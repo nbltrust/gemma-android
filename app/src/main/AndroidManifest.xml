@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.yiran.gemma">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Home.HomeActivity" />
+        <activity android:name=".Modules.Wallet.CreateWallet.CreateWalletActivity" />
+        <activity android:name=".Modules.Wallet.CreateWallet.CreateSuccessActivity" />
+        <activity android:name=".Modules.Wallet.BackUpMneWarningActivity" />
+        <activity android:name=".Modules.Wallet.BackupMneActivity" />
+        <activity android:name=".Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Modules.Me.Security.SecuritySettingActivity" />
+        <activity android:name=".Modules.Wallet.ImportWallet.ImportWalletActivity" />
+        <activity android:name=".Modules.QRCode.ScanActivity" />
+        <activity android:name=".Base.BaseActivity"></activity>
+    </application>
+
+</manifest>

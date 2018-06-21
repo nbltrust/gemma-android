@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Modules.Me.Security.SecuritySettingActivity">
+
+    <include
+        android:id="@+id/toolbar_security_check"
+        layout="@layout/toolbar">
+
+    </include>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView_face_unlock"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y50"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_security_check">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_face_unlock"
+                android:layout_width="@dimen/x150"
+                android:layout_height="match_parent" />
+
+            <Switch
+                android:id="@+id/switch_face_unlock"
+                android:layout_width="@dimen/x60"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView_finger_unlock"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y50"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView_face_unlock">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_finger_unlock"
+                android:layout_width="@dimen/x150"
+                android:layout_height="match_parent" />
+
+            <Switch
+                android:id="@+id/switch_finger_unlock"
+                android:layout_width="@dimen/x60"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView_pattern_unlock"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y50"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView_finger_unlock">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_pattern_unlock"
+                android:layout_width="@dimen/x150"
+                android:layout_height="match_parent" />
+
+            <Switch
+                android:id="@+id/switch_pattern_unlock"
+                android:layout_width="@dimen/x60"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView_change_pattern"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y50"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView_pattern_unlock">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_change_pattern"
+                android:layout_width="@dimen/x200"
+                android:layout_height="match_parent"
+                android:text="@string/changePattern"
+                android:paddingTop="@dimen/y10"
+                 />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>

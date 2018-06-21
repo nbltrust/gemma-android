@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home.HomeActivity">
+
+    <include
+        android:id="@+id/toolbar_home"
+        layout="@layout/toolbar">
+    </include>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_backup_hint"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y30"
+        android:layout_marginEnd="@dimen/x8"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/x8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_home">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/not_backup"
+            android:textAlignment="center" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="17"
+            android:text="@string/go_symbol"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/x60"
+        android:layout_height="@dimen/y60"
+        android:layout_marginStart="@dimen/x8"
+        android:layout_marginTop="@dimen/y5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout_backup_hint" />
+
+    <TextView
+        android:id="@+id/tv_hello"
+        android:layout_width="@dimen/x100"
+        android:layout_height="@dimen/y50"
+        android:layout_marginStart="@dimen/x8"
+        android:layout_marginTop="@dimen/y8"
+        android:text="@string/hello"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="@dimen/x200"
+        android:layout_height="@dimen/y50"
+        android:layout_marginStart="@dimen/x8"
+        android:layout_marginTop="@dimen/y8"
+        app:layout_constraintStart_toEndOf="@+id/tv_hello"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y120"
+        android:layout_marginEnd="@dimen/x8"
+        android:layout_marginStart="@dimen/x8"
+        android:layout_marginTop="@dimen/y8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+
+    <TextView
+        android:id="@+id/tv_market"
+        android:layout_width="@dimen/x100"
+        android:layout_height="@dimen/y50"
+        android:layout_marginStart="@dimen/x8"
+        android:layout_marginTop="@dimen/y38"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/tv_market_detail"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y200"
+        android:layout_marginEnd="@dimen/x8"
+        android:layout_marginStart="@dimen/x8"
+        android:layout_marginTop="@dimen/y8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_market" />
+
+
+</android.support.constraint.ConstraintLayout>

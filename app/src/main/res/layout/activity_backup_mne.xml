@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Modules.Wallet.BackupMneActivity">
+
+    <include
+        android:id="@+id/toolbar_backup_mne"
+        layout="@layout/toolbar">
+
+    </include>
+
+    <TextView
+        android:id="@+id/tv_backup_mne_hint_1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y40"
+        android:layout_marginEnd="@dimen/x8"
+        android:layout_marginStart="@dimen/x8"
+        android:layout_marginTop="@dimen/y8"
+        android:text="@string/backupYourMne"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_backup_mne" />
+
+    <TextView
+        android:id="@+id/tv_backup_mne_hint_2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y86"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/backupHint2"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_backup_mne_hint_1" />
+
+
+    <ImageView
+        android:id="@+id/iv_warn_icon"
+        android:layout_width="@dimen/x40"
+        android:layout_height="@dimen/y30"
+        android:layout_marginEnd="@dimen/x8"
+        android:layout_marginTop="@dimen/y8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_backup_mne_hint_2" />
+
+    <TextView
+        android:id="@+id/tv_show_mne"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y280"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_warn_icon" />
+
+
+
+    <Button
+        android:id="@+id/bt_copied"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/y20"
+        android:text="@string/copied"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_show_mne" />
+
+
+
+</android.support.constraint.ConstraintLayout>

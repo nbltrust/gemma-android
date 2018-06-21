@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity">
+    <include
+        android:id="@+id/toolbar_create_lock"
+        layout="@layout/toolbar">
+
+    </include>
+
+    <TextView
+        android:id="@+id/tv_lock_pattern_hint"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y30"
+        android:layout_marginEnd="@dimen/x8"
+        android:layout_marginStart="@dimen/x8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_create_lock" />
+
+    <com.github.ihsg.patternlocker.PatternLockerView
+        android:id="@+id/patternLocker"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/y20"
+        android:layout_marginEnd="@dimen/x15"
+        android:layout_marginStart="@dimen/x15"
+        android:layout_marginTop="@dimen/y20"
+        app:plv_hitColor="@color/colorPrimaryDark"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lock_pattern_hint" />
+
+</android.support.constraint.ConstraintLayout>

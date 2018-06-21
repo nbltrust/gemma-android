@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">Gemma</string>
+    <string name="title">我是标题</string>
+    <string name="wallet">Wallet</string>
+    <string name="Transfer">Transfer</string>
+    <string name="Me">Me</string>
+    <string name="hello">Hello,</string>
+    <string name="not_backup">钱包未备份</string>
+    <string name="go_symbol">-></string>
+
+    <string name="wallet_name">钱包名称</string>
+    <string name="password">密码</string>
+    <string name="hint_at_create_wallet">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储</string>
+    <string name="repeat_password">重复密码</string>
+    <string name="agreement">我已阅读并同意服务协议</string>
+    <string name="create_wallet">创建钱包</string>
+
+    <string name="contact">联系人</string>
+    <string name="createNewWallet">创建新钱包</string>
+    <string name="restoreWallet">从备份中导入钱包</string>
+
+
+    <string name="walletName">钱包名称</string>
+
+    <string name="repeatPassword">重复密码</string>
+    <string name="security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储</string>
+    <string name="createAWallet">创建钱包</string>
+
+
+    <string name="createWalletSuccess">恭喜！创建钱包成功</string>
+    <string name="exportMnemonic">导出私钥助记词</string>
+    <string name="backupHint">钱包私钥是资产的唯一认证方式，及时备份私钥，可防止手机丢失、忘记密码等意外无法使用钱包的情况。请将私钥助记词备份并妥善保存，以备将来不时之需。</string>
+    <string name="backupLater">稍后备份</string>
+
+
+    <string name="lookAround">请查看你的周围</string>
+    <string name="lookAround2">确保无人及摄像头的环境下进行备份</string>
+    <string name="backupSafely">请在安全环境下备份</string>
+    <string name="backupSafely2">备份期间可将手机调成飞行模式</string>
+    <string name="showMnemonic">明白了，显示助记词</string>
+
+
+    <string name="backupYourMne">请记下你的钱包私钥助记词并保存在安全的地方</string>
+    <string name="backupHint2">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
+    <string name="copied">已抄写</string>
+
+
+    <string name="writeDown">请输入抄下的钱包密钥助记词以验证</string>
+
+
+    <string name="general">通用</string>
+    <string name="security">安全设置</string>
+    <string name="help">帮助与反馈</string>
+    <string name="service_agreement">服务协议</string>
+    <string name="about">关于Gemma</string>
+
+
+    <string name="face">面容解锁</string>
+    <string name="fingerprints">指纹解锁</string>
+    <string name="pattern">手势解锁</string>
+    <string name="changePattern">修改手势密码</string>
+
+
+    <string name="export_privateKey">导出私钥</string>
+    <string name="export_mne">导出助记词</string>
+    <string name="accounts">钱包下账户（点击切换）</string>
+    <string name="account_1">账户一</string>
+    <string name="account_2">账户二</string>
+    <string name="account_3">账户三</string>
+    <string name="signUp">注册新用户名</string>
+
+
+    <string name="receiver">收款人</string>
+    <string name="payingAccount">付款账户</string>
+    <string name="fund">金额</string>
+    <string name="memo">备注</string>
+    <string name="confirmTransfer">确认转账</string>
+
+    <string name="lock_pattern_1">请设置新的解锁密码</string>
+    <string name="lock_pattern_2">再次输入解锁密码，以确认</string>
+    <string name="lock_pattern_3">请输入原手势密码</string>
+    <string name="change_pattern">修改手势密码</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

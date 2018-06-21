@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Modules.Transfer.TransferFragment">
+
+    <include
+        android:id="@+id/toolbar_transfer"
+        layout="@layout/toolbar">
+    </include>
+
+
+    <TextView
+        android:id="@+id/tv_receiver"
+        style="@style/textView_general"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_receiver"
+        style="@style/editText_general"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_receiver" />
+
+    <TextView
+        android:id="@+id/tv_pay_account"
+        style="@style/textView_general"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_receiver" />
+
+    <EditText
+        android:id="@+id/et_pay_account"
+        style="@style/editText_general"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pay_account" />
+
+    <TextView
+        android:id="@+id/tv_amount"
+        style="@style/textView_general"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_pay_account" />
+
+    <EditText
+        android:id="@+id/et_amount"
+        style="@style/editText_general"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount" />
+
+    <TextView
+        android:id="@+id/tv_memo"
+        style="@style/textView_general"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_amount" />
+
+    <EditText
+        android:id="@+id/et_memo"
+        style="@style/editText_general"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_memo" />
+
+    <Button
+        android:id="@+id/bt_confirm"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/y30"
+        android:layout_marginEnd="@dimen/x8"
+        android:layout_marginStart="@dimen/x8"
+        android:layout_marginTop="@dimen/y5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_memo" />
+
+</android.support.constraint.ConstraintLayout>
