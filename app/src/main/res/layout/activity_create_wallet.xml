@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f5f6f8"
     tools:context=".Modules.Wallet.CreateWallet.CreateWalletActivity">
 
     <include
@@ -11,92 +12,140 @@
         layout="@layout/toolbar">
     </include>
 
-    <TextView
-        android:id="@+id/tv_wallet_name"
-        style="@style/textView_general"
-        android:text="@string/walletName"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/subLayout_text"
+        style="@style/layout_input_area"
+        android:background="@drawable/shape_corner"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_create_wallet"
+        android:layout_marginTop="@dimen/x14"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_create_wallet" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <EditText
-        android:id="@+id/editText_walletName"
-        style="@style/editText_general"
+        <LinearLayout
+            android:id="@+id/subLayout_linear_1"
+            android:orientation="vertical"
+            style="@style/layout_single_input_area"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/tv_wallet_name"
+                style="@style/textView_general"
+                android:text="@string/walletName" />
+
+            <EditText
+                android:id="@+id/editText_walletName"
+                style="@style/editText_general"
+                android:hint="@string/wallet_name_hint"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/subLayout_linear_2"
+            android:orientation="vertical"
+            style="@style/layout_single_input_area"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/subLayout_linear_1">
+
+            <TextView
+                android:id="@+id/tv_password"
+                style="@style/textView_general"
+                android:text="@string/password" />
+
+
+            <EditText
+                android:id="@+id/editText_password"
+                style="@style/editText_general"
+                android:hint="@string/password_input_hint"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/subLayout_linear_3"
+            android:orientation="vertical"
+            style="@style/layout_single_input_area"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/subLayout_linear_2">
+
+            <TextView
+                android:id="@+id/tv_password2"
+                style="@style/textView_general"
+                android:text="@string/repeat_password" />
+
+
+            <EditText
+                android:id="@+id/editText_password2"
+                style="@style/editText_general"
+                android:hint="@string/repeatPassword_hint"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/subLayout_linear_4"
+            style="@style/layout_single_input_area"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/subLayout_linear_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/tv_password_hint"
+                style="@style/textView_general"
+                android:text="@string/password_hint"/>
+
+            <EditText
+                android:id="@+id/editText_password_hint"
+                style="@style/editText_general"
+                android:hint="@string/password_hint_hint" />
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <LinearLayout
+        android:id="@+id/subLayout_linear"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/x18"
+        android:layout_marginTop="@dimen/x23"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_wallet_name" />
+        app:layout_constraintTop_toBottomOf="@id/subLayout_text">
 
+        <CheckBox
+            android:id="@+id/cb_service_agreement"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="@dimen/x3"
+            android:layout_marginStart="@dimen/x30"
+            android:textSize="@dimen/x10"
+            android:textColor="@color/blueyGrey"
+            android:theme="@style/myCheckBox"
+            android:text="@string/agreement" />
 
-    <TextView
-        android:id="@+id/tv_password"
-        style="@style/textView_general"
-        android:text="@string/password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_walletName" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/agreement2"
+            android:layout_marginTop="@dimen/x2"
+            android:textSize="@dimen/x10"
+            android:textColor="@color/darkSlateBlue"
+            android:contextClickable="true"/>
 
-
-    <EditText
-        android:id="@+id/editText_password"
-        style="@style/editText_general"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password" />
-
-    <TextView
-        android:id="@+id/tv_hint"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/security_hint"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_password" />
-
-    <TextView
-        android:id="@+id/tv_password2"
-        style="@style/textView_general"
-        android:text="@string/repeat_password"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_hint" />
-
-
-    <EditText
-        android:id="@+id/editText_password2"
-        style="@style/editText_general"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password2" />
-
-
-
-    <CheckBox
-        android:id="@+id/cb_service_agreement"
-
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/agreement"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_password2" />
+    </LinearLayout>
 
 
     <Button
         android:id="@+id/btw_create_wallet"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        style="@style/button_create_wallet"
         android:text="@string/createAWallet"
+        android:layout_marginTop="@dimen/x50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cb_service_agreement" />
-
+        app:layout_constraintTop_toBottomOf="@+id/subLayout_linear" />
 
 </android.support.constraint.ConstraintLayout>

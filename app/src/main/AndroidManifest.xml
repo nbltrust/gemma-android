@@ -10,21 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Home.HomeActivity" />
-        <activity android:name=".Modules.Wallet.CreateWallet.CreateWalletActivity" />
-        <activity android:name=".Modules.Wallet.CreateWallet.CreateSuccessActivity" />
-        <activity android:name=".Modules.Wallet.BackUpMneWarningActivity" />
-        <activity android:name=".Modules.Wallet.BackupMneActivity" />
-        <activity android:name=".Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity">
+        <activity android:name=".Modules.Wallet.CreateWallet.CreateWalletActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        >
+        <activity android:name=".Modules.Wallet.CreateWallet.CreateSuccessActivity" />
+        <activity android:name=".Modules.Wallet.BackUpMneWarningActivity" />
+        <activity android:name=".Modules.Wallet.BackupMneActivity" />
+        <activity android:name=".Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity"></activity>
         <activity android:name=".Modules.Me.Security.SecuritySettingActivity" />
         <activity android:name=".Modules.Wallet.ImportWallet.ImportWalletActivity" />
         <activity android:name=".Modules.QRCode.ScanActivity" />
-        <activity android:name=".Base.BaseActivity"></activity>
+        <activity android:name=".Base.BaseActivity" />
     </application>
 
 </manifest>

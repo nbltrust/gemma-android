@@ -27,8 +27,8 @@ public class HomeActivity extends FragmentActivity {
 
 
     private void initViewPager(){
-        mViewPager = (ViewPager)findViewById(R.id.viewpager);
-        mTabLayout = (TabLayout)findViewById(R.id.tabs);
+        mViewPager = findViewById(R.id.viewpager);
+        mTabLayout = findViewById(R.id.tabs);
 
         List<String> titles = new ArrayList<>();
         titles.add("Wallet");
@@ -48,20 +48,6 @@ public class HomeActivity extends FragmentActivity {
         NavFragmentAdapter navFragmentAdapter = new NavFragmentAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(navFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-
-    }
-
-
-    protected void initData(){
-
-    }
-
-    protected void initViews(){
-
-
-    }
-
-    public void initEvent(){
 
     }
 

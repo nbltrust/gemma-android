@@ -6,31 +6,81 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="toolbar">
-        <item name="android:background">@color/colorPrimaryDark</item>
-    </style>
 
     <style name="cardview_common">
         <item name="android:layout_marginTop">@dimen/x8</item>
         <item name="android:layout_marginBottom">@dimen/x8</item>
-
     </style>
 
+    <!-- checkbox样式 -->
+    <style name="myCheckBox" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
+        <item name="android:colorControlActivated">@color/cornflowerBlue</item>
+        <item name="android:colorControlNormal">@color/colorPrimary</item>
+    </style>
+
+    <!--Create Wallet 页面 -->
+    <!-- 创建钱包Button样式 -->
+    <style name="button_create_wallet">
+        <item name="android:layout_width">@dimen/x292</item>
+        <item name="android:layout_height">@dimen/x32</item>
+        <item name="android:background">#cacddf</item>
+        <item name="android:textSize">@dimen/x12</item>
+        <item name="android:textColor">@color/whiteTwo</item>
+    </style>
+
+    <style name="button_create_wallet_clickable">
+        <item name="android:layout_width">@dimen/x292</item>
+        <item name="android:layout_height">@dimen/x32</item>
+        <item name="android:background">#426bd4</item>
+    </style>
+
+    <!-- Button 文字样式 -->
+    <style name="text_create_wallet">
+        <item name="android:layout_marginTop">@dimen/x12</item>
+        <item name="android:layout_marginBottom">@dimen/x12</item>
+        <item name="android:textSize">@dimen/x12</item>
+    </style>
+    <!-- 输入区域整体样式 -->
+    <style name="layout_input_area">
+        <item name="android:layout_width">@dimen/x292</item>
+        <item name="android:layout_height">@dimen/x256</item>
+        <item name="android:layout_marginStart">@dimen/x14</item>
+        <item name="android:layout_marginEnd">@dimen/x14</item>
+    </style>
+    <!-- 单一输入区域样式 -->
+    <style name="layout_single_input_area">
+        <item name="android:layout_width">@dimen/x265</item>
+        <item name="android:layout_height">@dimen/x62</item>
+        <item name="android:layout_marginStart">@dimen/x14</item>
+        <item name="android:layout_marginEnd">@dimen/x14</item>
+    </style>
+
+
     <style name="editText_general">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/y40</item>
-        <item name="android:layout_marginTop">@dimen/y5</item>
-        <item name="android:layout_marginStart">@dimen/x8</item>
-        <item name="android:layout_marginEnd">@dimen/x8</item>
+        <item name="android:layout_width">@dimen/x265</item>
+        <item name="android:layout_height">@dimen/x36</item>
+        <item name="android:layout_marginTop">@dimen/x6</item>
+        <item name="android:textSize">@dimen/x12</item>
+        <item name="android:textColor">@color/darkSlateBlue</item>
+        <item name="android:theme">@style/editText_sub</item>
+    </style>
+
+    <style name="editText_sub">
+        <item name="android:colorControlNormal">@color/paleGreyTwo</item>
+        <item name="android:colorControlActivated">@color/darkSlateBlue</item>
     </style>
 
     <style name="textView_general">
-        <item name="android:layout_width">@dimen/x160</item>
-        <item name="android:layout_height">@dimen/y28</item>
-        <item name="android:layout_marginStart">@dimen/x8</item>
-        <item name="android:layout_marginTop">@dimen/y5</item>
+        <item name="android:layout_width">@dimen/x41</item>
+        <item name="android:layout_height">@dimen/x14</item>
+        <item name="android:layout_marginTop">@dimen/x12</item>
+        <item name="android:textSize">@dimen/x10</item>
+        <item name="android:textColor">@color/steel</item>
     </style>
 
 </resources>

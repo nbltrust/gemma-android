@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.yiran.gemma.R;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class BaseFragment extends Fragment {
-    //private Unbinder unbinder;
+    private Unbinder unbinder;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -44,7 +47,7 @@ public class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base, container, false);
-        //unbinder = ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -63,7 +66,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //unbinder.unbind();
+        unbinder.unbind();
     }
 
 }

@@ -12,15 +12,20 @@
     <string name="password">密码</string>
     <string name="hint_at_create_wallet">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储</string>
     <string name="repeat_password">重复密码</string>
-    <string name="agreement">我已阅读并同意服务协议</string>
+    <string name="agreement">我已阅读并同意</string>
+    <string name="agreement2"><u>服务协议</u></string>
     <string name="create_wallet">创建钱包</string>
 
     <string name="contact">联系人</string>
     <string name="createNewWallet">创建新钱包</string>
     <string name="restoreWallet">从备份中导入钱包</string>
 
-
+    <string name="password_hint">密码提示</string>
+    <string name="wallet_name_hint">请输入钱包名称</string>
     <string name="walletName">钱包名称</string>
+    <string name="password_input_hint">8-16位字符，建议混合大小写字母、数字</string>
+    <string name="repeatPassword_hint">请再次输入密码</string>
+    <string name="password_hint_hint">(可选)请输入密码提示</string>
 
     <string name="repeatPassword">重复密码</string>
     <string name="security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储</string>

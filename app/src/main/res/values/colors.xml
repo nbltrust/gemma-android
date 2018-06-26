@@ -3,4 +3,24 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="paleGrey">#f5f6f8</color>
+    <color name="paleGreyTwo">#e7e9f8</color>
+
+    <color name="darkSlateBlue80">#212c67</color>
+    <color name="darkSkyBlue">#5596dc</color>
+    <color name="appleGreen">#7ed321</color>
+    <color name="cornflowerBlue">#426bd4</color>
+    <color name="whiteTwo">#ffffff</color>
+    <color name="white">#f9f9f9</color>
+    <color name="cloudyBlue">#c6cade</color>
+    <color name="darkSlateBlue">#212c67</color>
+    <color name="blueyGrey">#9ea3bd</color>
+    <color name="scarlet">#d0021b</color>
+    <color name="buff">#fff9a6</color>
+    <color name="steel">#8e8e93</color>
+    <color name="lightTeal">#94e1e1</color>
+    <color name="cloudyBlueTwo">#cacddf</color>
+    
+
 </resources>
