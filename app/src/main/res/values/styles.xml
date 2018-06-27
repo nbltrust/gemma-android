@@ -83,4 +83,90 @@
         <item name="android:textColor">@color/steel</item>
     </style>
 
+    <!-- Create Wallet Success页面样式-->
+    <!-- 消息显示区域 -->
+    <style name="show_area">
+        <item name="android:layout_marginStart">@dimen/x14</item>
+        <item name="android:layout_marginEnd">@dimen/x14</item>
+        <item name="android:layout_marginTop">@dimen/x41</item>
+        <item name="android:layout_height">@dimen/x159</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:background">@drawable/shape_corner</item>
+    </style>
+
+    <!-- 文本显示区域 -->
+
+    <style name="textView_in_create_success">
+        <item name="android:layout_marginStart">@dimen/x14</item>
+        <item name="android:layout_marginEnd">@dimen/x14</item>
+        <item name="android:layout_marginTop">@dimen/x23</item>
+        <item name="android:layout_height">@dimen/x70</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textSize">@dimen/x14</item>
+
+    </style>
+
+    <!-- 按钮 -->
+    <style name="button_in_create_success">
+        <item name="android:layout_width">@dimen/x126</item>
+        <item name="android:layout_height">@dimen/x36</item>
+        <item name="android:layout_marginTop">@dimen/x32</item>
+        <item name="android:textSize">@dimen/x14</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginStart">@dimen/x14</item>
+        <item name="android:layout_marginBottom">@dimen/x17</item>
+    </style>
+
+    <!-- BackUp Warning 页面样式-->
+    <!-- 文本显示区域 -->
+    <style name="show_area_in_backUpWarning">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/x127</item>
+        <item name="android:layout_marginStart">@dimen/x32</item>
+        <item name="android:layout_marginEnd">@dimen/x32</item>
+        <item name="android:layout_marginTop">@dimen/x59</item>
+        <item name="android:background">@drawable/shape_corner_buff</item>
+    </style>
+
+    <!-- 文本显示区域 LinearLayout-->
+    <style name="show_area_in_backUpWarning2">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginStart">@dimen/x40</item>
+        <item name="android:layout_marginEnd">@dimen/x16</item>
+        <item name="android:layout_marginTop">@dimen/x16</item>
+        <item name="android:layout_marginBottom">@dimen/x16</item>
+
+    </style>
+
+    <!-- 单一文本框 -->
+    <style name="singleTextView_in_BackUpWarning">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/x21</item>
+        <item name="android:textSize">@dimen/x10</item>
+        <item name="android:layout_marginEnd">@dimen/x16</item>
+
+    </style>
+
+    <!-- 按钮 -->
+    <style name="button_in_backUpWarning">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/x44</item>
+        <item name="android:textSize">@dimen/x14</item>
+        <item name="android:textColor">@color/whiteTwo</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:background">@color/cornflowerBlueTwo</item>
+    </style>
+
+    <style name="layout_show_mne">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/x160</item>
+        <item name="android:layout_marginStart">@dimen/x16</item>
+        <item name="android:layout_marginEnd">@dimen/x16</item>
+        <item name="android:layout_marginTop">@dimen/x14</item>
+    </style>
+
+
 </resources>

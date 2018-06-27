@@ -6,82 +6,96 @@
     android:layout_height="match_parent"
     tools:context=".Modules.Wallet.BackUpMneWarningActivity">
 
-    <include
-        android:id="@+id/toolbar_backup_mne_warning"
-        layout="@layout/toolbar">
-
-    </include>
 
     <ImageView
         android:id="@+id/iv_warn_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/x46"
+        android:layout_height="@dimen/x46"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="@dimen/x56"
+        android:background="@drawable/security3x"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_backup_mne_warning" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_look_around"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/lookAround"
+        android:layout_width="@dimen/x72"
+        android:layout_height="@dimen/x26"
+        android:layout_marginTop="@dimen/x15"
+        android:textSize="@dimen/x18"
+        android:textAlignment="center"
+        android:text="@string/backUp_wallet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_warn_icon" />
 
-    <TextView
-        android:id="@+id/tv_look_around2"
-        android:layout_width="224dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/lookAround2"
-        app:layout_constraintEnd_toEndOf="parent"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/show_area_in_backUpWarning"
+        style="@style/show_area_in_backUpWarning"
+        app:layout_constraintTop_toBottomOf="@+id/tv_look_around"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_look_around" />
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        
+        <ImageView
+            android:id="@+id/iv_dot_1"
+            android:layout_marginTop="@dimen/x19"
+            android:layout_marginStart="@dimen/x16"
+            android:layout_width="@dimen/x16"
+            android:layout_height="@dimen/x16" />
 
-    <TextView
-        android:id="@+id/tv_backupSafely"
-        android:layout_width="126dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
-        android:text="@string/backupSafely"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_look_around2" />
+        <LinearLayout
+            android:id="@+id/show_area_in_backUpWarning2"
+            style="@style/show_area_in_backUpWarning2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
 
-    <TextView
-        android:id="@+id/tv_backupSafely2"
-        android:layout_width="198dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/backupSafely2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_backupSafely" />
+            <TextView
+                android:id="@+id/tv_line_1"
+                android:text="@string/lookAround"
+                style="@style/singleTextView_in_BackUpWarning" />
+
+            <TextView
+                android:id="@+id/tv_line_2"
+                android:text="@string/lookAround2"
+                style="@style/singleTextView_in_BackUpWarning" />
+
+            <TextView
+                android:id="@+id/tv_line_3"
+                android:text="@string/backupSafely"
+                style="@style/singleTextView_in_BackUpWarning" />
+
+            <TextView
+                android:id="@+id/tv_line_4"
+                android:text="@string/backupSafely2"
+                style="@style/singleTextView_in_BackUpWarning" />
+
+        </LinearLayout>
+        
+        <ImageView
+            android:id="@+id/iv_dot_2"
+            android:layout_width="@dimen/x16"
+            android:layout_height="@dimen/x16"
+            android:layout_marginTop="@dimen/x37"
+            app:layout_constraintTop_toBottomOf="@+id/iv_dot_1"/>
+
+
+    </android.support.constraint.ConstraintLayout>
 
     <Button
         android:id="@+id/bt_show_mnemonic"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="18dp"
+        style="@style/button_in_backUpWarning"
         android:text="@string/showMnemonic"
-        android:textSize="10dp"
+        android:layout_marginTop="@dimen/x65"
+        android:layout_marginStart="@dimen/x44"
+        android:layout_marginEnd="@dimen/x44"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_backupSafely2" />
+        app:layout_constraintTop_toBottomOf="@+id/show_area_in_backUpWarning" />
 
 </android.support.constraint.ConstraintLayout>
