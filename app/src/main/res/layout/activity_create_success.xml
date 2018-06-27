@@ -6,21 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Modules.Wallet.CreateWallet.CreateSuccessActivity">
 
-    <include
-        android:id="@+id/toolbar_create_success"
-        layout="@layout/toolbar">
-
-    </include>
 
     <ImageView
         android:id="@+id/iv_success_logo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="38dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_create_success" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_success_word"

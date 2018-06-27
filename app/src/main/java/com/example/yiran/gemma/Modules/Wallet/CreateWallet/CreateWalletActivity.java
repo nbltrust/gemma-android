@@ -13,15 +13,16 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.yiran.gemma.Base.BaseActivity;
 import com.example.yiran.gemma.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CreateWalletActivity extends AppCompatActivity {
+public class CreateWalletActivity extends BaseActivity {
 
-    private static int barHeight;
-    private static int backIconWidth;
+    private int barHeight;
+    private int backIconWidth;
 
     @BindView(R.id.tv_title)
     TextView mTitle;
@@ -73,48 +74,4 @@ public class CreateWalletActivity extends AppCompatActivity {
         window.setNavigationBarColor(Color.TRANSPARENT);
     }
 
-    /**
-     * 动态获取状态栏高度
-     * @param mActivity
-     * @return
-     */
-
-    public int getStatusBarHeight(Activity mActivity) {
-        Context context = mActivity.getApplicationContext();
-        int result = 0;
-        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
-
-    /**
-     * 动态设置控件margins的方法
-     * @param v
-     * @param l 左边距
-     * @param t 上边距
-     * @param r
-     * @param b
-     */
-
-    public static void setMargins(View v, int l, int t, int r, int b){
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.requestLayout();
-        }
-    }
-
-    /**
-     * 手动测量view的宽度
-     * @param view
-     * @return
-     */
-    public int getViewWidth(View view){
-        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        view.measure(w, h);
-        return view.getMeasuredWidth();
-    }
 }

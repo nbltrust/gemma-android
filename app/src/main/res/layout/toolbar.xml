@@ -25,8 +25,8 @@
             <ImageView
                 android:id="@+id/iv_back"
                 android:background="@drawable/icback24px"
-                android:layout_width="@dimen/x22"
-                android:layout_height="@dimen/x22" />
+                android:layout_width="@dimen/x20"
+                android:layout_height="@dimen/x20" />
 
         </LinearLayout>
 
@@ -34,7 +34,7 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:text="@string/title"
             android:textColor="@color/whiteTwo"
             />
