@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Modules.Wallet.CheckMneActivity">
+    
+    <TextView
+        android:id="@+id/tv_checkMne_info"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/x22"
+        android:layout_marginTop="@dimen/x60"
+
+        android:text="@string/input_mne"
+        android:textSize="@dimen/x12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="@dimen/x28"
+        android:layout_marginStart="@dimen/x28"
+        />
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/layout_showMne_area"
+        android:background="@drawable/shape_corner"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/x110"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_checkMne_info"
+        android:layout_marginEnd="@dimen/x16"
+        android:layout_marginStart="@dimen/x16"
+        >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/layout_showMne_area2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/x110"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_showMne_area"
+        android:layout_marginEnd="@dimen/x16"
+        android:layout_marginStart="@dimen/x16"
+        >
+
+    </LinearLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>

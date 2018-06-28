@@ -52,7 +52,7 @@
 
 
     <string name="writeDown">请输入抄下的钱包密钥助记词以验证</string>
-
+    <string name="input_mne">请按顺序点击已抄下的助记词以验证抄写是否正确</string>
 
     <string name="general">通用</string>
     <string name="security">安全设置</string>

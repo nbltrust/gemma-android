@@ -13,7 +13,7 @@
         android:layout_height="@dimen/x22"
         android:layout_marginEnd="@dimen/x30"
         android:layout_marginStart="@dimen/x30"
-        android:layout_marginTop="@dimen/x60"
+        android:layout_marginTop="@dimen/x20"
         android:textSize="@dimen/x12"
         android:text="@string/backupYourMne"
         android:textAlignment="center"
@@ -35,24 +35,24 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_backup_mne_hint_1" />
 
 
-    <LinearLayout
-        android:id="@+id/layout_show_mne"
-        style="@style/layout_show_mne"
-        android:background="@drawable/shape_corner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_backup_mne_hint_2"
-        >
 
-    </LinearLayout>
+   <LinearLayout
+       android:id="@+id/layout_show_mne"
+       style="@style/layout_show_mne"
+       android:orientation="horizontal"
+       android:background="@drawable/shape_corner"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/tv_backup_mne_hint_2">
 
 
+   </LinearLayout>
 
     <Button
         android:id="@+id/bt_copied"
         style="@style/button_in_backUpWarning"
         android:text="@string/copied"
-        android:layout_marginTop="@dimen/x80"
+        android:layout_marginTop="@dimen/x60"
         android:layout_marginStart="@dimen/x32"
         android:layout_marginEnd="@dimen/x32"
         app:layout_constraintEnd_toEndOf="parent"
