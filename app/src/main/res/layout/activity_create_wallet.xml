@@ -17,7 +17,6 @@
         style="@style/layout_input_area"
         android:background="@drawable/shape_corner"
         app:layout_constraintTop_toBottomOf="@id/toolbar_create_wallet"
-        android:layout_marginTop="@dimen/x14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 

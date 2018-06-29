@@ -14,7 +14,7 @@
     <TextView
         android:id="@+id/tv_lock_pattern_hint"
         android:layout_width="0dp"
-        android:layout_height="@dimen/y30"
+        android:layout_height="@dimen/x30"
         android:layout_marginEnd="@dimen/x8"
         android:layout_marginStart="@dimen/x8"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,10 +26,10 @@
         android:id="@+id/patternLocker"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/y20"
+        android:layout_marginBottom="@dimen/x20"
         android:layout_marginEnd="@dimen/x15"
         android:layout_marginStart="@dimen/x15"
-        android:layout_marginTop="@dimen/y20"
+        android:layout_marginTop="@dimen/x20"
         app:plv_hitColor="@color/colorPrimaryDark"
 
         app:layout_constraintBottom_toBottomOf="parent"

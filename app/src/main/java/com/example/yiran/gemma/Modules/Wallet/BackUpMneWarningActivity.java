@@ -50,9 +50,7 @@ public class BackUpMneWarningActivity extends BaseActivity {
     }
 
     public void initView(){
-        mTitle.setText("备份助记词");
-        mTitle.setPadding(-getViewWidth(mBack), getStatusBarHeight(this), 0, 0);
-        setMargins(mBack, 0, getStatusBarHeight(this),0,0);
+        setTitle("备份助记词");
     }
 
 

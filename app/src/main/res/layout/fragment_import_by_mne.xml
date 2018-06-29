@@ -12,12 +12,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
+            android:layout_height="@dimen/x100"
             android:text="@string/hello_blank_fragment" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y100"
+            android:layout_height="@dimen/x100"
             android:text="助记词区域" />
 
         <Button

@@ -15,7 +15,7 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout_import_wallet"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y60"
+        android:layout_height="@dimen/x60"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

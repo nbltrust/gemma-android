@@ -17,7 +17,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardView_contact"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y30">
+        android:layout_height="@dimen/x30">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout_contact"
@@ -52,8 +52,8 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardView_general"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:layout_marginTop="@dimen/y10"
+        android:layout_height="@dimen/x30"
+        android:layout_marginTop="@dimen/x10"
         >
 
         <android.support.constraint.ConstraintLayout
@@ -88,8 +88,8 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardView_security"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:layout_marginTop="@dimen/y10"
+        android:layout_height="@dimen/x30"
+        android:layout_marginTop="@dimen/x10"
         >
 
         <android.support.constraint.ConstraintLayout
@@ -124,8 +124,8 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardView_help"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:layout_marginTop="@dimen/y10"
+        android:layout_height="@dimen/x30"
+        android:layout_marginTop="@dimen/x10"
         >
 
         <android.support.constraint.ConstraintLayout
@@ -160,8 +160,8 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardView_agreement"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:layout_marginTop="@dimen/y10"
+        android:layout_height="@dimen/x30"
+        android:layout_marginTop="@dimen/x10"
         >
 
         <android.support.constraint.ConstraintLayout

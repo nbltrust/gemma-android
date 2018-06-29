@@ -26,6 +26,8 @@ import butterknife.ButterKnife;
 
 public class BaseActivity extends AppCompatActivity {
 
+    private ImageView mBack;
+    private TextView mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,10 @@ public class BaseActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = layoutInflater.inflate(layoutResID, null);
         mContent.addView(v);
+        mBack = findViewById(R.id.iv_back);
+        mTitle = findViewById(R.id.tv_title);
+        setMargins(mBack, 10, getStatusBarHeight(this),0,0);
+        mTitle.setPadding(-getViewWidth(mBack), getStatusBarHeight(this), 0, 0);
     }
 
 
@@ -106,6 +112,10 @@ public class BaseActivity extends AppCompatActivity {
         int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         view.measure(w, h);
         return view.getMeasuredWidth();
+    }
+
+    public void setTitle(String title){
+        mTitle.setText(title);
     }
 
 

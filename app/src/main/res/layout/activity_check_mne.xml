@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Modules.Wallet.CheckMneActivity">
     
     <TextView
         android:id="@+id/tv_checkMne_info"
         android:layout_width="0dp"
         android:layout_height="@dimen/x22"
-        android:layout_marginTop="@dimen/x60"
+        android:layout_marginTop="@dimen/x24"
 
         android:text="@string/input_mne"
         android:textSize="@dimen/x12"
@@ -23,14 +24,14 @@
     
     <LinearLayout
         android:orientation="horizontal"
-        android:id="@+id/layout_showMne_area"
+        style="@style/layout_show_mne"
+        android:id="@+id/layout_checkMne_area"
         android:background="@drawable/shape_corner"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/x110"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_checkMne_info"
+        android:layout_marginTop="@dimen/x18"
         android:layout_marginEnd="@dimen/x16"
         android:layout_marginStart="@dimen/x16"
         >
@@ -39,15 +40,17 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:id="@+id/layout_showMne_area2"
+        android:id="@+id/layout_showMne_area"
         android:layout_width="0dp"
-        android:layout_height="@dimen/x110"
+        android:layout_height="@dimen/x160"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_showMne_area"
+        app:layout_constraintTop_toBottomOf="@id/layout_checkMne_area"
         android:layout_marginEnd="@dimen/x16"
         android:layout_marginStart="@dimen/x16"
+        android:layout_marginTop="@dimen/x10"
+
         >
 
     </LinearLayout>

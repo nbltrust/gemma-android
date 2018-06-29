@@ -11,7 +11,7 @@ import com.example.yiran.gemma.R;
 import java.util.ArrayList;
 
 public class FlowLayout extends ViewGroup {
-    private final int DEFAULT_SPACING = (int)getResources().getDimension(R.dimen.x10);
+    private final int DEFAULT_SPACING = 10;
     private int horizontalSpacing = DEFAULT_SPACING;//水平间距
     private int verticalSpacing = DEFAULT_SPACING;//行与行之间的垂直间距
 
@@ -102,7 +102,8 @@ public class FlowLayout extends ViewGroup {
             for (int j = 0; j < viewList.size(); j++) {
                 View childView = viewList.get(j);//获取每个TextView
                 //3.将perSpacing增加到每个TextView的宽度上
-                int widthMeasureSpec = MeasureSpec.makeMeasureSpec((int) (childView.getMeasuredWidth()+perSpacing),MeasureSpec.EXACTLY);
+                //int widthMeasureSpec = MeasureSpec.makeMeasureSpec((int) (childView.getMeasuredWidth()+perSpacing),MeasureSpec.EXACTLY);
+                int widthMeasureSpec = MeasureSpec.makeMeasureSpec((int) (childView.getMeasuredWidth()),MeasureSpec.EXACTLY);
                 childView.measure(widthMeasureSpec,0);
                 if(j==0){
                     //摆放每行的第一个TextView
@@ -150,9 +151,8 @@ public class FlowLayout extends ViewGroup {
                 //更新width
                 if(viewList.size()==1){
                     //如果是第一个TextView，那么width就是lineView的宽度
-                    //width = getChildAt(0).getMeasuredWidth();
                     width = lineView.getMeasuredWidth();
-                    Log.d("curLineViewWidth",String.valueOf(width));
+                    Log.d("cur Line Width : ", String.valueOf(width));
                 }else {
                     //如果不是第一个，则要在当前width的基础上+水平间距+lineView的宽度
                     width += horizontalSpacing + lineView.getMeasuredWidth();

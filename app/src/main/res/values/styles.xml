@@ -51,6 +51,7 @@
         <item name="android:layout_height">@dimen/x256</item>
         <item name="android:layout_marginStart">@dimen/x14</item>
         <item name="android:layout_marginEnd">@dimen/x14</item>
+        <item name="android:layout_marginTop">@dimen/x14</item>
     </style>
     <!-- 单一输入区域样式 -->
     <style name="layout_single_input_area">
@@ -168,5 +169,12 @@
         <item name="android:layout_marginTop">@dimen/x14</item>
     </style>
 
+    <!-- 验证成功弹出框 -->
+    <style name="dialogue_succeed">
+        <item name="android:layout_width">@dimen/x180</item>
+        <item name="android:layout_height">@dimen/x72</item>
+        <item name="android:background">@drawable/shape_corner_dialog_succeed</item>
+        <item name="android:textColor">@color/whiteTwo</item>
+    </style>
 
 </resources>

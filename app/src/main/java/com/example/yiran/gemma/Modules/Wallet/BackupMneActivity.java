@@ -46,24 +46,34 @@ public class BackupMneActivity extends BaseActivity {
         finish();
     }
 
+    @OnClick(R.id.bt_copied)
+    public void goCheck(){
+        Intent lastIntent = getIntent();
+        String mnes = lastIntent.getStringExtra("Mne");
+        Intent mIntent = new Intent(this, CheckMneActivity.class);
+        mIntent.putExtra("Mnes", mnes);
+        startActivity(mIntent);
+    }
+
 
     public void initView(){
-        mTitle.setText("备份助记词");
-        mTitle.setPadding(-getViewWidth(mBack), getStatusBarHeight(this), 0, 0);
-        setMargins(mBack, 0, getStatusBarHeight(this),0,0);
+        setTitle("备份助记词");
     }
 
     public void initShowMneArea(){
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
-                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         final FlowLayout flowLayout = new FlowLayout(this);
         //获取并设置单词显示整体区域相对与外框的内边距
         int paddingLeft = (int) getResources().getDimension(R.dimen.x14);
         int paddingTop = (int) getResources().getDimension(R.dimen.x16);
         flowLayout.setPadding(paddingLeft, paddingTop, paddingLeft, paddingTop);
+        //设置每个单词框的横纵间距
+        flowLayout.setVerticalSpacing((int) getResources().getDimension(R.dimen.x10));
+        flowLayout.setHorizontalSpacing((int) getResources().getDimension(R.dimen.x7));
 
-        String[] Mnes = getMne();
+        String[] Mnes = getMnes();
         for (int i = 0; i < Mnes.length; i++){
             flowLayout.addView(generateTextView(Mnes[i]));
         }
@@ -85,7 +95,7 @@ public class BackupMneActivity extends BaseActivity {
         int paddingTopAndBottom = (int) getResources().getDimension(R.dimen.x5);
         //设置textView宽，高，及内边距
         int viewHeight = (int)getResources().getDimension(R.dimen.x32);
-        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, viewHeight));
+        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,viewHeight));
         textView.setPadding(paddingLeftAndRight, paddingTopAndBottom, paddingLeftAndRight, paddingTopAndBottom);
         //设置其他样式
         textView.setBackground(getDrawable(R.drawable.shape_corner_text));
@@ -101,11 +111,11 @@ public class BackupMneActivity extends BaseActivity {
      * @return
      */
 
-    public String[] getMne(){
+    public String[] getMnes(){
         Intent mIntent = getIntent();
         String Mne = mIntent.getStringExtra("Mne");
         String[] Mnes = Mne.split(" ");
-        Log.d("Mne in CheckActivity", Mne);
+        Log.d("Mne in BackActivity", Mne);
         return Mnes;
     }
 

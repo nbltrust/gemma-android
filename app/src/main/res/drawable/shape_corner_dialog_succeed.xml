@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/darkSlateBlue">
+    </solid>
+    <corners
+        android:topLeftRadius="@dimen/dialogue_succeed_radius"
+        android:topRightRadius="@dimen/dialogue_succeed_radius"
+        android:bottomLeftRadius="@dimen/dialogue_succeed_radius"
+        android:bottomRightRadius="@dimen/dialogue_succeed_radius"
+        >
+    </corners>
+    <stroke android:width="@dimen/x1" android:color="@color/darkSlateBlue">
+
+    </stroke>
+</shape>
