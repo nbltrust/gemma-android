@@ -22,8 +22,8 @@
 
         <LinearLayout
             android:id="@+id/subLayout_linear_1"
-            android:orientation="vertical"
             style="@style/layout_single_input_area"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             >
@@ -36,10 +36,36 @@
             <EditText
                 android:id="@+id/editText_walletName"
                 style="@style/editText_general"
-                android:hint="@string/wallet_name_hint"
-                />
+                android:hint="@string/wallet_name_hint" />
 
         </LinearLayout>
+
+        <com.xujiaji.happybubble.BubbleLayout
+            android:id="@+id/bubble"
+            style="@style/bubble"
+            app:bubbleColor="@color/buff"
+            app:bubblePadding="0dp"
+            app:lookPosition="@dimen/x26"
+            app:lookLength="@dimen/x6"
+            app:bubbleRadius="@dimen/x3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/password_input_hint_2"
+                android:textSize="@dimen/x10"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/x15"
+                android:layout_marginBottom="@dimen/x15"
+                android:layout_marginStart="@dimen/x13"
+                android:layout_marginEnd="@dimen/x13"
+                android:textColor="@color/darkSlateBlue"
+                />
+
+        </com.xujiaji.happybubble.BubbleLayout>
+
 
         <LinearLayout
             android:id="@+id/subLayout_linear_2"
@@ -117,7 +143,7 @@
 
         <CheckBox
             android:id="@+id/cb_service_agreement"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_marginEnd="@dimen/x3"
             android:layout_marginStart="@dimen/x30"

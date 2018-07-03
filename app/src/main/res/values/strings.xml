@@ -9,7 +9,7 @@
     <string name="go_symbol">-></string>
 
     <string name="wallet_name">钱包名称</string>
-    <string name="password">密码</string>
+    <string name="password">设置密码</string>
     <string name="hint_at_create_wallet">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储</string>
     <string name="repeat_password">重复密码</string>
     <string name="agreement">我已阅读并同意</string>
@@ -86,6 +86,8 @@
     <string name="lock_pattern_2">再次输入解锁密码，以确认</string>
     <string name="lock_pattern_3">请输入原手势密码</string>
     <string name="change_pattern">修改手势密码</string>
+
+    <string name="password_input_hint_2">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不存储密码，无法提供密码找回服务</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

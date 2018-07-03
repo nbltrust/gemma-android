@@ -342,6 +342,13 @@
     <dimen name="x340">340px</dimen>
 
 
+
+    <dimen name="Title_Large">18pt</dimen>
+    <dimen name="Title_Mid">13pt</dimen>
+    <dimen name="Help_Mid">18pt</dimen>
+    <dimen name="Hint_Mid">12pt</dimen>
+    <dimen name="Hint_Small">10pt</dimen>
+
     <dimen name="dialogue_succeed_radius">4pt</dimen>
     <dimen name="list_item_spacing">16dp</dimen>
     <dimen name="list_item_spacing_half">8dp</dimen>

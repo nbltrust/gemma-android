@@ -62,6 +62,13 @@ public class BaseActivity extends AppCompatActivity {
         mTitle = findViewById(R.id.tv_title);
         setMargins(mBack, 10, getStatusBarHeight(this),0,0);
         mTitle.setPadding(-getViewWidth(mBack), getStatusBarHeight(this), 0, 0);
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
 

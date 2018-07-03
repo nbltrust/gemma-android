@@ -49,16 +49,16 @@
     <style name="layout_input_area">
         <item name="android:layout_width">@dimen/x292</item>
         <item name="android:layout_height">@dimen/x256</item>
-        <item name="android:layout_marginStart">@dimen/x14</item>
-        <item name="android:layout_marginEnd">@dimen/x14</item>
-        <item name="android:layout_marginTop">@dimen/x14</item>
+        <item name="android:layout_marginStart">@dimen/x13</item>
+        <item name="android:layout_marginEnd">@dimen/x13</item>
+        <item name="android:layout_marginTop">@dimen/x13</item>
     </style>
     <!-- 单一输入区域样式 -->
     <style name="layout_single_input_area">
         <item name="android:layout_width">@dimen/x265</item>
         <item name="android:layout_height">@dimen/x62</item>
-        <item name="android:layout_marginStart">@dimen/x14</item>
-        <item name="android:layout_marginEnd">@dimen/x14</item>
+        <item name="android:layout_marginStart">@dimen/x13</item>
+        <item name="android:layout_marginEnd">@dimen/x13</item>
     </style>
 
 
@@ -176,5 +176,43 @@
         <item name="android:background">@drawable/shape_corner_dialog_succeed</item>
         <item name="android:textColor">@color/whiteTwo</item>
     </style>
+
+    <!-- 密码输入提示气泡框 -->
+    <style name="bubble">
+        <item name="android:layout_width">@dimen/x292</item>
+        <item name="android:layout_height">@dimen/x66</item>
+
+    </style>
+
+
+    <!-- 字体样式 -->
+    <style name="Title_Large">
+        <item name="android:textColor">@color/darkSlateBlue</item>
+        <item name="android:textSize">@dimen/Title_Large</item>
+    </style>
+
+    <style name="Title_Mid">
+        <item name="android:textColor">@color/darkSlateBlue</item>
+        <item name="android:textSize">@dimen/Title_Mid</item>
+    </style>
+
+    <style name="Help_Mid">
+        <item name="android:textColor">@color/steel</item>
+        <item name="android:textSize">@dimen/Help_Mid</item>
+    </style>
+    <style name="Hint_Mid">
+        <item name="android:textColor">@color/cloudyBlue</item>
+        <item name="android:textSize">@dimen/Hint_Mid</item>
+    </style>
+    <style name="Hint_Small">
+        <item name="android:textColor">@color/blueyGrey</item>
+        <item name="android:textSize">@dimen/Hint_Small</item>
+    </style>
+    <style name="Hint_Small_2">
+        <item name="android:textColor">@color/darkSlateBlue</item>
+        <item name="android:textSize">@dimen/Hint_Small</item>
+    </style>
+
+
 
 </resources>

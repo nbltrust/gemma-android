@@ -10,14 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Home.HomeActivity" />
-        <activity android:name=".Modules.Wallet.CreateWallet.CreateWalletActivity" />
-        <activity android:name=".Modules.Wallet.CreateWallet.CreateSuccessActivity"></activity>
-        <activity android:name=".Modules.Wallet.BackUpMneWarningActivity">
+        <activity android:name=".Modules.Wallet.CreateWallet.CreateWalletActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Modules.Wallet.CreateWallet.CreateSuccessActivity"></activity>
+        <activity android:name=".Modules.Wallet.BackUpMneWarningActivity">
+
         </activity>
         <activity android:name=".Modules.Wallet.BackupMneActivity">
 

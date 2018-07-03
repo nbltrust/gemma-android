@@ -36,6 +36,7 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:text="@string/title"
+            android:textSize="@dimen/x15"
             android:textColor="@color/whiteTwo"
             />
 
