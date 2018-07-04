@@ -28,6 +28,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".GmaApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -53,6 +54,20 @@
         <activity android:name="com.example.yiran.gemma.Base.BaseActivity" />
         >
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.CheckMneActivity" />
+
+        <service android:name=".service.InitializeService" />
+
+        <!--兼容7.0-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.android7.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

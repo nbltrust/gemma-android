@@ -209,6 +209,13 @@ dependencies {
     implementation deps.gma.PatternLocker
     implementation deps.gma.happybubble
     implementation deps.gma.zxing
+    implementation deps.gma.androidanimations
+
+    implementation deps.yanzhenjie.permission
+    implementation deps.yanzhenjie.sofia
+    implementation deps.third.recyclerviewadapterhelper
+    implementation deps.smartrefresh.layout
+
 
     implementation project(':platform_framework:basiclib')
     implementation project(':platform_framework:base-view')

@@ -83,4 +83,7 @@ dependencies {
     api deps.yanzhenjie.sofia
     api deps.third.rxErrorHandler
 
+    api deps.glide.core
+    annotationProcessor deps.glide.compiler
+
 }
