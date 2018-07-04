@@ -1,1 +1,8 @@
 include ':app'
+include ':platform_framework:basiclib'
+include ':platform_framework:base-view'
+include ':platform_framework:base-res'
+include ':platform_framework:smart-scheduler'
+include ':platform_framework:customdialoglib'
+include ':platform_framework:update-app'
+

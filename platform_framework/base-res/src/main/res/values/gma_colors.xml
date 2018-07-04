@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 不含alpha，格式：color_色值 -->
+    <color name="color_ffffff">#ffffff</color>
+    <color name="color_000000">#000000</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_f2f2f2">#f2f2f2</color>
+    <color name="color_cccccc">#cccccc</color>
+    <color name="color_55bef6">#55bef6</color>
+    <color name="color_61c9ff">#61c9ff</color>
+    <color name="color_48b5ee">#48b5ee</color>
+    <color name="color_3990bf">#3990bf</color>
+    <color name="color_fafafa">#fafafa</color>
+    <color name="color_bfbfbf">#bfbfbf</color>
+    <color name="color_e0e2e8">#e0e2e8</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_77bd0c">#77bd0c</color>
+    <color name="color_e4e4e4">#e4e4e4</color>
+    <color name="color_f5f5f5">#f5f5f5</color>
+    <color name="color_e6e6e6">#e6e6e6</color>
+    <color name="color_007aff">#007aff</color>
+    <color name="color_f353c0">#f353c0</color>
+    <color name="color_f4f3f2">#f4f3f2</color>
+    <color name="color_fbe8c9">#fbe8c9</color>
+    <color name="color_917272">#917272</color>
+    <color name="color_5d5d5d">#5D5D5D</color>
+    <color name="color_7495bc">#7495bc</color>
+    <color name="color_b3b3b3">#b3b3b3</color>
+    <color name="color_37c7fd">#37c7fd</color>
+    <color name="color_2a90f3">#2a90f3</color>
+    <color name="color_c8c8c8">#c8c8c8</color>
+    <color name="color_d6d6d6">#d6d6d6</color>
+    <color name="color_5db5ff">#5db5ff</color>
+    <color name="color_b1b1b1">#b1b1b1</color>
+
+
+    <!-- 含alpha，格式：color_alpha_色值 -->
+    <color name="color_ff_ffffff">#ffffffff</color>
+    <color name="color_cc_ffffff">#ccffffff</color>
+    <color name="color_80_000000">#80000000</color>
+    <color name="color_00_000000">#00000000</color>
+    <color name="color_10_000000">#10000000</color>
+    <color name="color_ff_f3f3f3">#ff3f3f3f</color>
+    <color name="color_ff_cccccc">#ffcccccc</color>
+    <color name="color_ff_999999">#ff999999</color>
+    <color name="color_ff_ff2323">#ffff2323</color>
+    <color name="color_ff_e6e6e6">#ffe6e6e6</color>
+    <color name="color_44_000000">#44000000</color>
+
+</resources>

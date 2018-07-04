@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><!--配置一些公共的常量-->
+<resources>
+    <bool name="home_show">true</bool>
+    <bool name="home_hide">false</bool>
+</resources>

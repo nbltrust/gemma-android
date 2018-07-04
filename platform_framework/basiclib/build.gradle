@@ -1,0 +1,86 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+        ndk {
+            abiFilters /* 'x86',  */ 'armeabi-v7a' /*armeabi-v7a向下兼容armeabi, 'x86_64'*/, 'arm64-v8a'
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+
+    // 解决.common.process.ProcessException: org.gradle.process.internal.ExecException: Process 'command... java.exe'' finished with non-zero exit value 1问题
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // android support
+    implementation deps.support.appcompatV7
+    implementation deps.support.design
+    implementation deps.support.multidex
+
+    //rx2
+    api deps.rxjava2.rxjava
+    api(deps.rxjava2.rxandroid) {
+        exclude module: 'rxjava'
+    }
+    api(deps.rxcache2.core) {
+        exclude module: 'rxjava'
+        /* exclude module: 'dagger'*/
+    }
+    api(deps.rxcache2.jolyglot) {
+        exclude module: 'gson'
+    }
+    api(deps.gma.rxpermissions) {
+        exclude module: 'rxjava'
+        exclude module: 'support-annotations'
+    }
+    api(deps.rxlifecycle2.core) {
+        exclude module: 'rxjava'
+    }
+    api(deps.rxlifecycle2.components) {
+        exclude module: 'support-v4'
+        exclude module: 'appcompat-v7'
+        exclude module: 'support-annotations'
+        exclude module: 'rxjava'
+        exclude module: 'rxandroid'
+        exclude module: 'rxlifecycle'
+    }
+
+    //网络请求框架OKGo
+    api deps.okgo.core
+    api deps.okgo.okrx2
+    api deps.okgo.okserver
+
+    api deps.third.eventbus
+    // crash处理工具
+    api deps.third.customactivityoncrash
+    // gson
+    api deps.third.gson
+    api deps.third.chuck
+
+
+    api deps.third.kprogresshud
+
+    api deps.yanzhenjie.sofia
+    api deps.third.rxErrorHandler
+
+}

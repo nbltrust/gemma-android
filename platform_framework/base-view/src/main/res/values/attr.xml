@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CommonItemView">
+        <attr name="majorText" format="reference|string" />
+        <attr name="minorText" format="reference|string" />
+        <attr name="noticeText" format="reference|string" />
+        <attr name="drawableItem" format="reference" />
+        <attr name="drawableItemHeight" format="dimension" />
+        <attr name="drawableItemWidth" format="dimension" />
+        <attr name="showRightArrow" format="boolean" />
+        <attr name="showBottomLine" format="boolean" />
+        <attr name="majorTextSize" format="dimension" />
+        <attr name="minorTextSize" format="dimension" />
+        <attr name="noticeTextSize" format="dimension" />
+        <attr name="noticeMargins" format="dimension" />
+        <attr name="majorTextColor" format="reference" />
+        <attr name="minorTextColor" format="reference" />
+        <attr name="noticeTextColor" format="reference" />
+
+        <attr name="majorTextStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+        </attr>
+        <attr name="minorTextStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+        </attr>
+        <attr name="noticeTextStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+        </attr>
+    </declare-styleable>
+
+
+
+</resources>
