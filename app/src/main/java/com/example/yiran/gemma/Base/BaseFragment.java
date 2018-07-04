@@ -1,13 +1,13 @@
 package com.example.yiran.gemma.Base;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.yiran.gemma.R;
+
+import com.cybex.gma.client.R;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

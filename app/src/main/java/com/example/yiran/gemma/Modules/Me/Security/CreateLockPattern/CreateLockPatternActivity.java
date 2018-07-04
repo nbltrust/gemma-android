@@ -3,14 +3,14 @@ package com.example.yiran.gemma.Modules.Me.Security.CreateLockPattern;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cybex.gma.client.R;
 import com.example.yiran.gemma.Modules.Me.Security.SecuritySettingActivity;
-import com.example.yiran.gemma.R;
 import com.github.ihsg.patternlocker.PatternLockerView;
 
 import java.util.ArrayList;

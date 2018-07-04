@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.yiran.gemma.R;
+import com.cybex.gma.client.R;
+
 
 public class TransferFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";

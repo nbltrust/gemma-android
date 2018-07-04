@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.yiran.gemma.R;
+import com.cybex.gma.client.R;
+
 
 public class MeFragment extends Fragment {
 

@@ -1,28 +1,195 @@
 apply plugin: 'com.android.application'
+apply from: '../config/properties-util.gradle'
+
+if (!rootProject.optimizeForDevelopment) {
+    apply from: '../gradle/plugins/checkstyle-android.gradle'
+    apply from: '../gradle/plugins/findbugs-android.gradle'
+}
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 
 android {
-    compileSdkVersion 27
-    defaultConfig {
-        applicationId "com.example.yiran.gemma"
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    useLibrary 'org.apache.http.legacy'
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
+
+    defaultConfig {
+        applicationId "com.cybex.gma.client"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+
+        ndk {
+            //设置支持的SO库架构:ObjectBox only supports "armeabi-v7a" and "arm64-v8a" ABIs. "armeabi" is outdated.
+            abiFilters /* 'x86',  */ 'armeabi-v7a' /*armeabi-v7a向下兼容armeabi, 'x86_64', 'arm64-v8a'*/
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
     }
 
-        buildTypes {
+
+    // 解决.common.process.ProcessException: org.gradle.process.internal.ExecException: Process 'command... java.exe'' finished with non-zero exit value 1问题
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    // rename the apk with the version name
+    applicationVariants.all { variant ->
+        if (variant.buildType.name.equals('release')) {
+            variant.outputs.all { output ->
+                def buildName = "Fantasy"
+                def type = variant.buildType.name
+                def releaseApkName = buildName + '_' + type + "_" + versionName + '_' + releaseTime() + '.apk'
+                outputFileName = releaseApkName
+            }
+        } else {
+            variant.outputs.all { output ->
+                def buildName = "Fantasy"
+                def releaseApkName = buildName + '_' + "test" + "_" + versionName + '_' + releaseTime() + '.apk'
+                outputFileName = releaseApkName
+            }
+        }
+    }
+
+    //signing files settings
+    signingConfigs {
+        if (propertyHaveSigningConfigs) {
+            debug {
+                storeFile file(propertyStoreFileStr)
+                storePassword propertyStorePwdStr
+                keyAlias propertyKeyAliasStr
+                keyPassword propertyKeyPwdStr
+            }
+
             release {
-                minifyEnabled false
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                storeFile file(propertyStoreFileStr)
+                storePassword propertyStorePwdStr
+                keyAlias propertyKeyAliasStr
+                keyPassword propertyKeyPwdStr
+            }
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            jniLibs.srcDirs = ['src/main/jniLibs']
+            assets.srcDirs = ['src/main/assets']
+            res.srcDirs = ['src/main/res']
+            java.srcDirs = ['src/main/java']
+
+        }
+    }
+
+    // 移除lint检查的error
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+        lintConfig file("$rootProject.projectDir/config/lint/lint.xml")
+        disable 'MissingTranslation'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+    packagingOptions {
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/README'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
+    dexOptions {
+        preDexLibraries false
+        javaMaxHeapSize "4g"
+    }
+
+
+    //build type setting
+    buildTypes {
+
+        debug {
+            // 接口地址配置
+            buildConfigField('int', 'API_PATH', "0")
+            zipAlignEnabled true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
+            buildConfigField "boolean", "DEVELOPER_MODE", "true"
+            if (propertyHaveSigningConfigs) {
+                signingConfig signingConfigs.debug
             }
         }
 
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_8
-            targetCompatibility JavaVersion.VERSION_1_8
+        release {
+            // 接口地址配置
+            buildConfigField('int', 'API_PATH', "1")
+            minifyEnabled true
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            buildConfigField "boolean", "DEVELOPER_MODE", "false"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
+
+            if (propertyHaveSigningConfigs) {
+                signingConfig signingConfigs.release
+            }
         }
+    }
+
+    //product flavors
+    flavorDimensions 'cybex'
+    productFlavors {
+        GMA {
+            manifestPlaceholders = [CHANNEL_VALUE: "gma"]
+        }
+//        huipai {
+//            manifestPlaceholders = [CHANNEL_VALUE: "huipai"]
+//        }
+//        yingyongbao {
+//            manifestPlaceholders = [CHANNEL_VALUE: "yingyongbao"]
+//        }
+//        c360 {
+//            manifestPlaceholders = [CHANNEL_VALUE: "360"]
+//        }
+//        huawei {
+//            manifestPlaceholders = [CHANNEL_VALUE: "huawei"]
+//        }
+//        xiaomi {
+//            manifestPlaceholders = [CHANNEL_VALUE: "xiaomi"]
+//        }
+//        baidu {
+//            manifestPlaceholders = [CHANNEL_VALUE: "baidu"]
+//        }
+//        oppo {
+//            manifestPlaceholders = [CHANNEL_VALUE: "oppo"]
+//        }
+    }
+
+
+
+
+
 
 }
 
@@ -47,3 +214,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+

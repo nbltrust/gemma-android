@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.yiran.gemma">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cybex.gma.client">
+
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--在sdcard中创建/删除文件的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
 
     <application
         android:allowBackup="true"
@@ -9,28 +31,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Home.HomeActivity" />
-        <activity android:name=".Modules.Wallet.CreateWallet.CreateWalletActivity" >
+        <activity android:name="com.example.yiran.gemma.Home.HomeActivity" />
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateWalletActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Modules.Wallet.CreateWallet.CreateSuccessActivity"></activity>
-        <activity android:name=".Modules.Wallet.BackUpMneWarningActivity">
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateSuccessActivity"></activity>
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.BackUpMneWarningActivity">
 
         </activity>
-        <activity android:name=".Modules.Wallet.BackupMneActivity">
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.BackupMneActivity">
 
         </activity>
-        <activity android:name=".Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity" />
-        <activity android:name=".Modules.Me.Security.SecuritySettingActivity" />
-        <activity android:name=".Modules.Wallet.ImportWallet.ImportWalletActivity" />
-        <activity android:name=".Modules.QRCode.ScanActivity" />
-        <activity android:name=".Base.BaseActivity" />
+        <activity android:name="com.example.yiran.gemma.Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity" />
+        <activity android:name="com.example.yiran.gemma.Modules.Me.Security.SecuritySettingActivity" />
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.ImportWallet.ImportWalletActivity" />
+        <activity android:name="com.example.yiran.gemma.Modules.QRCode.ScanActivity" />
+        <activity android:name="com.example.yiran.gemma.Base.BaseActivity" />
         >
-        <activity android:name=".Modules.Wallet.CheckMneActivity" />
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CheckMneActivity" />
     </application>
 
 </manifest>

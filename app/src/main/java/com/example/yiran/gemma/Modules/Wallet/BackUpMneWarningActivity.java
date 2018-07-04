@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cybex.gma.client.R;
 import com.example.yiran.gemma.Base.BaseActivity;
-import com.example.yiran.gemma.R;
 
 import java.security.SecureRandom;
 

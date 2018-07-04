@@ -1,13 +1,13 @@
 package com.example.yiran.gemma.Modules.Wallet.ImportWallet;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 
+import com.cybex.gma.client.R;
 import com.example.yiran.gemma.Adapter.NavFragmentAdapter;
-import com.example.yiran.gemma.R;
 import com.example.yiran.gemma.Modules.Wallet.ImportWallet.ImportByMne.ImportByMneFragment;
 import com.example.yiran.gemma.Modules.Wallet.ImportWallet.ImportByPrikey.ImportByPriKeyFragment;
 

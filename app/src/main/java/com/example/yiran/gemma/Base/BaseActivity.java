@@ -3,11 +3,9 @@ package com.example.yiran.gemma.Base;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -16,12 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.yiran.gemma.R;
-
-import org.w3c.dom.Text;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.cybex.gma.client.R;
 
 
 public class BaseActivity extends AppCompatActivity {

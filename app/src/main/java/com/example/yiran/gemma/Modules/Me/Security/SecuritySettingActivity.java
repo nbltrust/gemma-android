@@ -1,13 +1,13 @@
 package com.example.yiran.gemma.Modules.Me.Security;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
 
+import com.cybex.gma.client.R;
 import com.example.yiran.gemma.Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity;
-import com.example.yiran.gemma.R;
 
 public class SecuritySettingActivity extends AppCompatActivity implements View.OnClickListener{
 

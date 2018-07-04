@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.yiran.gemma.R;
+import com.cybex.gma.client.R;
+
 
 public class ImportByMneFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match

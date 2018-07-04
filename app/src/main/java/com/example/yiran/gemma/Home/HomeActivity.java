@@ -1,14 +1,13 @@
 package com.example.yiran.gemma.Home;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 
+import com.cybex.gma.client.R;
 import com.example.yiran.gemma.Adapter.NavFragmentAdapter;
-import com.example.yiran.gemma.Modules.*;
-import com.example.yiran.gemma.R;
 
 import java.util.ArrayList;
 import java.util.List;

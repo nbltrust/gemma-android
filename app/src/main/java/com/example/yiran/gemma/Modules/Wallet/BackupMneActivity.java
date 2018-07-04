@@ -1,22 +1,16 @@
 package com.example.yiran.gemma.Modules.Wallet;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.gma.client.R;
 import com.example.yiran.gemma.Base.BaseActivity;
-import com.example.yiran.gemma.R;
 import com.example.yiran.gemma.Utils.FlowLayout;
 
 import butterknife.BindView;

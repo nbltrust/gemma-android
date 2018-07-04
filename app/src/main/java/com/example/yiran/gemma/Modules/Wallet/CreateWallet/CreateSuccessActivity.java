@@ -1,16 +1,11 @@
 package com.example.yiran.gemma.Modules.Wallet.CreateWallet;
 
-import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cybex.gma.client.R;
 import com.example.yiran.gemma.Base.BaseActivity;
-import com.example.yiran.gemma.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

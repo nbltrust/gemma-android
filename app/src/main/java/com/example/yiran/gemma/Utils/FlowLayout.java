@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.yiran.gemma.R;
 
 import java.util.ArrayList;
 

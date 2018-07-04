@@ -7,7 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.yiran.gemma.R;
+import com.cybex.gma.client.R;
+
 
 public class ImportByPriKeyFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match

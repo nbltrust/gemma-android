@@ -1,9 +1,10 @@
 package com.example.yiran.gemma.Modules.QRCode;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import com.example.yiran.gemma.R;
+import com.cybex.gma.client.R;
+
 
 public class ScanActivity extends AppCompatActivity {
 

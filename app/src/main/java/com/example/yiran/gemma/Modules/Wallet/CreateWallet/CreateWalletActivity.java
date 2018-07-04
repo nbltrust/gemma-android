@@ -3,16 +3,14 @@ package com.example.yiran.gemma.Modules.Wallet.CreateWallet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cybex.gma.client.R;
 import com.example.yiran.gemma.Base.BaseActivity;
-import com.example.yiran.gemma.R;
 import com.xujiaji.happybubble.BubbleDialog;
 import com.xujiaji.happybubble.BubbleLayout;
 
