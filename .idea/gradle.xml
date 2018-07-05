@@ -9,6 +9,13 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/platform_framework" />
+            <option value="$PROJECT_DIR$/platform_framework/base-res" />
+            <option value="$PROJECT_DIR$/platform_framework/base-view" />
+            <option value="$PROJECT_DIR$/platform_framework/basiclib" />
+            <option value="$PROJECT_DIR$/platform_framework/customdialoglib" />
+            <option value="$PROJECT_DIR$/platform_framework/smart-scheduler" />
+            <option value="$PROJECT_DIR$/platform_framework/update-app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
