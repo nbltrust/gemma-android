@@ -49,13 +49,15 @@ public class UISkipMananger {
         launchNewTaskIntent(context, cls, null, true);
     }
 
-    private static void launchNewTaskIntent(Context context, Class<? extends Activity> cls,
-                                            Bundle bundle) {
+    private static void launchNewTaskIntent(
+            Context context, Class<? extends Activity> cls,
+            Bundle bundle) {
         launchNewTaskIntent(context, cls, bundle, true);
     }
 
-    private static void launchNewTaskIntent(Context context, Class<? extends Activity> cls,
-                                            Bundle bundle, boolean isNewTask) {
+    private static void launchNewTaskIntent(
+            Context context, Class<? extends Activity> cls,
+            Bundle bundle, boolean isNewTask) {
         Intent intent = new Intent(context, cls);
         if (isNewTask) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
