@@ -209,7 +209,6 @@ dependencies {
     implementation deps.gma.MaterialDialog
 
     implementation deps.yanzhenjie.permission
-    implementation deps.yanzhenjie.sofia
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.smartrefresh.layout
 
@@ -218,5 +217,6 @@ dependencies {
     implementation project(':platform_framework:base-view')
     implementation project(':platform_framework:update-app')
     implementation project(':platform_framework:customdialoglib')
+    implementation project(':platform_framework:superTextview')
 
 }

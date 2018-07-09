@@ -95,4 +95,10 @@
     <string name="password_input_hint_2">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不存储密码，无法提供密码找回服务</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="tab_wallet">钱包</string>
+    <string name="tab_transfer">转账</string>
+    <string name="tab_mine">我的</string>
+    
 </resources>

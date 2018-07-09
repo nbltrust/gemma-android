@@ -3,6 +3,7 @@
           xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission
         android:name="android.permission.READ_LOGS"
@@ -17,12 +18,13 @@
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-    <!-- 在sdcard中创建/删除文件的权限 -->
+    <!--在sdcard中创建/删除文件的权限 -->
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.READ_SMS"/>
+
 
     <application
         android:name=".GmaApplication"
@@ -33,12 +35,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.example.yiran.gemma.Home.HomeActivity"/>
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateWallet2Activity">
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateWalletActivity">
+
         </activity>
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateSuccessActivity"/>
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateSuccessActivity"></activity>
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.BackUpMneWarningActivity">
+
         </activity>
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.BackupMneActivity">
+
         </activity>
         <activity android:name="com.example.yiran.gemma.Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity"/>
         <activity android:name="com.example.yiran.gemma.Modules.Me.Security.SecuritySettingActivity"/>
@@ -50,7 +55,21 @@
 
         <service android:name=".service.InitializeService"/>
 
-        <!-- 兼容7.0 -->
+
+        <!-- activity start -->
+        <activity
+            android:name=".ui.main.activity.MainTabActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- activity end -->
+
+        <!--兼容7.0-->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.android7.fileprovider"
@@ -61,22 +80,6 @@
                 android:resource="@xml/file_paths"/>
         </provider>
 
-        <activity android:name=".ui.main.activity.CreateWalletActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.main.activity.InitialActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.main.activity.CreateSuccessActivity">
-        </activity>
     </application>
 
 </manifest>

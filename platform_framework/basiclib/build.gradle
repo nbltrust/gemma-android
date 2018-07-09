@@ -86,4 +86,7 @@ dependencies {
     api deps.glide.core
     annotationProcessor deps.glide.compiler
 
+    api deps.yanzhenjie.sofia
+
+
 }

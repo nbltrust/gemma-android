@@ -6,7 +6,7 @@ import com.hxlx.core.lib.mvp.lite.XPresenter;
 /**
  * Created by wanglin on 2018/7/5.
  */
-public class MainPresenter extends XPresenter<MainTabFragment>{
+public class MainTabPresenter extends XPresenter<MainTabFragment>{
 
 
 }
