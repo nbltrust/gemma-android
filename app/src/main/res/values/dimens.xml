@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="x1">1.0px</dimen>
+    <dimen name="x1">1.0dp</dimen>
     <dimen name="x2">2.0px</dimen>
     <dimen name="x3">3.0px</dimen>
     <dimen name="x4">4.0px</dimen>
@@ -340,14 +340,54 @@
     <dimen name="x338">338px</dimen>
     <dimen name="x339">339px</dimen>
     <dimen name="x340">340px</dimen>
+    <!-- 公用 -->
+    <dimen name="bt_radius">3dp</dimen>
+
+    <!-- 启动页面 -->
+    <dimen name="bt_inInitPage_margin">32dp</dimen>
+    <dimen name="bt_inInitPage_height">44dp</dimen>
+    <dimen name="bt_marginTop">16dp</dimen>
+    <dimen name="bt_marginBot">48dp</dimen>
+    <dimen name="logo_length">129dp</dimen>
+    <dimen name="logo_marginTop">76dp</dimen>
+    <!-- 创建钱包页面 -->
+    <dimen name="input_layout_height">408dp</dimen>
+    <dimen name="input_layout_margin">16dp</dimen>
+    <dimen name="single_input_height">82dp</dimen>
+    <dimen name="single_input_height_last">73dp</dimen>
+    <dimen name="single_input_margin">16dp</dimen>
+    <dimen name="editText_margin">8dp</dimen>
+    <dimen name="editText_height">46dp</dimen>
+    <dimen name="textView_height">20dp</dimen>
+    <dimen name="textView_marginTop">16dp</dimen>
+    <dimen name="checkBox_length">18dp</dimen>
+    <dimen name="checkBox_marginStart">35dp</dimen>
+    <dimen name="checkBox_marginTop">15dp</dimen>
+    <dimen name="button_margin">32dp</dimen>
+    <dimen name="button_marginTop">29dp</dimen>
+    <dimen name="bubble_lookLength">6dp</dimen>
+    <dimen name="bubble_lookPosition">30dp</dimen>
+    <dimen name="tv_in_bubble_marginTop">20dp</dimen>
+    <dimen name="tv_in_bubble_marginBot">20dp</dimen>
+    <dimen name="tv_in_bubble_marginStart">10dp</dimen>
+    <dimen name="tv_in_bubble_marginEnd">10dp</dimen>
+    <!-- 创建成功页面 -->
+    <dimen name="logo_succeed_width">45dp</dimen>
+    <dimen name="logo_succeed_marginTop">68dp</dimen>
+    <dimen name="text_area_marginSide">16dp</dimen>
+    <dimen name="text_area_marginTop">57dp</dimen>
+    <dimen name="text_area_height">220dp</dimen>
+    <dimen name="text_height">88dp</dimen>
+    <dimen name="text_marginTop">16dp</dimen>
+    <dimen name="button_width">148dp</dimen>
 
 
-
-    <dimen name="Title_Large">18pt</dimen>
-    <dimen name="Title_Mid">13pt</dimen>
-    <dimen name="Help_Mid">18pt</dimen>
-    <dimen name="Hint_Mid">12pt</dimen>
-    <dimen name="Hint_Small">10pt</dimen>
+    <!-- 字体 -->
+    <dimen name="Title_Large">18dp</dimen>
+    <dimen name="Title_Mid">13dp</dimen>
+    <dimen name="Help_Mid">18dp</dimen>
+    <dimen name="Hint_Mid">12dp</dimen>
+    <dimen name="Hint_Small">10dp</dimen>
 
     <dimen name="dialogue_succeed_radius">4pt</dimen>
     <dimen name="list_item_spacing">16dp</dimen>

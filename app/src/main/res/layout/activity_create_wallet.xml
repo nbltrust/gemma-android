@@ -1,176 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f5f6f8"
-    tools:context=".Modules.Wallet.CreateWallet.CreateWalletActivity">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/toolbar_create_wallet"
-        layout="@layout/toolbar">
-    </include>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/subLayout_text"
+    <LinearLayout
+        android:id="@+id/layout_input_are"
         style="@style/layout_input_area"
         android:background="@drawable/shape_corner"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_create_wallet"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:id="@+id/subLayout_linear_1"
-            style="@style/layout_single_input_area"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            >
-
-            <TextView
-                android:id="@+id/tv_wallet_name"
-                style="@style/textView_general"
-                android:text="@string/walletName" />
-
-            <EditText
-                android:id="@+id/editText_walletName"
-                style="@style/editText_general"
-                android:hint="@string/wallet_name_hint" />
-
-        </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.xujiaji.happybubble.BubbleLayout
             android:id="@+id/bubble"
-            style="@style/bubble"
             app:bubbleColor="@color/buff"
+            app:lookLength="@dimen/bubble_lookLength"
+            app:lookPosition="@dimen/bubble_lookPosition"
             app:bubblePadding="0dp"
-            app:lookPosition="@dimen/x26"
-            app:lookLength="@dimen/x6"
-            app:bubbleRadius="@dimen/x3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/password_input_hint_2"
-                android:textSize="@dimen/x10"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/x15"
-                android:layout_marginBottom="@dimen/x15"
-                android:layout_marginStart="@dimen/x13"
-                android:layout_marginEnd="@dimen/x13"
-                android:textColor="@color/darkSlateBlue"
-                />
-
-        </com.xujiaji.happybubble.BubbleLayout>
-
-
-        <LinearLayout
-            android:id="@+id/subLayout_linear_2"
-            android:orientation="vertical"
-            style="@style/layout_single_input_area"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/subLayout_linear_1">
-
-            <TextView
-                android:id="@+id/tv_password"
-                style="@style/textView_general"
-                android:text="@string/password" />
-
-
-            <EditText
-                android:id="@+id/editText_password"
-                style="@style/editText_general"
-                android:hint="@string/password_input_hint"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/subLayout_linear_3"
-            android:orientation="vertical"
-            style="@style/layout_single_input_area"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/subLayout_linear_2">
-
-            <TextView
-                android:id="@+id/tv_password2"
-                style="@style/textView_general"
-                android:text="@string/repeat_password" />
-
-
-            <EditText
-                android:id="@+id/editText_password2"
-                style="@style/editText_general"
-                android:hint="@string/repeatPassword_hint"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/subLayout_linear_4"
-            style="@style/layout_single_input_area"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/subLayout_linear_3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:bubbleRadius="@dimen/bt_radius"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/single_input_height"
             >
 
             <TextView
-                android:id="@+id/tv_password_hint"
-                style="@style/textView_general"
-                android:text="@string/password_hint"/>
+                android:id="@+id/tv_in_bubble"
+                android:layout_marginTop="@dimen/tv_in_bubble_marginTop"
+                android:layout_marginStart="@dimen/tv_in_bubble_marginStart"
+                android:layout_marginEnd="@dimen/tv_in_bubble_marginEnd"
+                android:layout_marginBottom="@dimen/tv_in_bubble_marginBot"
+                android:text="@string/security_hint"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
-            <EditText
-                android:id="@+id/editText_password_hint"
-                style="@style/editText_general"
-                android:hint="@string/password_hint_hint" />
+        </com.xujiaji.happybubble.BubbleLayout>
+
+        <LinearLayout
+            android:id="@+id/single_input_1"
+            style="@style/layout_single_input_area"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_1"
+                android:text="@string/EOS_username"
+                style="@style/textView_general"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/editText_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editText_height"
+                android:hint="@string/EOS_username_hint"
+                android:textSize="14sp"
+                app:met_textColor="@color/darkSlateBlue"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/single_input_2"
+            style="@style/layout_single_input_area"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_2"
+                android:text="@string/password"
+                style="@style/textView_general"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/editText_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editText_height"
+                android:hint="@string/password_input_hint"
+                android:textSize="14sp"
+                app:met_textColor="@color/darkSlateBlue"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/single_input_3"
+            style="@style/layout_single_input_area"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_3"
+                android:text="@string/repeatPassword"
+                style="@style/textView_general"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/editText_3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editText_height"
+                android:hint="@string/repeatPassword_hint"
+                android:textSize="14sp"
+                app:met_textColor="@color/darkSlateBlue"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/single_input_4"
+            style="@style/layout_single_input_area"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_4"
+                android:text="@string/password_hint"
+                style="@style/textView_general"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/editText_4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editText_height"
+                android:hint="@string/password_hint_hint"
+                android:textSize="14sp"
+                app:met_textColor="@color/darkSlateBlue"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/single_input_5"
+            style="@style/layout_single_input_area"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textView_height"
+                android:layout_marginTop="@dimen/textView_marginTop"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView_5"
+                    android:text="@string/invitation_code"
+                    android:layout_width="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/steel"
+                    android:layout_height="@dimen/textView_height"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_get_invCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/get_invitation"
+                    android:textColor="@color/cornflowerBlue"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/editText_5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editText_height"
+                android:hint="@string/input_inv_code"
+                android:textSize="14sp"
+                app:met_textColor="@color/darkSlateBlue"
+                app:met_hideUnderline="true"
+                />
 
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
-
-
-    <LinearLayout
-        android:id="@+id/subLayout_linear"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/x18"
-        android:layout_marginTop="@dimen/x23"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subLayout_text">
-
-        <CheckBox
-            android:id="@+id/cb_service_agreement"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginEnd="@dimen/x3"
-            android:layout_marginStart="@dimen/x30"
-            android:textSize="@dimen/x10"
-            android:textColor="@color/blueyGrey"
-            android:theme="@style/myCheckBox"
-            android:text="@string/agreement" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/agreement2"
-            android:layout_marginTop="@dimen/x2"
-            android:textSize="@dimen/x10"
-            android:textColor="@color/darkSlateBlue"
-            android:contextClickable="true"/>
-
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layout_checkBox"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="@dimen/checkBox_marginTop"
+        android:layout_marginStart="@dimen/checkBox_marginStart"
+        app:layout_constraintTop_toBottomOf="@id/layout_input_are">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/checkBox_length"
+            android:text="@string/agreement"
+            android:theme="@style/myCheckBox"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/layout_input_are"/>
+
+        <TextView
+            android:id="@+id/tv_service_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/darkSlateBlue"
+            android:text="@string/agreement2"
+            />
+    </LinearLayout>
 
     <Button
-        android:id="@+id/btw_create_wallet"
-        style="@style/button_create_wallet"
+        android:id="@+id/bt_create_wallet"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bt_inInitPage_height"
+        android:layout_marginStart="@dimen/button_margin"
+        android:layout_marginEnd="@dimen/button_margin"
+        android:layout_marginTop="@dimen/button_margin"
         android:text="@string/createAWallet"
-        android:layout_marginTop="@dimen/x50"
+        android:background="@drawable/shape_corner_button_unclickable"
+        android:textColor="@color/whiteTwo"
+        app:layout_constraintTop_toBottomOf="@id/layout_checkBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subLayout_linear" />
+        />
 
+    
+
+    
 </android.support.constraint.ConstraintLayout>

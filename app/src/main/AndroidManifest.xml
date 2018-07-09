@@ -1,63 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.cybex.gma.client">
+<manifest package="com.cybex.gma.client"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
-
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_LOGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!--在sdcard中创建/删除文件的权限 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- 在sdcard中创建/删除文件的权限 -->
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
 
     <application
+        android:name=".GmaApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".GmaApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.yiran.gemma.Home.HomeActivity" />
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateWalletActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name="com.example.yiran.gemma.Home.HomeActivity"/>
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateWallet2Activity">
         </activity>
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateSuccessActivity"></activity>
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateSuccessActivity"/>
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.BackUpMneWarningActivity">
-
         </activity>
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.BackupMneActivity">
-
         </activity>
-        <activity android:name="com.example.yiran.gemma.Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity" />
-        <activity android:name="com.example.yiran.gemma.Modules.Me.Security.SecuritySettingActivity" />
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.ImportWallet.ImportWalletActivity" />
-        <activity android:name="com.example.yiran.gemma.Modules.QRCode.ScanActivity" />
-        <activity android:name="com.example.yiran.gemma.Base.BaseActivity" />
+        <activity android:name="com.example.yiran.gemma.Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity"/>
+        <activity android:name="com.example.yiran.gemma.Modules.Me.Security.SecuritySettingActivity"/>
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.ImportWallet.ImportWalletActivity"/>
+        <activity android:name="com.example.yiran.gemma.Modules.QRCode.ScanActivity"/>
+        <activity android:name="com.example.yiran.gemma.Base.BaseActivity"/>
         >
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CheckMneActivity" />
+        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CheckMneActivity"/>
 
-        <service android:name=".service.InitializeService" />
+        <service android:name=".service.InitializeService"/>
 
-        <!--兼容7.0-->
+        <!-- 兼容7.0 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.android7.fileprovider"
@@ -65,9 +58,25 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
 
+        <activity android:name=".ui.main.activity.CreateWalletActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.main.activity.InitialActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.main.activity.CreateSuccessActivity">
+        </activity>
     </application>
 
 </manifest>

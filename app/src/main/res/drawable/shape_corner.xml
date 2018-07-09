@@ -3,10 +3,10 @@
 <solid android:color="#ffffff">
 </solid>
 <corners
-    android:topLeftRadius="@dimen/x3"
-    android:topRightRadius="@dimen/x3"
-    android:bottomLeftRadius="@dimen/x3"
-    android:bottomRightRadius="@dimen/x3"
+    android:topLeftRadius="@dimen/bt_radius"
+    android:topRightRadius="@dimen/bt_radius"
+    android:bottomLeftRadius="@dimen/bt_radius"
+    android:bottomRightRadius="@dimen/bt_radius"
     >
 </corners>
 <stroke android:width="@dimen/x1" android:color="#ffffff">

@@ -29,7 +29,7 @@ android {
 
         ndk {
             //设置支持的SO库架构:ObjectBox only supports "armeabi-v7a" and "arm64-v8a" ABIs. "armeabi" is outdated.
-            abiFilters /* 'x86',  */ 'armeabi-v7a' /*armeabi-v7a向下兼容armeabi, 'x86_64', 'arm64-v8a'*/
+            abiFilters /* 'x86',  */ 'armeabi-v7a', 'x86' /*armeabi-v7a向下兼容armeabi, 'x86_64', 'arm64-v8a'*/
         }
 
         javaCompileOptions {
@@ -38,7 +38,6 @@ android {
             }
         }
     }
-
 
     // 解决.common.process.ProcessException: org.gradle.process.internal.ExecException: Process 'command... java.exe'' finished with non-zero exit value 1问题
     dexOptions {
@@ -125,7 +124,6 @@ android {
         javaMaxHeapSize "4g"
     }
 
-
     //build type setting
     buildTypes {
         debug {
@@ -188,10 +186,6 @@ android {
     }
 
 
-
-
-
-
 }
 
 dependencies {
@@ -204,12 +198,15 @@ dependencies {
     implementation deps.support.supportV4
 
     implementation deps.butterknife.core
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     annotationProcessor deps.butterknife.compiler
     implementation deps.gma.novacrypto
     implementation deps.gma.PatternLocker
     implementation deps.gma.happybubble
     implementation deps.gma.zxing
     implementation deps.gma.androidanimations
+    implementation deps.gma.MaterialEditText
+    implementation deps.gma.MaterialDialog
 
     implementation deps.yanzhenjie.permission
     implementation deps.yanzhenjie.sofia
@@ -223,4 +220,3 @@ dependencies {
     implementation project(':platform_framework:customdialoglib')
 
 }
-
