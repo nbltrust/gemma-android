@@ -1,5 +1,6 @@
 package com.hxlx.core.lib.mvp.lite;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -64,6 +65,15 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     Sofia.with(this).statusBarDarkFont()
         .navigationBarBackground(ContextCompat.getColor(this, R.color.navigation_bar_black_color))
         .statusBarBackground(ContextCompat.getColor(this, colorResId));
+  }
+
+  /**
+   * 设置沉侵式状态栏
+   **/
+  @SuppressLint("NewApi")
+  protected void setStatusBarRes(int statusColorResId) {
+    Sofia.with(this).statusBarDarkFont()
+           .statusBarBackground(getDrawable(statusColorResId));
   }
 
 

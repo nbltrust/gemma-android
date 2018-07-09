@@ -212,7 +212,6 @@ dependencies {
     implementation deps.gma.androidanimations
 
     implementation deps.yanzhenjie.permission
-    implementation deps.yanzhenjie.sofia
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.smartrefresh.layout
 
