@@ -131,7 +131,8 @@ ext {
                     'novacrypto'       : "io.github.novacrypto:BIP39:0.1.9",
                     'PatternLocker'    : "com.github.ihsg:PatternLocker:2.1.0",
                     "happybubble"      : "com.github.xujiaji:happy-bubble:1.1.4",
-                    "zxing"            : "com.google.zxing:core:3.2.1"
+                    "zxing"            : "com.google.zxing:core:3.2.1",
+                    "SuperTextView"    : "com.github.lygttpod:SuperTextView:2.1.7",
             ],
             'debug'       : [
                     'debugdb': "com.amitshekhar.android:debug-db:1.0.2",
