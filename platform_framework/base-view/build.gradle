@@ -27,4 +27,5 @@ dependencies {
     implementation deps.support.appcompatV7
     implementation deps.support.constraint
     api project(':platform_framework:base-res')
+    api deps.gma.SuperTextView
 }
