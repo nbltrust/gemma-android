@@ -352,4 +352,8 @@
     <dimen name="dialogue_succeed_radius">4pt</dimen>
     <dimen name="list_item_spacing">16dp</dimen>
     <dimen name="list_item_spacing_half">8dp</dimen>
+
+    <dimen name="bottombar_height">48dp</dimen>
+    <dimen name="bottombar_gemma_height">52dp</dimen>
+
 </resources>
