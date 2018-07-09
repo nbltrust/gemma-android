@@ -72,7 +72,7 @@ public class BottomBarTab extends FrameLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsTv.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2,
                 getResources().getDisplayMetrics());
-        paramsTv.bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4,
+        paramsTv.bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
                 getResources().getDisplayMetrics());
         mTvTitle.setTextSize(12);
         mTvTitle.setTextColor(ContextCompat.getColor(context, R.color.tab_unselect));
@@ -82,7 +82,7 @@ public class BottomBarTab extends FrameLayout {
         addView(lLContainer);
 
         int min = dip2px(context, 20);
-        int padding = dip2px(context, 5);
+        int padding = dip2px(context, 3);
         mTvUnreadCount = new TextView(context);
         mTvUnreadCount.setBackgroundResource(R.drawable.bg_msg_bubble);
         mTvUnreadCount.setMinWidth(min);
