@@ -15,6 +15,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.main.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.xujiaji.happybubble.BubbleLayout;
 
@@ -47,6 +48,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     BubbleLayout bubble;
     @BindView(R.id.single_input_1)
     LinearLayout single_input_layout_1;
+    @BindView(R.id.btn_navibar)
+    TitleBar titleBar;
 
     @OnClick(R.id.bt_create_wallet)
     public void createWallet(){
@@ -121,6 +124,12 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     public void initView(){
         bubble.setVisibility(View.GONE);
         createWallet.setClickable(false);
+        //initTitleBar
+        titleBar.setTitle("创建钱包");
+        titleBar.setTitleColor(R.color.white);
+        titleBar.setTitleSize(14);
+        titleBar.setImmersive(true);
+
         editText1.setOnTouchListener(new View.OnTouchListener() {
             int flag = 0;
             @Override

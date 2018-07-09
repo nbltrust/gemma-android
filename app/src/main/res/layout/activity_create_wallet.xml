@@ -7,6 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.hxlx.core.lib.widget.titlebar.view.TitleBar
+        android:id="@+id/btn_navibar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="@drawable/bg_navibar"
+        />
+
     <LinearLayout
         android:id="@+id/layout_input_are"
         style="@style/layout_input_area"
@@ -14,7 +21,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/btn_navibar">
 
         <com.xujiaji.happybubble.BubbleLayout
             android:id="@+id/bubble"
