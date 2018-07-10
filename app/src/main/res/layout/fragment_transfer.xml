@@ -1,78 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include
-        android:id="@+id/toolbar_transfer"
-        layout="@layout/toolbar">
-    </include>
+    android:layout_height="match_parent"
+    android:background="@color/bg_ui">
 
 
-    <TextView
-        android:id="@+id/tv_receiver"
-        style="@style/textView_general"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include layout="@layout/ui_navibar"/>
 
-    <EditText
-        android:id="@+id/et_receiver"
-        style="@style/editText_general"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_receiver" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_navibar"
+        android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/tv_pay_account"
-        style="@style/textView_general"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_receiver" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/et_pay_account"
-        style="@style/editText_general"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_pay_account" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/font_title"
+                android:textSize="16sp"
+                tools:text="收款人"
+                />
 
-    <TextView
-        android:id="@+id/tv_amount"
-        style="@style/textView_general"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_pay_account" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_shape_radius_white">
 
-    <EditText
-        android:id="@+id/et_amount"
-        style="@style/editText_general"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_amount" />
+                <TextView
+                    android:id="@+id/icon_receiver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:letterSpacing="-0.03"
+                    android:text="\ufeff@"
+                    android:textColor="@color/font_dark_state_blue"
+                    android:textSize="18sp"/>
 
-    <TextView
-        android:id="@+id/tv_memo"
-        style="@style/textView_general"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_amount" />
+                <View
+                    android:id="@+id/view_divider"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/icon_receiver"
+                    android:background="@color/vertical_line"/>
 
-    <EditText
-        android:id="@+id/et_memo"
-        style="@style/editText_general"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_memo" />
+                <EditText
+                    android:id="@+id/et_collection_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/view_divider"
+                    android:background="@null"
+                    android:hint="账户名"
+                    android:paddingLeft="18dp"
+                    android:textColorHint="@color/color_et_hint"
+                    android:textSize="16sp"/>
 
-    <Button
-        android:id="@+id/bt_confirm"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/x30"
-        android:layout_marginEnd="@dimen/x8"
-        android:layout_marginStart="@dimen/x8"
-        android:layout_marginTop="@dimen/x5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_memo" />
+            </RelativeLayout>
 
-</android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>

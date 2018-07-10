@@ -8,8 +8,8 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.EventBusActivityScope;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.ui.main.presenter.MainTabPresenter;
-import com.cybex.gma.client.widget.BottomBar;
-import com.cybex.gma.client.widget.BottomBarTab;
+import com.cybex.gma.client.widget.bottombar.BottomBar;
+import com.cybex.gma.client.widget.bottombar.BottomBarTab;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
 import me.framework.fragmentation.FragmentSupport;

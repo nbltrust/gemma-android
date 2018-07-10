@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.hxlx.core.lib.R;
 import com.hxlx.core.lib.common.eventbus.BaseEvent;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
+import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -33,6 +34,8 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
   private View rootView;
   protected LayoutInflater layoutInflater;
   protected KProgressHUD kProgressHUD;
+  protected TitleBar mTitleBar;
+
 
   public <T extends View> T $(View layoutView, @IdRes int resId) {
     return (T) layoutView.findViewById(resId);
@@ -54,6 +57,17 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
     }
 
     return rootView;
+  }
+
+  protected void setNavibarTitle(String title,boolean isShowBack){
+    mTitleBar = rootView.findViewById(R.id.btn_navibar);
+    mTitleBar.setTitle(title);
+    mTitleBar.setTitleColor(R.color.ffffff_white_1000);
+    mTitleBar.setTitleSize(20);
+    mTitleBar.setImmersive(true);
+    if(isShowBack){
+      mTitleBar.setLeftImageResource(R.drawable.ic_btn_back);
+    }
   }
 
 
@@ -105,6 +119,7 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
   public boolean useEventBus() {
     return false;
   }
+
 
 
   @Override
