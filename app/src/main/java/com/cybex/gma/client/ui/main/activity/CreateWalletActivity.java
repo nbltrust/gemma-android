@@ -124,11 +124,19 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     public void initView(){
         bubble.setVisibility(View.GONE);
         createWallet.setClickable(false);
-        //initTitleBar
+        //init TitleBar
         titleBar.setTitle("创建钱包");
         titleBar.setTitleColor(R.color.white);
-        titleBar.setTitleSize(14);
+        titleBar.setTitleSize(20);
         titleBar.setImmersive(true);
+        titleBar.setBackground(getDrawable(R.drawable.bg_navibar));
+        titleBar.setLeftImageResource(R.drawable.icback24px);
+        titleBar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         editText1.setOnTouchListener(new View.OnTouchListener() {
             int flag = 0;
@@ -138,7 +146,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 if (flag % 2 == 0){
                     textView1.setText("由小写字母a-z与数字1-5组成，须为12位");
                     textView1.setTextColor(getResources().getColor(R.color.scarlet));//scarlet
-                    editText1.setUnderlineColor(getResources().getColor(R.color.scarlet));
+                    //editText1.setUnderlineColor(getResources().getColor(R.color.scarlet));
                 }
                 return false;
             }

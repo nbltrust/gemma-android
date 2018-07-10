@@ -34,6 +34,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".ui.main.activity.CreateWalletActivity">
+
+        </activity>
+
+
+
         <activity android:name="com.example.yiran.gemma.Home.HomeActivity"/>
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateWalletActivity">
 
@@ -50,7 +57,6 @@
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.ImportWallet.ImportWalletActivity"/>
         <activity android:name="com.example.yiran.gemma.Modules.QRCode.ScanActivity"/>
         <activity android:name="com.example.yiran.gemma.Base.BaseActivity"/>
-        >
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.CheckMneActivity"/>
 
         <service android:name=".service.InitializeService"/>
@@ -65,6 +71,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
         <!-- activity end -->

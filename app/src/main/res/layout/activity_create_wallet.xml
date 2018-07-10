@@ -10,7 +10,7 @@
     <com.hxlx.core.lib.widget.titlebar.view.TitleBar
         android:id="@+id/btn_navibar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_height="@dimen/dp_40"
         android:background="@drawable/bg_navibar"
         />
 

@@ -380,6 +380,12 @@
     <dimen name="text_height">88dp</dimen>
     <dimen name="text_marginTop">16dp</dimen>
     <dimen name="button_width">148dp</dimen>
+    <!-- 钱包主页面 -->
+    <dimen name="show_info_area_radius">6dp</dimen>
+    <dimen name="cpu_text_size">10sp</dimen>
+    <dimen name="balance_text_size">12sp</dimen>
+    <dimen name="total_assets_text_size">11sp</dimen>
+    <dimen name="eos_amount_text_size">18sp</dimen>
 
 
     <!-- 字体 -->
