@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/bottombar_gemma_height"/>
 
-    <com.cybex.gma.client.widget.BottomBar
+    <com.cybex.gma.client.widget.bottombar.BottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottombar_gemma_height"

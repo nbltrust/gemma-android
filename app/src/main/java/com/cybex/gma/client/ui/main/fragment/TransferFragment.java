@@ -24,8 +24,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @Override
     public void bindUI(View rootView) {
+        setNavibarTitle("转账",false);
 
     }
+
 
     @Override
     public void initData(Bundle savedInstanceState) {

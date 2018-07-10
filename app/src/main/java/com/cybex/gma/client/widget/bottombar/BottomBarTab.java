@@ -1,4 +1,4 @@
-package com.cybex.gma.client.widget;
+package com.cybex.gma.client.widget.bottombar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
