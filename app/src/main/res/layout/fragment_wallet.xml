@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:elevation="1dp"
     android:background="@drawable/bg_wallet_home"
     >
 
@@ -32,12 +33,14 @@
         android:layout_height="40dp"
         android:layout_marginStart="38dp"
         android:layout_marginTop="8dp"
-        tools:text="GEMMA123"
-        tools:textSize="24sp"
+        android:text="GEMMA123"
+        android:textSize="32sp"
+        android:textColor="@color/white"
         title:layout_constraintStart_toStartOf="parent"
         title:layout_constraintTop_toBottomOf="@+id/imageView2"/>
 
-    <ScrollView
+    <com.cybex.gma.client.widget.OverScrollView
+        android:elevation="2dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         title:layout_constraintBottom_toBottomOf="parent"
@@ -51,13 +54,12 @@
             android:orientation="vertical">
 
             <include
-                layout="@layout/wallet_home_info"
-                >
+                layout="@layout/wallet_home_info">
 
             </include>
 
         </LinearLayout>
 
-    </ScrollView>
+    </com.cybex.gma.client.widget.OverScrollView>
 
 </android.support.constraint.ConstraintLayout>

@@ -382,10 +382,18 @@
     <dimen name="button_width">148dp</dimen>
     <!-- 钱包主页面 -->
     <dimen name="show_info_area_radius">6dp</dimen>
-    <dimen name="cpu_text_size">10sp</dimen>
+    <dimen name="cpu_text_size">12sp</dimen>
     <dimen name="balance_text_size">12sp</dimen>
-    <dimen name="total_assets_text_size">11sp</dimen>
-    <dimen name="eos_amount_text_size">18sp</dimen>
+    <dimen name="total_assets_text_size">14sp</dimen>
+    <dimen name="eos_amount_text_size">24sp</dimen>
+    <dimen name="bot_card_margin">12dp</dimen>
+    <dimen name="bot_card_height">48dp</dimen>
+    <dimen name="cpu_show_area_height">68dp</dimen>
+    <dimen name="cpu_show_area_margin">10dp</dimen>
+    <dimen name="single_cpu_margin">8dp</dimen>
+    <dimen name="single_cpu_height">50dp</dimen>
+    <dimen name="single_cpu_width">100dp</dimen>
+
 
 
     <!-- 字体 -->

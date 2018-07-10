@@ -8,8 +8,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:layout_marginEnd="18dp"
-    android:layout_marginStart="18dp"
     android:layout_marginTop="8dp"
     title:layout_constraintBottom_toTopOf="@+id/superTextView_1"
     title:layout_constraintEnd_toEndOf="parent"
@@ -18,21 +16,23 @@
 
 
     <android.support.constraint.ConstraintLayout
-        android:background="@drawable/shape_corner_transparent"
+        android:background="@drawable/shape_corner_shade"
         android:id="@+id/layout_info"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         android:layout_width="0dp"
-        android:layout_height="240dp"
+        android:layout_height="260dp"
         title:layout_constraintEnd_toEndOf="parent"
         title:layout_constraintStart_toStartOf="parent">
         <TextView
+            android:background="#e4ffffff"
             android:id="@+id/textView_total_assets"
             android:layout_width="100dp"
             android:layout_height="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="18dp"
             android:text="账户总资产"
+            android:textColor="@color/darkSlateBlue"
             android:textSize="@dimen/total_assets_text_size"
             title:layout_constraintStart_toStartOf="parent"
             title:layout_constraintTop_toTopOf="parent"/>
@@ -40,17 +40,17 @@
         <com.allen.library.SuperTextView
             android:id="@+id/superTextView_total_assets"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            title:sShapeStrokeDashWidth="5dp"
-            title:sShapeStrokeDashGap="2dp"
-            title:sShapeStrokeColor="@color/cloudyBlue"
+            title:sDividerLineType="none"
             title:sBackgroundDrawableRes="@drawable/shape_corner_transparent"
             title:sLeftBottomTextString="96 EOS"
             title:sLeftBottomTextSize="@dimen/eos_amount_text_size"
+            title:sLeftBottomTextColor="@color/darkSlateBlueTwo"
             title:sRightBottomTextString="≈9600.00 CNY"
+            title:sRightBottomTextColor="@color/darkSlateBlueTwo"
             title:sRightBottomTextSize="@dimen/total_assets_text_size"
             title:layout_constraintEnd_toEndOf="parent"
             title:layout_constraintStart_toStartOf="parent"
@@ -58,16 +58,31 @@
 
         </com.allen.library.SuperTextView>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/dash_line"
+            title:layout_constraintTop_toBottomOf="@id/superTextView_total_assets"
+            title:layout_constraintStart_toStartOf="parent"
+            title:layout_constraintEnd_toEndOf="parent">
+
+        </View>
+
 
         <com.allen.library.SuperTextView
             android:id="@+id/balance"
             android:layout_width="150dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             title:sLeftTopTextString="可用余额"
+            title:sDividerLineType="none"
             title:sLeftTopTextSize="@dimen/cpu_text_size"
+            title:sLeftTopTextColor="@color/darkSlateBlueTwo"
             title:sLeftBottomTextString="90 EOS"
+            title:sLeftBottomTextColor="@color/darkSlateBlueTwo"
             title:sLeftBottomTextSize="@dimen/balance_text_size"
             title:sBackgroundDrawableRes="@drawable/shape_corner_transparent"
             title:layout_constraintStart_toStartOf="parent"
@@ -75,17 +90,36 @@
 
         </com.allen.library.SuperTextView>
 
+        <View
+            android:id="@+id/dash_line_vertical"
+            android:layout_width="40dp"
+            android:layout_height="60dp"
+            android:layerType="software"
+            android:layout_marginTop="8dp"
+            android:elevation="3dp"
+            title:layout_constraintEnd_toEndOf="parent"
+            title:layout_constraintStart_toStartOf="parent"
+            title:layout_constraintBottom_toTopOf="@id/show_cpu"
+            title:layout_constraintStart_toEndOf="@id/balance"
+            title:layout_constraintTop_toBottomOf="@id/superTextView_total_assets"
+            android:background="@drawable/dash_line_vertical">
+
+        </View>
+
         <com.allen.library.SuperTextView
             android:id="@+id/superTextView_redeem"
             android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="36dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            title:sDividerLineType="none"
             title:sLeftTopTextString="正在赎回"
+            title:sLeftTopTextColor="@color/darkSlateBlueTwo"
             title:sLeftTopTextSize="@dimen/cpu_text_size"
             title:sLeftBottomTextSize="@dimen/balance_text_size"
             title:sLeftBottomTextString="6 EOS"
+            title:sLeftBottomTextColor="@color/darkSlateBlueTwo"
             title:sBackgroundDrawableRes="@drawable/shape_corner_transparent"
             title:layout_constraintEnd_toEndOf="parent"
             title:layout_constraintStart_toEndOf="@id/balance"
@@ -96,52 +130,57 @@
         <TextView
             android:id="@+id/tv_remain_time"
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
+            android:layout_height="16dp"
             android:text="剩余01天05小时"
             android:textSize="10sp"
+            android:textColor="@color/darkSkyBlue"
             title:layout_constraintTop_toBottomOf="@id/superTextView_redeem"
             title:layout_constraintStart_toStartOf="@id/superTextView_redeem"
             />
 
         <LinearLayout
             android:id="@+id/show_cpu"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:orientation="horizontal"
+            style="@style/show_cpu_status_area"
             title:layout_constraintTop_toBottomOf="@id/tv_remain_time"
             title:layout_constraintEnd_toEndOf="parent"
             title:layout_constraintStart_toStartOf="parent">
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_cpu"
-                title:sBackgroundDrawableRes="@drawable/shape_corner_transparent"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                title:sCenterSpaceHeight="0dp"
+                style="@style/cpu_net_ram"
+                title:sBackgroundDrawableRes="@drawable/shape_corner_grey"
+                title:sShapeSolidColor="#6adde2f0"
+                title:sDividerLineType="none"
+                title:sCenterSpaceHeight="1dp"
                 title:sCenterTopTextString="CPU"
+                title:sCenterTopTextColor="@color/darkSlateBlue"
+                title:sCenterBottomTextColor="@color/darkSlateBlue"
                 title:sCenterTopTextSize="@dimen/cpu_text_size"
                 title:sCenterBottomTextSize="@dimen/cpu_text_size"
                 title:sCenterBottomTextString="0.01EOS"
                 android:layout_weight="1">
 
             </com.allen.library.SuperTextView>
+
+            <View
+                android:background="@color/cloudyBlue"
+                android:layout_marginTop="16dp"
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layerType="software"
+                >
+
+            </View>
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_net"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                title:sBackgroundDrawableRes="@drawable/shape_corner_transparent"
-                title:sCenterSpaceHeight="0dp"
+                style="@style/cpu_net_ram"
+                title:sDividerLineType="none"
+                title:sBackgroundDrawableRes="@drawable/shape_corner_grey"
+                title:sCenterSpaceHeight="1dp"
                 title:sCenterTopTextString="NET"
+                title:sCenterTopTextColor="@color/darkSlateBlue"
+                title:sCenterBottomTextColor="@color/darkSlateBlue"
                 title:sCenterTopTextSize="@dimen/cpu_text_size"
                 title:sCenterBottomTextSize="@dimen/cpu_text_size"
                 title:sCenterBottomTextString="0.01EOS"
@@ -149,16 +188,23 @@
 
             </com.allen.library.SuperTextView>
 
+            <View
+                android:background="@color/cloudyBlue"
+                android:layout_width="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="40dp"
+                android:layerType="software">
+
+            </View>
+
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_ram"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                title:sCenterSpaceHeight="0dp"
-                title:sBackgroundDrawableRes="@drawable/shape_corner_transparent"
+                style="@style/cpu_net_ram"
+                title:sCenterSpaceHeight="1dp"
+                title:sDividerLineType="none"
+                title:sCenterTopTextColor="@color/darkSlateBlue"
+                title:sCenterBottomTextColor="@color/darkSlateBlue"
+                title:sBackgroundDrawableRes="@drawable/shape_corner_grey"
                 title:sCenterTopTextString="RAM"
                 title:sCenterTopTextSize="@dimen/cpu_text_size"
                 title:sCenterBottomTextSize="@dimen/cpu_text_size"
@@ -195,8 +241,8 @@
         android:elevation="6dp"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginEnd="@dimen/bot_card_margin"
+        android:layout_marginStart="@dimen/bot_card_margin"
         android:layout_marginTop="8dp"
         title:sLeftTextString="资源质押"
         title:sLeftTextSize="@dimen/total_assets_text_size"

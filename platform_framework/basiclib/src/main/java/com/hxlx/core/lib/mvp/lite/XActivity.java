@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.hxlx.core.lib.R;
 import com.hxlx.core.lib.common.eventbus.BaseEvent;
@@ -42,7 +43,6 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     context = this;
-
     if (getLayoutId() > 0) {
       setContentView(getLayoutId());
       bindUI(null);

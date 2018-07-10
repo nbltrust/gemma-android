@@ -9,7 +9,7 @@
         android:bottomRightRadius="@dimen/show_info_area_radius"
         >
     </corners>
-    <stroke android:width="@dimen/x1" android:color="#ffffff">
+    <stroke android:width="@dimen/x1" android:color="#e4ffffff">
 
     </stroke>
 </shape>

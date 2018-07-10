@@ -34,6 +34,33 @@
     </style>
 
 
+    <!-- 钱包主页面 -->
+    <style name="bottom_card">
+        <item name="android:layout_marginStart">@dimen/bot_card_margin</item>
+        <item name="android:layout_marginEnd">@dimen/bot_card_margin</item>
+        <item name="android:layout_height">@dimen/bot_card_height</item>
+    </style>
+
+    <style name="show_cpu_status_area">
+        <item name="android:layout_marginStart">@dimen/cpu_show_area_margin</item>
+        <item name="android:layout_marginEnd">@dimen/cpu_show_area_margin</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/cpu_show_area_height</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">#6adde2f0</item>
+    </style>
+
+    <style name="cpu_net_ram">
+        <item name="android:layout_width">@dimen/single_cpu_width</item>
+        <item name="android:layout_height">@dimen/single_cpu_height</item>
+        <item name="android:layout_marginBottom">@dimen/single_cpu_margin</item>
+        <item name="android:layout_marginStart">@dimen/single_cpu_margin</item>
+        <item name="android:layout_marginTop">@dimen/single_cpu_margin</item>
+    </style>
+
+
+
+
 
     <!--Create Wallet 页面 -->
     <!-- 创建钱包Button样式 -->
