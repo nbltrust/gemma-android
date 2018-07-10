@@ -1,10 +1,20 @@
 package com.hxlx.core.lib.utils;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Point;
+import android.os.Build;
 import android.os.Environment;
+import android.view.Display;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -367,4 +377,97 @@ public class OSUtils {
             return version;
         }
     }
+
+    /**
+     * <P>判断是否有虚拟按键</P>
+     *
+     * @param context
+     * @return
+     */
+    public static boolean checkDeviceHasNavigationBar(Context context) {
+        boolean hasNavigationBar = false;
+        Resources rs = context.getResources();
+        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id);
+        }
+        try {
+            Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            Method m = systemPropertiesClass.getMethod("get", String.class);
+            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
+            if ("1".equals(navBarOverride)) {
+                hasNavigationBar = false;
+            } else if ("0".equals(navBarOverride)) {
+                hasNavigationBar = true;
+            }
+        } catch (Exception e) {
+        }
+        return hasNavigationBar;
+    }
+
+
+    /**
+     * <P>解决虚拟按键问题</P>
+     *
+     * @param window
+     */
+    public static void solveNavigationBar(Window window) {
+
+        //保持布局状态
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                //布局位于状态栏下方
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                //全屏
+                View.SYSTEM_UI_FLAG_FULLSCREEN |
+                //隐藏导航栏
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+        if (Build.VERSION.SDK_INT >= 19) {
+            uiOptions |= 0x00001000;
+        } else {
+            uiOptions |= View.SYSTEM_UI_FLAG_LOW_PROFILE;
+        }
+        window.getDecorView().setSystemUiVisibility(uiOptions);
+    }
+
+
+    public static Point getNavigationBarSize(Context context) {
+        Point appUsableSize = getAppUsableScreenSize(context);
+        Point realScreenSize = getRealScreenSize(context);
+// navigation bar on the right
+        if (appUsableSize.x < realScreenSize.x) {
+            return new Point(realScreenSize.x - appUsableSize.x, appUsableSize.y);
+        }
+// navigation bar at the bottom
+        if (appUsableSize.y < realScreenSize.y) {
+            return new Point(appUsableSize.x, realScreenSize.y - appUsableSize.y);
+        }
+// navigation bar is not present
+        return new Point();
+    }
+
+    public static Point getAppUsableScreenSize(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size;
+    }
+
+    public static Point getRealScreenSize(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        if (Build.VERSION.SDK_INT >= 17) {
+            display.getRealSize(size);
+        } else if (Build.VERSION.SDK_INT >= 14) {
+            try {
+                size.x = (Integer) Display.class.getMethod("getRawWidth").invoke(display);
+                size.y = (Integer) Display.class.getMethod("getRawHeight").invoke(display);
+            } catch (IllegalAccessException e) {} catch (InvocationTargetException e) {} catch (NoSuchMethodException e) {}
+        }
+        return size;
+    }
+
+
 }

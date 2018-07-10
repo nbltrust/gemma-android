@@ -74,7 +74,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="20dp"
@@ -83,12 +83,11 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="80dp"
                     >
 
                     <TextView
-                        android:id="@+id/tv_pay_account"
+                        android:id="@+id/tv_title_pay_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
@@ -98,6 +97,39 @@
                         android:textSize="16sp"
                         />
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/tv_title_pay_account"
+                        android:layout_marginTop="14dp">
+
+                        <TextView
+                            android:id="@+id/tv_pay_account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="16dp"
+                            android:singleLine="true"
+                            android:text="账户1"
+                            android:textColor="@color/darkSlateBlue"
+                            android:textSize="16sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_banlance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="12dp"
+                            android:singleLine="true"
+                            android:text="余额：10.0000 EOS"
+                            android:textColor="#9ea3bd"
+                            android:textSize="14sp"
+                            />
+
+                    </RelativeLayout>
+
 
                 </RelativeLayout>
 
@@ -110,9 +142,34 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="90dp"
                     >
+
+                    <TextView
+                        android:id="@+id/tv_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="金额"
+                        android:textColor="@color/font_title"
+                        android:textSize="16sp"
+                        />
+
+                    <EditText
+                        android:id="@+id/et_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/tv_amount"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="14dp"
+                        android:background="@null"
+                        android:hint="输入转账金额"
+                        android:singleLine="true"
+                        android:textColor="@color/darkSlateBlue"
+                        android:textSize="16sp"/>
 
                 </RelativeLayout>
 
@@ -125,14 +182,53 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     >
+
+                    <TextView
+                        android:id="@+id/tv_note"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="备注"
+                        android:textColor="@color/font_title"
+                        android:textSize="16sp"
+                        />
+
+                    <EditText
+                        android:id="@+id/et_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_note"
+                        android:layout_marginBottom="18dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@null"
+                        android:hint="输入转账备注"
+                        android:maxLines="3"
+                        android:minHeight="50dp"
+                        android:textColor="@color/darkSlateBlue"
+                        android:textSize="16sp"/>
 
 
                 </RelativeLayout>
 
             </LinearLayout>
+            
+            <Button
+                android:id="@+id/btn_transfer"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:text="确认转账"
+                android:textSize="16sp"
+                android:enabled="false"
+                android:background="@drawable/selector_btn_transfer"
+                android:textColor="@color/white"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="24dp"
+                android:layout_height="50dp"/>
 
         </LinearLayout>
 

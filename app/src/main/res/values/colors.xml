@@ -33,6 +33,8 @@
     <color name="vertical_line">#f5f6f8</color>
     <color name="horiontal_line">#e7e9f8</color>
     <color name="color_et_hint">#c6cade</color>
+    <color name="btn_disabled">#c6cade</color>
+    <color name="btn_enabled">#4169d1</color>
 
 
 </resources>
