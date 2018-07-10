@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Modules.Wallet.CreateWallet.CreateSuccessActivity">
+    android:background="@color/white">
 
 
     <ImageView
         android:id="@+id/iv_success_logo"
-        android:background="@drawable/iccheck3x"
-        android:layout_width="@dimen/x40"
-        android:layout_height="@dimen/x40"
-        android:layout_marginTop="@dimen/x49"
+        android:layout_width="@dimen/logo_succeed_width"
+        android:layout_height="@dimen/logo_succeed_width"
+        android:layout_marginTop="@dimen/logo_succeed_marginTop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/createWalletSuccess"
         android:layout_marginTop="@dimen/x14"
-        android:textSize="@dimen/x18"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_success_logo"
@@ -31,7 +30,12 @@
     
     <android.support.constraint.ConstraintLayout
         android:id="@+id/CLayout_show"
-        style="@style/show_area"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/text_area_height"
+        android:layout_marginEnd="@dimen/text_area_marginSide"
+        android:layout_marginStart="@dimen/text_area_marginSide"
+        android:layout_marginTop="@dimen/text_area_marginTop"
+        android:background="@color/whiteTwo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_success_word"
@@ -39,8 +43,14 @@
 
         <TextView
             android:id="@+id/tv_backup_hint"
-            style="@style/textView_in_create_success"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/text_height"
             android:text="@string/backupHint"
+            android:layout_marginTop="@dimen/text_marginTop"
+            android:layout_marginStart="@dimen/text_area_marginSide"
+            android:layout_marginEnd="@dimen/text_area_marginSide"
+            android:textSize="14sp"
+            android:paddingTop="@dimen/text_marginTop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,8 +58,11 @@
 
         <Button
             android:id="@+id/bt_export_mnemonic"
-            style="@style/button_in_create_success"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/bt_inInitPage_height"
             android:text="@string/exportMnemonic"
+            android:layout_marginStart="@dimen/text_area_marginSide"
+            android:layout_marginTop="@dimen/button_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_backup_hint"
 
@@ -57,8 +70,11 @@
 
         <Button
             android:id="@+id/bt_backup_later"
-            style="@style/button_in_create_success"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/bt_inInitPage_height"
             android:text="@string/backupLater"
+            android:layout_marginTop="@dimen/button_margin"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/bt_export_mnemonic"
             app:layout_constraintTop_toBottomOf="@+id/tv_backup_hint" />
