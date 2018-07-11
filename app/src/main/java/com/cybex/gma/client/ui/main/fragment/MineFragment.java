@@ -25,7 +25,6 @@ public class MineFragment extends XFragment<MinePresenter> {
 
     @Override
     public void bindUI(View rootView) {
-
     }
 
     @Override

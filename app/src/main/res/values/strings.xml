@@ -117,5 +117,6 @@
     <string name="eos">EOS</string>
     
     <string name="at_char">\ufeff@</string>
+    <string name="title_transfer">转账</string>
     
 </resources>
