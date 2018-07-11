@@ -100,6 +100,21 @@
     <string name="tab_wallet">钱包</string>
     <string name="tab_transfer">转账</string>
     <string name="tab_mine">我的</string>
+
+    <string name="total_assets">账户总资产</string>
+    <string name="balance">可用余额</string>
+    <string name="redeem">正在赎回</string>
+    <string name="transfer_records">收支记录</string>
+    <string name="resource">资源质押</string>
+    <string name="get_cpu_net">获取CPU、NET</string>
+
+    <string name="expire_time">过期时间</string>
+    <string name="transfer_status">交易状态</string>
+    <string name="transfer_id">交易号</string>
+    <string name="block_num">区块</string>
+    <string name="block_time">区块时间</string>
+    <string name="see_in_explorer">在区块链浏览器上查看</string>
+    <string name="eos">EOS</string>
     
     <string name="at_char">\ufeff@</string>
     
