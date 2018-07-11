@@ -208,10 +208,12 @@ dependencies {
     api deps.gma.MaterialEditText
     implementation deps.gma.MaterialDialog
 
+    implementation deps.gma.badgeview
+    annotationProcessor deps.gma.badgeviewCompiler
+
     implementation deps.yanzhenjie.permission
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.smartrefresh.layout
-
 
     implementation project(':platform_framework:basiclib')
     implementation project(':platform_framework:base-view')
@@ -219,5 +221,7 @@ dependencies {
     implementation project(':platform_framework:customdialoglib')
     implementation project(':platform_framework:superTextview')
     implementation project(':platform_framework:validate')
+
+
 
 }
