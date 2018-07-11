@@ -101,4 +101,6 @@
     <string name="tab_transfer">转账</string>
     <string name="tab_mine">我的</string>
     
+    <string name="at_char">\ufeff@</string>
+    
 </resources>

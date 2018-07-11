@@ -73,11 +73,11 @@ public class MainThreadPostUtils {
         post(new Runnable() {
           @Override
           public void run() {
-            FantasyToastUtils.showShortToast(message);
+            GemmaToastUtils.showShortToast(message);
           }
         });
       else
-        FantasyToastUtils.showShortToast(message);
+        GemmaToastUtils.showShortToast(message);
     }
   }
 
@@ -89,11 +89,11 @@ public class MainThreadPostUtils {
         post(new Runnable() {
           @Override
           public void run() {
-            FantasyToastUtils.showLongToast(message);
+            GemmaToastUtils.showLongToast(message);
           }
         });
       else
-        FantasyToastUtils.showLongToast(message);
+        GemmaToastUtils.showLongToast(message);
     }
   }
 
@@ -111,11 +111,11 @@ public class MainThreadPostUtils {
       post(new Runnable() {
         @Override
         public void run() {
-          FantasyToastUtils.showShortToast(msg);
+          GemmaToastUtils.showShortToast(msg);
         }
       });
     else
-      FantasyToastUtils.showShortToast(msg);
+      GemmaToastUtils.showShortToast(msg);
   }
 
   public static void toastLong(int res) {
@@ -125,11 +125,11 @@ public class MainThreadPostUtils {
       post(new Runnable() {
         @Override
         public void run() {
-          FantasyToastUtils.showLongToast(msg);
+          GemmaToastUtils.showLongToast(msg);
         }
       });
     else
-      FantasyToastUtils.showLongToast(msg);
+      GemmaToastUtils.showLongToast(msg);
   }
 
 

@@ -65,7 +65,10 @@
         <!-- activity start -->
         <activity
             android:name=".ui.main.activity.MainTabActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
