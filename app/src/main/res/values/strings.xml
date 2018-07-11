@@ -117,5 +117,8 @@
     <string name="eos">EOS</string>
     
     <string name="at_char">\ufeff@</string>
-    
+    <string name="title_transfer">转账</string>
+    <string name="title_me">我的</string>
+    <string name="press_again_exit">再按一次退出</string>
+
 </resources>

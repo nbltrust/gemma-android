@@ -218,5 +218,6 @@ dependencies {
     implementation project(':platform_framework:update-app')
     implementation project(':platform_framework:customdialoglib')
     implementation project(':platform_framework:superTextview')
+    implementation project(':platform_framework:validate')
 
 }

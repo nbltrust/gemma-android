@@ -51,7 +51,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        setNavibarTitle("转账", false);
+        setNavibarTitle(getString(R.string.title_transfer), false);
     }
 
 

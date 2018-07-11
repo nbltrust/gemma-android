@@ -7,6 +7,9 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.main.presenter.MinePresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * 我的
  *
@@ -14,6 +17,8 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
  */
 public class MineFragment extends XFragment<MinePresenter> {
 
+
+    Unbinder unbinder;
 
     public static MineFragment newInstance() {
         Bundle args = new Bundle();
@@ -25,7 +30,8 @@ public class MineFragment extends XFragment<MinePresenter> {
 
     @Override
     public void bindUI(View rootView) {
-
+        unbinder = ButterKnife.bind(this, rootView);
+        setNavibarTitle(getString(R.string.title_me), false);
     }
 
     @Override
@@ -41,5 +47,12 @@ public class MineFragment extends XFragment<MinePresenter> {
     @Override
     public MinePresenter newP() {
         return new MinePresenter();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
