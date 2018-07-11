@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.UISkipMananger;
 import com.cybex.gma.client.ui.main.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -27,6 +27,7 @@ import butterknife.OnTextChanged;
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     private CreateWalletPresenter curPresenter;
+    private UISkipMananger uiSkipMananger;
 
     @BindView(R.id.editText_1)
     MaterialEditText editText1;
@@ -52,8 +53,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     TitleBar titleBar;
 
     @OnClick(R.id.bt_create_wallet)
-    public void createWallet(){
-        curPresenter.createWallet();
+    public void goToMainTab(){
+        uiSkipMananger.launchIntent(this, MainTabActivity.class);
     }
 
     @OnTextChanged(value = R.id.editText_1, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -119,6 +120,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         setContentView(R.layout.activity_create_wallet);
         ButterKnife.bind(this);
         initView();
+        uiSkipMananger = new UISkipMananger();
     }
 
     public void initView(){

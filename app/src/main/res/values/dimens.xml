@@ -347,9 +347,9 @@
     <dimen name="bt_inInitPage_margin">32dp</dimen>
     <dimen name="bt_inInitPage_height">44dp</dimen>
     <dimen name="bt_marginTop">16dp</dimen>
-    <dimen name="bt_marginBot">48dp</dimen>
+    <dimen name="bt_marginBot">68dp</dimen>
     <dimen name="logo_length">129dp</dimen>
-    <dimen name="logo_marginTop">76dp</dimen>
+    <dimen name="logo_marginTop">120dp</dimen>
     <!-- 创建钱包页面 -->
     <dimen name="input_layout_height">408dp</dimen>
     <dimen name="input_layout_margin">16dp</dimen>

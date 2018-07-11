@@ -1,30 +1,29 @@
 package com.cybex.gma.client.ui.main.activity;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.UISkipMananger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class InitialActivity extends AppCompatActivity {
+    private UISkipMananger uiSkipMananger;
 
-    @BindView(R.id.bt_create_new)
-    Button createWallet;
-    @BindView(R.id.bt_import)
-    Button restoreWallet;
+    @BindView(R.id.bt_create_new) Button btCreateNew;
+    @BindView(R.id.bt_import) Button btImport;
 
     @OnClick(R.id.bt_create_new)
-    public void createWallet(){
-        Intent intent  = new Intent(this, CreateWalletActivity.class);
-        startActivity(intent);
+    public void createWallet() {
+        uiSkipMananger.launchIntent(this, CreateWalletActivity.class);
     }
+
     @OnClick(R.id.bt_import)
-    public void importWallet(){
+    public void importWallet() {
 
     }
 
@@ -33,6 +32,7 @@ public class InitialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
         ButterKnife.bind(this);
+        uiSkipMananger = new UISkipMananger();
     }
 
 

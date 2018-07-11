@@ -7,30 +7,18 @@
     android:layout_height="match_parent"
     android:background="@color/darkSlateBlue"
     tools:context=".ui.main.activity.InitialActivity">
-    
+
     <ImageView
         android:id="@+id/logo_gma"
-        android:layout_width="@dimen/logo_length"
-        android:layout_height="@dimen/logo_length"
+        android:layout_width="120dp"
+        android:layout_height="162dp"
         android:layout_marginTop="@dimen/logo_marginTop"
+        android:background="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         />
-    
-    <LinearLayout
-        android:id="@+id/gma_word"
-        android:orientation="horizontal"
-        android:layout_width="@dimen/logo_length"
-        android:layout_height="21dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo_gma"
-        >
 
-    </LinearLayout>
-    
-    
     <Button
         android:id="@+id/bt_create_new"
         style="@style/bt_create_wallet"

@@ -39,7 +39,7 @@ public class UISkipMananger {
     }
 
 
-    private static void launchIntent(Context context, Class<? extends Activity> cls) {
+    public void launchIntent(Context context, Class<? extends Activity> cls) {
         launchNewTaskIntent(context, cls, null, false);
     }
 
