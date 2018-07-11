@@ -11,6 +11,7 @@
     <include layout="@layout/ui_navibar"/>
 
     <ScrollView
+        android:id="@+id/root_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/btn_navibar"
@@ -167,6 +168,7 @@
                         android:layout_marginTop="14dp"
                         android:background="@null"
                         android:hint="输入转账金额"
+                        android:inputType="numberDecimal"
                         android:singleLine="true"
                         android:textColor="@color/darkSlateBlue"
                         android:textSize="16sp"/>

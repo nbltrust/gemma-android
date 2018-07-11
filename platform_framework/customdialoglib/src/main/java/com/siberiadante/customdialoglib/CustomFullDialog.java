@@ -86,6 +86,7 @@ public class CustomFullDialog extends Dialog implements View.OnClickListener {
         this.mLayoutResId = layoutResID;
         this.mIds = listenedItems;
         this.mPosition = position;
+        this.mIsDismiss = isDismiss;
     }
 
 

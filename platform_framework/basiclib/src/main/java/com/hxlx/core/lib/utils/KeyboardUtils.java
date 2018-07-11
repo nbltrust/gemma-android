@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 
 /**
@@ -28,6 +30,7 @@ public final class KeyboardUtils {
         }
         return height;
     }
+
 
     /**
      * 屏幕分辨率高

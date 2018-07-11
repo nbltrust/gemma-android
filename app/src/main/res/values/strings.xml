@@ -116,4 +116,6 @@
     <string name="see_in_explorer">在区块链浏览器上查看</string>
     <string name="eos">EOS</string>
     
+    <string name="at_char">\ufeff@</string>
+    
 </resources>

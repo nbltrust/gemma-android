@@ -68,6 +68,8 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             }
         });
 
+
+
     }
 
     @Override

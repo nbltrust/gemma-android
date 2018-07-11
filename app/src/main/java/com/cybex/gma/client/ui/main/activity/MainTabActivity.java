@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.main.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.main.fragment.MainTabFragment;
@@ -22,8 +23,10 @@ public class MainTabActivity extends XActivity {
             loadRootFragment(R.id.fl_container, MainTabFragment.newInstance());
         }
 
-    }
+        //让布局向上移来显示软键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+    }
 
     @Override
     public void onBackPressedSupport() {
