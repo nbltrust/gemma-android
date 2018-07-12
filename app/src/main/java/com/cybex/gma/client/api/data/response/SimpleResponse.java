@@ -13,7 +13,7 @@ public class SimpleResponse implements Serializable {
     public CustomData toLzyResponse() {
         CustomData lzyResponse = new CustomData();
         lzyResponse.success = success;
-        lzyResponse.msg = msg;
+        lzyResponse.message = msg;
         return lzyResponse;
     }
 }

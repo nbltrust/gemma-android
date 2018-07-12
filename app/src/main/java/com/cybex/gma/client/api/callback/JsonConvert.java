@@ -64,9 +64,9 @@ public class JsonConvert<T> implements Converter<T> {
     }
 
     private T parseClass(Response response, Class<?> rawType) throws Exception {
-        if (rawType == null) return null;
+        if (rawType == null) { return null; }
         ResponseBody body = response.body();
-        if (body == null) return null;
+        if (body == null) { return null; }
         JsonReader jsonReader = new JsonReader(body.charStream());
 
         if (rawType == String.class) {
@@ -87,9 +87,9 @@ public class JsonConvert<T> implements Converter<T> {
 
 
     private T parseType(Response response, Type type) throws Exception {
-        if (type == null) return null;
+        if (type == null) { return null; }
         ResponseBody body = response.body();
-        if (body == null) return null;
+        if (body == null) { return null; }
         JsonReader jsonReader = new JsonReader(body.charStream());
 
         // 泛型格式如下： new JsonCallback<任意JavaBean>(this)
@@ -99,9 +99,9 @@ public class JsonConvert<T> implements Converter<T> {
     }
 
     private T parseParameterizedType(Response response, ParameterizedType type) throws Exception {
-        if (type == null) return null;
+        if (type == null) { return null; }
         ResponseBody body = response.body();
-        if (body == null) return null;
+        if (body == null) { return null; }
         JsonReader jsonReader = new JsonReader(body.charStream());
 
         Type rawType = type.getRawType();                     // 泛型的实际类型
@@ -125,12 +125,12 @@ public class JsonConvert<T> implements Converter<T> {
                 String code = lzyResponse.success;
                 //这里的0是以下意思
                 //一般来说服务器会和客户端约定一个数表示成功，其余的表示失败，这里根据实际情况修改
-                if (code.equals(HttpConst.RESULT_SUCCESS)) {
+                if (code == (HttpConst.RESULT_SUCCESS)) {
                     //noinspection unchecked
                     return (T) lzyResponse;
                 } else {
                     //直接将服务端的错误信息抛出，onError中可以获取
-                    throw new IllegalStateException("错误代码：" + code + "，错误信息：" + lzyResponse.msg);
+                    throw new IllegalStateException("错误代码：" + code + "，错误信息：" + lzyResponse.message);
                 }
             }
         }

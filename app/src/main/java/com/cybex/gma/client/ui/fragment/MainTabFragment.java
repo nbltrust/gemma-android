@@ -7,13 +7,10 @@ import android.view.View;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.EventBusActivityScope;
 import com.cybex.gma.client.event.TabSelectedEvent;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
 import com.cybex.gma.client.widget.bottombar.BottomBarTab;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-
-import java.util.Map;
 
 import me.framework.fragmentation.FragmentSupport;
 
@@ -57,11 +54,6 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
-
-                if(position==1){
-                    Map<String,String> test = JNIUtil.createKey();
-
-                }
             }
 
             @Override
