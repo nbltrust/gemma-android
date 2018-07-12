@@ -57,17 +57,22 @@ public class CustomConvert<T> implements Converter<T> {
             return null;
         }
 
-        String success = lzyResponse.success;
+        return (T) lzyResponse;
 
+       // int code = lzyResponse.code;
         //一般来说服务器会和客户端约定一个数表示成功，其余的表示失败，这里根据实际情况修改
-        if (HttpConst.RESULT_SUCCESS.equals(success)) {
-            return (T) lzyResponse;
-        }else if(HttpConst.RESULT_FAILED.equals(success)){
-            return (T) lzyResponse;
-        }else {
-            //直接将服务端的错误信息抛出，onError中可以获取
-            throw new IllegalStateException("(" + lzyResponse.msg + ")" + lzyResponse.msg);
-        }
+//        if (HttpConst.CODE_RESULT_SUCCESS==code) {
+//            return (T) lzyResponse;
+//        }
+
+//        else if(HttpConst.RESULT_FAILED.equals(success)){
+//            return (T) lzyResponse;
+//        }
+
+//        else {
+//            //直接将服务端的错误信息抛出，onError中可以获取
+//            throw new IllegalStateException("(" + lzyResponse.message + ")" + lzyResponse.message);
+//        }
 
     }
 

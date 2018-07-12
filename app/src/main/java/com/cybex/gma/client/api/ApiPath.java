@@ -11,11 +11,23 @@ import com.cybex.gma.client.BuildConfig;
 
 public class ApiPath {
 
-    // host
-    private static final String HOST_OFFICIAL = "https://api.xxx.com";
-    private static final String HOST_DEV = "";
-    private static final String HOST_TEST = "";
-    private final static String[] HOST={HOST_OFFICIAL,HOST_DEV,HOST_TEST};
-
+    //测试环境
+    public static final String HOST_TEST = "";
+    //开发环境
+    public static final String HOST_DEV = "";
+    //线上环境
+    public static final String HOST_ONLINE = "https://api.xxx.com";
+    public final static String[] HOST = {HOST_TEST, HOST_DEV, HOST_ONLINE};
     public static String REST_URI_HOST = HOST[BuildConfig.API_PATH];
+
+
+    /**
+     * ------------EOS 项目情况配置---------------
+     */
+    //中心化服务器host
+    public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3001";
+    //链上服务器host
+    public static final String HOST_ON_CHAIN = "";
+
+    /**------------EOS 项目情况配置---------------*/
 }

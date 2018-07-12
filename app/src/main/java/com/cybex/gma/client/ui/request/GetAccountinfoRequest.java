@@ -1,7 +1,7 @@
 package com.cybex.gma.client.ui.request;
 
 import com.cybex.gma.client.api.request.GMAHttpRequest;
-import com.cybex.gma.client.ui.model.AccountInfo;
+import com.cybex.gma.client.ui.model.response.AccountInfo;
 
 /**
  * 获得账户信息

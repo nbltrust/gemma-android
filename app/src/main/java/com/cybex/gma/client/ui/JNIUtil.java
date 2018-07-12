@@ -1,5 +1,7 @@
 package com.cybex.gma.client.ui;
 
+import java.util.Map;
+
 /**
  * Jni调用
  *
@@ -8,13 +10,13 @@ package com.cybex.gma.client.ui;
 public class JNIUtil {
 
     static {
-        System.loadLibrary("libkeosdlib");
+        System.loadLibrary("keosdlib");
     }
 
     private JNIUtil() {}
 
 
-    public final static native void createKey();
+    public final static native Map<String, String> createKey();
 
     public final static native String get_cypher(String password, String priv_key);
 
