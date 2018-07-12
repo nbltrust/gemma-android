@@ -170,6 +170,7 @@
                 title:sLeftTextColor="@color/steel"
                 title:sLeftTextSize="@dimen/total_assets_text_size"
                 title:sLeftTextString="@string/transfer_id"
+
                 title:sRightTextColor="@color/darkSlateBlue"
                 title:sRightTextString="0quw12150...1321f25"
                 title:sRightTextSize="@dimen/total_assets_text_size"

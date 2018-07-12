@@ -1,6 +1,5 @@
 package com.cybex.gma.client.ui.main.activity;
 
-
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,177 +22,160 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import cxy.com.validate.Validate;
 
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
-
     private CreateWalletPresenter curPresenter;
     private UISkipMananger uiSkipMananger;
+    private boolean isUserNameValid;
+    private boolean isPasswordMatched;
 
-    @BindView(R.id.editText_1)
-    MaterialEditText editText1;
-    @BindView(R.id.editText_2)
-    MaterialEditText editText2;
-    @BindView(R.id.editText_3)
-    MaterialEditText editText3;
-    @BindView(R.id.editText_5)
-    MaterialEditText editText5;
-    @BindView(R.id.textView_1)
-    TextView textView1;
-    @BindView(R.id.textView_3)
-    TextView textView3;
-    @BindView(R.id.checkbox)
-    CheckBox checkBox;
-    @BindView(R.id.bt_create_wallet)
-    Button createWallet;
-    @BindView(R.id.bubble)
-    BubbleLayout bubble;
-    @BindView(R.id.single_input_1)
-    LinearLayout single_input_layout_1;
-    @BindView(R.id.btn_navibar)
-    TitleBar titleBar;
+    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
+    @BindView(R.id.tv_in_bubble) TextView tvInBubble;
+    @BindView(R.id.bubble) BubbleLayout bubble;
+    @BindView(R.id.single_input_eosName) LinearLayout singleInputEosName;
+    @BindView(R.id.textView_eosName) TextView textViewEosName;
+    @BindView(R.id.editText_eosName) MaterialEditText editTextEosName;
+    @BindView(R.id.textView_password) TextView textViewPassword;
+    @BindView(R.id.editText_password) MaterialEditText editTextPassword;
+    @BindView(R.id.textView_repeatPass) TextView textViewRepeatPass;
+    @BindView(R.id.editText_repeatPass) MaterialEditText editTextRepeatPass;
+    @BindView(R.id.textView_passHint) TextView textViewPassHint;
+    @BindView(R.id.editText_passHint) MaterialEditText editTextPassHint;
+    @BindView(R.id.single_input_passHint) LinearLayout singleInputPassHint;
+    @BindView(R.id.textView_invCode) TextView textViewInvCode;
+    @BindView(R.id.tv_get_invCode) TextView tvGetInvCode;
+    @BindView(R.id.editText_invCode) MaterialEditText editTextInvCode;
+    @BindView(R.id.checkbox) CheckBox checkbox;
+    @BindView(R.id.tv_service_agreement) TextView tvServiceAgreement;
+    @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
+    @BindView(R.id.bt_create_wallet) Button btCreateWallet;
 
-    @OnClick(R.id.bt_create_wallet)
-    public void goToMainTab(){
-        uiSkipMananger.launchIntent(this, MainTabActivity.class);
+    @OnTextChanged(value = R.id.editText_eosName, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterNameChanged(){
+        if (editTextEosName.getText().toString().trim().length() == 12){
+            //当eos用户名为12位时，恢复初始样式
+            textViewEosName.setTextColor(getResources().getColor(R.color.steel));
+            textViewEosName.setText("EOS账户名");
+            editTextEosName.setUnderlineColor(getResources().getColor(R.color.steel));
+            isUserNameValid = true;
+            if (isAllTextFilled() && checkbox.isChecked()){
+                setClickable(btCreateWallet);
+            }else{
+                setUnclickable(btCreateWallet);
+            }
+        }else{
+            //不为12位时，更改样式示意
+            isUserNameValid = false;
+            textViewEosName.setText("由小写字母a-z与数字1-5组成，须为12位");
+            textViewEosName.setTextColor(getResources().getColor(R.color.scarlet));
+            editTextEosName.setUnderlineColor(getResources().getColor(R.color.scarlet));
+            setUnclickable(btCreateWallet);
+        }
     }
-
-    @OnTextChanged(value = R.id.editText_1, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    @OnTextChanged(value = R.id.editText_password, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterPasswordChanged(){
-        //检查所有要求输入的文本框是否都有值，以及checkbox是否勾选
-        if (isAllTextFilled() && checkBox.isChecked()){
-            setClickable(createWallet);
+        if (isAllTextFilled() && checkbox.isChecked() && isUserNameValid){
+            setClickable(btCreateWallet);
         }else{
-            setUnclickable(createWallet);
+            setUnclickable(btCreateWallet);
         }
     }
-    @OnTextChanged(value = R.id.editText_2, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterRepeatChanged(){
-        if (isAllTextFilled() && checkBox.isChecked()){
-            setClickable(createWallet);
+    @OnTextChanged(value = R.id.editText_repeatPass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterRepeatPassChanged(){
+        if (getPassword().equals(getRepeatPassword())){
+            textViewRepeatPass.setText("重复密码");
+            textViewRepeatPass.setTextColor(getResources().getColor(R.color.steel));
+            editTextRepeatPass.setUnderlineColor(getResources().getColor(R.color.steel));
+            if (isAllTextFilled() && checkbox.isChecked()){
+                setClickable(btCreateWallet);
+            }else{
+                setUnclickable(btCreateWallet);
+            }
         }else{
-            setUnclickable(createWallet);
-        }
-
-        //检查重复输入的密码是否匹配
-        if (!getPassword().equals(getRepeatPassword())){
-            editText3.setTextColor(getResources().getColor(R.color.scarlet));
-            textView3.setText("密码不匹配");
-            textView3.setTextColor(getResources().getColor(R.color.scarlet));//scarlet
-        }else{
-            editText3.setTextColor(getResources().getColor(R.color.darkSlateBlue));//darkSlateBlue
-            textView3.setText("密码一致");
-            textView3.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+            textViewRepeatPass.setText("密码不一致");
+            textViewRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
+            editTextRepeatPass.setUnderlineColor(getResources().getColor(R.color.scarlet));
+            setUnclickable(btCreateWallet);
         }
     }
-    @OnTextChanged(value = R.id.editText_3, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterWalletNameChanged(){
-        if (isAllTextFilled() && checkBox.isChecked()){
-            setClickable(createWallet);
-        }else{
-            setUnclickable(createWallet);
-        }
-        //检查重复输入的密码是否匹配
-        if (!getPassword().equals(getRepeatPassword())){
-            editText3.setTextColor(getResources().getColor(R.color.scarlet));
-            textView3.setText("密码不匹配");
-            textView3.setTextColor(getResources().getColor(R.color.scarlet));//scarlet
-        }else{
-            editText3.setTextColor(getResources().getColor(R.color.darkSlateBlue));//darkSlateBlue
-            textView3.setText("密码一致");
-            textView3.setTextColor(getResources().getColor(R.color.darkSlateBlue));
-        }
-
-    }
-    @OnTextChanged(value = R.id.editText_5, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    @OnTextChanged(value = R.id.editText_invCode, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterInvCodeChanged(){
-        if (isAllTextFilled() && checkBox.isChecked()){
-            setClickable(createWallet);
+        if (isAllTextFilled() && checkbox.isChecked() && isUserNameValid){
+            setClickable(btCreateWallet);
         }else{
-            setUnclickable(createWallet);
+            setUnclickable(btCreateWallet);
         }
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isUserNameValid = false;
         curPresenter = getP();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_wallet);
         ButterKnife.bind(this);
+        Validate.reg(this);
         initView();
         uiSkipMananger = new UISkipMananger();
     }
 
-    public void initView(){
-        bubble.setVisibility(View.GONE);
-        createWallet.setClickable(false);
-        //init TitleBar
-        titleBar.setTitle("创建钱包");
-        titleBar.setTitleColor(R.color.white);
-        titleBar.setTitleSize(20);
-        titleBar.setImmersive(true);
-        titleBar.setBackground(getDrawable(R.drawable.bg_navibar));
-        titleBar.setLeftImageResource(R.drawable.icback24px);
-        titleBar.setLeftClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
-        editText1.setOnTouchListener(new View.OnTouchListener() {
+    @OnClick(R.id.bt_create_wallet)
+    public void Jump(){
+        uiSkipMananger.launchIntent(CreateWalletActivity.this, MainTabActivity.class);
+    }
+
+    public void initView() {
+        bubble.setVisibility(View.GONE);
+        setUnclickable(btCreateWallet);
+        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
             int flag = 0;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 flag++;
-                if (flag % 2 == 0){
-                    textView1.setText("由小写字母a-z与数字1-5组成，须为12位");
-                    textView1.setTextColor(getResources().getColor(R.color.scarlet));//scarlet
-                    //editText1.setUnderlineColor(getResources().getColor(R.color.scarlet));
-                }
-                return false;
-            }
-        });
-        editText2.setOnTouchListener(new View.OnTouchListener() {
-            int flag = 0;
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                flag++;
-                if (flag % 2 == 0){
-                    single_input_layout_1.setVisibility(View.GONE);
+                if (flag % 2 == 0) {
+                    singleInputEosName.setVisibility(View.GONE);
                     bubble.setVisibility(View.VISIBLE);
                 }
                 return false;
             }
         });
-        editText3.setOnTouchListener(new View.OnTouchListener() {
+        editTextRepeatPass.setOnTouchListener(new View.OnTouchListener() {
             int flag = 0;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 flag++;
-                if (flag % 2 == 0){
+                if (flag % 2 == 0) {
                     bubble.setVisibility(View.GONE);
-                    single_input_layout_1.setVisibility(View.VISIBLE);
+                    singleInputEosName.setVisibility(View.VISIBLE);
                 }
                 return false;
             }
         });
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    //从未选到选中
-                    if (isAllTextFilled()){
-                        setClickable(createWallet);
-                    }else{
-                        setUnclickable(createWallet);
-                    }
+                if (isChecked && isAllTextFilled() && isUserNameValid ){
+                    setClickable(btCreateWallet);
                 }else{
-                    //从选中到取消
-                    setUnclickable(createWallet);
+                    setUnclickable(btCreateWallet);
                 }
             }
         });
-
+        btnNavibar.setTitle("创建钱包");
+        btnNavibar.setTitleColor(R.color.white);
+        btnNavibar.setTitleSize(20);
+        btnNavibar.setLeftImageResource(R.drawable.icback24px);
+        btnNavibar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -221,40 +203,46 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         return super.getP();
     }
 
-    public String getWalletName(){
-        return editText1.getText().toString().trim();
+    public String getWalletName() {
+        return editTextEosName.getText().toString().trim();
     }
 
-    public String getPassword(){
-        return editText2.getText().toString().trim();
+    public String getPassword() {
+        return editTextPassword.getText().toString().trim();
     }
 
-    public String getRepeatPassword(){
-        return editText3.getText().toString().trim();
+    public String getRepeatPassword() {
+        return editTextRepeatPass.getText().toString().trim();
     }
 
-    public String getInvCode(){
-        return editText5.getText().toString().trim();
+    public String getInvCode() {
+        return editTextInvCode.getText().toString().trim();
     }
 
-    public void setClickable(Button button){
-        createWallet.setClickable(true);
-        createWallet.setBackgroundColor(getResources().getColor(R.color.cornflowerBlueTwo));
+    public void setClickable(Button button) {
+        button.setClickable(true);
+        button.setBackgroundColor(getResources().getColor(R.color.cornflowerBlueTwo));
     }
 
-    public void setUnclickable(Button button){
-        createWallet.setClickable(false);
-        createWallet.setBackgroundColor(getResources().getColor(R.color.cloudyBlueTwo));
+    public void setUnclickable(Button button) {
+        button.setClickable(false);
+        button.setBackgroundColor(getResources().getColor(R.color.cloudyBlueTwo));
     }
 
-    public boolean isAllTextFilled(){
+    public boolean isAllTextFilled() {
         if (EmptyUtils.isEmpty(getPassword())
                 || EmptyUtils.isEmpty(getRepeatPassword())
                 || EmptyUtils.isEmpty(getWalletName())
-                || EmptyUtils.isEmpty(getInvCode())){
+                || EmptyUtils.isEmpty(getInvCode())) {
             return false;
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Validate.unreg(this);
     }
 
 }
