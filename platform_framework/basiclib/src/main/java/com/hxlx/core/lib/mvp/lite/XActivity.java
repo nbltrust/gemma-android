@@ -38,6 +38,8 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     protected KProgressHUD kProgressHUD;
     private VDelegate vDelegate;
     private P p;
+    protected TitleBar mTitleBar;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +58,6 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     }
 
 
-
     /**
      * 设置沉侵式状态栏
      *
@@ -66,6 +67,17 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         Sofia.with(this).statusBarDarkFont()
                 .navigationBarBackground(ContextCompat.getColor(this, R.color.navigation_bar_black_color))
                 .statusBarBackground(ContextCompat.getColor(this, colorResId));
+    }
+
+    protected void setNavibarTitle(String title, boolean isShowBack) {
+        mTitleBar = findViewById(R.id.btn_navibar);
+        mTitleBar.setTitle(title);
+        mTitleBar.setTitleColor(R.color.ffffff_white_1000);
+        mTitleBar.setTitleSize(20);
+        mTitleBar.setImmersive(true);
+        if (isShowBack) {
+            mTitleBar.setLeftImageResource(R.drawable.ic_btn_back);
+        }
     }
 
     /**

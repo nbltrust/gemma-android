@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
 /**
@@ -31,6 +32,14 @@ public class UISkipMananger {
     }
 
     /**
+     * 跳转到转账记录界面
+     */
+    public static void launchTransferList(Context mContext) {
+        launchIntent(mContext, TransferRecordActivity.class);
+
+    }
+
+    /**
      * 跳转到登录界面
      *
      * @param context
@@ -39,7 +48,7 @@ public class UISkipMananger {
     }
 
 
-    public void launchIntent(Context context, Class<? extends Activity> cls) {
+    public static void launchIntent(Context context, Class<? extends Activity> cls) {
         launchNewTaskIntent(context, cls, null, false);
     }
 

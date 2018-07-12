@@ -198,7 +198,7 @@
                         android:textSize="16sp"
                         />
 
-                    <EditText
+                    <com.cybex.gma.client.widget.EditTextWithScrollView
                         android:id="@+id/et_note"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -217,20 +217,20 @@
                 </RelativeLayout>
 
             </LinearLayout>
-            
+
             <Button
                 android:id="@+id/btn_transfer"
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
-                android:text="确认转账"
-                android:textSize="16sp"
-                android:enabled="false"
-                android:background="@drawable/selector_btn_transfer"
-                android:textColor="@color/white"
                 android:layout_marginTop="60dp"
-                android:layout_marginBottom="24dp"
-                android:layout_height="50dp"/>
+                android:background="@drawable/selector_btn_transfer"
+                android:enabled="false"
+                android:text="确认转账"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
 
         </LinearLayout>
 

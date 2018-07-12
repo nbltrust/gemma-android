@@ -29,7 +29,7 @@ android {
 
         ndk {
             //设置支持的SO库架构:ObjectBox only supports "armeabi-v7a" and "arm64-v8a" ABIs. "armeabi" is outdated.
-            abiFilters /* 'x86',  */ 'armeabi-v7a', 'x86' /*armeabi-v7a向下兼容armeabi, 'x86_64', 'arm64-v8a'*/
+            abiFilters  'armeabi', 'armeabi-v7a', 'x86' /*armeabi-v7a向下兼容armeabi, 'x86_64', 'arm64-v8a'*/
         }
 
         javaCompileOptions {
@@ -84,7 +84,7 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'src/main/AndroidManifest.xml'
-            jniLibs.srcDirs = ['src/main/jniLibs']
+            jniLibs.srcDirs=['libs']
             assets.srcDirs = ['src/main/assets']
             res.srcDirs = ['src/main/res']
             java.srcDirs = ['src/main/java']
@@ -208,10 +208,12 @@ dependencies {
     api deps.gma.MaterialEditText
     implementation deps.gma.MaterialDialog
 
+    implementation deps.gma.badgeview
+    annotationProcessor deps.gma.badgeviewCompiler
+
     implementation deps.yanzhenjie.permission
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.smartrefresh.layout
-
 
     implementation project(':platform_framework:basiclib')
     implementation project(':platform_framework:base-view')
@@ -219,5 +221,7 @@ dependencies {
     implementation project(':platform_framework:customdialoglib')
     implementation project(':platform_framework:superTextview')
     implementation project(':platform_framework:validate')
+
+
 
 }

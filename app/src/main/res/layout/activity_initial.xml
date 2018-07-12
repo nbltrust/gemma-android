@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkSlateBlue"
-    tools:context=".ui.main.activity.InitialActivity">
+    tools:context=".ui.activity.InitialActivity">
 
     <ImageView
         android:id="@+id/logo_gma"
