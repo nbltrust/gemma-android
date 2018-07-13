@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
@@ -38,7 +39,7 @@ public final class UISkipMananger {
     /**
      * 跳转到转账记录界面
      */
-    public static void launchTransferList(Context mContext) {
+    public static void launchTransferList(Activity mContext) {
         launchIntent(mContext, TransferRecordActivity.class);
 
     }
@@ -52,26 +53,26 @@ public final class UISkipMananger {
     }
 
 
-    public static void launchIntent(Context context, Class<? extends Activity> cls) {
+    public static void launchIntent(Activity context, Class<? extends Activity> cls) {
         launchNewTaskIntent(context, cls, null, false);
     }
 
-    private static void launchIntent(Context context, Class<? extends Activity> cls, Bundle bundle) {
+    private static void launchIntent(Activity context, Class<? extends Activity> cls, Bundle bundle) {
         launchNewTaskIntent(context, cls, bundle, false);
     }
 
-    private static void launchNewTaskIntent(Context context, Class<? extends Activity> cls) {
+    private static void launchNewTaskIntent(Activity context, Class<? extends Activity> cls) {
         launchNewTaskIntent(context, cls, null, true);
     }
 
     private static void launchNewTaskIntent(
-            Context context, Class<? extends Activity> cls,
+            Activity context, Class<? extends Activity> cls,
             Bundle bundle) {
         launchNewTaskIntent(context, cls, bundle, true);
     }
 
     private static void launchNewTaskIntent(
-            Context context, Class<? extends Activity> cls,
+            Activity context, Class<? extends Activity> cls,
             Bundle bundle, boolean isNewTask) {
         Intent intent = new Intent(context, cls);
         if (isNewTask) {
@@ -81,6 +82,8 @@ public final class UISkipMananger {
             intent.putExtras(bundle);
         }
         context.startActivity(intent);
+        context.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+
     }
 
     public static void loginOut(Context mContext) {

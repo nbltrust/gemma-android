@@ -54,6 +54,10 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
+
+                if(position==1){
+                   // JNIUtil.createKey();
+                }
             }
 
             @Override
