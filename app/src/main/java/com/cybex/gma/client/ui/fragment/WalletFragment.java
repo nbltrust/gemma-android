@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -9,12 +10,15 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.UISkipMananger;
+import com.cybex.gma.client.ui.model.TransferRecord;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -23,6 +27,7 @@ import butterknife.Unbinder;
  * Created by wanglin on 2018/7/9.
  */
 public class WalletFragment extends XFragment<WalletPresenter> {
+    private UISkipMananger uiSkipMananger;
 
     @BindView(R.id.superTextView_card_resource) SuperTextView superTextViewCardResource;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
@@ -42,6 +47,11 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.superTextView_card_record) SuperTextView superTextViewCardRecord;
     Unbinder unbinder;
 
+    @OnClick(R.id.superTextView_card_record)
+    public void goToSeeRecord(){
+        startActivity(new Intent(getActivity(), TransferRecord.class));
+    }
+
     public static WalletFragment newInstance() {
         Bundle args = new Bundle();
         WalletFragment fragment = new WalletFragment();
@@ -51,6 +61,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void bindUI(View rootView) {
+        uiSkipMananger = new UISkipMananger();
         unbinder = ButterKnife.bind(this, rootView);
     }
 

@@ -36,5 +36,7 @@
     <color name="btn_disabled">#c6cade</color>
     <color name="btn_enabled">#4169d1</color>
 
+    <color name="material_et_base_color">#0056d3</color>
+
 
 </resources>

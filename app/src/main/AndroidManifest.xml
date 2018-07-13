@@ -41,7 +41,18 @@
 
 
         <activity android:name=".ui.activity.InitialActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.TransferRecordActivity"
+            android:screenOrientation="portrait">
+
+
+        </activity>
+
         <activity android:name="com.example.yiran.gemma.Home.HomeActivity"/>
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateWalletActivity">
 
@@ -70,16 +81,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
 
         </activity>
-        <activity
-            android:name=".ui.activity.TransferRecordActivity"
-            android:screenOrientation="portrait"/>
 
         <!-- activity end -->
 

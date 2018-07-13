@@ -137,7 +137,35 @@
                 android:layout_height="50dp">
 
             </com.allen.library.SuperTextView>
-            
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:text="@string/memo"
+                    android:background="@color/whiteTwo"
+                    android:gravity="center_vertical"
+                    android:paddingStart="10dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="资金用途描述不超过三行，资金用途描述不超过三行，资金用途描述不超过三行，资金用途描述不超过三行，资金用途描述不超。"
+                    android:id="@+id/tv_memo"
+                    android:background="@color/whiteTwo"
+                    android:layout_width="100dp"
+                    android:layout_weight="11"
+                    android:paddingStart="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="10dp"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+            <!--
             <com.allen.library.SuperTextView
                 title:sUseShape="true"
                 title:sShapeSolidColor="@color/whiteTwo"
@@ -153,7 +181,7 @@
                 android:layout_height="100dp">
                 
             </com.allen.library.SuperTextView>
-
+        -->
         </LinearLayout>
 
         <LinearLayout

@@ -25,7 +25,6 @@ public class TransferRecordActivity extends XActivity{
             loadRootFragment(R.id.fl_container, MainTabFragment.newInstance());
         }
 
-
     }
 
     @Override
