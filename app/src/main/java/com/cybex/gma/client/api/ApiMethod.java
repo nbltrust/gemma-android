@@ -10,4 +10,11 @@ public interface ApiMethod {
      */
     String API_CHECK_VER = "";
 
+    /**
+     * 注册
+     */
+    String API_REGISTER = "/api/v1/faucet/new";
+
+
+
 }

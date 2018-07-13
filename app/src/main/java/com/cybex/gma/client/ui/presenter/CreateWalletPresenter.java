@@ -1,22 +1,19 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.support.annotation.NonNull;
+
+import com.cybex.gma.client.api.callback.CustomRequestCallback;
+import com.cybex.gma.client.api.data.response.CustomData;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
-import com.cybex.gma.client.ui.model.AccountInfo;
-import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
-import com.hxlx.core.lib.common.cache.CacheUtil;
+import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
+import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
+import com.hxlx.core.lib.utils.GsonUtils;
+
+import io.reactivex.disposables.Disposable;
 
 public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
-
-    private String[] keyPair = new String[2];//公私钥对
-    private String pubKey;//公钥
-    private String priKey;//私钥
-    private String invCode;
-    private AccountInfo newAccount;
-
-    private CreateWalletActivity curActivity = getV();
-    private GetAccountinfoRequest getAccountinfoRequest;
-    private CacheUtil cacheUtil = new CacheUtil();
 
     @Override
     protected CreateWalletActivity getV() {
@@ -24,36 +21,43 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
     }
 
 
-    /**
-     * 获取邀请码
-     */
-    public String getInvCode(){
-        String invCode = "";
-        return invCode;
+    public void createAccount(String accountname, String invitationCode, String publicKey) {
+        UserRegisterReqParams params = new UserRegisterReqParams();
+        params.setApp_id(ParamConstants.TYPE_APP_ID_CYBEX);
+        params.setAccount_name(accountname);
+        params.setInvitation_code(invitationCode);
+        params.setPublic_key(publicKey);
+
+        String json = GsonUtils.objectToJson(params);
+
+        new UserRegisterRequest(CustomData.class)
+                .setRegisterJsonParams(json)
+                .postJson(new CustomRequestCallback<CustomData>() {
+                    @Override
+                    public void onBeforeRequest(@NonNull Disposable disposable) {
+                        getV().showProgressDialog("正在创建...");
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull CustomData<CustomData> result) {
+                        getV().dissmisProgressDialog();
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        getV().dissmisProgressDialog();
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
     }
 
-    /**
-     * 生成(获取)公私钥对方法
-     * 调用本地方法获得公私钥对字符串，并做类型转换
-     */
-    public String[] getPubandPriKey(){
-
-
-
-        return keyPair;
-    }
-
-    /**
-     * 储存公私钥方法
-     * 公钥直接存储，私钥与密码组成字符串调用本地方法加密后存储
-     */
-
-    public void storeKeyPair(){
-        pubKey = keyPair[0];
-        priKey = keyPair[1];
-
-
-
-    }
 
 }

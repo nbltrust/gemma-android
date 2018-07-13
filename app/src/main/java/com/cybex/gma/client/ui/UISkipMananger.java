@@ -11,7 +11,7 @@ import com.hxlx.core.lib.utils.common.utils.AppManager;
 /**
  * 界面调整管理
  */
-public class UISkipMananger {
+public final class UISkipMananger {
 
     /**
      * 跳转到引导页

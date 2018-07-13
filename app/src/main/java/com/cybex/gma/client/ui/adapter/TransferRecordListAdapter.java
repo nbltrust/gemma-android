@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.model.TransferRecord;
+import com.cybex.gma.client.ui.model.response.TransferRecord;
 
 import java.util.List;
 
