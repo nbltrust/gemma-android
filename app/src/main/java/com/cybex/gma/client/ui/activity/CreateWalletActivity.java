@@ -116,7 +116,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     protected void onCreate(Bundle savedInstanceState) {
         curPresenter = getP();
         super.onCreate(savedInstanceState);
-        //setStatusBar();
+        setStatusBar();
         setContentView(R.layout.activity_create_wallet);
         ButterKnife.bind(this);
         Validate.reg(this);
