@@ -11,9 +11,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -33,6 +33,7 @@ import cxy.com.validate.Validate;
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     private CreateWalletPresenter curPresenter;
     private boolean isPasswordMatched;
+    private final String testPublicKey = "EOS5FBWk3oBMiipWfcPU5Z8Ry3N9CZVRtVaSffkonzkmueeyTupnS";
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
@@ -125,8 +126,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @OnClick(R.id.bt_create_wallet)
     public void Jump(){
-        //todo 发送封装数据,在回调方法中更新UI和判断是否跳转
-        UISkipMananger.launchIntent(CreateWalletActivity.this, MainTabActivity.class);
+        //todo
+        getP().createAccount(getEOSUserName(), getInvCode(),testPublicKey);
     }
 
     public void initView() {
@@ -277,6 +278,11 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         editTextRepeatPass.setBaseColor(R.color.cloudyBlue);
         editTextInvCode.setBaseColor(R.color.cloudyBlue);
 
+    }
+
+    public void showOnErrorInfo(){
+        //todo 根据返回值判断提醒的内容
+        Toast.makeText(CreateWalletActivity.this, "创建账户失败，请重新尝试", Toast.LENGTH_LONG).show();
     }
 
     @Override
