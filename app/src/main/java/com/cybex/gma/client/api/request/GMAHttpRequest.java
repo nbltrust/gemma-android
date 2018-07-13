@@ -34,6 +34,7 @@ public class GMAHttpRequest<T> extends CommonRequest<T> {
 
 
     public void postJson(CustomRequestCallback<T> callback) {
+        //TODO 表单参数扩展
         setParams(mParams);
         super.postJson(mPath, jsonParams, callback);
     }
@@ -48,8 +49,9 @@ public class GMAHttpRequest<T> extends CommonRequest<T> {
     }
 
 
-    protected void setJsonParams(String jsonParams) {
+    public GMAHttpRequest<T> setJsonParams(String jsonParams) {
         this.jsonParams = jsonParams;
+        return this;
     }
 
 
