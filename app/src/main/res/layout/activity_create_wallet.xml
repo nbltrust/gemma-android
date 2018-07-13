@@ -8,22 +8,10 @@
     android:layout_height="match_parent">
 
 
-    <ScrollView
-        android:id="@+id/btn_navibar_"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
-        <com.hxlx.core.lib.widget.titlebar.view.TitleBar
+    <include
+        layout="@layout/ui_navibar">
 
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/bg_ui_navibar"/>
-
-    </ScrollView>
+    </include>
 
     <LinearLayout
         android:id="@+id/layout_input_area"
@@ -32,7 +20,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_navibar_">
+        app:layout_constraintTop_toBottomOf="@+id/btn_navibar">
 
         <com.xujiaji.happybubble.BubbleLayout
             android:id="@+id/bubble"

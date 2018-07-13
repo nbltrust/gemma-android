@@ -66,7 +66,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             textViewEosName.setText("EOS账户名");
             editTextEosName.setUnderlineColor(getResources().getColor(R.color.cloudyBlue));
 
-
             if (isAllTextFilled() && checkbox.isChecked()){
                 setClickable(btCreateWallet);
             }else{
@@ -188,7 +187,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
                     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(Color.TRANSPARENT);//设置状态栏颜色为透明
-            window.setNavigationBarColor(Color.TRANSPARENT);//设置导航栏颜色为透明
+            //window.setNavigationBarColor(Color.TRANSPARENT);//设置导航栏颜色为透明
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 //Android 7.0以上适配

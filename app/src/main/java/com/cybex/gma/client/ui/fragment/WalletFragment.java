@@ -1,6 +1,5 @@
 package com.cybex.gma.client.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -50,6 +49,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @OnClick(R.id.superTextView_card_record)
     public void goToSeeRecord(){
         startActivity(new Intent(getActivity(), TransferRecordActivity.class));
+
     }
 
     public static WalletFragment newInstance() {
