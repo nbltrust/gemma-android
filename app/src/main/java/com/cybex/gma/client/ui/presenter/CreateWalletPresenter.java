@@ -31,7 +31,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         String json = GsonUtils.objectToJson(params);
 
         new UserRegisterRequest(CustomData.class)
-                .setRegisterJsonParams(json)
+                .setJsonParams(json)
                 .postJson(new CustomRequestCallback<CustomData>() {
                     @Override
                     public void onBeforeRequest(@NonNull Disposable disposable) {
