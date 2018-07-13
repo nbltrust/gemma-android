@@ -54,9 +54,6 @@
         </activity>
 
         <activity android:name="com.example.yiran.gemma.Home.HomeActivity"/>
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateWalletActivity">
-
-        </activity>
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateSuccessActivity"></activity>
         <activity android:name="com.example.yiran.gemma.Modules.Wallet.BackUpMneWarningActivity">
 

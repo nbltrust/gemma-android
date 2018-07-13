@@ -8,7 +8,6 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/include_navBar"
         layout="@layout/ui_navibar">
     </include>
 
@@ -20,7 +19,7 @@
         android:layout_marginEnd="20dp"
         title:layout_constraintStart_toStartOf="parent"
         title:layout_constraintEnd_toEndOf="parent"
-        title:layout_constraintTop_toBottomOf="@id/include_navBar"
+        title:layout_constraintTop_toBottomOf="@id/btn_navibar"
         title:layout_constraintBottom_toBottomOf="parent"
         >
 
@@ -49,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
-                tools:text="收入"
+                android:text="收入"
                 android:textSize="18sp"
                 android:textColor="@color/whiteTwo"
                 title:layout_constraintStart_toEndOf="@+id/arrow"
@@ -61,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                tools:text="+2.1101"
+                android:text="+2.1101"
                 android:textSize="24sp"
                 android:textColor="@color/whiteTwo"
                 title:layout_constraintBottom_toBottomOf="parent"
@@ -155,6 +154,7 @@
                 <TextView
                     android:ellipsize="end"
                     android:maxLines="3"
+                    android:textColor="@color/darkSlateBlue"
                     android:text="资金用途描述不超过三行，资金用途描述不超过三行，资金用途描述不超过三行，资金用途描述不超过三行，资金用途描述不超。"
                     android:id="@+id/tv_memo"
                     android:background="@color/whiteTwo"
