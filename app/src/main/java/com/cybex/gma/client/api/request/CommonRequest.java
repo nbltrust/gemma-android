@@ -118,7 +118,7 @@ public class CommonRequest<T> {
      * @param jsonParams
      * @param callback
      */
-    public void postJson(
+    public void postJsonNoRx(
             String tag, String path, String jsonParams,
             final AbsCallback<T> callback) {
         OkGo.<T>post(path)
