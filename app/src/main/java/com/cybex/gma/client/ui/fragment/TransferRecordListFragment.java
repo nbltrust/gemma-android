@@ -7,6 +7,9 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.presenter.TransferRecordListPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * 转账记录列表主界面
  *
@@ -14,6 +17,8 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
  */
 public class TransferRecordListFragment extends XFragment<TransferRecordListPresenter> {
 
+
+    Unbinder unbinder;
 
     public static TransferRecordListFragment newInstance() {
         Bundle args = new Bundle();
@@ -26,7 +31,8 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
 
     @Override
     public void bindUI(View rootView) {
-
+        unbinder = ButterKnife.bind(this, rootView);
+        setNavibarTitle(getString(R.string.title_transfer_record),true,true);
     }
 
     @Override
@@ -42,5 +48,13 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
     @Override
     public TransferRecordListPresenter newP() {
         return null;
+    }
+
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

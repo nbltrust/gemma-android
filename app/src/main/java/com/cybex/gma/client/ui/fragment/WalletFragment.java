@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.UISkipMananger;
-import com.cybex.gma.client.ui.model.response.TransferHistory;
+import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -49,7 +49,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.superTextView_card_record)
     public void goToSeeRecord(){
-        startActivity(new Intent(getActivity(), TransferHistory.class));
+        startActivity(new Intent(getActivity(), TransferRecordActivity.class));
     }
 
     public static WalletFragment newInstance() {
