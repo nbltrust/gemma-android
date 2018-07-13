@@ -9,9 +9,13 @@ import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
 /**
- * 界面调整管理
+ * 界面跳转管理
  */
 public final class UISkipMananger {
+
+    private UISkipMananger() {
+
+    }
 
     /**
      * 跳转到引导页
