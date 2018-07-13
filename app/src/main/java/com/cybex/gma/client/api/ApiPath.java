@@ -27,7 +27,7 @@ public class ApiPath {
     //中心化服务器host
     public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3001";
     //链上服务器host
-    public static final String HOST_ON_CHAIN = "";
+    public static final String HOST_ON_CHAIN = "http://139.196.73.117:9000";
 
     /**------------EOS 项目情况配置---------------*/
 }
