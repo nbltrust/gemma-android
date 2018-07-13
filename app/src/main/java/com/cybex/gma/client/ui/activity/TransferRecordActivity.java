@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.fragment.TransferRecordDetailFragment;
 import com.cybex.gma.client.ui.fragment.TransferRecordListFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
@@ -14,7 +13,7 @@ import me.framework.fragmentation.anim.FragmentAnimator;
 /**
  * Created by wanglin on 2018/7/11.
  */
-public class TransferRecordActivity extends XActivity{
+public class TransferRecordActivity extends XActivity {
 
     @Override
     public void bindUI(View rootView) {
@@ -25,7 +24,7 @@ public class TransferRecordActivity extends XActivity{
     public void initData(Bundle savedInstanceState) {
 
         if (findFragment(TransferRecordListFragment.class) == null) {
-            loadRootFragment(R.id.fl_container, TransferRecordDetailFragment.newInstance());
+            loadRootFragment(R.id.fl_container, TransferRecordListFragment.newInstance());
         }
 
     }

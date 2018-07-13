@@ -60,7 +60,7 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         return rootView;
     }
 
-    protected void setNavibarTitle(String title, boolean isShowBack) {
+    protected void setNavibarTitle(final String title, final boolean isShowBack) {
         mTitleBar = rootView.findViewById(R.id.btn_navibar);
         mTitleBar.setTitle(title);
         mTitleBar.setTitleColor(R.color.ffffff_white_1000);
@@ -77,6 +77,33 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         }
     }
 
+
+    /**
+     * @param title 标题
+     * @param isShowBack 是否显示返回键
+     * @param isOnBackFinishActivity 是否关闭Fragment,Activity
+     */
+    protected void setNavibarTitle(final String title, final boolean isShowBack, final boolean isOnBackFinishActivity) {
+
+        mTitleBar = rootView.findViewById(R.id.btn_navibar);
+        mTitleBar.setTitle(title);
+        mTitleBar.setTitleColor(R.color.ffffff_white_1000);
+        mTitleBar.setTitleSize(20);
+        mTitleBar.setImmersive(true);
+        if (isShowBack) {
+            mTitleBar.setLeftImageResource(R.drawable.ic_btn_back);
+            mTitleBar.setLeftClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isOnBackFinishActivity) {
+                        getActivity().finish();
+                    } else {
+                        pop();
+                    }
+                }
+            });
+        }
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

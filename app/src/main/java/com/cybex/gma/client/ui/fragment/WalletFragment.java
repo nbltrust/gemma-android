@@ -47,6 +47,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.superTextView_card_record)
     public void goToSeeRecord(){
+       UISkipMananger.launchTransferRecord(getActivity());
 
     }
 

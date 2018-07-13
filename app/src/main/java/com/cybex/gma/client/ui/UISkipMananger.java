@@ -1,7 +1,6 @@
 package com.cybex.gma.client.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -23,7 +22,7 @@ public final class UISkipMananger {
      *
      * @param context
      */
-    public static void launchGuide(Context context) {
+    public static void launchGuide(Activity context) {
     }
 
     /**
@@ -31,8 +30,18 @@ public final class UISkipMananger {
      *
      * @param context
      */
-    public static void launchHome(Context context) {
+    public static void launchHome(Activity context) {
 
+
+    }
+
+    /**
+     * 跳转到转账记录界面
+     *
+     * @param mContext
+     */
+    public static void launchTransferRecord(Activity mContext) {
+        launchIntent(mContext, TransferRecordActivity.class);
 
     }
 
@@ -49,7 +58,7 @@ public final class UISkipMananger {
      *
      * @param context
      */
-    public static void launchLogin(Context context) {
+    public static void launchLogin(Activity context) {
     }
 
 
@@ -86,7 +95,7 @@ public final class UISkipMananger {
 
     }
 
-    public static void loginOut(Context mContext) {
+    public static void loginOut(Activity mContext) {
         AppManager.getAppManager().finishAllActivity();
         launchLogin(mContext);
     }
