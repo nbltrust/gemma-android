@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.hxlx.core.lib.R;
 import com.hxlx.core.lib.common.eventbus.BaseEvent;
@@ -69,6 +68,12 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         mTitleBar.setImmersive(true);
         if (isShowBack) {
             mTitleBar.setLeftImageResource(R.drawable.ic_btn_back);
+            mTitleBar.setLeftClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pop();
+                }
+            });
         }
     }
 
