@@ -22,8 +22,10 @@ public class UserRegisterRequest extends GMAHttpRequest<CustomData> {
         setMethod(ApiPath.HOST_CENTER_SERVER + ApiMethod.API_REGISTER);
     }
 
+
     public UserRegisterRequest setRegisterJsonParams(String registerJsonParams) {
         this.registerJsonParams = registerJsonParams;
+        setJsonParams(registerJsonParams);
         return this;
     }
 }

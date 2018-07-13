@@ -16,6 +16,8 @@ public class GMAHttpRequest<T> extends CommonRequest<T> {
 
     private HashMap<String, String> mParams;
     private String mPath = "";
+    private String jsonParams;
+
 
     /**
      * @param clazz 想要请求返回的Bean
@@ -31,7 +33,7 @@ public class GMAHttpRequest<T> extends CommonRequest<T> {
     }
 
 
-    public void postJson(String jsonParams, CustomRequestCallback<T> callback) {
+    public void postJson(CustomRequestCallback<T> callback) {
         setParams(mParams);
         super.postJson(mPath, jsonParams, callback);
     }
@@ -46,9 +48,15 @@ public class GMAHttpRequest<T> extends CommonRequest<T> {
     }
 
 
+    protected void setJsonParams(String jsonParams) {
+        this.jsonParams = jsonParams;
+    }
+
+
     protected void checkNullAndSet(HashMap<String, String> params, String key, String value) {
         if (value != null && !TextUtils.isEmpty(String.valueOf(value))) {
             params.put(key, value);
         }
     }
+
 }
