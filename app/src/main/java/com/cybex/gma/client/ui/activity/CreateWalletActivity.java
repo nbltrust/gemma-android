@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.activity;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,9 +12,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -21,6 +22,7 @@ import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.xujiaji.happybubble.BubbleLayout;
 
+import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +35,7 @@ import cxy.com.validate.Validate;
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     private CreateWalletPresenter curPresenter;
     private boolean isPasswordMatched;
+    private final String testPublicKey = "EOS5FBWk3oBMiipWfcPU5Z8Ry3N9CZVRtVaSffkonzkmueeyTupnS";
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
@@ -125,12 +128,11 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @OnClick(R.id.bt_create_wallet)
     public void Jump(){
-        //todo 发送封装数据,在回调方法中更新UI和判断是否跳转
-        UISkipMananger.launchIntent(CreateWalletActivity.this, MainTabActivity.class);
+        //todo
+        getP().createAccount(getEOSUserName(), getInvCode(),testPublicKey);
     }
 
     public void initView() {
-        //setViewBaseColor();
         bubble.setVisibility(View.GONE);
         setUnclickable(btCreateWallet);
         editTextPassword.setOnTouchListener(new View.OnTouchListener() {
@@ -172,18 +174,34 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         setNavibarTitle("创建钱包", true);
     }
 
-    public void setStatusBar(){
+    public void setStatusBar() {
+        //顶部状态栏适配
         Window window = getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION  //该参数指布局能延伸到navigationbar，我们场景中不应加这个参数
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
-        | WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//透明状态栏
-        window.setStatusBarColor(Color.TRANSPARENT);
-        window.setNavigationBarColor(Color.TRANSPARENT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //Android 5.0 以上适配
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION  //布局能延伸到navigation bar
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Color.TRANSPARENT);//设置状态栏颜色为透明
+            window.setNavigationBarColor(Color.TRANSPARENT);//设置导航栏颜色为透明
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                //Android 7.0以上适配
+                try {
+                    Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
+                    Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
+                    field.setAccessible(true);
+                    field.setInt(getWindow().getDecorView(), Color.TRANSPARENT);  //改为透明
+                } catch (Exception e) {}
+            }
+        }
     }
+
 
     @Override
     public void bindUI(View rootView) {
@@ -277,6 +295,11 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         editTextRepeatPass.setBaseColor(R.color.cloudyBlue);
         editTextInvCode.setBaseColor(R.color.cloudyBlue);
 
+    }
+
+    public void showOnErrorInfo(){
+        //todo 根据返回值判断提醒的内容
+        Toast.makeText(CreateWalletActivity.this, "创建账户失败，请重新尝试", Toast.LENGTH_LONG).show();
     }
 
     @Override
