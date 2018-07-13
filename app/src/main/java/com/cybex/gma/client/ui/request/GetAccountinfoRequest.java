@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.request;
 
 import com.cybex.gma.client.api.ApiMethod;
 import com.cybex.gma.client.api.ApiPath;
+import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.api.request.GMAHttpRequest;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
 
@@ -12,6 +13,8 @@ import com.cybex.gma.client.ui.model.response.AccountInfo;
  */
 public class GetAccountinfoRequest extends GMAHttpRequest<AccountInfo> {
 
+    private static final String TAG = "get_account";
+
     /**
      * @param clazz 想要请求返回的Bean
      */
@@ -19,6 +22,11 @@ public class GetAccountinfoRequest extends GMAHttpRequest<AccountInfo> {
         super(clazz);
         setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_ACCOUNT_INFO);
 
+    }
+
+
+    public void getAccountInfo(JsonCallback<AccountInfo> callback) {
+        postJsonNoRxRequest(TAG, callback);
     }
 
 

@@ -68,6 +68,12 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         mTitleBar.setImmersive(true);
         if (isShowBack) {
             mTitleBar.setLeftImageResource(R.drawable.ic_btn_back);
+            mTitleBar.setLeftClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pop();
+                }
+            });
         }
     }
 

@@ -27,7 +27,7 @@ public class GMAHttpRequest<T> extends CommonRequest<T> {
         mParams = new HashMap<>();
     }
 
-    public void post(String tag, AbsCallback<T> callback) {
+    public void postJsonNoRxRequest(String tag, AbsCallback<T> callback) {
         setParams(mParams);
         super.post(tag, mPath, mParams, callback);
     }
