@@ -61,7 +61,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void bindUI(View rootView) {
-        uiSkipMananger = new UISkipMananger();
         unbinder = ButterKnife.bind(this, rootView);
     }
 

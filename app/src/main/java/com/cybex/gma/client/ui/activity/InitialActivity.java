@@ -32,7 +32,6 @@ public class InitialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
         ButterKnife.bind(this);
-        uiSkipMananger = new UISkipMananger();
     }
 
 
