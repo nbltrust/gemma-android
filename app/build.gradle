@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply from: '../config/properties-util.gradle'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 if (!rootProject.optimizeForDevelopment) {
     apply from: '../gradle/plugins/checkstyle-android.gradle'
@@ -223,12 +225,17 @@ dependencies {
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.smartrefresh.layout
 
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation deps.gma.svgImageViewer
+
+
     implementation project(':platform_framework:basiclib')
     implementation project(':platform_framework:base-view')
     implementation project(':platform_framework:update-app')
     implementation project(':platform_framework:customdialoglib')
     implementation project(':platform_framework:superTextview')
     implementation project(':platform_framework:validate')
+    implementation project(':platform_framework:jdenticon')
 
 
 

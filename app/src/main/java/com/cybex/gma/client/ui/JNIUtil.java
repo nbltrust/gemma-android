@@ -1,6 +1,9 @@
 package com.cybex.gma.client.ui;
 
-import android.support.v4.util.Pair;
+
+import android.util.Pair;
+
+import java.util.Map;
 
 
 /**
@@ -22,7 +25,7 @@ public class JNIUtil {
      *
      * @return
      */
-    public final static native Pair<String, String> createKey();
+    public final static native Map<String,String> createKey();
 
 
     /**
