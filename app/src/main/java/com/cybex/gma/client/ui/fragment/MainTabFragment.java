@@ -7,7 +7,6 @@ import android.view.View;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.EventBusActivityScope;
 import com.cybex.gma.client.event.TabSelectedEvent;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
 import com.cybex.gma.client.widget.bottombar.BottomBarTab;
@@ -57,7 +56,7 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
 
                 if (position == 1) {
-                  String str =  JNIUtil.get_cypher("test","111");
+                  //String str =  JNIUtil.get_cypher("test","111");
                 }
             }
 
