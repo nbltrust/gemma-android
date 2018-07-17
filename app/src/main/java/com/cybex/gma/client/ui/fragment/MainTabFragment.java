@@ -55,8 +55,8 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
 
-                if(position==1){
-                   // JNIUtil.createKey();
+                if (position == 1) {
+                  //String str =  JNIUtil.get_cypher("test","111");
                 }
             }
 
@@ -71,7 +71,6 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
                 EventBusActivityScope.getDefault(_mActivity).post(new TabSelectedEvent(position));
             }
         });
-
 
 
     }

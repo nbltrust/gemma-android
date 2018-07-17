@@ -20,7 +20,6 @@ public class GmaApplication extends BaseApplication {
         initFragmentation();
         InitializeService.start(this);
         HttpConfig.init(this);
-
     }
 
 
