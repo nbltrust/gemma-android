@@ -64,12 +64,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void bindUI(View rootView) {
-        generatePotrait(testUsername);
         unbinder = ButterKnife.bind(this, rootView);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        generatePotrait(testUsername);
         setNavibarTitle("GEMMA", false);
     }
 
