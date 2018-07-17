@@ -12,12 +12,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.xujiaji.happybubble.BubbleLayout;
@@ -201,7 +201,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         }
     }
 
-
     @Override
     public void bindUI(View rootView) {
 
@@ -296,9 +295,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     }
 
-    public void showOnErrorInfo(){
+    public void showOnErrorInfo() {
         //todo 根据返回值判断提醒的内容
-        Toast.makeText(CreateWalletActivity.this, "创建账户失败，请重新尝试", Toast.LENGTH_LONG).show();
+        GemmaToastUtils.showLongToast("创建失败，请重新尝试");
     }
 
     @Override
