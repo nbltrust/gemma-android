@@ -8,7 +8,10 @@
         android:bottomRightRadius="@dimen/dimen_6"
         >
     </corners>
-    <stroke android:width="1dp" android:color="#6adde2f0">
+    <!--
+    <stroke android:width="0dp" android:color="#6adde2f0">
 
     </stroke>
+
+    -->
 </shape>
