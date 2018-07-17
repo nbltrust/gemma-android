@@ -11,13 +11,16 @@ import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
+import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.pixplicity.sharp.Sharp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import jdenticon.AvatarHelper;
 
 /**
  * 钱包Fragment
@@ -61,6 +64,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void bindUI(View rootView) {
+        generatePotrait(testUsername);
         unbinder = ButterKnife.bind(this, rootView);
     }
 
@@ -80,6 +84,11 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         return new WalletPresenter();
     }
 
+    public void generatePotrait(String eosName){
+        String hash = EncryptationManager.getEncrypt().encryptSHA256(eosName);
+        final String str = AvatarHelper.Companion.getInstance().getAvatarSvg(hash, 62, null);
+        Sharp.loadString(str).into(imageViewPortrait);
+    }
 
     @Override
     public void onDestroyView() {
