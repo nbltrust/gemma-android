@@ -25,18 +25,17 @@ import butterknife.Unbinder;
  * Created by wanglin on 2018/7/9.
  */
 public class WalletFragment extends XFragment<WalletPresenter> {
-    private UISkipMananger uiSkipMananger;
 
+    @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
+    @BindView(R.id.total_EOS_amount) SuperTextView totalEOSAmount;
+    @BindView(R.id.total_CNY_amount) SuperTextView totalCNYAmount;
+    @BindView(R.id.balance) SuperTextView balance;
+    @BindView(R.id.redeem) SuperTextView redeem;
+    @BindView(R.id.layout_top_info) LinearLayout layoutTopInfo;
     @BindView(R.id.superTextView_card_resource) SuperTextView superTextViewCardResource;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.imageView2) ImageView imageView2;
-    @BindView(R.id.textView2) TextView textView2;
-    @BindView(R.id.textView_total_assets) TextView textViewTotalAssets;
-    @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
-    @BindView(R.id.balance) SuperTextView balance;
-    @BindView(R.id.dash_line_vertical) View dashLineVertical;
-    @BindView(R.id.superTextView_redeem) SuperTextView superTextViewRedeem;
-    @BindView(R.id.tv_remain_time) TextView tvRemainTime;
+    @BindView(R.id.imageView_portrait) ImageView imageViewPortrait;
+    @BindView(R.id.textView_username) TextView textViewUsername;
     @BindView(R.id.superTextView_cpu) SuperTextView superTextViewCpu;
     @BindView(R.id.superTextView_net) SuperTextView superTextViewNet;
     @BindView(R.id.superTextView_ram) SuperTextView superTextViewRam;
@@ -46,8 +45,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     Unbinder unbinder;
 
     @OnClick(R.id.superTextView_card_record)
-    public void goToSeeRecord(){
-       UISkipMananger.launchTransferRecord(getActivity());
+    public void goToSeeRecord() {
+        UISkipMananger.launchTransferRecord(getActivity());
 
     }
 
