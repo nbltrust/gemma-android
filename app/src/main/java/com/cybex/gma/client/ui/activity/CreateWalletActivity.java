@@ -16,15 +16,12 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.xujiaji.happybubble.BubbleLayout;
 
 import java.lang.reflect.Field;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,8 +30,6 @@ import butterknife.OnTextChanged;
 import cxy.com.validate.Validate;
 
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
-    private CreateWalletPresenter curPresenter;
-    private boolean isPasswordMatched;
     private final String testPublicKey = "EOS5FBWk3oBMiipWfcPU5Z8Ry3N9CZVRtVaSffkonzkmueeyTupnS";
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
@@ -59,64 +54,56 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
 
     @OnTextChanged(value = R.id.editText_eosName, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterNameChanged(){
-        if (editTextEosName.getText().toString().trim().length() == 12 && isUserNameValid()){
-            //当eos用户名为12位时，恢复初始样式
-            textViewEosName.setTextColor(getResources().getColor(R.color.steel));
-            textViewEosName.setText("EOS账户名");
-            editTextEosName.setUnderlineColor(getResources().getColor(R.color.cloudyBlue));
+    public void afterNameChanged() {
+        if (editTextEosName.getText().toString().trim().length() == 12 && getP().isUserNameValid()) {
+                setEOSNameValidStyle();
+            if (getP().isAllTextFilled() && checkbox.isChecked()) {
+                setClickable(btCreateWallet);
+            } else {
 
-            if (isAllTextFilled() && checkbox.isChecked()){
-                setClickable(btCreateWallet);
-            }else{
                 setUnclickable(btCreateWallet);
             }
-        }else{
-            //不为12位时，更改样式示意
-            textViewEosName.setText("由小写字母a-z与数字1-5组成，须为12位");
-            textViewEosName.setTextColor(getResources().getColor(R.color.scarlet));
-            editTextEosName.setUnderlineColor(getResources().getColor(R.color.scarlet));
+        } else {
+            setEOSNameInvalidStyle();
             setUnclickable(btCreateWallet);
         }
     }
+
     @OnTextChanged(value = R.id.editText_password, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterPasswordChanged(){
-        if (isAllTextFilled() && checkbox.isChecked() && isUserNameValid()){
+    public void afterPasswordChanged() {
+        if (getP().isAllTextFilled() && checkbox.isChecked() && getP().isUserNameValid()) {
             setClickable(btCreateWallet);
-        }else{
+        } else {
             setUnclickable(btCreateWallet);
         }
     }
+
     @OnTextChanged(value = R.id.editText_repeatPass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterRepeatPassChanged(){
-        if (getPassword().equals(getRepeatPassword())){
-            textViewRepeatPass.setText("重复密码");
-            textViewRepeatPass.setTextColor(getResources().getColor(R.color.steel));
-            editTextRepeatPass.setUnderlineColor(getResources().getColor(R.color.cloudyBlue));
-            if (isAllTextFilled() && checkbox.isChecked()){
+    public void afterRepeatPassChanged() {
+        if (getPassword().equals(getRepeatPassword())) {
+            setRepeatPassValidStyle();
+            if (getP().isAllTextFilled() && checkbox.isChecked()) {
                 setClickable(btCreateWallet);
-            }else{
+            } else {
                 setUnclickable(btCreateWallet);
             }
-        }else{
-            textViewRepeatPass.setText("密码不一致");
-            textViewRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
-            editTextRepeatPass.setUnderlineColor(getResources().getColor(R.color.scarlet));
+        } else {
+            setRepeatPassInvalidStyle();
             setUnclickable(btCreateWallet);
         }
     }
+
     @OnTextChanged(value = R.id.editText_invCode, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterInvCodeChanged(){
-        if (isAllTextFilled() && checkbox.isChecked() && isUserNameValid()){
+    public void afterInvCodeChanged() {
+        if (getP().isAllTextFilled() && checkbox.isChecked() && getP().isUserNameValid()) {
             setClickable(btCreateWallet);
-        }else{
+        } else {
             setUnclickable(btCreateWallet);
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        curPresenter = getP();
         super.onCreate(savedInstanceState);
         setStatusBar();
         setContentView(R.layout.activity_create_wallet);
@@ -126,9 +113,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     }
 
     @OnClick(R.id.bt_create_wallet)
-    public void Jump(){
+    public void Jump() {
         //todo
-        getP().createAccount(getEOSUserName(), getInvCode(),testPublicKey);
+        getP().createAccount(getEOSUserName(), getInvCode(), testPublicKey);
     }
 
     public void initView() {
@@ -163,9 +150,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && isAllTextFilled() && isUserNameValid() ){
+                if (isChecked && getP().isAllTextFilled() && getP().isUserNameValid()) {
                     setClickable(btCreateWallet);
-                }else{
+                } else {
                     setUnclickable(btCreateWallet);
                 }
             }
@@ -231,6 +218,44 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         return super.getP();
     }
 
+    public void setEOSNameValidStyle(){
+        //当eos用户名为12位时，恢复初始样式
+        textViewEosName.setTextColor(getResources().getColor(R.color.steel));
+        textViewEosName.setText("EOS账户名");
+        editTextEosName.setUnderlineColor(getResources().getColor(R.color.cloudyBlue));
+    }
+
+    public void setEOSNameInvalidStyle(){
+        //不为12位时，更改样式示意
+        textViewEosName.setText("由小写字母a-z与数字1-5组成，须为12位");
+        textViewEosName.setTextColor(getResources().getColor(R.color.scarlet));
+        editTextEosName.setUnderlineColor(getResources().getColor(R.color.scarlet));
+    }
+
+    public void setRepeatPassValidStyle(){
+        //两次输入密码匹配
+        textViewRepeatPass.setText("重复密码");
+        textViewRepeatPass.setTextColor(getResources().getColor(R.color.steel));
+        editTextRepeatPass.setUnderlineColor(getResources().getColor(R.color.cloudyBlue));
+    }
+
+    public void setRepeatPassInvalidStyle(){
+        //两次输入密码不匹配
+        textViewRepeatPass.setText("密码不一致");
+        textViewRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
+        editTextRepeatPass.setUnderlineColor(getResources().getColor(R.color.scarlet));
+    }
+
+    public void setClickable(Button button) {
+        button.setClickable(true);
+        button.setBackgroundColor(getResources().getColor(R.color.cornflowerBlueTwo));
+    }
+
+    public void setUnclickable(Button button) {
+        button.setClickable(false);
+        button.setBackgroundColor(getResources().getColor(R.color.cloudyBlueTwo));
+    }
+
     public String getEOSUserName() {
         return editTextEosName.getText().toString().trim();
     }
@@ -247,52 +272,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         return editTextInvCode.getText().toString().trim();
     }
 
-    public String getPassHint(){
+    public String getPassHint() {
         return editTextPassHint.getText().toString().trim();
-    }
-
-    public void setClickable(Button button) {
-        button.setClickable(true);
-        button.setBackgroundColor(getResources().getColor(R.color.cornflowerBlueTwo));
-    }
-    public void setUnclickable(Button button) {
-        button.setClickable(false);
-        button.setBackgroundColor(getResources().getColor(R.color.cloudyBlueTwo));
-    }
-
-    public boolean isAllTextFilled() {
-        if (EmptyUtils.isEmpty(getPassword())
-                || EmptyUtils.isEmpty(getRepeatPassword())
-                || EmptyUtils.isEmpty(getEOSUserName())
-                || EmptyUtils.isEmpty(getInvCode())) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean isUserNameValid(){
-        String eosUsername = getEOSUserName();
-        String regEx = "^[a-z1-5]{12}$";
-        Pattern pattern = Pattern.compile(regEx);
-        Matcher matcher = pattern.matcher((eosUsername));
-        boolean res = matcher.matches();
-        return res;
-    }
-
-    public void setViewBaseColor(){
-
-        textViewEosName.setTextColor(getResources().getColor(R.color.cloudyBlue));
-        textViewPassword.setTextColor(getResources().getColor(R.color.cloudyBlue));
-        textViewRepeatPass.setTextColor(getResources().getColor(R.color.cloudyBlue));
-        textViewPassHint.setTextColor(getResources().getColor(R.color.cloudyBlue));
-        textViewInvCode.setTextColor(getResources().getColor(R.color.cloudyBlue));
-
-        editTextEosName.setBaseColor(R.color.cloudyBlue);
-        editTextPassword.setBaseColor(R.color.cloudyBlue);
-        editTextPassHint.setBaseColor(R.color.cloudyBlue);
-        editTextRepeatPass.setBaseColor(R.color.cloudyBlue);
-        editTextInvCode.setBaseColor(R.color.cloudyBlue);
-
     }
 
     public void showOnErrorInfo() {
@@ -301,7 +282,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         Validate.unreg(this);
     }

@@ -58,6 +58,13 @@
         <item name="android:layout_marginTop">@dimen/single_cpu_margin</item>
     </style>
 
+    <!-- 管理钱包页面 -->
+    <style name="card_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+    </style>
 
 
     <!--Create Wallet 页面 -->

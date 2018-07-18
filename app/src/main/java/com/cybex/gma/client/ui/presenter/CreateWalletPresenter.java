@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.cybex.gma.client.api.callback.CustomRequestCallback;
 import com.cybex.gma.client.api.data.response.CustomData;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.UISkipMananger;
@@ -13,8 +14,12 @@ import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.common.cache.CacheUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.android.logger.Log;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.reactivex.disposables.Disposable;
 
@@ -76,14 +81,42 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
     }
 
     /**
+     * 用户名规则：12位小写字母a-z+数字1-5
+     * @return
+     */
+
+    public boolean isUserNameValid(){
+        String eosUsername = getV().getEOSUserName();
+        String regEx = "^[a-z1-5]{12}$";
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher matcher = pattern.matcher((eosUsername));
+        boolean res = matcher.matches();
+        return res;
+    }
+
+    /**
+     * 代替监听器检查是否所有edittext输入框都不为空值
+     * @return
+     */
+    public boolean isAllTextFilled(){
+        if (EmptyUtils.isEmpty(getV().getPassword())
+                || EmptyUtils.isEmpty(getV().getRepeatPassword())
+                || EmptyUtils.isEmpty(getV().getEOSUserName())
+                || EmptyUtils.isEmpty(getV().getInvCode())) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * 创建成功之后存
      * 公钥直接存（一个账户对应一个公钥）
      * 私钥+密码加密后存
      */
     public void saveKeypair(String publicKey, String privateKey, String username){
-        CacheUtil.put("PubKey_" + username, publicKey);
+        CacheUtil.put(CacheConstants.PubKey_Prefix + username, publicKey);
         String data = privateKey + getV().getPassword();
-        CacheUtil.put("PriKey+Pass_" + username, data, true);
+        CacheUtil.put(CacheConstants.PriKey_Prefix + username, data, true);
     }
 
 }

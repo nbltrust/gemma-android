@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.base.CommonWebViewActivity;
+import com.cybex.gma.client.ui.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -32,7 +32,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     private final String testUsername = "hellobitcoin";
 
     @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
-    @BindView(R.id.total_EOS_amount) SuperTextView totalEOSAmount;
+    @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
     @BindView(R.id.total_CNY_amount) SuperTextView totalCNYAmount;
     @BindView(R.id.balance) SuperTextView balance;
     @BindView(R.id.redeem) SuperTextView redeem;
@@ -51,9 +51,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.superTextView_card_record)
     public void goToSeeRecord() {
-        //UISkipMananger.launchTransferRecord(getActivity());
-        CommonWebViewActivity.startWebView(getActivity(), "http://www.baidu.com/", "测试WebView");
-
+        UISkipMananger.launchTransferRecord(getActivity());
     }
 
     public static WalletFragment newInstance() {
