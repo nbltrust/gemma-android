@@ -50,17 +50,15 @@
 
             </com.allen.library.SuperTextView>
 
-            <com.allen.library.SuperTextView
+            <TextView
                 android:id="@+id/total_EOS_amount"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                title:sUseShape="true"
-                title:sCenterTextString="0.0000 EOS"
-                title:sCenterTextSize="@dimen/font_6"
-                title:sCenterTextColor="@color/darkSlateBlue"
-                >
-
-            </com.allen.library.SuperTextView>
+                android:layout_height="30dp"
+                android:text=" 0.0000 EOS"
+                android:textColor="@color/darkSlateBlueTwo"
+                android:gravity="center"
+                android:textSize="@dimen/font_6"
+                android:textStyle="bold"/>
 
             <com.allen.library.SuperTextView
                 android:id="@+id/total_CNY_amount"

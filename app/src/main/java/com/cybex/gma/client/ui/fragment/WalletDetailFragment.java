@@ -4,57 +4,47 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.presenter.TransferRecordListPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * 转账记录列表主界面
- *
- * Created by wanglin on 2018/7/11.
- */
-public class TransferRecordListFragment extends XFragment<TransferRecordListPresenter> {
-
+public class WalletDetailFragment extends XFragment {
 
     Unbinder unbinder;
 
-    public static TransferRecordListFragment newInstance() {
+    public static WalletDetailFragment newInstance() {
         Bundle args = new Bundle();
-        TransferRecordListFragment fragment = new TransferRecordListFragment();
+        WalletDetailFragment fragment = new WalletDetailFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        setNavibarTitle(getString(R.string.title_transfer_record),true,true);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
-
+        setNavibarTitle("管理钱包", true);
     }
+
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_transfer_record_list;
+        return R.layout.fragment_manage_wallet;
     }
 
     @Override
-    public TransferRecordListPresenter newP() {
+    public Object newP() {
         return null;
     }
-
-
-
+    
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+
     }
 }

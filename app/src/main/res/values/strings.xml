@@ -15,6 +15,7 @@
     <string name="agreement">我已阅读并同意</string>
     <string name="agreement2"><u>服务协议</u></string>
     <string name="create_wallet">创建钱包</string>
+    <string name="import_wallet">导入钱包</string>
 
     <string name="contact">联系人</string>
     <string name="createNewWallet">创建新钱包</string>
@@ -115,7 +116,7 @@
     <string name="block_time">区块时间</string>
     <string name="see_in_explorer">在区块链浏览器上查看</string>
     <string name="eos">EOS</string>
-    
+
     <string name="at_char">\ufeff@</string>
     <string name="title_transfer">转账</string>
     <string name="title_me">我的</string>

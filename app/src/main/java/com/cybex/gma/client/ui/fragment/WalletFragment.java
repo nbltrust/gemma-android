@@ -32,7 +32,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     private final String testUsername = "hellobitcoin";
 
     @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
-    @BindView(R.id.total_EOS_amount) SuperTextView totalEOSAmount;
+    @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
     @BindView(R.id.total_CNY_amount) SuperTextView totalCNYAmount;
     @BindView(R.id.balance) SuperTextView balance;
     @BindView(R.id.redeem) SuperTextView redeem;

@@ -6,4 +6,7 @@ package com.cybex.gma.client.config;
  */
 public interface CacheConstants {
 
+    final String PubKey_Prefix = "PublicKey_";
+    final String PriKey_Prefix = "PriKey+Pass_";
+
 }
