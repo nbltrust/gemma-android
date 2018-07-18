@@ -1,6 +1,5 @@
 package com.cybex.gma.client.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -42,19 +41,17 @@ public class ChangeWalletNameFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("管理钱包", true);
-    }
-
-    @Override
-    protected void setNavibarTitle(String title, boolean isShowBack) {
-        super.setNavibarTitle(title, isShowBack);
+        mTitleBar.setActionTextColor(getResources().getColor(R.color.whiteTwo));
+        mTitleBar.setActionTextSize(18);
         mTitleBar.addAction(new TitleBar.TextAction("保存") {
             @Override
             public void performAction(View view) {
                 //todo 保存钱包名
             }
         });
-        mTitleBar.setActionTextColor(Color.parseColor("#ffffff"));
+
     }
+
 
     @Override
     public int getLayoutId() {
