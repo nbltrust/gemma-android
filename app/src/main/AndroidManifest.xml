@@ -83,6 +83,14 @@
 
         </activity>
 
+        <!-- 应用内浏览器 -->
+        <activity
+            android:name=".ui.base.CommonWebViewActivity"
+            android:configChanges="locale|layoutDirection|mcc|mnc|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:label="@string/fast_loading"
+            android:screenOrientation="portrait"/>
+
         <!-- activity end -->
 
         <!--兼容7.0-->

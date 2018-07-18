@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.UISkipMananger;
+import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -51,7 +51,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.superTextView_card_record)
     public void goToSeeRecord() {
-        UISkipMananger.launchTransferRecord(getActivity());
+        //UISkipMananger.launchTransferRecord(getActivity());
+        CommonWebViewActivity.startWebView(getActivity(), "http://www.baidu.com/", "测试WebView");
 
     }
 
@@ -84,7 +85,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         return new WalletPresenter();
     }
 
-    public void generatePotrait(String eosName){
+    public void generatePotrait(String eosName) {
         String hash = EncryptationManager.getEncrypt().encryptSHA256(eosName);
         final String str = AvatarHelper.Companion.getInstance().getAvatarSvg(hash, 62, null);
         Sharp.loadString(str).into(imageViewPortrait);

@@ -15,6 +15,7 @@ import android.view.View;
 import com.hxlx.core.lib.R;
 import com.hxlx.core.lib.common.eventbus.BaseEvent;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.OSUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -39,7 +40,13 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     private VDelegate vDelegate;
     private P p;
     protected TitleBar mTitleBar;
+    protected Activity mContext;
 
+
+    @Nullable
+    public <T extends View> T findView(int viewId) {
+        return (T) findViewById(viewId);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,12 +55,18 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
 
         if (getLayoutId() > 0) {
             setContentView(getLayoutId());
+
+            if (isShowTitleBar()) {
+                mTitleBar = findViewById(R.id.btn_navibar);
+            }
+
             bindUI(null);
             bindEvent();
         }
         initData(savedInstanceState);
 
         AppManager.getAppManager().addActivity(this);
+        mContext = this;
 
     }
 
@@ -70,7 +83,8 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     }
 
     protected void setNavibarTitle(String title, boolean isShowBack) {
-        mTitleBar = findViewById(R.id.btn_navibar);
+        if (EmptyUtils.isEmpty(title)) { return; }
+
         mTitleBar.setTitle(title);
         mTitleBar.setTitleColor(R.color.ffffff_white_1000);
         mTitleBar.setTitleSize(20);
@@ -84,6 +98,16 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
                 }
             });
         }
+    }
+
+    /**
+     * 是否因此TitleBar
+     *
+     * @param visibility
+     */
+    protected void isShowNavibar(int visibility) {
+        if (null != mTitleBar) { mTitleBar.setVisibility(visibility); }
+
     }
 
     /**
@@ -183,6 +207,10 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     @Override
     public boolean useEventBus() {
         return false;
+    }
+
+    public boolean isShowTitleBar() {
+        return true;
     }
 
     @Override
