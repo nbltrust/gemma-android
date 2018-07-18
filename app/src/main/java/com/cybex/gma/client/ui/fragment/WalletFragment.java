@@ -52,7 +52,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @OnClick(R.id.superTextView_card_record)
     public void goToSeeRecord() {
         UISkipMananger.launchTransferRecord(getActivity());
-
     }
 
     public static WalletFragment newInstance() {
@@ -84,7 +83,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         return new WalletPresenter();
     }
 
-    public void generatePotrait(String eosName){
+    public void generatePotrait(String eosName) {
         String hash = EncryptationManager.getEncrypt().encryptSHA256(eosName);
         final String str = AvatarHelper.Companion.getInstance().getAvatarSvg(hash, 62, null);
         Sharp.loadString(str).into(imageViewPortrait);

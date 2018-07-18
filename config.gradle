@@ -138,6 +138,7 @@ ext {
                     "badgeview"        : "cn.bingoogolapple:bga-badgeview-api:1.1.8",
                     "badgeviewCompiler" : "cn.bingoogolapple:bga-badgeview-compiler:1.1.8",
                     "svgImageViewer"    : "com.pixplicity.sharp:library:1.1.0",
+                    "agentweb"          : "com.just.agentweb:agentweb:4.0.2",
             ],
             'debug'       : [
                     'debugdb': "com.amitshekhar.android:debug-db:1.0.2",

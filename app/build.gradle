@@ -223,6 +223,7 @@ dependencies {
     implementation deps.gma.androidanimations
     api deps.gma.MaterialEditText
     implementation deps.gma.MaterialDialog
+    implementation deps.gma.agentweb
 
     implementation deps.gma.badgeview
     annotationProcessor deps.gma.badgeviewCompiler
@@ -233,7 +234,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation deps.gma.svgImageViewer
-
 
     implementation project(':platform_framework:basiclib')
     implementation project(':platform_framework:base-view')
