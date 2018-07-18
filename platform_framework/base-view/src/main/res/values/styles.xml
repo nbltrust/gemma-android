@@ -7,4 +7,15 @@
         <item name="android:background">@color/color_f2f2f2</item>
     </style>
 
+
+    <style name="MultipleStatusView.Content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textColor">#cacbcc</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+
 </resources>
