@@ -1,41 +1,35 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class WalletDetailFragment extends XFragment {
+public class ChangeWalletNameFragment extends XFragment {
 
-
+    @BindView(R.id.editText_setWalletName) MaterialEditText setWalletName;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.walletName_in_detailPage) TextView walletNameInDetailPage;
-    @BindView(R.id.eosAddress_in_detailPage) TextView eosAddressInDetailPage;
-    @BindView(R.id.iv_arrow_in_detailPage) ImageView ivArrowInDetailPage;
-    @BindView(R.id.layout_wallet_briefInfo) ConstraintLayout layoutWalletBriefInfo;
-    @BindView(R.id.superTextView_exportPriKey) SuperTextView superTextViewExportPriKey;
-    @BindView(R.id.superTextView_exportMne) SuperTextView superTextViewExportMne;
+    @BindView(R.id.clear_wallet_name) ImageView clearWalletName;
     Unbinder unbinder;
 
-    @OnClick(R.id.layout_wallet_briefInfo)
-    public void goChangeWalletName(){
-        start(ChangeWalletNameFragment.newInstance());
+    @OnClick(R.id.clear_wallet_name)
+    public void setClearWalletName(){
+        setWalletName.setText("");
     }
 
-    public static WalletDetailFragment newInstance() {
+    public static ChangeWalletNameFragment newInstance() {
         Bundle args = new Bundle();
-        WalletDetailFragment fragment = new WalletDetailFragment();
+        ChangeWalletNameFragment fragment = new ChangeWalletNameFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,10 +44,21 @@ public class WalletDetailFragment extends XFragment {
         setNavibarTitle("管理钱包", true);
     }
 
+    @Override
+    protected void setNavibarTitle(String title, boolean isShowBack) {
+        super.setNavibarTitle(title, isShowBack);
+        mTitleBar.addAction(new TitleBar.TextAction("保存") {
+            @Override
+            public void performAction(View view) {
+                //todo 保存钱包名
+            }
+        });
+        mTitleBar.setActionTextColor(Color.parseColor("#ffffff"));
+    }
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_wallet_detail;
+        return R.layout.fragment_change_walletname;
     }
 
     @Override
@@ -66,4 +71,5 @@ public class WalletDetailFragment extends XFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

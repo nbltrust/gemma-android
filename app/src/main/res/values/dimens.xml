@@ -393,7 +393,8 @@
     <dimen name="single_cpu_margin">8dp</dimen>
     <dimen name="single_cpu_height">50dp</dimen>
     <dimen name="single_cpu_width">100dp</dimen>
-
+    <!-- 管理钱包页面 -->
+    <dimen name="standard_margin_in_walletDetailPage">20dp</dimen>
 
 
     <!-- 字体大小 -->

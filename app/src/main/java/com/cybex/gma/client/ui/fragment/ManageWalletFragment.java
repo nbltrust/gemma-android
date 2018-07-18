@@ -24,7 +24,7 @@ public class ManageWalletFragment extends XFragment {
 
     @OnClick(R.id.superTextView_wallet_one)
     public void seeWalletDetail(){
-
+        start(WalletDetailFragment.newInstance());
     }
 
     public static ManageWalletFragment newInstance() {
@@ -55,6 +55,11 @@ public class ManageWalletFragment extends XFragment {
         return null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setNavibarTitle("钱包", true, true);
+    }
 
     @Override
     public void onDestroyView() {

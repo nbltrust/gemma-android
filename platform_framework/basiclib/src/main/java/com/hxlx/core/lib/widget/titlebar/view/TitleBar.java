@@ -555,8 +555,8 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
     // ============================================================================
 
     // store original color
-    private static final int ORIGIN_COLOR = -12345;
 
+    private static final int ORIGIN_COLOR = -12345;
     private boolean mTransparentEnabled = false;
     // start position of fading animation
     private int mStartFadePosition = 80;
