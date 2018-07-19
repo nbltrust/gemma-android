@@ -1,7 +1,7 @@
 #include <jni.h>
 #include <string>
 #include "keosdlib.hpp"
-#include <iostream>
+//#include <iostream>
 
 keosdlib_api k;
 extern "C" JNIEXPORT jstring
