@@ -27,7 +27,7 @@ ext {
             'sonic'          : "3.0.0",
             'multidex'       : '1.0.2',
             'dbflow'         : '4.2.4',
-            'smartrefresh'   : '1.1.0-alpha-3',
+            'smartrefresh'   : '1.0.3',
     ]
 
     deps = [
@@ -139,6 +139,7 @@ ext {
                     "badgeviewCompiler" : "cn.bingoogolapple:bga-badgeview-compiler:1.1.8",
                     "svgImageViewer"    : "com.pixplicity.sharp:library:1.1.0",
                     "agentweb"          : "com.just.agentweb:agentweb:4.0.2",
+                    "logger"            : "com.orhanobut:logger:2.1.1",
             ],
             'debug'       : [
                     'debugdb': "com.amitshekhar.android:debug-db:1.0.2",

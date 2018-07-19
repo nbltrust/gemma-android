@@ -7,7 +7,7 @@ import com.cybex.gma.client.api.data.response.CustomData;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.ui.UISkipMananger;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;

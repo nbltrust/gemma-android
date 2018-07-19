@@ -17,5 +17,39 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <declare-styleable name="MaterialHeader">
+        <attr name="mhPrimaryColor" format="color" />
+        <attr name="mhShadowColor" format="color" />
+        <attr name="mhShadowRadius" format="dimension" />
+        <attr name="mhShowBezierWave" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="RefreshProgressWheel">
+        <attr name="refresh_progressIndeterminate" format="boolean" />
+        <attr name="refresh_barColor" format="color" />
+        <attr name="refresh_rimColor" format="color" />
+        <attr name="refresh_rimWidth" format="dimension" />
+        <attr name="refresh_spinSpeed" format="float" />
+        <attr name="refresh_barSpinCycleTime" format="integer" />
+        <attr name="refresh_circleRadius" format="dimension" />
+        <attr name="refresh_fillRadius" format="boolean" />
+        <attr name="refresh_barWidth" format="dimension" />
+        <attr name="refresh_linearProgress" format="boolean" />
+    </declare-styleable>
+
+    <!--Material 风格 ProgressWheel-->
+    <declare-styleable name="MNBaseProgressWheel">
+        <attr name="mnbase_view_progressIndeterminate" format="boolean" />
+        <attr name="mnbase_view_barColor" format="color" />
+        <attr name="mnbase_view_rimColor" format="color" />
+        <attr name="mnbase_view_rimWidth" format="dimension" />
+        <attr name="mnbase_view_spinSpeed" format="float" />
+        <attr name="mnbase_view_barSpinCycleTime" format="integer" />
+        <attr name="mnbase_view_circleRadius" format="dimension" />
+        <attr name="mnbase_view_fillRadius" format="boolean" />
+        <attr name="mnbase_view_barWidth" format="dimension" />
+        <attr name="mnbase_view_linearProgress" format="boolean" />
+    </declare-styleable>
+
 
 </resources>

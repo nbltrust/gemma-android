@@ -6,13 +6,14 @@ import android.view.View;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.UISkipMananger;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
 /**
  *管理钱包一级界面
  * 钱包主页面中点击右上角icon进入的界面

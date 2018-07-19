@@ -26,5 +26,7 @@ dependencies {
     implementation deps.support.supportV4
     implementation deps.support.appcompatV7
     implementation deps.support.constraint
+
+    api deps.smartrefresh.layout
     api project(':platform_framework:base-res')
 }

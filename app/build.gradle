@@ -230,7 +230,9 @@ dependencies {
 
     implementation deps.yanzhenjie.permission
     implementation deps.third.recyclerviewadapterhelper
-    implementation deps.smartrefresh.layout
+
+    //日志打印
+    implementation deps.gma.logger
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation deps.gma.svgImageViewer

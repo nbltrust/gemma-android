@@ -102,6 +102,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
     private int mActionPadding;
     private int mOutPadding;
     private int mActionTextColor;
+    private int mActionTextSize;
     private int mHeight;
 
     public TitleBar(Context context, AttributeSet attrs) {
@@ -207,7 +208,8 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
         } else {
             index = title.toString().indexOf("\t");
             if (index > 0) {
-                setTitle(title.subSequence(0, index), "  " + title.subSequence(index + 1, title.length()), LinearLayout.HORIZONTAL);
+                setTitle(title.subSequence(0, index), "  " + title.subSequence(index + 1, title.length()),
+                        LinearLayout.HORIZONTAL);
             } else {
                 mCenterText.setText(title);
                 mSubTitleText.setVisibility(View.GONE);
@@ -286,6 +288,10 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
         mActionTextColor = colorResId;
     }
 
+    public void setActionTextSize(int actionTextSize) {
+        this.mActionTextSize = actionTextSize;
+    }
+
     /**
      * Function to set a click listener for Title TextView
      *
@@ -330,7 +336,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
      * Adds a new {@link Action} at the specified index.
      *
      * @param action the action to add
-     * @param index  the position at which to add the action
+     * @param index the position at which to add the action
      */
     public View addAction(Action action, int index) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -399,7 +405,12 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
             TextView text = new TextView(getContext());
             text.setGravity(Gravity.CENTER);
             text.setText(action.getText());
-            text.setTextSize(DEFAULT_ACTION_TEXT_SIZE);
+            if(mActionTextSize!=0){
+                text.setTextSize(mActionTextSize);
+            }else{
+                text.setTextSize(DEFAULT_ACTION_TEXT_SIZE);
+            }
+
             if (mActionTextColor != 0) {
                 text.setTextColor(mActionTextColor);
             }
@@ -445,7 +456,8 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        mLeftText.layout(0, mStatusBarHeight, mLeftText.getMeasuredWidth(), mLeftText.getMeasuredHeight() + mStatusBarHeight);
+        mLeftText.layout(0, mStatusBarHeight, mLeftText.getMeasuredWidth(),
+                mLeftText.getMeasuredHeight() + mStatusBarHeight);
         mRightLayout.layout(mScreenWidth - mRightLayout.getMeasuredWidth(), mStatusBarHeight,
                 mScreenWidth, mRightLayout.getMeasuredHeight() + mStatusBarHeight);
         if (mLeftText.getMeasuredWidth() > mRightLayout.getMeasuredWidth()) {
@@ -455,7 +467,8 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
             mCenterLayout.layout(mRightLayout.getMeasuredWidth(), mStatusBarHeight,
                     mScreenWidth - mRightLayout.getMeasuredWidth(), getMeasuredHeight());
         }
-        mDividerView.layout(0, getMeasuredHeight() - mDividerView.getMeasuredHeight(), getMeasuredWidth(), getMeasuredHeight());
+        mDividerView.layout(0, getMeasuredHeight() - mDividerView.getMeasuredHeight(), getMeasuredWidth(),
+                getMeasuredHeight());
     }
 
     public static int dip2px(int dpValue) {
@@ -503,6 +516,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
      * show.
      */
     public interface Action {
+
         String getText();
 
         int getDrawable();
@@ -511,6 +525,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
     }
 
     public static abstract class ImageAction implements Action {
+
         private int mDrawable;
 
         public ImageAction(int drawable) {
@@ -529,6 +544,7 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
     }
 
     public static abstract class TextAction implements Action {
+
         final private String mText;
 
         public TextAction(String text) {
@@ -590,8 +606,8 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
      * Set transparent title bar anim.
      *
      * @param enabled whether to open anim
-     * @param start   start position of fading animation
-     * @param end     end position of fading animation
+     * @param start start position of fading animation
+     * @param end end position of fading animation
      */
     public void setTransparentEnabled(boolean enabled, int start, int end) {
         setTransparentEnabled(enabled, start, end, mMaxAlpha);
@@ -600,9 +616,9 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
     /**
      * Set transparent title bar anim.
      *
-     * @param enabled  whether to open anim
-     * @param start    start position of fading animation
-     * @param end      end position of fading animation
+     * @param enabled whether to open anim
+     * @param start start position of fading animation
+     * @param end end position of fading animation
      * @param maxAlpha max alpha(0-255)
      */
     public void setTransparentEnabled(boolean enabled, int start, int end, int maxAlpha) {
