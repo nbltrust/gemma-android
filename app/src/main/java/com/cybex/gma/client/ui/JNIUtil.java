@@ -1,11 +1,6 @@
 package com.cybex.gma.client.ui;
 
 
-import android.util.Pair;
-
-import java.util.Map;
-
-
 /**
  * Jni调用
  *
@@ -14,7 +9,7 @@ import java.util.Map;
 public class JNIUtil {
 
     static {
-        System.loadLibrary("keosdlib");
+        System.loadLibrary("eosJni");
     }
 
     private JNIUtil() {}
@@ -25,7 +20,7 @@ public class JNIUtil {
      *
      * @return
      */
-    public final static native Map<String,String> createKey();
+    public final static native String createKey();
 
 
     /**
