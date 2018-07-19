@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#00FFFFFF">
+
+    <TextView
+        android:id="@+id/tvRefreshFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="加载中..."
+        android:textColor="#5c5c5c"
+        android:textSize="14sp" />
+
+    <com.maning.commonlibrary.refresh.view.RefreshProgressWheel
+        android:id="@+id/progressRefresh"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/tvRefreshFooter"
+        android:visibility="visible"
+        wheel:refresh_barColor="#5c5c5c"
+        wheel:refresh_barWidth="1.5dp"
+        wheel:refresh_progressIndeterminate="true" />
+
+</RelativeLayout>
