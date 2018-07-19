@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="26dp"
+        >
+
+        <TextView
+            style="@style/text_title"
+            android:text="@string/safety_first"/>
+
+        <TextView
+            style="@style/text_body"
+            android:text="@string/safety_first_hint"/>
+
+        <TextView
+            style="@style/text_title"
+            android:text="@string/save_offline"/>
+
+        <TextView
+            style="@style/text_body"
+            android:text="@string/save_offline_hint"/>
+
+        <TextView
+            style="@style/text_title"
+            android:text="@string/encrypto_save"/>
+
+        <TextView
+            style="@style/text_body"
+            android:text="@string/encrypto_save_hint"/>
+
+        <TextView
+            android:id="@+id/tv_show_priKey_area"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/shape_corner"
+            android:textColor="@color/darkSlateBlue"
+            android:textSize="@dimen/font_4"
+            android:textStyle="bold"
+            android:text="1234 bb56 7aea f0b6 81bf b99a a426
+ef96 56e1 6889 012b"
+            />
+
+        <Button
+            android:id="@+id/bt_copy_priKey"
+            style="@style/bt_long_in_linearLayout"
+            android:layout_marginTop="30dp"
+            android:text="@string/copy_prikey"/>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

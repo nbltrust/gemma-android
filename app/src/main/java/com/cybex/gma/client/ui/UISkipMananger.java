@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.activity.CreateWalletActivity;
+import com.cybex.gma.client.ui.activity.ManageWalletActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
@@ -30,13 +32,29 @@ public final class UISkipMananger {
     }
 
     /**
-     * 调转到主界面
+     * 跳转到主界面
      *
      * @param context
      */
     public static void launchHome(Activity context) {
 
 
+    }
+
+    /**
+     * 跳转到创建钱包页面
+     * @param context
+     */
+    public static void launchCreateWallet(Activity context){
+        launchIntent(context, CreateWalletActivity.class);
+    }
+
+    /**
+     * 跳转到钱包管理界面
+     * @param mContext
+     */
+    public static void launchWalletManagement(Activity mContext){
+            launchIntent(mContext, ManageWalletActivity.class);
     }
 
     /**

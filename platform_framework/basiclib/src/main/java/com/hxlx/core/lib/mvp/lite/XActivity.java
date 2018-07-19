@@ -84,7 +84,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
 
     protected void setNavibarTitle(String title, boolean isShowBack) {
         if (EmptyUtils.isEmpty(title)) { return; }
-
+        mTitleBar = findViewById(R.id.btn_navibar);
         mTitleBar.setTitle(title);
         mTitleBar.setTitleColor(R.color.ffffff_white_1000);
         mTitleBar.setTitleSize(20);

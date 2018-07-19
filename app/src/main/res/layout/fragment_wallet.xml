@@ -54,7 +54,7 @@
             android:orientation="vertical">
 
             <include
-                layout="@layout/wallet_home_info">
+                layout="@layout/ui_wallet_home_info">
 
             </include>
 

@@ -32,28 +32,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.activity.CreateWalletActivity"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity android:name=".ui.activity.InitialActivity">
-        </activity>
-        <activity
-            android:name=".ui.activity.TransferRecordActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name="com.example.yiran.gemma.Home.HomeActivity"/>
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CreateWallet.CreateSuccessActivity"/>
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.BackUpMneWarningActivity">
-        </activity>
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.BackupMneActivity">
-        </activity>
-        <activity android:name="com.example.yiran.gemma.Modules.Me.Security.CreateLockPattern.CreateLockPatternActivity"/>
-        <activity android:name="com.example.yiran.gemma.Modules.Me.Security.SecuritySettingActivity"/>
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.ImportWallet.ImportWalletActivity"/>
-        <activity android:name="com.example.yiran.gemma.Modules.QRCode.ScanActivity"/>
-        <activity android:name="com.example.yiran.gemma.Base.BaseActivity"/>
-        <activity android:name="com.example.yiran.gemma.Modules.Wallet.CheckMneActivity"/>
+
 
         <service android:name=".service.InitializeService"/>
 
@@ -63,7 +42,27 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.activity.ManageWalletActivity">
+
+        </activity>
+
+        <activity
+            android:name=".ui.activity.CreateWalletActivity"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity android:name=".ui.activity.InitialActivity">
+        </activity>
+        <activity
+            android:name=".ui.activity.TransferRecordActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <!-- 应用内浏览器 -->
@@ -88,13 +87,7 @@
                 android:resource="@xml/file_paths"/>
         </provider>
 
-        <activity android:name=".ui.activity.ManageWalletActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

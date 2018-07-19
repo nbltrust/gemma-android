@@ -15,6 +15,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * 修改钱包名页面
+ */
 public class ChangeWalletNameFragment extends XFragment {
 
     @BindView(R.id.editText_setWalletName) MaterialEditText setWalletName;

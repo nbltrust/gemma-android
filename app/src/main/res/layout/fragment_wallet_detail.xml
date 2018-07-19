@@ -1,111 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout 
+
+<LinearLayout
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include
-        layout="@layout/ui_navibar">
-    </include>
-
+    android:layout_height="match_parent"
+    >
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout_wallet_briefInfo"
-        android:background="@drawable/shape_corner"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
-        android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
-        android:layout_marginTop="@dimen/standard_margin_in_walletDetailPage"
-        title:layout_constraintEnd_toEndOf="parent"
-        title:layout_constraintStart_toStartOf="parent"
-        title:layout_constraintTop_toBottomOf="@+id/btn_navibar">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:title="http://schemas.android.com/apk/res-auto"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/walletName_in_detailPage"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
-            android:layout_marginTop="8dp"
-            android:text="WalletName"
-            android:textStyle="bold"
-            android:textSize="@dimen/font_6"
-            android:textColor="@color/darkSlateBlue"
-            android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
-            title:layout_constraintEnd_toEndOf="parent"
-            title:layout_constraintStart_toStartOf="parent"
-            title:layout_constraintTop_toTopOf="parent"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/eosAddress_in_detailPage"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
-            android:text="EOS12345678901231542571223414141231423451246Address"
-            android:ellipsize="middle"
-            android:singleLine="true"
-            android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
-            android:textSize="@dimen/font_4"
-            android:textColor="@color/darkSlateBlue"
-            title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
-            title:layout_constraintStart_toStartOf="parent"
-            title:layout_constraintTop_toBottomOf="@id/walletName_in_detailPage"/>
+            <include
+                layout="@layout/ui_navibar">
+            </include>
 
 
-        <ImageView
-            android:id="@+id/iv_arrow_in_detailPage"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginEnd="10dp"
-            title:layout_constraintTop_toTopOf="parent"
-            title:layout_constraintBottom_toBottomOf="parent"
-            title:layout_constraintEnd_toEndOf="parent"
-            title:layout_constraintStart_toEndOf="@id/eosAddress_in_detailPage"
-            android:background="@drawable/ic_arrow"
-            />
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layout_wallet_briefInfo"
+                android:background="@drawable/shape_corner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
+                android:layout_marginTop="@dimen/standard_margin_in_walletDetailPage"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@+id/btn_navibar">
+
+                <TextView
+                    android:id="@+id/walletName_in_detailPage"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                    android:layout_marginTop="8dp"
+                    android:text="WalletName"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_6"
+                    android:textColor="@color/darkSlateBlue"
+                    android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
+                    title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
+                    title:layout_constraintStart_toStartOf="parent"
+                    title:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/eosAddress_in_detailPage"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                    android:text="EOS12345678901231542571223414141231423451246Address"
+                    android:ellipsize="middle"
+                    android:singleLine="true"
+                    android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
+                    android:textSize="@dimen/font_4"
+                    android:textColor="@color/darkSlateBlue"
+                    title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
+                    title:layout_constraintStart_toStartOf="parent"
+                    title:layout_constraintTop_toBottomOf="@id/walletName_in_detailPage"/>
+
+
+                <ImageView
+                    android:id="@+id/iv_arrow_in_detailPage"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="10dp"
+                    title:layout_constraintTop_toTopOf="parent"
+                    title:layout_constraintBottom_toBottomOf="parent"
+                    title:layout_constraintEnd_toEndOf="parent"
+                    title:layout_constraintStart_toEndOf="@id/eosAddress_in_detailPage"
+                    android:background="@drawable/ic_arrow"
+                    />
+            </android.support.constraint.ConstraintLayout>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_exportPriKey"
+                style="@style/card_style"
+                android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
+                android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                android:layout_marginTop="10dp"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintTop_toBottomOf="@id/layout_wallet_briefInfo"
+                title:sLeftTextString="@string/export_privateKey"
+                title:sLeftTextSize="@dimen/font_3.5"
+                title:sLeftTextColor="@color/darkSlateBlue"
+                title:sLeftViewMarginLeft="@dimen/standard_margin_in_walletDetailPage"
+                title:sBackgroundDrawableRes="@drawable/shape_corner"
+                title:sRightTvDrawableRight="@drawable/ic_arrow"
+                title:sDividerLineType="bottom"
+                title:sDividerLineColor="@color/paleGrey">
+
+            </com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_exportMne"
+                style="@style/card_style"
+                android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
+                android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintTop_toBottomOf="@id/superTextView_exportPriKey"
+                title:sUseShape="true"
+                title:sShapeCornersRadius="@dimen/dimen_3"
+                title:sLeftTextString="@string/exportMnemonic"
+                title:sLeftTextColor="@color/darkSlateBlue"
+                title:sLeftTextSize="@dimen/font_3.5"
+                title:sLeftViewMarginLeft="@dimen/standard_margin_in_walletDetailPage"
+                title:sRightTvDrawableRight="@drawable/ic_arrow"
+                >
+
+            </com.allen.library.SuperTextView>
+
+        </LinearLayout>
+
+
+
+
+
     </android.support.constraint.ConstraintLayout>
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/superTextView_exportPriKey"
-        style="@style/card_style"
-        android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
-        android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
-        android:layout_marginTop="10dp"
-        title:layout_constraintStart_toStartOf="parent"
-        title:layout_constraintEnd_toEndOf="parent"
-        title:layout_constraintTop_toBottomOf="@id/layout_wallet_briefInfo"
-        title:sLeftTextString="@string/export_privateKey"
-        title:sLeftTextSize="@dimen/font_3.5"
-        title:sLeftTextColor="@color/darkSlateBlue"
-        title:sLeftViewMarginLeft="@dimen/standard_margin_in_walletDetailPage"
-        title:sBackgroundDrawableRes="@drawable/shape_corner"
-        title:sRightTvDrawableRight="@drawable/ic_arrow"
-        title:sDividerLineType="bottom"
-        title:sDividerLineColor="@color/paleGrey">
-
-    </com.allen.library.SuperTextView>
-
-    <com.allen.library.SuperTextView
-        android:id="@+id/superTextView_exportMne"
-        style="@style/card_style"
-        android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
-        android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
-        title:layout_constraintStart_toStartOf="parent"
-        title:layout_constraintEnd_toEndOf="parent"
-        title:layout_constraintTop_toBottomOf="@id/superTextView_exportPriKey"
-        title:sUseShape="true"
-        title:sShapeCornersRadius="@dimen/dimen_3"
-        title:sLeftTextString="@string/exportMnemonic"
-        title:sLeftTextColor="@color/darkSlateBlue"
-        title:sLeftTextSize="@dimen/font_3.5"
-        title:sLeftViewMarginLeft="@dimen/standard_margin_in_walletDetailPage"
-        title:sRightTvDrawableRight="@drawable/ic_arrow"
-        >
-
-    </com.allen.library.SuperTextView>
-
-
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

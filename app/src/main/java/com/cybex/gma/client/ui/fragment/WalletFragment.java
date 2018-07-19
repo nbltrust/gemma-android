@@ -72,6 +72,16 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         setNavibarTitle("GEMMA", false);
     }
 
+    @Override
+    protected void setNavibarTitle(String title, boolean isShowBack) {
+        super.setNavibarTitle(title, isShowBack);
+        ImageView mCollectView = (ImageView)mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.wallet_add1x) {
+            @Override
+            public void performAction(View view) {
+                UISkipMananger.launchWalletManagement(getActivity());
+            }
+        });
+    }
 
     @Override
     public int getLayoutId() {

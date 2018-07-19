@@ -23,6 +23,17 @@
         <item name="android:colorControlNormal">@color/colorPrimary</item>
     </style>
 
+    <style name="bt_long_in_linearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/bt_inInitPage_height</item>
+        <item name="android:textSize">@dimen/font_3.5</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/shape_corner_button</item>
+    </style>
+
 
     <!-- 启动页面 -->
     <style name="bt_create_wallet">
@@ -30,7 +41,6 @@
         <item name="android:layout_height">@dimen/bt_inInitPage_height</item>
         <item name="android:layout_marginStart">@dimen/bt_inInitPage_margin</item>
         <item name="android:layout_marginEnd">@dimen/bt_inInitPage_margin</item>
-
     </style>
 
 
@@ -47,7 +57,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">@dimen/cpu_show_area_height</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:background">@drawable/shape_corner_bot</item>
+        <item name="android:background">@drawable/shape_corner_bot_cpublock</item>
     </style>
 
     <style name="cpu_net_ram">
@@ -60,7 +70,7 @@
 
     <!-- 管理钱包页面 -->
     <style name="card_style">
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginEnd">10dp</item>
@@ -68,24 +78,9 @@
 
 
     <!--Create Wallet 页面 -->
-    <!-- 创建钱包Button样式 -->
-    <style name="button_create_wallet">
-        <item name="android:layout_width">@dimen/x292</item>
-        <item name="android:layout_height">@dimen/x32</item>
-        <item name="android:background">#cacddf</item>
-        <item name="android:textSize">@dimen/x12</item>
-        <item name="android:textColor">@color/whiteTwo</item>
-    </style>
-
-    <style name="button_create_wallet_clickable">
-        <item name="android:layout_width">@dimen/x292</item>
-        <item name="android:layout_height">@dimen/x32</item>
-        <item name="android:background">#426bd4</item>
-    </style>
-
     <!-- 输入区域整体样式 -->
     <style name="layout_input_area">
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/input_layout_height</item>
         <item name="android:layout_marginStart">@dimen/input_layout_margin</item>
         <item name="android:layout_marginEnd">@dimen/input_layout_margin</item>
@@ -215,5 +210,20 @@
 
     </style>
 
+
+    <!-- 备份私钥页面 -->
+    <style name="text_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textSize">@dimen/font_3.5</item>
+        <item name="android:textColor">@color/darkSlateBlue</item>
+    </style>
+
+    <style name="text_body">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textSize">@dimen/font_3</item>
+        <item name="android:textColor">@color/blueyGrey</item>
+    </style>
 
 </resources>

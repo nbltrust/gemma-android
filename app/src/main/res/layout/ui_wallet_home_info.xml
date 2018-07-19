@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="8dp"
+
+    title:layout_constraintEnd_toEndOf="parent"
+    title:layout_constraintStart_toStartOf="parent">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:elevation="2dp"
+        android:background="@drawable/shape_corner_shade"
+        android:id="@+id/layout_info"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        android:paddingTop="12dp"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/layout_top_info"
+            android:layout_width="match_parent"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:layout_height="180dp">
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_total_assets"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                title:sUseShape="true"
+                title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                title:sCenterTextString="@string/total_assets"
+                title:sCenterTextGravity="center"
+                title:sCenterTextSize="@dimen/font_3.5"
+                title:sCenterTextColor="@color/darkSlateBlue"
+                title:sCenterTvDrawableLeft="@drawable/asset_logo"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <TextView
+                android:id="@+id/total_EOS_amount"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text=" 0.0000 EOS"
+                android:textColor="@color/darkSlateBlueTwo"
+                android:gravity="center"
+                android:textSize="@dimen/font_6"
+                android:textStyle="bold"/>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/total_CNY_amount"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                title:sUseShape="true"
+                title:sDividerLineType="none"
+                title:sCenterTextString="≈0.0000 CNY"
+                title:sCenterTextSize="@dimen/font_3.5"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:elevation="3dp"
+                android:layout_marginStart="@dimen/cpu_show_area_margin"
+                android:layout_marginEnd="@dimen/cpu_show_area_margin"
+                android:background="@drawable/dash_line"
+                android:layerType="software">
+
+            </View>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/balance"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                title:sUseShape="true"
+                title:sDividerLineType="none"
+                title:sLeftTextString="@string/balance"
+                title:sLeftTextSize="@dimen/font_3"
+                title:sRightTextString="0.000 EOS"
+                title:sRightTextSize="@dimen/font_4">
+
+            </com.allen.library.SuperTextView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:elevation="3dp"
+                android:layout_marginStart="@dimen/cpu_show_area_margin"
+                android:layout_marginEnd="@dimen/cpu_show_area_margin"
+                android:background="@drawable/dash_line"
+                android:layerType="software">
+
+            </View>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/redeem"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="-3dp"
+                title:sDividerLineType="none"
+                title:sUseShape="true"
+                title:sLeftTextString="@string/redeem"
+                title:sLeftTextSize="@dimen/font_3"
+                title:sRightTextString="0.000 EOS"
+                title:sRightTextSize="@dimen/font_4">
+
+            </com.allen.library.SuperTextView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/show_cpu"
+            style="@style/show_cpu_status_area"
+
+            title:layout_constraintTop_toBottomOf="@id/layout_top_info"
+            title:layout_constraintEnd_toEndOf="parent"
+            title:layout_constraintStart_toStartOf="parent">
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_cpu"
+                style="@style/cpu_net_ram"
+                title:sBackgroundDrawableRes="@drawable/shape_corner_grey"
+                title:sDividerLineType="none"
+                title:sCenterSpaceHeight="1dp"
+                title:sCenterTopTextString="CPU"
+                title:sCenterTopTextColor="@color/darkSlateBlue"
+                title:sCenterBottomTextColor="@color/darkSlateBlue"
+                title:sCenterTopTextSize="@dimen/cpu_text_size"
+                title:sCenterBottomTextSize="@dimen/cpu_text_size"
+                title:sCenterBottomTextString="0.01EOS"
+                android:layout_weight="1">
+
+            </com.allen.library.SuperTextView>
+
+            <View
+                android:background="@color/cloudyBlue"
+                android:layout_marginTop="16dp"
+                android:layout_width="1dp"
+                android:layout_height="34dp"
+                android:layerType="software"
+                >
+
+            </View>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_net"
+                style="@style/cpu_net_ram"
+                title:sDividerLineType="none"
+                title:sBackgroundDrawableRes="@drawable/shape_corner_grey"
+                title:sCenterSpaceHeight="1dp"
+                title:sCenterTopTextString="NET"
+                title:sCenterTopTextColor="@color/darkSlateBlue"
+                title:sCenterBottomTextColor="@color/darkSlateBlue"
+                title:sCenterTopTextSize="@dimen/cpu_text_size"
+                title:sCenterBottomTextSize="@dimen/cpu_text_size"
+                title:sCenterBottomTextString="0.01EOS"
+                android:layout_weight="1">
+
+            </com.allen.library.SuperTextView>
+
+            <View
+                android:background="@color/cloudyBlue"
+                android:layout_width="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="34dp"
+                android:layerType="software">
+
+            </View>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_ram"
+                style="@style/cpu_net_ram"
+                title:sCenterSpaceHeight="1dp"
+                title:sDividerLineType="none"
+                title:sCenterTopTextColor="@color/darkSlateBlue"
+                title:sCenterBottomTextColor="@color/darkSlateBlue"
+                title:sBackgroundDrawableRes="@drawable/shape_corner_grey"
+                title:sCenterTopTextString="RAM"
+                title:sCenterTopTextSize="@dimen/cpu_text_size"
+                title:sCenterBottomTextSize="@dimen/cpu_text_size"
+                title:sCenterBottomTextString="0.01EOS"
+                android:layout_weight="1">
+
+            </com.allen.library.SuperTextView>
+
+        </LinearLayout>
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <com.allen.library.SuperTextView
+        title:sUseShape="true"
+        title:sUseRipple="true"
+        title:sShapeCornersRadius="6dp"
+        title:sLeftTextString="@string/transfer_records"
+        title:sLeftTextSize="@dimen/font_3.5"
+        title:layout_constraintTop_toBottomOf="@id/layout_info"
+        title:sRightTvDrawableRight="@drawable/ic_arrow"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/superTextView_card_record"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="36dp">
+
+    </com.allen.library.SuperTextView>
+
+    <com.allen.library.SuperTextView
+        title:sUseShape="true"
+        title:sUseRipple="true"
+        title:sShapeCornersRadius="6dp"
+        title:sLeftTextString="@string/resource"
+        title:sLeftTextSize="@dimen/font_3.5"
+        title:sRightTextString="@string/get_cpu_net"
+        title:sRightTextSize="@dimen/font_3.5"
+        title:sRightTextColor="@color/cloudyBlue"
+        title:sRightTvDrawableRight="@drawable/ic_arrow"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
+        android:id="@+id/superTextView_card_resource"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/bot_card_margin"
+        android:layout_marginStart="@dimen/bot_card_margin"
+        android:layout_marginTop="8dp">
+
+    </com.allen.library.SuperTextView>
+
+</android.support.constraint.ConstraintLayout>
+
+
+

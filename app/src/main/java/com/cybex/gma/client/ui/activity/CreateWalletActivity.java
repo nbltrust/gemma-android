@@ -196,6 +196,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
 
+
     }
 
     @Override
