@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.UISkipMananger;
+import com.cybex.gma.client.manager.UISkipMananger;
 
 import java.lang.reflect.Field;
 

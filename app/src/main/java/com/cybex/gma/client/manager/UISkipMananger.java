@@ -1,4 +1,4 @@
-package com.cybex.gma.client.ui;
+package com.cybex.gma.client.manager;
 
 import android.app.Activity;
 import android.content.Context;

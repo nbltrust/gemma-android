@@ -15,7 +15,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.UISkipMananger;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.BasePresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.just.agentweb.AgentWeb;
