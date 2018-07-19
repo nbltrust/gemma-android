@@ -10,6 +10,7 @@ import android.text.TextUtils;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
+import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.activity.ManageWalletActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
@@ -37,8 +38,7 @@ public final class UISkipMananger {
      * @param context
      */
     public static void launchHome(Activity context) {
-
-
+        launchIntent(context, MainTabActivity.class);
     }
 
     /**

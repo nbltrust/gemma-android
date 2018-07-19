@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            layout="@layout/ui_navibar">
+        </include>
+
+        <ImageView
+            android:background="@drawable/waiting3x"
+            android:layout_marginTop="@dimen/dimen_64"
+            android:layout_width="@dimen/dimen_46"
+            android:layout_height="@dimen/dimen_46"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:text="@string/creating"
+            android:gravity="center"
+            android:textColor="@color/darkSlateBlue"
+            android:textStyle="bold"
+            android:textSize="@dimen/font_4.5"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <com.allen.library.SuperTextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_70"
+            android:layout_margin="@dimen/dimen_20"
+            title:sCenterTextString="@string/please_confirm"
+            title:sCenterTextColor="@color/whiteTwo"
+            title:sLeftIconShowCircle="true"
+            title:sDividerLineType="none"
+            title:sLeftIconRes="@color/whiteTwo"
+            title:sBackgroundDrawableRes="@drawable/red_bg3x"
+            >
+
+        </com.allen.library.SuperTextView>
+
+        <LinearLayout
+            android:background="@drawable/shape_corner"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_180"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:textSize="@dimen/font_3.5"
+                android:textColor="@color/blueyGrey"
+                android:text="@string/backupHint"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_height="@dimen/bt_inInitPage_height">
+
+                <Button
+                    android:id="@+id/bt_backup_later"
+                    android:background="@drawable/shape_corner_button2"
+                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/cornflowerBlue"
+                    android:layout_height="@dimen/bt_inInitPage_height"
+                    android:text="@string/backupLater"/>
+
+                <Button
+                    android:id="@+id/bt_export_priKey"
+                    android:background="@drawable/shape_corner_button"
+                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:textSize="@dimen/font_3.5"
+                    android:textColor="@color/whiteTwo"
+                    android:layout_height="@dimen/bt_inInitPage_height"
+                    android:text="@string/export_privateKey"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

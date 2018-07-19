@@ -402,6 +402,7 @@
     <dimen name="font_3">12sp</dimen>
     <dimen name="font_6">24sp</dimen>
     <dimen name="font_4">16sp</dimen>
+    <dimen name="font_4.5">18sp</dimen>
     <dimen name="font_7">28sp</dimen>
 
     <dimen name="bottombar_height">48dp</dimen>

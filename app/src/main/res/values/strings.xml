@@ -45,13 +45,13 @@
     <string name="backupLater">稍后备份</string>
 
 
-    <string name="lookAround">请查看你的周围</string>
+    <string name="lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
+    <string name="lookAround_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
     <string name="backUp_wallet">备份钱包</string>
-    <string name="lookAround2">确保无人及摄像头的环境下进行备份</string>
-    <string name="backupSafely">请在安全环境下备份</string>
-    <string name="backupSafely2">备份期间可将手机调成飞行模式</string>
+    <string name="backupSafely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
     <string name="showMnemonic">明白了，显示助记词</string>
-
+    <string name="showPriKey">明白了，显示私钥</string>
+    <string name="start_import">明白了，开始导入</string>
 
     <string name="backupYourMne">请记下你的钱包私钥助记词并保存在安全的地方</string>
     <string name="backupHint2">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
@@ -149,5 +149,7 @@
     <string name="look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
     <string name="no_screenshot_hint2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
     <string name="show_QR">显示二维码</string>
+    <string name="creating">账户创建中</string>
+    <string name="please_confirm">请勿在EOS区块100%确认之前往账户转账</string>
 
 </resources>

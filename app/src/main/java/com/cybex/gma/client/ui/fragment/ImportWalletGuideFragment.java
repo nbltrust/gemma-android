@@ -9,23 +9,20 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * 通过二维码备份私钥界面
- *
- */
-public class BackUpPriKeyQRFragment extends XFragment {
+public class ImportWalletGuideFragment extends XFragment {
 
     Unbinder unbinder;
-    public static BackUpPriKeyQRFragment newInstance() {
+
+    public static ImportWalletGuideFragment newInstance() {
         Bundle args = new Bundle();
-        BackUpPriKeyQRFragment fragment = new BackUpPriKeyQRFragment();
+        ImportWalletGuideFragment fragment = new ImportWalletGuideFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void bindUI(View rootView) {
-        unbinder = ButterKnife.bind(BackUpPriKeyQRFragment.this, rootView);
+        unbinder = ButterKnife.bind(ImportWalletGuideFragment.this, rootView);
     }
 
     @Override
@@ -41,7 +38,7 @@ public class BackUpPriKeyQRFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_backup_prikey_qr;
+        return R.layout.fragment_import_wallet_guide;
     }
 
     @Override

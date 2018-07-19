@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * 备份私钥页面
+ * 明文备份私钥页面
  */
 
 public class BackUpPriKeyFragment extends XFragment {
@@ -59,5 +59,11 @@ public class BackUpPriKeyFragment extends XFragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
