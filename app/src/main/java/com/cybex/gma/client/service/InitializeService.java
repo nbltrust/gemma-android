@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import com.cybex.gma.client.BuildConfig;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.hxlx.core.lib.common.cache.CacheUtil;
 import com.hxlx.core.lib.common.cache.CacheUtilConfig;
 
@@ -25,6 +27,7 @@ public class InitializeService extends IntentService {
     private static final String CHANNEL_ID_SERVICE = "InitializeService";
     private static final String CHANNEL_ID_NAME = "Initialize_Service";
     private static final int serviceID = 8002;
+    private static final String TAG = "GEMMA_LOG";
 
     public InitializeService() {
         super("InitializeService");
@@ -77,8 +80,16 @@ public class InitializeService extends IntentService {
 
     private void initApplication() {
         initCache();
+        initLogger();
 
     }
+
+
+    private void initLogger() {
+        //初始化Logger日志打印
+        LoggerManager.init(TAG, BuildConfig.DEBUG);
+    }
+
 
     private void initCache() {
         CacheUtilConfig cc = CacheUtilConfig.builder(this)
