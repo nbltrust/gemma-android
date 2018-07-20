@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -106,7 +107,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBar();
-        setContentView(R.layout.activity_create_wallet);
+        setContentView(R.layout.activity_create_wallet_old);
         ButterKnife.bind(this);
         Validate.reg(this);
         initView();
@@ -114,8 +115,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @OnClick(R.id.bt_create_wallet)
     public void Jump() {
-        //todo
-        getP().createAccount(getEOSUserName(), getInvCode(), testPublicKey);
+        //getP().createAccount(getEOSUserName(), getInvCode(), testPublicKey);
+        UISkipMananger.launchHome(this);
     }
 
     public void initView() {
@@ -206,7 +207,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_create_wallet;
+        return R.layout.activity_create_wallet_old;
     }
 
     @Override

@@ -10,7 +10,7 @@
 
     <string name="wallet_name">钱包名称</string>
     <string name="wallet_name_short">钱包名</string>
-    <string name="password">设置密码</string>
+    <string name="set_password">设置密码</string>
     <string name="hint_at_create_wallet">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储</string>
     <string name="repeat_password">重复密码</string>
     <string name="agreement">我已阅读并同意</string>
@@ -27,8 +27,8 @@
     <string name="walletName">钱包名称</string>
     <string name="EOS_username">EOS账户名</string>
     <string name="EOS_username_hint">由小写字母a-z与数字1-5组成，须为12个字符</string>
-    <string name="password_input_hint">8-16位字符，建议混合大小写字母、数字</string>
-    <string name="repeatPassword_hint">请再次输入密码</string>
+    <string name="password_input_hint">最少8位长度，建议混合大小写字母、数字及符号</string>
+    <string name="repeatPassword_hint">请再次输入您的密码</string>
     <string name="password_hint_hint">(可选)请输入密码提示</string>
     <string name="invitation_code">邀请码</string>
     <string name="input_inv_code">输入邀请码</string>
@@ -137,7 +137,6 @@
     <string name="no_screenshot">请勿截图</string>
     <string name="no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
     <string name="i_understand">我知道了</string>
-
     <string name="safety_first">安全第一</string>
     <string name="safety_first_hint">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
     <string name="save_offline">离线储存</string>
@@ -152,4 +151,8 @@
     <string name="creating">账户创建中</string>
     <string name="please_confirm">请勿在EOS区块100%确认之前往账户转账</string>
 
+    <string name="input_key_hint">请完整输入备份的私钥</string>
+    <string name="input_key_hint2">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>
+    <string name="start_input">开始导入</string>
+    <string name="complete_input">完成导入</string>
 </resources>

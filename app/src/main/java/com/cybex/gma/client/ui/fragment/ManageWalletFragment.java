@@ -53,6 +53,13 @@ public class ManageWalletFragment extends XFragment {
                 UISkipMananger.launchCreateWallet(getActivity());
             }
         });
+
+        superTextViewImportWallet.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
+            @Override
+            public void onClickListener(SuperTextView superTextView) {
+                UISkipMananger.launchImportWallet(getActivity());
+            }
+        });
     }
 
     @Override
