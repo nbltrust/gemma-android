@@ -366,9 +366,9 @@
     <dimen name="button_margin">32dp</dimen>
     <dimen name="button_marginTop">29dp</dimen>
     <dimen name="bubble_lookLength">6dp</dimen>
-    <dimen name="bubble_lookPosition">30dp</dimen>
-    <dimen name="tv_in_bubble_marginTop">20dp</dimen>
-    <dimen name="tv_in_bubble_marginBot">20dp</dimen>
+    <dimen name="bubble_lookPosition">24dp</dimen>
+    <dimen name="tv_in_bubble_marginTop">10dp</dimen>
+    <dimen name="tv_in_bubble_marginBot">10dp</dimen>
     <dimen name="tv_in_bubble_marginStart">10dp</dimen>
     <dimen name="tv_in_bubble_marginEnd">10dp</dimen>
     <!-- 创建成功页面 -->

@@ -39,6 +39,7 @@
             android:textSize="@dimen/font_3.5"
             android:textColor="@color/blueyGrey"
             app:met_hideUnderline="true"
+            android:textCursorDrawable="@drawable/cursor_custom"
             />
 
     </LinearLayout>

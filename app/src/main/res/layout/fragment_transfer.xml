@@ -70,7 +70,8 @@
                     android:paddingLeft="18dp"
                     android:textColor="@color/font_dark_state_blue"
                     android:textColorHint="@color/color_et_hint"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textCursorDrawable="@drawable/cursor_custom"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -171,7 +172,8 @@
                         android:inputType="numberDecimal"
                         android:singleLine="true"
                         android:textColor="@color/darkSlateBlue"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:textCursorDrawable="@drawable/cursor_custom"/>
 
                 </RelativeLayout>
 
@@ -211,7 +213,8 @@
                         android:maxLines="3"
                         android:minHeight="50dp"
                         android:textColor="@color/darkSlateBlue"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:textCursorDrawable="@drawable/cursor_custom"/>
 
 
                 </RelativeLayout>

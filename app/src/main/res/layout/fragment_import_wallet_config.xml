@@ -53,6 +53,7 @@
             android:id="@+id/edt_pass_hint"
             style="@style/editText_config_wallet"
             android:hint="@string/password_hint_hint"
+            android:layout_marginStart="@dimen/dimen_6"
             android:background="@null"/>
 
     </LinearLayout>

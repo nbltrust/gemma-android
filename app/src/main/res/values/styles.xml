@@ -63,10 +63,13 @@
     <!-- 配置钱包页面 -->
     <style name="text_title_config_wallet">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/dimen_3</item>
+        <item name="android:layout_height">@dimen/dimen_20</item>
+        <item name="android:layout_marginStart">@dimen/dimen_10</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/font_3</item>
         <item name="android:textColor">@color/steel</item>
+        <item name="android:layout_marginTop">@dimen/dimen_6</item>
     </style>
     
     <style name="editText_config_wallet">
@@ -78,6 +81,9 @@
         <item name="android:theme">@style/myEditText</item>
         <item name="android:background">@drawable/edt_bg_selector</item>
         <item name="android:textCursorDrawable">@drawable/cursor_custom</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+        <item name="android:layout_marginStart">@dimen/dimen_10</item>
+
     </style>
 
     <!-- 钱包主页面 -->
@@ -113,7 +119,9 @@
     </style>
 
 
-    <!--Create Wallet 页面 -->
+    <!--创建钱包页面 -->
+
+
     <!-- 输入区域整体样式 -->
     <style name="layout_input_area">
         <item name="android:layout_width">match_parent</item>
