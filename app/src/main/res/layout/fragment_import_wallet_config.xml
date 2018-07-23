@@ -31,7 +31,6 @@
             style="@style/editText_config_wallet"
             android:hint="@string/password_input_hint"/>
 
-
         <TextView
             android:id="@+id/tv_repeat_pass"
             style="@style/text_title_config_wallet"
@@ -53,7 +52,7 @@
             android:id="@+id/edt_pass_hint"
             style="@style/editText_config_wallet"
             android:hint="@string/password_hint_hint"
-            android:layout_marginStart="@dimen/dimen_6"
+            android:layout_marginStart="@dimen/dimen_14"
             android:background="@null"/>
 
     </LinearLayout>
