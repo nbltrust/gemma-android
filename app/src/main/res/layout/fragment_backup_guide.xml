@@ -79,6 +79,7 @@
             />
 
         <Button
+            android:id="@+id/show_priKey"
             style="@style/bt_long_in_linearLayout"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"

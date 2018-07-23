@@ -3,12 +3,9 @@ package com.cybex.gma.client.ui.fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,39 +13,36 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
- * 导入钱包引导页面
- * 点击开始导入按钮跳转到的第一个界面
+ *
+ * 导入钱包输入私钥界面
  */
 
-public class ImportWalletGuideFragment extends XFragment {
+public class ImportWalletInputKeyFragment extends XFragment {
 
+    @BindView(R.id.bt_start_input) Button btStartInput;
     Unbinder unbinder;
-    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.iv_dot_one) ImageView ivDotOne;
-    @BindView(R.id.tv_look_around_hint) TextView tvLookAroundHint;
-    @BindView(R.id.bt_start_import) Button btStartImport;
 
-    @OnClick(R.id.bt_start_import)
-    public void goToInputPriKey(){
-        start(ImportWalletInputKeyFragment.newInstance());
+    @OnClick(R.id.bt_start_input)
+    public void goConfigWallet(){
+        start(ImportWalletConfigFragment.newInstance());
     }
 
-    public static ImportWalletGuideFragment newInstance() {
+
+    public static ImportWalletInputKeyFragment newInstance() {
         Bundle args = new Bundle();
-        ImportWalletGuideFragment fragment = new ImportWalletGuideFragment();
+        ImportWalletInputKeyFragment fragment = new ImportWalletInputKeyFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void bindUI(View rootView) {
-        unbinder = ButterKnife.bind(ImportWalletGuideFragment.this, rootView);
+        unbinder = ButterKnife.bind(ImportWalletInputKeyFragment.this, rootView);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("导入钱包", true, true);
-
+        setNavibarTitle("导入钱包", true, false);
 
     }
 
@@ -60,7 +54,7 @@ public class ImportWalletGuideFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_import_wallet_guide;
+        return R.layout.fragment_import_wallet_input_key;
     }
 
     @Override

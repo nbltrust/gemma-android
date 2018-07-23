@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <include
         layout="@layout/ui_navibar">
@@ -15,40 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_14"
+        android:paddingTop="@dimen/dimen_20"
+        android:paddingStart="@dimen/dimen_8"
+        android:paddingEnd="@dimen/dimen_8"
+        android:paddingBottom="@dimen/dimen_10"
         >
-
-        <com.xujiaji.happybubble.BubbleLayout
-            android:visibility="gone"
-            android:id="@+id/bubble"
-            app:bubbleColor="@color/buff"
-            app:lookLength="@dimen/bubble_lookLength"
-            app:lookPosition="@dimen/bubble_lookPosition"
-            app:bubblePadding="0dp"
-            app:bubbleRadius="@dimen/bt_radius"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_70"
-            >
-
-            <TextView
-                android:id="@+id/tv_in_bubble"
-                android:layout_margin="@dimen/dimen_10"
-                android:text="@string/security_hint"
-                android:textSize="@dimen/font_3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </com.xujiaji.happybubble.BubbleLayout>
-
-        <TextView
-            android:id="@+id/tv_eos_name"
-            style="@style/text_title_config_wallet"
-            android:text="@string/EOS_username"/>
-
-        <EditText
-            android:id="@+id/edt_eos_name"
-            style="@style/editText_config_wallet"
-            android:hint="@string/EOS_username_hint"/>
-
 
         <TextView
             android:id="@+id/tv_set_pass"
@@ -82,40 +53,7 @@
             android:id="@+id/edt_pass_hint"
             style="@style/editText_config_wallet"
             android:hint="@string/password_hint_hint"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_6"
-            android:layout_marginEnd="@dimen/dimen_4"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_invCode"
-                style="@style/text_title_config_wallet"
-                android:layout_weight="1"
-                android:text="@string/invitation_code"/>
-
-            <TextView
-                android:id="@+id/tv_get_invCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="@dimen/font_3"
-                android:textColor="@color/cornflowerBlue"
-                android:gravity="end"
-                android:text="@string/get_invitation"/>
-
-        </LinearLayout>
-
-
-        <EditText
-            android:id="@+id/edt_invCode"
-            style="@style/editText_config_wallet"
-            android:hint="@string/input_inv_code"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:layout_marginEnd="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_6"
             android:background="@null"/>
 
     </LinearLayout>
@@ -152,7 +90,7 @@
         android:layout_marginStart="@dimen/button_margin"
         android:layout_marginEnd="@dimen/button_margin"
         android:layout_marginTop="@dimen/button_margin"
-        android:text="@string/create_wallet"
+        android:text="@string/complete_input"
         android:background="@drawable/shape_corner_button_unclickable"
         android:textColor="@color/whiteTwo"
         />

@@ -12,7 +12,7 @@ import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
 /**
- * 导入钱包流程的容器Activity
+ * 导入钱包/配置钱包流程的容器Activity
  *
  */
 

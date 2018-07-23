@@ -12,7 +12,7 @@
     </include>
 
     <ImageView
-        android:background="@drawable/security4x"
+        android:background="@drawable/import_wallet3x"
         android:layout_width="@dimen/dimen_54"
         android:layout_height="@dimen/dimen_54"
         android:layout_marginTop="@dimen/dimen_72"
@@ -60,6 +60,7 @@
 
 
         <Button
+            android:id="@+id/bt_start_import"
             style="@style/bt_long_in_linearLayout"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"

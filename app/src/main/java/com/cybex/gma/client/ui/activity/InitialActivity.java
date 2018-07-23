@@ -28,7 +28,7 @@ public class InitialActivity extends AppCompatActivity {
 
     @OnClick(R.id.bt_import)
     public void importWallet() {
-
+        UISkipMananger.launchIntent(this, ImportWalletActivity.class);
     }
 
     @Override
