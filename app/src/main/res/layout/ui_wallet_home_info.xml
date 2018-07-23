@@ -6,17 +6,14 @@
     xmlns:title="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
-
     title:layout_constraintEnd_toEndOf="parent"
     title:layout_constraintStart_toStartOf="parent">
 
 
     <android.support.constraint.ConstraintLayout
-        android:elevation="2dp"
-        android:background="@drawable/shape_corner_shade"
         android:id="@+id/layout_info"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="2dp"
@@ -27,12 +24,14 @@
         title:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
+            android:translationZ="@dimen/dimen_6"
+            android:background="@drawable/shape_corner"
             android:orientation="vertical"
             android:id="@+id/layout_top_info"
             android:layout_width="match_parent"
             android:layout_marginStart="18dp"
             android:layout_marginEnd="18dp"
-            android:layout_height="@dimen/dimen_204">
+            android:layout_height="wrap_content">
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_total_assets"
@@ -57,6 +56,7 @@
                 android:text=" 0.0000 EOS"
                 android:textColor="@color/darkSlateBlueTwo"
                 android:gravity="center"
+                android:textAlignment="center"
                 android:textSize="@dimen/font_6"
                 android:textStyle="bold"/>
 
@@ -135,90 +135,84 @@
 
             </com.allen.library.SuperTextView>
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/show_cpu"
+                style="@style/show_cpu_status_area">
 
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_cpu"
+                    style="@style/cpu_net_ram"
+                    title:sBackgroundDrawableRes="@drawable/shape_transparent"
+                    title:sDividerLineType="none"
+                    title:sCenterSpaceHeight="1dp"
+                    title:sCenterTopTextString="CPU"
+                    title:sCenterTopTextColor="@color/darkSlateBlue"
+                    title:sCenterBottomTextColor="@color/darkSlateBlue"
+                    title:sCenterTopTextSize="@dimen/cpu_text_size"
+                    title:sCenterBottomTextSize="@dimen/cpu_text_size"
+                    title:sCenterBottomTextString="0.01EOS"
+                    android:layout_weight="1">
 
-        <LinearLayout
-            android:id="@+id/show_cpu"
-            style="@style/show_cpu_status_area"
-            title:layout_constraintTop_toBottomOf="@id/layout_top_info"
-            title:layout_constraintEnd_toEndOf="parent"
-            title:layout_constraintStart_toStartOf="parent">
+                </com.allen.library.SuperTextView>
 
-            <com.allen.library.SuperTextView
-                android:id="@+id/superTextView_cpu"
-                style="@style/cpu_net_ram"
-                title:sBackgroundDrawableRes="@drawable/shape_transparent"
-                title:sDividerLineType="none"
-                title:sCenterSpaceHeight="1dp"
-                title:sCenterTopTextString="CPU"
-                title:sCenterTopTextColor="@color/darkSlateBlue"
-                title:sCenterBottomTextColor="@color/darkSlateBlue"
-                title:sCenterTopTextSize="@dimen/cpu_text_size"
-                title:sCenterBottomTextSize="@dimen/cpu_text_size"
-                title:sCenterBottomTextString="0.01EOS"
-                android:layout_weight="1">
+                <View
+                    android:background="@color/cloudyBlue"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="1dp"
+                    android:layout_height="34dp"
+                    android:layerType="software"
+                    >
+                </View>
 
-            </com.allen.library.SuperTextView>
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_net"
+                    style="@style/cpu_net_ram"
+                    title:sDividerLineType="none"
+                    title:sBackgroundDrawableRes="@drawable/shape_transparent"
+                    title:sCenterSpaceHeight="1dp"
+                    title:sCenterTopTextString="NET"
+                    title:sCenterTopTextColor="@color/darkSlateBlue"
+                    title:sCenterBottomTextColor="@color/darkSlateBlue"
+                    title:sCenterTopTextSize="@dimen/cpu_text_size"
+                    title:sCenterBottomTextSize="@dimen/cpu_text_size"
+                    title:sCenterBottomTextString="0.01EOS"
+                    android:layout_weight="1">
 
-            <View
-                android:background="@color/cloudyBlue"
-                android:layout_marginTop="16dp"
-                android:layout_width="1dp"
-                android:layout_height="34dp"
-                android:layerType="software"
-                >
-            </View>
+                </com.allen.library.SuperTextView>
 
-            <com.allen.library.SuperTextView
-                android:id="@+id/superTextView_net"
-                style="@style/cpu_net_ram"
-                title:sDividerLineType="none"
-                title:sBackgroundDrawableRes="@drawable/shape_transparent"
-                title:sCenterSpaceHeight="1dp"
-                title:sCenterTopTextString="NET"
-                title:sCenterTopTextColor="@color/darkSlateBlue"
-                title:sCenterBottomTextColor="@color/darkSlateBlue"
-                title:sCenterTopTextSize="@dimen/cpu_text_size"
-                title:sCenterBottomTextSize="@dimen/cpu_text_size"
-                title:sCenterBottomTextString="0.01EOS"
-                android:layout_weight="1">
+                <View
+                    android:background="@color/cloudyBlue"
+                    android:layout_width="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="34dp"
+                    android:layerType="software">
 
-            </com.allen.library.SuperTextView>
+                </View>
 
-            <View
-                android:background="@color/cloudyBlue"
-                android:layout_width="1dp"
-                android:layout_marginTop="16dp"
-                android:layout_height="34dp"
-                android:layerType="software">
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_ram"
+                    style="@style/cpu_net_ram"
+                    title:sCenterSpaceHeight="1dp"
+                    title:sDividerLineType="none"
+                    title:sCenterTopTextColor="@color/darkSlateBlue"
+                    title:sCenterBottomTextColor="@color/darkSlateBlue"
+                    title:sBackgroundDrawableRes="@drawable/shape_transparent"
+                    title:sCenterTopTextString="RAM"
+                    title:sCenterTopTextSize="@dimen/cpu_text_size"
+                    title:sCenterBottomTextSize="@dimen/cpu_text_size"
+                    title:sCenterBottomTextString="0.01EOS"
+                    android:layout_weight="1">
 
-            </View>
+                </com.allen.library.SuperTextView>
 
-            <com.allen.library.SuperTextView
-                android:id="@+id/superTextView_ram"
-                style="@style/cpu_net_ram"
-                title:sCenterSpaceHeight="1dp"
-                title:sDividerLineType="none"
-                title:sCenterTopTextColor="@color/darkSlateBlue"
-                title:sCenterBottomTextColor="@color/darkSlateBlue"
-                title:sBackgroundDrawableRes="@drawable/shape_transparent"
-                title:sCenterTopTextString="RAM"
-                title:sCenterTopTextSize="@dimen/cpu_text_size"
-                title:sCenterBottomTextSize="@dimen/cpu_text_size"
-                title:sCenterBottomTextString="0.01EOS"
-                android:layout_weight="1">
-
-            </com.allen.library.SuperTextView>
+            </LinearLayout>
 
         </LinearLayout>
-
-
 
     </android.support.constraint.ConstraintLayout>
 
-
     <com.allen.library.SuperTextView
+        android:elevation="@dimen/dimen_2"
         title:sUseShape="true"
         title:sUseRipple="true"
         title:sShapeCornersRadius="6dp"
@@ -231,13 +225,14 @@
         android:id="@+id/superTextView_card_record"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginTop="36dp">
 
     </com.allen.library.SuperTextView>
 
     <com.allen.library.SuperTextView
+        android:elevation="@dimen/dimen_2"
         title:sUseShape="true"
         title:sUseRipple="true"
         title:sShapeCornersRadius="6dp"
@@ -253,11 +248,17 @@
         android:id="@+id/superTextView_card_resource"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="@dimen/bot_card_margin"
-        android:layout_marginStart="@dimen/bot_card_margin"
-        android:layout_marginTop="8dp">
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_10">
 
     </com.allen.library.SuperTextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        title:layout_constraintTop_toBottomOf="@id/superTextView_card_resource">
+    </View>
 
 </android.support.constraint.ConstraintLayout>
 

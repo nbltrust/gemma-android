@@ -342,6 +342,7 @@
     <dimen name="x340">340px</dimen>
     <!-- 公用 -->
     <dimen name="bt_radius">3dp</dimen>
+    <dimen name="card_height">44dp</dimen>
 
     <!-- 启动页面 -->
     <dimen name="bt_inInitPage_margin">32dp</dimen>

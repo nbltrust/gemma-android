@@ -1,8 +1,8 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
@@ -22,7 +22,7 @@ public class ManageWalletFragment extends XFragment {
 
     @BindView(R.id.superTextView_wallet_one) SuperTextView superTextViewWalletOne;
     @BindView(R.id.superTextView_wallet_two) SuperTextView superTextViewWalletTwo;
-    @BindView(R.id.layout_wallet_number) ConstraintLayout layoutWalletNumber;
+    @BindView(R.id.layout_wallet_number) LinearLayout layoutWalletNumber;
     @BindView(R.id.superTextView_importWallet) SuperTextView superTextViewImportWallet;
     @BindView(R.id.superTextView_createWallet) SuperTextView superTextViewCreateWallet;
     Unbinder unbinder;

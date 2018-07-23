@@ -155,4 +155,12 @@
     <string name="input_key_hint2">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>
     <string name="start_input">开始导入</string>
     <string name="complete_input">完成导入</string>
+
+    <string name="language">语言</string>
+    <string name="current_unit">货币单位</string>
+    <string name="simplified_C">简体中文</string>
+    <string name="USD">USD</string>
+    <string name="CNY">CNY</string>
+    <string name="english">English</string>
+    <string name="follow_system">跟随系统</string>
 </resources>

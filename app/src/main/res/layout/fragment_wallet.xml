@@ -1,65 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:title="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:elevation="1dp"
-    android:background="@drawable/bg_wallet_home3x"
-    >
 
-    <com.hxlx.core.lib.widget.titlebar.view.TitleBar
-        android:id="@+id/btn_navibar"
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:title="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:background="#00ffffff"
-        >
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_wallet_home3x">
 
-    </com.hxlx.core.lib.widget.titlebar.view.TitleBar>
-
-    <ImageView
-        android:id="@+id/imageView_portrait"
-        android:layout_width="62dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="18dp"
-        title:layout_constraintStart_toStartOf="parent"
-        title:layout_constraintTop_toBottomOf="@id/btn_navibar"/>
-
-    <TextView
-        android:id="@+id/textView_username"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="24dp"
-        android:text="GEMMA123"
-        android:textSize="32sp"
-        android:textColor="@color/white"
-        title:layout_constraintStart_toEndOf="@id/imageView_portrait"
-        title:layout_constraintTop_toBottomOf="@id/btn_navibar"/>
-
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        title:layout_constraintBottom_toBottomOf="parent"
-        title:layout_constraintEnd_toEndOf="parent"
-        title:layout_constraintStart_toStartOf="parent"
-        title:layout_constraintTop_toBottomOf="@id/imageView_portrait">
+        <com.hxlx.core.lib.widget.titlebar.view.TitleBar
+            android:id="@+id/btn_navibar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:background="#00ffffff"
+            >
+        </com.hxlx.core.lib.widget.titlebar.view.TitleBar>
 
         <LinearLayout
-
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <include
-                layout="@layout/ui_wallet_home_info">
+            <ImageView
+                android:id="@+id/imageView_portrait"
+                android:layout_width="@dimen/dimen_62"
+                android:layout_height="@dimen/dimen_62"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="@dimen/dimen_6"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@id/btn_navibar"/>
 
-            </include>
+            <TextView
+                android:id="@+id/textView_username"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:text="GEMMA123"
+                android:textSize="32sp"
+                android:textColor="@color/white"
+                title:layout_constraintStart_toEndOf="@id/imageView_portrait"
+                title:layout_constraintTop_toBottomOf="@id/btn_navibar"/>
 
         </LinearLayout>
 
-    </ScrollView>
+        <com.cybex.gma.client.widget.OverScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            title:layout_constraintBottom_toBottomOf="parent"
+            title:layout_constraintEnd_toEndOf="parent"
+            title:layout_constraintStart_toStartOf="parent"
+            title:layout_constraintTop_toBottomOf="@id/imageView_portrait">
 
-</android.support.constraint.ConstraintLayout>
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dimen_10"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/ui_wallet_home_info">
+
+                </include>
+
+            </LinearLayout>
+
+        </com.cybex.gma.client.widget.OverScrollView>
+
+</LinearLayout>
+
