@@ -250,6 +250,7 @@ dependencies {
     implementation project(':platform_framework:superTextview')
     implementation project(':platform_framework:validate')
     implementation project(':platform_framework:jdenticon')
+    implementation project(':platform_framework:qrcodecore')
 
 
 }

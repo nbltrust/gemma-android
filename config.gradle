@@ -97,7 +97,7 @@ ext {
             ],
             'yanzhenjie'  : [
                     'sofia'     : "com.yanzhenjie:sofia:1.0.4",
-                    'permission': "com.yanzhenjie:permission:1.1.2",
+                    'permission': "com.yanzhenjie:permission:2.0.0-rc11",
             ],
 
             'smartrefresh': [
@@ -140,6 +140,7 @@ ext {
                     "svgImageViewer"    : "com.pixplicity.sharp:library:1.1.0",
                     "agentweb"          : "com.just.agentweb:agentweb:4.0.2",
                     "logger"            : "com.orhanobut:logger:2.1.1",
+                    "zxing"             : "com.google.zxing:core:3.3.3",
             ],
             'debug'       : [
                     'debugdb': "com.amitshekhar.android:debug-db:1.0.2",
