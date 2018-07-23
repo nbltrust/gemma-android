@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20">
+
+        <TextView
+            android:textColor="@color/steel"
+            android:textSize="@dimen/font_3.5"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/brief_info"
+            />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@drawable/shape_corner"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_180">
+
+        </LinearLayout>
+
+        <TextView
+            android:textColor="@color/steel"
+            android:textSize="@dimen/font_3.5"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delegate"/>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@drawable/shape_corner"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_180">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

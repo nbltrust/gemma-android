@@ -5,22 +5,22 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.fragment.SecuritySettingFragment;
+import com.cybex.gma.client.ui.fragment.DelegateFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
 /**
- * 安全设置页面的容器Activity
+ *
+ * 资源抵押页面容器Activity
  */
 
-public class SecuritySettingActivity extends XActivity {
-
+public class DelegateActivity extends XActivity {
     @Override
     public void bindUI(View view){
-        if (findFragment(SecuritySettingFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_security_setting, SecuritySettingFragment.newInstance());
+        if (findFragment(DelegateFragment.class) == null) {
+            loadRootFragment(R.id.fl_container_delegate, DelegateFragment.newInstance());
         }
 
         //让布局向上移来显示软键盘
@@ -33,7 +33,7 @@ public class SecuritySettingActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_security_setting;
+        return R.layout.activity_general_setting;
     }
 
     @Override
