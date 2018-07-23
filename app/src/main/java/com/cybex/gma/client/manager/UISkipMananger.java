@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.GeneralSettingActivity;
@@ -47,33 +48,36 @@ public final class UISkipMananger {
 
     /**
      * 跳转到创建钱包页面
+     *
      * @param context
      */
-    public static void launchCreateWallet(Activity context){
+    public static void launchCreateWallet(Activity context) {
         launchIntent(context, CreateWalletActivity.class);
     }
 
     /**
      * 跳转到创建钱包管理界面
+     *
      * @param context
      */
-    public static void launchCreateManage(Activity context){
+    public static void launchCreateManage(Activity context) {
         launchIntent(context, CreateManageActivity.class);
     }
 
     /**
-     *跳转到导入钱包界面
+     * 跳转到导入钱包界面
      */
-    public static void launchImportWallet(Activity context){
+    public static void launchImportWallet(Activity context) {
         launchIntent(context, ImportWalletActivity.class);
     }
 
     /**
      * 跳转到钱包管理界面
+     *
      * @param mContext
      */
-    public static void launchWalletManagement(Activity mContext){
-            launchIntent(mContext, ManageWalletActivity.class);
+    public static void launchWalletManagement(Activity mContext) {
+        launchIntent(mContext, ManageWalletActivity.class);
     }
 
     /**
@@ -86,7 +90,11 @@ public final class UISkipMananger {
 
     }
 
+
     /**
+     * 跳转到二维码扫描界面
+     *
+     * @param mContext
      * 跳转到通用设置界面
      * @param context
      */
@@ -105,9 +113,8 @@ public final class UISkipMananger {
     /**
      * 跳转到转账记录界面
      */
-    public static void launchTransferList(Activity mContext) {
-        launchIntent(mContext, TransferRecordActivity.class);
-
+    public static void launchBarcodeScan(Activity mContext) {
+        launchIntent(mContext, BarcodeScanActivity.class);
     }
 
     /**

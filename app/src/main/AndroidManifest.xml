@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
@@ -42,12 +43,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
 
         <activity android:name=".ui.activity.ManageWalletActivity">
@@ -75,6 +76,7 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- 应用内浏览器窗口 -->
         <activity android:name=".ui.activity.GeneralSettingActivity">
 
         </activity>
@@ -82,14 +84,20 @@
         <activity android:name=".ui.activity.SecuritySettingActivity">
 
         </activity>
-
-        <!-- 应用内浏览器 -->
         <activity
             android:name=".ui.base.CommonWebViewActivity"
             android:configChanges="locale|layoutDirection|mcc|mnc|orientation|screenSize"
             android:hardwareAccelerated="true"
             android:label="@string/fast_loading"
             android:screenOrientation="portrait"/>
+
+        <!--二维码扫描窗口 -->
+        <activity
+            android:name=".ui.activity.BarcodeScanActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <!-- activity end -->
 

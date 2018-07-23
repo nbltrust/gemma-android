@@ -156,6 +156,21 @@
     <string name="start_input">开始导入</string>
     <string name="complete_input">完成导入</string>
 
+
+    <string name="title_dialog">Tips</string>
+    <string name="message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
+    <string name="message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
+    <string name="message_setting_comeback">The user comes back from the settings page.</string>
+    <string name="message_install_failed">Your phone is not allowed us to install apps.</string>
+    <string name="message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>
+    <string name="message_error_storage">Please check the external storage device.</string>
+    <string name="successfully">Successful</string>
+    <string name="failure">Failure</string>
+
+    <string name="setting">Setting</string>
+    <string name="resume">Resume</string>
+    <string name="cancel">Cancel</string>
+
     <string name="language">语言</string>
     <string name="current_unit">货币单位</string>
     <string name="simplified_C">简体中文</string>

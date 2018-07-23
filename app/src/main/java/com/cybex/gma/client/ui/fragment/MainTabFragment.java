@@ -7,10 +7,18 @@ import android.view.View;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.EventBusActivityScope;
 import com.cybex.gma.client.event.TabSelectedEvent;
+import com.cybex.gma.client.manager.PermissionManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
+import com.cybex.gma.client.utils.listener.PermissionResultListener;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
 import com.cybex.gma.client.widget.bottombar.BottomBarTab;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+
+import java.util.List;
 
 import me.framework.fragmentation.FragmentSupport;
 
@@ -57,20 +65,41 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
 
                 //测试eos库
                 /**
-                if (position == 1) {
-                    String str = JNIUtil.createKey();
+                 if (position == 1) {
+                 String str = JNIUtil.createKey();
 
-                    String[] pairedStr = str.split(";");
+                 String[] pairedStr = str.split(";");
 
-                    String publicKey = pairedStr[0];
-                    String privateKey = pairedStr[1];
-                    String get_cypher = JNIUtil.get_cypher("123",
-                            privateKey);
+                 String publicKey = pairedStr[0];
+                 String privateKey = pairedStr[1];
+                 String get_cypher = JNIUtil.get_cypher("123",
+                 privateKey);
 
-                    LoggerManager.d("公钥：" + publicKey);
-                    LoggerManager.d("私钥：" + privateKey);
-                    LoggerManager.d("get_cypher：" + get_cypher);
-                }*/
+                 LoggerManager.d("公钥：" + publicKey);
+                 LoggerManager.d("私钥：" + privateKey);
+                 LoggerManager.d("get_cypher：" + get_cypher);
+                 }*/
+
+                if (position == 2) {
+                    PermissionManager manager = PermissionManager.getInstance(getActivity());
+                    manager.requestPermission(new PermissionResultListener() {
+                                                  @Override
+                                                  public void onPermissionGranted() {
+                                                      UISkipMananger.launchBarcodeScan(getActivity());
+                                                  }
+
+                                                  @Override
+                                                  public void onPermissionDenied(List<String> permissions) {
+                                                      GemmaToastUtils.showShortToast("请设置相机相关权限");
+                                                      if (AndPermission.hasAlwaysDeniedPermission(getActivity(), permissions)) {
+                                                          manager.showSettingDialog(getContext(), permissions);
+                                                      }
+
+                                                  }
+                                              }, Permission.CAMERA
+                            , Permission.READ_EXTERNAL_STORAGE);
+
+                }
             }
 
             @Override
