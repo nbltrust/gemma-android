@@ -20,6 +20,8 @@
         android:layout_marginEnd="@dimen/dimen_20">
 
         <com.allen.library.SuperTextView
+            android:translationZ="@dimen/dimen_2"
+            android:id="@+id/superTextView_change_language"
             title:sUseShape="true"
             title:sShapeCornersRadius="@dimen/dimen_3"
             title:sLeftTextString="@string/language"
@@ -36,6 +38,8 @@
         </com.allen.library.SuperTextView>
 
         <com.allen.library.SuperTextView
+            android:translationZ="@dimen/dimen_2"
+            android:id="@+id/superTextView_change_unit"
             title:sUseShape="true"
             title:sShapeCornersRadius="@dimen/dimen_3"
             title:sLeftTextString="@string/current_unit"

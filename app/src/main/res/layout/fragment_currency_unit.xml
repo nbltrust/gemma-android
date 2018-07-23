@@ -12,10 +12,11 @@
     </include>
 
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:translationZ="@dimen/dimen_3"
         android:background="@drawable/shape_corner"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_10">
 
@@ -32,16 +33,12 @@
         </com.allen.library.SuperTextView>
 
         <View
-            android:elevation="@dimen/dimen_3"
             android:background="@color/paleGrey"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layerType="software"
             android:layout_marginStart="@dimen/dimen_10"
-            android:layout_marginEnd="@dimen/dimen_10"
-            title:layout_constraintStart_toStartOf="parent"
-            title:layout_constraintEnd_toEndOf="parent"
-            title:layout_constraintTop_toBottomOf="@id/superTextView_CNY">
+            android:layout_marginEnd="@dimen/dimen_10">
 
         </View>
 
@@ -51,12 +48,11 @@
             title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
             title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
             title:sLeftTextString="@string/USD"
-            title:layout_constraintTop_toBottomOf="@id/superTextView_CNY"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_height">
 
         </com.allen.library.SuperTextView>
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

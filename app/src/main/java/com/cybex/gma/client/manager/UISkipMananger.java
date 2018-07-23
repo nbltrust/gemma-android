@@ -11,9 +11,11 @@ import android.text.TextUtils;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
+import com.cybex.gma.client.ui.activity.GeneralSettingActivity;
 import com.cybex.gma.client.ui.activity.ImportWalletActivity;
 import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.activity.ManageWalletActivity;
+import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
@@ -82,6 +84,22 @@ public final class UISkipMananger {
     public static void launchTransferRecord(Activity mContext) {
         launchIntent(mContext, TransferRecordActivity.class);
 
+    }
+
+    /**
+     * 跳转到通用设置界面
+     * @param context
+     */
+    public static void launchGeneralSetting(Activity context){
+        launchIntent(context, GeneralSettingActivity.class);
+    }
+
+    /**
+     * 跳转到安全设置界面
+     * @param context
+     */
+    public static void launchSecuritySetting(Activity context){
+        launchIntent(context, SecuritySettingActivity.class);
     }
 
     /**

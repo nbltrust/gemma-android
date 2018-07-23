@@ -9,127 +9,156 @@
 
     <include layout="@layout/ui_navibar"/>
 
-    <LinearLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_10"
-        android:layout_marginTop="@dimen/dimen_16"
-        android:orientation="vertical">
-
-
-        <com.allen.library.SuperTextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_44"
-            android:layout_marginEnd="@dimen/dimen_10"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:translationZ="@dimen/dimen_2"
-            title:sLeftTextColor="@color/darkSlateBlue"
-            title:sLeftTextSize="@dimen/font_3.5"
-            title:sLeftTextString="@string/general"
-            title:sRightTvDrawableRight="@drawable/ic_arrow"
-            title:sShapeCornersRadius="@dimen/dimen_6"
-            title:sUseShape="true">
-
-        </com.allen.library.SuperTextView>
-
-        <com.allen.library.SuperTextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_44"
-            android:layout_marginEnd="@dimen/dimen_10"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:translationZ="@dimen/dimen_2"
-            title:sLeftTextColor="@color/darkSlateBlue"
-            title:sLeftTextSize="@dimen/font_3.5"
-            title:sLeftTextString="@string/security"
-            title:sRightTvDrawableRight="@drawable/ic_arrow"
-            title:sShapeCornersRadius="@dimen/dimen_6"
-            title:sUseShape="true">
-
-        </com.allen.library.SuperTextView>
-
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/dimen_10"
             android:layout_marginStart="@dimen/dimen_10"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:background="@drawable/shape_corner"
-            android:orientation="vertical"
-            android:translationZ="@dimen/dimen_3"
-            >
+            android:layout_marginTop="@dimen/dimen_16"
+            android:orientation="vertical">
+
 
             <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_general"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_44"
-                title:sLeftTextColor="@color/darkSlateBlue"
-                title:sLeftTextSize="@dimen/font_3.5"
-                title:sLeftTextString="@string/help"
-                title:sRightTvDrawableRight="@drawable/ic_arrow"
-                title:sUseShape="true"
-                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
-                title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-                >
-
-            </com.allen.library.SuperTextView>
-
-            <View
-                android:background="@color/paleGrey"
-                android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/dimen_10"
                 android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_height="1dp"
-                android:layerType="software">
-            </View>
-
-
-            <com.allen.library.SuperTextView
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_44"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:translationZ="@dimen/dimen_2"
                 title:sLeftTextColor="@color/darkSlateBlue"
                 title:sLeftTextSize="@dimen/font_3.5"
-                title:sLeftTextString="@string/service_agreement"
+                title:sLeftTextString="@string/general"
+                title:sLeftIconRes="@drawable/general3x"
+                title:sLeftIconHeight="@dimen/dimen_24"
+                title:sLeftIconWidth="@dimen/dimen_24"
                 title:sRightTvDrawableRight="@drawable/ic_arrow"
+                title:sLeftTextGravity="center"
+                title:sShapeCornersRadius="@dimen/dimen_6"
                 title:sUseShape="true">
 
             </com.allen.library.SuperTextView>
 
-            <View
-                android:background="@color/paleGrey"
-                android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/dimen_10"
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_height="1dp"
-                android:layerType="software">
-            </View>
-
             <com.allen.library.SuperTextView
-
+                android:id="@+id/superTextView_security"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_44"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:translationZ="@dimen/dimen_2"
                 title:sLeftTextColor="@color/darkSlateBlue"
                 title:sLeftTextSize="@dimen/font_3.5"
-                title:sLeftTextString="@string/about"
+                title:sLeftTextString="@string/security"
+                title:sLeftIconRes="@drawable/safe3x"
+                title:sLeftIconHeight="@dimen/dimen_24"
+                title:sLeftIconWidth="@dimen/dimen_24"
                 title:sRightTvDrawableRight="@drawable/ic_arrow"
-                title:sUseShape="true"
-                title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
-                title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
-                >
+                title:sLeftTextGravity="center"
+                title:sShapeCornersRadius="@dimen/dimen_6"
+                title:sUseShape="true">
 
             </com.allen.library.SuperTextView>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:background="@drawable/shape_corner"
+                android:orientation="vertical"
+                android:translationZ="@dimen/dimen_3"
+                >
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_44"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="@string/help"
+                    title:sLeftIconRes="@drawable/help3x"
+                    title:sLeftIconHeight="@dimen/dimen_24"
+                    title:sLeftIconWidth="@dimen/dimen_24"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sUseShape="true"
+                    title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                    title:sLeftTextGravity="center"
+                    title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                    >
+
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:background="@color/paleGrey"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_height="1dp"
+                    android:layerType="software">
+                </View>
+
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_service_agreement"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_44"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="@string/service_agreement"
+                    title:sLeftIconRes="@drawable/service_agreement3x"
+                    title:sLeftIconHeight="@dimen/dimen_24"
+                    title:sLeftIconWidth="@dimen/dimen_24"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sLeftTextGravity="center"
+                    title:sUseShape="true">
+
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:background="@color/paleGrey"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_height="1dp"
+                    android:layerType="software">
+                </View>
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_about"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_44"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="@string/about"
+                    title:sLeftTextGravity="center"
+                    title:sLeftIconRes="@drawable/about3x"
+                    title:sLeftIconHeight="@dimen/dimen_24"
+                    title:sLeftIconWidth="@dimen/dimen_24"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sUseShape="true"
+                    title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
+                    title:sShapeCornersBottomRightRadius="@dimen/dimen_6">
+
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_4">
+                </View>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_4">
+
             </View>
 
         </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

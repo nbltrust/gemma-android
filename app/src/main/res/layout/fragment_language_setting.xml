@@ -11,7 +11,8 @@
         layout="@layout/ui_navibar">
     </include>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:background="@drawable/shape_corner"
         android:elevation="@dimen/dimen_3"
         android:layout_width="match_parent"
@@ -35,18 +36,16 @@
         </com.allen.library.SuperTextView>
 
         <View
-            android:elevation="@dimen/dimen_3"
             android:background="@color/paleGrey"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layerType="software"
-            title:layout_constraintTop_toBottomOf="@id/superTextView_follow_system"
             android:layout_marginStart="@dimen/dimen_10"
             android:layout_marginEnd="@dimen/dimen_10">
         </View>
 
         <com.allen.library.SuperTextView
-            title:layout_constraintTop_toBottomOf="@id/superTextView_follow_system"
+
             android:id="@+id/superTextView_simC"
             title:sUseShape="true"
             title:sLeftTextString="@string/simplified_C"
@@ -58,19 +57,18 @@
         </com.allen.library.SuperTextView>
 
         <View
-            android:elevation="@dimen/dimen_3"
             android:background="@color/paleGrey"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layerType="software"
-            title:layout_constraintTop_toBottomOf="@id/superTextView_simC"
+
             android:layout_marginStart="@dimen/dimen_10"
             android:layout_marginEnd="@dimen/dimen_10">
         </View>
 
 
         <com.allen.library.SuperTextView
-            title:layout_constraintTop_toBottomOf="@id/superTextView_simC"
+
             android:id="@+id/superTextView_Eng"
             title:sUseShape="true"
             title:sShapeCornersBottomRightRadius="@dimen/dimen_3"
@@ -83,6 +81,6 @@
 
         </com.allen.library.SuperTextView>
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 </LinearLayout>

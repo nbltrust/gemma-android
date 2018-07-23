@@ -75,6 +75,14 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity android:name=".ui.activity.GeneralSettingActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.SecuritySettingActivity">
+
+        </activity>
+
         <!-- 应用内浏览器 -->
         <activity
             android:name=".ui.base.CommonWebViewActivity"
