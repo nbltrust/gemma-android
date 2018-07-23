@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -95,7 +94,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             Validate.check(this, new IValidateResult() {
                 @Override
                 public void onValidateSuccess() {
-                    UISkipMananger.launchHome(CreateWalletActivity.this);
+                    //所有验证通过，发送创建钱包请求
+                   getP().createAccount(getEOSUserName(), getInvCode(), getP().getPublicKey());
                 }
 
                 @Override

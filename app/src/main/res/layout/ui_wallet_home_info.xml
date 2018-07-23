@@ -21,11 +21,10 @@
         android:layout_marginStart="2dp"
         android:layout_marginEnd="2dp"
         android:layout_width="0dp"
-        android:layout_height="260dp"
+        android:layout_height="@dimen/dimen_284"
         android:paddingTop="12dp"
         title:layout_constraintEnd_toEndOf="parent"
         title:layout_constraintStart_toStartOf="parent">
-
 
         <LinearLayout
             android:orientation="vertical"
@@ -33,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_marginStart="18dp"
             android:layout_marginEnd="18dp"
-            android:layout_height="180dp">
+            android:layout_height="@dimen/dimen_204">
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_total_assets"
@@ -73,12 +72,26 @@
 
             </com.allen.library.SuperTextView>
 
+            <TextView
+                android:id="@+id/tv_backup_wallet"
+                android:layout_width="@dimen/dimen_60"
+                android:layout_height="@dimen/dimen_18"
+                android:text="@string/backUp_wallet"
+                android:textSize="@dimen/font_3"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/cornflowerBlue"
+                android:background="@drawable/shape_corner_grey"
+                />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:elevation="3dp"
                 android:layout_marginStart="@dimen/cpu_show_area_margin"
                 android:layout_marginEnd="@dimen/cpu_show_area_margin"
+                android:layout_marginTop="@dimen/dimen_8"
                 android:background="@drawable/dash_line"
                 android:layerType="software">
 
@@ -128,7 +141,6 @@
         <LinearLayout
             android:id="@+id/show_cpu"
             style="@style/show_cpu_status_area"
-
             title:layout_constraintTop_toBottomOf="@id/layout_top_info"
             title:layout_constraintEnd_toEndOf="parent"
             title:layout_constraintStart_toStartOf="parent">
@@ -136,7 +148,7 @@
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_cpu"
                 style="@style/cpu_net_ram"
-                title:sBackgroundDrawableRes="@drawable/shape_corner_grey"
+                title:sBackgroundDrawableRes="@drawable/shape_transparent"
                 title:sDividerLineType="none"
                 title:sCenterSpaceHeight="1dp"
                 title:sCenterTopTextString="CPU"
@@ -156,14 +168,13 @@
                 android:layout_height="34dp"
                 android:layerType="software"
                 >
-
             </View>
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_net"
                 style="@style/cpu_net_ram"
                 title:sDividerLineType="none"
-                title:sBackgroundDrawableRes="@drawable/shape_corner_grey"
+                title:sBackgroundDrawableRes="@drawable/shape_transparent"
                 title:sCenterSpaceHeight="1dp"
                 title:sCenterTopTextString="NET"
                 title:sCenterTopTextColor="@color/darkSlateBlue"
@@ -191,7 +202,7 @@
                 title:sDividerLineType="none"
                 title:sCenterTopTextColor="@color/darkSlateBlue"
                 title:sCenterBottomTextColor="@color/darkSlateBlue"
-                title:sBackgroundDrawableRes="@drawable/shape_corner_grey"
+                title:sBackgroundDrawableRes="@drawable/shape_transparent"
                 title:sCenterTopTextString="RAM"
                 title:sCenterTopTextSize="@dimen/cpu_text_size"
                 title:sCenterBottomTextSize="@dimen/cpu_text_size"

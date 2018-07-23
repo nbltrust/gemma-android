@@ -8,6 +8,7 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
@@ -38,6 +39,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
      * @param publicKey
      */
     public void createAccount(String accountname, String invitationCode, String publicKey) {
+
         UserRegisterReqParams params = new UserRegisterReqParams();
         params.setApp_id(ParamConstants.TYPE_APP_ID_CYBEX);
         params.setAccount_name(accountname);
@@ -81,6 +83,16 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
     }
 
     /**
+     * 调用底层方法生成公钥
+     * @return
+     */
+    public String getPublicKey(){
+        String[] keyPair = JNIUtil.createKey().split(";");
+        String pubKey = keyPair[0];
+        return pubKey;
+    }
+
+    /**
      * 用户名规则：12位小写字母a-z+数字1-5
      * @return
      */
@@ -107,6 +119,8 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         }
         return true;
     }
+
+
 
     /**
      * 创建成功之后存
