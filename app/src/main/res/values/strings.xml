@@ -27,7 +27,7 @@
     <string name="walletName">钱包名称</string>
     <string name="EOS_username">EOS账户名</string>
     <string name="EOS_username_hint">由小写字母a-z与数字1-5组成，须为12个字符</string>
-    <string name="password_input_hint">最少8位长度，建议混合大小写字母、数字及符号</string>
+    <string name="password_input_hint">最少8位，建议混合大小写字母、数字及符号</string>
     <string name="repeatPassword_hint">请再次输入您的密码</string>
     <string name="password_hint_hint">(可选)请输入密码提示</string>
     <string name="invitation_code">邀请码</string>
@@ -171,4 +171,11 @@
     <string name="resume">Resume</string>
     <string name="cancel">Cancel</string>
 
+    <string name="language">语言</string>
+    <string name="current_unit">货币单位</string>
+    <string name="simplified_C">简体中文</string>
+    <string name="USD">USD</string>
+    <string name="CNY">CNY</string>
+    <string name="english">English</string>
+    <string name="follow_system">跟随系统</string>
 </resources>

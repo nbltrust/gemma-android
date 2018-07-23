@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_14"
-        android:paddingTop="@dimen/dimen_20"
+        android:paddingTop="@dimen/dimen_10"
         android:paddingStart="@dimen/dimen_8"
         android:paddingEnd="@dimen/dimen_8"
         android:paddingBottom="@dimen/dimen_10"
@@ -30,7 +30,6 @@
             android:id="@+id/edt_set_pass"
             style="@style/editText_config_wallet"
             android:hint="@string/password_input_hint"/>
-
 
         <TextView
             android:id="@+id/tv_repeat_pass"
@@ -53,7 +52,7 @@
             android:id="@+id/edt_pass_hint"
             style="@style/editText_config_wallet"
             android:hint="@string/password_hint_hint"
-            android:layout_marginStart="@dimen/dimen_6"
+            android:layout_marginStart="@dimen/dimen_14"
             android:background="@null"/>
 
     </LinearLayout>

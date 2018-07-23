@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/white"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:title="http://schemas.android.com/apk/res-auto">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:translationZ="@dimen/dimen_3"
+        android:background="@drawable/shape_corner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_10">
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_CNY"
+            title:sUseShape="true"
+            title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+            title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+            title:sLeftTextString="@string/CNY"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_height"
+            >
+
+        </com.allen.library.SuperTextView>
+
+        <View
+            android:background="@color/paleGrey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layerType="software"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10">
+
+        </View>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_USD"
+            title:sUseShape="true"
+            title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
+            title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
+            title:sLeftTextString="@string/USD"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_height">
+
+        </com.allen.library.SuperTextView>
+    </LinearLayout>
+
+
+</LinearLayout>

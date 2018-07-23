@@ -77,6 +77,13 @@
         </activity>
 
         <!-- 应用内浏览器窗口 -->
+        <activity android:name=".ui.activity.GeneralSettingActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.SecuritySettingActivity">
+
+        </activity>
         <activity
             android:name=".ui.base.CommonWebViewActivity"
             android:configChanges="locale|layoutDirection|mcc|mnc|orientation|screenSize"

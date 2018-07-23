@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:title="http://schemas.android.com/apk/res-auto">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/shape_corner"
+        android:elevation="@dimen/dimen_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20">
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_follow_system"
+            title:sUseShape="true"
+            title:sShapeCornersTopLeftRadius="@dimen/dimen_3"
+            title:sShapeCornersTopRightRadius="@dimen/dimen_3"
+            title:sLeftTextString="@string/follow_system"
+            title:sLeftTextSize="@dimen/font_3.5"
+            title:sLeftTextColor="@color/darkSlateBlue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44"
+            >
+
+        </com.allen.library.SuperTextView>
+
+        <View
+            android:background="@color/paleGrey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layerType="software"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10">
+        </View>
+
+        <com.allen.library.SuperTextView
+
+            android:id="@+id/superTextView_simC"
+            title:sUseShape="true"
+            title:sLeftTextString="@string/simplified_C"
+            title:sLeftTextSize="@dimen/font_3.5"
+            title:sLeftTextColor="@color/darkSlateBlue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44">
+
+        </com.allen.library.SuperTextView>
+
+        <View
+            android:background="@color/paleGrey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layerType="software"
+
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10">
+        </View>
+
+
+        <com.allen.library.SuperTextView
+
+            android:id="@+id/superTextView_Eng"
+            title:sUseShape="true"
+            title:sShapeCornersBottomRightRadius="@dimen/dimen_3"
+            title:sShapeCornersBottomLeftRadius="@dimen/dimen_3"
+            title:sLeftTextString="@string/english"
+            title:sLeftTextSize="@dimen/font_3.5"
+            title:sLeftTextColor="@color/darkSlateBlue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44">
+
+        </com.allen.library.SuperTextView>
+
+    </LinearLayout>
+
+</LinearLayout>

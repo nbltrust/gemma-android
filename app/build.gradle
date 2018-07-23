@@ -236,6 +236,7 @@ dependencies {
 
     implementation deps.yanzhenjie.permission
     implementation deps.third.recyclerviewadapterhelper
+    implementation deps.third.overscroll
 
     //日志打印
     implementation deps.gma.logger

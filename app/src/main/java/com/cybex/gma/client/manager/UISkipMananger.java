@@ -12,9 +12,11 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
+import com.cybex.gma.client.ui.activity.GeneralSettingActivity;
 import com.cybex.gma.client.ui.activity.ImportWalletActivity;
 import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.activity.ManageWalletActivity;
+import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
@@ -93,6 +95,23 @@ public final class UISkipMananger {
      * 跳转到二维码扫描界面
      *
      * @param mContext
+     * 跳转到通用设置界面
+     * @param context
+     */
+    public static void launchGeneralSetting(Activity context){
+        launchIntent(context, GeneralSettingActivity.class);
+    }
+
+    /**
+     * 跳转到安全设置界面
+     * @param context
+     */
+    public static void launchSecuritySetting(Activity context){
+        launchIntent(context, SecuritySettingActivity.class);
+    }
+
+    /**
+     * 跳转到转账记录界面
      */
     public static void launchBarcodeScan(Activity mContext) {
         launchIntent(mContext, BarcodeScanActivity.class);
