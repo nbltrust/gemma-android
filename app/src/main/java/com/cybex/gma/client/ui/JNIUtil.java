@@ -42,4 +42,12 @@ public class JNIUtil {
     public final static native String get_private_key(String cipher_keys, String password);
 
 
+    /**
+     * 根据私钥获取公钥
+     *
+     * @param priv_str
+     * @return
+     */
+    public final static native String get_public_key(String priv_str);
+
 }

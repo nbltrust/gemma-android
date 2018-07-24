@@ -1,8 +1,17 @@
 package com.cybex.gma.client;
 
 import com.cybex.gma.client.config.HttpConfig;
+import com.cybex.gma.client.db.GemmaDatabase;
+import com.cybex.gma.client.db.sqlcipher.SQLCipherHelperImpl;
 import com.cybex.gma.client.service.InitializeService;
 import com.hxlx.core.lib.base.BaseApplication;
+import com.raizlabs.android.dbflow.config.DatabaseConfig;
+import com.raizlabs.android.dbflow.config.DatabaseDefinition;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowLog;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.structure.database.DatabaseHelperListener;
+import com.raizlabs.android.dbflow.structure.database.OpenHelper;
 
 import me.framework.fragmentation.Fragmentation;
 import me.framework.fragmentation.helper.ExceptionHandler;
@@ -18,8 +27,27 @@ public class GmaApplication extends BaseApplication {
         super.onCreate();
 
         initFragmentation();
+        initDBFlow();
         InitializeService.start(this);
         HttpConfig.init(this);
+    }
+
+    private void initDBFlow() {
+        FlowLog.setMinimumLoggingLevel(FlowLog.Level.D);
+
+        FlowManager.init(new FlowConfig.Builder(this)
+                .addDatabaseConfig(
+                        new DatabaseConfig.Builder(GemmaDatabase.class)
+                                .openHelper(new DatabaseConfig.OpenHelperCreator() {
+                                    @Override
+                                    public OpenHelper createHelper(
+                                            DatabaseDefinition databaseDefinition,
+                                            DatabaseHelperListener helperListener) {
+                                        return new SQLCipherHelperImpl(databaseDefinition, helperListener);
+                                    }
+                                })
+                                .build())
+                .build());
     }
 
 
