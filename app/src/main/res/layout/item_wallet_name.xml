@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:title="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/superTV_Item_WalletName"
+        style="@style/card_style"
+        title:sDividerLineType="none"
+        title:sLeftTextColor="@color/darkSlateBlue"
+        title:sLeftTextString="EOS-WALLET-DEFAULT"
+        title:sRightTvDrawableRight="@drawable/ic_arrow"
+        title:sUseShape="true"
+        title:sShapeCornersRadius="@dimen/dimen_6"
+        >
+
+    </com.allen.library.SuperTextView>
+
+</LinearLayout>

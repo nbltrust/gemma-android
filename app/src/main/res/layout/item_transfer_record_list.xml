@@ -51,7 +51,6 @@
                     android:textStyle="bold"
                     tools:text="\ufeff@qhy1233456789"
                     />
-                d
 
                 <TextView
                     android:id="@+id/tv_transfer_amount"

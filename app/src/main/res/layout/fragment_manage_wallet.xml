@@ -33,7 +33,17 @@
                 android:orientation="vertical"
                 android:translationZ="@dimen/dimen_3">
 
+                <android.support.v7.widget.RecyclerView
+                    android:background="@drawable/shape_corner"
+                    android:id="@+id/recycler_wallet_manage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
+
                 <com.allen.library.SuperTextView
+                    android:visibility="gone"
                     android:id="@+id/superTextView_wallet_one"
                     style="@style/card_style"
                     title:sDividerLineType="none"
@@ -48,6 +58,7 @@
                 </com.allen.library.SuperTextView>
 
                 <View
+                    android:visibility="gone"
                     android:id="@+id/line_one"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -59,6 +70,7 @@
                 </View>
 
                 <com.allen.library.SuperTextView
+                    android:visibility="gone"
                     android:id="@+id/superTextView_wallet_two"
                     style="@style/card_style"
                     title:sDividerLineType="none"

@@ -26,6 +26,8 @@ import io.reactivex.disposables.Disposable;
 
 public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
 
+    private String[] Keypair;
+
     @Override
     protected CreateWalletActivity getV() {
         return super.getV();
@@ -83,13 +85,25 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
     }
 
     /**
-     * 调用底层方法生成公钥
+     * 调用底层方法生成公私钥对
      * @return
      */
+    public String[] getKeypair(){
+        Keypair = JNIUtil.createKey().split(";");
+        return Keypair;
+    }
+
     public String getPublicKey(){
-        String[] keyPair = JNIUtil.createKey().split(";");
-        String pubKey = keyPair[0];
-        return pubKey;
+        return Keypair[0];
+    }
+
+    public String getCypher(){
+        return JNIUtil.get_cypher(getV().getPassword(), Keypair[1]);
+    }
+
+    public void clearKeypair(){
+        Keypair[0] = "";
+        Keypair[1] = "";
     }
 
     /**

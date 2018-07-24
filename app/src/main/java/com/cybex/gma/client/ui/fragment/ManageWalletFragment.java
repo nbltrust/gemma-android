@@ -1,6 +1,9 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -8,7 +11,12 @@ import android.widget.ScrollView;
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.adapter.WalletManageListAdapter;
+import com.cybex.gma.client.ui.model.vo.WalletVO;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +36,7 @@ public class ManageWalletFragment extends XFragment {
     @BindView(R.id.superTextView_importWallet) SuperTextView superTextViewImportWallet;
     @BindView(R.id.superTextView_createWallet) SuperTextView superTextViewCreateWallet;
     @BindView(R.id.scroll_wallet_manage) ScrollView scrollViewWalletManage;
+    @BindView(R.id.recycler_wallet_manage) RecyclerView recyclerViewWalletManage;
     Unbinder unbinder;
 
     @OnClick(R.id.superTextView_wallet_one)
@@ -45,6 +54,7 @@ public class ManageWalletFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(ManageWalletFragment.this, rootView);
+        OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletManage);
     }
 
     @Override
@@ -64,7 +74,19 @@ public class ManageWalletFragment extends XFragment {
             }
         });
 
-        OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletManage);
+        List<WalletVO> data = new ArrayList<>();
+        WalletVO wallet_1 = new WalletVO();
+        wallet_1.setWalletName("EOS-WALLET-1");
+        WalletVO wallet_2 = new WalletVO();
+        wallet_2.setWalletName("EOS-WALLET-2");
+        data.add(wallet_1);
+        data.add(wallet_2);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
+                .VERTICAL, false);
+        recyclerViewWalletManage.setLayoutManager(layoutManager);
+        recyclerViewWalletManage.setAdapter(new WalletManageListAdapter(data));
+        recyclerViewWalletManage.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration
+                .VERTICAL));
     }
 
     @Override
