@@ -5,6 +5,7 @@ import android.support.constraint.ConstraintLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
@@ -17,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 
 /**
@@ -33,6 +35,7 @@ public class WalletDetailFragment extends XFragment {
     @BindView(R.id.layout_wallet_briefInfo) ConstraintLayout layoutWalletBriefInfo;
     @BindView(R.id.superTextView_exportPriKey) SuperTextView superTextViewExportPriKey;
     @BindView(R.id.superTextView_exportMne) SuperTextView superTextViewExportMne;
+    @BindView(R.id.scroll_wallet_detail) ScrollView scrollViewWalletDetail;
     Unbinder unbinder;
 
 
@@ -52,6 +55,7 @@ public class WalletDetailFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
+        OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletDetail);
     }
 
     @Override

@@ -28,6 +28,12 @@
         <item name="android:colorControlActivated">@color/cornflowerBlue</item>
         <item name="android:colorControlNormal">@color/colorPrimary</item>
     </style>
+
+    <!-- 通用switch样式 -->
+    <style name="mySwitch">
+        <item name="android:thumb">@drawable/switch_thumb_selector</item>
+        <item name="android:track">@drawable/switch_track_selector</item>
+    </style>
     
     <!-- 线性布局中长按钮的样式 -->
     <style name="bt_long_in_linearLayout">

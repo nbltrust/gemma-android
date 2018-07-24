@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 转账Fragment
@@ -52,11 +53,13 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle(getString(R.string.title_transfer), false);
+        OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
     }
 
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
 
     }
 

@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
@@ -29,6 +30,7 @@ import cxy.com.validate.annotation.MinLength;
 import cxy.com.validate.annotation.NotNull;
 import cxy.com.validate.annotation.Password1;
 import cxy.com.validate.annotation.Password2;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 public class ImportWalletConfigFragment extends XFragment {
 
@@ -55,6 +57,7 @@ public class ImportWalletConfigFragment extends XFragment {
     @BindView(R.id.service_agreement_config) TextView serviceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
+    @BindView(R.id.scroll_wallet_config) ScrollView scrollViewWalletConfig;
 
     Unbinder unbinder;
 
@@ -97,6 +100,7 @@ public class ImportWalletConfigFragment extends XFragment {
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
         Validate.reg(this);
+        OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletConfig);
     }
 
     @Override

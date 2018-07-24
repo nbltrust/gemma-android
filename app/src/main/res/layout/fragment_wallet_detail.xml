@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
@@ -12,113 +10,125 @@
         layout="@layout/ui_navibar">
     </include>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout_wallet_briefInfo"
+    <ScrollView
+        android:id="@+id/scroll_wallet_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
-        android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
-        android:layout_marginTop="@dimen/standard_margin_in_walletDetailPage"
-        android:background="@drawable/shape_corner"
-        android:translationZ="@dimen/dimen_3"
-        title:layout_constraintEnd_toEndOf="parent"
-        title:layout_constraintStart_toStartOf="parent"
-        title:layout_constraintTop_toBottomOf="@+id/btn_navibar">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/walletName_in_detailPage"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
-            android:layout_marginTop="8dp"
-            android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
-            android:text="WalletName"
-            android:textColor="@color/darkSlateBlue"
-            android:textSize="@dimen/font_6"
-            android:textStyle="bold"
-            title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
-            title:layout_constraintStart_toStartOf="parent"
-            title:layout_constraintTop_toTopOf="parent"/>
-
-        <TextView
-            android:id="@+id/eosAddress_in_detailPage"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
-            android:ellipsize="middle"
-            android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
-            android:singleLine="true"
-            android:text="EOS12345678901231542571223414141231423451246Address"
-            android:textColor="@color/darkSlateBlue"
-            android:textSize="@dimen/font_4"
-            title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
-            title:layout_constraintStart_toStartOf="parent"
-            title:layout_constraintTop_toBottomOf="@id/walletName_in_detailPage"/>
-
-
-        <ImageView
-            android:id="@+id/iv_arrow_in_detailPage"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/ic_arrow"
-            title:layout_constraintBottom_toBottomOf="parent"
-            title:layout_constraintEnd_toEndOf="parent"
-            title:layout_constraintStart_toEndOf="@id/eosAddress_in_detailPage"
-            title:layout_constraintTop_toTopOf="parent"
-            />
-    </android.support.constraint.ConstraintLayout>
-
-    <LinearLayout
-        android:background="@drawable/shape_corner"
-        android:translationZ="@dimen/dimen_3"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginEnd="@dimen/dimen_20"
-        android:layout_marginTop="@dimen/dimen_10">
-
-        <com.allen.library.SuperTextView
-            android:id="@+id/superTextView_exportPriKey"
-            style="@style/card_style"
-            title:sUseShape="true"
-            title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-            title:sShapeCornersTopRightRadius="@dimen/dimen_6"
-            title:sDividerLineType="none"
-            title:sLeftTextColor="@color/darkSlateBlue"
-            title:sLeftTextSize="@dimen/font_3.5"
-            title:sLeftTextString="@string/export_privateKey"
-            title:sRightTvDrawableRight="@drawable/ic_arrow">
-
-        </com.allen.library.SuperTextView>
-
-        <View
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layerType="software"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:layout_marginEnd="@dimen/dimen_10"
-            android:background="@color/paleGrey">
+            android:layout_height="match_parent">
 
-        </View>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layout_wallet_briefInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
+                android:layout_marginTop="@dimen/standard_margin_in_walletDetailPage"
+                android:background="@drawable/shape_corner"
+                android:translationZ="@dimen/dimen_3"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@+id/btn_navibar">
 
-        <com.allen.library.SuperTextView
-            android:id="@+id/superTextView_exportMne"
-            style="@style/card_style"
-            title:sLeftTextColor="@color/darkSlateBlue"
-            title:sLeftTextSize="@dimen/font_3.5"
-            title:sLeftTextString="@string/exportMnemonic"
-            title:sRightTvDrawableRight="@drawable/ic_arrow"
-            title:sUseShape="true"
-            title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
-            title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
-            >
+                <TextView
+                    android:id="@+id/walletName_in_detailPage"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                    android:layout_marginTop="8dp"
+                    android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
+                    android:text="WalletName"
+                    android:textColor="@color/darkSlateBlue"
+                    android:textSize="@dimen/font_6"
+                    android:textStyle="bold"
+                    title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
+                    title:layout_constraintStart_toStartOf="parent"
+                    title:layout_constraintTop_toTopOf="parent"/>
 
-        </com.allen.library.SuperTextView>
+                <TextView
+                    android:id="@+id/eosAddress_in_detailPage"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                    android:ellipsize="middle"
+                    android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
+                    android:singleLine="true"
+                    android:text="EOS12345678901231542571223414141231423451246Address"
+                    android:textColor="@color/darkSlateBlue"
+                    android:textSize="@dimen/font_4"
+                    title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
+                    title:layout_constraintStart_toStartOf="parent"
+                    title:layout_constraintTop_toBottomOf="@id/walletName_in_detailPage"/>
 
-    </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/iv_arrow_in_detailPage"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_arrow"
+                    title:layout_constraintBottom_toBottomOf="parent"
+                    title:layout_constraintEnd_toEndOf="parent"
+                    title:layout_constraintStart_toEndOf="@id/eosAddress_in_detailPage"
+                    title:layout_constraintTop_toTopOf="parent"
+                    />
+            </android.support.constraint.ConstraintLayout>
 
+            <LinearLayout
+                android:background="@drawable/shape_corner"
+                android:translationZ="@dimen/dimen_3"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10">
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_exportPriKey"
+                    style="@style/card_style"
+                    title:sUseShape="true"
+                    title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                    title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                    title:sDividerLineType="none"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="@string/export_privateKey"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow">
+
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layerType="software"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:background="@color/paleGrey">
+
+                </View>
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_exportMne"
+                    style="@style/card_style"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="@string/exportMnemonic"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sUseShape="true"
+                    title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
+                    title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
+                    >
+
+                </com.allen.library.SuperTextView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

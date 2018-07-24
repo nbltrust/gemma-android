@@ -3,6 +3,7 @@ package com.cybex.gma.client.ui.fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
@@ -13,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  *管理钱包一级界面
@@ -25,6 +27,7 @@ public class ManageWalletFragment extends XFragment {
     @BindView(R.id.layout_wallet_number) LinearLayout layoutWalletNumber;
     @BindView(R.id.superTextView_importWallet) SuperTextView superTextViewImportWallet;
     @BindView(R.id.superTextView_createWallet) SuperTextView superTextViewCreateWallet;
+    @BindView(R.id.scroll_wallet_manage) ScrollView scrollViewWalletManage;
     Unbinder unbinder;
 
     @OnClick(R.id.superTextView_wallet_one)
@@ -60,6 +63,8 @@ public class ManageWalletFragment extends XFragment {
                 UISkipMananger.launchImportWallet(getActivity());
             }
         });
+
+        OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletManage);
     }
 
     @Override
@@ -87,6 +92,6 @@ public class ManageWalletFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-
     }
+
 }

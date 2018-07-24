@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ScrollView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
@@ -13,6 +14,7 @@ import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 我的
@@ -29,6 +31,7 @@ public class MineFragment extends XFragment<MinePresenter> {
     @BindView(R.id.superTextView_service_agreement) SuperTextView superTextViewServiceAgreement;
     @BindView(R.id.superTextView_about) SuperTextView superTextViewAbout;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
+    @BindView(R.id.scroll_me) ScrollView scrollViewMe;
 
     public static MineFragment newInstance() {
         Bundle args = new Bundle();
@@ -36,7 +39,6 @@ public class MineFragment extends XFragment<MinePresenter> {
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void bindUI(View rootView) {
@@ -81,6 +83,8 @@ public class MineFragment extends XFragment<MinePresenter> {
 
             }
         });
+
+        OverScrollDecoratorHelper.setUpOverScroll(scrollViewMe);
     }
 
     @Override

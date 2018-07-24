@@ -5,6 +5,7 @@ import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import jdenticon.AvatarHelper;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 钱包Fragment
@@ -48,6 +50,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.layout_info) ConstraintLayout layoutInfo;
     @BindView(R.id.superTextView_card_record) SuperTextView superTextViewCardRecord;
     @BindView(R.id.superTextView_card_delegate) SuperTextView superTextViewCardDelegate;
+    @BindView(R.id.scroll_wallet_tab) ScrollView scrollViewWalletTab;
     Unbinder unbinder;
 
     @OnClick(R.id.tv_backup_wallet)
@@ -81,13 +84,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     public void initData(Bundle savedInstanceState) {
         generatePotrait(testUsername);
         setNavibarTitle("GEMMA", false);
-
+        OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
     }
 
     @Override
     protected void setNavibarTitle(String title, boolean isShowBack) {
         super.setNavibarTitle(title, isShowBack);
-        ImageView mCollectView = (ImageView)mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.wallet_add1x) {
+        ImageView mCollectView = (ImageView)mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.wallet_add3x) {
             @Override
             public void performAction(View view) {
                 UISkipMananger.launchWalletManagement(getActivity());

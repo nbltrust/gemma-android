@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
@@ -38,6 +39,7 @@ import cxy.com.validate.annotation.MinLength;
 import cxy.com.validate.annotation.NotNull;
 import cxy.com.validate.annotation.Password1;
 import cxy.com.validate.annotation.Password2;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 创建钱包页面
@@ -46,6 +48,7 @@ import cxy.com.validate.annotation.Password2;
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     private final String testPublicKey = "EOS5FBWk3oBMiipWfcPU5Z8Ry3N9CZVRtVaSffkonzkmueeyTupnS";
+    @BindView(R.id.scroll_create_wallet) ScrollView scrollViewCreateWallet;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
     @BindView(R.id.bubble) BubbleLayout bubble;
@@ -171,6 +174,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             }
         });
         setNavibarTitle("创建钱包", true);
+        OverScrollDecoratorHelper.setUpOverScroll(scrollViewCreateWallet);
     }
 
     public void setStatusBar() {
@@ -300,5 +304,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         super.onDestroy();
         Validate.unreg(this);
     }
+
 
 }

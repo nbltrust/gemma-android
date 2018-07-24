@@ -1,160 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <include
         layout="@layout/ui_navibar">
     </include>
 
-    <LinearLayout
-        android:background="@drawable/shape_corner"
-        android:orientation="vertical"
+    <ScrollView
+        android:id="@+id/scroll_create_wallet"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_14"
-        >
-
-        <com.xujiaji.happybubble.BubbleLayout
-            android:visibility="gone"
-            android:id="@+id/bubble"
-            app:bubbleColor="@color/buff"
-            app:lookLength="@dimen/bubble_lookLength"
-            app:lookPosition="@dimen/bubble_lookPosition"
-            app:bubblePadding="0dp"
-            app:bubbleRadius="@dimen/bt_radius"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_70"
-            >
-
-            <TextView
-                android:id="@+id/tv_in_bubble"
-                android:layout_margin="@dimen/dimen_10"
-                android:text="@string/security_hint"
-                android:textSize="@dimen/font_3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </com.xujiaji.happybubble.BubbleLayout>
-
-        <TextView
-            android:id="@+id/tv_eos_name"
-            style="@style/text_title_config_wallet"
-            android:text="@string/EOS_username"/>
-
-        <EditText
-            android:id="@+id/edt_eos_name"
-            style="@style/editText_config_wallet"
-            android:hint="@string/EOS_username_hint"/>
-
-
-        <TextView
-            android:id="@+id/tv_set_pass"
-            style="@style/text_title_config_wallet"
-            android:text="@string/set_password"/>
-
-        <EditText
-            android:id="@+id/edt_set_pass"
-            style="@style/editText_config_wallet"
-            android:hint="@string/password_input_hint"/>
-
-
-        <TextView
-            android:id="@+id/tv_repeat_pass"
-            style="@style/text_title_config_wallet"
-            android:text="@string/repeatPassword"
-            android:layout_marginTop="@dimen/dimen_10"/>
-
-        <EditText
-            android:id="@+id/edt_repeat_pass"
-            style="@style/editText_config_wallet"
-            android:hint="@string/repeatPassword_hint"/>
-
-        <TextView
-            android:id="@+id/tv_pass_hint"
-            style="@style/text_title_config_wallet"
-            android:text="@string/password_hint"
-            android:layout_marginTop="@dimen/dimen_10"/>
-
-        <EditText
-            android:id="@+id/edt_pass_hint"
-            style="@style/editText_config_wallet"
-            android:hint="@string/password_hint_hint"
-            />
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_6"
-            android:layout_marginEnd="@dimen/dimen_4"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_invCode"
-                style="@style/text_title_config_wallet"
-                android:layout_weight="1"
-                android:text="@string/invitation_code"/>
-
-            <TextView
-                android:id="@+id/tv_get_invCode"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="@dimen/font_3"
-                android:textColor="@color/cornflowerBlue"
-                android:gravity="end"
-                android:text="@string/get_invitation"/>
+                android:layout_margin="@dimen/dimen_14"
+                android:background="@drawable/shape_corner"
+                android:orientation="vertical"
+                >
+
+                <com.xujiaji.happybubble.BubbleLayout
+                    android:id="@+id/bubble"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_70"
+                    android:visibility="gone"
+                    app:bubbleColor="@color/buff"
+                    app:bubblePadding="0dp"
+                    app:bubbleRadius="@dimen/bt_radius"
+                    app:lookLength="@dimen/bubble_lookLength"
+                    app:lookPosition="@dimen/bubble_lookPosition"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_in_bubble"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/dimen_10"
+                        android:text="@string/security_hint"
+                        android:textSize="@dimen/font_3"/>
+
+                </com.xujiaji.happybubble.BubbleLayout>
+
+                <TextView
+                    android:id="@+id/tv_eos_name"
+                    style="@style/text_title_config_wallet"
+                    android:text="@string/EOS_username"/>
+
+                <EditText
+                    android:id="@+id/edt_eos_name"
+                    style="@style/editText_config_wallet"
+                    android:hint="@string/EOS_username_hint"/>
+
+
+                <TextView
+                    android:id="@+id/tv_set_pass"
+                    style="@style/text_title_config_wallet"
+                    android:text="@string/set_password"/>
+
+                <EditText
+                    android:id="@+id/edt_set_pass"
+                    style="@style/editText_config_wallet"
+                    android:hint="@string/password_input_hint"/>
+
+
+                <TextView
+                    android:id="@+id/tv_repeat_pass"
+                    style="@style/text_title_config_wallet"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:text="@string/repeatPassword"/>
+
+                <EditText
+                    android:id="@+id/edt_repeat_pass"
+                    style="@style/editText_config_wallet"
+                    android:hint="@string/repeatPassword_hint"/>
+
+                <TextView
+                    android:id="@+id/tv_pass_hint"
+                    style="@style/text_title_config_wallet"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:text="@string/password_hint"/>
+
+                <EditText
+                    android:id="@+id/edt_pass_hint"
+                    style="@style/editText_config_wallet"
+                    android:hint="@string/password_hint_hint"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_4"
+                    android:layout_marginTop="@dimen/dimen_6"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_invCode"
+                        style="@style/text_title_config_wallet"
+                        android:layout_weight="1"
+                        android:text="@string/invitation_code"/>
+
+                    <TextView
+                        android:id="@+id/tv_get_invCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_6"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/get_invitation"
+                        android:textColor="@color/cornflowerBlue"
+                        android:textSize="@dimen/font_3"/>
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/edt_invCode"
+                    style="@style/editText_config_wallet"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:background="@null"
+                    android:hint="@string/input_inv_code"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layout_checkBox"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginStart="@dimen/checkBox_marginStart"
+                android:layout_marginTop="@dimen/checkBox_marginTop"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbox_config"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/checkBox_length"
+                    android:text="@string/agreement"
+                    android:textSize="14sp"
+                    android:theme="@style/myCheckBox"/>
+
+                <TextView
+                    android:id="@+id/service_agreement_config"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/agreement2"
+                    android:textColor="@color/darkSlateBlue"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_create_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bt_inInitPage_height"
+                android:layout_marginEnd="@dimen/button_margin"
+                android:layout_marginStart="@dimen/button_margin"
+                android:layout_marginTop="@dimen/button_margin"
+                android:background="@drawable/shape_corner_button_unclickable"
+                android:text="@string/create_wallet"
+                android:textColor="@color/whiteTwo"/>
 
         </LinearLayout>
 
+    </ScrollView>
 
-        <EditText
-            android:id="@+id/edt_invCode"
-            style="@style/editText_config_wallet"
-            android:hint="@string/input_inv_code"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:layout_marginEnd="@dimen/dimen_10"
-            android:background="@null"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_checkBox"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginTop="@dimen/checkBox_marginTop"
-        android:layout_marginStart="@dimen/checkBox_marginStart">
-
-        <CheckBox
-            android:id="@+id/checkbox_config"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/checkBox_length"
-            android:text="@string/agreement"
-            android:theme="@style/myCheckBox"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/service_agreement_config"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textColor="@color/darkSlateBlue"
-            android:text="@string/agreement2"
-            />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/bt_create_wallet"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bt_inInitPage_height"
-        android:layout_marginStart="@dimen/button_margin"
-        android:layout_marginEnd="@dimen/button_margin"
-        android:layout_marginTop="@dimen/button_margin"
-        android:text="@string/create_wallet"
-        android:background="@drawable/shape_corner_button_unclickable"
-        android:textColor="@color/whiteTwo"
-        />
 
 </LinearLayout>

@@ -12,94 +12,116 @@
         layout="@layout/ui_navibar">
     </include>
 
-    <LinearLayout
-        android:id="@+id/layout_wallet_number"
+    <ScrollView
+        android:id="@+id/scroll_wallet_manage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dimen_20"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/shape_corner"
-        android:orientation="vertical"
-        android:translationZ="@dimen/dimen_3">
+        android:layout_height="wrap_content">
 
-        <com.allen.library.SuperTextView
-            android:id="@+id/superTextView_wallet_one"
-            style="@style/card_style"
-            title:sDividerLineType="none"
-            title:sLeftTextColor="@color/darkSlateBlue"
-            title:sLeftTextString="钱包一"
-            title:sRightTvDrawableRight="@drawable/ic_arrow"
-            title:sUseShape="true"
-            title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-            title:sShapeCornersTopRightRadius="@dimen/dimen_6"
-            >
-
-        </com.allen.library.SuperTextView>
-
-        <View
-            android:id="@+id/line_one"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginEnd="@dimen/dimen_10"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:background="@color/paleGrey"
-            android:layerType="software">
+            android:layout_height="wrap_content">
 
-        </View>
+            <LinearLayout
+                android:id="@+id/layout_wallet_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/shape_corner"
+                android:orientation="vertical"
+                android:translationZ="@dimen/dimen_3">
 
-        <com.allen.library.SuperTextView
-            android:id="@+id/superTextView_wallet_two"
-            style="@style/card_style"
-            title:sDividerLineType="none"
-            title:sLeftTextColor="@color/darkSlateBlue"
-            title:sLeftTextString="钱包二"
-            title:sRightTvDrawableRight="@drawable/ic_arrow"
-            title:sUseShape="true"
-            title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
-            title:sShapeCornersBottomLeftRadius="@dimen/dimen_6">
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_wallet_one"
+                    style="@style/card_style"
+                    title:sDividerLineType="none"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextString="钱包一"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sUseShape="true"
+                    title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                    title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                    >
 
-        </com.allen.library.SuperTextView>
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:id="@+id/line_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:background="@color/paleGrey"
+                    android:layerType="software">
+
+                </View>
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_wallet_two"
+                    style="@style/card_style"
+                    title:sDividerLineType="none"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextString="钱包二"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sUseShape="true"
+                    title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
+                    title:sShapeCornersBottomLeftRadius="@dimen/dimen_6">
+
+                </com.allen.library.SuperTextView>
 
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/superTextView_importWallet"
-        style="@style/card_style"
-        android:layout_marginEnd="@dimen/dimen_20"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:translationZ="@dimen/dimen_2"
-        title:layout_constraintEnd_toEndOf="parent"
-        title:layout_constraintStart_toStartOf="parent"
-        title:layout_constraintTop_toBottomOf="@id/layout_wallet_number"
-        title:sLeftTextColor="@color/darkSlateBlue"
-        title:sLeftTextString="@string/import_wallet"
-        title:sRightTvDrawableRight="@drawable/ic_arrow"
-        title:sShapeCornersRadius="@dimen/dimen_3"
-        title:sUseShape="true"
-        >
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_importWallet"
+                style="@style/card_style"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:translationZ="@dimen/dimen_2"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@id/layout_wallet_number"
+                title:sLeftTextColor="@color/darkSlateBlue"
+                title:sLeftTextString="@string/import_wallet"
+                title:sRightTvDrawableRight="@drawable/ic_arrow"
+                title:sShapeCornersRadius="@dimen/dimen_3"
+                title:sUseShape="true"
+                >
 
-    </com.allen.library.SuperTextView>
+            </com.allen.library.SuperTextView>
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/superTextView_createWallet"
-        style="@style/card_style"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:translationZ="@dimen/dimen_2"
-        title:layout_constraintEnd_toEndOf="parent"
-        title:layout_constraintStart_toStartOf="parent"
-        title:layout_constraintTop_toBottomOf="@id/superTextView_importWallet"
-        title:sLeftTextColor="@color/darkSlateBlue"
-        title:sLeftTextString="@string/create_wallet"
-        title:sRightTvDrawableRight="@drawable/ic_arrow"
-        title:sShapeCornersRadius="@dimen/dimen_3"
-        title:sUseShape="true">
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_createWallet"
+                style="@style/card_style"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:translationZ="@dimen/dimen_2"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@id/superTextView_importWallet"
+                title:sLeftTextColor="@color/darkSlateBlue"
+                title:sLeftTextString="@string/create_wallet"
+                title:sRightTvDrawableRight="@drawable/ic_arrow"
+                title:sShapeCornersRadius="@dimen/dimen_3"
+                title:sUseShape="true">
 
-    </com.allen.library.SuperTextView>
+            </com.allen.library.SuperTextView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_3"
+                android:layerType="software">
+            </View>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 </LinearLayout>
 

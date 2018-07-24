@@ -41,7 +41,10 @@
             <Switch
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="@style/mySwitch"
+                android:layout_marginEnd="@dimen/dimen_10"
+                />
 
         </LinearLayout>
 
@@ -70,7 +73,9 @@
             <Switch
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="@style/mySwitch"
+                android:layout_marginEnd="@dimen/dimen_10"/>
 
         </LinearLayout>
 
@@ -107,7 +112,9 @@
             <Switch
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="@style/mySwitch"
+                android:layout_marginEnd="@dimen/dimen_10"/>
 
         </LinearLayout>
 

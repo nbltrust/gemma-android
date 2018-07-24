@@ -45,7 +45,8 @@
 
         </LinearLayout>
 
-        <com.cybex.gma.client.widget.OverScrollView
+        <ScrollView
+            android:id="@+id/scroll_wallet_tab"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             title:layout_constraintBottom_toBottomOf="parent"
@@ -67,7 +68,7 @@
 
             </LinearLayout>
 
-        </com.cybex.gma.client.widget.OverScrollView>
+        </ScrollView>
 
 </LinearLayout>
 
