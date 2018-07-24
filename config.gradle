@@ -46,6 +46,8 @@ ext {
                     'processor': "com.github.Raizlabs.DBFlow:dbflow-processor:${versions.dbflow}",
                     'core'     : "com.github.Raizlabs.DBFlow:dbflow-core:${versions.dbflow}",
                     'runtime'  : "com.github.Raizlabs.DBFlow:dbflow:${versions.dbflow}",
+                    'sqlcipher' : "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${versions.dbflow}",
+                    'sqlciperDatabase' : "net.zetetic:android-database-sqlcipher:3.5.6@aar",
             ],
             'leakcanary'  : [
                     'real': "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}",
