@@ -230,6 +230,9 @@ dependencies {
     api deps.gma.MaterialEditText
     implementation deps.gma.MaterialDialog
     implementation deps.gma.agentweb
+    annotationProcessor deps.dbflow.processor
+    implementation deps.dbflow.core
+    implementation deps.dbflow.runtime
 
     implementation deps.gma.badgeview
     annotationProcessor deps.gma.badgeviewCompiler
