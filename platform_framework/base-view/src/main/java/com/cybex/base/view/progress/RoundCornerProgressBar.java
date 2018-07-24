@@ -15,7 +15,7 @@ import com.cybex.gma.framework.view.R;
  *
  * 用法如下:
  *
- *  <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+ *  <com.cybex.base.view.progress.RoundCornerProgressBar
          android:layout_width="320dp"
          android:layout_height="4dp"
          app:rcBackgroundColor="#c6cade"
