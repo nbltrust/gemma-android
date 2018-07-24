@@ -245,7 +245,7 @@
         title:layout_constraintEnd_toEndOf="parent"
         title:layout_constraintStart_toStartOf="parent"
         title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
-        android:id="@+id/superTextView_card_resource"
+        android:id="@+id/superTextView_card_delegate"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginEnd="@dimen/dimen_20"
@@ -257,7 +257,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        title:layout_constraintTop_toBottomOf="@id/superTextView_card_resource">
+        title:layout_constraintTop_toBottomOf="@id/superTextView_card_delegate">
     </View>
 
 </android.support.constraint.ConstraintLayout>

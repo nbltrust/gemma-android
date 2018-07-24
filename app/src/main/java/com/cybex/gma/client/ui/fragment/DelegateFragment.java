@@ -12,6 +12,7 @@ import butterknife.Unbinder;
 public class DelegateFragment extends XFragment {
     
     Unbinder unbinder;
+
     public static DelegateFragment newInstance() {
         Bundle args = new Bundle();
         DelegateFragment fragment = new DelegateFragment();
@@ -22,7 +23,6 @@ public class DelegateFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-
     }
 
     @Override

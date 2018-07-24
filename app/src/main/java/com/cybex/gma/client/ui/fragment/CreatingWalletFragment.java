@@ -31,7 +31,7 @@ public class CreatingWalletFragment extends XFragment {
 
     @OnClick(R.id.bt_export_priKey)
     public void goToBackUpPriKey(){//前往备份引导页如果选择马上备份
-        start(BackUpPriKeyGuideFragment.newInstance());
+        UISkipMananger.launchBakupGuide(getActivity());
     }
 
     public static CreatingWalletFragment newInstance() {

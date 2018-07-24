@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/linwang/work/code/eos/GMA-Mobile-Android/platform_framework/qrcodecore/src/main/jniLibs"/></dataSet><dataSet config="debug"><source path="/Users/linwang/work/code/eos/GMA-Mobile-Android/platform_framework/qrcodecore/src/debug/jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/yiran/Documents/AndroidStudio/Projects/GMA-Mobile-Android/platform_framework/qrcodecore/src/main/jniLibs"/></dataSet><dataSet config="debug"><source path="/Users/yiran/Documents/AndroidStudio/Projects/GMA-Mobile-Android/platform_framework/qrcodecore/src/debug/jniLibs"/></dataSet></merger>

@@ -188,4 +188,6 @@
     <string name="delegate_hint">输入需要抵押的EOS数量</string>
     <string name="delegate_net">抵押NET</string>
     <string name="delegate_cpu_net">抵押CPU和NET</string>
+    <string name="CPU">CPU</string>
+    <string name="NET">NET</string>
 </resources>

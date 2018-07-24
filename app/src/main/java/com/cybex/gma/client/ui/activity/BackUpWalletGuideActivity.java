@@ -5,24 +5,18 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.fragment.DelegateFragment;
+import com.cybex.gma.client.ui.fragment.BackUpPriKeyGuideFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
-/**
- *
- * 资源抵押页面容器Activity
- */
-
-public class DelegateActivity extends XActivity {
-
+public class BackUpWalletGuideActivity extends XActivity {
 
     @Override
-    public void bindUI(View view){
-        if (findFragment(DelegateFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_delegate, DelegateFragment.newInstance());
+    public void bindUI(View view) {
+        if (findFragment(BackUpPriKeyGuideFragment.class) == null) {
+            loadRootFragment(R.id.fl_container_backup_guide, BackUpPriKeyGuideFragment.newInstance());
         }
 
         //让布局向上移来显示软键盘
@@ -30,12 +24,12 @@ public class DelegateActivity extends XActivity {
     }
 
     @Override
-    public void initData(Bundle savedInstanceState){
+    public void initData(Bundle savedInstanceState) {
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_delegate;
+        return R.layout.activity_backup_guide;
     }
 
     @Override

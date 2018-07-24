@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     >
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
 
     <LinearLayout
         android:orientation="vertical"
@@ -18,17 +24,70 @@
             android:textColor="@color/steel"
             android:textSize="@dimen/font_3.5"
             android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/brief_info"
             />
 
         <LinearLayout
+            android:translationZ="@dimen/dimen_3"
             android:layout_marginTop="@dimen/dimen_10"
             android:background="@drawable/shape_corner"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_180">
+            android:layout_height="@dimen/dimen_140">
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                title:sLeftTextString="@string/CPU"
+                title:sLeftTextSize="@dimen/font_3.5"
+                title:sLeftTextColor="@color/steel"
+                title:sRightTextString="0.1000 EOS"
+                title:sRightTextSize="@dimen/font_3"
+                title:sRightTextColor="@color/darkSlateBlueTwo"
+                title:sUseShape="true"
+                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_30">
+
+            </LinearLayout>
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                title:sLeftTextString="已用 0.000 ms"
+                title:sLeftTextColor="@color/cloudyBlue"
+                title:sLeftTextSize="@dimen/font_3"
+                title:sRightTextColor="@color/cloudyBlue"
+                title:sRightTextSize="@dimen/font_3"
+                title:sRightTextString="总量 10.91 ms"
+                title:sUseShape="true"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layerType="software"
+                android:background="@color/paleGrey"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_20">
+            </View>
+
+
+
+
 
         </LinearLayout>
 
@@ -36,6 +95,7 @@
             android:textColor="@color/steel"
             android:textSize="@dimen/font_3.5"
             android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/delegate"/>
@@ -45,8 +105,44 @@
             android:background="@drawable/shape_corner"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_180">
+            android:padding="@dimen/dimen_12"
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:textSize="@dimen/font_3.5"
+                android:textColor="@color/steel"
+                android:layout_height="wrap_content"
+                android:text="@string/delegate_cpu"/>
+
+            <EditText
+                android:id="@+id/edt_delegate_cpu"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:textSize="@dimen/font_4"
+                android:hint="@string/delegate_hint"
+                android:textColorHint="@color/cloudyBlue"
+                android:theme="@style/myEditText"
+                android:textCursorDrawable="@drawable/cursor_custom"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:textSize="@dimen/font_3.5"
+                android:textColor="@color/steel"
+                android:layout_height="wrap_content"
+                android:text="@string/delegate_net"
+                android:layout_marginTop="@dimen/dimen_6"/>
+
+            <EditText
+                android:id="@+id/edt_delegate_net"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:textSize="@dimen/font_4"
+                android:hint="@string/delegate_hint"
+                android:textColorHint="@color/cloudyBlue"
+                android:theme="@style/myEditText"
+                android:textCursorDrawable="@drawable/cursor_custom"
+                android:background="@null"/>
         </LinearLayout>
 
     </LinearLayout>

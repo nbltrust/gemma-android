@@ -12,7 +12,7 @@ import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
 /**
- * 创建钱包完全成功之前的两个页面的容器Activity
+ * 创建钱包完全成功之前的一个页面的容器Activity
  */
 
 public class CreateManageActivity extends XActivity {

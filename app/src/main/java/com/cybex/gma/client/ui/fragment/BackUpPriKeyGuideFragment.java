@@ -36,7 +36,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("备份私钥", true, false);
+        setNavibarTitle("备份私钥", true, true);
     }
 
 

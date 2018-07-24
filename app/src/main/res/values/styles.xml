@@ -10,12 +10,14 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
 
+        <!--
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
+
+        -->
     </style>
 
     <!-- 通用EditText样式 -->
-    
     <style name="myEditText">
         <item name="android:colorControlNormal">@color/paleGrey</item>
         <item name="android:colorControlActivated">@color/darkSlateBlue</item>

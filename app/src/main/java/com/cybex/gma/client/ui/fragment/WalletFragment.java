@@ -31,13 +31,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     private final String testUsername = "hellobitcoin";
 
+    @BindView(R.id.tv_backup_wallet) TextView textViewBackupWallet;
     @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
     @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
     @BindView(R.id.total_CNY_amount) SuperTextView totalCNYAmount;
     @BindView(R.id.balance) SuperTextView balance;
     @BindView(R.id.redeem) SuperTextView redeem;
     @BindView(R.id.layout_top_info) LinearLayout layoutTopInfo;
-    @BindView(R.id.superTextView_card_resource) SuperTextView superTextViewCardResource;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.imageView_portrait) ImageView imageViewPortrait;
     @BindView(R.id.textView_username) TextView textViewUsername;
@@ -47,11 +47,22 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.show_cpu) LinearLayout showCpu;
     @BindView(R.id.layout_info) ConstraintLayout layoutInfo;
     @BindView(R.id.superTextView_card_record) SuperTextView superTextViewCardRecord;
+    @BindView(R.id.superTextView_card_delegate) SuperTextView superTextViewCardDelegate;
     Unbinder unbinder;
+
+    @OnClick(R.id.tv_backup_wallet)
+    public void backUpWallet(){
+        UISkipMananger.launchBakupGuide(getActivity());
+    }
 
     @OnClick(R.id.superTextView_card_record)
     public void goToSeeRecord() {
         UISkipMananger.launchTransferRecord(getActivity());
+    }
+
+    @OnClick(R.id.superTextView_card_delegate)
+    public void goToDelegate(){
+        UISkipMananger.launchDelegate(getActivity());
     }
 
     public static WalletFragment newInstance() {
@@ -70,6 +81,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     public void initData(Bundle savedInstanceState) {
         generatePotrait(testUsername);
         setNavibarTitle("GEMMA", false);
+
     }
 
     @Override

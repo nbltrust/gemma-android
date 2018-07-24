@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
+import com.cybex.gma.client.ui.activity.DelegateActivity;
 import com.cybex.gma.client.ui.activity.GeneralSettingActivity;
 import com.cybex.gma.client.ui.activity.ImportWalletActivity;
 import com.cybex.gma.client.ui.activity.MainTabActivity;
@@ -90,11 +92,26 @@ public final class UISkipMananger {
 
     }
 
-
     /**
-     * 跳转到二维码扫描界面
+     * 跳转到备份钱包界面
      *
      * @param mContext
+     */
+    public static void launchBakupGuide(Activity mContext) {
+        launchIntent(mContext, BackUpWalletGuideActivity.class);
+
+    }
+
+    /**
+     * 跳转到资源抵押界面
+     *
+     */
+
+    public static void launchDelegate(Activity context){
+        launchIntent(context, DelegateActivity.class);
+    }
+
+    /**
      * 跳转到通用设置界面
      * @param context
      */
@@ -111,7 +128,7 @@ public final class UISkipMananger {
     }
 
     /**
-     * 跳转到转账记录界面
+     * 跳转到二维码扫描界面
      */
     public static void launchBarcodeScan(Activity mContext) {
         launchIntent(mContext, BarcodeScanActivity.class);
