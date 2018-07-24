@@ -48,7 +48,15 @@ Java_com_cybex_gma_client_ui_JNIUtil_get_1private_1key(JNIEnv *env, jclass type,
 }
 
 
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_cybex_gma_client_ui_JNIUtil_get_1public_1key(JNIEnv *env, jclass type, jstring priv_str_) {
+    const char *priv_str = env->GetStringUTFChars(priv_str_, 0);
+
+    env->ReleaseStringUTFChars(priv_str_, priv_str);
+
+    std::string returnValue = k.get_public_key(priv_str);
 
 
-
-
+    return env->NewStringUTF(returnValue.c_str());
+}
