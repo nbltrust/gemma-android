@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.EditText;
 
-/**x
+/**
  * 用于解决嵌套Scrollview的时候由于多行而产生的滑动冲突问题
  */
 public class EditTextWithScrollView extends EditText {

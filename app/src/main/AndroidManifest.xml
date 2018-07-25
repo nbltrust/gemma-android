@@ -49,6 +49,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
 
@@ -106,6 +107,11 @@
             android:name=".ui.activity.BarcodeScanActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".ui.activity.BackUpPrivatekeyActivity"
+                  android:screenOrientation="portrait">
 
         </activity>
 

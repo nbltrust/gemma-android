@@ -27,7 +27,7 @@
 
     <color name="tab_unselect">#c6cade</color>
     <color name="tab_normal">#4169d1</color>
-    
+
     <color name="bg_ui">#f9f9f9</color>
     <color name="font_dark_state_blue">#212c67</color>
     <color name="font_title">#8e8e93</color>
@@ -38,6 +38,18 @@
     <color name="btn_enabled">#4169d1</color>
 
     <color name="material_et_base_color">#0056d3</color>
+
+
+    <!--主页tab背景色-->
+    <color name="colorTabBackground">#ffffff</color>
+    <!--主页上划线颜色-->
+    <color name="colorTabUnderline">#e7e9f8</color>
+    <!--主页tab文字默认颜色-->
+    <color name="colorTabTextUnSelect">#9ea3bd</color>
+    <!--主页tab文字选中颜色-->
+    <color name="colorTabTextSelect">#212c67</color>
+    <!--Tab indicator 颜色 -->
+    <color name="colorTabIndicator">#212c67</color>
 
 
 </resources>
