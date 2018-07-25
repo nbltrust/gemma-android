@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
 import butterknife.BindView;
@@ -24,7 +25,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
 
     @OnClick(R.id.show_priKey)
     public void showPriKey(){
-
+        UISkipMananger.launchBackUpPrivateKey(getActivity());
     }
 
     public static BackUpPriKeyGuideFragment newInstance() {

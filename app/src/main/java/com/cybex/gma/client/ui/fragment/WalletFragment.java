@@ -16,6 +16,7 @@ import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
+import com.tapadoo.alerter.Alerter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,6 +86,14 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
+
+        Alerter.create(getActivity())
+                .setText(getResources().getString(R.string.please_confirm_alert))
+                .setBackgroundColorRes(R.color.scarlet)
+                .enableSwipeToDismiss()
+                .enableInfiniteDuration(true)
+                .setTextAppearance(R.style.myAlert)
+                .show();
     }
 
     @Override

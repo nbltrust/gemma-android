@@ -1,14 +1,15 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
+import com.cybex.base.view.tablayout.SlidingTabLayout;
 import com.cybex.gma.client.R;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -34,9 +35,9 @@ public class DelegateFragment extends XFragment {
     @BindView(R.id.progressbar_net) RoundCornerProgressBar progressbarNet;
     @BindView(R.id.superTextView_net_status) SuperTextView superTextViewNetStatus;
     @BindView(R.id.tv_remain_balance) TextView tvRemainBalance;
-    @BindView(R.id.edt_delegate_cpu) EditText edtDelegateCpu;
-    @BindView(R.id.edt_delegate_net) EditText edtDelegateNet;
     @BindView(R.id.bt_delegate_cpu_net) Button btDelegateCpuNet;
+    @BindView(R.id.vp_content) ViewPager viewPagerContent;
+    @BindView(R.id.view_sliding_tab) SlidingTabLayout slidingTabLayout;
 
     @OnClick(R.id.bt_delegate_cpu_net)
     public void showDialog(){
@@ -58,6 +59,8 @@ public class DelegateFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("资源管理", true, true);
+
+
     }
 
     @Override

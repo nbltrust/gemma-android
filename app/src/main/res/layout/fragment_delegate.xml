@@ -192,6 +192,21 @@
             android:padding="@dimen/dimen_12"
             android:layout_height="wrap_content">
 
+            <include
+                layout="@layout/ui_layout_activity_sliding">
+            </include>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/di_notify_bg"/>
+
+            <include
+                layout="@layout/ui_layout_view_pager">
+            </include>
+
+            <!--
+
             <TextView
                 android:layout_width="match_parent"
                 android:textSize="@dimen/font_3.5"
@@ -228,6 +243,7 @@
                 android:textCursorDrawable="@drawable/cursor_custom"
                 android:background="@null"/>
 
+            -->
         </LinearLayout>
 
         <View

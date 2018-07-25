@@ -61,12 +61,12 @@ public class ImportWalletConfigFragment extends XFragment {
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.service_agreement_config) TextView serviceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
-    @BindView(R.id.bt_create_wallet) Button btCreateWallet;
+    @BindView(R.id.btn_complete_import) Button btnCompleteImport;
     @BindView(R.id.scroll_wallet_config) ScrollView scrollViewWalletConfig;
 
     Unbinder unbinder;
 
-    @OnClick(R.id.bt_create_wallet)
+    @OnClick(R.id.btn_complete_import)
     public void checkValidation(){
         //先检查表单
         Validate.check(this, new IValidateResult() {
@@ -158,12 +158,12 @@ public class ImportWalletConfigFragment extends XFragment {
     }
 
     public void setButtonClickableStyle(){
-        btCreateWallet.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+        btnCompleteImport.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
 
     }
 
     public void setButtonUnClickableStyle(){
-        btCreateWallet.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
+        btnCompleteImport.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
 
     }
 

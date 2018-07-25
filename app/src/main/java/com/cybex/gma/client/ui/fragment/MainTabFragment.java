@@ -74,7 +74,7 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
                  }*/
 
                 if (position == 2) {
-                    UISkipMananger.lauchBackUpPrivateKey(getActivity());
+                    UISkipMananger.launchBackUpPrivateKey(getActivity());
 
                 }
             }

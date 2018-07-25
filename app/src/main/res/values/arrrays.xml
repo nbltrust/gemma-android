@@ -6,5 +6,9 @@
         <item>二维码</item>
     </string-array>
 
+    <string-array name="arrays_tab_delegate">
+        <item>抵押资源</item>
+        <item>解除抵押</item>
+    </string-array>
 
 </resources>
