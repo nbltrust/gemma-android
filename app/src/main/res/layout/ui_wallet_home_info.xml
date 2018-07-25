@@ -44,7 +44,7 @@
                 title:sCenterTextGravity="center"
                 title:sCenterTextSize="@dimen/font_3.5"
                 title:sCenterTextColor="@color/darkSlateBlue"
-                title:sCenterTvDrawableLeft="@drawable/asset_logo"
+                title:sCenterTvDrawableLeft="@drawable/ic_asset"
                 >
 
             </com.allen.library.SuperTextView>

@@ -16,7 +16,7 @@
         </include>
 
         <ImageView
-            android:background="@drawable/waiting3x"
+            android:background="@drawable/ic_waiting"
             android:layout_marginTop="@dimen/dimen_64"
             android:layout_width="@dimen/dimen_46"
             android:layout_height="@dimen/dimen_46"
@@ -42,7 +42,7 @@
             title:sLeftIconShowCircle="true"
             title:sDividerLineType="none"
             title:sLeftIconRes="@color/whiteTwo"
-            title:sBackgroundDrawableRes="@drawable/red_bg3x"
+            title:sBackgroundDrawableRes="@drawable/bg_red_with_dot"
             >
 
         </com.allen.library.SuperTextView>

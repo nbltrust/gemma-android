@@ -27,7 +27,7 @@
 
         <ImageView
             android:id="@+id/iv_fake_QR"
-            android:background="@drawable/qr_code3x"
+            android:background="@drawable/ic_qr_code"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"

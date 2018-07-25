@@ -12,7 +12,7 @@
     </include>
 
     <ImageView
-        android:background="@drawable/import_wallet3x"
+        android:background="@drawable/ic_import_wallet"
         android:layout_width="@dimen/dimen_54"
         android:layout_height="@dimen/dimen_54"
         android:layout_marginTop="@dimen/dimen_72"
