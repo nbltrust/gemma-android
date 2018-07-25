@@ -234,8 +234,8 @@ dependencies {
     annotationProcessor deps.dbflow.processor
     implementation deps.dbflow.core
     implementation deps.dbflow.runtime
-    implementation deps.dbflow.sqlcipher
     implementation deps.dbflow.sqlciperDatabase
+    implementation deps.dbflow.sqlcipher
 
     implementation deps.gma.badgeview
     annotationProcessor deps.gma.badgeviewCompiler
