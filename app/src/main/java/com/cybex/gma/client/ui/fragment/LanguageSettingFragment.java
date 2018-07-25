@@ -9,6 +9,11 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * 更改APP显示语言界面
+ *
+ */
+
 public class LanguageSettingFragment extends XFragment {
 
     Unbinder unbinder;

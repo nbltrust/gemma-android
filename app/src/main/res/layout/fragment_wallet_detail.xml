@@ -116,7 +116,7 @@
                     style="@style/card_style"
                     title:sLeftTextColor="@color/darkSlateBlue"
                     title:sLeftTextSize="@dimen/font_3.5"
-                    title:sLeftTextString="@string/exportMnemonic"
+                    title:sLeftTextString="@string/changePass"
                     title:sRightTvDrawableRight="@drawable/ic_arrow"
                     title:sUseShape="true"
                     title:sShapeCornersBottomRightRadius="@dimen/dimen_6"

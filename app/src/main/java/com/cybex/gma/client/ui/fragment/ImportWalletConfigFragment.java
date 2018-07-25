@@ -32,6 +32,11 @@ import cxy.com.validate.annotation.Password1;
 import cxy.com.validate.annotation.Password2;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
+/**
+ * 配置钱包界面
+ *
+ */
+
 public class ImportWalletConfigFragment extends XFragment {
 
 

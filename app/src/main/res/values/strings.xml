@@ -33,14 +33,16 @@
     <string name="invitation_code">邀请码</string>
     <string name="input_inv_code">输入邀请码</string>
     <string name="get_invitation">获取邀请码</string>
+    <string name="new_password">新密码</string>
 
     <string name="repeatPassword">重复密码</string>
     <string name="security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不储存密码，无法提供密码找回服务</string>
     <string name="createAWallet">创建钱包</string>
-
+    <string name="confirm_change">确认修改</string>
 
     <string name="createWalletSuccess">恭喜！创建钱包成功</string>
     <string name="exportMnemonic">导出私钥助记词</string>
+    <string name="changePass">修改密码</string>
     <string name="backupHint">钱包私钥是资产的唯一认证方式，及时备份私钥，可防止手机丢失、忘记密码等意外无法使用钱包的情况。请将私钥助记词备份并妥善保存，以备将来不时之需。</string>
     <string name="backupLater">稍后备份</string>
 
@@ -77,10 +79,10 @@
     <string name="export_privateKey">导出私钥</string>
     <string name="export_mne">导出助记词</string>
     <string name="accounts">钱包下账户（点击切换）</string>
-    <string name="account_1">账户一</string>
-    <string name="account_2">账户二</string>
-    <string name="account_3">账户三</string>
     <string name="signUp">注册新用户名</string>
+    <string name="input_original_pass">请输入原密码</string>
+    <string name="verify_password">验证密码</string>
+    <string name="input_password">请输入@账户名的密码</string>
 
 
     <string name="receiver">收款人</string>
@@ -190,4 +192,8 @@
     <string name="delegate_cpu_net">抵押</string>
     <string name="CPU">CPU</string>
     <string name="NET">NET</string>
+
+    <string name="refund_detail">赎回详情</string>
+    <string name="confirm_refund">确认赎回</string>
+    <string name="refund_username">赎回账户</string>
 </resources>
