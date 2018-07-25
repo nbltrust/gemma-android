@@ -3,9 +3,12 @@ package com.cybex.gma.client.ui.fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +53,12 @@ public class ImportWalletInputKeyFragment extends XFragment {
     protected void setNavibarTitle(String title, boolean isShowBack, boolean isOnBackFinishActivity) {
         super.setNavibarTitle(title, isShowBack, isOnBackFinishActivity);
         //todo 添加二维码模块入口
+        ImageView mCollectView = (ImageView)mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.ic_add_wallet) {
+            @Override
+            public void performAction(View view) {
+                UISkipMananger.launchBarcodeScan(getActivity());
+            }
+        });
     }
 
     @Override

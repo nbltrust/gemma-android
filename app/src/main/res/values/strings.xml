@@ -152,6 +152,7 @@
     <string name="show_QR">显示二维码</string>
     <string name="creating">账户创建中</string>
     <string name="please_confirm">请勿在EOS区块100%确认之前往账户转账</string>
+    <string name="please_confirm_alert">请勿在EOS区块100%确认之前往账户转账(滑动取消提醒)</string>
 
     <string name="input_key_hint">请完整输入备份的私钥</string>
     <string name="input_key_hint2">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>
