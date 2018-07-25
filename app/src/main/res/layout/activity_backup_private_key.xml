@@ -8,6 +8,10 @@
     <include layout="@layout/ui_navibar"/>
 
     <include layout="@layout/ui_layout_activity_sliding"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/di_notify_bg"/>
 
     <include layout="@layout/ui_layout_view_pager"/>
 </LinearLayout>
