@@ -18,10 +18,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.xujiaji.happybubble.BubbleLayout;
@@ -45,7 +43,6 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 创建钱包页面
- *
  */
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
@@ -83,25 +80,25 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterEosNameChanged(Editable s){
-        if (getP().isUserNameValid()){
+    public void afterEosNameChanged(Editable s) {
+        if (getP().isUserNameValid()) {
             setEOSNameValidStyle();
-        }else{
+        } else {
             setEOSNameInvalidStyle();
         }
     }
 
     @OnClick(R.id.bt_create_wallet)
-    public void checkAndCreateWallet(){
+    public void checkAndCreateWallet() {
         //先判断checkbox是否勾选以及EOS账户名是否合法
-        if (checkboxConfig.isChecked() && getP().isUserNameValid()){
+        if (checkboxConfig.isChecked() && getP().isUserNameValid()) {
             //判断表单验证结果
             Validate.check(this, new IValidateResult() {
                 @Override
                 public void onValidateSuccess() {
                     //所有验证通过，发送创建钱包请求
-                   //getP().createAccount(getEOSUserName(), getInvCode(), getP().getPublicKey());
-                    UISkipMananger.launchHome(CreateWalletActivity.this);
+                    String[] keyPair = getP().getKeypair();
+                    getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[0]);
                 }
 
                 @Override
@@ -116,9 +113,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                     return ValidateAnimation.horizontalTranslate();
                 }
             });
-        }else if (!checkboxConfig.isChecked() && getP().isUserNameValid()){
+        } else if (!checkboxConfig.isChecked() && getP().isUserNameValid()) {
             GemmaToastUtils.showLongToast("请阅读并同意我们的服务协议");
-        }else if(checkboxConfig.isChecked() && !getP().isUserNameValid()){
+        } else if (checkboxConfig.isChecked() && !getP().isUserNameValid()) {
             GemmaToastUtils.showLongToast("EOS用户名不符合规范，请重新输入");
         }
 
@@ -168,7 +165,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && isAllTextFilled() && getP().isUserNameValid()) {
+                if (isChecked && getP().isAllTextFilled() && getP().isUserNameValid()) {
                     setClickable(btCreateWallet);
                 } else {
                     setUnclickable(btCreateWallet);
@@ -272,7 +269,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     }
 
     public void setUnclickable(Button button) {
-        //button.setClickable(false);
+        // button.setClickable(false);
         button.setBackgroundColor(getResources().getColor(R.color.cloudyBlueTwo));
     }
 
@@ -299,20 +296,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     public void showOnErrorInfo() {
         //todo 根据返回值判断提醒的内容
         GemmaToastUtils.showLongToast("创建失败，请重新尝试");
-    }
-
-    /**
-     * 代替监听器检查是否所有edittext输入框都不为空值
-     * @return
-     */
-    public boolean isAllTextFilled(){
-        if (EmptyUtils.isEmpty(getPassword())
-                || EmptyUtils.isEmpty(getRepeatPassword())
-                || EmptyUtils.isEmpty(getEOSUserName())
-                || EmptyUtils.isEmpty(getInvCode())) {
-            return false;
-        }
-        return true;
     }
 
     @Override

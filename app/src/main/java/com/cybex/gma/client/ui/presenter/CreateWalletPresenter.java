@@ -26,8 +26,6 @@ import io.reactivex.disposables.Disposable;
 
 public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
 
-    private String[] Keypair;
-
     @Override
     protected CreateWalletActivity getV() {
         return super.getV();
@@ -40,7 +38,9 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
      * @param invitationCode
      * @param publicKey
      */
-    public void createAccount(String accountname, String invitationCode, String publicKey) {
+    public void createAccount(
+            final String accountname, final String password, final String invitationCode, final String
+            publicKey) {
 
         UserRegisterReqParams params = new UserRegisterReqParams();
         params.setApp_id(ParamConstants.TYPE_APP_ID_CYBEX);
@@ -62,11 +62,11 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                     public void onSuccess(@NonNull CustomData<CustomData> result) {
                         getV().dissmisProgressDialog();
 
-                        if(result.code == HttpConst.CODE_RESULT_SUCCESS){
+                        if (result.code == HttpConst.CODE_RESULT_SUCCESS) {
                             //todo 请求成功后执行存储和配置逻辑
                             Log.d("result.code", result.code);
                             UISkipMananger.launchIntent(getV(), MainTabActivity.class);
-                        }else{
+                        } else {
                             Log.d("Error Code", result.code);
                             getV().showOnErrorInfo();
                         }
@@ -87,32 +87,22 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
 
     /**
      * 调用底层方法生成公私钥对
+     *
      * @return
      */
-    public String[] getKeypair(){
-        Keypair = JNIUtil.createKey().split(";");
-        return Keypair;
+    public String[] getKeypair() {
+        String[] keypair = JNIUtil.createKey().split(";");
+        return keypair;
     }
 
-    public String getPublicKey(){
-        return Keypair[0];
-    }
-
-    public String getCypher(){
-        return JNIUtil.get_cypher(getV().getPassword(), Keypair[1]);
-    }
-
-    public void clearKeypair(){
-        Keypair[0] = "";
-        Keypair[1] = "";
-    }
 
     /**
      * 用户名规则：12位小写字母a-z+数字1-5
+     *
      * @return
      */
 
-    public boolean isUserNameValid(){
+    public boolean isUserNameValid() {
         String eosUsername = getV().getEOSUserName();
         String regEx = "^[a-z1-5]{12}$";
         Pattern pattern = Pattern.compile(regEx);
@@ -121,8 +111,20 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         return res;
     }
 
-
-
+    /**
+     * 代替监听器检查是否所有edittext输入框都不为空值
+     *
+     * @return
+     */
+    public boolean isAllTextFilled() {
+        if (EmptyUtils.isEmpty(getV().getPassword())
+                || EmptyUtils.isEmpty(getV().getRepeatPassword())
+                || EmptyUtils.isEmpty(getV().getEOSUserName())
+                || EmptyUtils.isEmpty(getV().getInvCode())) {
+            return false;
+        }
+        return true;
+    }
 
 
     /**
@@ -130,9 +132,9 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
      * 公钥直接存（一个账户对应一个公钥）
      * 私钥+密码加密后存
      */
-    public void saveKeypair(String publicKey, String privateKey, String username){
+    public void saveKeypair(String publicKey, String privateKey, String password, String username) {
         CacheUtil.put(CacheConstants.PubKey_Prefix + username, publicKey);
-        String data = privateKey + getV().getPassword();
+        String data = privateKey + password;
         CacheUtil.put(CacheConstants.PriKey_Prefix + username, data, true);
     }
 
