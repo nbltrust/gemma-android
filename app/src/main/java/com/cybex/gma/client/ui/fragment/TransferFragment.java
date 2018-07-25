@@ -12,6 +12,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+import com.tapadoo.alerter.Alerter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,8 +60,18 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
-
+        Alerter.create(getActivity())
+                .setText("账户创建中，请勿在EOS区块100%确认之前往账户转账！")
+                .setBackgroundColorRes(R.color.scarlet)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Alerter.hide();
+                    }
+                })
+                .enableSwipeToDismiss()
+                .setTextAppearance(R.style.myAlert)
+                .show();
     }
 
     @Override

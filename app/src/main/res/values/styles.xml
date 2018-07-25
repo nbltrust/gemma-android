@@ -56,6 +56,13 @@
     </style>
 
 
+    <!-- Alert 字体样式 -->
+
+    <style name="myAlert">
+        <item name="android:textSize">@dimen/font_3</item>
+        <item name="android:textColor">@color/whiteTwo</item>
+    </style>
+
     <!-- 备份私钥页面 -->
     <style name="text_title">
         <item name="android:layout_width">match_parent</item>
