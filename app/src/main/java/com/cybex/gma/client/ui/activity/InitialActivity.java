@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.utils.NoDoubleClick;
 
 import java.lang.reflect.Field;
 
@@ -23,12 +24,16 @@ public class InitialActivity extends AppCompatActivity {
 
     @OnClick(R.id.bt_create_new)
     public void createWallet() {
-        UISkipMananger.launchIntent(this, CreateWalletActivity.class);
+        if (!NoDoubleClick.isDoubleClick()) {
+            UISkipMananger.launchIntent(this, CreateWalletActivity.class);
+        }
     }
 
     @OnClick(R.id.bt_import)
     public void importWallet() {
-        UISkipMananger.launchIntent(this, ImportWalletActivity.class);
+        if (!NoDoubleClick.isDoubleClick()) {
+            UISkipMananger.launchIntent(this, ImportWalletActivity.class);
+        }
     }
 
     @Override
@@ -39,7 +44,7 @@ public class InitialActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    public  void setNavigationBarStatusBarTranslucent(){
+    public void setNavigationBarStatusBarTranslucent() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             View decorView = getWindow().getDecorView();
