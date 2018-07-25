@@ -15,7 +15,6 @@ import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.common.cache.CacheUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
-import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.android.logger.Log;
 
@@ -111,20 +110,6 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         return res;
     }
 
-    /**
-     * 代替监听器检查是否所有edittext输入框都不为空值
-     *
-     * @return
-     */
-    public boolean isAllTextFilled() {
-        if (EmptyUtils.isEmpty(getV().getPassword())
-                || EmptyUtils.isEmpty(getV().getRepeatPassword())
-                || EmptyUtils.isEmpty(getV().getEOSUserName())
-                || EmptyUtils.isEmpty(getV().getInvCode())) {
-            return false;
-        }
-        return true;
-    }
 
 
     /**
