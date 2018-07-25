@@ -6,7 +6,7 @@
     android:layout_height="@dimen/x46">
 
     <android.support.v7.widget.Toolbar
-        android:background="@drawable/navigationbg"
+        android:background="@drawable/bg_navigation"
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="@dimen/x46"
@@ -24,7 +24,7 @@
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:background="@drawable/icback24px"
+                android:background="@drawable/ic_back_24px"
                 android:layout_width="@dimen/x20"
                 android:layout_height="@dimen/x20" />
 

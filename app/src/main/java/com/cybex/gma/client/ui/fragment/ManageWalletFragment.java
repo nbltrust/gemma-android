@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -81,12 +82,14 @@ public class ManageWalletFragment extends XFragment {
         wallet_2.setWalletName("EOS-WALLET-2");
         data.add(wallet_1);
         data.add(wallet_2);
+
+        DividerItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(this.getActivity(), R.drawable.custom_divider));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
         recyclerViewWalletManage.setLayoutManager(layoutManager);
         recyclerViewWalletManage.setAdapter(new WalletManageListAdapter(data));
-        recyclerViewWalletManage.addItemDecoration(new DividerItemDecoration(this.getActivity(), DividerItemDecoration
-                .VERTICAL));
+        //recyclerViewWalletManage.addItemDecoration(divider);
     }
 
     @Override

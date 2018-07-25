@@ -206,7 +206,7 @@
                 android:textSize="@dimen/font_4"
                 android:hint="@string/delegate_hint"
                 android:textColorHint="@color/cloudyBlue"
-                android:theme="@style/myEditText"
+                style="@style/editText_config_wallet"
                 android:textCursorDrawable="@drawable/cursor_custom"/>
 
             <TextView
@@ -224,7 +224,7 @@
                 android:textSize="@dimen/font_4"
                 android:hint="@string/delegate_hint"
                 android:textColorHint="@color/cloudyBlue"
-                android:theme="@style/myEditText"
+                style="@style/editText_config_wallet"
                 android:textCursorDrawable="@drawable/cursor_custom"
                 android:background="@null"/>
 

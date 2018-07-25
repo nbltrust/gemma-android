@@ -13,7 +13,7 @@
     </include>
     
     <ImageView
-        android:background="@drawable/security4x"
+        android:background="@drawable/security"
         android:layout_width="@dimen/dimen_54"
         android:layout_height="@dimen/dimen_54"
         android:layout_marginTop="@dimen/dimen_72"
@@ -44,7 +44,8 @@
             android:layout_width="@dimen/dimen_10"
             android:layout_height="@dimen/dimen_10"
             android:layout_marginTop="@dimen/dimen_10"
-            android:background="@drawable/ic_point3x"
+            android:background="@drawable/ic_point"
+            android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -62,7 +63,7 @@
             android:layout_width="@dimen/dimen_10"
             android:layout_height="@dimen/dimen_10"
             android:layout_marginTop="@dimen/dimen_20"
-            android:background="@drawable/ic_point3x"
+            android:background="@drawable/ic_point"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_look_around_hint"/>
 
