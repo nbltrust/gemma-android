@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="arrays_tab_backup_private_key">
+        <item>私钥</item>
+        <item>二维码¬</item>
+    </string-array>
+
+
+</resources>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
@@ -104,26 +105,27 @@ public final class UISkipMananger {
 
     /**
      * 跳转到资源抵押界面
-     *
      */
 
-    public static void launchDelegate(Activity context){
+    public static void launchDelegate(Activity context) {
         launchIntent(context, DelegateActivity.class);
     }
 
     /**
      * 跳转到通用设置界面
+     *
      * @param context
      */
-    public static void launchGeneralSetting(Activity context){
+    public static void launchGeneralSetting(Activity context) {
         launchIntent(context, GeneralSettingActivity.class);
     }
 
     /**
      * 跳转到安全设置界面
+     *
      * @param context
      */
-    public static void launchSecuritySetting(Activity context){
+    public static void launchSecuritySetting(Activity context) {
         launchIntent(context, SecuritySettingActivity.class);
     }
 
@@ -132,6 +134,15 @@ public final class UISkipMananger {
      */
     public static void launchBarcodeScan(Activity mContext) {
         launchIntent(mContext, BarcodeScanActivity.class);
+    }
+
+    /**
+     * 备份私钥界面
+     *
+     * @param mContext
+     */
+    public static void lauchBackUpPrivateKey(Activity mContext) {
+        launchIntent(mContext, BackUpPrivatekeyActivity.class);
     }
 
     /**

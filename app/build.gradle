@@ -232,10 +232,10 @@ dependencies {
     implementation deps.gma.agentweb
 
     annotationProcessor deps.dbflow.processor
-    implementation deps.dbflow.core
-    implementation deps.dbflow.runtime
-    implementation deps.dbflow.sqlciperDatabase
-    implementation deps.dbflow.sqlcipher
+    api deps.dbflow.core
+    api deps.dbflow.runtime
+    api deps.dbflow.sqlciperDatabase
+    api deps.dbflow.sqlcipher
 
     implementation deps.gma.badgeview
     annotationProcessor deps.gma.badgeviewCompiler

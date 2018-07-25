@@ -196,4 +196,5 @@
     <string name="refund_detail">赎回详情</string>
     <string name="confirm_refund">确认赎回</string>
     <string name="refund_username">赎回账户</string>
+
 </resources>
