@@ -31,7 +31,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  */
 public class WalletFragment extends XFragment<WalletPresenter> {
 
-    private final String testUsername = "hellobitcoin";
+    private final String testUsername = "helloeoscoin";
 
     @BindView(R.id.tv_backup_wallet) TextView textViewBackupWallet;
     @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
@@ -82,7 +82,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        generatePotrait(testUsername);
+        generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
     }
@@ -90,7 +90,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @Override
     protected void setNavibarTitle(String title, boolean isShowBack) {
         super.setNavibarTitle(title, isShowBack);
-        ImageView mCollectView = (ImageView)mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.wallet_add3x) {
+        ImageView mCollectView = (ImageView)mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.ic_add_wallet) {
             @Override
             public void performAction(View view) {
                 UISkipMananger.launchWalletManagement(getActivity());
@@ -108,7 +108,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         return new WalletPresenter();
     }
 
-    public void generatePotrait(String eosName) {
+    public void generatePortrait(String eosName) {
         String hash = EncryptationManager.getEncrypt().encryptSHA256(eosName);
         final String str = AvatarHelper.Companion.getInstance().getAvatarSvg(hash, 62, null);
         Sharp.loadString(str).into(imageViewPortrait);

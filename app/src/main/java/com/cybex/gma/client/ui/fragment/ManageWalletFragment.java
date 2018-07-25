@@ -75,21 +75,7 @@ public class ManageWalletFragment extends XFragment {
             }
         });
 
-        List<WalletVO> data = new ArrayList<>();
-        WalletVO wallet_1 = new WalletVO();
-        wallet_1.setWalletName("EOS-WALLET-1");
-        WalletVO wallet_2 = new WalletVO();
-        wallet_2.setWalletName("EOS-WALLET-2");
-        data.add(wallet_1);
-        data.add(wallet_2);
-
-        DividerItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
-        divider.setDrawable(ContextCompat.getDrawable(this.getActivity(), R.drawable.custom_divider));
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
-                .VERTICAL, false);
-        recyclerViewWalletManage.setLayoutManager(layoutManager);
-        recyclerViewWalletManage.setAdapter(new WalletManageListAdapter(data));
-        //recyclerViewWalletManage.addItemDecoration(divider);
+        addNewWalletTab();
     }
 
     @Override
@@ -117,6 +103,30 @@ public class ManageWalletFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void addNewWalletTab(){
+        List<WalletVO> data = new ArrayList<>();
+        WalletVO wallet_1 = new WalletVO();
+        wallet_1.setWalletName("EOS-WALLET-1");
+        WalletVO wallet_2 = new WalletVO();
+        wallet_2.setWalletName("EOS-WALLET-2");
+        WalletVO wallet_3 = new WalletVO();
+        wallet_3.setWalletName("EOS-WALLET-3");
+        WalletVO wallet_4 = new WalletVO();
+        wallet_4.setWalletName("EOS-WALLET-4");
+        data.add(wallet_1);
+        data.add(wallet_2);
+        data.add(wallet_3);
+        data.add(wallet_4);
+
+        DividerItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(this.getActivity(), R.drawable.custom_divider));
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
+                .VERTICAL, false);
+        recyclerViewWalletManage.setLayoutManager(layoutManager);
+        recyclerViewWalletManage.setAdapter(new WalletManageListAdapter(data));
+        //recyclerViewWalletManage.addItemDecoration(divider);
     }
 
 }

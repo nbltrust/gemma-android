@@ -10,7 +10,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:background="@drawable/no_screenshots3x"
+        android:background="@drawable/ic_no_screenshots"
         android:id="@+id/iv_no_screenshot"
         android:layout_width="56dp"
         android:layout_height="56dp"

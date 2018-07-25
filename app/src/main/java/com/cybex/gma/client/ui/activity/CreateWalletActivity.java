@@ -162,7 +162,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 return false;
             }
         });
-
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

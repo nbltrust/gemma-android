@@ -13,7 +13,7 @@
     </include>
     
     <ImageView
-        android:background="@drawable/security"
+        android:background="@drawable/ic_security"
         android:layout_width="@dimen/dimen_54"
         android:layout_height="@dimen/dimen_54"
         android:layout_marginTop="@dimen/dimen_72"

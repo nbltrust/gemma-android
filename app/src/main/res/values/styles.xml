@@ -31,8 +31,8 @@
 
     <!-- 通用switch样式 -->
     <style name="mySwitch">
-        <item name="android:thumb">@drawable/switch_thumb_selector</item>
-        <item name="android:track">@drawable/switch_track_selector</item>
+        <item name="android:thumb">@drawable/selector_switch_thumb</item>
+        <item name="android:track">@drawable/selector_switch_track</item>
     </style>
     
     <!-- 线性布局中长按钮的样式 -->
@@ -90,7 +90,7 @@
         <item name="android:textSize">@dimen/font_3.5</item>
         <item name="android:textColorHint">@color/cloudyBlue</item>
         <item name="android:theme">@style/myEditText</item>
-        <item name="android:background">@drawable/edt_bg_selector</item>
+        <item name="android:background">@drawable/selector_edt_bg</item>
         <item name="android:textCursorDrawable">@drawable/cursor_custom</item>
         <item name="android:layout_marginEnd">@dimen/dimen_10</item>
         <item name="android:layout_marginStart">@dimen/dimen_10</item>
@@ -125,8 +125,6 @@
     <style name="card_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/card_height</item>
-        <item name="android:layout_marginStart">0dp</item>
-        <item name="android:layout_marginEnd">0dp</item>
     </style>
 
 
@@ -207,36 +205,6 @@
     </style>
 
     <!-- BackUp Warning 页面样式-->
-    <!-- 文本显示区域 -->
-    <style name="show_area_in_backUpWarning">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/x127</item>
-        <item name="android:layout_marginStart">@dimen/x32</item>
-        <item name="android:layout_marginEnd">@dimen/x32</item>
-        <item name="android:layout_marginTop">@dimen/x59</item>
-        <item name="android:background">@drawable/shape_corner_buff</item>
-    </style>
-
-    <!-- 文本显示区域 LinearLayout-->
-    <style name="show_area_in_backUpWarning2">
-        <item name="android:orientation">vertical</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:layout_marginStart">@dimen/x40</item>
-        <item name="android:layout_marginEnd">@dimen/x16</item>
-        <item name="android:layout_marginTop">@dimen/x16</item>
-        <item name="android:layout_marginBottom">@dimen/x16</item>
-
-    </style>
-
-    <!-- 单一文本框 -->
-    <style name="singleTextView_in_BackUpWarning">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/x21</item>
-        <item name="android:textSize">@dimen/x10</item>
-        <item name="android:layout_marginEnd">@dimen/x16</item>
-
-    </style>
 
     <!-- 按钮 -->
     <style name="button_in_backUpWarning">

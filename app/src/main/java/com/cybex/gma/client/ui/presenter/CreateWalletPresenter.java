@@ -63,6 +63,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                         getV().dissmisProgressDialog();
 
                         if(result.code == HttpConst.CODE_RESULT_SUCCESS){
+                            //todo 请求成功后执行存储和配置逻辑
                             Log.d("result.code", result.code);
                             UISkipMananger.launchIntent(getV(), MainTabActivity.class);
                         }else{
