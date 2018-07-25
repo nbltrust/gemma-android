@@ -121,19 +121,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         return res;
     }
 
-    /**
-     * 代替监听器检查是否所有edittext输入框都不为空值
-     * @return
-     */
-    public boolean isAllTextFilled(){
-        if (EmptyUtils.isEmpty(getV().getPassword())
-                || EmptyUtils.isEmpty(getV().getRepeatPassword())
-                || EmptyUtils.isEmpty(getV().getEOSUserName())
-                || EmptyUtils.isEmpty(getV().getInvCode())) {
-            return false;
-        }
-        return true;
-    }
+
 
 
 

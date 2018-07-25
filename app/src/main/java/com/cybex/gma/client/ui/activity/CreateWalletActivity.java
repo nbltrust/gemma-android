@@ -18,8 +18,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.xujiaji.happybubble.BubbleLayout;
@@ -98,7 +100,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 @Override
                 public void onValidateSuccess() {
                     //所有验证通过，发送创建钱包请求
-                   getP().createAccount(getEOSUserName(), getInvCode(), getP().getPublicKey());
+                   //getP().createAccount(getEOSUserName(), getInvCode(), getP().getPublicKey());
+                    UISkipMananger.launchHome(CreateWalletActivity.this);
                 }
 
                 @Override
@@ -165,7 +168,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && getP().isAllTextFilled() && getP().isUserNameValid()) {
+                if (isChecked && isAllTextFilled() && getP().isUserNameValid()) {
                     setClickable(btCreateWallet);
                 } else {
                     setUnclickable(btCreateWallet);
@@ -269,7 +272,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     }
 
     public void setUnclickable(Button button) {
-       // button.setClickable(false);
+        //button.setClickable(false);
         button.setBackgroundColor(getResources().getColor(R.color.cloudyBlueTwo));
     }
 
@@ -296,6 +299,20 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     public void showOnErrorInfo() {
         //todo 根据返回值判断提醒的内容
         GemmaToastUtils.showLongToast("创建失败，请重新尝试");
+    }
+
+    /**
+     * 代替监听器检查是否所有edittext输入框都不为空值
+     * @return
+     */
+    public boolean isAllTextFilled(){
+        if (EmptyUtils.isEmpty(getPassword())
+                || EmptyUtils.isEmpty(getRepeatPassword())
+                || EmptyUtils.isEmpty(getEOSUserName())
+                || EmptyUtils.isEmpty(getInvCode())) {
+            return false;
+        }
+        return true;
     }
 
     @Override
