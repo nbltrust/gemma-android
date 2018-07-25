@@ -43,7 +43,6 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 创建钱包页面
- *
  */
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
@@ -81,24 +80,25 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterEosNameChanged(Editable s){
-        if (getP().isUserNameValid()){
+    public void afterEosNameChanged(Editable s) {
+        if (getP().isUserNameValid()) {
             setEOSNameValidStyle();
-        }else{
+        } else {
             setEOSNameInvalidStyle();
         }
     }
 
     @OnClick(R.id.bt_create_wallet)
-    public void checkAndCreateWallet(){
+    public void checkAndCreateWallet() {
         //先判断checkbox是否勾选以及EOS账户名是否合法
-        if (checkboxConfig.isChecked() && getP().isUserNameValid()){
+        if (checkboxConfig.isChecked() && getP().isUserNameValid()) {
             //判断表单验证结果
             Validate.check(this, new IValidateResult() {
                 @Override
                 public void onValidateSuccess() {
                     //所有验证通过，发送创建钱包请求
-                   getP().createAccount(getEOSUserName(), getInvCode(), getP().getPublicKey());
+                    String[] keyPair = getP().getKeypair();
+                    getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[0]);
                 }
 
                 @Override
@@ -113,9 +113,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                     return ValidateAnimation.horizontalTranslate();
                 }
             });
-        }else if (!checkboxConfig.isChecked() && getP().isUserNameValid()){
+        } else if (!checkboxConfig.isChecked() && getP().isUserNameValid()) {
             GemmaToastUtils.showLongToast("请阅读并同意我们的服务协议");
-        }else if(checkboxConfig.isChecked() && !getP().isUserNameValid()){
+        } else if (checkboxConfig.isChecked() && !getP().isUserNameValid()) {
             GemmaToastUtils.showLongToast("EOS用户名不符合规范，请重新输入");
         }
 
@@ -269,7 +269,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     }
 
     public void setUnclickable(Button button) {
-       // button.setClickable(false);
+        // button.setClickable(false);
         button.setBackgroundColor(getResources().getColor(R.color.cloudyBlueTwo));
     }
 
