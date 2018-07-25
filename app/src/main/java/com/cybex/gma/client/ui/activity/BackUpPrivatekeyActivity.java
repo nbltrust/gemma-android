@@ -29,7 +29,7 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
 
 
     @BindView(R.id.vp_content) ViewPager vpContent;
-    @BindView(R.id.view_sliding_tab) private SlidingTabLayout mSlidingTab;
+    @BindView(R.id.view_sliding_tab) SlidingTabLayout mSlidingTab;
 
     private List<Fragment> listFragment = new ArrayList<>();
 
