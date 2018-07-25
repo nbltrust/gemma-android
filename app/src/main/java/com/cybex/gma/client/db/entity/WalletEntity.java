@@ -50,6 +50,12 @@ public class WalletEntity extends BaseModel {
     @Column
     private Integer isCurrentWallet;
 
+    /**
+     * 密码提示
+     */
+    @Column
+    private String passwordTip;
+
 
     public Integer getId() {
         return id;
@@ -97,5 +103,13 @@ public class WalletEntity extends BaseModel {
 
     public void setIsCurrentWallet(Integer isCurrentWallet) {
         this.isCurrentWallet = isCurrentWallet;
+    }
+
+    public String getPasswordTip() {
+        return passwordTip;
+    }
+
+    public void setPasswordTip(String passwordTip) {
+        this.passwordTip = passwordTip;
     }
 }
