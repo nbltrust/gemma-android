@@ -9,6 +9,10 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * 安全设置界面
+ */
+
 public class SecuritySettingFragment extends XFragment {
 
     Unbinder unbinder;

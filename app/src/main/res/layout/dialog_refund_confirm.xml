@@ -13,6 +13,17 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_mask_close"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="24dp"
+        android:textColor="@color/darkSlateBlue"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/refund_detail"
+        />
+
 
     <LinearLayout
         android:background="@drawable/bg_shape_radius_white"
@@ -34,13 +45,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="收款人"
+                android:text="@string/CPU"
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 
 
             <TextView
-                android:id="@+id/tv_payee"
+                android:id="@+id/tv_refund_cpu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -48,7 +59,7 @@
                 android:layout_marginRight="16dp"
                 android:textColor="@color/darkSlateBlue"
                 android:textSize="16sp"
-                tools:text="\ufeff@lhy546802341"/>
+                tools:text="0.0001 EOS"/>
         </RelativeLayout>
 
         <View
@@ -69,18 +80,19 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="金额"
+                android:text="@string/NET"
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 
 
             <TextView
-                android:id="@+id/tv_amount"
+                android:id="@+id/tv_refund_net"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
+                android:textSize="@dimen/font_4"
                 android:textColor="@color/darkSlateBlue"
                 tools:text="2.2345 EOS"/>
         </RelativeLayout>
@@ -98,67 +110,34 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/tv_note_title"
+                android:id="@+id/tv_refund_account_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="备注"
+                android:text="@string/refund_username"
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 
 
             <TextView
-                android:id="@+id/tv_note"
+                android:id="@+id/tv_refund_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="30dp"
                 android:layout_marginRight="16dp"
-                android:layout_toRightOf="@id/tv_note_title"
-                android:ellipsize="end"
-                android:singleLine="true"
+                android:textSize="@dimen/font_4"
                 android:textColor="@color/darkSlateBlue"
-                tools:text="资金用途描述不超过50个字，资金用途资金用途描述不超过50个字，资金用途"/>
+                tools:text="\ufeff@gemma12345"/>
 
         </RelativeLayout>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/bg_shape_radius_white"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:text="付款账户"
-            android:textColor="@color/font_title"
-            android:textSize="14sp"/>
-
-
-        <TextView
-            android:id="@+id/tv_payment_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            android:textColor="@color/darkSlateBlue"
-            android:textSize="16sp"
-            tools:text="\ufeff@lhy546802341"/>
-    </RelativeLayout>
-
     <Button
-        android:id="@+id/btn_transfer"
+        android:id="@+id/btn_confirm_refund"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="24dp"
@@ -166,7 +145,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/selector_btn_transfer"
-        android:text="确认转账"
+        android:text="@string/confirm_refund"
         android:textColor="@color/white"
         android:textSize="16sp"/>
 

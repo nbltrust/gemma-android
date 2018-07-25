@@ -143,6 +143,7 @@ ext {
                     "agentweb"          : "com.just.agentweb:agentweb:4.0.2",
                     "logger"            : "com.orhanobut:logger:2.1.1",
                     "zxing"             : "com.google.zxing:core:3.3.3",
+                    "tapadoo"           : "com.tapadoo.android:alerter:2.0.6"
             ],
             'debug'       : [
                     'debugdb': "com.amitshekhar.android:debug-db:1.0.2",

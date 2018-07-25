@@ -19,6 +19,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * 资源抵押界面
+ */
+
 public class DelegateFragment extends XFragment {
 
     Unbinder unbinder;

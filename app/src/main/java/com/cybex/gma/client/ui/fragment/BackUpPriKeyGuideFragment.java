@@ -12,6 +12,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * 正式进入备份私钥界面前的引导页面
+ *
+ */
+
 public class BackUpPriKeyGuideFragment extends XFragment {
 
     @BindView(R.id.show_priKey) Button btShowPrikey;

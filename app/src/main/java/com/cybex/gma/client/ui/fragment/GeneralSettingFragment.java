@@ -12,6 +12,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * 通用设置界面
+ */
+
 public class GeneralSettingFragment extends XFragment {
 
     Unbinder unbinder;
