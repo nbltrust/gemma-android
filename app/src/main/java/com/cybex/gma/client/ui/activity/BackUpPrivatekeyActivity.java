@@ -39,8 +39,6 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
         ButterKnife.bind(this);
 
         setNavibarTitle("备份私钥", true);
-
-
     }
 
     @Override
@@ -58,8 +56,6 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
         TabLayoutManager.getInstance().setSlidingTabData(this, mSlidingTab, vpContent,
                 getTitles(R.array.arrays_tab_backup_private_key), listFragment);
 
-        //SlidingTabLayout--需这样切换一下不然选中变粗没有效果不知是SlidingTabLayout BUG还是设置问题
-        //mSlidingTab.setCurrentTab(1);
         mSlidingTab.setCurrentTab(0);
 
     }
