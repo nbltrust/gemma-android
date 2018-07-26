@@ -36,7 +36,7 @@
         app:qrcv_tipTextColor="@android:color/white"
         app:qrcv_tipTextSize="14sp"
         app:qrcv_toolbarHeight="56dp"
-        app:qrcv_topOffset="80dp"
+        app:qrcv_topOffset="150dp"
         app:qrcv_verticalBias="-1"/>
 
 
@@ -44,14 +44,13 @@
         android:id="@+id/ui_naviar"
         android:layout_width="match_parent"
         android:gravity="center_vertical"
-        android:layout_height="56dp">
+        android:layout_height="70dp">
         <ImageView
             android:id="@+id/btn_back"
             android:clickable="true"
-            android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back_24px"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"/>
 
         <TextView

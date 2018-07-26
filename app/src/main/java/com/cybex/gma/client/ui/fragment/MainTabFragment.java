@@ -56,25 +56,8 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
 
-                //测试eos库
-                /**
-                 if (position == 1) {
-                 String str = JNIUtil.createKey();
-
-                 String[] pairedStr = str.split(";");
-
-                 String publicKey = pairedStr[0];
-                 String privateKey = pairedStr[1];
-                 String get_cypher = JNIUtil.get_cypher("123",
-                 privateKey);
-
-                 LoggerManager.d("公钥：" + publicKey);
-                 LoggerManager.d("私钥：" + privateKey);
-                 LoggerManager.d("get_cypher：" + get_cypher);
-                 }*/
-
                 if (position == 2) {
-                    UISkipMananger.launchBackUpPrivateKey(getActivity());
+                    UISkipMananger.launchBarcodeScan(getActivity());
 
                 }
             }
