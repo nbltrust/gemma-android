@@ -33,6 +33,12 @@ public class WalletEntity extends BaseModel {
     private String publicKey;
 
     /**
+     * 摘要信息
+     */
+    @Column
+    private String cypher;
+
+    /**
      * 私钥
      */
     @Column
@@ -111,5 +117,13 @@ public class WalletEntity extends BaseModel {
 
     public void setPasswordTip(String passwordTip) {
         this.passwordTip = passwordTip;
+    }
+
+    public String getCypher() {
+        return cypher;
+    }
+
+    public void setCypher(String cypher) {
+        this.cypher = cypher;
     }
 }
