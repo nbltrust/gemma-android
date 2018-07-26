@@ -112,7 +112,7 @@
                 </View>
 
                 <com.allen.library.SuperTextView
-                    android:id="@+id/superTextView_exportMne"
+                    android:id="@+id/superTextView_changePass"
                     style="@style/card_style"
                     title:sLeftTextColor="@color/darkSlateBlue"
                     title:sLeftTextSize="@dimen/font_3.5"
@@ -125,7 +125,15 @@
 
                 </com.allen.library.SuperTextView>
 
+
+
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layerType="software">
+            </View>
 
         </LinearLayout>
 

@@ -98,7 +98,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 public void onValidateSuccess() {
                     //所有验证通过，发送创建钱包请求
                     String[] keyPair = getP().getKeypair();
-                    getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[0]);
+                    //getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[0]);
                 }
 
                 @Override
@@ -319,6 +319,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         }
         return true;
     }
+
+
 
 
 }

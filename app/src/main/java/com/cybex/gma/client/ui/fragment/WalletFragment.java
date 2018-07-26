@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
@@ -17,6 +20,8 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
 import com.tapadoo.alerter.Alerter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -128,4 +133,20 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    /**
+     * 从数据库中获取当前Wallet对象
+     * @return
+     */
+    public WalletEntity getCurrentWallet(){
+        List<WalletEntity> list = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
+        for (WalletEntity walletEntity : list){
+            if (walletEntity.getIsCurrentWallet() == CacheConstants.IS_CURRENT_WALLET){
+                return walletEntity;
+            }
+        }
+        return null;
+    }
+
+
 }

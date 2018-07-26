@@ -43,7 +43,6 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
         this.setTab();
     }
 

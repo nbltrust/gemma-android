@@ -33,11 +33,13 @@
         android:padding="@dimen/dimen_16">
 
         <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/edt_show_priKey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/input_key_hint"
             android:textSize="@dimen/font_3.5"
-            android:textColor="@color/blueyGrey"
+            android:textColor="@color/darkSlateBlue"
+            android:textColorHint="@color/blueyGrey"
             app:met_hideUnderline="true"
             android:textCursorDrawable="@drawable/cursor_custom"
             />

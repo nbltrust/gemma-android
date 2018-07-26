@@ -38,6 +38,7 @@
         <service android:name=".service.InitializeService"/>
 
         <!-- activity start -->
+        <!-- 主TAB界面 -->
         <activity
             android:name=".ui.activity.MainTabActivity"
             android:launchMode="singleTask"

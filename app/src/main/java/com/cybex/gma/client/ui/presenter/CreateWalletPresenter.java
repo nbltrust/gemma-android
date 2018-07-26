@@ -7,13 +7,14 @@ import com.cybex.gma.client.api.data.response.CustomData;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
-import com.hxlx.core.lib.common.cache.CacheUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.android.logger.Log;
@@ -62,7 +63,6 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                         getV().dissmisProgressDialog();
 
                         if (result.code == HttpConst.CODE_RESULT_SUCCESS) {
-                            //todo 请求成功后执行存储和配置逻辑
                             Log.d("result.code", result.code);
                             UISkipMananger.launchIntent(getV(), MainTabActivity.class);
                         } else {
@@ -110,17 +110,32 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         return res;
     }
 
-
-
     /**
-     * 创建成功之后存
-     * 公钥直接存（一个账户对应一个公钥）
-     * 私钥+密码加密后存
+     * 调用DB Manager将钱包信息存入表中
+     * @param publicKey
+     * @param privateKey
+     * @param password
+     * @param eosUsername
+     * @param isCurrentWallet 是否为当前钱包 1为是，0为否
+     * @param passwordTip
      */
-    public void saveKeypair(String publicKey, String privateKey, String password, String username) {
-        CacheUtil.put(CacheConstants.PubKey_Prefix + username, publicKey);
-        String data = privateKey + password;
-        CacheUtil.put(CacheConstants.PriKey_Prefix + username, data, true);
+
+    public void saveAccount(final String publicKey, final String privateKey, final String
+            password, final String eosUsername, final int isCurrentWallet, final String passwordTip ){
+
+        WalletEntity walletEntity = new WalletEntity();
+        //获取当前数据库中已存入的钱包个数
+        int walletNum = DBManager.getInstance().getMediaBeanDao().getWalletEntityList().size();
+        int index = walletNum + 1;
+        //以默认钱包名称存入
+        walletEntity.setWalletName(CacheConstants.DEFAULT_WALLETNAME_PREFIX + String.valueOf(index));
+        walletEntity.setPublicKey(publicKey);
+        final String cypher = JNIUtil.get_cypher(password, privateKey);
+        walletEntity.setPrivateKey(cypher);
+        walletEntity.setIsCurrentWallet(isCurrentWallet);
+        walletEntity.setEosName(eosUsername);
+        walletEntity.setPasswordTip(passwordTip);
+        DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(walletEntity);
     }
 
 }

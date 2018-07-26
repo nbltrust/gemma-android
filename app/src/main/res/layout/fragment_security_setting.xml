@@ -37,13 +37,13 @@
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_height="match_parent"
                 android:layout_weight="6"/>
-
-            <Switch
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                style="@style/mySwitch"
-                android:layout_marginEnd="@dimen/dimen_10"
+            
+            <com.cybex.base.view.switchbutton.SwitchButton
+                android:id="@+id/switch_face"
+                style="@style/mySwitchButton"
+                title:sb_background="#D5D5D5"
+                title:sb_show_indicator="false"
+                title:sb_checked_color="@color/cornflowerBlueTwo"
                 />
 
         </LinearLayout>
@@ -70,12 +70,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="6"/>
 
-            <Switch
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                style="@style/mySwitch"
-                android:layout_marginEnd="@dimen/dimen_10"/>
+            <com.cybex.base.view.switchbutton.SwitchButton
+                android:id="@+id/switch_fingerprint"
+                style="@style/mySwitchButton"
+                title:sb_background="#D5D5D5"
+                title:sb_show_indicator="false"
+                title:sb_checked_color="@color/cornflowerBlueTwo"
+                />
 
         </LinearLayout>
 
@@ -109,12 +110,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="6"/>
 
-            <Switch
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                style="@style/mySwitch"
-                android:layout_marginEnd="@dimen/dimen_10"/>
+            <com.cybex.base.view.switchbutton.SwitchButton
+                android:id="@+id/switch_pattern"
+                style="@style/mySwitchButton"
+                title:sb_background="#D5D5D5"
+                title:sb_show_indicator="false"
+                title:sb_checked_color="@color/cornflowerBlueTwo"
+                />
 
         </LinearLayout>
 
@@ -128,6 +130,7 @@
         </View>
 
         <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_change_pattern"
             title:sUseShape="true"
             title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
             title:sShapeCornersBottomRightRadius="@dimen/dimen_6"

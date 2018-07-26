@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_refund_cpu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:text="@string/CPU"
+        android:textColor="@color/steel"
+        android:textSize="@dimen/font_3.5"/>
+
+    <EditText
+        android:id="@+id/edt_refund_cpu"
+        style="@style/editText_config_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:hint="@string/refund_hint"
+        android:textColorHint="@color/cloudyBlue"
+        android:textCursorDrawable="@drawable/cursor_custom"
+        android:textSize="@dimen/font_4"/>
+
+    <TextView
+        android:id="@+id/tv_refund_net"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:text="@string/NET"
+        android:textColor="@color/steel"
+        android:textSize="@dimen/font_3.5"/>
+
+    <EditText
+        android:id="@+id/edt_refund_net"
+        style="@style/editText_config_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:background="@null"
+        android:hint="@string/refund_hint"
+        android:textColorHint="@color/cloudyBlue"
+        android:textCursorDrawable="@drawable/cursor_custom"
+        android:textSize="@dimen/font_4"/>
+
+</LinearLayout>

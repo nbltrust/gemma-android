@@ -1,8 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.allen.library.SuperTextView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.WalletManageListAdapter;
 import com.cybex.gma.client.ui.model.vo.WalletVO;
@@ -75,8 +77,9 @@ public class ManageWalletFragment extends XFragment {
             }
         });
 
-        addNewWalletTab();
+        addtestWalletTab();
     }
+
 
     @Override
     protected void setNavibarTitle(String title, boolean isShowBack) {
@@ -105,28 +108,60 @@ public class ManageWalletFragment extends XFragment {
         unbinder.unbind();
     }
 
-    public void addNewWalletTab(){
-        List<WalletVO> data = new ArrayList<>();
-        WalletVO wallet_1 = new WalletVO();
-        wallet_1.setWalletName("EOS-WALLET-1");
-        WalletVO wallet_2 = new WalletVO();
-        wallet_2.setWalletName("EOS-WALLET-2");
-        WalletVO wallet_3 = new WalletVO();
-        wallet_3.setWalletName("EOS-WALLET-3");
-        WalletVO wallet_4 = new WalletVO();
-        wallet_4.setWalletName("EOS-WALLET-4");
-        data.add(wallet_1);
-        data.add(wallet_2);
-        data.add(wallet_3);
-        data.add(wallet_4);
 
-        DividerItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
-        divider.setDrawable(ContextCompat.getDrawable(this.getActivity(), R.drawable.custom_divider));
+    /**
+     *
+     * 从数据库中读取Wallet信息转换成WalletVO列表
+     * @return
+     */
+    public List<WalletVO> getWalletVOList(){
+        List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
+        List<WalletVO> walletVOList = new ArrayList<>();
+
+        for (int i = 0; i < walletEntityList.size(); i++){
+            WalletVO curWalletVO = new WalletVO();
+            curWalletVO.setWalletName(walletEntityList.get(i).getWalletName());
+            walletVOList.add(curWalletVO);
+        }
+
+        return walletVOList;
+    }
+
+    /**
+     * 把数据放入RecyclerView中显示出来
+     * @param walletVOList
+     */
+    public void setWalletListViewData(List<WalletVO> walletVOList){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
         recyclerViewWalletManage.setLayoutManager(layoutManager);
-        recyclerViewWalletManage.setAdapter(new WalletManageListAdapter(data));
+        recyclerViewWalletManage.setAdapter(new WalletManageListAdapter(walletVOList));
+    }
+
+
+    public void addtestWalletTab(){
+        List<WalletVO> data = new ArrayList<>();
+
+        WalletVO wallet_1 = new WalletVO();
+        wallet_1.setWalletName("EOS-WALLET-1");
+
+        data.add(wallet_1);
+
+
+        //DividerItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
+        //divider.setDrawable(ContextCompat.getDrawable(this.getActivity(), R.drawable.custom_divider));
         //recyclerViewWalletManage.addItemDecoration(divider);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
+               .VERTICAL, false);
+        recyclerViewWalletManage.setLayoutManager(layoutManager);
+        recyclerViewWalletManage.setAdapter(new WalletManageListAdapter(data));
+        recyclerViewWalletManage.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                start(WalletDetailFragment.newInstance());
+            }
+        });
     }
 
 }
