@@ -3,6 +3,7 @@ package com.cybex.gma.client.ui.activity;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.BarcodeScanEvent;
@@ -31,6 +32,7 @@ import butterknife.ButterKnife;
 public class BarcodeScanActivity extends XActivity implements QRCodeView.Delegate {
 
     @BindView(R.id.view_barcode_zxing) ZXingView mZXingView;
+    @BindView(R.id.btn_back) ImageView btnBack;
 
     private SoundPoolHelper soundPoolHelper;
     private static final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 666;
@@ -42,9 +44,15 @@ public class BarcodeScanActivity extends XActivity implements QRCodeView.Delegat
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("扫描二维码", true);
         soundPoolHelper = new SoundPoolHelper().loadDefault(this);
         mZXingView.setDelegate(this);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

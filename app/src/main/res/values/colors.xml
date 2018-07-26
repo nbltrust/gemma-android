@@ -51,5 +51,5 @@
     <!--Tab indicator 颜色 -->
     <color name="colorTabIndicator">#212c67</color>
 
-
+   <color name="item_pressed">#9ea3bd</color>
 </resources>

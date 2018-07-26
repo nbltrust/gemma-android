@@ -214,7 +214,6 @@
     <com.allen.library.SuperTextView
         android:elevation="@dimen/dimen_2"
         title:sUseShape="true"
-        title:sUseRipple="true"
         title:sShapeCornersRadius="6dp"
         title:sLeftTextString="@string/transfer_records"
         title:sLeftTextSize="@dimen/font_3.5"
@@ -222,6 +221,7 @@
         title:sRightTvDrawableRight="@drawable/ic_arrow"
         title:layout_constraintEnd_toEndOf="parent"
         title:layout_constraintStart_toStartOf="parent"
+        title:sBackgroundDrawableRes="@drawable/selector_layout_pressed"
         android:id="@+id/superTextView_card_record"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -234,7 +234,6 @@
     <com.allen.library.SuperTextView
         android:elevation="@dimen/dimen_2"
         title:sUseShape="true"
-        title:sUseRipple="true"
         title:sShapeCornersRadius="6dp"
         title:sLeftTextString="@string/resource"
         title:sLeftTextSize="@dimen/font_3.5"
