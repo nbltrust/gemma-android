@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.xujiaji.happybubble.BubbleLayout;
@@ -46,7 +47,6 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  */
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
-    private final String testPublicKey = "EOS5FBWk3oBMiipWfcPU5Z8Ry3N9CZVRtVaSffkonzkmueeyTupnS";
     @BindView(R.id.scroll_create_wallet) ScrollView scrollViewCreateWallet;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
@@ -165,7 +165,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && getP().isAllTextFilled() && getP().isUserNameValid()) {
+                if (isChecked && isAllTextFilled() && getP().isUserNameValid()) {
                     setClickable(btCreateWallet);
                 } else {
                     setUnclickable(btCreateWallet);
@@ -302,6 +302,22 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     protected void onDestroy() {
         super.onDestroy();
         Validate.unreg(this);
+    }
+
+
+    /**
+     * 代替监听器检查是否所有edittext输入框都不为空值
+     *
+     * @return
+     */
+    public boolean isAllTextFilled() {
+        if (EmptyUtils.isEmpty(getPassword())
+                || EmptyUtils.isEmpty(getRepeatPassword())
+                || EmptyUtils.isEmpty(getEOSUserName())
+                || EmptyUtils.isEmpty(getInvCode())) {
+            return false;
+        }
+        return true;
     }
 
 
