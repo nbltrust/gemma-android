@@ -7,11 +7,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -25,13 +28,21 @@ public class BackUpPriKeyFragment extends XFragment {
     @BindView(R.id.bt_copy_priKey) Button buttonCopyPrikey;
     Unbinder unbinder;
 
+    @OnClick(R.id.bt_copy_priKey)
+    public void copyPrikeyToClipboard(){
+        String curPriKey = textViewShowPriKey.getText().toString().trim();
+        ClipboardUtils.copyText(getActivity(), curPriKey);
+        GemmaToastUtils.showLongToast("私钥已复制，请在使用后及时清空系统剪贴板！");
+    }
+
     public static BackUpPriKeyFragment newInstance() {
         Bundle args = new Bundle();
         BackUpPriKeyFragment fragment = new BackUpPriKeyFragment();
         fragment.setArguments(args);
         return fragment;
     }
-    
+
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BackUpPriKeyFragment.this, rootView);
