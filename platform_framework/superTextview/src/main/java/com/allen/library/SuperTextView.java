@@ -554,7 +554,7 @@ public class SuperTextView extends RelativeLayout {
 
     private void initSuperTextView() {
         if (useRipple) {
-            this.setBackgroundResource(R.drawable.selector_white);
+            this.setBackgroundResource(R.drawable.selector_white_layout_pressed);
             this.setClickable(true);
         }
 

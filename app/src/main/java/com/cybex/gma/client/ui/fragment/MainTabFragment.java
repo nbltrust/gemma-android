@@ -7,7 +7,6 @@ import android.view.View;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.EventBusActivityScope;
 import com.cybex.gma.client.event.TabSelectedEvent;
-import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
 import com.cybex.gma.client.widget.bottombar.BottomBarTab;
@@ -55,11 +54,6 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
-
-                if (position == 2) {
-                    UISkipMananger.launchBarcodeScan(getActivity());
-
-                }
             }
 
             @Override
