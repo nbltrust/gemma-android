@@ -19,6 +19,7 @@ import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.android.logger.Log;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -116,25 +117,31 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
      * @param privateKey
      * @param password
      * @param eosUsername
-     * @param isCurrentWallet 是否为当前钱包 1为是，0为否
      * @param passwordTip
      */
 
     public void saveAccount(final String publicKey, final String privateKey, final String
-            password, final String eosUsername, final int isCurrentWallet, final String passwordTip ){
+            password, final String eosUsername, final String passwordTip ){
 
         WalletEntity walletEntity = new WalletEntity();
+        List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
         //获取当前数据库中已存入的钱包个数
-        int walletNum = DBManager.getInstance().getMediaBeanDao().getWalletEntityList().size();
+        int walletNum = walletEntityList.size();
         int index = walletNum + 1;
         //以默认钱包名称存入
         walletEntity.setWalletName(CacheConstants.DEFAULT_WALLETNAME_PREFIX + String.valueOf(index));
-        walletEntity.setPublicKey(publicKey);
+        walletEntity.setPublicKey(publicKey);//设置公钥
         final String cypher = JNIUtil.get_cypher(password, privateKey);
-        walletEntity.setPrivateKey(cypher);
-        walletEntity.setIsCurrentWallet(isCurrentWallet);
-        walletEntity.setEosName(eosUsername);
-        walletEntity.setPasswordTip(passwordTip);
+        walletEntity.setPrivateKey(cypher);//设置摘要
+        walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);//设置是否为当前钱包，默认新建钱包为当前钱包
+        walletEntity.setEosName(eosUsername);//设置eosUsername
+        walletEntity.setPasswordTip(passwordTip);//设置密码提示
+        //执行存入操作之前需要把其他钱包设置为非当前钱包
+        if (walletNum > 0){
+            for (WalletEntity curWalletEntity : walletEntityList){
+                curWalletEntity.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+            }
+        }
         DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(walletEntity);
     }
 

@@ -92,6 +92,9 @@ public class WalletDetailFragment extends XFragment {
         unbinder.unbind();
     }
 
+    /**
+     * 显示输入密码Dialog
+     */
     private void showConfirmAuthoriDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),

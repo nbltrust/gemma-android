@@ -13,6 +13,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
@@ -88,6 +89,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        WalletEntity curWallet = getCurrentWallet();
+
+        if (curWallet == null){
+            LoggerManager.d("DB ERROR", "DB中没有当前钱包值为1的钱包对象");
+        }
+
         generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
@@ -146,6 +153,10 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             }
         }
         return null;
+    }
+
+    public void setCurWalletData(WalletEntity wallet){
+        String walletName = wallet.getWalletName();
     }
 
 

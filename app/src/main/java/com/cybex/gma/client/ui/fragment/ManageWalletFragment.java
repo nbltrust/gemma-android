@@ -110,11 +110,12 @@ public class ManageWalletFragment extends XFragment {
 
 
     /**
+     * 把数据放入RecyclerView中显示出来
      *
-     * 从数据库中读取Wallet信息转换成WalletVO列表
-     * @return
      */
-    public List<WalletVO> getWalletVOList(){
+    public void setWalletListViewData(){
+
+        //从数据库中读取Wallet信息转换成WalletVO列表
         List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
         List<WalletVO> walletVOList = new ArrayList<>();
 
@@ -124,14 +125,6 @@ public class ManageWalletFragment extends XFragment {
             walletVOList.add(curWalletVO);
         }
 
-        return walletVOList;
-    }
-
-    /**
-     * 把数据放入RecyclerView中显示出来
-     * @param walletVOList
-     */
-    public void setWalletListViewData(List<WalletVO> walletVOList){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
         recyclerViewWalletManage.setLayoutManager(layoutManager);
@@ -147,7 +140,6 @@ public class ManageWalletFragment extends XFragment {
 
         data.add(wallet_1);
 
-
         //DividerItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
         //divider.setDrawable(ContextCompat.getDrawable(this.getActivity(), R.drawable.custom_divider));
         //recyclerViewWalletManage.addItemDecoration(divider);
@@ -159,6 +151,13 @@ public class ManageWalletFragment extends XFragment {
         recyclerViewWalletManage.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+                List<WalletEntity> list = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
+                final String curItemWalletName = list.get(position).getWalletName();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("curItemName", curItemWalletName);
+                //todo 没有带BUNDLE的FRAGMENT跳转方法
                 start(WalletDetailFragment.newInstance());
             }
         });
