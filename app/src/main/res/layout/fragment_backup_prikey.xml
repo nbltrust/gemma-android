@@ -57,8 +57,6 @@ ef96 56e1 6889 012b"
             android:layout_marginTop="30dp"
             android:text="@string/copy_prikey"/>
 
-
-
     </LinearLayout>
 
 

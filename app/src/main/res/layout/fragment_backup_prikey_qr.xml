@@ -35,7 +35,7 @@
 
         <ImageView
             android:visibility="gone"
-            android:id="@+id/tv_real_QR"
+            android:id="@+id/iv_real_QR"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:layout_width="180dp"
