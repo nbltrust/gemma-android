@@ -57,5 +57,10 @@ public interface ApiMethod {
      */
     String API_GET_CUREENCY_BALANCE = "/v1/chain/get_currency_balance";
 
+    /**
+     * 根据公钥查询账户列表
+     */
+    String API_GET_KEY_ACCOUNTS = "/v1/history/get_key_accounts";
+
 
 }
