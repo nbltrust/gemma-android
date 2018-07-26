@@ -2,10 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     >
 
     <include
@@ -14,75 +14,75 @@
     </include>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_20"
         android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginEnd="@dimen/dimen_20">
+        android:orientation="vertical">
 
         <TextView
-            android:textColor="@color/steel"
-            android:textSize="@dimen/font_3.5"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:layout_marginStart="@dimen/dimen_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_16"
             android:text="@string/brief_info"
+            android:textColor="@color/steel"
+            android:textSize="@dimen/font_3.5"
             />
 
         <LinearLayout
-            android:translationZ="@dimen/dimen_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
             android:background="@drawable/shape_corner"
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:padding="@dimen/dimen_10"
+            android:translationZ="@dimen/dimen_3"
             >
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_cpu_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                title:sLeftTextString="@string/CPU"
-                title:sLeftTextSize="@dimen/font_3.5"
                 title:sLeftTextColor="@color/steel"
-                title:sRightTextString="0.1000 EOS"
-                title:sRightTextSize="@dimen/font_3"
+                title:sLeftTextSize="@dimen/font_3.5"
+                title:sLeftTextString="@string/CPU"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
-                title:sUseShape="true"
-                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                title:sRightTextSize="@dimen/font_3"
+                title:sRightTextString="0.1000 EOS"
                 title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                title:sUseShape="true"
                 >
 
             </com.allen.library.SuperTextView>
 
-           <com.cybex.base.view.progress.RoundCornerProgressBar
-               android:id="@+id/progressbar_cpu"
-               android:layout_width="match_parent"
-               android:layout_height="@dimen/dimen_4"
-               title:rcBackgroundColor="@color/cloudyBlue"
-               title:rcBackgroundPadding="0dp"
-               title:rcMax="100"
-               title:rcProgress="30"
-               title:rcProgressColor="@color/dark_sky_blue"
-               title:rcRadius="10dp"
-               android:layout_margin="@dimen/dimen_10"
-               >
+            <com.cybex.base.view.progress.RoundCornerProgressBar
+                android:id="@+id/progressbar_cpu"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_4"
+                android:layout_margin="@dimen/dimen_10"
+                title:rcBackgroundColor="@color/cloudyBlue"
+                title:rcBackgroundPadding="0dp"
+                title:rcMax="100"
+                title:rcProgress="30"
+                title:rcProgressColor="@color/dark_sky_blue"
+                title:rcRadius="10dp"
+                >
 
 
-           </com.cybex.base.view.progress.RoundCornerProgressBar>
+            </com.cybex.base.view.progress.RoundCornerProgressBar>
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_cpu_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                title:sLeftTextString="已用 0.000 ms"
+                title:sLeftIconHeight="@dimen/dimen_8"
                 title:sLeftIconRes="@drawable/ic_blue_dot"
                 title:sLeftIconWidth="@dimen/dimen_8"
-                title:sLeftIconHeight="@dimen/dimen_8"
                 title:sLeftTextColor="@color/cloudyBlue"
                 title:sLeftTextSize="@dimen/font_3"
+                title:sLeftTextString="已用 0.000 ms"
                 title:sRightTextColor="@color/cloudyBlue"
                 title:sRightTextSize="@dimen/font_3"
                 title:sRightTextString="总量 10.91 ms"
@@ -94,27 +94,27 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layerType="software"
-                android:background="@color/paleGrey"
-                android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:layout_marginEnd="@dimen/dimen_10">
+                android:layout_marginTop="@dimen/dimen_10"
+                android:background="@color/paleGrey"
+                android:layerType="software">
             </View>
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_net_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                title:sLeftTextString="@string/NET"
-                title:sLeftTextSize="@dimen/font_3.5"
                 title:sLeftTextColor="@color/steel"
-                title:sRightTextString="0.1000 EOS"
-                title:sRightTextSize="@dimen/font_3"
+                title:sLeftTextSize="@dimen/font_3.5"
+                title:sLeftTextString="@string/NET"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
-                title:sUseShape="true"
-                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                title:sRightTextSize="@dimen/font_3"
+                title:sRightTextString="0.1000 EOS"
                 title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                title:sUseShape="true"
                 >
 
             </com.allen.library.SuperTextView>
@@ -123,13 +123,13 @@
                 android:id="@+id/progressbar_net"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_4"
+                android:layout_margin="@dimen/dimen_10"
                 title:rcBackgroundColor="@color/cloudyBlue"
                 title:rcBackgroundPadding="0dp"
                 title:rcMax="100"
                 title:rcProgress="10"
                 title:rcProgressColor="@color/dark_sky_blue"
                 title:rcRadius="10dp"
-                android:layout_margin="@dimen/dimen_10"
                 >
 
 
@@ -139,12 +139,12 @@
                 android:id="@+id/superTextView_net_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                title:sLeftTextString="已用 0.000 KB"
+                title:sLeftIconHeight="@dimen/dimen_8"
                 title:sLeftIconRes="@drawable/ic_blue_dot"
                 title:sLeftIconWidth="@dimen/dimen_8"
-                title:sLeftIconHeight="@dimen/dimen_8"
                 title:sLeftTextColor="@color/cloudyBlue"
                 title:sLeftTextSize="@dimen/font_3"
+                title:sLeftTextString="已用 0.000 KB"
                 title:sRightTextColor="@color/cloudyBlue"
                 title:sRightTextSize="@dimen/font_3"
                 title:sRightTextString="总量 10.91 KB"
@@ -157,19 +157,19 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_10">
+            android:layout_marginTop="@dimen/dimen_10"
+            android:orientation="horizontal">
 
             <TextView
-                android:textColor="@color/steel"
-                android:textSize="@dimen/font_3.5"
-                android:layout_marginStart="@dimen/dimen_10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_weight="1"
                 android:text="@string/delegate"
-                android:layout_weight="1"/>
+                android:textColor="@color/steel"
+                android:textSize="@dimen/font_3.5"/>
 
             <TextView
                 android:id="@+id/tv_remain_balance"
@@ -184,34 +184,35 @@
 
 
         <LinearLayout
-            android:translationZ="@dimen/dimen_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
+            android:animateLayoutChanges="true"
             android:background="@drawable/shape_corner"
             android:orientation="vertical"
-            android:layout_width="match_parent"
             android:padding="@dimen/dimen_12"
-            android:layout_height="wrap_content">
+            android:translationZ="@dimen/dimen_3">
 
-           <com.cybex.base.view.tablayout.CommonTabLayout
-               android:id="@+id/STL_delegate"
-               android:layout_width="match_parent"
-               android:layout_height="@dimen/dimen_48"
-               title:tl_indicator_color="@color/colorTabIndicator"
-               title:tl_indicator_gravity="BOTTOM"
-               title:tl_indicator_height="1dp"
-               title:tl_indicator_width="120dp"
-               title:tl_indicator_style="NORMAL"
-               title:tl_underline_color="#E7E9F8"
-               title:tl_indicator_width_equal_title="false"
-               title:tl_tab_padding="6dp"
-               title:tl_tab_space_equal="true"
-               title:tl_textBold="SELECT"
-               title:tl_textSelectColor="@color/colorTabTextSelect"
-               title:tl_textUnselectColor="@color/colorTabTextUnSelect"
-               title:tl_textsize="16dp"
-               >
+            <com.cybex.base.view.tablayout.CommonTabLayout
+                android:id="@+id/STL_delegate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_48"
+                title:tl_indicator_color="@color/colorTabIndicator"
+                title:tl_indicator_gravity="BOTTOM"
+                title:tl_indicator_height="1dp"
+                title:tl_indicator_style="NORMAL"
+                title:tl_indicator_width="120dp"
+                title:tl_indicator_width_equal_title="false"
+                title:tl_tab_padding="6dp"
+                title:tl_tab_space_equal="true"
+                title:tl_textBold="SELECT"
+                title:tl_textSelectColor="@color/colorTabTextSelect"
+                title:tl_textUnselectColor="@color/colorTabTextUnSelect"
+                title:tl_textsize="16dp"
+                title:tl_underline_color="#E7E9F8"
+                >
 
-           </com.cybex.base.view.tablayout.CommonTabLayout>
+            </com.cybex.base.view.tablayout.CommonTabLayout>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -224,9 +225,9 @@
             </include>
 
             <include
-               android:id="@+id/layout_tab_refund"
-                android:visibility="gone"
-                layout="@layout/ui_tab_refund">
+                android:id="@+id/layout_tab_refund"
+                layout="@layout/ui_tab_refund"
+                android:visibility="gone">
             </include>
 
         </LinearLayout>
@@ -247,10 +248,10 @@
         />
 
     <Button
-        android:visibility="gone"
         android:id="@+id/bt_refund_cpu_net"
         style="@style/bt_long_in_linearLayout"
         android:layout_margin="@dimen/dimen_30"
-        android:text="@string/undelegate"/>
+        android:text="@string/undelegate"
+        android:visibility="gone"/>
 
 </LinearLayout>
