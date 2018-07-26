@@ -117,6 +117,7 @@ public class BarcodeScanActivity extends XActivity implements QRCodeView.Delegat
         //发送 扫描结果event
         EventBusProvider.post(new BarcodeScanEvent(result));
         mZXingView.startSpot(); // 延迟0.5秒后开始识别
+        finish();
     }
 
     @Override

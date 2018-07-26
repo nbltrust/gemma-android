@@ -20,5 +20,8 @@ public class WalletManageListAdapter extends BaseQuickAdapter<WalletVO, BaseView
     protected void convert(BaseViewHolder helper, WalletVO item) {
         SuperTextView superTextView =  helper.getView(R.id.superTV_Item_WalletName);
         superTextView.setLeftString(item.getWalletName());
+
+        helper.addOnClickListener(R.id.superTV_Item_WalletName);
+
     }
 }

@@ -34,6 +34,13 @@
         <item name="android:thumb">@drawable/selector_switch_thumb</item>
         <item name="android:track">@drawable/selector_switch_track</item>
     </style>
+
+    <style name="mySwitchButton">
+        <item name="android:layout_width">@dimen/dimen_44</item>
+        <item name="android:layout_height">@dimen/dimen_22</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
     
     <!-- 线性布局中长按钮的样式 -->
     <style name="bt_long_in_linearLayout">

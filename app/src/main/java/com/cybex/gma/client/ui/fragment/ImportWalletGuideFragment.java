@@ -55,7 +55,6 @@ public class ImportWalletGuideFragment extends XFragment {
     @Override
     protected void setNavibarTitle(String title, boolean isShowBack, boolean isOnBackFinishActivity) {
         super.setNavibarTitle(title, isShowBack, isOnBackFinishActivity);
-        //todo 添加二维码模块入口
     }
 
     @Override

@@ -1,19 +1,25 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
-import com.cybex.base.view.tablayout.SlidingTabLayout;
+import com.cybex.base.view.tablayout.CommonTabLayout;
+import com.cybex.base.view.tablayout.listener.CustomTabEntity;
+import com.cybex.base.view.tablayout.listener.OnTabSelectListener;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
+import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,11 +42,22 @@ public class DelegateFragment extends XFragment {
     @BindView(R.id.superTextView_net_status) SuperTextView superTextViewNetStatus;
     @BindView(R.id.tv_remain_balance) TextView tvRemainBalance;
     @BindView(R.id.bt_delegate_cpu_net) Button btDelegateCpuNet;
-    @BindView(R.id.vp_content) ViewPager viewPagerContent;
-    @BindView(R.id.view_sliding_tab) SlidingTabLayout slidingTabLayout;
+    @BindView(R.id.STL_delegate) CommonTabLayout mTab;
+    @BindView(R.id.tv_delegate_cpu) TextView tvDelegateCpu;
+    @BindView(R.id.edt_delegate_cpu) EditText edtDelegateCpu;
+    @BindView(R.id.tv_delegate_net) TextView tvDelegateNet;
+    @BindView(R.id.edt_delegate_net) EditText edtDelegateNet;
+    @BindView(R.id.tv_refund_cpu) TextView tvRefundCpu;
+    @BindView(R.id.edt_refund_cpu) EditText edtRefundCpu;
+    @BindView(R.id.tv_refund_net) TextView tvRefundNet;
+    @BindView(R.id.edt_refund_net) EditText edtRefundNet;
+    @BindView(R.id.bt_refund_cpu_net) Button btRefundCpuNet;
+    @BindView(R.id.layout_tab_delegate) View tab_delegate;
+    @BindView(R.id.layout_tab_refund) View tab_refund;
+
 
     @OnClick(R.id.bt_delegate_cpu_net)
-    public void showDialog(){
+    public void showDialog() {
         showConfirmDelegateiDialog();
     }
 
@@ -56,10 +73,31 @@ public class DelegateFragment extends XFragment {
         unbinder = ButterKnife.bind(this, rootView);
     }
 
+
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("资源管理", true, true);
 
+        ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
+        list.add(new TabTitleDelegateVO());
+        list.add(new TabTitleRefundVO());
+        mTab.setTabData(list);
+        mTab.setCurrentTab(0);
+        mTab.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                if (position == 0) {
+                    showDelegateTab();
+                } else if (position == 1) {
+                    showRefundTab();
+                }
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+
+            }
+        });
 
     }
 
@@ -77,6 +115,21 @@ public class DelegateFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private void showDelegateTab(){
+        tab_delegate.setVisibility(View.VISIBLE);
+        tab_refund.setVisibility(View.GONE);
+        btDelegateCpuNet.setVisibility(View.VISIBLE);
+        btRefundCpuNet.setVisibility(View.GONE);
+
+    }
+
+    private void showRefundTab(){
+        tab_delegate.setVisibility(View.GONE);
+        tab_refund.setVisibility(View.VISIBLE);
+        btDelegateCpuNet.setVisibility(View.GONE);
+        btRefundCpuNet.setVisibility(View.VISIBLE);
     }
 
     /**

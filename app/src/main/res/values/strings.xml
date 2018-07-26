@@ -189,6 +189,7 @@
     <string name="remain_balance">余额</string>
     <string name="delegate_cpu">抵押CPU</string>
     <string name="delegate_hint">输入需要抵押的EOS数量</string>
+    <string name="refund_hint">输入解除抵押的EOS数量</string>
     <string name="delegate_net">抵押NET</string>
     <string name="delegate_cpu_net">抵押</string>
     <string name="CPU">CPU</string>
@@ -196,6 +197,7 @@
 
     <string name="refund_detail">赎回详情</string>
     <string name="confirm_refund">确认赎回</string>
+    <string name="undelegate">解除抵押</string>
     <string name="refund_username">赎回账户</string>
 
 </resources>

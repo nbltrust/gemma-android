@@ -192,9 +192,26 @@
             android:padding="@dimen/dimen_12"
             android:layout_height="wrap_content">
 
-            <include
-                layout="@layout/ui_layout_activity_sliding">
-            </include>
+           <com.cybex.base.view.tablayout.CommonTabLayout
+               android:id="@+id/STL_delegate"
+               android:layout_width="match_parent"
+               android:layout_height="@dimen/dimen_48"
+               title:tl_indicator_color="@color/colorTabIndicator"
+               title:tl_indicator_gravity="BOTTOM"
+               title:tl_indicator_height="1dp"
+               title:tl_indicator_width="120dp"
+               title:tl_indicator_style="NORMAL"
+               title:tl_underline_color="#E7E9F8"
+               title:tl_indicator_width_equal_title="false"
+               title:tl_tab_padding="6dp"
+               title:tl_tab_space_equal="true"
+               title:tl_textBold="SELECT"
+               title:tl_textSelectColor="@color/colorTabTextSelect"
+               title:tl_textUnselectColor="@color/colorTabTextUnSelect"
+               title:tl_textsize="16dp"
+               >
+
+           </com.cybex.base.view.tablayout.CommonTabLayout>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -202,48 +219,16 @@
                 android:src="@drawable/di_notify_bg"/>
 
             <include
-                layout="@layout/ui_layout_view_pager">
+                android:id="@+id/layout_tab_delegate"
+                layout="@layout/ui_tab_delegte">
             </include>
 
-            <!--
+            <include
+               android:id="@+id/layout_tab_refund"
+                android:visibility="gone"
+                layout="@layout/ui_tab_refund">
+            </include>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:textSize="@dimen/font_3.5"
-                android:textColor="@color/steel"
-                android:layout_height="wrap_content"
-                android:text="@string/delegate_cpu"/>
-
-            <EditText
-                android:id="@+id/edt_delegate_cpu"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:textSize="@dimen/font_4"
-                android:hint="@string/delegate_hint"
-                android:textColorHint="@color/cloudyBlue"
-                style="@style/editText_config_wallet"
-                android:textCursorDrawable="@drawable/cursor_custom"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:textSize="@dimen/font_3.5"
-                android:textColor="@color/steel"
-                android:layout_height="wrap_content"
-                android:text="@string/delegate_net"
-                android:layout_marginTop="@dimen/dimen_6"/>
-
-            <EditText
-                android:id="@+id/edt_delegate_net"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:textSize="@dimen/font_4"
-                android:hint="@string/delegate_hint"
-                android:textColorHint="@color/cloudyBlue"
-                style="@style/editText_config_wallet"
-                android:textCursorDrawable="@drawable/cursor_custom"
-                android:background="@null"/>
-
-            -->
         </LinearLayout>
 
         <View
@@ -260,5 +245,12 @@
         android:layout_margin="@dimen/dimen_30"
         android:text="@string/delegate_cpu_net"
         />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/bt_refund_cpu_net"
+        style="@style/bt_long_in_linearLayout"
+        android:layout_margin="@dimen/dimen_30"
+        android:text="@string/undelegate"/>
 
 </LinearLayout>

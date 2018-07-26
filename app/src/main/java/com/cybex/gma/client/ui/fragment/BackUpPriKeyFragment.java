@@ -1,12 +1,14 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +39,7 @@ public class BackUpPriKeyFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        
+        showAlertDialog();
     }
 
     @Override
@@ -65,5 +67,27 @@ public class BackUpPriKeyFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    /**
+     * 显示请勿截图Dialog
+     */
+    private void showAlertDialog(){
+        int[] listenedItems = {R.id.tv_i_understand};
+        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+                R.layout.dialog_no_screenshot, listenedItems, false, Gravity.CENTER);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.tv_i_understand:
+                        dialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
     }
 }
