@@ -1,4 +1,4 @@
-package com.cybex.gma.client.utils;
+package com.cybex.gma.client.utils.repeatclick;
 
 /**
  * Created by wanglin on 2018/7/25.

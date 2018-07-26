@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.utils.NoDoubleClick;
+import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 
 import java.lang.reflect.Field;
 
