@@ -62,6 +62,12 @@ public class WalletEntity extends BaseModel {
     @Column
     private String passwordTip;
 
+    /**
+     *是否备份过 （1---是  0---否）
+     */
+    @Column
+    private Integer isBackUp;
+
 
     public Integer getId() {
         return id;
@@ -125,5 +131,13 @@ public class WalletEntity extends BaseModel {
 
     public void setCypher(String cypher) {
         this.cypher = cypher;
+    }
+
+    public Integer getIsBackUp() {
+        return isBackUp;
+    }
+
+    public void setIsBackUp(Integer isBackUp) {
+        this.isBackUp = isBackUp;
     }
 }

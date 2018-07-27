@@ -108,8 +108,6 @@ public class ImportWalletConfigFragment extends XFragment {
         });
     }
 
-
-
     public static ImportWalletConfigFragment newInstance(String privateKey) {
         Bundle args = new Bundle();
         args.putString("priKey", privateKey);
@@ -195,24 +193,24 @@ public class ImportWalletConfigFragment extends XFragment {
         int index = walletNum + 1;
         //以默认钱包名称存入
         walletEntity.setWalletName(CacheConstants.DEFAULT_WALLETNAME_PREFIX + String.valueOf(index));
-
-        WalletEntity curWallet = new WalletEntity();
+        walletEntity.setEosName("default-eos-name");
         final String cypher = JNIUtil.get_cypher(password, privateKey);
-        curWallet.setCypher(cypher);
-        final String pubKey = JNIUtil.get_public_key(privateKey);
-        curWallet.setPublicKey(pubKey);
-        curWallet.setPasswordTip(passwordTips);
-        curWallet.setEosName("default-eos-name");
-        curWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-        //把其他钱包设置为非当前钱包
+        walletEntity.setPrivateKey(cypher);//设置摘要
+        walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);//设置是否为当前钱包，默认新建钱包为当前钱包
+        walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);//设置为未备份
+        walletEntity.setPasswordTip(passwordTips);//设置密码提示
+        //执行存入操作之前需要把其他钱包设置为非当前钱包
+        if (walletNum > 0){
 
-        for (WalletEntity curWalletEntity : walletEntityList){
-            curWalletEntity.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-           //todo 执行更新操作
+            for (WalletEntity curWallet : walletEntityList){
+                curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+                DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
+            }
         }
-        DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
-
+        //最后执行存入操作，此前包此时为当前钱包
+        DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(walletEntity);
     }
+
 
     public void saveConfigedWallet(final String privateKey, final String password, final String passwordTips ){
         //根据私钥算出公钥和摘要
@@ -223,6 +221,9 @@ public class ImportWalletConfigFragment extends XFragment {
         curWallet.setPublicKey(pubKey);
         curWallet.setPasswordTip(passwordTips);
         //todo 用公钥上链获取eosUsername,这里用同步方法(显示progress bar，如果上链查询eosUsername失败，提示导入失败)
+
+
+
 
         GetkeyAccountReqParams getkeyAccountReqParams = new GetkeyAccountReqParams();
         getkeyAccountReqParams.setPublic_key(pubKey);
@@ -239,6 +240,10 @@ public class ImportWalletConfigFragment extends XFragment {
 
         final String eosName = "";
         curWallet.setEosName(eosName);
+
+
+
+
         curWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
         //更新其他WALLET为非当前WALLET,再把构建好的WALLET存入数据库
         List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();

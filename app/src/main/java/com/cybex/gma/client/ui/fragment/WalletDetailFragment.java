@@ -38,7 +38,7 @@ public class WalletDetailFragment extends XFragment {
     Unbinder unbinder;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_walletName_in_detailPage) TextView tvWalletNameInDetailPage;
-    @BindView(R.id.eosAddress_in_detailPage) TextView eosAddressInDetailPage;
+    @BindView(R.id.eosAddress_in_detailPage) TextView tvPublicKey;
     @BindView(R.id.iv_arrow_in_detailPage) ImageView ivArrowInDetailPage;
 
     @OnClick(R.id.layout_wallet_briefInfo)
@@ -63,13 +63,17 @@ public class WalletDetailFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("管理钱包", true);
-        final String name = getArguments().getString("thisWalletName");
-        tvWalletNameInDetailPage.setText(name);
+        //显示当前钱包名称
+        final String curWalletName = getArguments().getString("thisWalletName");
+        tvWalletNameInDetailPage.setText(curWalletName);
+        //显示当前钱包公钥
+        final String pubKey = getPublicKey(curWalletName);
+        tvPublicKey.setText(pubKey);
 
         superTextViewExportPriKey.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-                showConfirmAuthoriDialog();
+                UISkipMananger.launchBakupGuide(getActivity());
             }
         });
 
@@ -81,7 +85,6 @@ public class WalletDetailFragment extends XFragment {
         });
 
     }
-
 
     @Override
     public int getLayoutId() {
@@ -114,7 +117,7 @@ public class WalletDetailFragment extends XFragment {
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_authorization:
-                        UISkipMananger.launchBakupGuide(getActivity());
+
                         break;
                     default:
                         break;
@@ -132,7 +135,6 @@ public class WalletDetailFragment extends XFragment {
        WalletEntity curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntity(walletname);
        return curWallet.getPublicKey();
     }
-
 
 
 }

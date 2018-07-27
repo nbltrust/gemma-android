@@ -15,4 +15,7 @@ public interface CacheConstants {
     final int IS_CURRENT_WALLET = 1;
     final int NOT_CURRENT_WALLET = 0;
 
+    final int ALREADY_BACKUP = 1;
+    final int NOT_BACKUP = 0;
+
 }

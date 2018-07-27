@@ -72,8 +72,8 @@ public class ManageWalletFragment extends XFragment {
             }
         });
 
-        //setWalletListViewData();
-        addtestWalletTab();
+        setWalletListViewData();
+        //addtestWalletTab();
     }
 
 
@@ -96,7 +96,7 @@ public class ManageWalletFragment extends XFragment {
     @Override
     public void onResume() {
         super.onResume();
-        //setWalletListViewData();
+        updateWalletList();
     }
 
     @Override
@@ -106,10 +106,7 @@ public class ManageWalletFragment extends XFragment {
     }
 
 
-    /**
-     * 把钱包名称数据放入RecyclerView中显示出来
-     */
-    public void setWalletListViewData() {
+    public void updateWalletList(){
 
         //从数据库中读取Wallet信息转换成WalletVO列表
         List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
@@ -120,23 +117,27 @@ public class ManageWalletFragment extends XFragment {
             curWalletVO.setWalletName(walletEntityList.get(i).getWalletName());
             walletVOList.add(curWalletVO);
         }
-
         adapter = new WalletManageListAdapter(walletVOList);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                WalletVO vo = (WalletVO) adapter.getItem(position);
-                String s = vo.getWalletName();
-
-            }
-        });
+    }
 
 
+    /**
+     * 把钱包名称数据放入RecyclerView中显示出来
+     */
+    public void setWalletListViewData() {
+        updateWalletList();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
         recyclerViewWalletManage.setLayoutManager(layoutManager);
         recyclerViewWalletManage.setAdapter(adapter);
+        recyclerViewWalletManage.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                WalletVO vo = (WalletVO) adapter.getItem(position);
+                String s = vo.getWalletName();
+                start(WalletDetailFragment.newInstance(s));
+            }
+        });
 
 
     }
@@ -147,14 +148,6 @@ public class ManageWalletFragment extends XFragment {
 
         WalletVO wallet_1 = new WalletVO();
         wallet_1.setWalletName("EOS-WALLET-DEFAULT");
-        data.add(wallet_1);
-
-        wallet_1 = new WalletVO();
-        wallet_1.setWalletName("test");
-        data.add(wallet_1);
-
-        wallet_1 = new WalletVO();
-        wallet_1.setWalletName("test2");
         data.add(wallet_1);
 
         //DividerItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
@@ -173,6 +166,7 @@ public class ManageWalletFragment extends XFragment {
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 WalletVO vo = (WalletVO) adapter.getItem(position);
                 String s = vo.getWalletName();
+                start(WalletDetailFragment.newInstance(s));
             }
         });
 
