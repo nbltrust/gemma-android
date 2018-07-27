@@ -10,6 +10,16 @@ import java.util.List;
  */
 public interface WalletEntityDao {
 
+
+    /**
+     * 根据钱包名，获取 WalletEntity对象
+     *
+     * @param walletName
+     * @return
+     */
+    WalletEntity getWalletEntity(String walletName);
+
+
     /**
      * 获取钱包列表对象
      *
