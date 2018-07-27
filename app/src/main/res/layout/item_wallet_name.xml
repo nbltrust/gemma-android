@@ -14,6 +14,7 @@
         title:sLeftTextString="EOS-WALLET-DEFAULT"
         title:sRightTvDrawableRight="@drawable/ic_arrow"
         title:sUseShape="true"
+        android:clickable="false"
         title:sShapeSelectorPressedColor="@color/item_pressed"
         title:sShapeCornersRadius="@dimen/dimen_6"
         >
