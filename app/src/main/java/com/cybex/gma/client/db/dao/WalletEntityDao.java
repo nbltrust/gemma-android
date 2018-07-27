@@ -20,7 +20,7 @@ public interface WalletEntityDao {
     WalletEntity getWalletEntity(String walletName);
 
     /**
-     * 根据id查询WalleteNtity
+     * 根据id查询 WalleteEtity
      *
      * @param id
      * @return

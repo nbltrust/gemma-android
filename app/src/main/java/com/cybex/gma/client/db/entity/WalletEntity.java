@@ -48,10 +48,16 @@ public class WalletEntity extends BaseModel implements Parcelable {
     private String privateKey;
 
     /**
-     * 账户eos的名称
+     * 账户eos的名称对象列表转换为json的数据
      */
     @Column
-    private String eosName;
+    private String eosNameJson;
+
+    /**
+     * 在当前钱包，并且当前选择的eosname
+     */
+    @Column
+    private String currentEosName;
 
     /**
      * 是否当前钱包  （1---是  0---否）
@@ -65,6 +71,10 @@ public class WalletEntity extends BaseModel implements Parcelable {
     @Column
     private String passwordTip;
 
+    /**
+     * 是否已经备份
+     */
+    @Column
     private Integer isBackUp;
 
 
@@ -92,6 +102,14 @@ public class WalletEntity extends BaseModel implements Parcelable {
         this.publicKey = publicKey;
     }
 
+    public String getCypher() {
+        return cypher;
+    }
+
+    public void setCypher(String cypher) {
+        this.cypher = cypher;
+    }
+
     public String getPrivateKey() {
         return privateKey;
     }
@@ -100,12 +118,20 @@ public class WalletEntity extends BaseModel implements Parcelable {
         this.privateKey = privateKey;
     }
 
-    public String getEosName() {
-        return eosName;
+    public String getEosNameJson() {
+        return eosNameJson;
     }
 
-    public void setEosName(String eosName) {
-        this.eosName = eosName;
+    public void setEosNameJson(String eosNameJson) {
+        this.eosNameJson = eosNameJson;
+    }
+
+    public String getCurrentEosName() {
+        return currentEosName;
+    }
+
+    public void setCurrentEosName(String currentEosName) {
+        this.currentEosName = currentEosName;
     }
 
     public Integer getIsCurrentWallet() {
@@ -124,20 +150,12 @@ public class WalletEntity extends BaseModel implements Parcelable {
         this.passwordTip = passwordTip;
     }
 
-    public String getCypher() {
-        return cypher;
-    }
-
-    public void setCypher(String cypher) {
-        this.cypher = cypher;
+    public Integer getIsBackUp() {
+        return isBackUp;
     }
 
     public void setIsBackUp(Integer isBackUp) {
         this.isBackUp = isBackUp;
-    }
-
-    public Integer getIsBackUp() {
-        return isBackUp;
     }
 
     @Override
@@ -150,7 +168,8 @@ public class WalletEntity extends BaseModel implements Parcelable {
         dest.writeString(this.publicKey);
         dest.writeString(this.cypher);
         dest.writeString(this.privateKey);
-        dest.writeString(this.eosName);
+        dest.writeString(this.eosNameJson);
+        dest.writeString(this.currentEosName);
         dest.writeValue(this.isCurrentWallet);
         dest.writeString(this.passwordTip);
         dest.writeValue(this.isBackUp);
@@ -164,13 +183,14 @@ public class WalletEntity extends BaseModel implements Parcelable {
         this.publicKey = in.readString();
         this.cypher = in.readString();
         this.privateKey = in.readString();
-        this.eosName = in.readString();
+        this.eosNameJson = in.readString();
+        this.currentEosName = in.readString();
         this.isCurrentWallet = (Integer) in.readValue(Integer.class.getClassLoader());
         this.passwordTip = in.readString();
         this.isBackUp = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<WalletEntity> CREATOR = new Parcelable.Creator<WalletEntity>() {
+    public static final Creator<WalletEntity> CREATOR = new Creator<WalletEntity>() {
         @Override
         public WalletEntity createFromParcel(Parcel source) {return new WalletEntity(source);}
 
