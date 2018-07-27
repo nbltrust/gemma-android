@@ -46,7 +46,7 @@ public class WalletDetailFragment extends XFragment {
 
     public static WalletDetailFragment newInstance(String walletName) {
         Bundle args = new Bundle();
-        args.putString("curName", walletName);
+        args.putString("thisWalletName", walletName);
         WalletDetailFragment fragment = new WalletDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -61,8 +61,7 @@ public class WalletDetailFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("管理钱包", true);
-        final String name = getArguments().getString("curName");
-        //LoggerManager.d("curName", name);
+        final String name = getArguments().getString("thisWalletName");
         tvWalletNameInDetailPage.setText(name);
 
         superTextViewExportPriKey.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
@@ -122,6 +121,11 @@ public class WalletDetailFragment extends XFragment {
         });
         dialog.show();
     }
+
+    /**
+     *根据钱包名称去数据库查询公钥
+     */
+
 
 
 }
