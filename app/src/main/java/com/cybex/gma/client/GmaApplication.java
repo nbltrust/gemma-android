@@ -1,5 +1,6 @@
 package com.cybex.gma.client;
 
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.gma.client.config.HttpConfig;
 import com.cybex.gma.client.db.GemmaDatabase;
 import com.cybex.gma.client.db.sqlcipher.SQLCipherHelperImpl;
@@ -30,6 +31,11 @@ public class GmaApplication extends BaseApplication {
         initDBFlow();
         InitializeService.start(this);
         HttpConfig.init(this);
+        initRefresh();
+    }
+
+    private void initRefresh() {
+        CommonRefreshLayout.initRefresh();
     }
 
     private void initDBFlow() {
