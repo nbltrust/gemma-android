@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -125,6 +127,11 @@ public class WalletDetailFragment extends XFragment {
     /**
      *根据钱包名称去数据库查询公钥
      */
+
+    public String getPublicKey(String walletname){
+       WalletEntity curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntity(walletname);
+       return curWallet.getPublicKey();
+    }
 
 
 

@@ -9,10 +9,10 @@ import android.widget.ScrollView;
 
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.WalletManageListAdapter;
 import com.cybex.gma.client.ui.model.vo.WalletVO;
@@ -40,6 +40,7 @@ public class ManageWalletFragment extends XFragment {
     @BindView(R.id.scroll_wallet_manage) ScrollView scrollViewWalletManage;
     @BindView(R.id.recycler_wallet_manage) RecyclerView recyclerViewWalletManage;
     Unbinder unbinder;
+    private WalletManageListAdapter adapter;
 
     public static ManageWalletFragment newInstance() {
         Bundle args = new Bundle();
@@ -71,6 +72,7 @@ public class ManageWalletFragment extends XFragment {
             }
         });
 
+        //setWalletListViewData();
         addtestWalletTab();
     }
 
@@ -94,6 +96,7 @@ public class ManageWalletFragment extends XFragment {
     @Override
     public void onResume() {
         super.onResume();
+        //setWalletListViewData();
     }
 
     @Override
@@ -104,7 +107,7 @@ public class ManageWalletFragment extends XFragment {
 
 
     /**
-     * 把数据放入RecyclerView中显示出来
+     * 把钱包名称数据放入RecyclerView中显示出来
      *
      */
     public void setWalletListViewData(){
@@ -119,10 +122,24 @@ public class ManageWalletFragment extends XFragment {
             walletVOList.add(curWalletVO);
         }
 
+        adapter = new WalletManageListAdapter(walletVOList);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                WalletVO vo = (WalletVO) adapter.getItem(position);
+                String s =  vo.getWalletName();
+
+            }
+        }) ;
+
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
         recyclerViewWalletManage.setLayoutManager(layoutManager);
-        recyclerViewWalletManage.setAdapter(new WalletManageListAdapter(walletVOList));
+        recyclerViewWalletManage.setAdapter(adapter);
+
+
     }
 
 
@@ -130,25 +147,30 @@ public class ManageWalletFragment extends XFragment {
         List<WalletVO> data = new ArrayList<>();
 
         WalletVO wallet_1 = new WalletVO();
-        wallet_1.setWalletName("EOS-WALLET-1");
+        wallet_1.setWalletName("EOS-WALLET-DEFAULT");
 
         data.add(wallet_1);
 
         //DividerItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
         //divider.setDrawable(ContextCompat.getDrawable(this.getActivity(), R.drawable.custom_divider));
         //recyclerViewWalletManage.addItemDecoration(divider);
+        adapter = new WalletManageListAdapter(data);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                WalletVO vo = (WalletVO) adapter.getItem(position);
+                String s =  vo.getWalletName();
+                LoggerManager.d("TAG", s);
+            }
+        }) ;
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
-               .VERTICAL, false);
+                .VERTICAL, false);
         recyclerViewWalletManage.setLayoutManager(layoutManager);
-        recyclerViewWalletManage.setAdapter(new WalletManageListAdapter(data));
-        recyclerViewWalletManage.addOnItemTouchListener(new OnItemChildClickListener() {
-            @Override
-            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        recyclerViewWalletManage.setAdapter(adapter);
 
-                start(WalletDetailFragment.newInstance("EOS-WALLET-1"));
-            }
-        });
+
     }
 
 }

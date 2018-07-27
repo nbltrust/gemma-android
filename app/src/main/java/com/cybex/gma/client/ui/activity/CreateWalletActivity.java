@@ -98,6 +98,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 public void onValidateSuccess() {
                     //所有验证通过，发送创建钱包请求
                     String[] keyPair = getP().getKeypair();
+                    final String publicKey = keyPair[0];
+                    final String privateKey = keyPair[1];
+                    getP().saveAccount(publicKey, privateKey, getPassword(), getEOSUserName(), getPassHint());
                     //getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[0]);
                 }
 
