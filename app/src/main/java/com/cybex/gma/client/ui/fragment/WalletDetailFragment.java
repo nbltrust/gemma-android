@@ -28,23 +28,25 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  */
 public class WalletDetailFragment extends XFragment {
 
-    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.walletName_in_detailPage) TextView walletNameInDetailPage;
-    @BindView(R.id.eosAddress_in_detailPage) TextView eosAddressInDetailPage;
-    @BindView(R.id.iv_arrow_in_detailPage) ImageView ivArrowInDetailPage;
+
     @BindView(R.id.layout_wallet_briefInfo) ConstraintLayout layoutWalletBriefInfo;
     @BindView(R.id.superTextView_exportPriKey) SuperTextView superTextViewExportPriKey;
     @BindView(R.id.superTextView_changePass) SuperTextView superTextViewChangePass;
     @BindView(R.id.scroll_wallet_detail) ScrollView scrollViewWalletDetail;
     Unbinder unbinder;
+    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
+    @BindView(R.id.tv_walletName_in_detailPage) TextView tvWalletNameInDetailPage;
+    @BindView(R.id.eosAddress_in_detailPage) TextView eosAddressInDetailPage;
+    @BindView(R.id.iv_arrow_in_detailPage) ImageView ivArrowInDetailPage;
 
     @OnClick(R.id.layout_wallet_briefInfo)
-    public void goChangeWalletName(){
+    public void goChangeWalletName() {
         start(ChangeWalletNameFragment.newInstance());
     }
 
-    public static WalletDetailFragment newInstance() {
+    public static WalletDetailFragment newInstance(String walletName) {
         Bundle args = new Bundle();
+        args.putString("curName", walletName);
         WalletDetailFragment fragment = new WalletDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -59,6 +61,10 @@ public class WalletDetailFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("管理钱包", true);
+        final String name = getArguments().getString("curName");
+        //LoggerManager.d("curName", name);
+        tvWalletNameInDetailPage.setText(name);
+
         superTextViewExportPriKey.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {

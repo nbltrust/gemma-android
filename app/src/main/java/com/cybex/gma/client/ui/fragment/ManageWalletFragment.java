@@ -23,7 +23,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
@@ -41,11 +40,6 @@ public class ManageWalletFragment extends XFragment {
     @BindView(R.id.scroll_wallet_manage) ScrollView scrollViewWalletManage;
     @BindView(R.id.recycler_wallet_manage) RecyclerView recyclerViewWalletManage;
     Unbinder unbinder;
-
-    @OnClick(R.id.superTextView_wallet_one)
-    public void seeWalletDetail(){
-        start(WalletDetailFragment.newInstance());
-    }
 
     public static ManageWalletFragment newInstance() {
         Bundle args = new Bundle();
@@ -152,13 +146,7 @@ public class ManageWalletFragment extends XFragment {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
-                List<WalletEntity> list = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
-                final String curItemWalletName = list.get(position).getWalletName();
-
-                Bundle bundle = new Bundle();
-                bundle.putString("curItemName", curItemWalletName);
-                //todo 没有带BUNDLE的FRAGMENT跳转方法
-                start(WalletDetailFragment.newInstance());
+                start(WalletDetailFragment.newInstance("EOS-WALLET-1"));
             }
         });
     }

@@ -5,7 +5,7 @@
               android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_refund_cpu"
+        android:id="@+id/tv_undelegate_cpu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_10"
@@ -14,7 +14,7 @@
         android:textSize="@dimen/font_3.5"/>
 
     <EditText
-        android:id="@+id/edt_refund_cpu"
+        android:id="@+id/edt_undelegate_cpu"
         style="@style/editText_config_wallet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
@@ -24,7 +24,7 @@
         android:textSize="@dimen/font_4"/>
 
     <TextView
-        android:id="@+id/tv_refund_net"
+        android:id="@+id/tv_undelegate_net"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_10"
@@ -33,7 +33,7 @@
         android:textSize="@dimen/font_3.5"/>
 
     <EditText
-        android:id="@+id/edt_refund_net"
+        android:id="@+id/edt_undelegate_net"
         style="@style/editText_config_wallet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"

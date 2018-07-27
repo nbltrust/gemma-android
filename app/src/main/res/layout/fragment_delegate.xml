@@ -224,8 +224,8 @@
             </include>
 
             <include
-                android:id="@+id/layout_tab_refund"
-                layout="@layout/ui_tab_refund"
+                android:id="@+id/layout_tab_undelegate"
+                layout="@layout/ui_tab_undelegate"
                 android:visibility="gone">
             </include>
 
@@ -234,7 +234,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_2">
-
         </View>
 
     </LinearLayout>
@@ -247,7 +246,7 @@
         />
 
     <Button
-        android:id="@+id/bt_refund_cpu_net"
+        android:id="@+id/bt_undelegate_cpu_net"
         style="@style/bt_long_in_linearLayout"
         android:layout_margin="@dimen/dimen_30"
         android:text="@string/undelegate"
