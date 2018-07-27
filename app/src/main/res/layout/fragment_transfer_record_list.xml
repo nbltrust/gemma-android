@@ -2,12 +2,28 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_ui">
 
 
     <include layout="@layout/ui_navibar"/>
+
+
+    <com.cybex.base.view.statusview.MultipleStatusView
+        android:id="@+id/list_multiple_status_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_navibar"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        app:contentView="@layout/content_recycler_view"
+        app:emptyView="@layout/empty_view"
+        app:errorView="@layout/error_view"
+        app:loadingView="@layout/loading_view"
+        app:noNetworkView="@layout/no_network_view"
+        >
+    </com.cybex.base.view.statusview.MultipleStatusView>
+
 
 </RelativeLayout>

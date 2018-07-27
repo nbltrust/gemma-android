@@ -15,5 +15,8 @@ public class TransferHistory {
     public String time;
     public String hash;
     public int block;
+    /**
+     * 交易状态：1：未确认 2：正在确认 3：已确认 4: 交易失败
+     */
     public int status;
 }

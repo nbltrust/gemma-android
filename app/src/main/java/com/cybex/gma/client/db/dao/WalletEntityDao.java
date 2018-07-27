@@ -19,6 +19,14 @@ public interface WalletEntityDao {
      */
     WalletEntity getWalletEntity(String walletName);
 
+    /**
+     * 根据id查询WalleteNtity
+     *
+     * @param id
+     * @return
+     */
+    WalletEntity getWalletEntityByID(int id);
+
 
     /**
      * 获取钱包列表对象
