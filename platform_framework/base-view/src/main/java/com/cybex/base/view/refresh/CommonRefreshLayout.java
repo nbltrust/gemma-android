@@ -60,7 +60,7 @@ public class CommonRefreshLayout extends SmartRefreshLayout {
 
     private void initViews() {
         //设置是否监听列表在滚动到底部时触发加载事件
-        setEnableAutoLoadmore(false);
+        setEnableAutoLoadmore(true);
         //在内容不满一页的时候，是否可以上拉加载更多
         setEnableLoadmoreWhenContentNotFull(true);
         //是否启用下拉刷新（默认启用）

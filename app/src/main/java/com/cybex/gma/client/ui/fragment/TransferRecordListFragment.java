@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -30,7 +31,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
     Unbinder unbinder;
     @BindView(R.id.list_multiple_status_view) MultipleStatusView listMultipleStatusView;
     @BindView(R.id.view_refresh) CommonRefreshLayout viewRefresh;
-    @BindView(R.id.rv_list) RecyclerView mRechclerView;
+    @BindView(R.id.rv_list) RecyclerView mRecyclerView;
 
     private TransferRecordListAdapter mAdapter;
     private List<TransferHistory> data;
@@ -47,6 +48,8 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle(getString(R.string.title_transfer_record), true, true);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(manager);
     }
 
     @Override
@@ -81,9 +84,9 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         }
 
         mAdapter = new TransferRecordListAdapter(data);
-        mRechclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
-
+        listMultipleStatusView.showContent();
     }
 
     @Override
