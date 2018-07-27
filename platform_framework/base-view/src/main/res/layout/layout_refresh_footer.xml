@@ -14,7 +14,7 @@
         android:textColor="#5c5c5c"
         android:textSize="14sp" />
 
-    <com.maning.commonlibrary.refresh.view.RefreshProgressWheel
+    <com.cybex.base.view.refresh.view.RefreshProgressWheel
         android:id="@+id/progressRefresh"
         android:layout_width="20dp"
         android:layout_height="20dp"

@@ -14,7 +14,7 @@ import java.util.List;
  *
  * Created by wanglin on 2018/7/12.
  */
-public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory, BaseViewHolder> {
+public class  TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory, BaseViewHolder> {
 
     public TransferRecordListAdapter(@Nullable List<TransferHistory> data) {
         super(R.layout.item_transfer_record_list, data);
@@ -22,6 +22,10 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
 
     @Override
     protected void convert(BaseViewHolder helper, TransferHistory item) {
+        helper.setText(R.id.tv_transfer_account,item.to);
+        helper.setText(R.id.tv_transfer_amount,item.value);
+        helper.setText(R.id.tv_transfer_status,"转账中");
+        helper.setText(R.id.tv_transfer_date,item.time);
 
     }
 }

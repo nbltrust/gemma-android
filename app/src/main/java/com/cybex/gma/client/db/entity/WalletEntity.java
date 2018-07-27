@@ -1,5 +1,8 @@
 package com.cybex.gma.client.db.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.cybex.gma.client.db.GemmaDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -12,7 +15,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  * Created by wanglin on 2018/7/24.
  */
 @Table(database = GemmaDatabase.class, name = "t_wallet")
-public class WalletEntity extends BaseModel {
+public class WalletEntity extends BaseModel implements Parcelable {
 
     /**
      * 自增长主键id
@@ -126,4 +129,40 @@ public class WalletEntity extends BaseModel {
     public void setCypher(String cypher) {
         this.cypher = cypher;
     }
+
+    @Override
+    public int describeContents() { return 0; }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.walletName);
+        dest.writeString(this.publicKey);
+        dest.writeString(this.cypher);
+        dest.writeString(this.privateKey);
+        dest.writeString(this.eosName);
+        dest.writeValue(this.isCurrentWallet);
+        dest.writeString(this.passwordTip);
+    }
+
+    public WalletEntity() {}
+
+    protected WalletEntity(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.walletName = in.readString();
+        this.publicKey = in.readString();
+        this.cypher = in.readString();
+        this.privateKey = in.readString();
+        this.eosName = in.readString();
+        this.isCurrentWallet = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.passwordTip = in.readString();
+    }
+
+    public static final Parcelable.Creator<WalletEntity> CREATOR = new Parcelable.Creator<WalletEntity>() {
+        @Override
+        public WalletEntity createFromParcel(Parcel source) {return new WalletEntity(source);}
+
+        @Override
+        public WalletEntity[] newArray(int size) {return new WalletEntity[size];}
+    };
 }
