@@ -3,6 +3,7 @@ package com.cybex.gma.client.db.dao.impl;
 import com.cybex.gma.client.db.GemmaDatabase;
 import com.cybex.gma.client.db.dao.WalletEntityDao;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.db.entity.WalletEntity_Table;
 import com.cybex.gma.client.db.util.DBCallback;
 import com.cybex.gma.client.db.util.DBFlowUtil;
 import com.cybex.gma.client.db.util.OperationType;
@@ -16,6 +17,14 @@ import java.util.List;
  * Created by wanglin on 2018/7/24.
  */
 public class WalletEntityDaoImpl implements WalletEntityDao {
+
+    @Override
+    public WalletEntity getWalletEntity(String walletName) {
+        WalletEntity entity = SQLite.select().from(WalletEntity.class)
+                .where(WalletEntity_Table.walletName.eq(walletName))
+                .querySingle();
+        return entity;
+    }
 
     @Override
     public List<WalletEntity> getWalletEntityList() {
