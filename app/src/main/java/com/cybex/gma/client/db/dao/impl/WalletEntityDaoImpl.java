@@ -27,6 +27,14 @@ public class WalletEntityDaoImpl implements WalletEntityDao {
     }
 
     @Override
+    public WalletEntity getWalletEntityByID(int id) {
+        WalletEntity entity = SQLite.select().from(WalletEntity.class)
+                .where(WalletEntity_Table.id.eq(id))
+                .querySingle();
+        return entity;
+    }
+
+    @Override
     public List<WalletEntity> getWalletEntityList() {
         List<WalletEntity> list =
                 SQLite.select().from(WalletEntity.class)
