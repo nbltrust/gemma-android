@@ -65,6 +65,8 @@ public class WalletEntity extends BaseModel implements Parcelable {
     @Column
     private String passwordTip;
 
+    private Integer isBackUp;
+
 
     public Integer getId() {
         return id;
@@ -130,6 +132,14 @@ public class WalletEntity extends BaseModel implements Parcelable {
         this.cypher = cypher;
     }
 
+    public void setIsBackUp(Integer isBackUp) {
+        this.isBackUp = isBackUp;
+    }
+
+    public Integer getIsBackUp() {
+        return isBackUp;
+    }
+
     @Override
     public int describeContents() { return 0; }
 
@@ -143,6 +153,7 @@ public class WalletEntity extends BaseModel implements Parcelable {
         dest.writeString(this.eosName);
         dest.writeValue(this.isCurrentWallet);
         dest.writeString(this.passwordTip);
+        dest.writeValue(this.isBackUp);
     }
 
     public WalletEntity() {}
@@ -156,6 +167,7 @@ public class WalletEntity extends BaseModel implements Parcelable {
         this.eosName = in.readString();
         this.isCurrentWallet = (Integer) in.readValue(Integer.class.getClassLoader());
         this.passwordTip = in.readString();
+        this.isBackUp = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<WalletEntity> CREATOR = new Parcelable.Creator<WalletEntity>() {

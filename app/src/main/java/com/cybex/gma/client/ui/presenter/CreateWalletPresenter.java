@@ -134,14 +134,18 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         final String cypher = JNIUtil.get_cypher(password, privateKey);
         walletEntity.setPrivateKey(cypher);//设置摘要
         walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);//设置是否为当前钱包，默认新建钱包为当前钱包
+        walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);//设置为未备份
         walletEntity.setEosName(eosUsername);//设置eosUsername
         walletEntity.setPasswordTip(passwordTip);//设置密码提示
         //执行存入操作之前需要把其他钱包设置为非当前钱包
         if (walletNum > 0){
-            for (WalletEntity curWalletEntity : walletEntityList){
-                curWalletEntity.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+
+            for (WalletEntity curWallet : walletEntityList){
+                curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+                DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
             }
         }
+        //最后执行存入操作，此前包此时为当前钱包
         DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(walletEntity);
     }
 

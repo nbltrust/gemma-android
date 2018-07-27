@@ -7,14 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
-import com.cybex.gma.client.db.entity.WalletEntity;
-import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.siberiadante.customdialoglib.CustomFullDialog;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +23,6 @@ import butterknife.Unbinder;
 public class BackUpPriKeyGuideFragment extends XFragment {
 
     @BindView(R.id.show_priKey) Button btShowPrikey;
-    @BindView(R.id.et_password) EditText passInDialog;
     Unbinder unbinder;
 
 
@@ -42,6 +36,11 @@ public class BackUpPriKeyGuideFragment extends XFragment {
         BackUpPriKeyGuideFragment fragment = new BackUpPriKeyGuideFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 
     @Override
@@ -91,17 +90,12 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_authorization:
-                        /*
-                        //获取底层方法需要的参数
-                        final String inputPass = passInDialog.getText().toString().trim();
-                        WalletEntity curWallet = getCurWallet();
-                        final String cypher = curWallet.getCypher();
-                        final String priKey = JNIUtil.get_private_key(cypher, inputPass);
-                        //向BUNDLE中添加
-                        Bundle bundle = new Bundle();
-                        bundle.putString("prikey", priKey);
-                        */
-
+                        EditText password = dialog.findViewById(R.id.et_password);
+                        final String inputPass = password.getText().toString().trim();
+                        //todo 如何判断是显示哪一个钱包的私钥？
+                        //JNIUtil.get_private_key()
+                        //KeySendEvent message = new KeySendEvent();
+                        //EventBusProvider.post();
                         UISkipMananger.launchBackUpPrivateKey(getActivity());
                         break;
                     default:
@@ -110,16 +104,6 @@ public class BackUpPriKeyGuideFragment extends XFragment {
             }
         });
         dialog.show();
-    }
-
-    private WalletEntity getCurWallet(){
-        List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
-        for (WalletEntity walletEntity : walletEntityList){
-            if (walletEntity.getIsCurrentWallet() == CacheConstants.IS_CURRENT_WALLET){
-                return walletEntity;
-            }
-        }
-        return null;
     }
 
 
