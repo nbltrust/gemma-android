@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -31,16 +32,17 @@
                 android:translationZ="@dimen/dimen_3"
                 title:layout_constraintEnd_toEndOf="parent"
                 title:layout_constraintStart_toStartOf="parent"
-                title:layout_constraintTop_toBottomOf="@+id/btn_navibar">
+                title:layout_constraintTop_toBottomOf="@+id/btn_navibar"
+                >
 
                 <TextView
-                    android:id="@+id/walletName_in_detailPage"
+                    android:id="@+id/tv_walletName_in_detailPage"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
                     android:layout_marginTop="8dp"
                     android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
-                    android:text="WalletName"
+                    tools:text="WalletName"
                     android:textColor="@color/darkSlateBlue"
                     android:textSize="@dimen/font_6"
                     android:textStyle="bold"
@@ -56,15 +58,16 @@
                     android:ellipsize="middle"
                     android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
                     android:singleLine="true"
-                    android:text="EOS12345678901231542571223414141231423451246Address"
+                    android:text="EOS5jvZ4TxzZhLh6cU3VNxcr4qRxRa5fYsxoxFmKZw2VXy49AaYpQ"
                     android:textColor="@color/darkSlateBlue"
                     android:textSize="@dimen/font_4"
                     title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
                     title:layout_constraintStart_toStartOf="parent"
-                    title:layout_constraintTop_toBottomOf="@id/walletName_in_detailPage"/>
+                    title:layout_constraintTop_toBottomOf="@id/tv_walletName_in_detailPage"/>
 
 
                 <ImageView
+
                     android:id="@+id/iv_arrow_in_detailPage"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
@@ -90,14 +93,15 @@
                 <com.allen.library.SuperTextView
                     android:id="@+id/superTextView_exportPriKey"
                     style="@style/card_style"
-                    title:sUseShape="true"
                     title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
                     title:sShapeCornersTopRightRadius="@dimen/dimen_6"
                     title:sDividerLineType="none"
                     title:sLeftTextColor="@color/darkSlateBlue"
                     title:sLeftTextSize="@dimen/font_3.5"
                     title:sLeftTextString="@string/export_privateKey"
-                    title:sRightTvDrawableRight="@drawable/ic_arrow">
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sUseShape="true"
+                    title:sShapeSelectorPressedColor="@color/item_pressed">
 
                 </com.allen.library.SuperTextView>
 
@@ -115,6 +119,7 @@
                     android:id="@+id/superTextView_changePass"
                     style="@style/card_style"
                     title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sShapeSelectorPressedColor="@color/item_pressed"
                     title:sLeftTextSize="@dimen/font_3.5"
                     title:sLeftTextString="@string/changePass"
                     title:sRightTvDrawableRight="@drawable/ic_arrow"

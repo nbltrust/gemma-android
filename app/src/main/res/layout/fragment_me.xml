@@ -40,7 +40,8 @@
                     title:sRightTvDrawableRight="@drawable/ic_arrow"
                     title:sLeftTextGravity="center"
                     title:sShapeCornersRadius="@dimen/dimen_6"
-                    title:sUseShape="true">
+                    title:sUseShape="true"
+                    title:sShapeSelectorPressedColor="@color/item_pressed">
 
                 </com.allen.library.SuperTextView>
 
@@ -61,7 +62,9 @@
                     title:sRightTvDrawableRight="@drawable/ic_arrow"
                     title:sLeftTextGravity="center"
                     title:sShapeCornersRadius="@dimen/dimen_6"
-                    title:sUseShape="true">
+                    title:sUseShape="true"
+                    title:sShapeSelectorPressedColor="@color/item_pressed">
+                    >
 
                 </com.allen.library.SuperTextView>
 
@@ -92,7 +95,8 @@
                         title:sShapeCornersTopRightRadius="@dimen/dimen_6"
                         title:sLeftTextGravity="center"
                         title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-                        >
+                        title:sShapeSelectorPressedColor="@color/item_pressed">
+
 
                     </com.allen.library.SuperTextView>
 
@@ -118,7 +122,8 @@
                         title:sLeftIconWidth="@dimen/dimen_24"
                         title:sRightTvDrawableRight="@drawable/ic_arrow"
                         title:sLeftTextGravity="center"
-                        title:sUseShape="true">
+                        title:sUseShape="true"
+                        title:sShapeSelectorPressedColor="@color/item_pressed">
 
                     </com.allen.library.SuperTextView>
 
@@ -145,14 +150,10 @@
                         title:sRightTvDrawableRight="@drawable/ic_arrow"
                         title:sUseShape="true"
                         title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
-                        title:sShapeCornersBottomRightRadius="@dimen/dimen_6">
+                        title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
+                        title:sShapeSelectorPressedColor="@color/item_pressed">
 
                     </com.allen.library.SuperTextView>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen_4">
-                    </View>
 
                 </LinearLayout>
 

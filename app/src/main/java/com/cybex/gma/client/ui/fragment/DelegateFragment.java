@@ -47,13 +47,13 @@ public class DelegateFragment extends XFragment {
     @BindView(R.id.edt_delegate_cpu) EditText edtDelegateCpu;
     @BindView(R.id.tv_delegate_net) TextView tvDelegateNet;
     @BindView(R.id.edt_delegate_net) EditText edtDelegateNet;
-    @BindView(R.id.tv_refund_cpu) TextView tvRefundCpu;
-    @BindView(R.id.edt_refund_cpu) EditText edtRefundCpu;
-    @BindView(R.id.tv_refund_net) TextView tvRefundNet;
-    @BindView(R.id.edt_refund_net) EditText edtRefundNet;
-    @BindView(R.id.bt_refund_cpu_net) Button btRefundCpuNet;
+    @BindView(R.id.tv_undelegate_cpu) TextView tvundelegateCpu;
+    @BindView(R.id.edt_undelegate_cpu) EditText edtundelegateCpu;
+    @BindView(R.id.tv_undelegate_net) TextView tvundelegateNet;
+    @BindView(R.id.edt_undelegate_net) EditText edtundelegateNet;
+    @BindView(R.id.bt_undelegate_cpu_net) Button btundelegateCpuNet;
     @BindView(R.id.layout_tab_delegate) View tab_delegate;
-    @BindView(R.id.layout_tab_refund) View tab_refund;
+    @BindView(R.id.layout_tab_undelegate) View tab_undelegate;
 
 
     @OnClick(R.id.bt_delegate_cpu_net)
@@ -119,17 +119,17 @@ public class DelegateFragment extends XFragment {
 
     private void showDelegateTab(){
         tab_delegate.setVisibility(View.VISIBLE);
-        tab_refund.setVisibility(View.GONE);
+        tab_undelegate.setVisibility(View.GONE);
         btDelegateCpuNet.setVisibility(View.VISIBLE);
-        btRefundCpuNet.setVisibility(View.GONE);
+        btundelegateCpuNet.setVisibility(View.GONE);
 
     }
 
     private void showRefundTab(){
         tab_delegate.setVisibility(View.GONE);
-        tab_refund.setVisibility(View.VISIBLE);
+        tab_undelegate.setVisibility(View.VISIBLE);
         btDelegateCpuNet.setVisibility(View.GONE);
-        btRefundCpuNet.setVisibility(View.VISIBLE);
+        btundelegateCpuNet.setVisibility(View.VISIBLE);
     }
 
     /**
