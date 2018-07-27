@@ -9,10 +9,10 @@ import android.widget.ScrollView;
 
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.WalletManageListAdapter;
 import com.cybex.gma.client.ui.model.vo.WalletVO;
@@ -27,7 +27,7 @@ import butterknife.Unbinder;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
- *管理钱包一级界面
+ * 管理钱包一级界面
  * 钱包主页面中点击右上角icon进入的界面
  */
 public class ManageWalletFragment extends XFragment {
@@ -108,30 +108,29 @@ public class ManageWalletFragment extends XFragment {
 
     /**
      * 把钱包名称数据放入RecyclerView中显示出来
-     *
      */
-    public void setWalletListViewData(){
+    public void setWalletListViewData() {
 
         //从数据库中读取Wallet信息转换成WalletVO列表
         List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
         List<WalletVO> walletVOList = new ArrayList<>();
 
-        for (int i = 0; i < walletEntityList.size(); i++){
+        for (int i = 0; i < walletEntityList.size(); i++) {
             WalletVO curWalletVO = new WalletVO();
             curWalletVO.setWalletName(walletEntityList.get(i).getWalletName());
             walletVOList.add(curWalletVO);
         }
 
         adapter = new WalletManageListAdapter(walletVOList);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener(){
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
 
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 WalletVO vo = (WalletVO) adapter.getItem(position);
-                String s =  vo.getWalletName();
+                String s = vo.getWalletName();
 
             }
-        }) ;
+        });
 
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
@@ -143,33 +142,39 @@ public class ManageWalletFragment extends XFragment {
     }
 
 
-    public void addtestWalletTab(){
+    public void addtestWalletTab() {
         List<WalletVO> data = new ArrayList<>();
 
         WalletVO wallet_1 = new WalletVO();
         wallet_1.setWalletName("EOS-WALLET-DEFAULT");
+        data.add(wallet_1);
 
+        wallet_1 = new WalletVO();
+        wallet_1.setWalletName("test");
+        data.add(wallet_1);
+
+        wallet_1 = new WalletVO();
+        wallet_1.setWalletName("test2");
         data.add(wallet_1);
 
         //DividerItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
         //divider.setDrawable(ContextCompat.getDrawable(this.getActivity(), R.drawable.custom_divider));
         //recyclerViewWalletManage.addItemDecoration(divider);
         adapter = new WalletManageListAdapter(data);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener(){
-
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                WalletVO vo = (WalletVO) adapter.getItem(position);
-                String s =  vo.getWalletName();
-                LoggerManager.d("TAG", s);
-            }
-        }) ;
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
         recyclerViewWalletManage.setLayoutManager(layoutManager);
         recyclerViewWalletManage.setAdapter(adapter);
 
+
+        recyclerViewWalletManage.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                WalletVO vo = (WalletVO) adapter.getItem(position);
+                String s = vo.getWalletName();
+            }
+        });
 
     }
 
