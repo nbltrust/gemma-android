@@ -16,6 +16,7 @@ import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.request.GetkeyAccountReqParams;
@@ -85,6 +86,9 @@ public class ImportWalletConfigFragment extends XFragment {
             @Override
             public void onValidateSuccess() {
                 if (checkboxConfig.isChecked()){//再检查checkBox
+                    final String priKey = getArguments().getString("priKey");
+                    LoggerManager.d("priKey", priKey);
+                    saveTestWallet(priKey, getPassword(), getPassHint());
                     UISkipMananger.launchHome(getActivity());
                 }
             }
@@ -106,8 +110,9 @@ public class ImportWalletConfigFragment extends XFragment {
 
 
 
-    public static ImportWalletConfigFragment newInstance() {
+    public static ImportWalletConfigFragment newInstance(String privateKey) {
         Bundle args = new Bundle();
+        args.putString("priKey", privateKey);
         ImportWalletConfigFragment fragment = new ImportWalletConfigFragment();
         fragment.setArguments(args);
         return fragment;
@@ -123,6 +128,8 @@ public class ImportWalletConfigFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("配置钱包", true, false);
+        final String priKey = getArguments().getString("priKey");
+        LoggerManager.d("priKey", priKey);
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -179,6 +186,34 @@ public class ImportWalletConfigFragment extends XFragment {
 
     }
 
+    public void saveTestWallet(final String privateKey, final String password, final String passwordTips ){
+
+        WalletEntity walletEntity = new WalletEntity();
+        List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
+        //获取当前数据库中已存入的钱包个数
+        int walletNum = walletEntityList.size();
+        int index = walletNum + 1;
+        //以默认钱包名称存入
+        walletEntity.setWalletName(CacheConstants.DEFAULT_WALLETNAME_PREFIX + String.valueOf(index));
+
+        WalletEntity curWallet = new WalletEntity();
+        final String cypher = JNIUtil.get_cypher(password, privateKey);
+        curWallet.setCypher(cypher);
+        final String pubKey = JNIUtil.get_public_key(privateKey);
+        curWallet.setPublicKey(pubKey);
+        curWallet.setPasswordTip(passwordTips);
+        curWallet.setEosName("default-eos-name");
+        curWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+        //把其他钱包设置为非当前钱包
+
+        for (WalletEntity curWalletEntity : walletEntityList){
+            curWalletEntity.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+           //todo 执行更新操作
+        }
+        DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
+
+    }
+
     public void saveConfigedWallet(final String privateKey, final String password, final String passwordTips ){
         //根据私钥算出公钥和摘要
         WalletEntity curWallet = new WalletEntity();
@@ -187,7 +222,7 @@ public class ImportWalletConfigFragment extends XFragment {
         final String pubKey = JNIUtil.get_public_key(privateKey);
         curWallet.setPublicKey(pubKey);
         curWallet.setPasswordTip(passwordTips);
-        //todo 用公钥上链获取eosUsername,这里必须得同步进行？不同步的话之后在哪里更新？
+        //todo 用公钥上链获取eosUsername,这里用同步方法(显示progress bar，如果上链查询eosUsername失败，提示导入失败)
 
         GetkeyAccountReqParams getkeyAccountReqParams = new GetkeyAccountReqParams();
         getkeyAccountReqParams.setPublic_key(pubKey);
@@ -202,8 +237,6 @@ public class ImportWalletConfigFragment extends XFragment {
             }
         });
 
-
-
         final String eosName = "";
         curWallet.setEosName(eosName);
         curWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
@@ -213,6 +246,14 @@ public class ImportWalletConfigFragment extends XFragment {
             walletEntity.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
         }
         DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
+    }
+
+    public String getPassword(){
+        return edtSetPass.getText().toString().trim();
+    }
+
+    public String getPassHint(){
+        return edtPassHint.getText().toString().trim();
     }
 
 }

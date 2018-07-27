@@ -34,7 +34,8 @@ public class ImportWalletInputKeyFragment extends XFragment {
 
     @OnClick(R.id.bt_start_input)
     public void goConfigWallet(){
-        start(ImportWalletConfigFragment.newInstance());
+        final String key = edtShowPrikey.getText().toString().trim();
+        start(ImportWalletConfigFragment.newInstance(key));
     }
 
 
