@@ -33,12 +33,6 @@ public class BackUpPriKeyFragment extends XFragment {
     @BindView(R.id.bt_copy_priKey) Button buttonCopyPrikey;
     Unbinder unbinder;
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getKey(KeySendEvent message){
-        textViewShowPriKey.setText(message.getKey());
-        LoggerManager.d("PriKEY", message.getKey());
-    }
-
     @OnClick(R.id.bt_copy_priKey)
     public void copyPrikeyToClipboard(){
         String curPriKey = textViewShowPriKey.getText().toString().trim();
@@ -53,11 +47,18 @@ public class BackUpPriKeyFragment extends XFragment {
         return fragment;
     }
 
+
+
     @Override
     public boolean useEventBus() {
         return true;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getKey(KeySendEvent message){
+        textViewShowPriKey.setText(message.getKey());
+        LoggerManager.d("PriKEY", message.getKey());
+    }
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BackUpPriKeyFragment.this, rootView);

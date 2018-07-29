@@ -136,7 +136,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         walletEntity.setPublicKey(publicKey);
         //设置摘要
         final String cypher = JNIUtil.get_cypher(password, privateKey);
-        walletEntity.setPrivateKey(cypher);
+        walletEntity.setCypher(cypher);
         //设置eosNameJson
         //todo 需要一个方法把存入的字符串格式和从链上查询的数据做格式统一
         List<String> account_names = new ArrayList<>();

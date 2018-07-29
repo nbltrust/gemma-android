@@ -40,7 +40,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
         walletEntity.setPublicKey(pubKey);
         //设置摘要
         final String cypher = JNIUtil.get_cypher(password, privateKey);
-        walletEntity.setPrivateKey(cypher);
+        walletEntity.setCypher(cypher);
         walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);// 设置是否为当前钱包，默认新建钱包为当前钱包
         walletEntity.setPasswordTip(passwordTips);   //设置密码提示
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);      //设置为未备份

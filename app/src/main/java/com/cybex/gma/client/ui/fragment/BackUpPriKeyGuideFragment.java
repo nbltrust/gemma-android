@@ -49,8 +49,9 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void setID(WalletIDEvent walletIDEvent){
-        walletID = walletIDEvent.getWalletID();
+    public void showID(WalletIDEvent message){
+        walletID = message.getWalletID();
+        LoggerManager.d("received ID", message.getWalletID());
     }
 
     @Override
@@ -115,7 +116,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                         if (JNIUtil.get_cypher(inputPass, priKey).equals(cypher)){
                             //密码正确
                             EventBusProvider.post(new KeySendEvent(priKey));
-                            //UISkipMananger.launchBackUpPrivateKey(getActivity());
+                            UISkipMananger.launchBackUpPrivateKey(getActivity());
                         }else {
                             //密码错误
                             GemmaToastUtils.showLongToast("密码错误请重新输入！");

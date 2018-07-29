@@ -2,7 +2,9 @@ package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -11,10 +13,15 @@ import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.WalletIDEvent;
+import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +37,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 public class WalletDetailFragment extends XFragment {
 
     private WalletEntity curWallet;
+    private Integer currentID;
 
     @BindView(R.id.layout_wallet_briefInfo) ConstraintLayout layoutWalletBriefInfo;
     @BindView(R.id.superTextView_exportPriKey) SuperTextView superTextViewExportPriKey;
@@ -43,7 +51,7 @@ public class WalletDetailFragment extends XFragment {
 
     @OnClick(R.id.layout_wallet_briefInfo)
     public void goChangeWalletName() {
-        start(ChangeWalletNameFragment.newInstance());
+        start(ChangeWalletNameFragment.newInstance(curWallet.getId()));
     }
 
     public static WalletDetailFragment newInstance(Bundle bundle) {
@@ -70,7 +78,7 @@ public class WalletDetailFragment extends XFragment {
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("管理钱包", true);
         curWallet = getArguments().getParcelable("thisWallet");
-
+        currentID = curWallet.getId();
         //显示当前钱包名称
         final String walletName = curWallet.getWalletName();
         tvWalletNameInDetailPage.setText(walletName);
@@ -89,7 +97,8 @@ public class WalletDetailFragment extends XFragment {
         superTextViewChangePass.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-                start(ChangePasswordFragment.newInstance());
+                showConfirmAuthoriDialog();
+
             }
         });
 
@@ -111,5 +120,55 @@ public class WalletDetailFragment extends XFragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntityByID(currentID);
+        final String walletName = curWallet.getWalletName();
+        LoggerManager.d("walletName", walletName);
+        tvWalletNameInDetailPage.setText(walletName);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    /**
+     * 显示确认授权dialog
+     */
+    private void showConfirmAuthoriDialog() {
+        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
+        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+                R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imc_cancel:
+                        dialog.cancel();
+                        break;
+                    case R.id.btn_confirm_authorization:
+                        //检查密码是否正确
+                        EditText edtPassword = dialog.findViewById(R.id.et_password);
+                        final String inputPass = edtPassword.getText().toString().trim();
+                        final String cypher = curWallet.getCypher();
+                        final String priKey = JNIUtil.get_private_key(cypher, inputPass);
+                        final String generatedCypher = JNIUtil.get_cypher(inputPass, priKey);
+                        if (cypher.equals(generatedCypher)){
+                            //验证通过
+                            start(ChangePasswordFragment.newInstance(priKey,currentID));
+                            dialog.cancel();
+                        }else {
+                            GemmaToastUtils.showLongToast("密码错误，请重新输入");
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+    }
 }

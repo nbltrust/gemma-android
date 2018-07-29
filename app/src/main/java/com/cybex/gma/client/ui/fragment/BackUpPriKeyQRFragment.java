@@ -6,9 +6,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.qrcode.zxing.QRCodeEncoder;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +32,7 @@ public class BackUpPriKeyQRFragment extends XFragment {
 
     @OnClick(R.id.bt_show_QR)
     public void showQR(){
-
+        showRealQR(priKey);
     }
 
     public static BackUpPriKeyQRFragment newInstance() {
@@ -36,6 +40,16 @@ public class BackUpPriKeyQRFragment extends XFragment {
         BackUpPriKeyQRFragment fragment = new BackUpPriKeyQRFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getKey(KeySendEvent keySendEvent){
+        priKey = keySendEvent.getKey();
     }
 
     @Override
@@ -82,7 +96,6 @@ public class BackUpPriKeyQRFragment extends XFragment {
             @Override
             public void run() {
                 ivRealQR.setImageBitmap(QRCodeEncoder.syncEncodeQRCode(privateKey, 100));
-
             }
         });
 
