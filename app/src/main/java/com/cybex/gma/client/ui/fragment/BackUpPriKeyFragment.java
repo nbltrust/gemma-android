@@ -7,10 +7,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.event.KeySendEvent;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +33,12 @@ public class BackUpPriKeyFragment extends XFragment {
     @BindView(R.id.bt_copy_priKey) Button buttonCopyPrikey;
     Unbinder unbinder;
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getKey(KeySendEvent message){
+        textViewShowPriKey.setText(message.getKey());
+        LoggerManager.d("PriKEY", message.getKey());
+    }
+
     @OnClick(R.id.bt_copy_priKey)
     public void copyPrikeyToClipboard(){
         String curPriKey = textViewShowPriKey.getText().toString().trim();
@@ -42,6 +53,10 @@ public class BackUpPriKeyFragment extends XFragment {
         return fragment;
     }
 
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
 
     @Override
     public void bindUI(View rootView) {

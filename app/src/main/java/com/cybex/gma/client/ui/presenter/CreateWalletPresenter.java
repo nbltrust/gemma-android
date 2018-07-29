@@ -9,6 +9,7 @@ import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
@@ -19,6 +20,7 @@ import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.android.logger.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -130,19 +132,42 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         int index = walletNum + 1;
         //以默认钱包名称存入
         walletEntity.setWalletName(CacheConstants.DEFAULT_WALLETNAME_PREFIX + String.valueOf(index));
-        walletEntity.setPublicKey(publicKey);//设置公钥
+        //设置公钥
+        walletEntity.setPublicKey(publicKey);
+        //设置摘要
         final String cypher = JNIUtil.get_cypher(password, privateKey);
-        walletEntity.setPrivateKey(cypher);//设置摘要
-        walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);//设置是否为当前钱包，默认新建钱包为当前钱包
-        walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);//设置为未备份
-        walletEntity.setEosName(eosUsername);//设置eosUsername
-        walletEntity.setPasswordTip(passwordTip);//设置密码提示
+        walletEntity.setPrivateKey(cypher);
+        //设置eosNameJson
+        //todo 需要一个方法把存入的字符串格式和从链上查询的数据做格式统一
+        List<String> account_names = new ArrayList<>();
+        account_names.add(eosUsername);
+        final String eosNameJson = GsonUtils.objectToJson(account_names);
+        LoggerManager.d("eosnamejson", eosNameJson);
+        /*
+        List<EOSNameVO> eosNameVOList = new ArrayList<>();
+        EOSNameVO eosNameVO = new EOSNameVO();
+        eosNameVO.setEosName(eosUsername);
+        eosNameVOList.add(eosNameVO);
+        final String eosNameJson = GsonUtils.objectToJson(eosNameVOList);
+        LoggerManager.d("eosname", eosNameJson);
+        walletEntity.setEosNameJson(eosNameJson);
+        */
+        //设置currentEosName，创建钱包步骤中可以直接设置，因为默认eosNameJson中只会有一个用户名字符串
+        walletEntity.setCurrentEosName(eosUsername);
+        //设置是否为当前钱包，默认新建钱包为当前钱包
+        walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+        //设置密码提示
+        walletEntity.setPasswordTip(passwordTip);
+        //设置为未备份
+        walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
         //执行存入操作之前需要把其他钱包设置为非当前钱包
         if (walletNum > 0){
 
             for (WalletEntity curWallet : walletEntityList){
-                curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-                DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
+                if (curWallet.getIsCurrentWallet().equals(CacheConstants.IS_CURRENT_WALLET) ){
+                    curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+                    DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
+                }
             }
         }
         //最后执行存入操作，此前包此时为当前钱包

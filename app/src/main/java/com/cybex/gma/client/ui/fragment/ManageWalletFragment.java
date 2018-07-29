@@ -73,7 +73,6 @@ public class ManageWalletFragment extends XFragment {
         });
 
         setWalletListViewData();
-        //addtestWalletTab();
     }
 
 
@@ -97,6 +96,7 @@ public class ManageWalletFragment extends XFragment {
     public void onResume() {
         super.onResume();
         updateWalletList();
+        //setWalletListViewData();
     }
 
     @Override
@@ -133,43 +133,13 @@ public class ManageWalletFragment extends XFragment {
         recyclerViewWalletManage.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                WalletVO vo = (WalletVO) adapter.getItem(position);
-                String s = vo.getWalletName();
-                start(WalletDetailFragment.newInstance(s));
+                //position与数据库表中的id对应，可直接根据position值来确定ID
+                WalletEntity curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntityByID(position+1);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("curWallet", curWallet);
+                start(WalletDetailFragment.newInstance(bundle));
             }
         });
-
-
-    }
-
-
-    public void addtestWalletTab() {
-        List<WalletVO> data = new ArrayList<>();
-
-        WalletVO wallet_1 = new WalletVO();
-        wallet_1.setWalletName("EOS-WALLET-DEFAULT");
-        data.add(wallet_1);
-
-        //DividerItemDecoration divider = new DividerItemDecoration(this.getActivity(), DividerItemDecoration.VERTICAL);
-        //divider.setDrawable(ContextCompat.getDrawable(this.getActivity(), R.drawable.custom_divider));
-        //recyclerViewWalletManage.addItemDecoration(divider);
-        adapter = new WalletManageListAdapter(data);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
-                .VERTICAL, false);
-        recyclerViewWalletManage.setLayoutManager(layoutManager);
-        recyclerViewWalletManage.setAdapter(adapter);
-
-
-        recyclerViewWalletManage.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                WalletVO vo = (WalletVO) adapter.getItem(position);
-                String s = vo.getWalletName();
-                start(WalletDetailFragment.newInstance(s));
-            }
-        });
-
     }
 
 }

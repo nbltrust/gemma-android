@@ -12,24 +12,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.api.callback.JsonCallback;
-import com.cybex.gma.client.config.CacheConstants;
-import com.cybex.gma.client.db.entity.WalletEntity;
-import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.JNIUtil;
-import com.cybex.gma.client.ui.model.request.GetkeyAccountReqParams;
-import com.cybex.gma.client.ui.model.response.GetKeyAccountsReuslt;
-import com.cybex.gma.client.ui.request.GetKeyAccountsRequest;
+import com.cybex.gma.client.ui.presenter.ImportWalletConfigPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
-import com.lzy.okgo.model.Response;
-
-import java.util.List;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +40,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  *
  */
 
-public class ImportWalletConfigFragment extends XFragment {
+public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPresenter> {
 
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
@@ -88,7 +78,7 @@ public class ImportWalletConfigFragment extends XFragment {
                 if (checkboxConfig.isChecked()){//再检查checkBox
                     final String priKey = getArguments().getString("priKey");
                     LoggerManager.d("priKey", priKey);
-                    saveTestWallet(priKey, getPassword(), getPassHint());
+                    getP().saveConfigWallet(priKey, getPassword(), getPassHint());
                     UISkipMananger.launchHome(getActivity());
                 }
             }
@@ -150,8 +140,8 @@ public class ImportWalletConfigFragment extends XFragment {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public ImportWalletConfigPresenter newP() {
+        return new ImportWalletConfigPresenter();
     }
 
     @Override
@@ -167,8 +157,8 @@ public class ImportWalletConfigFragment extends XFragment {
     }
 
     public boolean isAllFilled(){
-        if (EmptyUtils.isEmpty(edtSetPass.getText().toString().trim())
-                || EmptyUtils.isEmpty(edtRepeatPass.getText().toString().trim())){
+        if (EmptyUtils.isEmpty(getPassword())
+                || EmptyUtils.isEmpty(getRepeatPass())){
             return false;
         }
         return true;
@@ -184,73 +174,21 @@ public class ImportWalletConfigFragment extends XFragment {
 
     }
 
-    public void saveTestWallet(final String privateKey, final String password, final String passwordTips ){
-
-        WalletEntity walletEntity = new WalletEntity();
-        List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
-        //获取当前数据库中已存入的钱包个数
-        int walletNum = walletEntityList.size();
-        int index = walletNum + 1;
-        //以默认钱包名称存入
-        walletEntity.setWalletName(CacheConstants.DEFAULT_WALLETNAME_PREFIX + String.valueOf(index));
-        walletEntity.setEosName("default-eos-name");
-        final String cypher = JNIUtil.get_cypher(password, privateKey);
-        walletEntity.setPrivateKey(cypher);//设置摘要
-        walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);//设置是否为当前钱包，默认新建钱包为当前钱包
-        walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);//设置为未备份
-        walletEntity.setPasswordTip(passwordTips);//设置密码提示
-        //执行存入操作之前需要把其他钱包设置为非当前钱包
-        if (walletNum > 0){
-
-            for (WalletEntity curWallet : walletEntityList){
-                curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-                DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
-            }
-        }
-        //最后执行存入操作，此前包此时为当前钱包
-        DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(walletEntity);
-    }
-
-
-    public void saveConfigedWallet(final String privateKey, final String password, final String passwordTips ){
-        //根据私钥算出公钥和摘要
-        WalletEntity curWallet = new WalletEntity();
-        final String cypher = JNIUtil.get_cypher(password, privateKey);
-        curWallet.setCypher(cypher);
-        final String pubKey = JNIUtil.get_public_key(privateKey);
-        curWallet.setPublicKey(pubKey);
-        curWallet.setPasswordTip(passwordTips);
-        //todo 用公钥上链获取eosUsername,这里用同步方法(显示progress bar，如果上链查询eosUsername失败，提示导入失败)
-
-
-
-
-        GetkeyAccountReqParams getkeyAccountReqParams = new GetkeyAccountReqParams();
-        getkeyAccountReqParams.setPublic_key(pubKey);
-        String json = GsonUtils.objectToJson(getkeyAccountReqParams);
-        //todo json数据如何设置？
-        GetKeyAccountsRequest request = new GetKeyAccountsRequest(GetKeyAccountsReuslt.class);
-        request.setJsonParams(json);
-        request.getkEYAccountS(new JsonCallback<GetKeyAccountsReuslt>() {
+    public void showProgressDialog(final String prompt) {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
-            public void onSuccess(Response<GetKeyAccountsReuslt> response) {
-
+            public void run() {
+                if (kProgressHUD == null) {
+                    kProgressHUD = KProgressHUD.create(getActivity())
+                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                            .setCancellable(true)
+                            .setAnimationSpeed(2)
+                            .setDimAmount(0.5f);
+                }
+                kProgressHUD.setLabel(prompt);
+                kProgressHUD.show();
             }
         });
-
-        final String eosName = "";
-        curWallet.setEosName(eosName);
-
-
-
-
-        curWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-        //更新其他WALLET为非当前WALLET,再把构建好的WALLET存入数据库
-        List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
-        for (WalletEntity walletEntity : walletEntityList){
-            walletEntity.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-        }
-        DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
     }
 
     public String getPassword(){
@@ -259,6 +197,10 @@ public class ImportWalletConfigFragment extends XFragment {
 
     public String getPassHint(){
         return edtPassHint.getText().toString().trim();
+    }
+
+    public String getRepeatPass(){
+        return edtRepeatPass.getText().toString().trim();
     }
 
 }

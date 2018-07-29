@@ -4,14 +4,14 @@ import com.cybex.gma.client.api.ApiMethod;
 import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.api.request.GMAHttpRequest;
-import com.cybex.gma.client.ui.model.response.GetKeyAccountsReuslt;
+import com.cybex.gma.client.ui.model.response.GetKeyAccountsResult;
 
 /**
  * 根据公钥查询账户列表
  *
  * Created by wanglin on 2018/7/26.
  */
-public class GetKeyAccountsRequest extends GMAHttpRequest<GetKeyAccountsReuslt> {
+public class GetKeyAccountsRequest extends GMAHttpRequest<GetKeyAccountsResult> {
 
     private static final String TAG = "GetKeyAccountsRequest";
 
@@ -24,7 +24,7 @@ public class GetKeyAccountsRequest extends GMAHttpRequest<GetKeyAccountsReuslt> 
 
     }
 
-    public void getkEYAccountS(JsonCallback<GetKeyAccountsReuslt> callback) {
+    public void getkEYAccountS(JsonCallback<GetKeyAccountsResult> callback) {
         postJsonNoRxRequest(TAG, callback);
     }
 

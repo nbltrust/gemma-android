@@ -5,11 +5,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.event.WalletIDEvent;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,10 +26,10 @@ import butterknife.Unbinder;
  */
 
 public class BackUpPriKeyGuideFragment extends XFragment {
-
     @BindView(R.id.show_priKey) Button btShowPrikey;
+    @BindView(R.id.testTV) TextView testTV;
     Unbinder unbinder;
-
+    private Integer walletID;
 
     @OnClick(R.id.show_priKey)
     public void showPriKey() {
@@ -43,6 +48,11 @@ public class BackUpPriKeyGuideFragment extends XFragment {
         return true;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void setID(WalletIDEvent walletIDEvent){
+        walletID = walletIDEvent.getWalletID();
+    }
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BackUpPriKeyGuideFragment.this, rootView);
@@ -51,6 +61,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("备份私钥", true, true);
+
     }
 
 
@@ -79,10 +90,12 @@ public class BackUpPriKeyGuideFragment extends XFragment {
      * 显示输入密码Dialog
      */
     private void showConfirmAuthoriDialog() {
+
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
                 R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
@@ -92,11 +105,22 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                     case R.id.btn_confirm_authorization:
                         EditText password = dialog.findViewById(R.id.et_password);
                         final String inputPass = password.getText().toString().trim();
-                        //todo 如何判断是显示哪一个钱包的私钥？
-                        //JNIUtil.get_private_key()
-                        //KeySendEvent message = new KeySendEvent();
-                        //EventBusProvider.post();
-                        UISkipMananger.launchBackUpPrivateKey(getActivity());
+                        LoggerManager.d("IDinGuide", walletID);
+                       /*
+                        WalletEntity curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntityByID
+                                (walletID);
+                        final String cypher = curWallet.getCypher();
+                        final String priKey = JNIUtil.get_private_key(cypher, inputPass);
+                        //验证密码是否正确
+                        if (JNIUtil.get_cypher(inputPass, priKey).equals(cypher)){
+                            //密码正确
+                            EventBusProvider.post(new KeySendEvent(priKey));
+                            //UISkipMananger.launchBackUpPrivateKey(getActivity());
+                        }else {
+                            //密码错误
+                            GemmaToastUtils.showLongToast("密码错误请重新输入！");
+                        }
+                        */
                         break;
                     default:
                         break;
