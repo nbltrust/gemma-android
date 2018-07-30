@@ -12,12 +12,10 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
-import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -69,10 +67,12 @@ public class WalletDetailFragment extends XFragment {
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletDetail);
     }
 
+    /*
     @Override
     public boolean useEventBus() {
         return true;
     }
+    */
 
     @Override
     public void initData(Bundle savedInstanceState) {
@@ -89,8 +89,10 @@ public class WalletDetailFragment extends XFragment {
         superTextViewExportPriKey.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-                EventBusProvider.post(new WalletIDEvent(curWallet.getId()));
-                UISkipMananger.launchBakupGuide(getActivity());
+                //EventBusProvider.post(new WalletIDEvent(curWallet.getId()));
+                Bundle bundle = new Bundle();
+                bundle.putInt("walletID", currentID);
+                UISkipMananger.launchBakupGuide(getActivity(), bundle);
             }
         });
         //修改密码点击事件

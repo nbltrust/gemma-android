@@ -16,7 +16,11 @@ public class BackUpWalletGuideActivity extends XActivity {
     @Override
     public void bindUI(View view) {
         if (findFragment(BackUpPriKeyGuideFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_backup_guide, BackUpPriKeyGuideFragment.newInstance());
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null){
+                loadRootFragment(R.id.fl_container_backup_guide, BackUpPriKeyGuideFragment.newInstance(bundle));
+            }
+
         }
 
         //让布局向上移来显示软键盘

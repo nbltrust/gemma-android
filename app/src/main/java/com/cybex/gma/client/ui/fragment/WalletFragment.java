@@ -13,10 +13,12 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
 import com.tapadoo.alerter.Alerter;
@@ -38,7 +40,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 public class WalletFragment extends XFragment<WalletPresenter> {
 
     private final String testUsername = "helloeoscoin";
-
+    private WalletEntity curWallet;
     @BindView(R.id.tv_backup_wallet) TextView textViewBackupWallet;
     @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
     @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
@@ -61,7 +63,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.tv_backup_wallet)
     public void backUpWallet(){
-        UISkipMananger.launchBakupGuide(getActivity());
+        Bundle bundle = new Bundle();
+        if (!EmptyUtils.isEmpty(curWallet)){
+            bundle.putInt("walletID", curWallet.getId());
+            LoggerManager.d("walletID", curWallet.getId());
+            UISkipMananger.launchBakupGuide(getActivity(), bundle);
+        }
+
     }
 
     @OnClick(R.id.superTextView_card_record)
@@ -88,25 +96,26 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        WalletEntity curWallet = getCurrentWallet();
-        /*
-        if (isCurWalletBackUp(curWallet)){
-            //当前钱包已经备份过，把备份钱包按钮隐藏掉
-            textViewBackupWallet.setVisibility(View.GONE);
-        }
-        */
 
         generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
 
-        Alerter.create(getActivity())
-                .setText(getResources().getString(R.string.please_confirm_alert))
-                .setBackgroundColorRes(R.color.scarlet)
-                .enableSwipeToDismiss()
-                .enableInfiniteDuration(true)
-                .setTextAppearance(R.style.myAlert)
-                .show();
+        curWallet = getCurrentWallet();
+        LoggerManager.d("curWallet", curWallet.getWalletName());
+        if (!EmptyUtils.isEmpty(curWallet) && isCurWalletBackUp(curWallet)){
+            textViewBackupWallet.setVisibility(View.GONE);
+        }
+
+        if (getActivity() != null){
+            Alerter.create(getActivity())
+                    .setText(getResources().getString(R.string.please_confirm_alert))
+                    .setBackgroundColorRes(R.color.scarlet)
+                    .enableSwipeToDismiss()
+                    .enableInfiniteDuration(true)
+                    .setTextAppearance(R.style.myAlert)
+                    .show();
+        }
     }
 
     @Override
@@ -149,7 +158,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     public WalletEntity getCurrentWallet(){
         List<WalletEntity> list = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
         for (WalletEntity walletEntity : list){
-            if (walletEntity.getIsCurrentWallet() == CacheConstants.IS_CURRENT_WALLET){
+            if (walletEntity.getIsCurrentWallet().equals(CacheConstants.IS_CURRENT_WALLET)){
                 return walletEntity;
             }
         }
@@ -162,7 +171,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
      * @return
      */
     public boolean isCurWalletBackUp(WalletEntity curWallet){
-        if(curWallet.getIsBackUp().equals(Integer.valueOf(CacheConstants.ALREADY_BACKUP))){
+        if(!EmptyUtils.isEmpty(curWallet)
+                && curWallet.getIsBackUp().equals(CacheConstants.ALREADY_BACKUP)){
             return true;
         }
         return false;

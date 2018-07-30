@@ -39,6 +39,8 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
         ButterKnife.bind(this);
 
         setNavibarTitle("备份私钥", true);
+
+
     }
 
     @Override
@@ -47,16 +49,19 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
     }
 
     private void setTab() {
+        Bundle bundle = getIntent().getExtras();
+
         vpContent.removeAllViews();
         listFragment.clear();
+        if (bundle != null) {
+            final String key = bundle.getString("key");
+            listFragment.add(BackUpPriKeyFragment.newInstance(key));
+            listFragment.add(BackUpPriKeyQRFragment.newInstance(key));
+        }
 
-        listFragment.add(BackUpPriKeyFragment.newInstance());
-        listFragment.add(BackUpPriKeyQRFragment.newInstance());
         TabLayoutManager.getInstance().setSlidingTabData(this, mSlidingTab, vpContent,
                 getTitles(R.array.arrays_tab_backup_private_key), listFragment);
-
         mSlidingTab.setCurrentTab(0);
-
     }
 
     private List<String> getTitles(int array) {

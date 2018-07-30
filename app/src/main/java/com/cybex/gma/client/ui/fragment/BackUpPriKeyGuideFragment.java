@@ -8,13 +8,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.event.WalletIDEvent;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,13 +36,13 @@ public class BackUpPriKeyGuideFragment extends XFragment {
         showConfirmAuthoriDialog();
     }
 
-    public static BackUpPriKeyGuideFragment newInstance() {
-        Bundle args = new Bundle();
+    public static BackUpPriKeyGuideFragment newInstance(Bundle args) {
         BackUpPriKeyGuideFragment fragment = new BackUpPriKeyGuideFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
+    /*
     @Override
     public boolean useEventBus() {
         return true;
@@ -53,6 +53,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
         walletID = message.getWalletID();
         LoggerManager.d("received ID", message.getWalletID());
     }
+    */
 
     @Override
     public void bindUI(View rootView) {
@@ -62,9 +63,10 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("备份私钥", true, true);
-
+        if (getArguments() != null){
+            walletID = getArguments().getInt("walletID");
+        }
     }
-
 
     @Override
     public int getLayoutId() {
@@ -106,8 +108,6 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                     case R.id.btn_confirm_authorization:
                         EditText password = dialog.findViewById(R.id.et_password);
                         final String inputPass = password.getText().toString().trim();
-                        LoggerManager.d("IDinGuide", walletID);
-                       /*
                         WalletEntity curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntityByID
                                 (walletID);
                         final String cypher = curWallet.getCypher();
@@ -115,13 +115,15 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                         //验证密码是否正确
                         if (JNIUtil.get_cypher(inputPass, priKey).equals(cypher)){
                             //密码正确
-                            EventBusProvider.post(new KeySendEvent(priKey));
-                            UISkipMananger.launchBackUpPrivateKey(getActivity());
+                            //EventBusProvider.post(new KeySendEvent(priKey));
+                            Bundle bundle = new Bundle();
+                            bundle.putString("key", priKey);
+                            UISkipMananger.launchBackUpPrivateKey(getActivity(), bundle);
                         }else {
                             //密码错误
                             GemmaToastUtils.showLongToast("密码错误请重新输入！");
                         }
-                        */
+
                         break;
                     default:
                         break;

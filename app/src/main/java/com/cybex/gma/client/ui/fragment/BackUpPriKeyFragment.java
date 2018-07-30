@@ -7,15 +7,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.event.KeySendEvent;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,15 +35,16 @@ public class BackUpPriKeyFragment extends XFragment {
         GemmaToastUtils.showLongToast("私钥已复制，请在使用后及时清空系统剪贴板！");
     }
 
-    public static BackUpPriKeyFragment newInstance() {
+    public static BackUpPriKeyFragment newInstance(String key) {
         Bundle args = new Bundle();
+        args.putString("key", key);
         BackUpPriKeyFragment fragment = new BackUpPriKeyFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
 
-
+    /*
     @Override
     public boolean useEventBus() {
         return true;
@@ -59,6 +55,7 @@ public class BackUpPriKeyFragment extends XFragment {
         textViewShowPriKey.setText(message.getKey());
         LoggerManager.d("PriKEY", message.getKey());
     }
+    */
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BackUpPriKeyFragment.this, rootView);
@@ -67,6 +64,10 @@ public class BackUpPriKeyFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         showAlertDialog();
+        if (getArguments() != null){
+            String key = getArguments().getString("key");
+            textViewShowPriKey.setText(key);
+        }
     }
 
     @Override
