@@ -23,10 +23,18 @@ public class GetCurrencyBalanceRequest extends GMAHttpRequest {
         setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_CUREENCY_BALANCE);
     }
 
+
+    public GetCurrencyBalanceRequest setJsonParams(String jsonParams) {
+        super.setJsonParams(jsonParams);
+        return this;
+    }
+
+
     /**
      * @param callback
      */
-    public void getCurrencyBalance(StringCallback callback) {
+    public GetCurrencyBalanceRequest getCurrencyBalance(StringCallback callback) {
         postJsonNoRxRequest(TAG, callback);
+        return this;
     }
 }

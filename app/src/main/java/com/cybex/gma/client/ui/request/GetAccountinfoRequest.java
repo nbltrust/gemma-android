@@ -25,8 +25,16 @@ public class GetAccountinfoRequest extends GMAHttpRequest<AccountInfo> {
     }
 
 
-    public void getAccountInfo(JsonCallback<AccountInfo> callback) {
+    public GetAccountinfoRequest setJsonParams(String jsonParams) {
+        super.setJsonParams(jsonParams);
+        return this;
+    }
+
+
+    public GetAccountinfoRequest getAccountInfo(JsonCallback<AccountInfo> callback) {
         postJsonNoRxRequest(TAG, callback);
+
+        return this;
     }
 
 

@@ -28,7 +28,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="15dp"
                 android:text="收款人"
-                android:textColor="@color/font_title"
+                android:textColor="#8e8e93"
                 android:textSize="16sp"
                 />
 
@@ -69,7 +69,7 @@
                     android:hint="账户名"
                     android:paddingLeft="18dp"
                     android:textColor="@color/font_dark_state_blue"
-                    android:textColorHint="@color/color_et_hint"
+                    android:textColorHint="#9ea3bd"
                     android:textSize="16sp"
                     android:textCursorDrawable="@drawable/cursor_custom"/>
             </RelativeLayout>
@@ -95,7 +95,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="付款账户"
-                        android:textColor="@color/font_title"
+                        android:textColor="#8e8e93"
                         android:textSize="16sp"
                         />
 
@@ -112,7 +112,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_marginLeft="16dp"
                             android:singleLine="true"
-                            android:text="账户1"
+                            tools:text="账户1"
                             android:textColor="@color/darkSlateBlue"
                             android:textSize="16sp"
                             />
@@ -125,8 +125,8 @@
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="12dp"
                             android:singleLine="true"
-                            android:text="余额：10.0000 EOS"
-                            android:textColor="#9ea3bd"
+                            tools:text="余额：10.0000 EOS"
+                            android:textColor="#535c8a"
                             android:textSize="14sp"
                             />
 
@@ -154,7 +154,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="金额"
-                        android:textColor="@color/font_title"
+                        android:textColor="#8e8e93"
                         android:textSize="16sp"
                         />
 
@@ -168,7 +168,8 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="14dp"
                         android:background="@null"
-                        android:hint="输入转账金额"
+                        android:hint="输入转账金额，最多四位小数"
+                        android:textColorHint="#c6cade"
                         android:inputType="numberDecimal"
                         android:singleLine="true"
                         android:textColor="@color/darkSlateBlue"
@@ -195,8 +196,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
-                        android:text="备注"
-                        android:textColor="@color/font_title"
+                        android:text="备注（可选）"
+                        android:textColor="#8e8e93"
                         android:textSize="16sp"
                         />
 
@@ -210,6 +211,7 @@
                         android:layout_marginRight="16dp"
                         android:background="@null"
                         android:hint="输入转账备注"
+                        android:textColorHint="#c6cade"
                         android:maxLines="3"
                         android:minHeight="50dp"
                         android:textColor="@color/darkSlateBlue"

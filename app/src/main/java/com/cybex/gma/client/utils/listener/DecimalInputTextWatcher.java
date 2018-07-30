@@ -105,7 +105,7 @@ public class DecimalInputTextWatcher implements TextWatcher {
 
         if (!TextUtils.isEmpty(text)) {
             if (AmountUtil.compare(Double.parseDouble(text), Double.parseDouble(maxvalue))) {
-                GemmaToastUtils.showShortToast("余额不足");
+                GemmaToastUtils.showLongToast("可用余额不足");
                 editable.delete(editable.length() - 1, editable.length());
             }
         }

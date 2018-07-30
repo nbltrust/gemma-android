@@ -32,6 +32,8 @@ public class CustomFullDialog extends Dialog implements View.OnClickListener {
     private int mPosition = 0; //Dialog 相对页面显示的位置
     private List<View> mViews = new ArrayList<>();//监听的View的集合
 
+    private View allView ;
+
     public void setOnDialogItemClickListener(OnCustomDialogItemClickListener listener) {
         this.listener = listener;
     }
@@ -132,7 +134,9 @@ public class CustomFullDialog extends Dialog implements View.OnClickListener {
         } else {
             window.setWindowAnimations(mAnimationResId);//添加自定义动画
         }
-        setContentView(mLayoutResId);
+
+        allView = getLayoutInflater().inflate(mLayoutResId,null);
+        setContentView(allView);
 
         WindowManager windowManager = ((Activity) context).getWindowManager();
         Display display = windowManager.getDefaultDisplay();
@@ -176,4 +180,9 @@ public class CustomFullDialog extends Dialog implements View.OnClickListener {
         }
         listener.OnCustomDialogItemClick(this, view);
     }
+
+    public View getAllView() {
+        return allView;
+    }
+
 }
