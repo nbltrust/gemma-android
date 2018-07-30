@@ -214,6 +214,13 @@ public class GsonUtils {
     return obj;
   }
 
+  /**
+   * 把json字符串解析为指定类型的List
+   * @param json
+   * @param clazz
+   * @param <T>
+   * @return
+   */
 
   public static <T> List<T> parseString2List(String json, Class clazz) {
     Type type = new ParameterizedTypeImpl(clazz);

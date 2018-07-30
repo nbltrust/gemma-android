@@ -98,7 +98,7 @@
             android:hardwareAccelerated="true"
             android:label="@string/fast_loading"
             android:screenOrientation="portrait"/>
-
+        <!-- 备份钱包引导页 -->
         <activity android:name=".ui.activity.BackUpWalletGuideActivity">
 
         </activity>

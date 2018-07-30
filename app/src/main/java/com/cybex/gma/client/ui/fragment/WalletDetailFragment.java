@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -11,9 +12,14 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.JNIUtil;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
@@ -30,25 +36,28 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  */
 public class WalletDetailFragment extends XFragment {
 
+    private WalletEntity curWallet;
+    private Integer currentID;
 
     @BindView(R.id.layout_wallet_briefInfo) ConstraintLayout layoutWalletBriefInfo;
     @BindView(R.id.superTextView_exportPriKey) SuperTextView superTextViewExportPriKey;
     @BindView(R.id.superTextView_changePass) SuperTextView superTextViewChangePass;
     @BindView(R.id.scroll_wallet_detail) ScrollView scrollViewWalletDetail;
-    Unbinder unbinder;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_walletName_in_detailPage) TextView tvWalletNameInDetailPage;
     @BindView(R.id.eosAddress_in_detailPage) TextView tvPublicKey;
     @BindView(R.id.iv_arrow_in_detailPage) ImageView ivArrowInDetailPage;
+    Unbinder unbinder;
 
     @OnClick(R.id.layout_wallet_briefInfo)
     public void goChangeWalletName() {
-        start(ChangeWalletNameFragment.newInstance());
+        start(ChangeWalletNameFragment.newInstance(curWallet.getId()));
     }
 
-    public static WalletDetailFragment newInstance(String walletName) {
+    public static WalletDetailFragment newInstance(Bundle bundle) {
         Bundle args = new Bundle();
-        args.putString("thisWalletName", walletName);
+        WalletEntity walletEntity = bundle.getParcelable("curWallet");
+        args.putParcelable("thisWallet", walletEntity);
         WalletDetailFragment fragment = new WalletDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -61,26 +70,35 @@ public class WalletDetailFragment extends XFragment {
     }
 
     @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("管理钱包", true);
+        curWallet = getArguments().getParcelable("thisWallet");
+        currentID = curWallet.getId();
         //显示当前钱包名称
-        final String curWalletName = getArguments().getString("thisWalletName");
-        tvWalletNameInDetailPage.setText(curWalletName);
+        final String walletName = curWallet.getWalletName();
+        tvWalletNameInDetailPage.setText(walletName);
         //显示当前钱包公钥
-        final String pubKey = getPublicKey(curWalletName);
+        final String pubKey = curWallet.getPublicKey();
         tvPublicKey.setText(pubKey);
-
+        //导出私钥点击事件
         superTextViewExportPriKey.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
+                EventBusProvider.post(new WalletIDEvent(curWallet.getId()));
                 UISkipMananger.launchBakupGuide(getActivity());
             }
         });
-
+        //修改密码点击事件
         superTextViewChangePass.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-                start(ChangePasswordFragment.newInstance());
+                showConfirmAuthoriDialog();
+
             }
         });
 
@@ -102,8 +120,22 @@ public class WalletDetailFragment extends XFragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntityByID(currentID);
+        final String walletName = curWallet.getWalletName();
+        LoggerManager.d("walletName", walletName);
+        tvWalletNameInDetailPage.setText(walletName);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     /**
-     * 显示输入密码Dialog
+     * 显示确认授权dialog
      */
     private void showConfirmAuthoriDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
@@ -117,6 +149,19 @@ public class WalletDetailFragment extends XFragment {
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_authorization:
+                        //检查密码是否正确
+                        EditText edtPassword = dialog.findViewById(R.id.et_password);
+                        final String inputPass = edtPassword.getText().toString().trim();
+                        final String cypher = curWallet.getCypher();
+                        final String priKey = JNIUtil.get_private_key(cypher, inputPass);
+                        final String generatedCypher = JNIUtil.get_cypher(inputPass, priKey);
+                        if (cypher.equals(generatedCypher)){
+                            //验证通过
+                            start(ChangePasswordFragment.newInstance(priKey,currentID));
+                            dialog.cancel();
+                        }else {
+                            GemmaToastUtils.showLongToast("密码错误，请重新输入");
+                        }
 
                         break;
                     default:
@@ -126,15 +171,4 @@ public class WalletDetailFragment extends XFragment {
         });
         dialog.show();
     }
-
-    /**
-     *根据钱包名称去数据库查询公钥
-     */
-
-    public String getPublicKey(String walletname){
-       WalletEntity curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntity(walletname);
-       return curWallet.getPublicKey();
-    }
-
-
 }

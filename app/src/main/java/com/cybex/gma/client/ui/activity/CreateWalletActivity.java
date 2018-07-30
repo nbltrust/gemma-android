@@ -62,6 +62,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     @Index(2)
     @NotNull(msg = "密码不能为空")
     @Password1()
+    @MinLength(length = 8, msg = "密码请至少输入8位")
     @BindView(R.id.edt_set_pass) EditText edtSetPass;
     @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
     @Index(3)

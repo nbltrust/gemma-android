@@ -89,10 +89,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         WalletEntity curWallet = getCurrentWallet();
+        /*
         if (isCurWalletBackUp(curWallet)){
             //当前钱包已经备份过，把备份钱包按钮隐藏掉
             textViewBackupWallet.setVisibility(View.GONE);
         }
+        */
 
         generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
@@ -160,7 +162,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
      * @return
      */
     public boolean isCurWalletBackUp(WalletEntity curWallet){
-        if (curWallet.getIsBackUp() == CacheConstants.ALREADY_BACKUP){
+        if(curWallet.getIsBackUp().equals(Integer.valueOf(CacheConstants.ALREADY_BACKUP))){
             return true;
         }
         return false;
