@@ -9,7 +9,6 @@ package com.cybex.gma.client.config;
 public interface ParamConstants {
 
     int TYPE_APP_ID_CYBEX = 1;//cybex
-
     int TYPE_APP_ID_BEIJIN_TEAM = 2;//北京团队
 
 

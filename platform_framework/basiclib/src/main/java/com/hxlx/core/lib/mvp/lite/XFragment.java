@@ -41,6 +41,14 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         return (T) layoutView.findViewById(resId);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (useEventBus()) {
+            EventBusProvider.register(this);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(
@@ -108,9 +116,6 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (useEventBus()) {
-            EventBusProvider.register(this);
-        }
         bindEvent();
         initData(savedInstanceState);
     }
