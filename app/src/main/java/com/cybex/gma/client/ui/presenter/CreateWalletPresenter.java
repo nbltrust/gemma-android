@@ -162,13 +162,9 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
         //执行存入操作之前需要把其他钱包设置为非当前钱包
         if (walletNum > 0){
-
-            for (WalletEntity curWallet : walletEntityList){
-                if (curWallet.getIsCurrentWallet().equals(CacheConstants.IS_CURRENT_WALLET) ){
-                    curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-                    DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
-                }
-            }
+            WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+            curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
         }
         //最后执行存入操作，此前包此时为当前钱包
         DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);

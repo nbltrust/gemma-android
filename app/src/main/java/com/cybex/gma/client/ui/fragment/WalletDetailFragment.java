@@ -13,12 +13,11 @@ import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.WalletIDEvent;
-import com.cybex.gma.client.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomFullDialog;
@@ -78,14 +77,19 @@ public class WalletDetailFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("管理钱包", true);
-        curWallet = getArguments().getParcelable("thisWallet");
-        currentID = curWallet.getId();
-        //显示当前钱包名称
-        final String walletName = curWallet.getWalletName();
-        tvWalletNameInDetailPage.setText(walletName);
-        //显示当前钱包公钥
-        final String pubKey = curWallet.getPublicKey();
-        tvPublicKey.setText(pubKey);
+        if (getArguments() != null){
+            curWallet = getArguments().getParcelable("thisWallet");
+            if (!EmptyUtils.isEmpty(curWallet)){
+                currentID = curWallet.getId();
+                //显示当前钱包名称
+                final String walletName = curWallet.getWalletName();
+                tvWalletNameInDetailPage.setText(walletName);
+                //显示当前钱包公钥
+                final String pubKey = curWallet.getPublicKey();
+                tvPublicKey.setText(pubKey);
+            }
+        }
+
         //导出私钥点击事件
         superTextViewExportPriKey.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
@@ -124,10 +128,6 @@ public class WalletDetailFragment extends XFragment {
     @Override
     public void onStart() {
         super.onStart();
-        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentID);
-        final String walletName = curWallet.getWalletName();
-        LoggerManager.d("walletName", walletName);
-        tvWalletNameInDetailPage.setText(walletName);
     }
 
     @Override
@@ -153,15 +153,17 @@ public class WalletDetailFragment extends XFragment {
                         //检查密码是否正确
                         EditText edtPassword = dialog.findViewById(R.id.et_password);
                         final String inputPass = edtPassword.getText().toString().trim();
-                        final String cypher = curWallet.getCypher();
-                        final String priKey = JNIUtil.get_private_key(cypher, inputPass);
-                        final String generatedCypher = JNIUtil.get_cypher(inputPass, priKey);
-                        if (cypher.equals(generatedCypher)){
-                            //验证通过
-                            start(ChangePasswordFragment.newInstance(priKey,currentID));
-                            dialog.cancel();
-                        }else {
-                            GemmaToastUtils.showLongToast("密码错误，请重新输入");
+                        if (!EmptyUtils.isEmpty(curWallet)){
+                            final String cypher = curWallet.getCypher();
+                            final String priKey = JNIUtil.get_private_key(cypher, inputPass);
+                            final String generatedCypher = JNIUtil.get_cypher(inputPass, priKey);
+                            if (cypher.equals(generatedCypher)){
+                                //验证通过
+                                start(ChangePasswordFragment.newInstance(priKey,currentID));
+                                dialog.cancel();
+                            }else {
+                                GemmaToastUtils.showLongToast("密码错误，请重新输入");
+                            }
                         }
 
                         break;

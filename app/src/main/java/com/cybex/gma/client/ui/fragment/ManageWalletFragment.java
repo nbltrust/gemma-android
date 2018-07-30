@@ -94,7 +94,6 @@ public class ManageWalletFragment extends XFragment {
     public void onResume() {
         super.onResume();
         updateWalletList();
-        //setWalletListViewData();
     }
 
     @Override

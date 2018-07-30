@@ -37,10 +37,7 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
-
         setNavibarTitle("备份私钥", true);
-
-
     }
 
     @Override
@@ -64,7 +61,6 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
     private List<String> getTitles(int array) {
         return Arrays.asList(getResources().getStringArray(array));
     }
-
 
     @Override
     public int getLayoutId() {

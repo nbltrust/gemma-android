@@ -59,6 +59,9 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void setID(WalletIDEvent message){
         walletID = message.getWalletID();
+        if (walletID != null){
+            curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
+        }
     }
 
 
@@ -70,7 +73,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("备份私钥", true, true);
-        curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntityByID(walletID);
+        //curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
     }
 
     @Override
