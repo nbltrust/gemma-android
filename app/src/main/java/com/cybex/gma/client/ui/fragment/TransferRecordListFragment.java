@@ -8,6 +8,8 @@ import android.view.View;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.presenter.TransferRecordListPresenter;
@@ -35,6 +37,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
 
     private TransferRecordListAdapter mAdapter;
     private List<TransferHistory> data;
+    private String currentEosName = "";
 
     public static TransferRecordListFragment newInstance() {
         Bundle args = new Bundle();
@@ -83,7 +86,13 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
             data.add(h);
         }
 
-        mAdapter = new TransferRecordListAdapter(data);
+        WalletEntity entity = DBManager.getInstance()
+                .getWalletEntityDao()
+                .getCurrentWalletEntity();
+        if (entity != null) {
+            currentEosName = entity.getCurrentEosName();
+        }
+        mAdapter = new TransferRecordListAdapter(data, currentEosName);
         mRecyclerView.setAdapter(mAdapter);
 
         listMultipleStatusView.showContent();

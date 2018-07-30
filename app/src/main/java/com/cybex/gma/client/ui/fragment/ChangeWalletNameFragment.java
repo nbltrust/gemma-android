@@ -55,14 +55,14 @@ public class ChangeWalletNameFragment extends XFragment {
         mTitleBar.setActionTextSize(18);
         int currentID = getArguments().getInt("walletID");
         LoggerManager.d("currentID", currentID);
-        curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntityByID(currentID);
+        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentID);
         mTitleBar.addAction(new TitleBar.TextAction("保存") {
             @Override
             public void performAction(View view) {
                 //todo 保存钱包名
                 final String name = getWalletName();
                 curWallet.setWalletName(name);
-                DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
                 GemmaToastUtils.showLongToast("更改成功");
                 UISkipMananger.launchHome(getActivity());
             }

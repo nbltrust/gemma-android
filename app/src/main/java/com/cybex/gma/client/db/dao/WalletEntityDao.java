@@ -12,6 +12,13 @@ public interface WalletEntityDao {
 
 
     /**
+     * 获得当前WalletEntity对象
+     *
+     * @return
+     */
+    WalletEntity getCurrentWalletEntity();
+
+    /**
      * 根据钱包名，获取 WalletEntity对象
      *
      * @param walletName

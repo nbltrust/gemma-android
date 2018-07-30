@@ -107,7 +107,7 @@ public class ManageWalletFragment extends XFragment {
     public void updateWalletList(){
 
         //从数据库中读取Wallet信息转换成WalletVO列表
-        List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
+        List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
         List<WalletVO> walletVOList = new ArrayList<>();
 
         for (int i = 0; i < walletEntityList.size(); i++) {
@@ -131,7 +131,7 @@ public class ManageWalletFragment extends XFragment {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //position与数据库表中的id对应，可直接根据position值来确定ID
-                WalletEntity curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntityByID(position+1);
+                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(position+1);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("curWallet", curWallet);
                 start(WalletDetailFragment.newInstance(bundle));

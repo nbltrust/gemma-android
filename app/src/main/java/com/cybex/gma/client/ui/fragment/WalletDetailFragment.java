@@ -124,7 +124,7 @@ public class WalletDetailFragment extends XFragment {
     @Override
     public void onStart() {
         super.onStart();
-        curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntityByID(currentID);
+        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentID);
         final String walletName = curWallet.getWalletName();
         LoggerManager.d("walletName", walletName);
         tvWalletNameInDetailPage.setText(walletName);

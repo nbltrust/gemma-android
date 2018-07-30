@@ -72,7 +72,7 @@ public class ChangePasswordFragment extends XFragment {
             public void onValidateSuccess() {
                 final String newCypher = JNIUtil.get_cypher(getPassword(), priKey);
                 curWallet.setCypher(newCypher);
-                DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
                 GemmaToastUtils.showLongToast("修改密码成功！");
             }
 
@@ -109,7 +109,7 @@ public class ChangePasswordFragment extends XFragment {
         setNavibarTitle("修改密码", true, false);
         final int currentId = getArguments().getInt("walletID");
         LoggerManager.d("currentID", currentId);
-        curWallet = DBManager.getInstance().getMediaBeanDao().getWalletEntityByID(currentId);
+        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentId);
         priKey = getArguments().getString("key");
     }
 

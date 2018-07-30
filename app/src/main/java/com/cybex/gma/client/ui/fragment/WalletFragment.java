@@ -148,7 +148,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
      * @return
      */
     public WalletEntity getCurrentWallet(){
-        List<WalletEntity> list = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
+        List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
         for (WalletEntity walletEntity : list){
             if (walletEntity.getIsCurrentWallet().equals(CacheConstants.IS_CURRENT_WALLET)){
                 return walletEntity;

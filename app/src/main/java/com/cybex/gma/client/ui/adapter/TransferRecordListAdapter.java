@@ -15,9 +15,11 @@ import java.util.List;
  * Created by wanglin on 2018/7/12.
  */
 public class  TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory, BaseViewHolder> {
+    String currentEosName = null;
 
-    public TransferRecordListAdapter(@Nullable List<TransferHistory> data) {
+    public TransferRecordListAdapter(@Nullable List<TransferHistory> data,String currentEosName) {
         super(R.layout.item_transfer_record_list, data);
+        this.currentEosName = currentEosName;
     }
 
     @Override
