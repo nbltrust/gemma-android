@@ -30,7 +30,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
     public void saveConfigWallet(final String privateKey, final String password, final String passwordTips ){
 
         WalletEntity walletEntity = new WalletEntity();
-        List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
+        List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
         //获取当前数据库中已存入的钱包个数，后以默认钱包名称存入
         int walletNum = walletEntityList.size();
         int index = walletNum + 1;
@@ -80,11 +80,11 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                         if (walletNum > 0){
                             for (WalletEntity curWallet : walletEntityList){
                                 curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-                                DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
+                                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
                             }
                         }
                         //最后执行存入操作，此前包此时为当前钱包
-                        DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(walletEntity);
+                        DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);
                         getV().dissmisProgressDialog();
                     }
 

@@ -25,7 +25,7 @@ public class DBManager {
         return tempInstance;
     }
 
-    public WalletEntityDao getMediaBeanDao() {
+    public WalletEntityDao getWalletEntityDao() {
         return new WalletEntityDaoImpl();
     }
 

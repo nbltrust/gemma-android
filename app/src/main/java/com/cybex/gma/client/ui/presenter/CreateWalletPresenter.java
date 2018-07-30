@@ -126,7 +126,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
             password, final String eosUsername, final String passwordTip ){
 
         WalletEntity walletEntity = new WalletEntity();
-        List<WalletEntity> walletEntityList = DBManager.getInstance().getMediaBeanDao().getWalletEntityList();
+        List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
         //获取当前数据库中已存入的钱包个数
         int walletNum = walletEntityList.size();
         int index = walletNum + 1;
@@ -166,12 +166,12 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
             for (WalletEntity curWallet : walletEntityList){
                 if (curWallet.getIsCurrentWallet().equals(CacheConstants.IS_CURRENT_WALLET) ){
                     curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-                    DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(curWallet);
+                    DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
                 }
             }
         }
         //最后执行存入操作，此前包此时为当前钱包
-        DBManager.getInstance().getMediaBeanDao().saveOrUpateMedia(walletEntity);
+        DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);
     }
 
 }
