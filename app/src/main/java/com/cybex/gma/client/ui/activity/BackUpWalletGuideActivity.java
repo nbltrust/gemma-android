@@ -16,7 +16,8 @@ public class BackUpWalletGuideActivity extends XActivity {
     @Override
     public void bindUI(View view) {
         if (findFragment(BackUpPriKeyGuideFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_backup_guide, BackUpPriKeyGuideFragment.newInstance());
+                loadRootFragment(R.id.fl_container_backup_guide, BackUpPriKeyGuideFragment.newInstance());
+
         }
 
         //让布局向上移来显示软键盘
@@ -36,7 +37,6 @@ public class BackUpWalletGuideActivity extends XActivity {
     public Object newP() {
         return null;
     }
-
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {

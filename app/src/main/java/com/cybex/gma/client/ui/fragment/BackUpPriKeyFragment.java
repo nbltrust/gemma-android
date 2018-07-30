@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.KeySendEvent;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -28,7 +27,7 @@ import butterknife.Unbinder;
 
 public class BackUpPriKeyFragment extends XFragment {
 
-
+    private String key;
     @BindView(R.id.tv_show_priKey_area) TextView textViewShowPriKey;
     @BindView(R.id.bt_copy_priKey) Button buttonCopyPrikey;
     Unbinder unbinder;
@@ -47,18 +46,16 @@ public class BackUpPriKeyFragment extends XFragment {
         return fragment;
     }
 
-
-
     @Override
     public boolean useEventBus() {
         return true;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void getKey(KeySendEvent message){
-        textViewShowPriKey.setText(message.getKey());
-        LoggerManager.d("PriKEY", message.getKey());
+        key = message.getKey();
     }
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BackUpPriKeyFragment.this, rootView);
@@ -67,6 +64,7 @@ public class BackUpPriKeyFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         showAlertDialog();
+        textViewShowPriKey.setText(key);
     }
 
     @Override

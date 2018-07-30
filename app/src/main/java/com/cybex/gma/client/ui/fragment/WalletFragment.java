@@ -12,16 +12,17 @@ import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
 import com.tapadoo.alerter.Alerter;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +39,8 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 public class WalletFragment extends XFragment<WalletPresenter> {
 
     private final String testUsername = "helloeoscoin";
-
+    private WalletEntity curWallet;
+    private int walletID;
     @BindView(R.id.tv_backup_wallet) TextView textViewBackupWallet;
     @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
     @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
@@ -61,6 +63,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.tv_backup_wallet)
     public void backUpWallet(){
+        if (!EmptyUtils.isEmpty(curWallet)){
+            walletID = curWallet.getId();
+            EventBusProvider.postSticky(new WalletIDEvent(walletID));
+            //todo 跳转逻辑还需要调整，为了方便测试，跳转放在空判断外
+            //UISkipMananger.launchBakupGuide(getActivity());
+        }
         UISkipMananger.launchBakupGuide(getActivity());
     }
 
@@ -88,25 +96,24 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        WalletEntity curWallet = getCurrentWallet();
-        /*
-        if (isCurWalletBackUp(curWallet)){
-            //当前钱包已经备份过，把备份钱包按钮隐藏掉
-            textViewBackupWallet.setVisibility(View.GONE);
-        }
-        */
 
         generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
+        curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (!EmptyUtils.isEmpty(curWallet) && isCurWalletBackUp(curWallet)){
+            textViewBackupWallet.setVisibility(View.GONE);
+        }
 
-        Alerter.create(getActivity())
-                .setText(getResources().getString(R.string.please_confirm_alert))
-                .setBackgroundColorRes(R.color.scarlet)
-                .enableSwipeToDismiss()
-                .enableInfiniteDuration(true)
-                .setTextAppearance(R.style.myAlert)
-                .show();
+        if (getActivity() != null){
+            Alerter.create(getActivity())
+                    .setText(getResources().getString(R.string.please_confirm_alert))
+                    .setBackgroundColorRes(R.color.scarlet)
+                    .enableSwipeToDismiss()
+                    .enableInfiniteDuration(true)
+                    .setTextAppearance(R.style.myAlert)
+                    .show();
+        }
     }
 
     @Override
@@ -137,23 +144,15 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    /**
-     * 从数据库中获取当前Wallet对象
-     * @return
-     */
-    public WalletEntity getCurrentWallet(){
-        List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
-        for (WalletEntity walletEntity : list){
-            if (walletEntity.getIsCurrentWallet() == CacheConstants.IS_CURRENT_WALLET){
-                return walletEntity;
-            }
-        }
-        return null;
     }
 
     /**
@@ -162,7 +161,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
      * @return
      */
     public boolean isCurWalletBackUp(WalletEntity curWallet){
-        if(curWallet.getIsBackUp().equals(Integer.valueOf(CacheConstants.ALREADY_BACKUP))){
+        if(!EmptyUtils.isEmpty(curWallet)
+                && curWallet.getIsBackUp().equals(CacheConstants.ALREADY_BACKUP)){
             return true;
         }
         return false;

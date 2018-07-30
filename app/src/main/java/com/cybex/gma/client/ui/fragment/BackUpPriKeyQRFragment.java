@@ -42,12 +42,13 @@ public class BackUpPriKeyQRFragment extends XFragment {
         return fragment;
     }
 
+
     @Override
     public boolean useEventBus() {
         return true;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void getKey(KeySendEvent keySendEvent){
         priKey = keySendEvent.getKey();
     }
@@ -55,11 +56,11 @@ public class BackUpPriKeyQRFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BackUpPriKeyQRFragment.this, rootView);
+
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
     }
 
     @Override

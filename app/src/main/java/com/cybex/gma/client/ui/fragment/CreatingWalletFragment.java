@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
@@ -19,7 +20,7 @@ import butterknife.Unbinder;
 public class CreatingWalletFragment extends XFragment {
 
 
-
+    private WalletEntity curWallet;
     @BindView(R.id.bt_backup_later) Button btBackupLater;
     @BindView(R.id.bt_export_priKey) Button btExportPriKey;
     Unbinder unbinder;

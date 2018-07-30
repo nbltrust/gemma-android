@@ -32,8 +32,6 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  */
 public class ManageWalletFragment extends XFragment {
 
-    @BindView(R.id.superTextView_wallet_one) SuperTextView superTextViewWalletOne;
-    @BindView(R.id.superTextView_wallet_two) SuperTextView superTextViewWalletTwo;
     @BindView(R.id.layout_wallet_number) LinearLayout layoutWalletNumber;
     @BindView(R.id.superTextView_importWallet) SuperTextView superTextViewImportWallet;
     @BindView(R.id.superTextView_createWallet) SuperTextView superTextViewCreateWallet;
@@ -96,7 +94,6 @@ public class ManageWalletFragment extends XFragment {
     public void onResume() {
         super.onResume();
         updateWalletList();
-        //setWalletListViewData();
     }
 
     @Override
@@ -119,7 +116,6 @@ public class ManageWalletFragment extends XFragment {
         }
         adapter = new WalletManageListAdapter(walletVOList);
     }
-
 
     /**
      * 把钱包名称数据放入RecyclerView中显示出来
