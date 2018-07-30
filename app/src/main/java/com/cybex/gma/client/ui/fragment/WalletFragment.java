@@ -14,7 +14,6 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
@@ -67,7 +66,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         if (!EmptyUtils.isEmpty(curWallet)){
             walletID = curWallet.getId();
             EventBusProvider.postSticky(new WalletIDEvent(walletID));
-            //todo 跳转逻辑还需要调整，为了方便测试，直接跳转
+            //todo 跳转逻辑还需要调整，为了方便测试，跳转放在空判断外
             //UISkipMananger.launchBakupGuide(getActivity());
         }
         UISkipMananger.launchBakupGuide(getActivity());
@@ -148,7 +147,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     public void onStart() {
         super.onStart();
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        LoggerManager.d("curWallet", curWallet.getWalletName());
     }
 
     @Override

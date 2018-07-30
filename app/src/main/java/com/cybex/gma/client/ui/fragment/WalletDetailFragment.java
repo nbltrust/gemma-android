@@ -103,7 +103,6 @@ public class WalletDetailFragment extends XFragment {
             @Override
             public void onClickListener(SuperTextView superTextView) {
                 showConfirmAuthoriDialog();
-
             }
         });
 
@@ -141,7 +140,7 @@ public class WalletDetailFragment extends XFragment {
     private void showConfirmAuthoriDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
+                R.layout.dialog_input_origin_password, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {

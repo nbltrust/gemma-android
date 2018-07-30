@@ -7,9 +7,9 @@ import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.BarcodeScanEvent;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -53,8 +53,9 @@ public class ImportWalletInputKeyFragment extends XFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showPriKey(BarcodeScanEvent message){
-        LoggerManager.d("received scan", message.getResult());
-        edtShowPrikey.setText(message.getResult());
+        if (!EmptyUtils.isEmpty(message)){
+            edtShowPrikey.setText(message.getResult());
+        }
     }
 
     @Override

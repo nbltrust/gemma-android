@@ -18,14 +18,22 @@ public class GetKeyAccountsRequest extends GMAHttpRequest<GetKeyAccountsResult> 
     /**
      * @param clazz 想要请求返回的Bean
      */
+
     public GetKeyAccountsRequest(Class clazz) {
         super(clazz);
         setMethod(ApiPath.HOST_ON_CHAIN_MAIN + ApiMethod.API_GET_KEY_ACCOUNTS);
-
     }
 
-    public void getkEYAccountS(JsonCallback<GetKeyAccountsResult> callback) {
+    public GetKeyAccountsRequest setJsonParams(String jsonParams) {
+        super.setJsonParams(jsonParams);
+        return this;
+    }
+
+
+    public GetKeyAccountsRequest getKeyAccountsRequest(JsonCallback<GetKeyAccountsResult> callback) {
         postJsonNoRxRequest(TAG, callback);
+
+        return this;
     }
 
 }

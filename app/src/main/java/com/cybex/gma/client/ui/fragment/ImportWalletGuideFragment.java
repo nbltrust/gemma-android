@@ -48,8 +48,6 @@ public class ImportWalletGuideFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("导入钱包", true, true);
-
-
     }
 
     @Override
