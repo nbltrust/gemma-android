@@ -127,16 +127,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStatusBar();
-        setContentView(R.layout.activity_create_wallet);
-        ButterKnife.bind(this);
-        Validate.reg(this);
-        initView();
-    }
-
     public void initView() {
         bubble.setVisibility(View.GONE);
         setUnclickable(btCreateWallet);
@@ -212,13 +202,13 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @Override
     public void bindUI(View rootView) {
-
+        ButterKnife.bind(this);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
-
+        Validate.reg(this);
+        initView();
     }
 
     @Override
@@ -228,7 +218,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_create_wallet_old;
+        return R.layout.activity_create_wallet;
     }
 
     @Override

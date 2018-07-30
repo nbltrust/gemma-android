@@ -58,12 +58,14 @@ public class BackUpPriKeyGuideFragment extends XFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void setID(WalletIDEvent message){
-        walletID = message.getWalletID();
-        if (walletID != null){
-            curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
+        if (!EmptyUtils.isEmpty(message)){
+            walletID = message.getWalletID();
+            if (walletID != null){
+                curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
+            }
         }
-    }
 
+    }
 
     @Override
     public void bindUI(View rootView) {
@@ -73,7 +75,6 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("备份私钥", true, true);
-        //curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
     }
 
     @Override
@@ -125,6 +126,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                                 EventBusProvider.postSticky(new KeySendEvent(priKey));
                                 //Bundle bundle = new Bundle();
                                // bundle.putString("key", priKey);
+                                dialog.cancel();
                                 UISkipMananger.launchBackUpPrivateKey(getActivity());
                             }else {
                                 //密码错误
@@ -140,6 +142,5 @@ public class BackUpPriKeyGuideFragment extends XFragment {
         });
         dialog.show();
     }
-
 
 }

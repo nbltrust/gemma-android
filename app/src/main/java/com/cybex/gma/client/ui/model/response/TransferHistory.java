@@ -13,11 +13,11 @@ public class TransferHistory implements Parcelable {
     public int action_seq;
     public String from;
     public String to;
-    public String value;
+    public String value;//交易金额
     public String memo;
-    public String time;
-    public String hash;
-    public int block;
+    public String time;//交易时间
+    public String hash;//交易哈希
+    public int block;//交易区块号
     /**
      * 交易状态：1：未确认 2：正在确认 3：已确认 4: 交易失败
      */
