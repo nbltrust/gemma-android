@@ -48,10 +48,11 @@ public class BackUpPriKeyGuideFragment extends XFragment {
         return true;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void showID(WalletIDEvent message){
         walletID = message.getWalletID();
         LoggerManager.d("received ID", message.getWalletID());
+
     }
 
     @Override
@@ -62,7 +63,6 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("备份私钥", true, true);
-
     }
 
 

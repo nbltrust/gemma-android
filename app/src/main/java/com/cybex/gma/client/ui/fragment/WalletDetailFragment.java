@@ -89,7 +89,7 @@ public class WalletDetailFragment extends XFragment {
         superTextViewExportPriKey.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-                EventBusProvider.post(new WalletIDEvent(curWallet.getId()));
+                EventBusProvider.postSticky(new WalletIDEvent(curWallet.getId()));
                 UISkipMananger.launchBakupGuide(getActivity());
             }
         });
@@ -155,11 +155,11 @@ public class WalletDetailFragment extends XFragment {
                         final String cypher = curWallet.getCypher();
                         final String priKey = JNIUtil.get_private_key(cypher, inputPass);
                         final String generatedCypher = JNIUtil.get_cypher(inputPass, priKey);
-                        if (cypher.equals(generatedCypher)){
+                        if (cypher.equals(generatedCypher)) {
                             //验证通过
-                            start(ChangePasswordFragment.newInstance(priKey,currentID));
+                            start(ChangePasswordFragment.newInstance(priKey, currentID));
                             dialog.cancel();
-                        }else {
+                        } else {
                             GemmaToastUtils.showLongToast("密码错误，请重新输入");
                         }
 

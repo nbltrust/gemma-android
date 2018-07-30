@@ -142,7 +142,7 @@ public final class UISkipMananger {
      * @param mContext
      */
     public static void launchBackUpPrivateKey(Activity mContext) {
-        launchIntent(mContext, BackUpPrivatekeyActivity.class);
+        startActivity(mContext, BackUpPrivatekeyActivity.class);
     }
 
     /**

@@ -53,6 +53,11 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         super.onCreate(savedInstanceState);
         context = this;
 
+        if (useEventBus()) {
+            EventBusProvider.register(this);
+        }
+
+
         if (getLayoutId() > 0) {
             setContentView(getLayoutId());
 
@@ -63,6 +68,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
             bindUI(null);
             bindEvent();
         }
+
         initData(savedInstanceState);
 
         AppManager.getAppManager().addActivity(this);
@@ -178,13 +184,6 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         return p;
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (useEventBus()) {
-            EventBusProvider.register(this);
-        }
-    }
 
 
     @Override
