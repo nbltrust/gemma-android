@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui;
 
 
+
 /**
  * Jni调用
  *
@@ -49,5 +50,42 @@ public class JNIUtil {
      * @return
      */
     public final static native String get_public_key(String priv_str);
+
+
+    /**
+     * 转账
+     *
+     * @param priv_key_str
+     * @param contract
+     * @param senderstr
+     * @param infostr
+     * @param abistr
+     * @param max_cpu_usage_ms
+     * @param max_net_usage_words
+     * @param tx_expiration
+     * @return
+     */
+    public final static native String signTransaction_tranfer(
+            String priv_key_str,
+            String contract, String senderstr, String infostr, String abistr,
+            long max_cpu_usage_ms,
+            long max_net_usage_words,
+            long tx_expiration);
+
+    /**
+     * 创建转账 abi req
+     *
+     * @param code
+     * @param action
+     * @param from
+     * @param to
+     * @param quantity
+     * @param memo
+     * @return
+     */
+    public final static native String create_abi_req_transfer(
+            String code,
+            String action, String from, String to, String quantity, String memo);
+
 
 }
