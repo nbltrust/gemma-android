@@ -39,6 +39,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
 
     private TransferRecordListAdapter mAdapter;
     private List<TransferHistory> data = new ArrayList<>();
+    //TODO
     private String currentEosName = "cooljadepool";
 
 
