@@ -98,9 +98,9 @@ public final class UISkipMananger {
      *
      * @param mContext
      */
-    public static void launchBakupGuide(Activity mContext, Bundle bundle) {
-        //launchIntent(mContext, BackUpWalletGuideActivity.class);
-        launchIntent(mContext, BackUpWalletGuideActivity.class, bundle);
+    public static void launchBakupGuide(Activity mContext) {
+        launchIntent(mContext, BackUpWalletGuideActivity.class);
+        //launchIntent(mContext, BackUpWalletGuideActivity.class, bundle);
     }
 
     /**
@@ -141,9 +141,9 @@ public final class UISkipMananger {
      *
      * @param mContext
      */
-    public static void launchBackUpPrivateKey(Activity mContext, Bundle bundle) {
-        //launchIntent(mContext, BackUpPrivatekeyActivity.class);
-        launchIntent(mContext, BackUpPrivatekeyActivity.class, bundle);
+    public static void launchBackUpPrivateKey(Activity mContext) {
+        launchIntent(mContext, BackUpPrivatekeyActivity.class);
+        //launchIntent(mContext, BackUpPrivatekeyActivity.class, bundle);
     }
 
     /**

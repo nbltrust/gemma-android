@@ -16,10 +16,7 @@ public class BackUpWalletGuideActivity extends XActivity {
     @Override
     public void bindUI(View view) {
         if (findFragment(BackUpPriKeyGuideFragment.class) == null) {
-            Bundle bundle = getIntent().getExtras();
-            if (bundle != null){
-                loadRootFragment(R.id.fl_container_backup_guide, BackUpPriKeyGuideFragment.newInstance(bundle));
-            }
+                loadRootFragment(R.id.fl_container_backup_guide, BackUpPriKeyGuideFragment.newInstance());
 
         }
 
@@ -40,7 +37,6 @@ public class BackUpWalletGuideActivity extends XActivity {
     public Object newP() {
         return null;
     }
-
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {

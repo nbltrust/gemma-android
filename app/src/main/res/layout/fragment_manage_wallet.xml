@@ -52,13 +52,12 @@
 
                 </android.support.v7.widget.RecyclerView>
 
-
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/curwallets"
+                android:text="@string/walletManege"
                 android:textColor="@color/steel"
                 android:textSize="@dimen/font_3.5"
                 android:layout_marginStart="@dimen/dimen_30"

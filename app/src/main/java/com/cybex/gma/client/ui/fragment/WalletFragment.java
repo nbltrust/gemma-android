@@ -13,7 +13,6 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
@@ -63,13 +62,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.tv_backup_wallet)
     public void backUpWallet(){
-        Bundle bundle = new Bundle();
-        if (!EmptyUtils.isEmpty(curWallet)){
-            bundle.putInt("walletID", curWallet.getId());
-            LoggerManager.d("walletID", curWallet.getId());
-            UISkipMananger.launchBakupGuide(getActivity(), bundle);
-        }
-
+        UISkipMananger.launchBakupGuide(getActivity());
     }
 
     @OnClick(R.id.superTextView_card_record)
@@ -102,7 +95,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
 
         curWallet = getCurrentWallet();
-        LoggerManager.d("curWallet", curWallet.getWalletName());
         if (!EmptyUtils.isEmpty(curWallet) && isCurWalletBackUp(curWallet)){
             textViewBackupWallet.setVisibility(View.GONE);
         }
