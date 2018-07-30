@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
@@ -50,7 +52,6 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         return fragment;
     }
 
-
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
@@ -85,6 +86,19 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
 
         //第一次请求数据
         doRequest(-1);
+
+        //设置点击事件
+        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                TransferHistory curTransfer = data.get(position);
+                bundle.putParcelable("curTransfer", curTransfer);
+                if (!EmptyUtils.isEmpty(bundle)){
+                    start(TransferRecordDetailFragment.newInstance(bundle));
+                }
+            }
+        });
     }
 
 

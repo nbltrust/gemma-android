@@ -86,6 +86,7 @@
 
 
     <string name="receiver">收款人</string>
+    <string name="payer">转账人</string>
     <string name="payingAccount">付款账户</string>
     <string name="fund">金额</string>
     <string name="memo">备注</string>
@@ -202,5 +203,9 @@
 
     <string name="curwallets">已有钱包</string>
     <string name="walletManege">钱包管理</string>
+    <string name="income">收入</string>
+    <string name="payment">支出</string>
+    <string name="income_amount">+%1$s</string>
+    <string name="payment_amount">-%1$s</string>
 
 </resources>

@@ -79,8 +79,6 @@
                 title:layout_constraintBottom_toBottomOf="parent"
                 title:layout_constraintStart_toEndOf="@+id/tv_amount"
                 title:layout_constraintTop_toBottomOf="@+id/tv_income_or_out"/>
-            
-            
 
         </android.support.constraint.ConstraintLayout>
 
