@@ -7,9 +7,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.KeySendEvent;
+import com.cybex.gma.client.event.WalletIDEvent;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
@@ -28,6 +33,8 @@ import butterknife.Unbinder;
 public class BackUpPriKeyFragment extends XFragment {
 
     private String key;
+    private int walletID;
+    private WalletEntity thisWallet;
     @BindView(R.id.tv_show_priKey_area) TextView textViewShowPriKey;
     @BindView(R.id.bt_copy_priKey) Button buttonCopyPrikey;
     Unbinder unbinder;
@@ -35,7 +42,14 @@ public class BackUpPriKeyFragment extends XFragment {
     @OnClick(R.id.bt_copy_priKey)
     public void copyPrikeyToClipboard(){
         String curPriKey = textViewShowPriKey.getText().toString().trim();
-        ClipboardUtils.copyText(getActivity(), curPriKey);
+        if (getActivity() != null){
+            ClipboardUtils.copyText(getActivity(), curPriKey);
+        }
+        thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
+        if (!EmptyUtils.isEmpty(thisWallet)){
+            thisWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
+            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(thisWallet);
+        }
         GemmaToastUtils.showLongToast("私钥已复制，请在使用后及时清空系统剪贴板！");
     }
 
@@ -54,6 +68,11 @@ public class BackUpPriKeyFragment extends XFragment {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void getKey(KeySendEvent message){
         key = message.getKey();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void getID(WalletIDEvent message){
+        walletID = message.getWalletID();
     }
 
     @Override

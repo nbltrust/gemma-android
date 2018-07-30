@@ -32,7 +32,6 @@ import butterknife.Unbinder;
  */
 public class TransferRecordListFragment extends XFragment<TransferRecordListPresenter> {
 
-
     Unbinder unbinder;
     @BindView(R.id.list_multiple_status_view) MultipleStatusView listMultipleStatusView;
     @BindView(R.id.view_refresh) CommonRefreshLayout viewRefresh;

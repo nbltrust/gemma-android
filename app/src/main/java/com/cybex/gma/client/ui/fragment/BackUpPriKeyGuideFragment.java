@@ -125,6 +125,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                                 EventBusProvider.postSticky(new KeySendEvent(priKey));
                                 //Bundle bundle = new Bundle();
                                // bundle.putString("key", priKey);
+                                dialog.cancel();
                                 UISkipMananger.launchBackUpPrivateKey(getActivity());
                             }else {
                                 //密码错误
@@ -140,6 +141,5 @@ public class BackUpPriKeyGuideFragment extends XFragment {
         });
         dialog.show();
     }
-
 
 }
