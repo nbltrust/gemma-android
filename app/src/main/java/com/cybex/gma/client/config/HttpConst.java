@@ -17,5 +17,11 @@ public interface HttpConst {
     int BALANCE_NOT_ENOUGH = 20001;
     int CREATE_ACCOUNT_FAIL = 20002;
 
+    String KEY_ACCOUNT_NAME = "account_name";
+    String KEY_SHOW_NUM = "show_num";
+    String KEY_LAST_POST = "last_pos";
+    int PAGE_NUM = 10;
+    int ACTION_REFRESH = -1;//列表刷新操作
+
 
 }

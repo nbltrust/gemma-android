@@ -6,10 +6,13 @@
     android:layout_height="match_parent"
     android:background="#FAFAFA"
     tools:ignore="ResourceName">
-    <ProgressBar
-        style="@android:style/Widget.ProgressBar.Small"
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:layout_centerInParent="true"
+        style="@style/SpinKitView.Circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        />
+        android:layout_gravity="center"
+        app:SpinKit_Color="#3F51B5" />
 </RelativeLayout>

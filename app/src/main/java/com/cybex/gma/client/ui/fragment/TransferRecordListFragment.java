@@ -14,6 +14,9 @@ import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.presenter.TransferRecordListPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +39,9 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
     @BindView(R.id.rv_list) RecyclerView mRecyclerView;
 
     private TransferRecordListAdapter mAdapter;
-    private List<TransferHistory> data;
-    private String currentEosName = "";
+    private List<TransferHistory> data = new ArrayList<>();
+    private String currentEosName = "cooljadepool";
+
 
     public static TransferRecordListFragment newInstance() {
         Bundle args = new Bundle();
@@ -57,33 +61,41 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        data = new ArrayList<>();
+        viewRefresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                if (mAdapter != null) {
+                    List<TransferHistory> historyList = mAdapter.getData();
+                    if (!EmptyUtils.isEmpty(historyList)) {
+                        TransferHistory history = historyList.get(historyList.size() - 1);
+                        int lastPos = history.last_pos;
+                        doRequest(lastPos);
+                    }
+                }
 
-        TransferHistory h = new TransferHistory();
-        h.from = "test1";
-        h.to = "to1";
-        h.status = 2;
-        h.time = "2018-06-21T09:26:18.500";
-        h.value = "1.9999 EOS";
-        data.add(h);
+            }
 
-        h = new TransferHistory();
-        h.from = "test2";
-        h.to = "to1";
-        h.status = 3;
-        h.time = "2018-06-21T09:26:18.500";
-        h.value = "1.9999 EOS";
-        data.add(h);
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                doRequest(-1);
+                viewRefresh.finishRefresh();
+            }
+        });
 
 
-        for (int i = 0; i < 10; i++) {
-            h = new TransferHistory();
-            h.from = "data" + i;
-            h.to = "to1";
-            h.status = 2;
-            h.time = "2018-06-21T09:26:18.500";
-            h.value = "1.9999 EOS";
-            data.add(h);
+        //第一次请求数据
+        doRequest(-1);
+    }
+
+
+    public void doRequest(int currentLastPos) {
+        getP().requestHistory(currentEosName, currentLastPos);
+
+    }
+
+    public void loadMoreData(List<TransferHistory> dataList) {
+        if (EmptyUtils.isEmpty(dataList)) {
+            dataList = new ArrayList<>();
         }
 
         WalletEntity entity = DBManager.getInstance()
@@ -92,11 +104,27 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         if (entity != null) {
             currentEosName = entity.getCurrentEosName();
         }
-        mAdapter = new TransferRecordListAdapter(data, currentEosName);
-        mRecyclerView.setAdapter(mAdapter);
 
-        listMultipleStatusView.showContent();
+        if (mAdapter == null) {
+            //第一次请求
+            mAdapter = new TransferRecordListAdapter(dataList, currentEosName);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            //加载更多
+            mAdapter.addData(dataList);
+        }
+
     }
+
+    public void refreshData(List<TransferHistory> dataList) {
+        if (EmptyUtils.isEmpty(dataList)) {
+            dataList = new ArrayList<>();
+        }
+
+        mAdapter.getData().clear();
+        mAdapter.setNewData(dataList);
+    }
+
 
     @Override
     public int getLayoutId() {
@@ -115,5 +143,35 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         unbinder.unbind();
     }
 
+    public void showLoading() {
+        listMultipleStatusView.showLoading();
+    }
+
+    public void showError() {
+        listMultipleStatusView.showError();
+    }
+
+    public void showContent() {
+        listMultipleStatusView.showContent();
+    }
+
+    /**
+     * 显示加载更多完成和空数据界面逻辑
+     */
+    public void showEmptyOrFinish() {
+        if (mAdapter != null) {
+            List<TransferHistory> historyList = mAdapter.getData();
+            if (EmptyUtils.isEmpty(historyList)) {
+                listMultipleStatusView.showEmpty();
+            } else {
+                listMultipleStatusView.showContent();
+                viewRefresh.finishLoadmore();
+            }
+
+        } else {
+            listMultipleStatusView.showEmpty();
+        }
+
+    }
 
 }
