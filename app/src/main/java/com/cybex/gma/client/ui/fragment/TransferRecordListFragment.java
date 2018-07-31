@@ -46,7 +46,6 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
     private int currentLastPos = -1;
     private boolean isFirstLoad = true;
 
-
     public static TransferRecordListFragment newInstance() {
         Bundle args = new Bundle();
         TransferRecordListFragment fragment = new TransferRecordListFragment();

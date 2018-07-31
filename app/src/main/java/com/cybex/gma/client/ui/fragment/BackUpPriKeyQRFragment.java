@@ -6,10 +6,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.KeySendEvent;
+import com.cybex.gma.client.event.WalletIDEvent;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.qrcode.zxing.QRCodeEncoder;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -24,7 +29,9 @@ import butterknife.Unbinder;
  */
 public class BackUpPriKeyQRFragment extends XFragment {
 
-    String priKey;
+    private int walletID;
+    private WalletEntity curWallet;
+    private String priKey;
     Unbinder unbinder;
     @BindView(R.id.iv_fake_QR) ImageView ivFakeQR;
     @BindView(R.id.iv_real_QR) ImageView ivRealQR;
@@ -33,6 +40,11 @@ public class BackUpPriKeyQRFragment extends XFragment {
     @OnClick(R.id.bt_show_QR)
     public void showQR(){
         showRealQR(priKey);
+        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
+        if (EmptyUtils.isEmpty(curWallet)){
+            curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
+            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+        }
     }
 
     public static BackUpPriKeyQRFragment newInstance() {
@@ -41,7 +53,6 @@ public class BackUpPriKeyQRFragment extends XFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public boolean useEventBus() {
@@ -53,6 +64,10 @@ public class BackUpPriKeyQRFragment extends XFragment {
         priKey = keySendEvent.getKey();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void getID(WalletIDEvent message){
+        walletID = message.getWalletID();
+    }
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BackUpPriKeyQRFragment.this, rootView);

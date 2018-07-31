@@ -9,6 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
@@ -39,6 +40,8 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 public class WalletFragment extends XFragment<WalletPresenter> {
 
     private final String testUsername = "helloeoscoin";
+    @BindView(R.id.superTextView_card_vote) SuperTextView superTextViewCardVote;
+    @BindView(R.id.superTextView_card_buy_ram) SuperTextView superTextViewCardBuyRam;
     private WalletEntity curWallet;
     private int walletID;
     @BindView(R.id.tv_backup_wallet) TextView textViewBackupWallet;
@@ -51,19 +54,19 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.imageView_portrait) ImageView imageViewPortrait;
     @BindView(R.id.textView_username) TextView textViewUsername;
-    @BindView(R.id.superTextView_cpu) SuperTextView superTextViewCpu;
-    @BindView(R.id.superTextView_net) SuperTextView superTextViewNet;
-    @BindView(R.id.superTextView_ram) SuperTextView superTextViewRam;
     @BindView(R.id.show_cpu) LinearLayout showCpu;
     @BindView(R.id.layout_info) ConstraintLayout layoutInfo;
     @BindView(R.id.superTextView_card_record) SuperTextView superTextViewCardRecord;
     @BindView(R.id.superTextView_card_delegate) SuperTextView superTextViewCardDelegate;
     @BindView(R.id.scroll_wallet_tab) ScrollView scrollViewWalletTab;
+    @BindView(R.id.progressbar_cpu_small) RoundCornerProgressBar progressBarCPU;
+    @BindView(R.id.progressbar_net_small) RoundCornerProgressBar progressBarNET;
+    @BindView(R.id.progressbar_ram_small) RoundCornerProgressBar progressBarRAM;
     Unbinder unbinder;
 
     @OnClick(R.id.tv_backup_wallet)
-    public void backUpWallet(){
-        if (!EmptyUtils.isEmpty(curWallet)){
+    public void backUpWallet() {
+        if (!EmptyUtils.isEmpty(curWallet)) {
             walletID = curWallet.getId();
             EventBusProvider.postSticky(new WalletIDEvent(walletID));
             //todo 跳转逻辑还需要调整，为了方便测试，跳转放在空判断外
@@ -78,8 +81,18 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     }
 
     @OnClick(R.id.superTextView_card_delegate)
-    public void goToDelegate(){
+    public void goToDelegate() {
         UISkipMananger.launchDelegate(getActivity());
+    }
+
+    @OnClick(R.id.superTextView_card_buy_ram)
+    public void goToBuySellRam(){
+        UISkipMananger.launchRamTransaction(getActivity());
+    }
+
+    @OnClick(R.id.superTextView_card_vote)
+    public void goToVote(){
+        UISkipMananger.launchVote(getActivity());
     }
 
     public static WalletFragment newInstance() {
@@ -96,16 +109,16 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
+        textViewBackupWallet.setVisibility(View.VISIBLE);
         generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (!EmptyUtils.isEmpty(curWallet) && isCurWalletBackUp(curWallet)){
+        if (!EmptyUtils.isEmpty(curWallet) && isCurWalletBackUp()) {
             textViewBackupWallet.setVisibility(View.GONE);
         }
 
-        if (getActivity() != null){
+        if (getActivity() != null) {
             Alerter.create(getActivity())
                     .setText(getResources().getString(R.string.please_confirm_alert))
                     .setBackgroundColorRes(R.color.scarlet)
@@ -119,7 +132,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @Override
     protected void setNavibarTitle(String title, boolean isShowBack) {
         super.setNavibarTitle(title, isShowBack);
-        ImageView mCollectView = (ImageView)mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.ic_add_wallet) {
+        ImageView mCollectView = (ImageView) mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.ic_add_wallet) {
             @Override
             public void performAction(View view) {
                 UISkipMananger.launchWalletManagement(getActivity());
@@ -147,6 +160,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     public void onStart() {
         super.onStart();
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (!EmptyUtils.isEmpty(curWallet) && isCurWalletBackUp()) {
+            textViewBackupWallet.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -157,18 +173,19 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     /**
      * 判断当前钱包是否已经备份过
-     * @param curWallet
+     *
+     * @param
      * @return
      */
-    public boolean isCurWalletBackUp(WalletEntity curWallet){
-        if(!EmptyUtils.isEmpty(curWallet)
-                && curWallet.getIsBackUp().equals(CacheConstants.ALREADY_BACKUP)){
+    public boolean isCurWalletBackUp() {
+        if (!EmptyUtils.isEmpty(curWallet)
+                && curWallet.getIsBackUp().equals(CacheConstants.ALREADY_BACKUP)) {
             return true;
         }
         return false;
     }
 
-    public void setCurWalletData(WalletEntity wallet){
+    public void setCurWalletData(WalletEntity wallet) {
         String walletName = wallet.getWalletName();
     }
 

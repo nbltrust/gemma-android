@@ -12,24 +12,20 @@
         title:sDividerLineType="none"
         title:sLeftTextColor="@color/darkSlateBlue"
         title:sLeftTextString="EOS-WALLET-DEFAULT"
-        title:sRightTvDrawableRight="@drawable/ic_arrow"
-        title:sUseShape="true"
-        android:clickable="false"
+        title:sRightTvDrawableRight="@drawable/ic_tab_more"
         title:sShapeSelectorPressedColor="@color/item_pressed"
-        title:sShapeCornersRadius="@dimen/dimen_6"
-        >
+        title:sShapeCornersRadius="@dimen/dimen_3"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:translationZ="@dimen/dimen_2"
+        title:sUseShape="true">
 
     </com.allen.library.SuperTextView>
 
-
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/paleGrey"
-        android:layerType="software"
-        android:layout_marginStart="@dimen/dimen_10"
-        android:layout_marginEnd="@dimen/dimen_10"
-        >
+        android:layout_height="@dimen/dimen_5"
+        android:layerType="software">
     </View>
-
 </LinearLayout>

@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.activity.AboutActivity;
 import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
+import com.cybex.gma.client.ui.activity.BuySellRamActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
@@ -21,6 +23,7 @@ import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.activity.ManageWalletActivity;
 import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
+import com.cybex.gma.client.ui.activity.VoteActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
 /**
@@ -56,6 +59,17 @@ public final class UISkipMananger {
      */
     public static void launchCreateWallet(Activity context) {
         launchIntent(context, CreateWalletActivity.class);
+    }
+
+    public static void launchVote(Activity context){
+        launchIntent(context, VoteActivity.class);
+    }
+    /**
+     * 跳转到买卖RAM页面
+     * @param context
+     */
+    public static void launchRamTransaction(Activity context){
+        launchIntent(context, BuySellRamActivity.class);
     }
 
     /**
@@ -120,6 +134,13 @@ public final class UISkipMananger {
         launchIntent(context, GeneralSettingActivity.class);
     }
 
+    /**
+     * 跳转到about界面
+     * @param context
+     */
+    public static void launchAbout(Activity context){
+        launchIntent(context, AboutActivity.class);
+    }
     /**
      * 跳转到安全设置界面
      *

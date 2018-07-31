@@ -20,5 +20,14 @@ public class WalletManageListAdapter extends BaseQuickAdapter<WalletVO, BaseView
     protected void convert(BaseViewHolder helper, WalletVO item) {
         SuperTextView superTextView =  helper.getView(R.id.superTV_Item_WalletName);
         superTextView.setLeftString(item.getWalletName());
+
+        if (item.isSelected){
+            //默认被选中的选项卡
+
+            //设置背景色为cornflowerBlue
+        }else{
+
+        }
+
     }
 }

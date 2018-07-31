@@ -12,6 +12,7 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -34,7 +35,7 @@ public class BackUpPriKeyFragment extends XFragment {
 
     private String key;
     private int walletID;
-    private WalletEntity thisWallet;
+    private WalletEntity curWallet;
     @BindView(R.id.tv_show_priKey_area) TextView textViewShowPriKey;
     @BindView(R.id.bt_copy_priKey) Button buttonCopyPrikey;
     Unbinder unbinder;
@@ -45,12 +46,13 @@ public class BackUpPriKeyFragment extends XFragment {
         if (getActivity() != null){
             ClipboardUtils.copyText(getActivity(), curPriKey);
         }
-        thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
-        if (!EmptyUtils.isEmpty(thisWallet)){
-            thisWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
-            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(thisWallet);
+        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
+        if (!EmptyUtils.isEmpty(curWallet)){
+            curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
+            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
         }
         GemmaToastUtils.showLongToast("私钥已复制，请在使用后及时清空系统剪贴板！");
+        LoggerManager.d("backUp?", curWallet.getIsBackUp());
     }
 
     public static BackUpPriKeyFragment newInstance() {
@@ -73,6 +75,7 @@ public class BackUpPriKeyFragment extends XFragment {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void getID(WalletIDEvent message){
         walletID = message.getWalletID();
+        LoggerManager.d("walletID", walletID);
     }
 
     @Override

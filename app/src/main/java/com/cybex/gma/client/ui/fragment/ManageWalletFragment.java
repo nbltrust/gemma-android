@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.allen.library.SuperTextView;
@@ -17,6 +16,7 @@ import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.WalletManageListAdapter;
 import com.cybex.gma.client.ui.model.vo.WalletVO;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  */
 public class ManageWalletFragment extends XFragment {
 
-    @BindView(R.id.layout_wallet_number) LinearLayout layoutWalletNumber;
+    List<WalletVO> walletVOList = new ArrayList<>();
     @BindView(R.id.superTextView_importWallet) SuperTextView superTextViewImportWallet;
     @BindView(R.id.superTextView_createWallet) SuperTextView superTextViewCreateWallet;
     @BindView(R.id.scroll_wallet_manage) ScrollView scrollViewWalletManage;
@@ -93,7 +93,6 @@ public class ManageWalletFragment extends XFragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateWalletList();
     }
 
     @Override
@@ -102,26 +101,27 @@ public class ManageWalletFragment extends XFragment {
         unbinder.unbind();
     }
 
-
-    public void updateWalletList(){
-
-        //从数据库中读取Wallet信息转换成WalletVO列表
-        List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
-        List<WalletVO> walletVOList = new ArrayList<>();
-
-        for (int i = 0; i < walletEntityList.size(); i++) {
-            WalletVO curWalletVO = new WalletVO();
-            curWalletVO.setWalletName(walletEntityList.get(i).getWalletName());
-            walletVOList.add(curWalletVO);
-        }
-        adapter = new WalletManageListAdapter(walletVOList);
-    }
-
     /**
      * 把钱包名称数据放入RecyclerView中显示出来
      */
     public void setWalletListViewData() {
-        updateWalletList();
+        //从数据库中读取Wallet信息转换成WalletVO列表
+        List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (!EmptyUtils.isEmpty(curWallet)){
+            int chosenID = curWallet.getId();
+            for (int i = 0; i < walletEntityList.size(); i++) {
+                WalletVO curWalletVO = new WalletVO();
+                curWalletVO.setWalletName(walletEntityList.get(i).getWalletName());
+                //设置当前钱包
+                if (i+1 == chosenID){
+                    curWalletVO.isSelected = true;
+                }
+                walletVOList.add(curWalletVO);
+            }
+            adapter = new WalletManageListAdapter(walletVOList);
+        }
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
         recyclerViewWalletManage.setLayoutManager(layoutManager);
@@ -133,9 +133,22 @@ public class ManageWalletFragment extends XFragment {
                 WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(position+1);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("curWallet", curWallet);
-                start(WalletDetailFragment.newInstance(bundle));
+                //start(WalletDetailFragment.newInstance(bundle));
+                walletVOList.get(position).isSelected = true;
+                //把其他的WalletVO对象设置为未被选取
+                for (int i = 0; i < walletVOList.size(); i++){
+                    if (i != position){
+                        walletVOList.get(i).isSelected = false;
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void updateCurWalletHighlight(){
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+
     }
 
 }

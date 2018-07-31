@@ -36,8 +36,8 @@
     </style>
 
     <style name="mySwitchButton">
-        <item name="android:layout_width">@dimen/dimen_44</item>
-        <item name="android:layout_height">@dimen/dimen_22</item>
+        <item name="android:layout_width">@dimen/dimen_48</item>
+        <item name="android:layout_height">@dimen/dimen_26</item>
         <item name="android:layout_marginEnd">@dimen/dimen_10</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
@@ -133,6 +133,25 @@
         <item name="android:layout_marginBottom">@dimen/single_cpu_margin</item>
         <item name="android:layout_marginStart">@dimen/single_cpu_margin</item>
         <item name="android:layout_marginTop">@dimen/single_cpu_margin</item>
+    </style>
+
+    <style name="textView_cpu_net_ram">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:layout_marginTop">@dimen/dimen_6</item>
+        <item name="android:layout_marginStart">@dimen/dimen_20</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_20</item>
+        <item name="android:textColor">@color/darkSlateBlue</item>
+        <item name="android:textSize">@dimen/font_3</item>
+    </style>
+
+    <style name="progressBar_cpu_net_ram">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_3</item>
+        <item name="android:layout_marginTop">@dimen/dimen_10</item>
+        <item name="android:layout_marginStart">@dimen/dimen_20</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_20</item>
     </style>
 
     <!-- 管理钱包页面 -->

@@ -137,6 +137,7 @@
             title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             title:sLeftTextString="@string/changePattern"
+            title:sLeftTextColor="@color/darkSlateBlue"
             title:sLeftTextSize="@dimen/font_3.5"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/card_height"

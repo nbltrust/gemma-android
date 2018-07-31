@@ -80,7 +80,7 @@ public class MineFragment extends XFragment<MinePresenter> {
         superTextViewAbout.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-
+                UISkipMananger.launchAbout(getActivity());
             }
         });
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -47,7 +48,7 @@
             android:textColor="@color/darkSlateBlue"
             android:textSize="@dimen/font_4"
             android:textStyle="bold"
-            android:text="1234 bb56 7aea f0b6 81bf b99a a426
+            tools:text="1234 bb56 7aea f0b6 81bf b99a a426
 ef96 56e1 6889 012b"
             />
 
