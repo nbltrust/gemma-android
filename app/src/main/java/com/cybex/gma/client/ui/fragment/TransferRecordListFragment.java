@@ -15,8 +15,10 @@ import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.presenter.TransferRecordListPresenter;
+import com.cybex.gma.client.ui.request.TransferHistoryListRequest;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.lzy.okgo.OkGo;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
@@ -81,7 +83,6 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
             public void onRefresh(RefreshLayout refreshlayout) {
                 currentLastPos = -1;
                 doRequest(currentLastPos);
-                viewRefresh.finishRefresh();
             }
         });
 
@@ -93,19 +94,20 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Bundle bundle = new Bundle();
-                TransferHistory curTransfer = data.get(position);
-                bundle.putParcelable("curTransfer", curTransfer);
-                if (!EmptyUtils.isEmpty(bundle)) {
+                if (mAdapter != null && EmptyUtils.isNotEmpty(mAdapter.getData())) {
+                    Bundle bundle = new Bundle();
+                    TransferHistory curTransfer = mAdapter.getData().get(position);
+                    bundle.putParcelable("curTransfer", curTransfer);
                     start(TransferRecordDetailFragment.newInstance(bundle));
                 }
+
             }
         });
     }
 
 
     public void doRequest(int currentLastPos) {
-        getP().requestHistory(currentEosName, currentLastPos,isFirstLoad);
+        getP().requestHistory(currentEosName, currentLastPos, isFirstLoad);
 
     }
 
@@ -132,6 +134,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         } else {
             //加载更多
             mAdapter.addData(dataList);
+            viewRefresh.finishLoadmore();
         }
 
     }
@@ -141,15 +144,14 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
             dataList = new ArrayList<>();
         }
 
-        if(mAdapter!=null&&EmptyUtils.isNotEmpty(mAdapter.getData())){
+        if (mAdapter != null && EmptyUtils.isNotEmpty(mAdapter.getData())) {
             mAdapter.getData().clear();
             mAdapter.setNewData(dataList);
-        }else{
-            mAdapter = new TransferRecordListAdapter(dataList,currentEosName);
+        } else {
+            mAdapter = new TransferRecordListAdapter(dataList, currentEosName);
             mRecyclerView.setAdapter(mAdapter);
         }
-
-
+        viewRefresh.finishRefresh();
     }
 
 
@@ -192,7 +194,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
                 listMultipleStatusView.showEmpty();
             } else {
                 listMultipleStatusView.showContent();
-                viewRefresh.finishLoadmore();
+                viewRefresh.setLoadmoreFinished(true);
             }
 
         } else {
@@ -201,5 +203,9 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
 
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OkGo.getInstance().cancelTag(TransferHistoryListRequest.TAG);
+    }
 }

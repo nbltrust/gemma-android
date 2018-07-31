@@ -62,31 +62,38 @@ public class TransferRecordDetailFragment extends XFragment {
         setNavibarTitle("收支记录", true, false);
         //判断此交易的类型
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if(getArguments() != null){
-            curTransfer = getArguments().getParcelable("curTransfer");
-            if (!EmptyUtils.isEmpty(curWallet)){
-                curEosName = curWallet.getCurrentEosName();
-                //设置收入&支出页面不同的值(箭头，加减号，收入/支出)
-                if (curTransfer.from.equals(curEosName)){
-                    //转出操作
-                    arrow.setBackground(getResources().getDrawable(R.drawable.ic_tab_pay_white));
-                    tvAmount.setText(String.format(getResources().getString(R.string.payment_amount), curTransfer.value));
-                    tvIncomeOrOut.setText(getResources().getString(R.string.payment));
-                    superTextViewReceiver.setLeftString(getResources().getString(R.string.receiver));
-                }else{
-                    //收入操作
-                    tvAmount.setText(String.format(getResources().getString(R.string.income_amount), curTransfer.value));
-                    tvIncomeOrOut.setText(getResources().getString(R.string.income));
-                    arrow.setBackground(getResources().getDrawable(R.drawable.ic_income_white));
-                    superTextViewReceiver.setLeftString(getResources().getString(R.string.payer));
+        if (getArguments() != null) {
+            Bundle bd = getArguments();
+            if (bd != null) {
+                curTransfer = getArguments().getParcelable("curTransfer");
+                if (!EmptyUtils.isEmpty(curWallet)) {
+                    curEosName = curWallet.getCurrentEosName();
+                    //设置收入&支出页面不同的值(箭头，加减号，收入/支出)
+                    if (curTransfer.from.equals(curEosName)) {
+                        //转出操作
+                        arrow.setBackground(getResources().getDrawable(R.drawable.ic_tab_pay_white));
+                        tvAmount.setText(
+                                String.format(getResources().getString(R.string.payment_amount), curTransfer.value));
+                        tvIncomeOrOut.setText(getResources().getString(R.string.payment));
+                        superTextViewReceiver.setLeftString(getResources().getString(R.string.receiver));
+                    } else {
+                        //收入操作
+                        tvAmount.setText(
+                                String.format(getResources().getString(R.string.income_amount), curTransfer.value));
+                        tvIncomeOrOut.setText(getResources().getString(R.string.income));
+                        arrow.setBackground(getResources().getDrawable(R.drawable.ic_income_white));
+                        superTextViewReceiver.setLeftString(getResources().getString(R.string.payer));
+                    }
+                    //设置固定的值
+                    superTextViewBlockTime.setRightString(curTransfer.time);
+                    tvMemo.setText(curTransfer.memo);
+                    superTextViewBlockId.setRightString(String.valueOf(curTransfer.block));
+                    superTextViewTransferStatus.setRightString(String.valueOf(curTransfer.status));
+                    superTextViewTransferId.setLeftString(curTransfer.hash);
                 }
-                //设置固定的值
-                superTextViewBlockTime.setRightString(curTransfer.time);
-                tvMemo.setText(curTransfer.memo);
-                superTextViewBlockId.setRightString(String.valueOf(curTransfer.block));
-                superTextViewTransferStatus.setRightString(String.valueOf(curTransfer.status));
-                superTextViewTransferId.setLeftString(curTransfer.hash);
+
             }
+
         }
     }
 

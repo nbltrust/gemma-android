@@ -4,7 +4,6 @@ package com.cybex.gma.client.api.request;
 import com.cybex.gma.client.api.callback.CustomConvert;
 import com.cybex.gma.client.api.callback.CustomRequestCallback;
 import com.cybex.gma.client.api.data.response.CustomData;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
@@ -74,8 +73,6 @@ public class CommonRequest<T> {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        LoggerManager.e("error:"+e);
-
                         if (callback != null) {
                             callback.onError(e);
                         }
