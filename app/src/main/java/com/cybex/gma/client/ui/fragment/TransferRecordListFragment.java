@@ -83,7 +83,6 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
             public void onRefresh(RefreshLayout refreshlayout) {
                 currentLastPos = -1;
                 doRequest(currentLastPos);
-                viewRefresh.finishRefresh();
             }
         });
 
@@ -95,10 +94,13 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Bundle bundle = new Bundle();
-                TransferHistory curTransfer = data.get(position);
-                bundle.putParcelable("curTransfer", curTransfer);
-                start(TransferRecordDetailFragment.newInstance(bundle));
+                if (mAdapter != null && EmptyUtils.isNotEmpty(mAdapter.getData())) {
+                    Bundle bundle = new Bundle();
+                    TransferHistory curTransfer = mAdapter.getData().get(position);
+                    bundle.putParcelable("curTransfer", curTransfer);
+                    start(TransferRecordDetailFragment.newInstance(bundle));
+                }
+
             }
         });
     }
@@ -149,8 +151,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
             mAdapter = new TransferRecordListAdapter(dataList, currentEosName);
             mRecyclerView.setAdapter(mAdapter);
         }
-
-
+        viewRefresh.finishRefresh();
     }
 
 
