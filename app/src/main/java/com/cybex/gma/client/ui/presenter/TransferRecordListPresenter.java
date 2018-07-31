@@ -37,7 +37,7 @@ public class TransferRecordListPresenter extends XPresenter<TransferRecordListFr
                     @Override
                     public void onStart(Request<TransferHistoryListData, ? extends Request> request) {
                         super.onStart(request);
-                        if(isFirstLoad){
+                        if (isFirstLoad) {
                             getV().showLoading();
                         }
 
@@ -81,47 +81,6 @@ public class TransferRecordListPresenter extends XPresenter<TransferRecordListFr
                         }
                     }
                 });
-
-
-        /**
-         new TransferHistoryListRequest(TransferHistoryList.class)
-         .setJsonParams(json)
-         .postJson(new CustomRequestCallback<TransferHistoryList>() {
-        @Override public void onBeforeRequest(@NonNull Disposable disposable) {
-        getV().showLoading();
-        }
-
-        @Override public void onSuccess(@NonNull CustomData<TransferHistoryList> data) {
-        if (data != null && data.result != null) {
-        TransferHistoryList transferHistoryList = data.result;
-        int lastPos = transferHistoryList.last_pos;
-        List<TransferHistory> historyList = transferHistoryList.transactions;
-        List<TransferHistory> newList = buildNewData(lastPos, historyList);
-        getV().showContent();
-        if (last_pos == HttpConst.ACTION_REFRESH) {
-        //刷新数据
-        getV().refreshData(newList);
-        } else {
-        //加载更多数据
-        getV().loadMoreData(newList);
-        }
-        } else {
-        getV().showEmptyOrFinish();
-
-        }
-        }
-
-        @Override public void onError(@NonNull Throwable e) {
-        getV().showError();
-
-        }
-
-
-        @Override public void onComplete() {
-
-        }
-        }); */
-
 
         return historyList;
     }
