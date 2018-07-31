@@ -64,7 +64,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                     @Override
                     public void onSuccess(@NonNull CustomData<CustomData> result) {
                         getV().dissmisProgressDialog();
-
+                        LoggerManager.d("result", result.result.toString());
                         if (result.code == HttpConst.CODE_RESULT_SUCCESS) {
                             Log.d("result.code", result.code);
                             UISkipMananger.launchIntent(getV(), MainTabActivity.class);
