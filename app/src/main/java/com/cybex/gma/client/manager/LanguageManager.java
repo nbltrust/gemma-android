@@ -23,7 +23,6 @@ import java.util.Locale;
  */
 public class LanguageManager {
 
-    private static final String TAG = "MultiLanguageUtil";
     private static LanguageManager instance;
     private Context mContext;
     public static final String SAVE_LANGUAGE = "save_language";
@@ -84,7 +83,7 @@ public class LanguageManager {
             return Locale.TRADITIONAL_CHINESE;
         }
         getSystemLanguage(getSysLocale());
-        Log.e(TAG, "getLanguageLocale" + languageType + languageType);
+        LoggerManager.e("getLanguageLocale" + languageType + languageType);
         return Locale.SIMPLIFIED_CHINESE;
     }
 
@@ -143,7 +142,7 @@ public class LanguageManager {
         } else if (languageType == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
             return LanguageType.LANGUAGE_FOLLOW_SYSTEM;
         }
-        Log.e(TAG, "getLanguageType" + languageType);
+        LoggerManager.e("getLanguageType" + languageType);
         return languageType;
     }
 
