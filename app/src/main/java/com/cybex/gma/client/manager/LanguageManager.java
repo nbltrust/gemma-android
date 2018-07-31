@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.OnChangeLanguageEvent;

@@ -11,7 +11,7 @@ import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
  */
 public class AbiJsonToBeanRequest extends GMAHttpRequest<AbiJsonToBeanResult> {
 
-    private static final String TAG = "abi_json_to_bin";
+    public static final String TAG = "abi_json_to_bin";
 
     /**
      * @param clazz 想要请求返回的Bean

@@ -12,7 +12,7 @@ import com.lzy.okgo.callback.StringCallback;
  */
 public class GetCurrencyBalanceRequest extends GMAHttpRequest {
 
-    private static final String TAG = "get_currency_banlance";
+    public static final String TAG = "get_currency_banlance";
 
 
     /**

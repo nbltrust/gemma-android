@@ -10,7 +10,7 @@ import com.cybex.gma.client.api.request.GMAHttpRequest;
  */
 public class PushTransactionRequest extends GMAHttpRequest<CustomData> {
 
-    private final static String TAG = "PushTransactionRequest";
+    public final static String TAG = "PushTransactionRequest";
 
 
     /**

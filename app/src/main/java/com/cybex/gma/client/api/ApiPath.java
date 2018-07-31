@@ -31,6 +31,8 @@ public class ApiPath {
     public static final String HOST_ON_CHAIN = "http://139.196.73.117:9000";
     //主链上的一个节点
     public static final String HOST_ON_CHAIN_MAIN = "http://13.251.120.68:8888";
+    //测试链地址
+    public static final String HOST_ON_CHAIN_TEST = "http://139.224.135.236:18888";
 
     /**------------EOS 项目情况配置---------------*/
 }

@@ -13,7 +13,7 @@ import com.cybex.gma.client.ui.model.response.AccountInfo;
  */
 public class GetAccountinfoRequest extends GMAHttpRequest<AccountInfo> {
 
-    private static final String TAG = "get_account";
+    public static final String TAG = "get_account";
 
     /**
      * @param clazz 想要请求返回的Bean

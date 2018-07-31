@@ -13,7 +13,7 @@ import com.cybex.gma.client.ui.model.response.GetKeyAccountsResult;
  */
 public class GetKeyAccountsRequest extends GMAHttpRequest<GetKeyAccountsResult> {
 
-    private static final String TAG = "GetKeyAccountsRequest";
+    public static final String TAG = "GetKeyAccountsRequest";
 
     /**
      * @param clazz 想要请求返回的Bean

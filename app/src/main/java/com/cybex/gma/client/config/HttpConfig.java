@@ -27,7 +27,7 @@ import okhttp3.Response;
  */
 public class HttpConfig {
 
-    public static final long DEFAULT_MILLISECONDS = 20 * 1000; // 默认时间
+    public static final long DEFAULT_MILLISECONDS = 60 * 1000; // 默认时间
     public static final long REFRESH_TIME = 300;
 
     public static void init(Context mContext) {

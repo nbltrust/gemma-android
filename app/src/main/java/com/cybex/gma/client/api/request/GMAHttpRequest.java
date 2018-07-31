@@ -29,7 +29,7 @@ public class GMAHttpRequest<T> extends CommonRequest<T> {
 
     public void postJsonNoRxRequest(String tag, AbsCallback<T> callback) {
         setParams(mParams);
-        super.post(tag, mPath, mParams, callback);
+        super.postJsonNoRx(tag, mPath, jsonParams, callback);
     }
 
 

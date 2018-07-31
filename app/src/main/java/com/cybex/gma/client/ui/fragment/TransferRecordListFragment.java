@@ -43,6 +43,8 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
     private List<TransferHistory> data = new ArrayList<>();
     //TODO
     private String currentEosName = "cooljadepool";
+    private int currentLastPos = -1;
+    private boolean isFirstLoad = true;
 
 
     public static TransferRecordListFragment newInstance() {
@@ -69,8 +71,8 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
                     List<TransferHistory> historyList = mAdapter.getData();
                     if (!EmptyUtils.isEmpty(historyList)) {
                         TransferHistory history = historyList.get(historyList.size() - 1);
-                        int lastPos = history.last_pos;
-                        doRequest(lastPos);
+                        currentLastPos = history.last_pos;
+                        doRequest(currentLastPos);
                     }
                 }
 
@@ -78,7 +80,8 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
 
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                doRequest(-1);
+                currentLastPos = -1;
+                doRequest(currentLastPos);
                 viewRefresh.finishRefresh();
             }
         });
@@ -94,7 +97,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
                 Bundle bundle = new Bundle();
                 TransferHistory curTransfer = data.get(position);
                 bundle.putParcelable("curTransfer", curTransfer);
-                if (!EmptyUtils.isEmpty(bundle)){
+                if (!EmptyUtils.isEmpty(bundle)) {
                     start(TransferRecordDetailFragment.newInstance(bundle));
                 }
             }
@@ -103,8 +106,12 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
 
 
     public void doRequest(int currentLastPos) {
-        getP().requestHistory(currentEosName, currentLastPos);
+        getP().requestHistory(currentEosName, currentLastPos,isFirstLoad);
 
+    }
+
+    public void setFirstLoad(boolean firstLoad) {
+        isFirstLoad = firstLoad;
     }
 
     public void loadMoreData(List<TransferHistory> dataList) {
@@ -135,8 +142,15 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
             dataList = new ArrayList<>();
         }
 
-        mAdapter.getData().clear();
-        mAdapter.setNewData(dataList);
+        if(mAdapter!=null&&EmptyUtils.isNotEmpty(mAdapter.getData())){
+            mAdapter.getData().clear();
+            mAdapter.setNewData(dataList);
+        }else{
+            mAdapter = new TransferRecordListAdapter(dataList,currentEosName);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+
+
     }
 
 
@@ -187,5 +201,6 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         }
 
     }
+
 
 }
