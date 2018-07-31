@@ -15,6 +15,7 @@ import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
+import com.cybex.gma.client.ui.model.response.UserRegisterResult;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -53,23 +54,29 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
 
         String json = GsonUtils.objectToJson(params);
 
-        new UserRegisterRequest(CustomData.class)
+        new UserRegisterRequest(UserRegisterResult.class)
                 .setJsonParams(json)
-                .postJson(new CustomRequestCallback<CustomData>() {
+                .postJson(new CustomRequestCallback<UserRegisterResult>() {
                     @Override
                     public void onBeforeRequest(@NonNull Disposable disposable) {
                         getV().showProgressDialog("正在创建...");
                     }
 
                     @Override
-                    public void onSuccess(@NonNull CustomData<CustomData> result) {
+                    public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
                         getV().dissmisProgressDialog();
 
-                        if (result.code == HttpConst.CODE_RESULT_SUCCESS) {
-                            Log.d("result.code", result.code);
+                        if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
+                            Log.d("result.code", data.code);
+                            UserRegisterResult registerResult = data.result;
+                            if (registerResult != null) {
+                                String txtId = registerResult.txId;
+                                //TODO
+                            }
+
                             UISkipMananger.launchIntent(getV(), MainTabActivity.class);
                         } else {
-                            Log.d("Error Code", result.code);
+                            Log.d("Error Code", data.code);
                             getV().showOnErrorInfo();
                         }
                     }
@@ -115,6 +122,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
 
     /**
      * 调用DB Manager将钱包信息存入表中
+     *
      * @param publicKey
      * @param privateKey
      * @param password
@@ -122,8 +130,9 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
      * @param passwordTip
      */
 
-    public void saveAccount(final String publicKey, final String privateKey, final String
-            password, final String eosUsername, final String passwordTip ){
+    public void saveAccount(
+            final String publicKey, final String privateKey, final String
+            password, final String eosUsername, final String passwordTip) {
 
         WalletEntity walletEntity = new WalletEntity();
         List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
@@ -161,7 +170,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         //设置为未备份
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
         //执行存入操作之前需要把其他钱包设置为非当前钱包
-        if (walletNum > 0){
+        if (walletNum > 0) {
             WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
             curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
             DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
