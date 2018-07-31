@@ -33,8 +33,6 @@
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
         <service android:name=".service.InitializeService"/>
 
         <!-- activity start -->
@@ -45,17 +43,24 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <!-- 收支记录界面 -->
         <activity
             android:name=".ui.activity.TransferRecordActivity"
             android:screenOrientation="portrait">
+        </activity>
+        <!-- 投票界面 -->
+        <activity android:name=".ui.activity.VoteActivity">
+
+        </activity>
+        <!-- 买卖RAM界面 -->
+        <activity android:name=".ui.activity.BuySellRamActivity">
+
         </activity>
         <!-- 资源质押界面 -->
         <activity android:name=".ui.activity.DelegateActivity">
@@ -64,31 +69,28 @@
         <activity android:name=".ui.activity.ManageWalletActivity">
         </activity>
 
-
         <!-- 导入钱包界面 -->
         <activity android:name=".ui.activity.ImportWalletActivity">
         </activity>
         <!-- 创建钱包后提醒界面 -->
         <activity android:name=".ui.activity.CreateManageActivity">
         </activity>
-
         <activity
             android:name=".ui.activity.CreateWalletActivity"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
 
         <!-- 初始页面 -->
         <activity android:name=".ui.activity.InitialActivity">
-
+        </activity>
+        <!-- 关于页面 -->
+        <activity android:name=".ui.activity.AboutActivity">
         </activity>
         <!-- 通用设置界面 -->
         <activity android:name=".ui.activity.GeneralSettingActivity">
-
         </activity>
         <!-- 安全设置界面 -->
         <activity android:name=".ui.activity.SecuritySettingActivity">
-
         </activity>
 
         <!-- 应用内浏览器窗口 -->
@@ -100,20 +102,17 @@
             android:screenOrientation="portrait"/>
         <!-- 备份钱包引导页 -->
         <activity android:name=".ui.activity.BackUpWalletGuideActivity">
-
         </activity>
 
-        <!--二维码扫描窗口 -->
+        <!-- 二维码扫描窗口 -->
         <activity
             android:name=".ui.activity.BarcodeScanActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
         </activity>
-
-        <activity android:name=".ui.activity.BackUpPrivatekeyActivity"
-                  android:screenOrientation="portrait">
-
+        <activity
+            android:name=".ui.activity.BackUpPrivatekeyActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <!-- activity end -->
@@ -129,7 +128,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
-
 
     </application>
 

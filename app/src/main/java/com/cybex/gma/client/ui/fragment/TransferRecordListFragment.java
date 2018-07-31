@@ -44,7 +44,6 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
     //TODO
     private String currentEosName = "cooljadepool";
 
-
     public static TransferRecordListFragment newInstance() {
         Bundle args = new Bundle();
         TransferRecordListFragment fragment = new TransferRecordListFragment();

@@ -46,7 +46,6 @@
     <string name="backupHint">钱包私钥是资产的唯一认证方式，及时备份私钥，可防止手机丢失、忘记密码等意外无法使用钱包的情况。请将私钥助记词备份并妥善保存，以备将来不时之需。</string>
     <string name="backupLater">稍后备份</string>
 
-
     <string name="lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
     <string name="lookAround_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
     <string name="backUp_wallet">备份钱包</string>
@@ -58,7 +57,6 @@
     <string name="backupYourMne">请记下你的钱包私钥助记词并保存在安全的地方</string>
     <string name="backupHint2">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
     <string name="copied">已抄写</string>
-
 
     <string name="writeDown">请输入抄下的钱包密钥助记词以验证</string>
     <string name="input_mne">请按顺序点击已抄下的助记词以验证抄写是否正确</string>
@@ -101,7 +99,6 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
     <string name="tab_wallet">钱包</string>
     <string name="tab_transfer">转账</string>
     <string name="tab_mine">我的</string>
@@ -110,7 +107,7 @@
     <string name="balance">可用余额</string>
     <string name="redeem">正在赎回</string>
     <string name="transfer_records">收支记录</string>
-    <string name="resource">资源质押</string>
+    <string name="resource">资源管理</string>
     <string name="get_cpu_net">获取CPU、NET</string>
 
     <string name="expire_time">过期时间</string>
@@ -195,6 +192,7 @@
     <string name="delegate_cpu_net">抵押</string>
     <string name="CPU">CPU</string>
     <string name="NET">NET</string>
+    <string name="RAM">RAM</string>
 
     <string name="refund_detail">赎回详情</string>
     <string name="confirm_refund">确认赎回</string>
@@ -212,6 +210,21 @@
     <string name="setting_language_english">English</string>
     <string name="setting_simplified_chinese">简体中文</string>
     <string name="setting_traditional_chinese">繁體中文</string>
+    <string name="version_info">版本说明</string>
+    <string name="version_update">版本更新</string>
+    <string name="copyright">Copyright @2018 Tuolian. All Rights Reserved</string>
 
+    <string name="vote">节点投票</string>
+    <string name="buy_sell_ram">买卖RAM</string>
+    <string name="buy">买入</string>
+    <string name="sell">卖出</string>
+    <string name="transaction">交易</string>
+    <string name="transfer_amount">交易数量(KB)</string>
+    <string name="available">可用</string>
+    <string name="price">价格</string>
+    <string name="input_ram_amount">输入RAM数量</string>
+    <string name="confirm_buy">确认买入</string>
+    <string name="confirm_sell">确认卖出</string>
+    <string name="explanation">说明</string>
 
 </resources>

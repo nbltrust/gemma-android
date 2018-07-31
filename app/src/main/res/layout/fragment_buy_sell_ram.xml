@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -35,21 +36,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
-            android:layout_marginStart="@dimen/dimen_10"
             android:layout_marginEnd="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_10"
             android:background="@drawable/shape_corner"
             android:orientation="vertical"
             android:padding="@dimen/dimen_10"
+
             android:translationZ="@dimen/dimen_3"
             >
 
             <com.allen.library.SuperTextView
-                android:id="@+id/superTextView_cpu_amount"
+                android:id="@+id/superTextView_ram_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 title:sLeftTextColor="@color/steel"
                 title:sLeftTextSize="@dimen/font_3.5"
-                title:sLeftTextString="@string/CPU"
+                title:sLeftTextString="@string/RAM"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightTextSize="@dimen/font_3"
                 title:sRightTextString="0.1000 EOS"
@@ -61,7 +63,7 @@
             </com.allen.library.SuperTextView>
 
             <com.cybex.base.view.progress.RoundCornerProgressBar
-                android:id="@+id/progressbar_cpu"
+                android:id="@+id/progressbar_ram"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_4"
                 android:layout_margin="@dimen/dimen_10"
@@ -77,7 +79,7 @@
             </com.cybex.base.view.progress.RoundCornerProgressBar>
 
             <com.allen.library.SuperTextView
-                android:id="@+id/superTextView_cpu_status"
+                android:id="@+id/superTextView_ram_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 title:sLeftIconHeight="@dimen/dimen_8"
@@ -106,56 +108,20 @@
             </View>
 
             <com.allen.library.SuperTextView
-                android:id="@+id/superTextView_net_amount"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/bt_inInitPage_height"
+                title:sLeftTextString="@string/price"
                 title:sLeftTextColor="@color/steel"
                 title:sLeftTextSize="@dimen/font_3.5"
-                title:sLeftTextString="@string/NET"
+                title:sUseShape="true"
+                title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
+                title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="0.1000 EOS"
-                title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
-                title:sUseShape="true"
+                title:sRightTextString="≈0.32915259 EOS/KB"
                 >
 
             </com.allen.library.SuperTextView>
-
-            <com.cybex.base.view.progress.RoundCornerProgressBar
-                android:id="@+id/progressbar_net"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_4"
-                android:layout_margin="@dimen/dimen_10"
-                title:rcBackgroundColor="@color/cloudyBlue"
-                title:rcBackgroundPadding="0dp"
-                title:rcMax="100"
-                title:rcProgress="10"
-                title:rcProgressColor="@color/dark_sky_blue"
-                title:rcRadius="10dp"
-                >
-
-
-            </com.cybex.base.view.progress.RoundCornerProgressBar>
-
-            <com.allen.library.SuperTextView
-                android:id="@+id/superTextView_net_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                title:sLeftIconHeight="@dimen/dimen_8"
-                title:sLeftIconRes="@drawable/ic_blue_dot"
-                title:sLeftIconWidth="@dimen/dimen_8"
-                title:sLeftTextColor="@color/cloudyBlue"
-                title:sLeftTextSize="@dimen/font_3"
-                title:sLeftTextString="已用 0.000 KB"
-                title:sRightTextColor="@color/cloudyBlue"
-                title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="总量 10.91 KB"
-                title:sUseShape="true"
-                >
-
-            </com.allen.library.SuperTextView>
-
 
         </LinearLayout>
 
@@ -163,8 +129,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
-            android:layout_marginEnd="@dimen/dimen_10"
             android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10"
             android:orientation="horizontal">
 
             <TextView
@@ -172,21 +138,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:layout_weight="1"
-                android:text="@string/delegate"
+                android:text="@string/transaction"
                 android:textColor="@color/steel"
                 android:textSize="@dimen/font_3.5"/>
 
-            <TextView
-                android:id="@+id/tv_remain_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:text="余额： 0.1 EOS"
-                android:textColor="@color/dusk"
-                android:textSize="@dimen/font_3"
-                />
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -200,7 +156,7 @@
             android:translationZ="@dimen/dimen_3">
 
             <com.cybex.base.view.tablayout.CommonTabLayout
-                android:id="@+id/STL_delegate"
+                android:id="@+id/CTL_buy_sell_ram"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_48"
                 title:tl_indicator_color="@color/colorTabIndicator"
@@ -225,16 +181,41 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/di_notify_bg"/>
 
-            <include
-                android:id="@+id/layout_tab_delegate"
-                layout="@layout/ui_tab_delegte">
-            </include>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16">
 
-            <include
-                android:id="@+id/layout_tab_undelegate"
-                layout="@layout/ui_tab_undelegate"
-                android:visibility="gone">
-            </include>
+                <TextView
+                    android:layout_width="0dp"
+                    android:textSize="@dimen/font_3.5"
+                    android:textColor="@color/steel"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transfer_amount"
+
+                    android:layout_weight="1"/>
+
+                <TextView
+                    tools:text="可用 0.17KB"
+                    android:textSize="@dimen/font_3"
+                    android:textColor="@color/darkSlateBlueTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/edt_buy_sell_ram"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:textSize="@dimen/font_4"
+                android:hint="@string/input_ram_amount"
+                android:textColorHint="@color/cloudyBlue"
+                style="@style/editText_config_wallet"
+                android:layout_marginStart="0dp"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/cursor_custom"/>
 
         </LinearLayout>
 
@@ -246,17 +227,17 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/bt_delegate_cpu_net"
+        android:id="@+id/bt_buy_ram"
         style="@style/bt_long_in_linearLayout"
         android:layout_margin="@dimen/dimen_30"
-        android:text="@string/delegate_cpu_net"
+        android:text="@string/buy"
         />
 
     <Button
-        android:id="@+id/bt_undelegate_cpu_net"
+        android:id="@+id/bt_sell_ram"
         style="@style/bt_long_in_linearLayout"
         android:layout_margin="@dimen/dimen_30"
-        android:text="@string/undelegate"
+        android:text="@string/sell"
         android:visibility="gone"/>
 
 </LinearLayout>

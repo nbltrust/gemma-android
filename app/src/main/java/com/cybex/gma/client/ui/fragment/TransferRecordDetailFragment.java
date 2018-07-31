@@ -69,7 +69,7 @@ public class TransferRecordDetailFragment extends XFragment {
                 //设置收入&支出页面不同的值(箭头，加减号，收入/支出)
                 if (curTransfer.from.equals(curEosName)){
                     //转出操作
-                    //arrow.setBackground(getResources().getDrawable(R.drawable.));
+                    arrow.setBackground(getResources().getDrawable(R.drawable.ic_tab_pay_white));
                     tvAmount.setText(String.format(getResources().getString(R.string.payment_amount), curTransfer.value));
                     tvIncomeOrOut.setText(getResources().getString(R.string.payment));
                     superTextViewReceiver.setLeftString(getResources().getString(R.string.receiver));
