@@ -4,6 +4,7 @@ import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.ImportWalletConfigFragment;
 import com.cybex.gma.client.ui.model.request.GetkeyAccountReqParams;
@@ -98,6 +99,8 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                             }
                             //最后执行存入操作，此前包此时为当前钱包
                             DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);
+
+                            UISkipMananger.launchHome(getV().getActivity());
                         } else {
                             GemmaToastUtils.showShortToast("导入钱包失败");
                         }

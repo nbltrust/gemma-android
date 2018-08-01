@@ -80,7 +80,6 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                     final String priKey = getArguments().getString("priKey");
                     LoggerManager.d("priKey", priKey);
                     getP().saveConfigWallet(priKey, getPassword(), getPassHint());
-                    //UISkipMananger.launchHome(getActivity());
                 }
             }
 
