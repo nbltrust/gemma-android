@@ -246,11 +246,9 @@ dependencies {
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.third.overscroll
     implementation deps.gma.tapadoo
-    implementation deps.gma.smartscheduler
 
     //日志打印
     implementation deps.gma.logger
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation deps.gma.svgImageViewer
 
@@ -268,7 +266,7 @@ dependencies {
     implementation project(':platform_framework:validate')
     implementation project(':platform_framework:jdenticon')
     implementation project(':platform_framework:qrcodecore')
-
+    implementation project(':platform_framework:smart-scheduler')
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
