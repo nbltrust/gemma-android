@@ -26,6 +26,8 @@ import com.siberiadante.customdialoglib.CustomFullDialog;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.DecimalFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -83,8 +85,50 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
 
     public void showInitData(String banlance) {
-        maxValue = banlance;
-        tvBanlance.setText("余额：" + maxValue);
+        if (EmptyUtils.isEmpty(banlance)) { return; }
+
+        String[] spiltBanlance = banlance.split(" ");
+        if (EmptyUtils.isEmpty(spiltBanlance)) {
+            return;
+
+        }
+
+        maxValue = spiltBanlance[0].trim();
+        tvBanlance.setText("余额：" + banlance);
+
+        etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
+                .Type.decimal, 4, maxValue) {
+            @Override
+            public void afterTextChanged(Editable s) {
+                super.afterTextChanged(s);
+                validateButton();
+            }
+        });
+
+
+        etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    validateAmountValue();
+                }
+            }
+        });
+
+    }
+
+
+    private void validateAmountValue() {
+        String text = String.valueOf(etAmount.getText());
+        if (EmptyUtils.isNotEmpty(text)) {
+            LoggerManager.d("input text:" + text);
+            DecimalFormat df = new DecimalFormat("00.0000");
+            df.setMaximumFractionDigits(4);
+            df.setMinimumFractionDigits(4);
+            String data = df.format(Double.parseDouble(text));
+            etAmount.setText(data);
+        }
+
     }
 
 
@@ -96,15 +140,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
 
         tvPayAccount.setText(currentEOSName);
-
-        etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
-                .Type.decimal, 4, maxValue) {
-            @Override
-            public void afterTextChanged(Editable s) {
-                super.afterTextChanged(s);
-                validateButton();
-            }
-        });
 
         etCollectionAccount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -135,6 +170,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         } else {
             btnTransfer.setEnabled(false);
         }
+
     }
 
     @Override
@@ -142,11 +178,11 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         return true;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (event != null) {
             LoggerManager.d("tab transfer selected");
-            getP().requestAccountInfo();
+            getP().requestBanlanceInfo();
         }
 
     }
@@ -174,6 +210,12 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @OnClick({R.id.btn_transfer})
     public void onClickSubmitTransfer(View view) {
+        String toAccount = String.valueOf(etCollectionAccount.getText());
+        if (toAccount.equals(currentEOSName)) {
+            GemmaToastUtils.showShortToast("不能给自己的账户转账");
+            return;
+        }
+        validateAmountValue();
         showConfirmTransferDialog();
     }
 
@@ -234,12 +276,14 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
 
+    CustomFullDialog dialog = null;
+
     /**
      * 显示确认授权dialog
      */
     private void showConfirmAuthoriDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+        dialog = new CustomFullDialog(getContext(),
                 R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
@@ -261,8 +305,15 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                     .getCurrentWalletEntity();
                             if (entity != null) {
                                 String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
-                                getP().executeTransferLogic(entity.getCurrentEosName(),
-                                        collectionAccount, amount, memo, privateKey);
+
+
+                                if ("wrong password".equals(privateKey)) {
+                                    GemmaToastUtils.showShortToast("密码输入错误，请重试");
+                                } else {
+                                    getP().executeTransferLogic(entity.getCurrentEosName(),
+                                            collectionAccount, amount + " " + "EOS", memo, privateKey);
+                                }
+
                             } else {
                                 GemmaToastUtils.showShortToast("当前账户转账出现异常");
                             }
@@ -276,6 +327,20 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         dialog.show();
         EditText etPasword = dialog.findViewById(R.id.et_password);
         etPasword.setHint("请输入@" + currentEOSName + "的密码");
+    }
+
+
+    public void clearData() {
+        if (dialog != null) {
+            dialog.cancel();
+        }
+
+        etCollectionAccount.setText("");
+        etAmount.setText("");
+        etNote.setText("");
+
+        //刷新数据
+        getP().requestBanlanceInfo();
     }
 
 
