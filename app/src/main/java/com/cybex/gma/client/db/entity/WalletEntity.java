@@ -76,7 +76,17 @@ public class WalletEntity extends BaseModel implements Parcelable {
      */
     @Column
     private Integer isBackUp;
+    /**
+     * 是否被链上确认100创建成功 (1---是  0---否）
+     */
+    @Column
+    private Integer isConfirmLib;
 
+    /**
+     * 每次创建流程由中心化服务器返回的hash值
+     */
+    @Column
+    private String txId;
 
     public Integer getId() {
         return id;
@@ -173,6 +183,8 @@ public class WalletEntity extends BaseModel implements Parcelable {
         dest.writeValue(this.isCurrentWallet);
         dest.writeString(this.passwordTip);
         dest.writeValue(this.isBackUp);
+        dest.writeValue(this.isConfirmLib);
+        dest.writeString(this.txId);
     }
 
     public WalletEntity() {}
@@ -188,6 +200,8 @@ public class WalletEntity extends BaseModel implements Parcelable {
         this.isCurrentWallet = (Integer) in.readValue(Integer.class.getClassLoader());
         this.passwordTip = in.readString();
         this.isBackUp = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.isConfirmLib = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.txId = in.readString();
     }
 
     public static final Creator<WalletEntity> CREATOR = new Creator<WalletEntity>() {
@@ -197,4 +211,20 @@ public class WalletEntity extends BaseModel implements Parcelable {
         @Override
         public WalletEntity[] newArray(int size) {return new WalletEntity[size];}
     };
+
+    public Integer getIsConfirmLib() {
+        return isConfirmLib;
+    }
+
+    public void setIsConfirmLib(Integer isConfirmLib) {
+        this.isConfirmLib = isConfirmLib;
+    }
+
+    public String getTxId() {
+        return txId;
+    }
+
+    public void setTxId(String txId) {
+        this.txId = txId;
+    }
 }
