@@ -65,7 +65,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                     @Override
                     public void onStart(Request<GetKeyAccountsResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("正在获取账户信息...");
+                        getV().showProgressDialog("正在配置钱包...");
 
                     }
 
