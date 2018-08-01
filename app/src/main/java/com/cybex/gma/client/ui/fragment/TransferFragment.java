@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -53,8 +54,12 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     ScrollView rootScrollview;
     Unbinder unbinder;
 
-    private String maxValue = "200.9999";
+    private String maxValue = "";
     private String currentEOSName = "";
+
+    private String collectionAccount = "";
+    private String amount = "";
+    private String memo = "";
 
     public static TransferFragment newInstance() {
         Bundle args = new Bundle();
@@ -70,9 +75,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         setNavibarTitle(getString(R.string.title_transfer), false);
         OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
 
-        // getP().requestAccountInfo();
-        //TODO
-        showInitData(maxValue);
+        getP().requestAccountInfo();
+
     }
 
 
@@ -191,9 +195,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         TextView tv_payment_account = dialog.findViewById(R.id.tv_payment_account);//付款账户
 
 
-        String collectionAccount = String.valueOf(etCollectionAccount.getText());
-        String amount = String.valueOf(etAmount.getText());
-        String note = String.valueOf(etNote.getText());
+        collectionAccount = String.valueOf(etCollectionAccount.getText());
+        amount = String.valueOf(etAmount.getText());
+        memo = String.valueOf(etNote.getText());
 
         if (EmptyUtils.isNotEmpty(collectionAccount)) {
             tv_payee.setText(collectionAccount);
@@ -203,8 +207,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             tv_amount.setText(amount);
         }
 
-        if (EmptyUtils.isNotEmpty(note)) {
-            tv_note.setText(note);
+        if (EmptyUtils.isNotEmpty(memo)) {
+            tv_note.setText(memo);
         }
 
         if (EmptyUtils.isNotEmpty(currentEOSName)) {
@@ -236,7 +240,17 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                             GemmaToastUtils.showLongToast("请输入密码");
                             return;
                         } else {
-                            //TODO 执行转账操作
+                            //获取当前账户的私钥
+                            WalletEntity entity = DBManager.getInstance()
+                                    .getWalletEntityDao()
+                                    .getCurrentWalletEntity();
+                            if (entity != null) {
+                                String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
+                                getP().executeTransferLogic(entity.getCurrentEosName(),
+                                        collectionAccount, amount, memo, privateKey);
+                            } else {
+                                GemmaToastUtils.showShortToast("当前账户转账出现异常");
+                            }
                         }
                         break;
                     default:

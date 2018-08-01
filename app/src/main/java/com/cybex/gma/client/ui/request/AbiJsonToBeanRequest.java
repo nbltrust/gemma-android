@@ -21,8 +21,15 @@ public class AbiJsonToBeanRequest extends GMAHttpRequest<AbiJsonToBeanResult> {
         setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_ABI_JSON_TO_BIN);
     }
 
-    public void getAbiJsonToBean(JsonCallback<AbiJsonToBeanResult> callback) {
+    public AbiJsonToBeanRequest setJsonParams(String jsonParams) {
+        super.setJsonParams(jsonParams);
+        return this;
+    }
+
+    public AbiJsonToBeanRequest getAbiJsonToBean(JsonCallback<AbiJsonToBeanResult> callback) {
         postJsonNoRxRequest(TAG, callback);
+
+        return this;
     }
 
 }

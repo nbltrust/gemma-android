@@ -6,23 +6,25 @@ import com.cybex.gma.client.api.request.GMAHttpRequest;
 import com.lzy.okgo.callback.StringCallback;
 
 /**
- * Created by wanglin on 2018/7/13.
+ * 获取配置信息
+ *
+ * Created by wanglin on 2018/8/1.
  */
-public class PushTransactionRequest extends GMAHttpRequest {
+public class EOSConfigInfoRequest extends GMAHttpRequest {
 
-    public final static String TAG = "PushTransactionRequest";
+    public static final String TAG = "get_info";
 
 
     /**
      * @param clazz 想要请求返回的Bean
      */
-    public PushTransactionRequest(Class clazz) {
+    public EOSConfigInfoRequest(Class clazz) {
         super(clazz);
-        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_PUSH_TRANSACTION);
+        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_INFO);
     }
 
 
-    public PushTransactionRequest setJsonParams(String jsonParams) {
+    public EOSConfigInfoRequest setJsonParams(String jsonParams) {
         super.setJsonParams(jsonParams);
         return this;
     }
@@ -31,8 +33,9 @@ public class PushTransactionRequest extends GMAHttpRequest {
     /**
      * @param callback
      */
-    public PushTransactionRequest pushTransaction(StringCallback callback) {
+    public EOSConfigInfoRequest getInfo(StringCallback callback) {
         postJsonNoRxRequest(TAG, callback);
         return this;
     }
 }
+
