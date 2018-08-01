@@ -159,6 +159,8 @@ android {
             if (propertyHaveSigningConfigs) {
                 signingConfig signingConfigs.debug
             }
+
+            resValue("string", "PORT_NUMBER", "8081")
         }
 
         release {
@@ -266,6 +268,9 @@ dependencies {
     implementation project(':platform_framework:validate')
     implementation project(':platform_framework:jdenticon')
     implementation project(':platform_framework:qrcodecore')
+
+
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
 
 }

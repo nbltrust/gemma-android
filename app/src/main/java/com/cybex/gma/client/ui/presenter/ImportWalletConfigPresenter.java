@@ -10,7 +10,9 @@ import com.cybex.gma.client.ui.model.request.GetkeyAccountReqParams;
 import com.cybex.gma.client.ui.model.response.GetKeyAccountsResult;
 import com.cybex.gma.client.ui.request.GetKeyAccountsRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
@@ -20,11 +22,12 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
 
     /**
      * 存入配置过后的钱包
+     *
      * @param privateKey
      * @param password
      * @param passwordTips
      */
-    public void saveConfigWallet(final String privateKey, final String password, final String passwordTips ){
+    public void saveConfigWallet(final String privateKey, final String password, final String passwordTips) {
 
         WalletEntity walletEntity = new WalletEntity();
         List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
@@ -46,21 +49,23 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
 
     /**
      * 根据公钥查询eosName列表
+     *
      * @param publicKey
      */
-    public void postGetKeyAccountRequest(WalletEntity walletEntity, List<WalletEntity> walletEntityList, String
-            publicKey, int walletNum){
+    public void postGetKeyAccountRequest(
+            WalletEntity walletEntity, List<WalletEntity> walletEntityList, String
+            publicKey, int walletNum) {
 
         GetkeyAccountReqParams getkeyAccountReqParams = new GetkeyAccountReqParams();
         getkeyAccountReqParams.setPublic_key(publicKey);
         String json = GsonUtils.objectToJson(getkeyAccountReqParams);
         new GetKeyAccountsRequest(GetKeyAccountsResult.class)
-        .setJsonParams(json)
-                .getKeyAccountsRequest(new JsonCallback<GetKeyAccountsResult>(){
+                .setJsonParams(json)
+                .getKeyAccountsRequest(new JsonCallback<GetKeyAccountsResult>() {
                     @Override
                     public void onStart(Request<GetKeyAccountsResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("正在获取账户信息...");
+                        getV().showProgressDialog("正在配置钱包...");
 
                     }
 
@@ -68,37 +73,38 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                     public void onError(Response<GetKeyAccountsResult> response) {
                         super.onError(response);
                         getV().dissmisProgressDialog();
+                        GemmaToastUtils.showShortToast("导入钱包失败");
                     }
 
                     @Override
                     public void onSuccess(Response<GetKeyAccountsResult> response) {
                         getV().dissmisProgressDialog();
-                        GetKeyAccountsResult result = response.body();
 
+                        if (response != null && response.body() != null && EmptyUtils.isNotEmpty(
+                                response.body().account_names)) {
+                            GetKeyAccountsResult result = response.body();
                             List<String> account_names = result.account_names;
                             final String curEosName = account_names.get(0);
-                            //LoggerManager.d("curEOsName", curEosName);
                             final String eosNameJson = GsonUtils.objectToJson(account_names);
-                            //LoggerManager.d("eosNameJson", eosNameJson);
                             walletEntity.setEosNameJson(eosNameJson);
                             walletEntity.setCurrentEosName(curEosName);
 
-                        //执行存入操作之前需要把其他钱包设置为非当前钱包
-                        if (walletNum > 0){
-                            WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao()
-                                    .getCurrentWalletEntity();
-                            curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-                            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                            //执行存入操作之前需要把其他钱包设置为非当前钱包
+                            if (walletNum > 0) {
+                                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao()
+                                        .getCurrentWalletEntity();
+                                curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+                                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                            }
+                            //最后执行存入操作，此前包此时为当前钱包
+                            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);
+                        } else {
+                            GemmaToastUtils.showShortToast("导入钱包失败");
                         }
-                        //最后执行存入操作，此前包此时为当前钱包
-                        DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);
+
                     }
 
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-                        getV().dissmisProgressDialog();
-                    }
+
                 });
     }
 
