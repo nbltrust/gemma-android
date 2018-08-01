@@ -18,7 +18,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -103,8 +102,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                     final String publicKey = keyPair[0];
                     final String privateKey = keyPair[1];
                     getP().saveAccount(publicKey, privateKey, getPassword(), getEOSUserName(), getPassHint());
-                    UISkipMananger.launchHome(CreateWalletActivity.this);
-                    //getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[0]);
+                    //UISkipMananger.launchHome(CreateWalletActivity.this);
+                    getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[0]);
                 }
 
                 @Override

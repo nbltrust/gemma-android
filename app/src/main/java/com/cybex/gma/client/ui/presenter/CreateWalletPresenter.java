@@ -17,6 +17,7 @@ import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
 import com.cybex.gma.client.ui.model.response.UserRegisterResult;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
+import com.hxlx.core.lib.common.cache.CacheUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.android.logger.Log;
@@ -70,8 +71,10 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             Log.d("result.code", data.code);
                             UserRegisterResult registerResult = data.result;
                             if (registerResult != null) {
-                                String txtId = registerResult.txId;
+                                String txId = registerResult.txId;
                                 //TODO
+                                LoggerManager.d("txId", txId);
+                                CacheUtil.put("txId", txId);
                             }
 
                             UISkipMananger.launchIntent(getV(), MainTabActivity.class);
