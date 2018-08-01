@@ -133,7 +133,7 @@ public class ManageWalletFragment extends XFragment {
                 WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(position+1);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("curWallet", curWallet);
-                //start(WalletDetailFragment.newInstance(bundle));
+                start(WalletDetailFragment.newInstance(bundle));
                 walletVOList.get(position).isSelected = true;
                 //把其他的WalletVO对象设置为未被选取
                 for (int i = 0; i < walletVOList.size(); i++){

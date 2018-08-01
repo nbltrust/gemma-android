@@ -144,7 +144,8 @@ ext {
                     "logger"            : "com.orhanobut:logger:2.1.1",
                     "zxing"             : "com.google.zxing:core:3.3.3",
                     "tapadoo"           : "com.tapadoo.android:alerter:2.0.6",
-                    "spinkit"           : "com.github.ybq:Android-SpinKit:1.1.0"
+                    "spinkit"           : "com.github.ybq:Android-SpinKit:1.1.0",
+                    "smartscheduler"    : "io.hypertrack:smart-scheduler:0.0.13",
             ],
             'debug'       : [
                     'debugdb': "com.amitshekhar.android:debug-db:1.0.2",

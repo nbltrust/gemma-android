@@ -73,16 +73,15 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                     @Override
                     public void onSuccess(Response<GetKeyAccountsResult> response) {
                         getV().dissmisProgressDialog();
-
                         GetKeyAccountsResult result = response.body();
-                        List<String> account_names = result.account_names;
-                        final String curEosName = account_names.get(0);
-                        //LoggerManager.d("curEOsName", curEosName);
-                        final String eosNameJson = GsonUtils.objectToJson(account_names);
-                        //LoggerManager.d("eosNameJson", eosNameJson);
 
-                        walletEntity.setEosNameJson(eosNameJson);
-                        walletEntity.setCurrentEosName(curEosName);
+                            List<String> account_names = result.account_names;
+                            final String curEosName = account_names.get(0);
+                            //LoggerManager.d("curEOsName", curEosName);
+                            final String eosNameJson = GsonUtils.objectToJson(account_names);
+                            //LoggerManager.d("eosNameJson", eosNameJson);
+                            walletEntity.setEosNameJson(eosNameJson);
+                            walletEntity.setCurrentEosName(curEosName);
 
                         //执行存入操作之前需要把其他钱包设置为非当前钱包
                         if (walletNum > 0){

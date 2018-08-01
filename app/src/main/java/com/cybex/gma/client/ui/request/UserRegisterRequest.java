@@ -19,5 +19,4 @@ public class UserRegisterRequest extends GMAHttpRequest<UserRegisterResult> {
         super(clazz);
         setMethod(ApiPath.HOST_CENTER_SERVER + ApiMethod.API_REGISTER);
     }
-
 }

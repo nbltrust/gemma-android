@@ -13,14 +13,12 @@ import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
-import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
 import com.cybex.gma.client.ui.model.response.UserRegisterResult;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.common.cache.CacheUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
-import com.hxlx.core.lib.utils.android.logger.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +42,9 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
      * @param publicKey
      */
     public void createAccount(
-            final String accountname, final String password, final String invitationCode, final String
-            publicKey) {
+            final String accountname, final String password, final String invitationCode, final String privateKey,
+            final String
+            publicKey, final String passwordTip) {
 
         UserRegisterReqParams params = new UserRegisterReqParams();
         params.setApp_id(ParamConstants.TYPE_APP_ID_CYBEX);
@@ -68,18 +67,15 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                         getV().dissmisProgressDialog();
 
                         if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
-                            Log.d("result.code", data.code);
                             UserRegisterResult registerResult = data.result;
                             if (registerResult != null) {
                                 String txId = registerResult.txId;
                                 //TODO
-                                LoggerManager.d("txId", txId);
                                 CacheUtil.put("txId", txId);
                             }
-
-                            UISkipMananger.launchIntent(getV(), MainTabActivity.class);
+                            saveAccount(publicKey, privateKey, password, accountname, passwordTip);
+                            UISkipMananger.launchHome(getV());
                         } else {
-                            Log.d("Error Code", data.code);
                             getV().showOnErrorInfo();
                         }
                     }

@@ -244,6 +244,7 @@ dependencies {
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.third.overscroll
     implementation deps.gma.tapadoo
+    implementation deps.gma.smartscheduler
 
     //日志打印
     implementation deps.gma.logger

@@ -101,9 +101,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                     String[] keyPair = getP().getKeypair();
                     final String publicKey = keyPair[0];
                     final String privateKey = keyPair[1];
-                    getP().saveAccount(publicKey, privateKey, getPassword(), getEOSUserName(), getPassHint());
-                    //UISkipMananger.launchHome(CreateWalletActivity.this);
-                    getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[0]);
+                    getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[1], keyPair[0],
+                            getPassHint());
                 }
 
                 @Override
