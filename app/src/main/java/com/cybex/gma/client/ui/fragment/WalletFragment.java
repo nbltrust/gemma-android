@@ -216,17 +216,14 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         SmartScheduler.JobScheduledCallback repeatCallback = new SmartScheduler.JobScheduledCallback() {
             @Override
             public void onJobScheduled(Context context, Job job) {
-                LoggerManager.d("Job Repeat executed");
             }
         };
 
         SmartScheduler.JobScheduledCallback alarmCallback = new SmartScheduler.JobScheduledCallback() {
             @Override
             public void onJobScheduled(Context context, Job job) {
-                LoggerManager.d("Job Alarm executed");
                 Job repeatJob = JobUtils.createPeriodicHandlerJob(1, repeatCallback, 3000);
                 if (smartScheduler.addJob(repeatJob)){
-                    LoggerManager.d("Job repeat Added");
                 }
 
             }

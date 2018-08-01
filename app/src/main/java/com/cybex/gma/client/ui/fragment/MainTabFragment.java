@@ -5,11 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.event.EventBusActivityScope;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
 import com.cybex.gma.client.widget.bottombar.BottomBarTab;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
 import me.framework.fragmentation.FragmentSupport;
@@ -54,6 +54,11 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
+
+                if (position == 1) {
+                    //转账
+                    EventBusProvider.postSticky(new TabSelectedEvent());
+                }
             }
 
             @Override
@@ -64,7 +69,6 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             @Override
             public void onTabReselected(int position) {
                 // 主要为了交互: 重选tab 如果列表不在顶部则移动到顶部,如果已经在顶部,则刷新
-                EventBusActivityScope.getDefault(_mActivity).post(new TabSelectedEvent(position));
             }
         });
 

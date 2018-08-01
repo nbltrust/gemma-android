@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
@@ -20,6 +22,9 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,26 +79,23 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle(getString(R.string.title_transfer), false);
         OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
-
-        getP().requestAccountInfo();
-
     }
 
 
     public void showInitData(String banlance) {
         maxValue = banlance;
-        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (entity != null) {
-            currentEOSName = entity.getCurrentEosName();
-        }
-
-        tvPayAccount.setText(currentEOSName);
         tvBanlance.setText("余额：" + maxValue);
     }
 
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (entity != null) {
+            currentEOSName = entity.getCurrentEosName();
+        }
+
+        tvPayAccount.setText(currentEOSName);
 
         etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
                 .Type.decimal, 4, maxValue) {
@@ -135,6 +137,19 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
     }
 
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void onTabSelctedEvent(TabSelectedEvent event) {
+        if (event != null) {
+            LoggerManager.d("tab transfer selected");
+            getP().requestAccountInfo();
+        }
+
+    }
 
     @Override
     public int getLayoutId() {
