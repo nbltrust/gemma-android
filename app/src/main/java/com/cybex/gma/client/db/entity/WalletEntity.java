@@ -40,7 +40,6 @@ public class WalletEntity extends BaseModel implements Parcelable {
      */
     @Column
     private String cypher;
-
     /**
      * 私钥
      */
