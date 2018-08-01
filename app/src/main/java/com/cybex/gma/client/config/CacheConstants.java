@@ -9,7 +9,6 @@ public interface CacheConstants {
     String PubKey_Prefix = "PublicKey_";
     String PriKey_Prefix = "PriKey+Pass_";
     String DEFAULT_WALLETNAME_PREFIX = "EOS-WALLET-";
-    String DEFALUT_WALLETNAME = "EOS-WALLET";
     Integer IS_CURRENT_WALLET = 1;
     Integer NOT_CURRENT_WALLET = 0;
     int ALREADY_BACKUP = 1;

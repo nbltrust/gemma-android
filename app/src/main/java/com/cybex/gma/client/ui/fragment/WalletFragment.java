@@ -1,6 +1,5 @@
 package com.cybex.gma.client.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -13,9 +12,9 @@ import com.allen.library.SuperTextView;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.WalletIDEvent;
-import com.cybex.gma.client.job.JobUtils;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -32,7 +31,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.hypertrack.smart_scheduler.Job;
 import io.hypertrack.smart_scheduler.SmartScheduler;
 import jdenticon.AvatarHelper;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
@@ -115,12 +113,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         SmartScheduler smartScheduler = SmartScheduler.getInstance(getActivity().getApplicationContext());
-
-        if (smartScheduler.contains(1)){
-            smartScheduler.removeJob(1);
+        if (smartScheduler.contains(ParamConstants.ALARM_JOB) || smartScheduler.contains(ParamConstants.POLLING_JOB)){
+            smartScheduler.removeJob(ParamConstants.POLLING_JOB);
+            smartScheduler.removeJob(ParamConstants.ALARM_JOB);
         }
 
-        setJob();
+        //getP().setPolling();
         textViewBackupWallet.setVisibility(View.VISIBLE);
         generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
@@ -211,35 +209,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         String walletName = wallet.getWalletName();
     }
 
-    public void setJob(){
-        SmartScheduler smartScheduler = SmartScheduler.getInstance(getActivity().getApplicationContext());
-        SmartScheduler.JobScheduledCallback repeatCallback = new SmartScheduler.JobScheduledCallback() {
-            @Override
-            public void onJobScheduled(Context context, Job job) {
-                LoggerManager.d("Job Repeat executed");
-            }
-        };
 
-        SmartScheduler.JobScheduledCallback alarmCallback = new SmartScheduler.JobScheduledCallback() {
-            @Override
-            public void onJobScheduled(Context context, Job job) {
-                LoggerManager.d("Job Alarm executed");
-                Job repeatJob = JobUtils.createPeriodicHandlerJob(1, repeatCallback, 3000);
-                if (smartScheduler.addJob(repeatJob)){
-                    LoggerManager.d("Job repeat Added");
-                }
-
-            }
-        };
-
-        Job alarmJob = JobUtils.createAlarmJob(2, alarmCallback, 10000);
-
-        boolean result = smartScheduler.addJob(alarmJob);
-
-        if (result){
-            LoggerManager.d("Job alarm Added");
-        }
-    }
 
 
 
