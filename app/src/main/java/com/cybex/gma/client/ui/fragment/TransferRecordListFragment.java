@@ -127,6 +127,9 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
             currentEosName = entity.getCurrentEosName();
         }
 
+        //TODO 暂时测试用
+        currentEosName = "cooljadepool";
+
         if (mAdapter == null) {
             //第一次请求
             mAdapter = new TransferRecordListAdapter(dataList, currentEosName);
