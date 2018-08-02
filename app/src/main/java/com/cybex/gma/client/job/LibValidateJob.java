@@ -190,7 +190,7 @@ public class LibValidateJob {
                         String trx = getTResult[1];
 
 
-                        if (EmptyUtils.isEmpty(trx)) {
+                        if (trx.equals("false")) {
                             return STATUS_FAILED;
                         } else {
                             if (curBlockNum < lib) {

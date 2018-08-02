@@ -106,7 +106,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             //两次输入的密码不一致
             tvRepeatPass.setText("密码不一致");
             tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
-            tvRepeatPass.set
         }
     }
 
