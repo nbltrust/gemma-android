@@ -52,9 +52,10 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         if (EmptyUtils.isNotEmpty(curWallet)){
             int isComfirmLib = curWallet.getIsConfirmLib();
             if(isComfirmLib == CacheConstants.CONFIRM_FAILED){
-                //如果当前钱包的此字段为Confirm_Failed,说明此钱包创建失败过一次以上
-                String txId = curWallet.getTxId();
-                params.setTxId(txId);
+                //如果当前钱包的此字段为Confirm_Failed,说明此钱包创建失败过一次,取出其Hash值之后删除此钱包
+                String txID = curWallet.getTxId();
+                params.setTxId(txID);
+                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
             }
         }
 
