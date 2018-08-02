@@ -11,6 +11,10 @@ import java.util.List;
 public interface WalletEntityDao {
 
 
+
+    void  deleteEntity(WalletEntity entity);
+
+
     /**
      * 获得当前WalletEntity对象
      *
