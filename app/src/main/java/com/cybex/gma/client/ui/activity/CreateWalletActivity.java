@@ -83,34 +83,57 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterEosNameChanged(Editable s) {
+        if (isAllTextFilled() && checkboxConfig.isChecked()){
+            setClickable(btCreateWallet);
+        }else{
+            setUnclickable(btCreateWallet);
+        }
+
         if (getP().isUserNameValid()) {
             setEOSNameValidStyle();
         } else {
+            setUnclickable(btCreateWallet);
             setEOSNameInvalidStyle();
         }
     }
 
     @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterPassChanged(Editable s){
-
+        if (isAllTextFilled() && checkboxConfig.isChecked()){
+            setClickable(btCreateWallet);
+        }else{
+            setUnclickable(btCreateWallet);
+        }
     }
 
     @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterRepeatPassChanged(Editable s){
+        if (isAllTextFilled() && checkboxConfig.isChecked()){
+            setClickable(btCreateWallet);
+        }else{
+            setUnclickable(btCreateWallet);
+        }
+
         if (getPassword().equals(getRepeatPassword())){
             //两次输入的密码一致
             tvRepeatPass.setText("重复密码");
             tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
-            tvRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+            edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
         }else{
             //两次输入的密码不一致
             tvRepeatPass.setText("密码不一致");
             tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
+            edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
         }
     }
 
     @OnTextChanged(value = R.id.edt_invCode, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterInvCodeChanged(Editable s){
+        if (isAllTextFilled() && checkboxConfig.isChecked()){
+            setClickable(btCreateWallet);
+        }else{
+            setUnclickable(btCreateWallet);
+        }
 
     }
 
