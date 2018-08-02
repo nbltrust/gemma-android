@@ -8,7 +8,6 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.model.request.GetTransactionReqParams;
-import com.cybex.gma.client.ui.model.response.EOSConfigInfo;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetTransactionRequest;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -21,6 +20,13 @@ import org.json.JSONObject;
 
 import io.hypertrack.smart_scheduler.Job;
 import io.hypertrack.smart_scheduler.SmartScheduler;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 验证创建钱包lib
@@ -30,78 +36,11 @@ import io.hypertrack.smart_scheduler.SmartScheduler;
 public class LibValidateJob {
 
 
-    /**
-     * 设置轮询
-     * 先设置一个alarmJob，可设置延时多久之后开始做轮询
-     * 时间单位毫秒
-     */
-    public static void startDelayPolling(int waitngTime, int intervalTime) {
-        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+    private static final int STATUS_FAILED = -1; //状态失败
+    private static final int STATUS_OK = 1;//成功状态
+    private static final int STATUS_PENDING = 1001; //pending状态
+    private static final int STATUS_ON_LINE = 1002; //online状态
 
-        SmartScheduler.JobScheduledCallback pollingCallback = new SmartScheduler.JobScheduledCallback() {
-            @Override
-            public void onJobScheduled(Context context, Job job) {
-                LoggerManager.d("polling executed");
-
-                int[] getInfoResult = getConfigInfo();
-                String[] getTResult = getTransaction();
-
-                if (EmptyUtils.isEmpty(getInfoResult)) { return; }
-                if (EmptyUtils.isEmpty(getTResult)) { return; }
-
-                int head = getInfoResult[1];
-                LoggerManager.d("head", head);
-                int lib = getInfoResult[0];
-                LoggerManager.d("lib", lib);
-                int curBlockNum = Integer.parseInt(getTResult[0]);
-                LoggerManager.d("block_num", curBlockNum);
-                String trx = getTResult[1];
-
-
-                if (EmptyUtils.isEmpty(trx)) {
-                    //fail
-                    smartScheduler.removeJob(ParamConstants.POLLING_JOB);
-                    LoggerManager.d("status", "failed");
-                } else {
-                    if (curBlockNum < lib) {
-                        //验证通过，结束轮询，结束alert TODO post eventbus
-                        smartScheduler.removeJob(ParamConstants.POLLING_JOB);
-                        LoggerManager.d("status", "Done");
-                    } else if (curBlockNum >= lib && curBlockNum <= head) {
-                        //pending  显示alert，一直轮询
-                        LoggerManager.d("status", "pending");
-                    } else {
-                        //online 显示alert，一直轮询
-                        LoggerManager.d("status", "online");
-                    }
-                }
-
-            }
-
-        };
-
-        SmartScheduler.JobScheduledCallback alarmCallback = new SmartScheduler.JobScheduledCallback() {
-            @Override
-            public void onJobScheduled(Context context, Job job) {
-                Job pollingJob = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, pollingCallback,
-                        waitngTime);
-                boolean isPolling_existed = smartScheduler.addJob(pollingJob);
-                if (isPolling_existed) {
-                    LoggerManager.d("polling added");
-                }
-                if (smartScheduler.contains(ParamConstants.POLLING_JOB)) {
-                    LoggerManager.d("true");
-                }
-
-            }
-        };
-
-        Job alarmJob = JobUtils.createAlarmJob(ParamConstants.ALARM_JOB, alarmCallback, intervalTime);
-        boolean alarmJob_exist = smartScheduler.addJob(alarmJob);
-        if (alarmJob_exist) {
-            LoggerManager.d("alarm added");
-        }
-    }
 
     /**
      * 不等待，直接轮询，可设置间隔
@@ -117,38 +56,7 @@ public class LibValidateJob {
             public void onJobScheduled(Context context, Job job) {
                 LoggerManager.d("polling executed");
 
-                int[] getInfoResult = getConfigInfo();
-                String[] getTResult = getTransaction();
-
-                if (EmptyUtils.isEmpty(getInfoResult)) { return; }
-                if (EmptyUtils.isEmpty(getTResult)) { return; }
-
-                int head = getInfoResult[1];
-                LoggerManager.d("head", head);
-                int lib = getInfoResult[0];
-                LoggerManager.d("lib", lib);
-                int curBlockNum = Integer.parseInt(getTResult[0]);
-                LoggerManager.d("block_num", curBlockNum);
-                String trx = getTResult[1];
-
-
-                if (EmptyUtils.isEmpty(trx)) {
-                    //fail
-                    smartScheduler.removeJob(ParamConstants.POLLING_JOB);
-                    LoggerManager.d("status", "failed");
-                } else {
-                    if (curBlockNum < lib) {
-                        //验证通过，结束轮询，结束alert TODO post eventbus
-                        smartScheduler.removeJob(ParamConstants.POLLING_JOB);
-                        LoggerManager.d("status", "Done");
-                    } else if (curBlockNum >= lib && curBlockNum <= head) {
-                        //pending  显示alert，一直轮询
-                        LoggerManager.d("status", "pending");
-                    } else {
-                        //online 显示alert，一直轮询
-                        LoggerManager.d("status", "online");
-                    }
-                }
+                executeLibLogic();
             }
 
         };
@@ -163,75 +71,181 @@ public class LibValidateJob {
      * result[0]返回lib
      * result[1]返回head
      */
-    public static int[] getConfigInfo() {
-        int[] result = new int[2];
-        new EOSConfigInfoRequest(EOSConfigInfo.class)
-                .getInfo(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        if (response != null && EmptyUtils.isNotEmpty(response.body())) {
-                            String infoJson = response.body();
-                            //LoggerManager.d("config info:" + infoJson);
-                            try {
-                                JSONObject obj = new JSONObject(infoJson);
-                                if (obj != null) {
-                                    String last_irreversible_block_num = obj.optString("last_irreversible_block_num");
-                                    String head_block_num = obj.optString("head_block_num");
-                                    result[0] = Integer.parseInt(last_irreversible_block_num);
-                                    result[1] = Integer.parseInt(head_block_num);
-                                    LoggerManager.d("lib", last_irreversible_block_num);
-                                    LoggerManager.d("head_num", head_block_num);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
-        return result;
+    public static void getConfigInfo(StringCallback callback) {
+        new EOSConfigInfoRequest(String.class)
+                .getInfo(callback);
     }
 
     /**
      * @return 返回block_num
      */
 
-    public static String[] getTransaction() {
-        String[] res = new String[2];
+    public static void getTransaction(StringCallback callback) {
         GetTransactionReqParams reqParams = new GetTransactionReqParams();
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)) {
             LoggerManager.d("txId", curWallet.getTxId());
             reqParams.setid(curWallet.getTxId());
+            String jsonParams = GsonUtils.objectToJson(reqParams);
+            new GetTransactionRequest(String.class)
+                    .setJsonParams(jsonParams)
+                    .getInfo(callback);
         }
-        String jsonParams = GsonUtils.objectToJson(reqParams);
-        new GetTransactionRequest(String.class)
-                .setJsonParams(jsonParams)
-                .getInfo(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        if (response != null && EmptyUtils.isNotEmpty(response.body())) {
-                            String infoJson = response.body();
-                            LoggerManager.d("transaction info:" + infoJson);
-                            try {
-                                JSONObject obj = new JSONObject(infoJson);
-                                if (obj != null) {
-                                    String block_num = obj.optString("block_num");
-                                    JSONObject trx = obj.optJSONObject("trx");
-                                    LoggerManager.d("block_num", block_num);
-                                    res[0] = block_num;
-                                    if (trx == null) {
-                                        res[1] = "false";
-                                    } else {
-                                        res[1] = "true";
-                                    }
+
+    }
+
+
+   static Observable<String[]> observableTransaction = Observable.create(new ObservableOnSubscribe<String[]>() {
+        @Override
+        public void subscribe(ObservableEmitter<String[]> emitter) throws Exception {
+            getTransaction(new StringCallback() {
+                @Override
+                public void onSuccess(Response<String> response) {
+                    String[] res = new String[2];
+                    if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                        String infoJson = response.body();
+                        LoggerManager.d("transaction info:" + infoJson);
+                        try {
+                            JSONObject obj = new JSONObject(infoJson);
+                            if (obj != null) {
+                                String block_num = obj.optString("block_num");
+                                JSONObject trx = obj.optJSONObject("trx");
+                                LoggerManager.d("block_num", block_num);
+                                res[0] = block_num;
+                                if (trx == null) {
+                                    res[1] = "false";
+                                } else {
+                                    res[1] = "true";
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    emitter.onNext(res);
+                    emitter.onComplete();
+                }
+            });
+
+        }
+    }).subscribeOn(Schedulers.io());
+
+
+   static Observable<int[]> observableConfigInfo = Observable.create(new ObservableOnSubscribe<int[]>() {
+        @Override
+        public void subscribe(ObservableEmitter<int[]> emitter) throws Exception {
+            int[] result = new int[2];
+
+            getConfigInfo(new StringCallback() {
+                @Override
+                public void onSuccess(Response<String> response) {
+                    if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                        String infoJson = response.body();
+                        //LoggerManager.d("config info:" + infoJson);
+                        try {
+                            JSONObject obj = new JSONObject(infoJson);
+                            if (obj != null) {
+                                String last_irreversible_block_num = obj.optString("last_irreversible_block_num");
+                                String head_block_num = obj.optString("head_block_num");
+                                result[0] = Integer.parseInt(last_irreversible_block_num);
+                                result[1] = Integer.parseInt(head_block_num);
+                                LoggerManager.d("lib", last_irreversible_block_num);
+                                LoggerManager.d("head_num", head_block_num);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+
+            emitter.onNext(result);
+            emitter.onComplete();
+
+        }
+    }).subscribeOn(Schedulers.io());
+
+
+    /**
+     * 处理Lib 相关逻辑
+     */
+    private static void executeLibLogic() {
+        //通过使用Zip（）对两个网络请求进行合并再发送
+        Observable.zip(observableTransaction, observableConfigInfo,
+                new BiFunction<String[], int[], Integer>() {
+                    // 注：创建BiFunction对象传入的第3个参数 = 合并后数据的数据类型
+                    @Override
+                    public Integer apply(
+                            String[] getTResult,
+                            int[] getInfoResult) throws Exception {
+                        if (EmptyUtils.isEmpty(getInfoResult)) { return STATUS_FAILED; }
+                        if (EmptyUtils.isEmpty(getTResult)) { return STATUS_FAILED; }
+
+                        int head = getInfoResult[1];
+                        LoggerManager.d("head", head);
+                        int lib = getInfoResult[0];
+                        LoggerManager.d("lib", lib);
+                        int curBlockNum = Integer.parseInt(getTResult[0]);
+                        LoggerManager.d("block_num", curBlockNum);
+                        String trx = getTResult[1];
+
+
+                        if (EmptyUtils.isEmpty(trx)) {
+                            return STATUS_FAILED;
+                        } else {
+                            if (curBlockNum < lib) {
+                                return STATUS_OK;
+                            } else if (curBlockNum >= lib && curBlockNum <= head) {
+                                //pending  显示alert，一直轮询
+                                LoggerManager.d("status", "pending");
+                                return STATUS_PENDING;
+                            } else {
+                                //online 显示alert，一直轮询
+                                LoggerManager.d("status", "online");
+                                return STATUS_ON_LINE;
                             }
                         }
                     }
+                }).observeOn(AndroidSchedulers.mainThread()) // 在主线程接收 & 处理数据
+                .subscribe(new Consumer<Integer>() {
+                    // 成功返回数据时调用
+                    @Override
+                    public void accept(Integer combine_infro) throws Exception {
+                        // 结合显示2个网络请求的数据结果
+                        switch (combine_infro.intValue()) {
+                            case STATUS_FAILED:
+                                LoggerManager.d("status", "failed");
+
+                                removeJob();
+                                break;
+                            case STATUS_OK:
+                                LoggerManager.d("status", "ok");
+
+                                //验证通过，结束轮询，结束alert TODO post eventbus
+                                removeJob();
+                                break;
+                            case STATUS_PENDING:
+                            case STATUS_ON_LINE:
+                            default:
+                                break;
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        //TODO  网络请求错误时相关处理
+                    }
                 });
-        return res;
+
+
+    }
+
+
+    private static void removeJob() {
+        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+        if (smartScheduler != null && smartScheduler.contains(ParamConstants.POLLING_JOB)) {
+            smartScheduler.removeJob(ParamConstants.POLLING_JOB);
+        }
     }
 
 
