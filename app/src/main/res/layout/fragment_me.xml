@@ -32,7 +32,7 @@
                     android:layout_marginEnd="@dimen/dimen_10"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginTop="@dimen/dimen_10"
-                    android:translationZ="@dimen/dimen_2"
+                    android:translationZ="@dimen/dimen_1"
                     title:sLeftTextColor="@color/darkSlateBlue"
                     title:sLeftTextSize="@dimen/font_3.5"
                     title:sLeftTextString="@string/general"
@@ -54,7 +54,7 @@
                     android:layout_marginEnd="@dimen/dimen_10"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginTop="@dimen/dimen_10"
-                    android:translationZ="@dimen/dimen_2"
+                    android:translationZ="@dimen/dimen_1"
                     title:sLeftTextColor="@color/darkSlateBlue"
                     title:sLeftTextSize="@dimen/font_3.5"
                     title:sLeftTextString="@string/security"
@@ -79,7 +79,7 @@
                     android:layout_marginTop="@dimen/dimen_10"
                     android:background="@drawable/shape_corner"
                     android:orientation="vertical"
-                    android:translationZ="@dimen/dimen_3"
+                    android:translationZ="@dimen/dimen_2"
                     >
 
                     <com.allen.library.SuperTextView
@@ -98,7 +98,6 @@
                         title:sLeftTextGravity="center"
                         title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
                         title:sShapeSelectorPressedColor="@color/item_pressed">
-
 
                     </com.allen.library.SuperTextView>
 

@@ -57,8 +57,8 @@ public final class UISkipMananger {
      *
      * @param context
      */
-    public static void launchCreateWallet(Activity context) {
-        launchIntent(context, CreateWalletActivity.class);
+    public static void launchCreateWallet(Context context) {
+        startActivity(context, CreateWalletActivity.class);
     }
 
     public static void launchVote(Activity context){

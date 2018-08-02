@@ -20,7 +20,6 @@ import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,13 +46,18 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
             final String accountname, final String password, final String invitationCode, final String privateKey,
             final String
             publicKey, final String passwordTip) {
-
         UserRegisterReqParams params = new UserRegisterReqParams();
+
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)){
-
+            int isComfirmLib = curWallet.getIsConfirmLib();
+            if(isComfirmLib == CacheConstants.CONFIRM_FAILED){
+                //如果当前钱包的此字段为Confirm_Failed,说明此钱包创建失败过一次,取出其Hash值之后删除此钱包
+                String txID = curWallet.getTxId();
+                params.setTxId(txID);
+                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
+            }
         }
-
 
         params.setApp_id(ParamConstants.TYPE_APP_ID_CYBEX);
         params.setAccount_name(accountname);
@@ -79,10 +83,8 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             if (registerResult != null) {
                                 String txId = registerResult.txId;
                                 saveAccount(publicKey, privateKey, password, accountname, passwordTip, txId);
-                                GemmaToastUtils.showLongToast("本地创建成功，请等待链上确认！");
                                 UISkipMananger.launchHome(getV());
-
-                                LibValidateJob.startPolling(5000);
+                                LibValidateJob.startPolling(10000);
                             }
                         } else {
                             getV().showOnErrorInfo(data.code);
@@ -142,6 +144,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
             final String publicKey, final String privateKey, final String
             password, final String eosUsername, final String passwordTip, final String txId) {
 
+
         WalletEntity walletEntity = new WalletEntity();
         List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
         //获取当前数据库中已存入的钱包个数
@@ -167,7 +170,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         walletEntity.setPasswordTip(passwordTip);
         //设置为未备份
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
-        //设置未被链完全确认
+        //设置被链上确认状态位未被确认
         walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
         //设置当前Transaction的Hash值
         walletEntity.setTxId(txId);

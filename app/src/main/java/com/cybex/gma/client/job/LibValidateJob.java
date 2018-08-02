@@ -3,13 +3,17 @@ package com.cybex.gma.client.job;
 import android.content.Context;
 
 import com.cybex.gma.client.GmaApplication;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.request.GetTransactionReqParams;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetTransactionRequest;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.lzy.okgo.callback.StringCallback;
@@ -112,11 +116,12 @@ public class LibValidateJob {
                                 JSONObject trx = obj.optJSONObject("trx");
                                 LoggerManager.d("block_num", block_num);
                                 res[0] = block_num;
-                                if (trx == null) {
+                                if (EmptyUtils.isEmpty(trx)) {
                                     res[1] = "false";
                                 } else {
                                     res[1] = "true";
                                 }
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -189,7 +194,6 @@ public class LibValidateJob {
                         LoggerManager.d("block_num", curBlockNum);
                         String trx = getTResult[1];
 
-
                         if (trx.equals("false")) {
                             return STATUS_FAILED;
                         } else {
@@ -214,14 +218,23 @@ public class LibValidateJob {
                         // 结合显示2个网络请求的数据结果
                         switch (combine_infro.intValue()) {
                             case STATUS_FAILED:
+                                //如果失败，结束本次轮询，设置当前钱包isConfirm字段为-1，表示失败过，重新创建钱包
                                 LoggerManager.d("status", "failed");
-
+                                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao()
+                                        .getCurrentWalletEntity();
+                                curWallet.setIsConfirmLib(CacheConstants.CONFIRM_FAILED);
+                                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                                UISkipMananger.launchCreateWallet(GmaApplication.getAppContext());
                                 removeJob();
                                 break;
                             case STATUS_OK:
                                 LoggerManager.d("status", "ok");
-
                                 //验证通过，结束轮询，结束alert TODO post eventbus
+                                WalletEntity successWallet = DBManager.getInstance().getWalletEntityDao()
+                                        .getCurrentWalletEntity();
+                                successWallet.setIsConfirmLib(CacheConstants.IS_CONFIRMED);
+                                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(successWallet);
+                                EventBusProvider.postSticky(new PollEvent(true));
                                 removeJob();
                                 break;
                             case STATUS_PENDING:
