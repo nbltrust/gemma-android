@@ -43,35 +43,6 @@ public class WalletPresenter extends XPresenter<WalletFragment>{
             @Override
             public void onJobScheduled(Context context, Job job) {
                 LoggerManager.d("polling executed");
-                /*
-                //todo 执行 get_Info request 查询，需要手动设置轮询关闭逻辑
-                int[] getInfoResult = getConfigInfo();
-                String[] getTResult = getTransaction();
-                int head = getInfoResult[1];
-                LoggerManager.d("head", head);
-                int lib = getInfoResult[0];
-                LoggerManager.d("lib", lib);
-                int curBlockNum = Integer.parseInt(getTResult[0]);
-                LoggerManager.d("block_num", curBlockNum);
-                String trx = getTResult[1];
-
-                if (trx == null){
-                    //fail
-                    smartScheduler.removeJob(ParamConstants.POLLING_JOB);
-                    LoggerManager.d("status","failed");
-                    //UISkipMananger.launchCreateWallet(getV().getActivity());
-                }else if (curBlockNum < lib){
-                    //done
-                    smartScheduler.removeJob(ParamConstants.POLLING_JOB);
-                    LoggerManager.d("status", "Done");
-                }else if(curBlockNum >= lib && curBlockNum <= head){
-                    //pending
-                    LoggerManager.d("status", "pending");
-                }else{
-                    //online
-                    LoggerManager.d("status", "online");
-                }
-                */
             }
 
         };
@@ -112,7 +83,7 @@ public class WalletPresenter extends XPresenter<WalletFragment>{
             @Override
             public void onJobScheduled(Context context, Job job) {
                 LoggerManager.d("job executed");
-                /*
+
                 int[] getInfoResult = getConfigInfo();
                 String[] getTResult = getTransaction();
                 int head = getInfoResult[1];
@@ -123,25 +94,25 @@ public class WalletPresenter extends XPresenter<WalletFragment>{
                 LoggerManager.d("block_num", curBlockNum);
                 String trxStatus = getTResult[1];
 
-                if (trxStatus.equals("true")){
+                if (trxStatus.equals("false")){
                     //fail
                     smartScheduler.removeJob(ParamConstants.POLLING_JOB);
                     LoggerManager.d("status","failed");
                     //UISkipMananger.launchCreateWallet(getV().getActivity());
-                }else if (curBlockNum < lib){
-                    //done
-                    smartScheduler.removeJob(ParamConstants.POLLING_JOB);
-                    LoggerManager.d("status", "Done");
-                }else if(curBlockNum >= lib && curBlockNum <= head){
-                    //pending
-                    LoggerManager.d("status", "pending");
-                }else{
-                    //online
-                    LoggerManager.d("status", "online");
+                }else {
+                    if (curBlockNum < lib){
+                        //done
+                        smartScheduler.removeJob(ParamConstants.POLLING_JOB);
+                        LoggerManager.d("status", "Done");
+                    }else if(curBlockNum >= lib && curBlockNum <= head){
+                        //pending
+                        LoggerManager.d("status", "pending");
+                    }else{
+                        //online
+                        LoggerManager.d("status", "online");
+                    }
                 }
-                  */
             }
-
         };
 
         Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, intervalTime);
@@ -177,6 +148,11 @@ public class WalletPresenter extends XPresenter<WalletFragment>{
                                 e.printStackTrace();
                             }
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
                     }
                 });
         return result;
@@ -223,6 +199,11 @@ public class WalletPresenter extends XPresenter<WalletFragment>{
                                 e.printStackTrace();
                             }
                         }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
                     }
                 });
         return res;

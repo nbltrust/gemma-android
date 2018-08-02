@@ -18,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -287,9 +288,41 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         return edtPassHint.getText().toString().trim();
     }
 
-    public void showOnErrorInfo() {
+
+    public void showOnErrorInfo(int errorCode) {
         //todo 根据返回值判断提醒的内容
-        GemmaToastUtils.showLongToast("创建失败，请重新尝试");
+        switch (errorCode){
+            case(HttpConst.INVCODE_USED):
+                GemmaToastUtils.showLongToast("创建失败，邀请码已被使用！");
+                break;
+            case(HttpConst.INVCODE_NOTEXIST):
+                GemmaToastUtils.showLongToast("创建失败，邀请码不存在！");
+                break;
+            case(HttpConst.EOSNAME_USED):
+                GemmaToastUtils.showLongToast("创建失败，eos账户名已存在！");
+                break;
+            case(HttpConst.EOSNAME_INVALID):
+                GemmaToastUtils.showLongToast("创建失败，eos账户名格式错误！");
+                break;
+            case(HttpConst.EOSNAME_LENGTH_INVALID):
+                GemmaToastUtils.showLongToast("创建失败，eos账户名长度不为12位！");
+                break;
+            case(HttpConst.PARAMETERS_INVALID):
+                GemmaToastUtils.showLongToast("创建失败，参数错误！");
+                break;
+            case(HttpConst.PUBLICKEY_INVALID):
+                GemmaToastUtils.showLongToast("创建失败，参数错误！");
+                break;
+            default:
+
+                GemmaToastUtils.showLongToast("创建失败，请重新尝试");
+                break;
+        }
+
+
+
+
+
     }
 
     @Override
