@@ -42,7 +42,6 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
     @BindView(R.id.rv_list) RecyclerView mRecyclerView;
 
     private TransferRecordListAdapter mAdapter;
-    private List<TransferHistory> data = new ArrayList<>();
     private String currentEosName = "";
     private int currentLastPos = -1;
     private boolean isFirstLoad = true;

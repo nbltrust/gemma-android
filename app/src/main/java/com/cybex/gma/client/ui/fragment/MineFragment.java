@@ -44,6 +44,7 @@ public class MineFragment extends XFragment<MinePresenter> {
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle(getString(R.string.title_me), false);
+        OverScrollDecoratorHelper.setUpOverScroll(scrollViewMe);
     }
 
     @Override
@@ -84,7 +85,6 @@ public class MineFragment extends XFragment<MinePresenter> {
             }
         });
 
-        OverScrollDecoratorHelper.setUpOverScroll(scrollViewMe);
     }
 
     @Override
