@@ -43,8 +43,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
 
     private TransferRecordListAdapter mAdapter;
     private List<TransferHistory> data = new ArrayList<>();
-    //TODO
-    private String currentEosName = "cooljadepool";
+    private String currentEosName = "";
     private int currentLastPos = -1;
     private boolean isFirstLoad = true;
 
@@ -61,6 +60,15 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         setNavibarTitle(getString(R.string.title_transfer_record), true, true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
+
+        WalletEntity entity = DBManager.getInstance()
+                .getWalletEntityDao()
+                .getCurrentWalletEntity();
+        if (entity != null) {
+            currentEosName = entity.getCurrentEosName();
+        }
+
+
     }
 
     @Override
@@ -119,16 +127,6 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         if (EmptyUtils.isEmpty(dataList)) {
             dataList = new ArrayList<>();
         }
-
-        WalletEntity entity = DBManager.getInstance()
-                .getWalletEntityDao()
-                .getCurrentWalletEntity();
-        if (entity != null) {
-            currentEosName = entity.getCurrentEosName();
-        }
-
-        //TODO 暂时测试用
-        currentEosName = "cooljadepool";
 
         if (mAdapter == null) {
             //第一次请求

@@ -111,7 +111,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
         textViewBackupWallet.setVisibility(View.VISIBLE);
         generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
