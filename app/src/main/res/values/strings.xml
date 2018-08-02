@@ -203,8 +203,8 @@
     <string name="walletManege">钱包管理</string>
     <string name="income">收入</string>
     <string name="payment">支出</string>
-    <string name="income_amount">+%1$s</string>
-    <string name="payment_amount">-%1$s</string>
+    <string name="income_amount">+ %1$s</string>
+    <string name="payment_amount">- %1$s</string>
 
     <string name="setting_language_auto">跟随系统</string>
     <string name="setting_language_english">English</string>

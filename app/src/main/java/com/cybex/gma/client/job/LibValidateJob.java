@@ -190,12 +190,12 @@ public class LibValidateJob {
                         String trx = getTResult[1];
 
 
-                        if (EmptyUtils.isEmpty(trx)) {
+                        if (trx.equals("false")) {
                             return STATUS_FAILED;
                         } else {
-                            if (curBlockNum < lib) {
+                            if (curBlockNum <= lib) {
                                 return STATUS_OK;
-                            } else if (curBlockNum >= lib && curBlockNum <= head) {
+                            } else if (curBlockNum > lib && curBlockNum <= head) {
                                 //pending  显示alert，一直轮询
                                 LoggerManager.d("status", "pending");
                                 return STATUS_PENDING;

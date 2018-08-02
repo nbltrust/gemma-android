@@ -83,11 +83,58 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterEosNameChanged(Editable s) {
+        if (isAllTextFilled() && checkboxConfig.isChecked()){
+            setClickable(btCreateWallet);
+        }else{
+            setUnclickable(btCreateWallet);
+        }
+
         if (getP().isUserNameValid()) {
             setEOSNameValidStyle();
         } else {
+            setUnclickable(btCreateWallet);
             setEOSNameInvalidStyle();
         }
+    }
+
+    @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterPassChanged(Editable s){
+        if (isAllTextFilled() && checkboxConfig.isChecked()){
+            setClickable(btCreateWallet);
+        }else{
+            setUnclickable(btCreateWallet);
+        }
+    }
+
+    @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterRepeatPassChanged(Editable s){
+        if (isAllTextFilled() && checkboxConfig.isChecked()){
+            setClickable(btCreateWallet);
+        }else{
+            setUnclickable(btCreateWallet);
+        }
+
+        if (getPassword().equals(getRepeatPassword())){
+            //两次输入的密码一致
+            tvRepeatPass.setText("重复密码");
+            tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
+            edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        }else{
+            //两次输入的密码不一致
+            tvRepeatPass.setText("密码不一致");
+            tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
+            edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+        }
+    }
+
+    @OnTextChanged(value = R.id.edt_invCode, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterInvCodeChanged(Editable s){
+        if (isAllTextFilled() && checkboxConfig.isChecked()){
+            setClickable(btCreateWallet);
+        }else{
+            setUnclickable(btCreateWallet);
+        }
+
     }
 
     @OnClick(R.id.bt_create_wallet)
@@ -311,7 +358,13 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 GemmaToastUtils.showLongToast("创建失败，参数错误！");
                 break;
             case(HttpConst.PUBLICKEY_INVALID):
-                GemmaToastUtils.showLongToast("创建失败，参数错误！");
+                GemmaToastUtils.showLongToast("创建失败，无效的公钥！");
+                break;
+            case(HttpConst.BALANCE_NOT_ENOUGH):
+                GemmaToastUtils.showLongToast("创建失败，账户余额不足！");
+                break;
+            case(HttpConst.CREATE_ACCOUNT_FAIL):
+                GemmaToastUtils.showLongToast("创建失败，请重新尝试");
                 break;
             default:
 
