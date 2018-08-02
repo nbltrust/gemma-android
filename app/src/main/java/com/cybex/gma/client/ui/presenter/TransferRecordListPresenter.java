@@ -66,7 +66,12 @@ public class TransferRecordListPresenter extends XPresenter<TransferRecordListFr
                                         getV().refreshData(newList);
                                     } else {
                                         //加载更多数据
-                                        getV().loadMoreData(newList);
+                                        if(EmptyUtils.isNotEmpty(newList)){
+                                            getV().loadMoreData(newList);
+                                        }else{
+                                            getV().showEmptyOrFinish();
+                                        }
+
                                     }
                                 } else {
                                     getV().showEmptyOrFinish();
