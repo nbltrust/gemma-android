@@ -112,26 +112,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         //初始化页面时清空轮询JOB
-
-        /*
-        SmartScheduler smartScheduler = SmartScheduler.getInstance(getActivity().getApplicationContext());
-        if (smartScheduler.contains(ParamConstants.ALARM_JOB) || smartScheduler.contains(ParamConstants.POLLING_JOB)){
-            smartScheduler.removeJob(ParamConstants.POLLING_JOB);
-            smartScheduler.removeJob(ParamConstants.ALARM_JOB);
-        }
-        SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
-            @Override
-            public void onJobScheduled(Context context, Job job) {
-                LoggerManager.d("job executed");
-            }
-        };
-
-        Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, 5000);
-        smartScheduler.addJob(job);
-        */
-        getP().startPolling(5000);
-
-
         textViewBackupWallet.setVisibility(View.VISIBLE);
         generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);

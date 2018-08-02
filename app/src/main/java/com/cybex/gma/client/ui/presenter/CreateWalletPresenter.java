@@ -8,6 +8,7 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.job.LibValidateJob;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -69,9 +70,10 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             UserRegisterResult registerResult = data.result;
                             if (registerResult != null) {
                                 String txId = registerResult.txId;
-                                //TODO
                                 saveAccount(publicKey, privateKey, password, accountname, passwordTip, txId);
                                 UISkipMananger.launchHome(getV());
+
+                                LibValidateJob.startPolling(5000);
                             }
                         } else {
                             getV().showOnErrorInfo();

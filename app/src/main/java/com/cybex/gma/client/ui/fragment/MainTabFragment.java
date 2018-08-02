@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.TabSelectedEvent;
+import com.cybex.gma.client.job.LibValidateJob;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
 import com.cybex.gma.client.widget.bottombar.BottomBarTab;
@@ -59,6 +60,12 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
                     //转账
                     EventBusProvider.postSticky(new TabSelectedEvent());
                 }
+
+                if(position==2){
+                    //测试用
+                    LibValidateJob.startPolling(5000);
+                }
+
             }
 
             @Override
