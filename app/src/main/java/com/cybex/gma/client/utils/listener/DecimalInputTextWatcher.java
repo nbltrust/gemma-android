@@ -110,6 +110,7 @@ public class DecimalInputTextWatcher implements TextWatcher {
             }
         }
 
+
     }
 
     public enum Type {

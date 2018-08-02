@@ -4,10 +4,9 @@ import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
-import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.TransferFragment;
-import com.cybex.gma.client.ui.model.request.GetAccountReqParams;
+import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
@@ -37,14 +36,17 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     private static final String VALUE_ACTION = "transfer";
     private static final String VALUE_CONTRACT = "eosio.token";
     private static final String VALUE_COMPRESSION = "none";
+    private static final String VALUE_SYMBOL = "EOS";
 
-    public void requestAccountInfo() {
+    public void requestBanlanceInfo() {
         WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (entity == null) { return; }
 
         String currentEOSName = entity.getCurrentEosName();
-        GetAccountReqParams params = new GetAccountReqParams();
-        params.setAccount_name(currentEOSName);
+        GetCurrencyBalanceReqParams params = new GetCurrencyBalanceReqParams();
+        params.setAccount(currentEOSName);
+        params.setCode(VALUE_CODE);
+        params.setSymbol(VALUE_SYMBOL);
         String jsonParams = GsonUtils.objectToJson(params);
 
         new GetCurrencyBalanceRequest(String.class)
@@ -53,7 +55,6 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onStart(Request<String, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("加载中...");
                     }
 
                     @Override
@@ -64,8 +65,6 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        getV().dissmisProgressDialog();
-
                         String jsonStr = response.body();
                         String banlance = "";
                         LoggerManager.d("json:" + jsonStr);
@@ -74,6 +73,8 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             if (array != null && array.length() > 0) {
                                 banlance = array.optString(0);
                                 getV().showInitData(banlance);
+                            } else {
+                                GemmaToastUtils.showShortToast("没有获取到该账户余额信息");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -159,17 +160,18 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onSuccess(Response<String> response) {
                         if (response != null && EmptyUtils.isNotEmpty(response.body())) {
-                            String infoJson = response.body();
-                            LoggerManager.d("config info:" + infoJson);
+                            String infostr = response.body();
+                            LoggerManager.d("config info:" + infostr);
                             //C++库获取Transaction交易体
                             String transactionStr = JNIUtil.signTransaction_tranfer(privateKey,
-                                    VALUE_CONTRACT, from, to, abiStr,
+                                    VALUE_CONTRACT, from, infostr, abiStr,
                                     0,
                                     0,
                                     120);
                             LoggerManager.d("transactionJson:" + transactionStr);
 
-                            TransferTransactionVO vo = GsonUtils.jsonToBean(infoJson, TransferTransactionVO.class);
+                            TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
+                                    TransferTransactionVO.class);
                             if (vo != null) {
                                 //构造PushTransaction 请求的json参数
                                 PushTransactionReqParams reqParams = new PushTransactionReqParams();
@@ -211,12 +213,12 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onSuccess(Response<String> response) {
                         getV().dissmisProgressDialog();
-                        if (response != null && response.body() != null) {
+                        if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                            //跳转到转账记录列表界面
-                            UISkipMananger.launchTransferRecord(getV().getActivity());
+                            GemmaToastUtils.showLongToast("转账成功");
+                            getV().clearData();
 
                         }
 

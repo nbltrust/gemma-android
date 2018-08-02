@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
@@ -20,6 +22,11 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.text.DecimalFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,26 +81,20 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle(getString(R.string.title_transfer), false);
         OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
-
-        getP().requestAccountInfo();
-
     }
 
 
     public void showInitData(String banlance) {
-        maxValue = banlance;
-        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (entity != null) {
-            currentEOSName = entity.getCurrentEosName();
+        if (EmptyUtils.isEmpty(banlance)) { return; }
+
+        String[] spiltBanlance = banlance.split(" ");
+        if (EmptyUtils.isEmpty(spiltBanlance)) {
+            return;
+
         }
 
-        tvPayAccount.setText(currentEOSName);
-        tvBanlance.setText("余额：" + maxValue);
-    }
-
-
-    @Override
-    public void initData(Bundle savedInstanceState) {
+        maxValue = spiltBanlance[0].trim();
+        tvBanlance.setText("余额：" + banlance);
 
         etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
                 .Type.decimal, 4, maxValue) {
@@ -103,6 +104,42 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                 validateButton();
             }
         });
+
+
+        etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    validateAmountValue();
+                }
+            }
+        });
+
+    }
+
+
+    private void validateAmountValue() {
+        String text = String.valueOf(etAmount.getText());
+        if (EmptyUtils.isNotEmpty(text)) {
+            LoggerManager.d("input text:" + text);
+            DecimalFormat df = new DecimalFormat("00.0000");
+            df.setMaximumFractionDigits(4);
+            df.setMinimumFractionDigits(4);
+            String data = df.format(Double.parseDouble(text));
+            etAmount.setText(data);
+        }
+
+    }
+
+
+    @Override
+    public void initData(Bundle savedInstanceState) {
+        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (entity != null) {
+            currentEOSName = entity.getCurrentEosName();
+        }
+
+        tvPayAccount.setText(currentEOSName);
 
         etCollectionAccount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -133,8 +170,22 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         } else {
             btnTransfer.setEnabled(false);
         }
+
     }
 
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onTabSelctedEvent(TabSelectedEvent event) {
+        if (event != null) {
+            LoggerManager.d("tab transfer selected");
+            getP().requestBanlanceInfo();
+        }
+
+    }
 
     @Override
     public int getLayoutId() {
@@ -159,6 +210,12 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @OnClick({R.id.btn_transfer})
     public void onClickSubmitTransfer(View view) {
+        String toAccount = String.valueOf(etCollectionAccount.getText());
+        if (toAccount.equals(currentEOSName)) {
+            GemmaToastUtils.showShortToast("不能给自己的账户转账");
+            return;
+        }
+        validateAmountValue();
         showConfirmTransferDialog();
     }
 
@@ -219,12 +276,14 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
 
+    CustomFullDialog dialog = null;
+
     /**
      * 显示确认授权dialog
      */
     private void showConfirmAuthoriDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+        dialog = new CustomFullDialog(getContext(),
                 R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
@@ -246,8 +305,15 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                     .getCurrentWalletEntity();
                             if (entity != null) {
                                 String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
-                                getP().executeTransferLogic(entity.getCurrentEosName(),
-                                        collectionAccount, amount, memo, privateKey);
+
+
+                                if ("wrong password".equals(privateKey)) {
+                                    GemmaToastUtils.showShortToast("密码输入错误，请重试");
+                                } else {
+                                    getP().executeTransferLogic(entity.getCurrentEosName(),
+                                            collectionAccount, amount + " " + "EOS", memo, privateKey);
+                                }
+
                             } else {
                                 GemmaToastUtils.showShortToast("当前账户转账出现异常");
                             }
@@ -261,6 +327,20 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         dialog.show();
         EditText etPasword = dialog.findViewById(R.id.et_password);
         etPasword.setHint("请输入@" + currentEOSName + "的密码");
+    }
+
+
+    public void clearData() {
+        if (dialog != null) {
+            dialog.cancel();
+        }
+
+        etCollectionAccount.setText("");
+        etAmount.setText("");
+        etNote.setText("");
+
+        //刷新数据
+        getP().requestBanlanceInfo();
     }
 
 
