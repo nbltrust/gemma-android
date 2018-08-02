@@ -205,5 +205,4 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
 
 
-
 }

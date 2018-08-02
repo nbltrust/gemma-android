@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <include
         layout="@layout/ui_navibar">
@@ -15,13 +15,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        title:layout_constraintStart_toStartOf="parent"
-        title:layout_constraintEnd_toEndOf="parent"
-        title:layout_constraintTop_toBottomOf="@id/btn_navibar"
+        android:layout_marginStart="20dp"
+        android:orientation="vertical"
         title:layout_constraintBottom_toBottomOf="parent"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        title:layout_constraintTop_toBottomOf="@id/btn_navibar"
         >
 
 
@@ -37,8 +37,8 @@
                 android:id="@+id/arrow"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:layout_marginTop="12dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/ic_income_white"
                 title:layout_constraintStart_toStartOf="parent"
                 title:layout_constraintTop_toTopOf="parent"/>
@@ -50,8 +50,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
                 android:text="收入"
-                android:textSize="18sp"
                 android:textColor="@color/whiteTwo"
+                android:textSize="18sp"
                 title:layout_constraintStart_toEndOf="@+id/arrow"
                 title:layout_constraintTop_toTopOf="parent"/>
 
@@ -62,8 +62,8 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:text="+2.1101"
-                android:textSize="24sp"
                 android:textColor="@color/whiteTwo"
+                android:textSize="24sp"
                 title:layout_constraintBottom_toBottomOf="parent"
                 title:layout_constraintStart_toStartOf="@+id/tv_income_or_out"
                 title:layout_constraintTop_toBottomOf="@+id/tv_income_or_out"/>
@@ -77,6 +77,7 @@
                 android:text="@string/eos"
                 android:textColor="@color/whiteTwo"
                 android:textSize="24sp"
+                android:visibility="gone"
                 title:layout_constraintBottom_toBottomOf="parent"
                 title:layout_constraintStart_toEndOf="@+id/tv_amount"
                 title:layout_constraintTop_toBottomOf="@+id/tv_income_or_out"/>
@@ -85,124 +86,151 @@
 
         <LinearLayout
             android:id="@+id/layout_detail_1"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginTop="10dp"
+            android:orientation="vertical"
             >
             
             <com.allen.library.SuperTextView
-                title:sUseShape="true"
-                title:sShapeSolidColor="@color/whiteTwo"
+                android:id="@+id/superTextView_receiver"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 title:sLeftTextColor="@color/steel"
                 title:sLeftTextSize="@dimen/total_assets_text_size"
                 title:sLeftTextString="@string/receiver"
                 title:sRightTextColor="@color/darkSlateBlue"
-                title:sRightTextString="dopadopa1234"
                 title:sRightTextSize="@dimen/total_assets_text_size"
-                android:id="@+id/superTextView_receiver"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
+                title:sRightTextString="dopadopa1234"
+                title:sShapeSolidColor="@color/whiteTwo"
+                title:sUseShape="true">
                 
             </com.allen.library.SuperTextView>
 
             <com.allen.library.SuperTextView
-                title:sUseShape="true"
-                title:sShapeSolidColor="@color/whiteTwo"
+                android:id="@+id/superTextView_blockTime"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 title:sLeftTextColor="@color/steel"
                 title:sLeftTextSize="@dimen/total_assets_text_size"
                 title:sLeftTextString="@string/block_time"
                 title:sRightTextColor="@color/darkSlateBlue"
-                title:sRightTextString="2018/07/08 10:11"
                 title:sRightTextSize="@dimen/total_assets_text_size"
-                android:id="@+id/superTextView_blockTime"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
+                title:sRightTextString="2018/07/08 10:11"
+                title:sShapeSolidColor="@color/whiteTwo"
+                title:sUseShape="true">
 
             </com.allen.library.SuperTextView>
 
             <com.allen.library.SuperTextView
-                title:sUseShape="true"
-                title:sShapeSolidColor="@color/whiteTwo"
+                android:id="@+id/superTextView_transfer_status"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 title:sLeftTextColor="@color/steel"
                 title:sLeftTextSize="@dimen/total_assets_text_size"
                 title:sLeftTextString="@string/transfer_status"
                 title:sRightTextColor="@color/darkSlateBlue"
-                title:sRightTextString="待确认"
                 title:sRightTextSize="@dimen/total_assets_text_size"
-                android:id="@+id/superTextView_transfer_status"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
+                title:sRightTextString="待确认"
+                title:sShapeSolidColor="@color/whiteTwo"
+                title:sUseShape="true">
 
             </com.allen.library.SuperTextView>
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <android.support.constraint.ConstraintLayout
+                android:background="@color/whiteTwo"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="100dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="80dp"
-                    android:text="@string/memo"
-                    android:background="@color/whiteTwo"
+                    android:id="@+id/tv_memo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingStart="10dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"/>
+                    android:text="@string/memo"
+                    android:textColor="@color/steel"
+                    android:textSize="@dimen/font_3.5"
+                    title:layout_constraintTop_toTopOf="parent"
+                    title:layout_constraintBottom_toBottomOf="parent"
+                    title:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    />
 
                 <TextView
+                    android:id="@+id/tv_show_memo"
+                    android:layout_width="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="3"
-                    android:textColor="@color/darkSlateBlue"
                     android:text="资金用途描述不超过三行，资金用途描述不超过三行，资金用途描述不超过三行，资金用途描述不超过三行，资金用途描述不超。"
-                    android:id="@+id/tv_memo"
-                    android:background="@color/whiteTwo"
-                    android:layout_width="100dp"
-                    android:layout_weight="11"
-                    android:paddingStart="10dp"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="10dp"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
+                    android:textColor="@color/darkSlateBlue"
+                    android:textAlignment="viewEnd"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    title:layout_constraintTop_toTopOf="parent"
+                    title:layout_constraintBottom_toBottomOf="parent"
+                    title:layout_constraintEnd_toEndOf="parent"
+
+                    />
+            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_detail_2"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
             >
 
-           <com.allen.library.SuperTextView
-                title:sUseShape="true"
-                title:sShapeSolidColor="@color/whiteTwo"
-                title:sLeftTextColor="@color/steel"
-                title:sLeftTextSize="@dimen/total_assets_text_size"
-                title:sLeftTextString="@string/transfer_id"
-
-                title:sRightTextColor="@color/darkSlateBlue"
-                title:sRightTextString="0quw12150...1321f25"
-                title:sRightTextSize="@dimen/total_assets_text_size"
-                android:id="@+id/superTextView_transferId"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="@dimen/dimen_50"
+                android:background="@color/whiteTwo">
 
-            </com.allen.library.SuperTextView>
+                <TextView
+                    android:id="@+id/tv_transfer_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:text="@string/transfer_id"
+                    title:layout_constraintBottom_toBottomOf="parent"
+                    title:layout_constraintStart_toStartOf="parent"
+                    title:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_show_transfer_id"
+                    android:layout_width="@dimen/dimen_140"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:ellipsize="middle"
+                    android:gravity="end"
+                    android:singleLine="true"
+                    android:textColor="@color/darkSlateBlue"
+                    android:textSize="@dimen/font_3.5"
+                    title:layout_constraintBottom_toBottomOf="parent"
+                    title:layout_constraintEnd_toEndOf="parent"
+                    title:layout_constraintStart_toEndOf="@string/transfer_id"
+                    title:layout_constraintTop_toTopOf="parent"
+                    tools:text="0quw12150...1321f25"/>
+
+
+            </android.support.constraint.ConstraintLayout>
 
             <com.allen.library.SuperTextView
-                title:sUseShape="true"
-                title:sShapeSolidColor="@color/whiteTwo"
+                android:id="@+id/superTextView_blockId"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 title:sLeftTextColor="@color/steel"
                 title:sLeftTextSize="@dimen/total_assets_text_size"
                 title:sLeftTextString="@string/block_num"
                 title:sRightTextColor="@color/darkSlateBlue"
-                title:sRightTextString="5456999"
                 title:sRightTextSize="@dimen/total_assets_text_size"
-                android:id="@+id/superTextView_blockId"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
+                title:sRightTextString="5456999"
+                title:sShapeSolidColor="@color/whiteTwo"
+                title:sUseShape="true">
 
             </com.allen.library.SuperTextView>
 
@@ -210,13 +238,13 @@
 
         <TextView
             android:id="@+id/tv_see_in_explorer"
-            android:text="@string/see_in_explorer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="15dp"
+            android:text="@string/see_in_explorer"
             android:textColor="@color/cornflowerBlue"
-            android:textSize="12sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="12sp"/>
 
     </LinearLayout>
 

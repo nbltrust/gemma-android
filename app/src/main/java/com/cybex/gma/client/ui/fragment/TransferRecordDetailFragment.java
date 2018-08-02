@@ -15,6 +15,7 @@ import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +23,11 @@ import butterknife.Unbinder;
 
 public class TransferRecordDetailFragment extends XFragment {
 
+    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
+    @BindView(R.id.tv_show_transfer_id) TextView tvShowTransferId;
+    @BindView(R.id.tv_memo) TextView tvMemo;
+    @BindView(R.id.tv_show_memo) TextView tvShowMemo;
+    @BindView(R.id.tv_transfer_id) TextView tvTransferId;
     private TransferHistory curTransfer;
     private WalletEntity curWallet;
     private String curEosName;
@@ -32,9 +38,8 @@ public class TransferRecordDetailFragment extends XFragment {
     @BindView(R.id.superTextView_receiver) SuperTextView superTextViewReceiver;
     @BindView(R.id.superTextView_blockTime) SuperTextView superTextViewBlockTime;
     @BindView(R.id.superTextView_transfer_status) SuperTextView superTextViewTransferStatus;
-    @BindView(R.id.tv_memo) TextView tvMemo;
+
     @BindView(R.id.layout_detail_1) LinearLayout layoutDetail1;
-    @BindView(R.id.superTextView_transferId) SuperTextView superTextViewTransferId;
     @BindView(R.id.superTextView_blockId) SuperTextView superTextViewBlockId;
     @BindView(R.id.layout_detail_2) LinearLayout layoutDetail2;
     @BindView(R.id.tv_see_in_explorer) TextView tvSeeInExplorer;
@@ -86,10 +91,10 @@ public class TransferRecordDetailFragment extends XFragment {
                     }
                     //设置固定的值
                     superTextViewBlockTime.setRightString(curTransfer.time);
-                    tvMemo.setText(curTransfer.memo);
+                    tvShowMemo.setText(curTransfer.memo);
                     superTextViewBlockId.setRightString(String.valueOf(curTransfer.block));
                     superTextViewTransferStatus.setRightString(String.valueOf(curTransfer.status));
-                    superTextViewTransferId.setLeftString(curTransfer.hash);
+                    tvShowTransferId.setText(curTransfer.hash);
                 }
 
             }

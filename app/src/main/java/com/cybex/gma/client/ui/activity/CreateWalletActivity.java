@@ -90,6 +90,31 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         }
     }
 
+    @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterPassChanged(Editable s){
+
+    }
+
+    @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterRepeatPassChanged(Editable s){
+        if (getPassword().equals(getRepeatPassword())){
+            //两次输入的密码一致
+            tvRepeatPass.setText("重复密码");
+            tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
+            tvRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        }else{
+            //两次输入的密码不一致
+            tvRepeatPass.setText("密码不一致");
+            tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
+            tvRepeatPass.set
+        }
+    }
+
+    @OnTextChanged(value = R.id.edt_invCode, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterInvCodeChanged(Editable s){
+
+    }
+
     @OnClick(R.id.bt_create_wallet)
     public void checkAndCreateWallet() {
         //先判断checkbox是否勾选以及EOS账户名是否合法
@@ -311,7 +336,13 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 GemmaToastUtils.showLongToast("创建失败，参数错误！");
                 break;
             case(HttpConst.PUBLICKEY_INVALID):
-                GemmaToastUtils.showLongToast("创建失败，参数错误！");
+                GemmaToastUtils.showLongToast("创建失败，无效的公钥！");
+                break;
+            case(HttpConst.BALANCE_NOT_ENOUGH):
+                GemmaToastUtils.showLongToast("创建失败，账户余额不足！");
+                break;
+            case(HttpConst.CREATE_ACCOUNT_FAIL):
+                GemmaToastUtils.showLongToast("创建失败，请重新尝试");
                 break;
             default:
 
