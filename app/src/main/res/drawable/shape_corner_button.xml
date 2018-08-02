@@ -9,7 +9,4 @@
         android:bottomRightRadius="@dimen/bt_radius"
         >
     </corners>
-    <stroke android:width="@dimen/x1" android:color="@color/darkSlateBlue">
-
-    </stroke>
 </shape>

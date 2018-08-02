@@ -16,5 +16,6 @@ public interface CacheConstants {
 
     Integer IS_CONFIRMED = 1;
     Integer NOT_CONFIRMED = 0;
+    Integer CONFIRM_FAILED = -1;
 
 }

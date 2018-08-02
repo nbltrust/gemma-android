@@ -335,7 +335,10 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         return edtPassHint.getText().toString().trim();
     }
 
-
+    /**
+     * 根据返回值不同Toast不同内容
+     * @param errorCode
+     */
     public void showOnErrorInfo(int errorCode) {
         //todo 根据返回值判断提醒的内容
         switch (errorCode){
@@ -377,6 +380,15 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
 
     }
+
+    public void showAfterFirstCreateToast(){
+            GemmaToastUtils.showLongToast("提交创建请求成功，请等待链上确认！");
+    }
+
+    public void showAfterSecondCreateToast(){
+            GemmaToastUtils.showLongToast("再次提交创建请求成功，请等待链上确认！");
+    }
+
 
     @Override
     protected void onDestroy() {

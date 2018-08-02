@@ -13,6 +13,7 @@ import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
@@ -25,6 +26,9 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
 import com.tapadoo.alerter.Alerter;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,6 +81,11 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         UISkipMananger.launchBakupGuide(getActivity());
     }
 
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
     @OnClick(R.id.superTextView_card_record)
     public void goToSeeRecord() {
         UISkipMananger.launchTransferRecord(getActivity());
@@ -104,6 +113,17 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         return fragment;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onReceivePollevent(PollEvent pollEvent){
+        if (EmptyUtils.isNotEmpty(pollEvent) && pollEvent.isDone()){
+            LoggerManager.d("isDone", pollEvent.isDone());
+            if (Alerter.isShowing()){
+                Alerter.hide();
+                LoggerManager.d("Alert Hide");
+            }
+        }
+    }
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
@@ -116,19 +136,29 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         setNavibarTitle("GEMMA", false);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (!EmptyUtils.isEmpty(curWallet) && isCurWalletBackUp()) {
-            textViewBackupWallet.setVisibility(View.GONE);
+        if (EmptyUtils.isNotEmpty(curWallet)) {
+
+            if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED)){
+                if (getActivity() != null) {
+                    Alerter.create(getActivity())
+                            .setText(getResources().getString(R.string.please_confirm_alert))
+                            .setBackgroundColorRes(R.color.scarlet)
+                            .enableSwipeToDismiss()
+                            .enableInfiniteDuration(true)
+                            .setTextAppearance(R.style.myAlert)
+                            .show();
+                }
+            }
+
+            if (isCurWalletBackUp()){
+                textViewBackupWallet.setVisibility(View.GONE);
+            }
+
         }
 
-        if (getActivity() != null) {
-            Alerter.create(getActivity())
-                    .setText(getResources().getString(R.string.please_confirm_alert))
-                    .setBackgroundColorRes(R.color.scarlet)
-                    .enableSwipeToDismiss()
-                    .enableInfiniteDuration(true)
-                    .setTextAppearance(R.style.myAlert)
-                    .show();
-        }
+
+
+
     }
 
     @Override

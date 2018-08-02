@@ -76,7 +76,7 @@ public class WalletEntity extends BaseModel implements Parcelable {
     @Column
     private Integer isBackUp;
     /**
-     * 是否被链上确认100创建成功 (1---是  0---否）
+     * 是否被链上确认100创建成功 (1---是  0---否 -1---失败）
      */
     @Column
     private Integer isConfirmLib;
