@@ -18,7 +18,9 @@ import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
 import com.cybex.gma.client.ui.model.response.UserRegisterResult;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,12 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
             publicKey, final String passwordTip) {
 
         UserRegisterReqParams params = new UserRegisterReqParams();
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)){
+
+        }
+
+
         params.setApp_id(ParamConstants.TYPE_APP_ID_CYBEX);
         params.setAccount_name(accountname);
         params.setInvitation_code(invitationCode);
@@ -71,12 +79,13 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             if (registerResult != null) {
                                 String txId = registerResult.txId;
                                 saveAccount(publicKey, privateKey, password, accountname, passwordTip, txId);
+                                GemmaToastUtils.showLongToast("本地创建成功，请等待链上确认！");
                                 UISkipMananger.launchHome(getV());
 
                                 LibValidateJob.startPolling(5000);
                             }
                         } else {
-                            getV().showOnErrorInfo();
+                            getV().showOnErrorInfo(data.code);
                         }
                     }
 

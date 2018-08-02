@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -37,6 +38,7 @@ public class ManageWalletFragment extends XFragment {
     @BindView(R.id.superTextView_createWallet) SuperTextView superTextViewCreateWallet;
     @BindView(R.id.scroll_wallet_manage) ScrollView scrollViewWalletManage;
     @BindView(R.id.recycler_wallet_manage) RecyclerView recyclerViewWalletManage;
+    @BindView(R.id.tv_existed_wallet) TextView tvExsitedWallet;
     Unbinder unbinder;
     private WalletManageListAdapter adapter;
 
@@ -107,6 +109,12 @@ public class ManageWalletFragment extends XFragment {
     public void setWalletListViewData() {
         //从数据库中读取Wallet信息转换成WalletVO列表
         List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
+        if (walletEntityList.size() == 0){
+            tvExsitedWallet.setVisibility(View.GONE);
+        }else{
+            tvExsitedWallet.setVisibility(View.VISIBLE);
+        }
+
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (!EmptyUtils.isEmpty(curWallet)){
             int chosenID = curWallet.getId();
