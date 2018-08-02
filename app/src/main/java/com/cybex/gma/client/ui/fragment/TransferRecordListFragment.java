@@ -153,6 +153,8 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
             mRecyclerView.setAdapter(mAdapter);
         }
         viewRefresh.finishRefresh();
+        viewRefresh.setLoadmoreFinished(false);
+
     }
 
 
@@ -195,7 +197,9 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
                 listMultipleStatusView.showEmpty();
             } else {
                 listMultipleStatusView.showContent();
+                viewRefresh.finishLoadmore();
                 viewRefresh.setLoadmoreFinished(true);
+
             }
 
         } else {
