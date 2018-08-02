@@ -14,4 +14,7 @@ public interface CacheConstants {
     int ALREADY_BACKUP = 1;
     int NOT_BACKUP = 0;
 
+    Integer IS_CONFIRMED = 1;
+    Integer NOT_CONFIRMED = 0;
+
 }

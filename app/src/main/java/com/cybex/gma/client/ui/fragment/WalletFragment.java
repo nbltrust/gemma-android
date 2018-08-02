@@ -12,7 +12,6 @@ import com.allen.library.SuperTextView;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
-import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
@@ -112,13 +111,27 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        //初始化页面时清空轮询JOB
+
+        /*
         SmartScheduler smartScheduler = SmartScheduler.getInstance(getActivity().getApplicationContext());
         if (smartScheduler.contains(ParamConstants.ALARM_JOB) || smartScheduler.contains(ParamConstants.POLLING_JOB)){
             smartScheduler.removeJob(ParamConstants.POLLING_JOB);
             smartScheduler.removeJob(ParamConstants.ALARM_JOB);
         }
+        SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
+            @Override
+            public void onJobScheduled(Context context, Job job) {
+                LoggerManager.d("job executed");
+            }
+        };
 
-        //getP().setPolling();
+        Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, 5000);
+        smartScheduler.addJob(job);
+        */
+        getP().startPolling(5000);
+
+
         textViewBackupWallet.setVisibility(View.VISIBLE);
         generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
@@ -180,7 +193,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         super.onDestroyView();
         unbinder.unbind();
         SmartScheduler jobScheduler = SmartScheduler.getInstance(getActivity().getApplicationContext());
-        boolean reslut = jobScheduler.removeJob(1);
+        boolean reslut = jobScheduler.removeJob(2);
+        jobScheduler.removeJob(1);
         if (reslut){
             LoggerManager.d("Job repeat Removed");
         }

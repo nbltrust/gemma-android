@@ -16,7 +16,6 @@ import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
 import com.cybex.gma.client.ui.model.response.UserRegisterResult;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
-import com.hxlx.core.lib.common.cache.CacheUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
 
@@ -71,10 +70,9 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             if (registerResult != null) {
                                 String txId = registerResult.txId;
                                 //TODO
-                                CacheUtil.put("txId", txId);
+                                saveAccount(publicKey, privateKey, password, accountname, passwordTip, txId);
+                                UISkipMananger.launchHome(getV());
                             }
-                            saveAccount(publicKey, privateKey, password, accountname, passwordTip);
-                            UISkipMananger.launchHome(getV());
                         } else {
                             getV().showOnErrorInfo();
                         }
@@ -131,7 +129,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
 
     public void saveAccount(
             final String publicKey, final String privateKey, final String
-            password, final String eosUsername, final String passwordTip) {
+            password, final String eosUsername, final String passwordTip, final String txId) {
 
         WalletEntity walletEntity = new WalletEntity();
         List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
@@ -146,20 +144,10 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         final String cypher = JNIUtil.get_cypher(password, privateKey);
         walletEntity.setCypher(cypher);
         //设置eosNameJson
-        //todo 需要一个方法把存入的字符串格式和从链上查询的数据做格式统一
         List<String> account_names = new ArrayList<>();
         account_names.add(eosUsername);
         final String eosNameJson = GsonUtils.objectToJson(account_names);
         LoggerManager.d("eosnamejson", eosNameJson);
-        /*
-        List<EOSNameVO> eosNameVOList = new ArrayList<>();
-        EOSNameVO eosNameVO = new EOSNameVO();
-        eosNameVO.setEosName(eosUsername);
-        eosNameVOList.add(eosNameVO);
-        final String eosNameJson = GsonUtils.objectToJson(eosNameVOList);
-        LoggerManager.d("eosname", eosNameJson);
-        walletEntity.setEosNameJson(eosNameJson);
-        */
         //设置currentEosName，创建钱包步骤中可以直接设置，因为默认eosNameJson中只会有一个用户名字符串
         walletEntity.setCurrentEosName(eosUsername);
         //设置是否为当前钱包，默认新建钱包为当前钱包
@@ -168,6 +156,10 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         walletEntity.setPasswordTip(passwordTip);
         //设置为未备份
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
+        //设置未被链完全确认
+        walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
+        //设置当前Transaction的Hash值
+        walletEntity.setTxId(txId);
         //执行存入操作之前需要把其他钱包设置为非当前钱包
         if (walletNum > 0) {
             WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();

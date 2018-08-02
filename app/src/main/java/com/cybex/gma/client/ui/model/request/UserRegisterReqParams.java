@@ -26,6 +26,10 @@ public class UserRegisterReqParams {
      * 公钥
      */
     private String public_key;
+    /**
+     * hash值
+     */
+    private String txId;
 
 
     public int getApp_id() {
@@ -58,5 +62,13 @@ public class UserRegisterReqParams {
 
     public void setPublic_key(String public_key) {
         this.public_key = public_key;
+    }
+
+    public String getTxId() {
+        return txId;
+    }
+
+    public void setTxId(String txId) {
+        this.txId = txId;
     }
 }

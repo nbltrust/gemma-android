@@ -45,6 +45,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
         walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);// 设置是否为当前钱包，默认新建钱包为当前钱包
         walletEntity.setPasswordTip(passwordTips);   //设置密码提示
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);      //设置为未备份
+        walletEntity.setIsConfirmLib(CacheConstants.IS_CONFIRMED); //导入的钱包设置为已被确认
         postGetKeyAccountRequest(walletEntity, walletEntityList, pubKey, walletNum);
     }
 

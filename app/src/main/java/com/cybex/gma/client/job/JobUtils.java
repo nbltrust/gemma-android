@@ -11,7 +11,7 @@ public class JobUtils {
     public static Job createPeriodicHandlerJob(int JOB_ID, SmartScheduler.JobScheduledCallback callback, int
             intervalTime){
 
-        Job.Builder builder = new Job.Builder(JOB_ID, callback, Job.Type.JOB_TYPE_HANDLER, "")
+        Job.Builder builder = new Job.Builder(JOB_ID, callback, Job.Type.JOB_TYPE_HANDLER, "io.hypertrack.android_scheduler_demo.JobPeriodicTask")
                 .setIntervalMillis(intervalTime)//设置间隔多久时间开始
                 .setPeriodic(intervalTime)//设置每隔多少时间执行
                 .setRequiredNetworkType(Job.NetworkType.NETWORK_TYPE_ANY)//任何网络下都执行
@@ -22,7 +22,7 @@ public class JobUtils {
 
     public static Job createAlarmJob(int JOB_ID, SmartScheduler.JobScheduledCallback callback, int timeInMillis){
 
-        Job.Builder builder = new Job.Builder(JOB_ID, callback, Job.Type.JOB_TYPE_ALARM, "")
+        Job.Builder builder = new Job.Builder(JOB_ID, callback, Job.Type.JOB_TYPE_ALARM, "io.hypertrack.android_scheduler_demo.JobPeriodicTask")
                 .setRequiresCharging(false)
                 .setRequiredNetworkType(Job.NetworkType.NETWORK_TYPE_ANY)
                 .setIntervalMillis(timeInMillis);

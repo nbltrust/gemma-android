@@ -31,6 +31,8 @@ public class ApiPath {
     public static final String HOST_ON_CHAIN = "http://139.224.135.236:18888" ;//"http://139.196.73.117:9000";
     //主链上的一个节点
     public static final String HOST_ON_CHAIN_MAIN = "http://13.251.120.68:8888";
+    //eosweb.net,一个外网节点，拥有当前eos链上所有数据
+    public static final String HOST_EOS_WEB = "https://eosweb.net";
 
     /**------------EOS 项目情况配置---------------*/
 }

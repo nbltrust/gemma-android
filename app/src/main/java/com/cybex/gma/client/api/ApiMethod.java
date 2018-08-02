@@ -62,5 +62,11 @@ public interface ApiMethod {
      */
     String API_GET_KEY_ACCOUNTS = "/v1/history/get_key_accounts";
 
+    /**
+     *根据txId哈希值查询当前transaction信息
+     * 创建钱包使用
+     */
+    String API_GET_TRANSACTION = "/v1/history/get_transaction";
+
 
 }
