@@ -80,6 +80,16 @@ public class ChangePasswordFragment extends XFragment {
         if (isAllFilled()){
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
         }
+
+        if (getRepeatPass().equals(getPassword())){
+            tvRepeatNewPass.setText("重复密码");
+            tvRepeatNewPass.setTextColor(getResources().getColor(R.color.steel));
+            edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        }else{
+            tvRepeatNewPass.setText("密码不一致");
+            tvRepeatNewPass.setTextColor(getResources().getColor(R.color.scarlet));
+            edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+        }
     }
 
     @OnClick(R.id.btn_confirm_change_pass)

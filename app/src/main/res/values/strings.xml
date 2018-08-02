@@ -226,5 +226,6 @@
     <string name="confirm_buy">确认买入</string>
     <string name="confirm_sell">确认卖出</string>
     <string name="explanation">说明</string>
+    <string name="change_wallet_name_hint">请输入新的钱包名称</string>
 
 </resources>

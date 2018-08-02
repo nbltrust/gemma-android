@@ -4,6 +4,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -410,6 +413,15 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             return false;
         }
         return true;
+    }
+
+    public void setEditTextHintStyle(){
+        String hintStr = getResources().getString(R.string.EOS_username_hint);
+        SpannableString ss =  new SpannableString(hintStr);
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(12, true);
+        edtEosName.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
     }
 
 

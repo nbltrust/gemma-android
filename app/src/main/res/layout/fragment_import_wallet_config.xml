@@ -3,7 +3,9 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <include
         layout="@layout/ui_navibar">
@@ -81,13 +83,15 @@
                     android:layout_height="@dimen/checkBox_length"
                     android:text="@string/agreement"
                     android:theme="@style/myCheckBox"
-                    android:textSize="14sp"/>
+                    android:textSize="@dimen/font_3"
+                    android:textColor="@color/blueyGrey"/>
 
                 <TextView
                     android:id="@+id/service_agreement_config"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:textColor="@color/darkSlateBlue"
+                    android:textSize="@dimen/font_3"
                     android:text="@string/agreement2"
                     />
             </LinearLayout>

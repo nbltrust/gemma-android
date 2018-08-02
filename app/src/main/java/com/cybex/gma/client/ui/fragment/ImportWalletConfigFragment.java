@@ -23,6 +23,7 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import cxy.com.validate.IValidateResult;
 import cxy.com.validate.Validate;
@@ -68,6 +69,19 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         ImportWalletConfigFragment fragment = new ImportWalletConfigFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onRepeatPassChanged(){
+        if (getRepeatPass().equals(getPassword())){
+            tvRepeatPass.setText("重复密码");
+            tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
+            edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        }else{
+            tvRepeatPass.setText("密码不一致");
+            tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
+            edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+        }
     }
 
     @OnClick(R.id.btn_complete_import)

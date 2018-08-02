@@ -18,7 +18,7 @@
         android:layout_marginStart="2dp"
         android:layout_marginEnd="2dp"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dimen_284"
+        android:layout_height="wrap_content"
         android:paddingTop="12dp"
         title:layout_constraintEnd_toEndOf="parent"
         title:layout_constraintStart_toStartOf="parent">
@@ -36,7 +36,7 @@
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_total_assets"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 title:sUseShape="true"
                 title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
                 title:sShapeCornersTopRightRadius="@dimen/dimen_6"
@@ -45,6 +45,7 @@
                 title:sCenterTextSize="@dimen/font_3.5"
                 title:sCenterTextColor="@color/darkSlateBlue"
                 title:sCenterTvDrawableLeft="@drawable/ic_asset"
+                android:layout_marginTop="@dimen/dimen_15"
                 >
 
             </com.allen.library.SuperTextView>
@@ -52,22 +53,24 @@
             <TextView
                 android:id="@+id/total_EOS_amount"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:text=" 0.0000 EOS"
                 android:textColor="@color/darkSlateBlueTwo"
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textSize="@dimen/font_6"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dimen_5"/>
 
             <com.allen.library.SuperTextView
                 android:id="@+id/total_CNY_amount"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 title:sUseShape="true"
                 title:sDividerLineType="none"
                 title:sCenterTextString="≈0.0000 CNY"
                 title:sCenterTextSize="@dimen/font_3.5"
+                android:layout_marginTop="@dimen/dimen_5"
                 >
 
             </com.allen.library.SuperTextView>
@@ -75,7 +78,7 @@
             <TextView
                 android:id="@+id/tv_backup_wallet"
                 android:layout_width="@dimen/dimen_60"
-                android:layout_height="@dimen/dimen_18"
+                android:layout_height="wrap_content"
                 android:text="@string/backUp_wallet"
                 android:textSize="@dimen/font_3"
                 android:layout_gravity="center"
@@ -83,6 +86,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/cornflowerBlue"
                 android:background="@drawable/shape_corner_grey"
+                android:layout_marginTop="@dimen/dimen_5"
                 />
 
             <View
@@ -91,7 +95,7 @@
                 android:elevation="3dp"
                 android:layout_marginStart="@dimen/cpu_show_area_margin"
                 android:layout_marginEnd="@dimen/cpu_show_area_margin"
-                android:layout_marginTop="@dimen/dimen_8"
+                android:layout_marginTop="@dimen/dimen_15"
                 android:background="@drawable/dash_line"
                 android:layerType="software">
 
@@ -233,6 +237,16 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            title:layout_constraintStart_toStartOf="parent"
+            title:layout_constraintEnd_toEndOf="parent"
+            title:layout_constraintTop_toBottomOf="@id/layout_top_info"
+            >
+
+        </View>
+
     </android.support.constraint.ConstraintLayout>
 
     <com.allen.library.SuperTextView
@@ -251,7 +265,7 @@
         android:layout_height="48dp"
         android:layout_marginEnd="@dimen/dimen_20"
         android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginTop="36dp">
+        android:layout_marginTop="@dimen/dimen_30">
 
     </com.allen.library.SuperTextView>
 

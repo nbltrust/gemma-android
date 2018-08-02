@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:focusable="true"
+              android:focusableInTouchMode="true">
 
     <include
         layout="@layout/ui_navibar">
@@ -57,7 +60,7 @@
                 <EditText
                     android:id="@+id/edt_eos_name"
                     style="@style/editText_config_wallet"
-                    android:hint="@string/EOS_username_hint"/>
+                    tools:hint="@string/EOS_username_hint"/>
 
 
                 <TextView
@@ -145,14 +148,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/checkBox_length"
                     android:text="@string/agreement"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_3"
+                    android:textColor="@color/blueyGrey"
                     android:theme="@style/myCheckBox"/>
 
                 <TextView
                     android:id="@+id/service_agreement_config"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/agreement2"
+                    android:textSize="@dimen/font_3"
                     android:textColor="@color/darkSlateBlue"
                     />
             </LinearLayout>
