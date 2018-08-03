@@ -14,7 +14,7 @@ import me.framework.fragmentation.anim.FragmentAnimator;
 public class AboutActivity extends XActivity {
 
     @Override
-    public void bindUI(View view){
+    public void bindUI(View view) {
         if (findFragment(AboutFragment.class) == null) {
             loadRootFragment(R.id.fl_container_about, AboutFragment.newInstance());
         }
@@ -24,7 +24,7 @@ public class AboutActivity extends XActivity {
     }
 
     @Override
-    public void initData(Bundle savedInstanceState){
+    public void initData(Bundle savedInstanceState) {
     }
 
     @Override

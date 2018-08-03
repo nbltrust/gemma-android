@@ -21,6 +21,7 @@ public class AboutFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(AboutFragment.this, rootView);
+        setNavibarTitle("关于", true,true);
     }
     
     Unbinder unbinder;
