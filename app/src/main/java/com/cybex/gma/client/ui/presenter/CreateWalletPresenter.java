@@ -45,7 +45,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
     public void createAccount(
             final String accountname, final String password, final String invitationCode, final String privateKey,
             final String
-            publicKey, final String passwordTip) {
+            publicKey, final String passwordTip, final String invCode) {
         UserRegisterReqParams params = new UserRegisterReqParams();
 
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
@@ -82,7 +82,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             UserRegisterResult registerResult = data.result;
                             if (registerResult != null) {
                                 String txId = registerResult.txId;
-                                saveAccount(publicKey, privateKey, password, accountname, passwordTip, txId);
+                                saveAccount(publicKey, privateKey, password, accountname, passwordTip, txId, invCode);
                                 UISkipMananger.launchHome(getV());
                                 LibValidateJob.startPolling(10000);
                             }
@@ -142,7 +142,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
 
     public void saveAccount(
             final String publicKey, final String privateKey, final String
-            password, final String eosUsername, final String passwordTip, final String txId) {
+            password, final String eosUsername, final String passwordTip, final String txId, final String invCode) {
 
 
         WalletEntity walletEntity = new WalletEntity();
@@ -174,6 +174,8 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
         //设置当前Transaction的Hash值
         walletEntity.setTxId(txId);
+        //设置邀请码
+        walletEntity.setInvCode(invCode);
         //执行存入操作之前需要把其他钱包设置为非当前钱包
         if (walletNum > 0) {
             WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();

@@ -153,7 +153,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                     final String publicKey = keyPair[0];
                     final String privateKey = keyPair[1];
                     getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[1], keyPair[0],
-                            getPassHint());
+                            getPassHint(), getInvCode());
                 }
 
                 @Override
@@ -218,6 +218,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             }
         });
         setNavibarTitle("创建钱包", true);
+
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewCreateWallet);
     }
 
@@ -384,15 +385,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     }
 
-    public void showAfterFirstCreateToast(){
-            GemmaToastUtils.showLongToast("提交创建请求成功，请等待链上确认！");
-    }
-
-    public void showAfterSecondCreateToast(){
-            GemmaToastUtils.showLongToast("再次提交创建请求成功，请等待链上确认！");
-    }
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -415,16 +407,13 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         return true;
     }
 
-    public void setEditTextHintStyle(){
-        String hintStr = getResources().getString(R.string.EOS_username_hint);
+    public void setEditTextHintStyle(EditText editText, int resId){
+        String hintStr = getResources().getString(resId);
         SpannableString ss =  new SpannableString(hintStr);
         AbsoluteSizeSpan ass = new AbsoluteSizeSpan(12, true);
-        edtEosName.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
+        editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
     }
-
-
-
 
 }
