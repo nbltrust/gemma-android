@@ -14,4 +14,6 @@ public interface ParamConstants {
     int ALARM_JOB = 1;
     int POLLING_JOB = 2;
 
+    String KEY_CUR_TRANSFER = "curTransfer";
+
 }
