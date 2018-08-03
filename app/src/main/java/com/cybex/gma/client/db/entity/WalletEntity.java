@@ -91,6 +91,7 @@ public class WalletEntity extends BaseModel implements Parcelable {
     @Column
     private String invCode;
 
+
     public Integer getId() {
         return id;
     }
