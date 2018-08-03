@@ -111,6 +111,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     validateAmountValue();
+                    validateButton();
                 }
             }
         });
@@ -140,6 +141,15 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
 
         tvPayAccount.setText(currentEOSName);
+
+        etCollectionAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    validateButton();
+                }
+            }
+        });
 
         etCollectionAccount.addTextChangedListener(new TextWatcher() {
             @Override

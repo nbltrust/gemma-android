@@ -36,3 +36,5 @@ platform_framework/qrcodecore/build/intermediates/javac/debug/compileDebugJavaWi
 platform_framework/qrcodecore/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/cybex/qrcode/zxing/ZXingView.class
 platform_framework/qrcodecore/build/intermediates/transforms/mergeJniLibs/debug/__content__.json
 platform_framework/qrcodecore/build/intermediates/transforms/stripDebugSymbol/debug/__content__.json
+app/GMA/release/Fantasy_release_1.0.0_2018-08-03.apk
+app/GMA/release/output.json

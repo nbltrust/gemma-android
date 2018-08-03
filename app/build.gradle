@@ -166,10 +166,10 @@ android {
         release {
             // 接口地址配置
             buildConfigField('int', 'API_PATH', "2")
-            minifyEnabled true
+            minifyEnabled false
             zipAlignEnabled true
             // 移除无用的resource文件
-            shrinkResources true
+            shrinkResources false
 
             buildConfigField "boolean", "DEVELOPER_MODE", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
