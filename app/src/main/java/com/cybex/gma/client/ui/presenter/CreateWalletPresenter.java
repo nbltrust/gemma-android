@@ -45,19 +45,8 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
     public void createAccount(
             final String accountname, final String password, final String invitationCode, final String privateKey,
             final String
-            publicKey, final String passwordTip) {
+            publicKey, final String passwordTip, final String invCode) {
         UserRegisterReqParams params = new UserRegisterReqParams();
-
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)){
-            int isComfirmLib = curWallet.getIsConfirmLib();
-            if(isComfirmLib == CacheConstants.CONFIRM_FAILED){
-                //如果当前钱包的此字段为Confirm_Failed,说明此钱包创建失败过一次,取出其Hash值之后删除此钱包
-                String txID = curWallet.getTxId();
-                params.setTxId(txID);
-                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
-            }
-        }
 
         params.setApp_id(ParamConstants.TYPE_APP_ID_CYBEX);
         params.setAccount_name(accountname);
@@ -82,7 +71,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             UserRegisterResult registerResult = data.result;
                             if (registerResult != null) {
                                 String txId = registerResult.txId;
-                                saveAccount(publicKey, privateKey, password, accountname, passwordTip, txId);
+                                saveAccount(publicKey, privateKey, password, accountname, passwordTip, txId, invCode);
                                 UISkipMananger.launchHome(getV());
                                 LibValidateJob.startPolling(10000);
                             }
@@ -94,6 +83,60 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         getV().dissmisProgressDialog();
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    /**
+     * 重新请求
+     */
+    public void reCreateAccount(WalletEntity walletEntity) {
+        UserRegisterReqParams params = new UserRegisterReqParams();
+
+        params.setTxId(walletEntity.getTxId());
+        params.setApp_id(ParamConstants.TYPE_APP_ID_CYBEX);
+        params.setAccount_name(walletEntity.getCurrentEosName());
+        params.setInvitation_code(walletEntity.getInvCode());
+        params.setPublic_key(walletEntity.getPublicKey());
+
+        String json = GsonUtils.objectToJson(params);
+
+        new UserRegisterRequest(UserRegisterResult.class)
+                .setJsonParams(json)
+                .postJson(new CustomRequestCallback<UserRegisterResult>() {
+                    @Override
+                    public void onBeforeRequest(@NonNull Disposable disposable) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
+                        getV().dissmisProgressDialog();
+
+                        if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
+                            UserRegisterResult registerResult = data.result;
+                            if (registerResult != null) {
+                                String txId = registerResult.txId;
+                                updateWalletConfirmStatus(walletEntity, txId);
+                                LibValidateJob.startPolling(10000);
+                            }
+                        } else if(data.code == HttpConst.EOSNAME_INVALID) {
+                            if (EmptyUtils.isNotEmpty(walletEntity) && walletEntity.getIsConfirmLib().equals
+                                    (CacheConstants.CONFIRM_FAILED)){
+                                //todo 如果是重传失败且提示EOS用户名被占用，表示该账户名被其他人抢注，此时需要提示用户选择其他用户名，具体方式？
+                                //UISkipMananger.launchCreateWallet(getV());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
 
                     }
 
@@ -142,7 +185,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
 
     public void saveAccount(
             final String publicKey, final String privateKey, final String
-            password, final String eosUsername, final String passwordTip, final String txId) {
+            password, final String eosUsername, final String passwordTip, final String txId, final String invCode) {
 
 
         WalletEntity walletEntity = new WalletEntity();
@@ -174,6 +217,8 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
         //设置当前Transaction的Hash值
         walletEntity.setTxId(txId);
+        //设置邀请码
+        walletEntity.setInvCode(invCode);
         //执行存入操作之前需要把其他钱包设置为非当前钱包
         if (walletNum > 0) {
             WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
@@ -183,5 +228,31 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         //最后执行存入操作，此前包此时为当前钱包
         DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);
     }
+
+    /**
+     * 删除当前钱包，并更新当前钱包为最后一个钱包
+     * 数据库中若没有钱包，表示这是第一次创建，不做操作
+     */
+    public void deleteCurWalletInRequest(){
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
+            //删除钱包完之后查询数据库是否为空
+            List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
+            if (EmptyUtils.isNotEmpty(walletEntityList)){
+                //数据库中还有钱包，更新当前钱包为最后一个钱包
+                WalletEntity newCurWallt = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
+                        (walletEntityList.size());
+                newCurWallt.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(newCurWallt);
+            }
+        }
+    }
+
+    public void updateWalletConfirmStatus(WalletEntity walletEntity ,String txId){
+        walletEntity.setTxId(txId);
+        DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);
+    }
+
 
 }

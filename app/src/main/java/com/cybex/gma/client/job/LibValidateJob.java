@@ -1,18 +1,25 @@
 package com.cybex.gma.client.job;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.cybex.gma.client.GmaApplication;
+import com.cybex.gma.client.api.callback.CustomRequestCallback;
+import com.cybex.gma.client.api.data.response.CustomData;
 import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
-import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.request.GetTransactionReqParams;
+import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
+import com.cybex.gma.client.ui.model.response.UserRegisterResult;
+import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetTransactionRequest;
+import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -28,6 +35,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -44,6 +52,7 @@ public class LibValidateJob {
     private static final int STATUS_OK = 1;//成功状态
     private static final int STATUS_PENDING = 1001; //pending状态
     private static final int STATUS_ON_LINE = 1002; //online状态
+    private static final int STATUS_INVALID_PARAMETER = 10013;//重传失败状态
 
 
     /**
@@ -114,9 +123,10 @@ public class LibValidateJob {
                             if (obj != null) {
                                 String block_num = obj.optString("block_num");
                                 JSONObject trx = obj.optJSONObject("trx");
+                                String code = obj.optString("code");
                                 LoggerManager.d("block_num", block_num);
                                 res[0] = block_num;
-                                if (EmptyUtils.isEmpty(trx)) {
+                                if (code.equals("400")) {
                                     res[1] = "false";
                                 } else {
                                     res[1] = "true";
@@ -129,6 +139,13 @@ public class LibValidateJob {
                     }
                     emitter.onNext(res);
                     emitter.onComplete();
+                }
+
+                @Override
+                public void onError(Response<String> response) {
+                    if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                        LoggerManager.d(response.toString());
+                    }
                 }
             });
 
@@ -192,11 +209,12 @@ public class LibValidateJob {
                         LoggerManager.d("lib", lib);
                         int curBlockNum = Integer.parseInt(getTResult[0]);
                         LoggerManager.d("block_num", curBlockNum);
-                        String trx = getTResult[1];
+                        String res = getTResult[1];
 
-                        if (trx.equals("false")) {
+                        if (res.equals("false")) {
                             return STATUS_FAILED;
                         } else {
+
                             if (curBlockNum <= lib) {
                                 return STATUS_OK;
                             } else if (curBlockNum > lib && curBlockNum <= head) {
@@ -218,18 +236,24 @@ public class LibValidateJob {
                         // 结合显示2个网络请求的数据结果
                         switch (combine_infro.intValue()) {
                             case STATUS_FAILED:
-                                //如果失败，结束本次轮询，设置当前钱包isConfirm字段为-1，表示失败过，重新创建钱包
+                                //如果失败，结束本次轮询，设置当前钱包isConfirm字段为-1，表示失败过，重新调用创建钱包请求
                                 LoggerManager.d("status", "failed");
                                 WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao()
                                         .getCurrentWalletEntity();
-                                curWallet.setIsConfirmLib(CacheConstants.CONFIRM_FAILED);
-                                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
-                                UISkipMananger.launchCreateWallet(GmaApplication.getAppContext());
-                                removeJob();
+                                if (EmptyUtils.isNotEmpty(curWallet)){
+                                    curWallet.setIsConfirmLib(CacheConstants.CONFIRM_FAILED);
+                                    DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                                    //todo 调取重新创建请求
+                                    CreateWalletPresenter presenter = new CreateWalletPresenter();
+                                    presenter.reCreateAccount(curWallet);
+                                    removeJob();
+                                }else {
+                                    removeJob();
+                                }
                                 break;
                             case STATUS_OK:
                                 LoggerManager.d("status", "ok");
-                                //验证通过，结束轮询，结束alert TODO post eventbus
+                                //验证通过，结束轮询，结束alert
                                 WalletEntity successWallet = DBManager.getInstance().getWalletEntityDao()
                                         .getCurrentWalletEntity();
                                 successWallet.setIsConfirmLib(CacheConstants.IS_CONFIRMED);
@@ -259,6 +283,62 @@ public class LibValidateJob {
         if (smartScheduler != null && smartScheduler.contains(ParamConstants.POLLING_JOB)) {
             smartScheduler.removeJob(ParamConstants.POLLING_JOB);
         }
+    }
+
+    private void reCreateAccount(){
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            final String account_name = curWallet.getCurrentEosName();
+            final String invCode = curWallet.getInvCode();
+            final String txId = curWallet.getTxId();
+            final String publicKey = curWallet.getPublicKey();
+            final int app_id = ParamConstants.TYPE_APP_ID_CYBEX;
+
+            UserRegisterReqParams params = new UserRegisterReqParams();
+            params.setApp_id(app_id);
+            params.setPublic_key(publicKey);
+            params.setInvitation_code(invCode);
+            params.setTxId(txId);
+            params.setAccount_name(account_name);
+
+            String jsonParams = GsonUtils.objectToJson(params);
+
+            new UserRegisterRequest(UserRegisterResult.class)
+                    .setJsonParams(jsonParams)
+                    .postJson(new CustomRequestCallback<UserRegisterResult>() {
+                        @Override
+                        public void onBeforeRequest(@NonNull Disposable disposable) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
+                            if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
+                                UserRegisterResult registerResult = data.result;
+                                if (registerResult != null) {
+                                    String txId = registerResult.txId;
+                                    LibValidateJob.startPolling(10000);
+                                }
+                            } else if(data.code == HttpConst.EOSNAME_INVALID) {
+
+                            } else {
+
+                            }
+                        }
+
+                        @Override
+                        public void onError(@NonNull Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
+
+
     }
 
 

@@ -60,7 +60,7 @@
                 <EditText
                     android:id="@+id/edt_eos_name"
                     style="@style/editText_config_wallet"
-                    tools:hint="@string/EOS_username_hint"/>
+                    android:hint="@string/EOS_username_hint"/>
 
 
                 <TextView

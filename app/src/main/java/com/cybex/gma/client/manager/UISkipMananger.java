@@ -19,6 +19,7 @@ import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
 import com.cybex.gma.client.ui.activity.GeneralSettingActivity;
 import com.cybex.gma.client.ui.activity.ImportWalletActivity;
+import com.cybex.gma.client.ui.activity.InitialActivity;
 import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.activity.ManageWalletActivity;
 import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
@@ -41,6 +42,7 @@ public final class UISkipMananger {
      * @param context
      */
     public static void launchGuide(Activity context) {
+        launchIntent(context, InitialActivity.class);
     }
 
     /**

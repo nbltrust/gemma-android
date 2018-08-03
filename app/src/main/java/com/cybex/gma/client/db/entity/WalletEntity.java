@@ -22,7 +22,6 @@ public class WalletEntity extends BaseModel implements Parcelable {
      */
     @PrimaryKey(autoincrement = true)
     private Integer id;
-
     /**
      * 钱包名称
      */
@@ -86,6 +85,12 @@ public class WalletEntity extends BaseModel implements Parcelable {
      */
     @Column
     private String txId;
+    /**
+     * 邀请码
+     */
+    @Column
+    private String invCode;
+
 
     public Integer getId() {
         return id;
@@ -184,6 +189,7 @@ public class WalletEntity extends BaseModel implements Parcelable {
         dest.writeValue(this.isBackUp);
         dest.writeValue(this.isConfirmLib);
         dest.writeString(this.txId);
+        dest.writeString(this.invCode);
     }
 
     public WalletEntity() {}
@@ -201,6 +207,7 @@ public class WalletEntity extends BaseModel implements Parcelable {
         this.isBackUp = (Integer) in.readValue(Integer.class.getClassLoader());
         this.isConfirmLib = (Integer) in.readValue(Integer.class.getClassLoader());
         this.txId = in.readString();
+        this.invCode = in.readString();
     }
 
     public static final Creator<WalletEntity> CREATOR = new Creator<WalletEntity>() {
@@ -225,5 +232,13 @@ public class WalletEntity extends BaseModel implements Parcelable {
 
     public void setTxId(String txId) {
         this.txId = txId;
+    }
+
+    public String getInvCode() {
+        return invCode;
+    }
+
+    public void setInvCode(String invCode) {
+        this.invCode = invCode;
     }
 }
