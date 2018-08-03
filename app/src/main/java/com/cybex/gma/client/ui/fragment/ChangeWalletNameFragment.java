@@ -55,22 +55,24 @@ public class ChangeWalletNameFragment extends XFragment {
         mTitleBar.setActionTextSize(18);
         int currentID = getArguments().getInt("walletID");
         curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentID);
-        mTitleBar.addAction(new TitleBar.TextAction("保存") {
-            @Override
-            public void performAction(View view) {
-                //todo 保存钱包名
-                if (EmptyUtils.isNotEmpty(setWalletName.getText().toString().trim())){
-                    final String name = getWalletName();
-                    curWallet.setWalletName(name);
-                    DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
-                    GemmaToastUtils.showLongToast("更改成功");
-                    UISkipMananger.launchHome(getActivity());
-                }else{
-                    GemmaToastUtils.showLongToast("钱包名称不能为空！");
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            setWalletName.setHint(curWallet.getWalletName());
+            mTitleBar.addAction(new TitleBar.TextAction("保存") {
+                @Override
+                public void performAction(View view) {
+                    //todo 保存钱包名
+                    if (EmptyUtils.isNotEmpty(setWalletName.getText().toString().trim())){
+                        final String name = getWalletName();
+                        curWallet.setWalletName(name);
+                        DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                        GemmaToastUtils.showLongToast("更改成功");
+                        UISkipMananger.launchHome(getActivity());
+                    }else{
+                        GemmaToastUtils.showLongToast("钱包名称不能为空！");
+                    }
                 }
-            }
-        });
-
+            });
+        }
     }
 
 

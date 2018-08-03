@@ -92,12 +92,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             setUnclickable(btCreateWallet);
         }
 
-        if (getP().isUserNameValid()) {
-            setEOSNameValidStyle();
-        } else {
-            setUnclickable(btCreateWallet);
-            setEOSNameInvalidStyle();
-        }
+
     }
 
     @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -117,17 +112,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             setUnclickable(btCreateWallet);
         }
 
-        if (getPassword().equals(getRepeatPassword())){
-            //两次输入的密码一致
-            tvRepeatPass.setText("重复密码");
-            tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
-            edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
-        }else{
-            //两次输入的密码不一致
-            tvRepeatPass.setText("密码不一致");
-            tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
-            edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
-        }
+
     }
 
     @OnTextChanged(value = R.id.edt_invCode, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -219,6 +204,40 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         });
         setNavibarTitle("创建钱包", true);
 
+        edtEosName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (EmptyUtils.isEmpty(getEOSUserName())){
+                    setEOSNameValidStyle();
+                }else{
+                    if (getP().isUserNameValid()) {
+                        setEOSNameValidStyle();
+                    } else {
+                        setUnclickable(btCreateWallet);
+                        setEOSNameInvalidStyle();
+                    }
+                }
+            }
+        });
+
+        edtRepeatPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (EmptyUtils.isEmpty(getRepeatPassword())){
+                    setRepeatPassValidStyle();
+                }else{
+                    if (getPassword().equals(getRepeatPassword())){
+                        //两次输入的密码一致
+                        setRepeatPassValidStyle();
+                    }else{
+                        //两次输入的密码不一致
+                        setRepeatPassInvalidStyle();
+                    }
+                }
+
+            }
+        });
+
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewCreateWallet);
     }
 
@@ -299,14 +318,14 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         //两次输入密码匹配
         tvRepeatPass.setText("重复密码");
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
-
+        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
     public void setRepeatPassInvalidStyle() {
         //两次输入密码不匹配
         tvRepeatPass.setText("密码不一致");
         tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
-
+        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }
 
     public void setClickable(Button button) {
