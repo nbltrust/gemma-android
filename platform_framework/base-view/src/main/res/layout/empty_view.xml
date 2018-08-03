@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/pic_empty"
+        android:src="@drawable/img_common_empty"
         />
 
     <TextView
