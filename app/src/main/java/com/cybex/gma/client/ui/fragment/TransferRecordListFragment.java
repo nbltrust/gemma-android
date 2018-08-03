@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
@@ -104,7 +105,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
                 if (mAdapter != null && EmptyUtils.isNotEmpty(mAdapter.getData())) {
                     Bundle bundle = new Bundle();
                     TransferHistory curTransfer = mAdapter.getData().get(position);
-                    bundle.putParcelable("curTransfer", curTransfer);
+                    bundle.putParcelable(ParamConstants. KEY_CUR_TRANSFER, curTransfer);
                     start(TransferRecordDetailFragment.newInstance(bundle));
                 }
 

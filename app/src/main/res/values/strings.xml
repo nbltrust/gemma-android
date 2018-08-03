@@ -114,7 +114,7 @@
     <string name="transfer_status">交易状态</string>
     <string name="transfer_id">交易号</string>
     <string name="block_num">区块</string>
-    <string name="block_time">区块时间</string>
+    <string name="block_time">交易时间</string>
     <string name="see_in_explorer">在区块链浏览器上查看</string>
     <string name="eos">EOS</string>
 
