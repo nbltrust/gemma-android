@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginTop="26dp"
@@ -40,25 +41,49 @@
             style="@style/text_body"
             android:text="@string/encrypto_save_hint"/>
 
+    </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_marginEnd="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_corner"
+        android:padding="@dimen/dimen_10">
+
         <TextView
             android:id="@+id/tv_show_priKey_area"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="@drawable/shape_corner"
             android:textColor="@color/darkSlateBlue"
             android:textSize="@dimen/font_4"
             android:textStyle="bold"
-            tools:text="1234 bb56 7aea f0b6 81bf b99a a426
-ef96 56e1 6889 012b"
+            tools:text="1234 bb56 7aea f0b6 81bf b99a a426 ef96 56e1 6889 012b"
             />
 
         <Button
-            android:id="@+id/bt_copy_priKey"
-            style="@style/bt_long_in_linearLayout"
-            android:layout_marginTop="30dp"
-            android:text="@string/copy_prikey"/>
+            android:id="@+id/bt_click_to_copy"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_20"
+            android:textSize="@dimen/font_3"
+            android:textColor="@color/cornflowerBlue"
+            android:text="@string/click_to_copy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/shape_corner_button_cornblue20"
+            />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/bt_copied_priKey"
+        style="@style/bt_long_in_linearLayout"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="@string/key_saved"
+        />
 
 
 </LinearLayout>

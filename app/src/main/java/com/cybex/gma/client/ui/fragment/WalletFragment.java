@@ -97,12 +97,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     }
 
     @OnClick(R.id.superTextView_card_buy_ram)
-    public void goToBuySellRam(){
+    public void goToBuySellRam() {
         UISkipMananger.launchRamTransaction(getActivity());
     }
 
     @OnClick(R.id.superTextView_card_vote)
-    public void goToVote(){
+    public void goToVote() {
         UISkipMananger.launchVote(getActivity());
     }
 
@@ -114,10 +114,10 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onReceivePollevent(PollEvent pollEvent){
-        if (EmptyUtils.isNotEmpty(pollEvent) && pollEvent.isDone()){
+    public void onReceivePollevent(PollEvent pollEvent) {
+        if (EmptyUtils.isNotEmpty(pollEvent) && pollEvent.isDone()) {
             LoggerManager.d("isDone", pollEvent.isDone());
-            if (Alerter.isShowing()){
+            if (Alerter.isShowing()) {
                 Alerter.hide();
                 LoggerManager.d("Alert Hide");
             }
@@ -136,28 +136,22 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         setNavibarTitle("GEMMA", false);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)) {
-
-            if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED)){
-                if (getActivity() != null) {
-                    Alerter.create(getActivity())
-                            .setText(getResources().getString(R.string.please_confirm_alert))
-                            .setBackgroundColorRes(R.color.scarlet)
-                            .enableSwipeToDismiss()
-                            .enableInfiniteDuration(true)
-                            .setTextAppearance(R.style.myAlert)
-                            .show();
-                }
+        if (EmptyUtils.isNotEmpty(curWallet) && (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) ||
+                curWallet.getIsConfirmLib().equals(CacheConstants.CONFIRM_FAILED))){
+            if (getActivity() != null) {
+                Alerter.create(getActivity())
+                        .setText(getResources().getString(R.string.please_confirm_alert))
+                        .setBackgroundColorRes(R.color.scarlet)
+                        .enableSwipeToDismiss()
+                        .enableInfiniteDuration(true)
+                        .setTextAppearance(R.style.myAlert)
+                        .show();
             }
-
-            if (isCurWalletBackUp()){
-                textViewBackupWallet.setVisibility(View.GONE);
-            }
-
         }
 
-
-
+        if (isCurWalletBackUp()) {
+            textViewBackupWallet.setVisibility(View.GONE);
+        }
 
     }
 
@@ -204,7 +198,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         SmartScheduler jobScheduler = SmartScheduler.getInstance(getActivity().getApplicationContext());
         boolean reslut = jobScheduler.removeJob(2);
         jobScheduler.removeJob(1);
-        if (reslut){
+        if (reslut) {
             LoggerManager.d("Job repeat Removed");
         }
 
@@ -226,13 +220,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     /**
      * 将获取到的信息填入页面中相应控件
+     *
      * @param wallet
      */
     public void setCurWalletData(WalletEntity wallet) {
         String walletName = wallet.getWalletName();
     }
-
-
 
 
 }

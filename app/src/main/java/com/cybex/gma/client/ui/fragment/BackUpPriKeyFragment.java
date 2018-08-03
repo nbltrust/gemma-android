@@ -13,6 +13,7 @@ import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -33,26 +34,32 @@ import butterknife.Unbinder;
 
 public class BackUpPriKeyFragment extends XFragment {
 
+    @BindView(R.id.tv_show_priKey_area) TextView tvShowPriKeyArea;
+    @BindView(R.id.bt_click_to_copy) Button btClickToCopy;
+    @BindView(R.id.bt_copied_priKey) Button btCopiedPriKey;
     private String key;
     private int walletID;
     private WalletEntity curWallet;
-    @BindView(R.id.tv_show_priKey_area) TextView textViewShowPriKey;
-    @BindView(R.id.bt_copy_priKey) Button buttonCopyPrikey;
+
     Unbinder unbinder;
 
-    @OnClick(R.id.bt_copy_priKey)
-    public void copyPrikeyToClipboard(){
-        String curPriKey = textViewShowPriKey.getText().toString().trim();
-        if (getActivity() != null){
+    @OnClick(R.id.bt_click_to_copy)
+    public void copyPrikeyToClipboard() {
+        String curPriKey = tvShowPriKeyArea.getText().toString().trim();
+        if (getActivity() != null) {
             ClipboardUtils.copyText(getActivity(), curPriKey);
         }
         curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
-        if (!EmptyUtils.isEmpty(curWallet)){
+        if (!EmptyUtils.isEmpty(curWallet)) {
             curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
             DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
         }
         GemmaToastUtils.showLongToast("私钥已复制，请在使用后及时清空系统剪贴板！");
-        LoggerManager.d("backUp?", curWallet.getIsBackUp());
+    }
+
+    @OnClick(R.id.bt_copied_priKey)
+    public void goToMainTab(){
+        UISkipMananger.launchHome(getActivity());
     }
 
     public static BackUpPriKeyFragment newInstance() {
@@ -68,12 +75,12 @@ public class BackUpPriKeyFragment extends XFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void getKey(KeySendEvent message){
+    public void getKey(KeySendEvent message) {
         key = message.getKey();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void getID(WalletIDEvent message){
+    public void getID(WalletIDEvent message) {
         walletID = message.getWalletID();
         LoggerManager.d("walletID", walletID);
     }
@@ -86,7 +93,7 @@ public class BackUpPriKeyFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         showAlertDialog();
-        textViewShowPriKey.setText(key);
+        tvShowPriKeyArea.setText(key);
     }
 
     @Override
@@ -119,7 +126,7 @@ public class BackUpPriKeyFragment extends XFragment {
     /**
      * 显示请勿截图Dialog
      */
-    private void showAlertDialog(){
+    private void showAlertDialog() {
         int[] listenedItems = {R.id.tv_i_understand};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
                 R.layout.dialog_no_screenshot, listenedItems, false, Gravity.CENTER);

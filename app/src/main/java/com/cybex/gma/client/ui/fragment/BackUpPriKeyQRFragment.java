@@ -11,6 +11,7 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.qrcode.zxing.QRCodeEncoder;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -29,6 +30,7 @@ import butterknife.Unbinder;
  */
 public class BackUpPriKeyQRFragment extends XFragment {
 
+    @BindView(R.id.bt_key_saved) Button btKeySaved;
     private int walletID;
     private WalletEntity curWallet;
     private String priKey;
@@ -38,13 +40,20 @@ public class BackUpPriKeyQRFragment extends XFragment {
     @BindView(R.id.bt_show_QR) Button btShowQR;
 
     @OnClick(R.id.bt_show_QR)
-    public void showQR(){
+    public void showQR() {
         showRealQR(priKey);
+        btShowQR.setVisibility(View.GONE);
+        btKeySaved.setVisibility(View.VISIBLE);
         curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
-        if (EmptyUtils.isEmpty(curWallet)){
+        if (EmptyUtils.isEmpty(curWallet)) {
             curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
             DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
         }
+    }
+
+    @OnClick(R.id.bt_key_saved)
+    public void goToMainTab(){
+        UISkipMananger.launchHome(getActivity());
     }
 
     public static BackUpPriKeyQRFragment newInstance() {
@@ -60,14 +69,15 @@ public class BackUpPriKeyQRFragment extends XFragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void getKey(KeySendEvent keySendEvent){
+    public void getKey(KeySendEvent keySendEvent) {
         priKey = keySendEvent.getKey();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void getID(WalletIDEvent message){
+    public void getID(WalletIDEvent message) {
         walletID = message.getWalletID();
     }
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BackUpPriKeyQRFragment.this, rootView);
@@ -105,7 +115,7 @@ public class BackUpPriKeyQRFragment extends XFragment {
         unbinder.unbind();
     }
 
-    public void showRealQR(String privateKey){
+    public void showRealQR(String privateKey) {
         ivFakeQR.setVisibility(View.GONE);
         ivRealQR.setVisibility(View.VISIBLE);
         TaskManager.runOnUIThread(new Runnable() {
