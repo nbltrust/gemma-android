@@ -16,6 +16,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
 /**
@@ -68,6 +70,41 @@ public class DelegateFragment extends XFragment {
         return fragment;
     }
 
+    @OnTextChanged(value = R.id.edt_delegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterDelegateCpuChanged(){
+        if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+            setClickable(btDelegateCpuNet);
+        }else{
+            setUnclickable(btDelegateCpuNet);
+        }
+    }
+
+    @OnTextChanged(value = R.id.edt_delegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterDelegateNetChanged(){
+        if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+            setClickable(btDelegateCpuNet);
+        }else{
+            setUnclickable(btDelegateCpuNet);
+        }
+    }
+
+    @OnTextChanged(value = R.id.edt_undelegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterUndelegateCpuChanged(){
+        if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+            setClickable(btundelegateCpuNet);
+        }else{
+            setUnclickable(btundelegateCpuNet);
+        }
+    }
+
+    @OnTextChanged(value = R.id.edt_undelegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterundelegateNetChanged(){
+        if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+            setClickable(btundelegateCpuNet);
+        }else{
+            setUnclickable(btundelegateCpuNet);
+        }
+    }
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
@@ -77,7 +114,8 @@ public class DelegateFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("资源管理", true, true);
-
+        setUnclickable(btundelegateCpuNet);
+        setUnclickable(btDelegateCpuNet);
         ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
         list.add(new TabTitleDelegateVO());
         list.add(new TabTitleRefundVO());
@@ -132,6 +170,30 @@ public class DelegateFragment extends XFragment {
         btundelegateCpuNet.setVisibility(View.VISIBLE);
     }
 
+    public String getDelegateCpu(){
+        return edtDelegateCpu.getText().toString().trim();
+    }
+
+    public String getUndelegateCpu(){
+        return edtundelegateCpu.getText().toString().trim();
+    }
+
+    public String getDelegateNet(){
+        return edtDelegateNet.getText().toString().trim();
+    }
+    public String getunDelegateNet(){
+        return edtundelegateNet.getText().toString().trim();
+    }
+
+    public void setClickable(Button button){
+        button.setClickable(true);
+        button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+    }
+
+    public void setUnclickable(Button button){
+        button.setClickable(false);
+        button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
+    }
     /**
      * 显示确认质押dialog
      */

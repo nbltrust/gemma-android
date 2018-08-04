@@ -80,16 +80,6 @@ public class ChangePasswordFragment extends XFragment {
         if (isAllFilled()){
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
         }
-
-        if (getRepeatPass().equals(getPassword())){
-            tvRepeatNewPass.setText("重复密码");
-            tvRepeatNewPass.setTextColor(getResources().getColor(R.color.steel));
-            edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
-        }else{
-            tvRepeatNewPass.setText("密码不一致");
-            tvRepeatNewPass.setTextColor(getResources().getColor(R.color.scarlet));
-            edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
-        }
     }
 
     @OnClick(R.id.btn_confirm_change_pass)
@@ -161,6 +151,21 @@ public class ChangePasswordFragment extends XFragment {
             //LoggerManager.d("currentID", currentId);
             curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentId);
             priKey = getArguments().getString("key");
+
+            edtRepeatNewPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (EmptyUtils.isNotEmpty(getRepeatPass())){
+                        if (getRepeatPass().equals(getPassword())){
+                            setRepeatPassValidStyle();
+                        }else{
+                            setRepeatPassInvalidStyle();
+                        }
+                    }else{
+                        setRepeatPassValidStyle();
+                    }
+                }
+            });
         }
     }
 
@@ -198,6 +203,18 @@ public class ChangePasswordFragment extends XFragment {
 
     public String getRepeatPass() {
         return edtRepeatNewPass.getText().toString().trim();
+    }
+
+    public void setRepeatPassValidStyle(){
+        tvRepeatNewPass.setText("重复密码");
+        tvRepeatNewPass.setTextColor(getResources().getColor(R.color.steel));
+        edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+    }
+
+    public void setRepeatPassInvalidStyle(){
+        tvRepeatNewPass.setText("密码不一致");
+        tvRepeatNewPass.setTextColor(getResources().getColor(R.color.scarlet));
+        edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }
 
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/method_one"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:textSize="@dimen/font_3.5"
+        android:textColor="@color/darkSlateBlue"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/method_one_hint"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:textColor="@color/blueyGrey"
+        android:textSize="@dimen/font_3"/>
+    
+    <include
+        layout="@layout/ui_card_show_and_copy_key">
+        
+    </include>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/method_one_hint_2"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:textColor="@color/scarlet"
+        android:textSize="@dimen/font_3"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/method_two"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:textColor="@color/darkSlateBlue"
+        android:textSize="@dimen/font_3.5"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/method_two_hint"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:textSize="@dimen/font_3"
+        android:textColor="@color/blueyGrey"
+        />
+    
+    <include
+        layout="@layout/ui_card_show_and_copy_key">
+        
+    </include>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/show_priKey"
+        android:textSize="@dimen/font_3"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:textColor="@color/cornflowerBlue"
+        />
+
+   
+    
+    
+    
+
+</LinearLayout>

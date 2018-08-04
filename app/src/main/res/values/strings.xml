@@ -230,4 +230,21 @@
     <string name="click_to_copy">点击复制</string>
     <string name="key_saved">我已安全储存私钥</string>
 
+    <string name="get_inv_from_friend">邀请好友帮助创建</string>
+    <string name="use_cybex">交易所提现创建</string>
+    <string name="use_invCode">VIP邀请码创建</string>
+    <string name="choose_create_method">请选择钱包创建方式</string>
+    <string name="create_use_invCode">VIP邀请码创建</string>
+    <string name="how_to_get_invCode">如何获取邀请码</string>
+    <string name="input_invCode_hint">请输入邀请码</string>
+
+    <string name="method_one">方法一</string>
+    <string name="method_two">方法二</string>
+    <string name="method_one_hint">请持有EOS的好友向智能合约%1$s转账并须将以下文字作为备注(memo)，即可完成创建。创建成功后请重新打开App，即可使用该账户。</string>
+    <string name="method_one_hint_2">为保证顺利创建账户，建议至少转 2EOS ：账户将抵押 0.01EOS 作为CPU，0.01EOS 作为NET，剩余1.8EOS将按现价购买RAM。</string>
+    <string name="method_two_hint">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
+    <string name="show_priKey">查看私钥</string>
+    <string name="priKey_encrypted">私钥已加密存储，请输入之前设置的密码以解锁查看</string>
+
+
 </resources>

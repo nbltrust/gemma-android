@@ -71,16 +71,21 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         return fragment;
     }
 
+    @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onSetPassChanged(){
+        if (isAllFilled() && checkboxConfig.isChecked()){
+            setButtonClickableStyle();
+        }else{
+            setButtonUnClickableStyle();
+        }
+    }
+
     @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onRepeatPassChanged(){
-        if (getRepeatPass().equals(getPassword())){
-            tvRepeatPass.setText("重复密码");
-            tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
-            edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        if (isAllFilled() && checkboxConfig.isChecked()){
+            setButtonClickableStyle();
         }else{
-            tvRepeatPass.setText("密码不一致");
-            tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
-            edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+            setButtonUnClickableStyle();
         }
     }
 
@@ -160,6 +165,21 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                 }
             }
         });
+
+        edtRepeatPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (EmptyUtils.isNotEmpty(getRepeatPass())){
+                    if (getRepeatPass().equals(getPassword())){
+                        setRepeatPassValidStyle();
+                    }else{
+                        setRepeatPassInvalidStyle();
+                    }
+                }else{
+                    setRepeatPassValidStyle();
+                }
+            }
+        });
     }
 
     @Override
@@ -177,6 +197,10 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         super.onResume();
     }
 
+    /**
+     * 输入框空判断
+     * @return
+     */
     public boolean isAllFilled() {
         if (EmptyUtils.isEmpty(getPassword())
                 || EmptyUtils.isEmpty(getRepeatPass())) {
@@ -185,14 +209,35 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         return true;
     }
 
+    /**
+     * Button可点击样式
+     */
     public void setButtonClickableStyle() {
         btnCompleteImport.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
 
     }
-
+    /**
+     * Button不可点击样式
+     */
     public void setButtonUnClickableStyle() {
         btnCompleteImport.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
 
+    }
+    /**
+     * 重置密码区域默认样式
+     */
+    public void setRepeatPassValidStyle(){
+        tvRepeatPass.setText("重复密码");
+        tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
+        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+    }
+    /**
+     * 重置密码区域不匹配时的样式
+     */
+    public void setRepeatPassInvalidStyle(){
+        tvRepeatPass.setText("密码不一致");
+        tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
+        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }
 
     public String getPassword() {

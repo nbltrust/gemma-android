@@ -14,6 +14,8 @@ public interface ParamConstants {
     int ALARM_JOB = 1;
     int POLLING_JOB = 2;
 
+    int VALID_EOSNAME_LENGTH = 12;
+
     String KEY_CUR_TRANSFER = "curTransfer";
 
 }

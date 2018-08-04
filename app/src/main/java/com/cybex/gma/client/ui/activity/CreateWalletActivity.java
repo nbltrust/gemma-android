@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -90,6 +91,17 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             setClickable(btCreateWallet);
         }else{
             setUnclickable(btCreateWallet);
+        }
+
+        if (EmptyUtils.isEmpty(getEOSUserName())){
+            setEOSNameValidStyle();
+        }else if (getEOSUserName().length() == ParamConstants.VALID_EOSNAME_LENGTH){
+            if (getP().isUserNameValid()) {
+                setEOSNameValidStyle();
+            } else {
+                setUnclickable(btCreateWallet);
+                setEOSNameInvalidStyle();
+            }
         }
 
 
