@@ -85,7 +85,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
 
     public void showInitData(String banlance) {
-        if (EmptyUtils.isEmpty(banlance)) { return; }
+        if (EmptyUtils.isEmpty(banlance)) {
+            return;
+        }
 
         String[] spiltBanlance = banlance.split(" ");
         if (EmptyUtils.isEmpty(spiltBanlance)) {

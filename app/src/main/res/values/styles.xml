@@ -17,6 +17,16 @@
         -->
     </style>
 
+    <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@style/Fantasy.Animation.Activity.SlidingBack
+        </item>
+
+    </style>
+
     <!-- 通用EditText样式 -->
     <style name="myEditText">
         <item name="android:colorControlNormal">@color/paleGrey</item>
