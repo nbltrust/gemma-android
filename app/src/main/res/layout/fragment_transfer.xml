@@ -126,7 +126,7 @@
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="12dp"
                             android:singleLine="true"
-                            tools:text="余额：10.0000 EOS"
+                            android:text="余额：0.0000 EOS"
                             android:textColor="#535c8a"
                             android:textSize="14sp"
                             />

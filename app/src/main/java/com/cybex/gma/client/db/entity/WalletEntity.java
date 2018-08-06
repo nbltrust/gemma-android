@@ -172,51 +172,7 @@ public class WalletEntity extends BaseModel implements Parcelable {
         this.isBackUp = isBackUp;
     }
 
-    @Override
-    public int describeContents() { return 0; }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(this.id);
-        dest.writeString(this.walletName);
-        dest.writeString(this.publicKey);
-        dest.writeString(this.cypher);
-        dest.writeString(this.privateKey);
-        dest.writeString(this.eosNameJson);
-        dest.writeString(this.currentEosName);
-        dest.writeValue(this.isCurrentWallet);
-        dest.writeString(this.passwordTip);
-        dest.writeValue(this.isBackUp);
-        dest.writeValue(this.isConfirmLib);
-        dest.writeString(this.txId);
-        dest.writeString(this.invCode);
-    }
-
     public WalletEntity() {}
-
-    protected WalletEntity(Parcel in) {
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.walletName = in.readString();
-        this.publicKey = in.readString();
-        this.cypher = in.readString();
-        this.privateKey = in.readString();
-        this.eosNameJson = in.readString();
-        this.currentEosName = in.readString();
-        this.isCurrentWallet = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.passwordTip = in.readString();
-        this.isBackUp = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.isConfirmLib = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.txId = in.readString();
-        this.invCode = in.readString();
-    }
-
-    public static final Creator<WalletEntity> CREATOR = new Creator<WalletEntity>() {
-        @Override
-        public WalletEntity createFromParcel(Parcel source) {return new WalletEntity(source);}
-
-        @Override
-        public WalletEntity[] newArray(int size) {return new WalletEntity[size];}
-    };
 
     public Integer getIsConfirmLib() {
         return isConfirmLib;
@@ -241,4 +197,48 @@ public class WalletEntity extends BaseModel implements Parcelable {
     public void setInvCode(String invCode) {
         this.invCode = invCode;
     }
+
+    @Override
+    public int describeContents() { return 0; }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.walletName);
+        dest.writeString(this.publicKey);
+        dest.writeString(this.cypher);
+        dest.writeString(this.privateKey);
+        dest.writeString(this.eosNameJson);
+        dest.writeString(this.currentEosName);
+        dest.writeValue(this.isCurrentWallet);
+        dest.writeString(this.passwordTip);
+        dest.writeValue(this.isBackUp);
+        dest.writeValue(this.isConfirmLib);
+        dest.writeString(this.txId);
+        dest.writeString(this.invCode);
+    }
+
+    protected WalletEntity(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.walletName = in.readString();
+        this.publicKey = in.readString();
+        this.cypher = in.readString();
+        this.privateKey = in.readString();
+        this.eosNameJson = in.readString();
+        this.currentEosName = in.readString();
+        this.isCurrentWallet = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.passwordTip = in.readString();
+        this.isBackUp = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.isConfirmLib = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.txId = in.readString();
+        this.invCode = in.readString();
+    }
+
+    public static final Creator<WalletEntity> CREATOR = new Creator<WalletEntity>() {
+        @Override
+        public WalletEntity createFromParcel(Parcel source) {return new WalletEntity(source);}
+
+        @Override
+        public WalletEntity[] newArray(int size) {return new WalletEntity[size];}
+    };
 }

@@ -74,7 +74,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                 banlance = array.optString(0);
                                 getV().showInitData(banlance);
                             } else {
-                                GemmaToastUtils.showShortToast("没有获取到该账户余额信息");
+                               // GemmaToastUtils.showShortToast("没有可用余额");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

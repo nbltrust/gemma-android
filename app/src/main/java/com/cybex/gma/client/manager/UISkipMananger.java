@@ -63,14 +63,16 @@ public final class UISkipMananger {
         startActivity(context, CreateWalletActivity.class);
     }
 
-    public static void launchVote(Activity context){
+    public static void launchVote(Activity context) {
         launchIntent(context, VoteActivity.class);
     }
+
     /**
      * 跳转到买卖RAM页面
+     *
      * @param context
      */
-    public static void launchRamTransaction(Activity context){
+    public static void launchRamTransaction(Activity context) {
         launchIntent(context, BuySellRamActivity.class);
     }
 
@@ -138,11 +140,13 @@ public final class UISkipMananger {
 
     /**
      * 跳转到about界面
+     *
      * @param context
      */
-    public static void launchAbout(Activity context){
+    public static void launchAbout(Activity context) {
         launchIntent(context, AboutActivity.class);
     }
+
     /**
      * 跳转到安全设置界面
      *
@@ -175,6 +179,7 @@ public final class UISkipMananger {
      * @param context
      */
     public static void launchLogin(Activity context) {
+        launchIntent(context, InitialActivity.class);
     }
 
 
@@ -276,6 +281,10 @@ public final class UISkipMananger {
             intent.putExtras(bundle);
         }
         context.startActivity(intent);
+        //TODO
+        //Activity act = (Activity) context;
+        //act.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+
     }
 
     public static void startActivity(Context context, Class<? extends Activity> activity, Bundle bundle) {

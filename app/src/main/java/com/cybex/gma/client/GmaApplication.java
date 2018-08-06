@@ -27,7 +27,6 @@ public class GmaApplication extends BaseApplication {
 
         initFragmentation();
         initDBFlow();
-        InitializeService.start(this);
         HttpConfig.init(this);
         initRefresh();
         LanguageManager.init(this);

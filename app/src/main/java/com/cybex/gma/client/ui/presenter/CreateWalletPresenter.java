@@ -75,6 +75,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                                 //UISkipMananger.launchHome(getV());
                                 UISkipMananger.launchCreateManage(getV());
                                 LibValidateJob.startPolling(10000);
+                                getV().finish();
                             }
                         } else {
                             getV().showOnErrorInfo(data.code);
