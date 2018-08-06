@@ -71,7 +71,7 @@
 
                 <Button
                     android:id="@+id/bt_backup_later"
-                    android:background="@drawable/shape_corner_button_white"
+                    android:background="@drawable/shape_corner_button_white_with_stroke"
                     android:layout_width="100dp"
                     android:layout_weight="1"
                     android:textColor="@color/cornflowerBlue"

@@ -14,6 +14,8 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,14 +63,22 @@ public class ChangeWalletNameFragment extends XFragment {
                 @Override
                 public void performAction(View view) {
                     //todo 保存钱包名
-                    if (EmptyUtils.isNotEmpty(setWalletName.getText().toString().trim())){
-                        final String name = getWalletName();
-                        curWallet.setWalletName(name);
-                        DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
-                        GemmaToastUtils.showLongToast("更改成功");
-                        UISkipMananger.launchHome(getActivity());
-                    }else{
-                        GemmaToastUtils.showLongToast("钱包名称不能为空！");
+                    List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
+                    if (EmptyUtils.isNotEmpty(list)){
+                        for (WalletEntity walletEntity : list){
+                            if (setWalletName.getText().toString().trim().equals(walletEntity.getWalletName())){
+                                GemmaToastUtils.showLongToast("钱包名称不能与已有钱包名相同");
+                            }else if (EmptyUtils.isNotEmpty(setWalletName.getText().toString().trim())){
+                                final String name = getWalletName();
+                                curWallet.setWalletName(name);
+                                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                                GemmaToastUtils.showLongToast("更改成功");
+                                UISkipMananger.launchHome(getActivity());
+                            }else{
+                                GemmaToastUtils.showLongToast("钱包名称不能为空！");
+                            }
+
+                        }
                     }
                 }
             });

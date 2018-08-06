@@ -6,6 +6,8 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
+
+<!--
     <com.allen.library.SuperTextView
         android:id="@+id/superTV_Item_WalletName"
         style="@style/card_style"
@@ -22,10 +24,25 @@
         title:sUseShape="true">
 
     </com.allen.library.SuperTextView>
+-->
+
+        <TextView
+            style="@style/card_style"
+            android:id="@+id/tv_item_walletName"
+            android:layout_marginStart="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/dimen_30"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:textColor="@color/darkSlateBlue"
+            android:textSize="@dimen/font_3.5"
+            tools:text="EOS-WALLET-DEFAULT"
+            android:drawableRight="@drawable/ic_tab_more"
+            />
+
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_5"
+        android:layout_height="@dimen/dimen_3"
         android:layerType="software">
     </View>
 </LinearLayout>

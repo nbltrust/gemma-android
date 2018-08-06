@@ -11,6 +11,7 @@ import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -38,7 +39,7 @@ public class ManageWalletFragment extends XFragment {
     @BindView(R.id.superTextView_createWallet) SuperTextView superTextViewCreateWallet;
     @BindView(R.id.scroll_wallet_manage) ScrollView scrollViewWalletManage;
     @BindView(R.id.recycler_wallet_manage) RecyclerView recyclerViewWalletManage;
-    @BindView(R.id.tv_existed_wallet) TextView tvExsitedWallet;
+    @BindView(R.id.tv_existed_wallet) TextView tvExistedWallet;
     Unbinder unbinder;
     private WalletManageListAdapter adapter;
 
@@ -110,14 +111,15 @@ public class ManageWalletFragment extends XFragment {
         //从数据库中读取Wallet信息转换成WalletVO列表
         List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
         if (walletEntityList.size() == 0){
-            tvExsitedWallet.setVisibility(View.GONE);
+            //如果数据库中没有钱包，隐藏已有钱包提示
+            tvExistedWallet.setVisibility(View.GONE);
         }else{
-            tvExsitedWallet.setVisibility(View.VISIBLE);
+            tvExistedWallet.setVisibility(View.VISIBLE);
         }
 
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (!EmptyUtils.isEmpty(curWallet)){
-            int chosenID = curWallet.getId();
+            int chosenID = curWallet.getId();//当前被选中的钱包的ID
             for (int i = 0; i < walletEntityList.size(); i++) {
                 WalletVO curWalletVO = new WalletVO();
                 curWalletVO.setWalletName(walletEntityList.get(i).getWalletName());
@@ -138,10 +140,11 @@ public class ManageWalletFragment extends XFragment {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //position与数据库表中的id对应，可直接根据position值来确定ID
-                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(position+1);
+                WalletEntity thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
+                        (position+1);//当前卡片对应的wallet
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("curWallet", curWallet);
-                start(WalletDetailFragment.newInstance(bundle));
+                bundle.putParcelable("curWallet", thisWallet);
+                //start(WalletDetailFragment.newInstance(bundle));
                 walletVOList.get(position).isSelected = true;
                 //把其他的WalletVO对象设置为未被选取
                 for (int i = 0; i < walletVOList.size(); i++){
@@ -149,6 +152,14 @@ public class ManageWalletFragment extends XFragment {
                         walletVOList.get(i).isSelected = false;
                     }
                 }
+
+                //把thisWallet设置为当前Wallet
+
+                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+                thisWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(thisWallet);
                 adapter.notifyDataSetChanged();
             }
         });

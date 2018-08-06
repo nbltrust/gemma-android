@@ -1,8 +1,8 @@
 package com.cybex.gma.client.ui.adapter;
 
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
-import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cybex.gma.client.R;
@@ -18,15 +18,19 @@ public class WalletManageListAdapter extends BaseQuickAdapter<WalletVO, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, WalletVO item) {
-        SuperTextView superTextView =  helper.getView(R.id.superTV_Item_WalletName);
-        superTextView.setLeftString(item.getWalletName());
+        //SuperTextView superTextView =  helper.getView(R.id.superTV_Item_WalletName);
+        //superTextView.setLeftString(item.getWalletName());
+        TextView textView = helper.getView(R.id.tv_item_walletName);
+        //textView.setText(item.getWalletName());
 
         if (item.isSelected){
             //默认被选中的选项卡
-
+            textView.setText("selected");
+            //textView.setBackgroundColor(0x426bd4);
             //设置背景色为cornflowerBlue
         }else{
-
+            textView.setText(item.getWalletName());
+            //textView.setBackgroundColor(0xffffff);
         }
 
     }

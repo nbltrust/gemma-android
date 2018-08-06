@@ -103,8 +103,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 setEOSNameInvalidStyle();
             }
         }
-
-
     }
 
     @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -118,6 +116,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterRepeatPassChanged(Editable s){
+        if (EmptyUtils.isEmpty(getRepeatPassword())){
+            setRepeatPassValidStyle();
+        }
         if (isAllTextFilled() && checkboxConfig.isChecked()){
             setClickable(btCreateWallet);
         }else{

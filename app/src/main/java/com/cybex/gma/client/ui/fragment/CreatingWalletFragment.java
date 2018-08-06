@@ -6,8 +6,12 @@ import android.widget.Button;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.WalletIDEvent;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +37,16 @@ public class CreatingWalletFragment extends XFragment {
     @OnClick(R.id.bt_export_priKey)
     public void goToBackUpPriKey(){
         //如果选择马上备份，前往备份引导页
-        UISkipMananger.launchBakupGuide(getActivity());
+        curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            EventBusProvider.postSticky(new WalletIDEvent(curWallet.getId()));
+            UISkipMananger.launchBakupGuide(getActivity());
+        }
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 
     public static CreatingWalletFragment newInstance() {
