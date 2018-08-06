@@ -44,15 +44,16 @@ public class BackUpPriKeyQRFragment extends XFragment {
         showRealQR(priKey);
         btShowQR.setVisibility(View.GONE);
         btKeySaved.setVisibility(View.VISIBLE);
+
+    }
+
+    @OnClick(R.id.bt_key_saved)
+    public void goToMainTab(){
         curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
         if (EmptyUtils.isEmpty(curWallet)) {
             curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
             DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
         }
-    }
-
-    @OnClick(R.id.bt_key_saved)
-    public void goToMainTab(){
         UISkipMananger.launchHome(getActivity());
     }
 
@@ -86,6 +87,11 @@ public class BackUpPriKeyQRFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
+        if (!EmptyUtils.isEmpty(curWallet)) {
+            curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
+            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+        }
     }
 
     @Override

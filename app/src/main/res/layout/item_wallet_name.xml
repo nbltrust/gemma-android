@@ -24,20 +24,49 @@
         title:sUseShape="true">
 
     </com.allen.library.SuperTextView>
--->
 
-        <TextView
-            style="@style/card_style"
-            android:id="@+id/tv_item_walletName"
-            android:layout_marginStart="@dimen/dimen_30"
-            android:layout_marginEnd="@dimen/dimen_30"
-            android:layout_marginTop="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:textColor="@color/darkSlateBlue"
-            android:textSize="@dimen/font_3.5"
-            tools:text="EOS-WALLET-DEFAULT"
-            android:drawableRight="@drawable/ic_tab_more"
-            />
+-->
+   <LinearLayout
+       android:id="@+id/layout_item_wallet"
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="@dimen/dimen_20"
+       android:layout_marginEnd="@dimen/dimen_20"
+       android:layout_marginTop="@dimen/dimen_5">
+
+       <TextView
+           android:elevation="@dimen/dimen_2"
+           style="@style/card_style"
+           android:id="@+id/tv_item_walletName"
+           android:paddingStart="@dimen/dimen_10"
+           android:paddingEnd="@dimen/dimen_10"
+           android:gravity="center_vertical"
+           android:textColor="@color/darkSlateBlue"
+           android:textSize="@dimen/font_3.5"
+           tools:text="EOS-WALLET-DEFAULT"
+           android:layout_weight="1"
+           />
+
+       <LinearLayout
+           android:id="@+id/layout_more"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:layout_marginEnd="@dimen/dimen_10">
+           <ImageView
+               android:id="@+id/iv_ic_more"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center_vertical"
+               android:background="@drawable/ic_tab_more"/>
+
+       </LinearLayout>
+
+
+   </LinearLayout>
+
+
+
 
 
     <View

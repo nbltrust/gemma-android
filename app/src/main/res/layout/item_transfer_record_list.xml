@@ -50,7 +50,7 @@
                     android:textColor="@color/darkSlateBlue"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    tools:text="\ufeff@qhy1233456789"
+                    tools:text="\ufeff@qhy123345678"
                     />
 
                 <TextView
@@ -59,11 +59,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="16dp"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:gravity="end"
                     android:textColor="@color/darkSlateBlue"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    tools:text="+2.1101 "
+                    tools:text="+2.1101000000000"
                     />
             </RelativeLayout>
 

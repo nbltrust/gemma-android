@@ -1,6 +1,9 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -180,6 +183,10 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                 }
             }
         });
+
+        setEditTextHintStyle(edtSetPass, R.string.password_input_hint);
+        setEditTextHintStyle(edtPassHint, R.string.password_hint_hint);
+        setEditTextHintStyle(edtRepeatPass, R.string.repeatPassword_hint);
     }
 
     @Override
@@ -251,5 +258,15 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     public String getRepeatPass() {
         return edtRepeatPass.getText().toString().trim();
     }
+
+    public void setEditTextHintStyle(EditText editText, int resId){
+        String hintStr = getResources().getString(resId);
+        SpannableString ss =  new SpannableString(hintStr);
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(14, true);
+        editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        editText.setHint(new SpannableString(ss));
+    }
+
 
 }

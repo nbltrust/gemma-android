@@ -49,16 +49,16 @@ public class BackUpPriKeyFragment extends XFragment {
         if (getActivity() != null) {
             ClipboardUtils.copyText(getActivity(), curPriKey);
         }
-        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
-        if (!EmptyUtils.isEmpty(curWallet)) {
-            curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
-            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
-        }
         GemmaToastUtils.showLongToast("私钥已复制，请在使用后及时清空系统剪贴板！");
     }
 
     @OnClick(R.id.bt_copied_priKey)
     public void goToMainTab(){
+        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
+        if (!EmptyUtils.isEmpty(curWallet)) {
+            curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
+            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+        }
         UISkipMananger.launchHome(getActivity());
     }
 
@@ -94,6 +94,11 @@ public class BackUpPriKeyFragment extends XFragment {
     public void initData(Bundle savedInstanceState) {
         showAlertDialog();
         tvShowPriKeyArea.setText(key);
+        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
+        if (!EmptyUtils.isEmpty(curWallet)) {
+            curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
+            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+        }
     }
 
     @Override

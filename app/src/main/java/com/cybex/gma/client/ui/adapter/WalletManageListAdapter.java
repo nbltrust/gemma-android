@@ -1,7 +1,6 @@
 package com.cybex.gma.client.ui.adapter;
 
 import android.support.annotation.Nullable;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -18,19 +17,17 @@ public class WalletManageListAdapter extends BaseQuickAdapter<WalletVO, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, WalletVO item) {
-        //SuperTextView superTextView =  helper.getView(R.id.superTV_Item_WalletName);
-        //superTextView.setLeftString(item.getWalletName());
-        TextView textView = helper.getView(R.id.tv_item_walletName);
-        //textView.setText(item.getWalletName());
-
+        helper.addOnClickListener(R.id.layout_more);
         if (item.isSelected){
             //默认被选中的选项卡
-            textView.setText("selected");
-            //textView.setBackgroundColor(0x426bd4);
+            helper.setText(R.id.tv_item_walletName, item.getWalletName());
+            helper.setTextColor(R.id.tv_item_walletName, 0xffffffff);
+            helper.setBackgroundRes(R.id.layout_item_wallet, R.drawable.shape_corner_button);
             //设置背景色为cornflowerBlue
         }else{
-            textView.setText(item.getWalletName());
-            //textView.setBackgroundColor(0xffffff);
+            helper.setText(R.id.tv_item_walletName, item.getWalletName());
+            helper.setTextColor(R.id.tv_item_walletName, 0xff212c67);
+            helper.setBackgroundRes(R.id.layout_item_wallet, R.drawable.shape_corner);
         }
 
     }

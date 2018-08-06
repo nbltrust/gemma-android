@@ -117,22 +117,26 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                     case R.id.btn_confirm_authorization:
                         EditText password = dialog.findViewById(R.id.et_password);
                         final String inputPass = password.getText().toString().trim();
-                        if (!EmptyUtils.isEmpty(curWallet)){
-                            final String cypher = curWallet.getCypher();
-                            final String priKey = JNIUtil.get_private_key(cypher, inputPass);
-                            //验证密码是否正确
-                            if (JNIUtil.get_cypher(inputPass, priKey).equals(cypher)){
-                                //密码正确
-                                EventBusProvider.postSticky(new KeySendEvent(priKey));
-                                //Bundle bundle = new Bundle();
-                               // bundle.putString("key", priKey);
-                                dialog.cancel();
-                                UISkipMananger.launchBackUpPrivateKey(getActivity());
-                            }else {
-                                //密码错误
-                                GemmaToastUtils.showLongToast("密码错误请重新输入！");
+                        if (EmptyUtils.isEmpty(inputPass)){
+                            GemmaToastUtils.showLongToast("请输入密码");
+                            return;
+                        }else{
+                            if (!EmptyUtils.isEmpty(curWallet)){
+                                final String cypher = curWallet.getCypher();
+                                final String priKey = JNIUtil.get_private_key(cypher, inputPass);
+                                //验证密码是否正确
+                                if ("wrong password".equals(priKey)){
+                                    //密码错误
+                                    GemmaToastUtils.showLongToast("密码错误请重新输入！");
+                                }else {
+                                    //密码正确
+                                    EventBusProvider.postSticky(new KeySendEvent(priKey));
+                                    dialog.cancel();
+                                    UISkipMananger.launchBackUpPrivateKey(getActivity());
+                                }
                             }
                         }
+
 
                         break;
                     default:

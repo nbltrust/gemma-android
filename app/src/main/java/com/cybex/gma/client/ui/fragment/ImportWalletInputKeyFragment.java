@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
 /**
@@ -51,6 +53,14 @@ public class ImportWalletInputKeyFragment extends XFragment {
         fragment.setArguments(args);
         return fragment;
     }
+    @OnTextChanged(value = R.id.edt_show_priKey, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onTextChanged(Editable s){
+        if (EmptyUtils.isEmpty(edtShowPrikey.getText().toString().trim())){
+            setButtonUnclickable(btStartInput);
+        }else{
+            setButtonClickable(btStartInput);
+        }
+    }
 
     @Override
     public boolean useEventBus() {
@@ -71,8 +81,8 @@ public class ImportWalletInputKeyFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        setButtonUnclickable(btStartInput);
         setNavibarTitle("导入钱包", true, false);
-
     }
 
     @Override
@@ -126,5 +136,15 @@ public class ImportWalletInputKeyFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void setButtonUnclickable(Button button){
+        button.setClickable(false);
+        button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
+    }
+
+    public void setButtonClickable(Button button){
+        button.setClickable(true);
+        button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
     }
 }

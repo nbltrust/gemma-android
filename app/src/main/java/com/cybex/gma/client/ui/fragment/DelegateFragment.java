@@ -90,7 +90,7 @@ public class DelegateFragment extends XFragment {
 
     @OnTextChanged(value = R.id.edt_undelegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterUndelegateCpuChanged(){
-        if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+        if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
             setClickable(btundelegateCpuNet);
         }else{
             setUnclickable(btundelegateCpuNet);
@@ -99,7 +99,7 @@ public class DelegateFragment extends XFragment {
 
     @OnTextChanged(value = R.id.edt_undelegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterundelegateNetChanged(){
-        if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+        if (EmptyUtils.isNotEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())){
             setClickable(btundelegateCpuNet);
         }else{
             setUnclickable(btundelegateCpuNet);

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -63,22 +64,17 @@ public class ChangeWalletNameFragment extends XFragment {
                 @Override
                 public void performAction(View view) {
                     //todo 保存钱包名
-                    List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
-                    if (EmptyUtils.isNotEmpty(list)){
-                        for (WalletEntity walletEntity : list){
-                            if (setWalletName.getText().toString().trim().equals(walletEntity.getWalletName())){
-                                GemmaToastUtils.showLongToast("钱包名称不能与已有钱包名相同");
-                            }else if (EmptyUtils.isNotEmpty(setWalletName.getText().toString().trim())){
-                                final String name = getWalletName();
-                                curWallet.setWalletName(name);
-                                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
-                                GemmaToastUtils.showLongToast("更改成功");
-                                UISkipMananger.launchHome(getActivity());
-                            }else{
-                                GemmaToastUtils.showLongToast("钱包名称不能为空！");
-                            }
 
-                        }
+                    if (isWalletNameExist(getWalletName())){
+                        GemmaToastUtils.showLongToast(ParamConstants.SAME_WALLET_NAME);
+                    }else if (EmptyUtils.isNotEmpty(getWalletName())){
+                        final String name = getWalletName();
+                        curWallet.setWalletName(name);
+                        DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                        GemmaToastUtils.showLongToast(ParamConstants.CHANGE_NAME_SUCCESS);
+                        UISkipMananger.launchWalletManagement(getActivity());
+                    }else{
+                        GemmaToastUtils.showLongToast(ParamConstants.EMPTY_WALLET_NAME);
                     }
                 }
             });
@@ -104,6 +100,16 @@ public class ChangeWalletNameFragment extends XFragment {
 
     public String getWalletName(){
         return setWalletName.getText().toString().trim();
+    }
+
+    public boolean isWalletNameExist(String walletName){
+        List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
+        for (WalletEntity walletEntity : list){
+            if (walletEntity.getWalletName().equals(walletName)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

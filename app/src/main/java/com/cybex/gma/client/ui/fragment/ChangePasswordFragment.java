@@ -1,6 +1,9 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -167,6 +170,10 @@ public class ChangePasswordFragment extends XFragment {
                 }
             });
         }
+
+        setEditTextHintStyle(edtSetNewPass, R.string.new_password);
+        setEditTextHintStyle(edtRepeatNewPass, R.string.repeatPassword_hint);
+        setEditTextHintStyle(edtNewPassHint, R.string.password_hint_hint);
     }
 
     @Override
@@ -215,6 +222,15 @@ public class ChangePasswordFragment extends XFragment {
         tvRepeatNewPass.setText("密码不一致");
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.scarlet));
         edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+    }
+
+    public void setEditTextHintStyle(EditText editText, int resId){
+        String hintStr = getResources().getString(resId);
+        SpannableString ss =  new SpannableString(hintStr);
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(14, true);
+        editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        editText.setHint(new SpannableString(ss));
     }
 
 }

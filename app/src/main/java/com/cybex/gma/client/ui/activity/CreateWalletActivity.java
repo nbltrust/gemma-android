@@ -175,6 +175,11 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     }
 
     public void initView() {
+        setEditTextHintStyle(edtEosName, R.string.EOS_username_hint);
+        setEditTextHintStyle(edtSetPass, R.string.password_hint);
+        setEditTextHintStyle(edtRepeatPass, R.string.repeatPassword_hint);
+        setEditTextHintStyle(edtPassHint, R.string.password_hint_hint);
+        setEditTextHintStyle(edtInvCode, R.string.input_invCode_hint);
         bubble.setVisibility(View.GONE);
         setUnclickable(btCreateWallet);
         edtSetPass.setOnTouchListener(new View.OnTouchListener() {
@@ -291,6 +296,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     public void initData(Bundle savedInstanceState) {
         Validate.reg(this);
         initView();
+
     }
 
     @Override
@@ -442,10 +448,10 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     public void setEditTextHintStyle(EditText editText, int resId){
         String hintStr = getResources().getString(resId);
         SpannableString ss =  new SpannableString(hintStr);
-        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(12, true);
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(14, true);
         editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+        editText.setHint(new SpannableString(ss));
     }
 
 }

@@ -111,7 +111,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_50</item>
         <item name="android:textColor">@color/darkSlateBlue</item>
-        <item name="android:textSize">@dimen/font_3.5</item>
+        <item name="android:textSize">@dimen/font_4</item>
         <item name="android:textColorHint">@color/cloudyBlue</item>
         <item name="android:theme">@style/myEditText</item>
         <item name="android:background">@drawable/selector_edt_bg</item>

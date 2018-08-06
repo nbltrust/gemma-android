@@ -136,23 +136,30 @@ public class ManageWalletFragment extends XFragment {
                 .VERTICAL, false);
         recyclerViewWalletManage.setLayoutManager(layoutManager);
         recyclerViewWalletManage.setAdapter(adapter);
+
         recyclerViewWalletManage.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                WalletEntity thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
+                        (position+1);//当前卡片对应的wallet
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("curWallet", thisWallet);
+                start(WalletDetailFragment.newInstance(bundle));
+            }
+
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //position与数据库表中的id对应，可直接根据position值来确定ID
                 WalletEntity thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
                         (position+1);//当前卡片对应的wallet
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("curWallet", thisWallet);
-                //start(WalletDetailFragment.newInstance(bundle));
                 walletVOList.get(position).isSelected = true;
                 //把其他的WalletVO对象设置为未被选取
+
                 for (int i = 0; i < walletVOList.size(); i++){
                     if (i != position){
                         walletVOList.get(i).isSelected = false;
                     }
                 }
-
                 //把thisWallet设置为当前Wallet
 
                 WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
@@ -161,8 +168,11 @@ public class ManageWalletFragment extends XFragment {
                 DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
                 DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(thisWallet);
                 adapter.notifyDataSetChanged();
+                UISkipMananger.launchHome(getActivity());
             }
         });
+
+
     }
 
     public void updateCurWalletHighlight(){

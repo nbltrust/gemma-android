@@ -132,13 +132,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         textViewBackupWallet.setVisibility(View.VISIBLE);
-        generatePortrait(testUsername);
         setNavibarTitle("GEMMA", false);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet) && (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) ||
-                curWallet.getIsConfirmLib().equals(CacheConstants.CONFIRM_FAILED))){
-            if (getActivity() != null) {
+        if (EmptyUtils.isNotEmpty(curWallet)) {
+            textViewUsername.setText(curWallet.getCurrentEosName());
+            generatePortrait(curWallet.getCurrentEosName());
+            if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
                 Alerter.create(getActivity())
                         .setText(getResources().getString(R.string.please_confirm_alert))
                         .setBackgroundColorRes(R.color.scarlet)
@@ -147,8 +147,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                         .setTextAppearance(R.style.myAlert)
                         .show();
             }
-        }
 
+        }
+        LoggerManager.d(isCurWalletBackUp());
         if (isCurWalletBackUp()) {
             textViewBackupWallet.setVisibility(View.GONE);
         }
@@ -186,8 +187,24 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     public void onStart() {
         super.onStart();
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (!EmptyUtils.isEmpty(curWallet) && isCurWalletBackUp()) {
-            textViewBackupWallet.setVisibility(View.GONE);
+        if (EmptyUtils.isNotEmpty(curWallet)) {
+            textViewUsername.setText(curWallet.getCurrentEosName());
+            generatePortrait(curWallet.getCurrentEosName());
+            if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
+                Alerter.create(getActivity())
+                        .setText(getResources().getString(R.string.please_confirm_alert))
+                        .setBackgroundColorRes(R.color.scarlet)
+                        .enableSwipeToDismiss()
+                        .enableInfiniteDuration(true)
+                        .setTextAppearance(R.style.myAlert)
+                        .show();
+            }
+
+            if (isCurWalletBackUp()){
+                textViewBackupWallet.setVisibility(View.GONE);
+            }else{
+                textViewBackupWallet.setVisibility(View.VISIBLE);
+            }
         }
     }
 

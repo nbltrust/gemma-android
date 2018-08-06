@@ -17,5 +17,8 @@ public interface ParamConstants {
     int VALID_EOSNAME_LENGTH = 12;
 
     String KEY_CUR_TRANSFER = "curTransfer";
+    String SAME_WALLET_NAME = "钱包名称不能与已有钱包名相同";
+    String EMPTY_WALLET_NAME = "钱包名称不能为空！";
+    String CHANGE_NAME_SUCCESS = "更改成功";
 
 }
