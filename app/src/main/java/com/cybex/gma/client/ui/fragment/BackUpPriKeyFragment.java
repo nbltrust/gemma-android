@@ -18,7 +18,7 @@ import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
-import com.siberiadante.customdialoglib.CustomFullDialog;
+import com.siberiadante.customdialoglib.CustomDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -133,11 +133,12 @@ public class BackUpPriKeyFragment extends XFragment {
      */
     private void showAlertDialog() {
         int[] listenedItems = {R.id.tv_i_understand};
-        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+        CustomDialog dialog = new CustomDialog(getContext(),
                 R.layout.dialog_no_screenshot, listenedItems, false, Gravity.CENTER);
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
             @Override
-            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.tv_i_understand:
                         dialog.cancel();
