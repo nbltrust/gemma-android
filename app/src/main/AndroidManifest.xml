@@ -54,6 +54,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
+        <!-- 创建方式容器界面 -->
+        <activity android:name=".ui.activity.CreateMethodActivity">
+
+        </activity>
 
         <!-- 收支记录界面 -->
         <activity

@@ -1,16 +1,13 @@
 package com.cybex.gma.client.ui.activity;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,9 +25,8 @@ import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.xujiaji.happybubble.BubbleLayout;
-
-import java.lang.reflect.Field;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,17 +83,17 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterEosNameChanged(Editable s) {
-        if (isAllTextFilled() && checkboxConfig.isChecked()){
+        if (isAllTextFilled() && checkboxConfig.isChecked()) {
             setClickable(btCreateWallet);
-        }else{
+        } else {
             setUnclickable(btCreateWallet);
         }
 
-        if (EmptyUtils.isEmpty(getEOSUserName())){
-            setEOSNameValidStyle();
-        }else if (getEOSUserName().length() == ParamConstants.VALID_EOSNAME_LENGTH){
+        if (EmptyUtils.isEmpty(getEOSUserName())) {
+            if (edtEosName.hasFocus()) setEOSNameFocusedStyle();
+        } else if (getEOSUserName().length() == ParamConstants.VALID_EOSNAME_LENGTH) {
             if (getP().isUserNameValid()) {
-                setEOSNameValidStyle();
+                setEOSNameFocusedStyle();
             } else {
                 setUnclickable(btCreateWallet);
                 setEOSNameInvalidStyle();
@@ -106,22 +102,22 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     }
 
     @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterPassChanged(Editable s){
-        if (isAllTextFilled() && checkboxConfig.isChecked()){
+    public void afterPassChanged(Editable s) {
+        if (isAllTextFilled() && checkboxConfig.isChecked()) {
             setClickable(btCreateWallet);
-        }else{
+        } else {
             setUnclickable(btCreateWallet);
         }
     }
 
     @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterRepeatPassChanged(Editable s){
-        if (EmptyUtils.isEmpty(getRepeatPassword())){
-            setRepeatPassValidStyle();
+    public void afterRepeatPassChanged(Editable s) {
+        if (EmptyUtils.isEmpty(getRepeatPassword())) {
+            if (edtRepeatPass.hasFocus())setRepeatPassFocusStyle();
         }
-        if (isAllTextFilled() && checkboxConfig.isChecked()){
+        if (isAllTextFilled() && checkboxConfig.isChecked()) {
             setClickable(btCreateWallet);
-        }else{
+        } else {
             setUnclickable(btCreateWallet);
         }
 
@@ -129,10 +125,10 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     }
 
     @OnTextChanged(value = R.id.edt_invCode, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterInvCodeChanged(Editable s){
-        if (isAllTextFilled() && checkboxConfig.isChecked()){
+    public void afterInvCodeChanged(Editable s) {
+        if (isAllTextFilled() && checkboxConfig.isChecked()) {
             setClickable(btCreateWallet);
-        }else{
+        } else {
             setUnclickable(btCreateWallet);
         }
 
@@ -175,6 +171,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     }
 
     public void initView() {
+        //动态设置hint样式
         setEditTextHintStyle(edtEosName, R.string.EOS_username_hint);
         setEditTextHintStyle(edtSetPass, R.string.password_hint);
         setEditTextHintStyle(edtRepeatPass, R.string.repeatPassword_hint);
@@ -221,70 +218,80 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
             }
         });
         setNavibarTitle("创建钱包", true);
-
+        /**
+         * eos用户名输入区域样式设置
+         */
         edtEosName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (EmptyUtils.isEmpty(getEOSUserName())){
+
+                if (EmptyUtils.isEmpty(getEOSUserName())) {
                     setEOSNameValidStyle();
-                }else{
+                    if (hasFocus)setEOSNameFocusedStyle();
+                }else {
                     if (getP().isUserNameValid()) {
                         setEOSNameValidStyle();
+                        if (hasFocus)setEOSNameFocusedStyle();
                     } else {
                         setUnclickable(btCreateWallet);
                         setEOSNameInvalidStyle();
                     }
                 }
+
             }
+
         });
 
+        /**
+         * 设置密码输入区域样式设置
+         */
+        edtSetPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                } else {
+                    tvSetPass.setTextColor(getResources().getColor(R.color.steel));
+                }
+            }
+        });
+        /**
+         * 重复密码输入区域样式设置
+         */
         edtRepeatPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (EmptyUtils.isEmpty(getRepeatPassword())){
+
+                if (EmptyUtils.isEmpty(getRepeatPassword())) {
                     setRepeatPassValidStyle();
-                }else{
-                    if (getPassword().equals(getRepeatPassword())){
+                    if (hasFocus)setRepeatPassFocusStyle();
+                } else {
+                    if (getPassword().equals(getRepeatPassword())) {
                         //两次输入的密码一致
                         setRepeatPassValidStyle();
-                    }else{
+                        if (hasFocus)setRepeatPassFocusStyle();
+                    } else {
                         //两次输入的密码不一致
                         setRepeatPassInvalidStyle();
                     }
                 }
-
+            }
+        });
+        /**
+         * 密码提示输入区域样式设置
+         */
+        edtPassHint.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                } else {
+                    tvPassHint.setTextColor(getResources().getColor(R.color.steel));
+                }
             }
         });
 
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewCreateWallet);
-    }
-
-    public void setStatusBar() {
-        //顶部状态栏适配
-        Window window = getWindow();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //Android 5.0 以上适配
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION  //布局能延伸到navigation bar
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(Color.TRANSPARENT);//设置状态栏颜色为透明
-            //window.setNavigationBarColor(Color.TRANSPARENT);//设置导航栏颜色为透明
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                //Android 7.0以上适配
-                try {
-                    Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
-                    Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
-                    field.setAccessible(true);
-                    field.setInt(getWindow().getDecorView(), Color.TRANSPARENT);  //改为透明
-                } catch (Exception e) {}
-            }
-        }
     }
 
     @Override
@@ -320,6 +327,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     }
 
     public void setEOSNameValidStyle() {
+        if (EmptyUtils.isNotEmpty(getEOSUserName())) {
+
+        }
         //当eos用户名为12位时，恢复初始样式
         tvEosName.setTextColor(getResources().getColor(R.color.steel));
         tvEosName.setText("EOS账户名");
@@ -333,10 +343,21 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     }
 
+    public void setEOSNameFocusedStyle(){
+        tvEosName.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+        tvEosName.setText("EOS账户名");
+    }
+
     public void setRepeatPassValidStyle() {
         //两次输入密码匹配
         tvRepeatPass.setText("重复密码");
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
+        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+    }
+
+    public void setRepeatPassFocusStyle(){
+        tvRepeatPass.setText("重复密码");
+        tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
@@ -379,36 +400,37 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     /**
      * 根据返回值不同Toast不同内容
+     *
      * @param errorCode
      */
     public void showOnErrorInfo(int errorCode) {
         //todo 根据返回值判断提醒的内容
-        switch (errorCode){
-            case(HttpConst.INVCODE_USED):
+        switch (errorCode) {
+            case (HttpConst.INVCODE_USED):
                 GemmaToastUtils.showLongToast("创建失败，邀请码已被使用！");
                 break;
-            case(HttpConst.INVCODE_NOTEXIST):
+            case (HttpConst.INVCODE_NOTEXIST):
                 GemmaToastUtils.showLongToast("创建失败，邀请码不存在！");
                 break;
-            case(HttpConst.EOSNAME_USED):
+            case (HttpConst.EOSNAME_USED):
                 GemmaToastUtils.showLongToast("创建失败，eos账户名已存在！");
                 break;
-            case(HttpConst.EOSNAME_INVALID):
+            case (HttpConst.EOSNAME_INVALID):
                 GemmaToastUtils.showLongToast("创建失败，eos账户名格式错误！");
                 break;
-            case(HttpConst.EOSNAME_LENGTH_INVALID):
+            case (HttpConst.EOSNAME_LENGTH_INVALID):
                 GemmaToastUtils.showLongToast("创建失败，eos账户名长度不为12位！");
                 break;
-            case(HttpConst.PARAMETERS_INVALID):
+            case (HttpConst.PARAMETERS_INVALID):
                 GemmaToastUtils.showLongToast("创建失败，参数错误！");
                 break;
-            case(HttpConst.PUBLICKEY_INVALID):
+            case (HttpConst.PUBLICKEY_INVALID):
                 GemmaToastUtils.showLongToast("创建失败，无效的公钥！");
                 break;
-            case(HttpConst.BALANCE_NOT_ENOUGH):
+            case (HttpConst.BALANCE_NOT_ENOUGH):
                 GemmaToastUtils.showLongToast("创建失败，账户余额不足！");
                 break;
-            case(HttpConst.CREATE_ACCOUNT_FAIL):
+            case (HttpConst.CREATE_ACCOUNT_FAIL):
                 GemmaToastUtils.showLongToast("创建失败，请重新尝试");
                 break;
             default:
@@ -416,9 +438,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 GemmaToastUtils.showLongToast("创建失败，请重新尝试");
                 break;
         }
-
-
-
 
 
     }
@@ -445,13 +464,69 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         return true;
     }
 
-    public void setEditTextHintStyle(EditText editText, int resId){
+    public void setEditTextHintStyle(EditText editText, int resId) {
         String hintStr = getResources().getString(resId);
-        SpannableString ss =  new SpannableString(hintStr);
+        SpannableString ss = new SpannableString(hintStr);
         AbsoluteSizeSpan ass = new AbsoluteSizeSpan(14, true);
         editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         editText.setHint(new SpannableString(ss));
+    }
+
+    /**
+     * 显示选择创建方式dialog
+     */
+    private void showChooseMethodDialog() {
+        int[] listenedItems = {R.id.btn_close, R.id.btn_use_invCode, R.id.btn_use_cybex, R.id.btn_invite_friend};
+        CustomFullDialog dialog = new CustomFullDialog(this,
+                R.layout.dialog_choose_create_method, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.btn_close:
+                        dialog.cancel();
+                        break;
+                    case R.id.btn_use_invCode:
+                        showGetInvCodeDialog();
+                        dialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    /**
+     * 显示获取邀请码dialog
+     */
+    private void showGetInvCodeDialog() {
+        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_create, R.id.tv_get_invCode};
+        CustomFullDialog dialog = new CustomFullDialog(this,
+                R.layout.dialog_get_invcode, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imc_cancel:
+                        dialog.cancel();
+                        break;
+                    case R.id.btn_use_invCode:
+
+
+                        break;
+                    case R.id.tv_get_invCode:
+
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
     }
 
 }

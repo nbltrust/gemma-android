@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner"
+    android:orientation="horizontal"
+    android:padding="@dimen/dimen_16">
+    
+    <RadioButton
+        android:id="@+id/redioButton_is_chosen"
+        android:layout_width="@dimen/dimen_16"
+        android:layout_height="@dimen/dimen_16"
+        android:layout_gravity="center"/>
+    
+    <LinearLayout
+        android:padding="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_node_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/darkSlateBlue"
+                android:textSize="@dimen/font_4"
+                android:textStyle="bold"
+                tools:text="EOS Cannon"/>
+
+            <TextView
+                android:id="@+id/tv_node_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_3.5"
+                android:textColor="@color/cornflowerBlue"
+                tools:text="11.33%"/>
+
+            <TextView
+                android:id="@+id/tv_node_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="#4"
+                android:textSize="@dimen/font_3.5"
+                android:textColor="@color/cornflowerBlue"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/dimen_10"
+                />
+
+        </LinearLayout>
+        
+        <TextView
+            android:id="@+id/tv_node_alias"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blueyGrey"
+            android:textSize="@dimen/font_3"
+            tools:text="eoscannonchn"
+            />
+
+        <TextView
+            android:id="@+id/tv_node_announcement"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_3"
+            android:textColor="@color/darkSlateBlue"
+            tools:text="IN EOS WE TRUST CANNON"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

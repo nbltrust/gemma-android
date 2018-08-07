@@ -92,6 +92,9 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         }
     }
 
+    /**
+     * 按钮点击事件，执行判断跳转
+     */
     @OnClick(R.id.btn_complete_import)
     public void checkValidation() {
         //先检查表单
@@ -169,17 +172,42 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             }
         });
 
+        edtSetPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                }else{
+                    tvSetPass.setTextColor(getResources().getColor(R.color.steel));
+                }
+            }
+        });
+
         edtRepeatPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+
                 if (EmptyUtils.isNotEmpty(getRepeatPass())){
                     if (getRepeatPass().equals(getPassword())){
                         setRepeatPassValidStyle();
+                        if (hasFocus)setRepeatPassFocusStyle();
                     }else{
                         setRepeatPassInvalidStyle();
                     }
                 }else{
                     setRepeatPassValidStyle();
+                    if (hasFocus)setRepeatPassFocusStyle();
+                }
+            }
+        });
+
+        edtPassHint.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                }else{
+                    tvPassHint.setTextColor(getResources().getColor(R.color.steel));
                 }
             }
         });
@@ -236,6 +264,11 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     public void setRepeatPassValidStyle(){
         tvRepeatPass.setText("重复密码");
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
+        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+    }
+    public void setRepeatPassFocusStyle(){
+        tvRepeatPass.setText("重复密码");
+        tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
     /**
