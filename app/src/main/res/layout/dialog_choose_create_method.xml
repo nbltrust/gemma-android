@@ -20,7 +20,6 @@
         android:textSize="14sp"
         android:layout_marginLeft="28dp"
         android:layout_marginRight="24dp"
-
         android:textColor="@color/darkSlateBlue"
         android:lineSpacingExtra="2sp"
         android:text="@string/choose_create_method"
@@ -51,7 +50,6 @@
         android:text="@string/use_cybex"
         android:textColor="@color/white"
         android:textSize="@dimen/font_3.5"/>
-
 
     <Button
         android:id="@+id/btn_use_invCode"

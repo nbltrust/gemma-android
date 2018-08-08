@@ -155,20 +155,46 @@ public class ChangePasswordFragment extends XFragment {
             curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentId);
             priKey = getArguments().getString("key");
 
+            edtSetNewPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus){
+                        tvSetNewPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    }else{
+                        tvSetNewPass.setTextColor(getResources().getColor(R.color.steel));
+                    }
+                }
+            });
+
             edtRepeatNewPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (EmptyUtils.isNotEmpty(getRepeatPass())){
                         if (getRepeatPass().equals(getPassword())){
                             setRepeatPassValidStyle();
+                            if (hasFocus)setRepeatPassFocusStyle();
                         }else{
                             setRepeatPassInvalidStyle();
                         }
                     }else{
                         setRepeatPassValidStyle();
+                        if (hasFocus)setRepeatPassFocusStyle();
                     }
                 }
             });
+
+            edtNewPassHint.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus){
+                        tvNewPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    }else{
+                        tvNewPassHint.setTextColor(getResources().getColor(R.color.steel));
+                    }
+                }
+            });
+
+
         }
 
         setEditTextHintStyle(edtSetNewPass, R.string.new_password);
@@ -218,11 +244,19 @@ public class ChangePasswordFragment extends XFragment {
         edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
+    public void setRepeatPassFocusStyle(){
+        tvRepeatNewPass.setText("重复密码");
+        tvRepeatNewPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+        edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+    }
+
     public void setRepeatPassInvalidStyle(){
         tvRepeatNewPass.setText("密码不一致");
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.scarlet));
         edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }
+
+
 
     public void setEditTextHintStyle(EditText editText, int resId){
         String hintStr = getResources().getString(resId);

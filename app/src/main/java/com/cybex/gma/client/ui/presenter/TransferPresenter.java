@@ -191,7 +191,6 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                     }
                 });
-
     }
 
     /**

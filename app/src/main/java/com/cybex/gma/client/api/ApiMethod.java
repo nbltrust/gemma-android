@@ -68,5 +68,10 @@ public interface ApiMethod {
      */
     String API_GET_TRANSACTION = "/v1/history/get_transaction";
 
+    /**
+     * 根据区块号获取当前区块信息
+     */
+    String API_GET_BLOCK = "v1/chain/get_block";
+
 
 }

@@ -75,7 +75,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         return fragment;
     }
 
-
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
@@ -217,7 +216,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             default:
                 break;
         }
-
     }
 
     @OnClick({R.id.btn_transfer})

@@ -1,15 +1,22 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.gma.client.R;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class VoteFragment extends XFragment {
+
+    @BindView(R.id.view_refresh) CommonRefreshLayout viewRefresh;
+    @BindView(R.id.rv_list) RecyclerView mRecyclerView;
+
     Unbinder unbinder;
     public static VoteFragment newInstance() {
         Bundle args = new Bundle();

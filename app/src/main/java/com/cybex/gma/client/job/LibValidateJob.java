@@ -1,25 +1,18 @@
 package com.cybex.gma.client.job;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.cybex.gma.client.GmaApplication;
-import com.cybex.gma.client.api.callback.CustomRequestCallback;
-import com.cybex.gma.client.api.data.response.CustomData;
 import com.cybex.gma.client.config.CacheConstants;
-import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.model.request.GetTransactionReqParams;
-import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
-import com.cybex.gma.client.ui.model.response.UserRegisterResult;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetTransactionRequest;
-import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -35,7 +28,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -284,62 +276,5 @@ public class LibValidateJob {
             smartScheduler.removeJob(ParamConstants.POLLING_JOB);
         }
     }
-
-    private void reCreateAccount(){
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)){
-            final String account_name = curWallet.getCurrentEosName();
-            final String invCode = curWallet.getInvCode();
-            final String txId = curWallet.getTxId();
-            final String publicKey = curWallet.getPublicKey();
-            final int app_id = ParamConstants.TYPE_APP_ID_CYBEX;
-
-            UserRegisterReqParams params = new UserRegisterReqParams();
-            params.setApp_id(app_id);
-            params.setPublic_key(publicKey);
-            params.setInvitation_code(invCode);
-            params.setTxId(txId);
-            params.setAccount_name(account_name);
-
-            String jsonParams = GsonUtils.objectToJson(params);
-
-            new UserRegisterRequest(UserRegisterResult.class)
-                    .setJsonParams(jsonParams)
-                    .postJson(new CustomRequestCallback<UserRegisterResult>() {
-                        @Override
-                        public void onBeforeRequest(@NonNull Disposable disposable) {
-
-                        }
-
-                        @Override
-                        public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
-                            if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
-                                UserRegisterResult registerResult = data.result;
-                                if (registerResult != null) {
-                                    String txId = registerResult.txId;
-                                    LibValidateJob.startPolling(10000);
-                                }
-                            } else if(data.code == HttpConst.EOSNAME_INVALID) {
-
-                            } else {
-
-                            }
-                        }
-
-                        @Override
-                        public void onError(@NonNull Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    });
-        }
-
-
-    }
-
 
 }

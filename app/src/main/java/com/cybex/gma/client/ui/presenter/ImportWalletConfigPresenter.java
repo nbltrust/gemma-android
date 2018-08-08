@@ -75,7 +75,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                     public void onError(Response<GetKeyAccountsResult> response) {
                         super.onError(response);
                         getV().dissmisProgressDialog();
-                        GemmaToastUtils.showShortToast("导入钱包失败");
+                        GemmaToastUtils.showShortToast("导入钱包失败,请检查输入后重试");
                     }
 
                     @Override
@@ -105,10 +105,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                         } else {
                             GemmaToastUtils.showShortToast("导入钱包失败");
                         }
-
                     }
-
-
                 });
     }
 

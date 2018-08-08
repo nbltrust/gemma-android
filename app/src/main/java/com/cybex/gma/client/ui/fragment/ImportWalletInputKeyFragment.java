@@ -147,4 +147,6 @@ public class ImportWalletInputKeyFragment extends XFragment {
         button.setClickable(true);
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
     }
+
+
 }
