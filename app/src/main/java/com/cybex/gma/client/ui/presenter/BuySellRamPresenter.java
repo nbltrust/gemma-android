@@ -262,11 +262,15 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
     /**
      * 估算EOS和RAM之间的换算关系
      */
-   public void calculateApproxiValue(List<String> args){
+   public double calculateApproxiValue(List<String> args, double cardinalNum){
        double baseBalance = Double.parseDouble(args.get(0));
        double quoteBalance = Double.parseDouble(args.get(1));
        double quoteWeight = Double.parseDouble(args.get(2));
 
+       double ramPrice = (quoteBalance/baseBalance) * quoteWeight;
+       double price = ramPrice * cardinalNum;
+
+       return price;
    }
 
 }

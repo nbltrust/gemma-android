@@ -212,6 +212,7 @@
                 android:textSize="@dimen/font_4"
                 android:hint="@string/input_eos_amount"
                 android:textColorHint="@color/cloudyBlue"
+                android:inputType="number"
                 style="@style/editText_config_wallet"
                 android:layout_marginStart="0dp"
                 android:background="@null"
