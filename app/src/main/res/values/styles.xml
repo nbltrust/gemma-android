@@ -27,6 +27,19 @@
 
     </style>
 
+
+    <style name="mRadioButton">
+        <item name="android:layout_marginStart">@dimen/dimen_10</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+        <item name="android:layout_height">@dimen/card_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">@dimen/font_3.5</item>
+        <item name="android:textColor">@color/darkSlateBlue</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:drawableRight">@drawable/selector_radio_button</item>
+    </style>
+
     <!-- 通用EditText样式 -->
     <style name="myEditText">
         <item name="android:colorControlNormal">@color/paleGrey</item>

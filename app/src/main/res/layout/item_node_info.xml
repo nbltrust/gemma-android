@@ -11,9 +11,11 @@
     
     <RadioButton
         android:id="@+id/redioButton_is_chosen"
+        android:button="@null"
+        android:drawableRight="@drawable/selector_radio_button"
+        android:layout_gravity="center"
         android:layout_width="@dimen/dimen_16"
-        android:layout_height="@dimen/dimen_16"
-        android:layout_gravity="center"/>
+        android:layout_height="@dimen/dimen_16"/>
     
     <LinearLayout
         android:padding="@dimen/dimen_10"
