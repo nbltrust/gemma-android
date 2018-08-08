@@ -28,9 +28,9 @@ public class ApiPath {
     //中心化服务器host
     public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3002";
     //链上服务器host
-    public static final String HOST_ON_CHAIN = "http://139.224.135.236:18888" ;//"http://139.196.73.117:9000";
-    //北京团队私链节点
-    public static final String HOST_ON_TEST_CHAIN_BEIJING = "http://47.75.154.248:50001";
+    public static final String HOST_ON_CHAIN = "http://47.75.154.248:50001"; //"http://139.224.135.236:18888" ;
+    // "http://139.196.73.117:9000";
+
     //主链上的一个节点
     public static final String HOST_ON_CHAIN_MAIN = "http://13.251.120.68:8888";
     //eosweb.net,一个外网节点，拥有当前eos链上所有数据

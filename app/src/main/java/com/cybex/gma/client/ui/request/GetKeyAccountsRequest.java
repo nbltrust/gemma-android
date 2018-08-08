@@ -21,7 +21,7 @@ public class GetKeyAccountsRequest extends GMAHttpRequest<GetKeyAccountsResult> 
 
     public GetKeyAccountsRequest(Class clazz) {
         super(clazz);
-        setMethod(ApiPath.HOST_ON_TEST_CHAIN_BEIJING + ApiMethod.API_GET_KEY_ACCOUNTS);
+        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_KEY_ACCOUNTS);
     }
 
     public GetKeyAccountsRequest setJsonParams(String jsonParams) {
