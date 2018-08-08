@@ -197,7 +197,7 @@
                     android:layout_weight="1"/>
 
                 <TextView
-                    tools:text="可用 0.17KB"
+                    tools:text="可用 0.17 EOS"
                     android:textSize="@dimen/font_3"
                     android:textColor="@color/darkSlateBlueTwo"
                     android:layout_width="wrap_content"
@@ -210,7 +210,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50"
                 android:textSize="@dimen/font_4"
-                android:hint="@string/input_ram_amount"
+                android:hint="@string/input_eos_amount"
                 android:textColorHint="@color/cloudyBlue"
                 style="@style/editText_config_wallet"
                 android:layout_marginStart="0dp"
@@ -218,6 +218,17 @@
                 android:textCursorDrawable="@drawable/cursor_custom"/>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_approximately_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darkSlateBlueTwo"
+            android:textSize="@dimen/font_3"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/dimen_10"
+            tools:text="预估可兑换 0.001 KB"
+            />
 
         <View
             android:layout_width="match_parent"

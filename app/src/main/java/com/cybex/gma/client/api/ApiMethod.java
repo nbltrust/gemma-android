@@ -71,7 +71,13 @@ public interface ApiMethod {
     /**
      * 根据区块号获取当前区块信息
      */
-    String API_GET_BLOCK = "v1/chain/get_block";
+    String API_GET_BLOCK = "/v1/chain/get_block";
+
+    /**
+     * 获取当前RAM market信息
+     * 估算EOS与RAM间换算价格使用
+     */
+    String API_GET_RAM_MARKET = "/v1/chain/get_table_rows";
 
 
 }

@@ -1,102 +1,45 @@
 package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.gma.client.api.callback.JsonCallback;
-import com.cybex.gma.client.db.entity.WalletEntity;
-import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
-import com.cybex.gma.client.ui.fragment.TransferFragment;
-import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
+import com.cybex.gma.client.ui.fragment.BuySellRamFragment;
+import com.cybex.gma.client.ui.model.request.GetRamMarketReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
-import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
+import com.cybex.gma.client.ui.request.GetRamMarketRequest;
 import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.android.logger.Log;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
-import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-/**
- * 转账presenter
- *
- * Created by wanglin on 2018/7/9.
- */
-public class TransferPresenter extends XPresenter<TransferFragment> {
+import java.util.ArrayList;
+import java.util.List;
 
+
+public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
+
+    private static final String SCOPE = "eosio";
+    private static final String CODE = "eosio";
+    private static final String TABLE = "rammarket";
     private static final String VALUE_CODE = "eosio.token";
-    private static final String VALUE_ACTION = "transfer";
     private static final String VALUE_CONTRACT = "eosio.token";
     private static final String VALUE_COMPRESSION = "none";
-    private static final String VALUE_SYMBOL = "EOS";
 
-    public void requestBanlanceInfo() {
-        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (entity == null) { return; }
-
-        String currentEOSName = entity.getCurrentEosName();
-        GetCurrencyBalanceReqParams params = new GetCurrencyBalanceReqParams();
-        params.setAccount(currentEOSName);
-        params.setCode(VALUE_CODE);
-        params.setSymbol(VALUE_SYMBOL);
-        String jsonParams = GsonUtils.objectToJson(params);
-
-        new GetCurrencyBalanceRequest(String.class)
-                .setJsonParams(jsonParams)
-                .getCurrencyBalance(new StringCallback() {
-                    @Override
-                    public void onStart(Request<String, ? extends Request> request) {
-                        super.onStart(request);
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        getV().dissmisProgressDialog();
-                    }
-
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        String jsonStr = response.body();
-                        String banlance = "";
-                        LoggerManager.d("json:" + jsonStr);
-                        try {
-                            JSONArray array = new JSONArray(jsonStr);
-                            if (array != null && array.length() > 0) {
-                                banlance = array.optString(0);
-                                getV().showInitData(banlance);
-                            } else {
-                                // GemmaToastUtils.showShortToast("没有可用余额");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
-    }
-
-    /**
-     * 执行转账逻辑
-     *
-     * @param from
-     * @param to
-     * @param quantity
-     * @param memo
-     * @param privateKey
-     */
-    public void executeTransferLogic(String from, String to, String quantity, String memo, String privateKey) {
-        //通过c++获取 abi json操作体
-        String abijson = JNIUtil.create_abi_req_transfer(VALUE_CODE, VALUE_ACTION,
-                from, to, quantity, memo);
+    public void executeBuyRamLogic(String from, String to, String quantity, String memo, String privateKey){
+        //通过C++获取abi操作体
+        String abijson = ""; //JNIUtil.create_abi_req_buyram()
 
         //链上接口请求 abi_json_to_bin
         new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)
@@ -105,13 +48,13 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("转账处理中...");
+                        getV().showProgressDialog("操作处理中...");
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("转账失败");
+                        GemmaToastUtils.showShortToast("操作失败");
                         getV().dissmisProgressDialog();
                     }
 
@@ -126,13 +69,58 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
 
                         } else {
-                            GemmaToastUtils.showShortToast("转账失败");
+                            GemmaToastUtils.showShortToast("操作失败");
+                        }
+
+                    }
+                });
+
+
+
+    }
+
+    public void executeSellRamLogic(String from, String to, String quantity, String memo, String privateKey){
+
+        //通过C++获取abi操作体
+        String abijson = ""; //JNIUtil.create_abi_req_sellram()
+
+        //链上接口请求 abi_json_to_bin
+        new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)
+                .setJsonParams(abijson)
+                .getAbiJsonToBean(new JsonCallback<AbiJsonToBeanResult>() {
+                    @Override
+                    public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
+                        super.onStart(request);
+                        getV().showProgressDialog("操作处理中...");
+                    }
+
+                    @Override
+                    public void onError(Response<AbiJsonToBeanResult> response) {
+                        super.onError(response);
+                        GemmaToastUtils.showShortToast("操作失败");
+                        getV().dissmisProgressDialog();
+                    }
+
+                    @Override
+                    public void onSuccess(Response<AbiJsonToBeanResult> response) {
+                        if (response != null && response.body() != null) {
+                            AbiJsonToBeanResult result = response.body();
+                            String binargs = result.binargs;
+                            LoggerManager.d("abiStr: " + binargs);
+
+                            getInfo(from, privateKey, binargs);
+
+
+                        } else {
+                            GemmaToastUtils.showShortToast("操作失败");
                         }
 
                     }
                 });
 
     }
+
+
 
 
     /**
@@ -149,7 +137,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("转账失败");
+                        GemmaToastUtils.showShortToast("操作失败");
                         getV().dissmisProgressDialog();
                     }
 
@@ -184,7 +172,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             }
 
                         } else {
-                            GemmaToastUtils.showShortToast("转账失败");
+                            GemmaToastUtils.showShortToast("操作失败");
                             getV().dissmisProgressDialog();
                         }
 
@@ -193,32 +181,73 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     }
 
     /**
-         * 最后执行push transaction
-         */
-        public void pushTransaction(String jsonParams) {
-            new PushTransactionRequest(String.class)
-                    .setJsonParams(jsonParams)
-                    .pushTransaction(new StringCallback() {
-                        @Override
-                        public void onError(Response<String> response) {
-                            super.onError(response);
-                            getV().dissmisProgressDialog();
-                        }
+     * 执行push transaction
+     */
+    public void pushTransaction(String jsonParams) {
+        new PushTransactionRequest(String.class)
+                .setJsonParams(jsonParams)
+                .pushTransaction(new StringCallback() {
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        getV().dissmisProgressDialog();
+                    }
 
-                        @Override
-                        public void onSuccess(Response<String> response) {
-                            getV().dissmisProgressDialog();
-                            if (response != null && EmptyUtils.isNotEmpty(response.body())) {
-                                String jsonStr = response.body();
-                                LoggerManager.d("pushTransaction json:" + jsonStr);
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        getV().dissmisProgressDialog();
+                        if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                            String jsonStr = response.body();
+                            LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                                GemmaToastUtils.showLongToast("转账成功");
-                                getV().clearData();
-
-                            }
+                            GemmaToastUtils.showLongToast("操作成功");
+                            //todo 页面刷新，什么数据该更新显示？
 
                         }
-                    });
+
+                    }
+                });
 
     }
+
+    /**
+     * 获取当前链上ram市场信息
+     */
+   public List<JSONObject> getRamMarketInfo(){
+       List<JSONObject> args = new ArrayList<>();
+       GetRamMarketReqParams params = new GetRamMarketReqParams();
+       params.setScope(SCOPE);
+       params.setCode(CODE);
+       params.setTable(TABLE);
+       params.setJson(true);
+
+       String jsonParams = GsonUtils.objectToJson(params);
+
+       new GetRamMarketRequest(String.class)
+               .setJsonParams(jsonParams)
+               .getRamMarketRequest(new StringCallback() {
+                   @Override
+                   public void onSuccess(Response<String> response) {
+                       Log.d("on Success");
+                       String infoJson = response.body();
+                       LoggerManager.d("transaction info:" + infoJson);
+                       try {
+                           JSONObject obj = new JSONObject(infoJson);
+                           if (obj != null) {
+
+                           }
+                       } catch (JSONException e) {
+                           e.printStackTrace();
+                       }
+                   }
+
+                   @Override
+                   public void onError(Response<String> response) {
+                       LoggerManager.d("on Error");
+                   }
+               });
+
+        return args;
+   }
+
 }
