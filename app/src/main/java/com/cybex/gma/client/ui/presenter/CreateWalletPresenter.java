@@ -10,7 +10,6 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.job.LibValidateJob;
 import com.cybex.gma.client.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
@@ -206,7 +205,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         List<String> account_names = new ArrayList<>();
         account_names.add(eosUsername);
         final String eosNameJson = GsonUtils.objectToJson(account_names);
-        LoggerManager.d("eosnamejson", eosNameJson);
+        walletEntity.setEosNameJson(eosNameJson);
         //设置currentEosName，创建钱包步骤中可以直接设置，因为默认eosNameJson中只会有一个用户名字符串
         walletEntity.setCurrentEosName(eosUsername);
         //设置是否为当前钱包，默认新建钱包为当前钱包

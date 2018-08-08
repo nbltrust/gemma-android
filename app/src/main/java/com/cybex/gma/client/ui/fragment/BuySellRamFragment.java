@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
@@ -14,6 +15,7 @@ import com.cybex.base.view.tablayout.listener.OnTabSelectListener;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.model.vo.TabTitleBuyRamVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleSellRamVO;
+import com.cybex.gma.client.ui.presenter.BuySellRamPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -27,7 +29,11 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
-public class BuySellRamFragment extends XFragment {
+
+/**
+ * 买卖RAM Fragment
+ */
+public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_ram_amount) SuperTextView superTextViewRamAmount;
@@ -37,24 +43,29 @@ public class BuySellRamFragment extends XFragment {
     @BindView(R.id.edt_buy_sell_ram) EditText edtBuySellRam;
     @BindView(R.id.bt_buy_ram) Button btBuyRam;
     @BindView(R.id.bt_sell_ram) Button btSellRam;
+    @BindView(R.id.tv_approximately_amount) TextView tvApproximatelyAmount;
 
     @OnClick(R.id.bt_buy_ram)
-    public void showBuyDialog(){
+    public void showBuyDialog() {
         showConfirmBuyRamDialog();
     }
 
     @OnClick(R.id.bt_sell_ram)
-    public void showSellDialog(){
+    public void showSellDialog() {
         showConfirmSellRamDialog();
     }
 
     @OnTextChanged(value = R.id.edt_buy_sell_ram, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void  onChanged(){
-        if (!EmptyUtils.isEmpty(edtBuySellRam.getText().toString().trim())){
+    public void onChanged() {
+        if (EmptyUtils.isNotEmpty(edtBuySellRam.getText().toString().trim())) {
             btBuyRam.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
             btSellRam.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+            tvApproximatelyAmount.setVisibility(View.VISIBLE);
+        }else{
+            tvApproximatelyAmount.setVisibility(View.GONE);
         }
     }
+
     public static BuySellRamFragment newInstance() {
         Bundle args = new Bundle();
         BuySellRamFragment fragment = new BuySellRamFragment();
@@ -72,7 +83,7 @@ public class BuySellRamFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("买卖RAM", true, true);
-
+        tvApproximatelyAmount.setVisibility(View.GONE);
         btBuyRam.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
         btSellRam.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
 
@@ -99,6 +110,7 @@ public class BuySellRamFragment extends XFragment {
 
             }
         });
+        getP().getRamMarketInfo();
     }
 
     @Override
@@ -107,8 +119,8 @@ public class BuySellRamFragment extends XFragment {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public BuySellRamPresenter newP() {
+        return new BuySellRamPresenter();
     }
 
     @Override
@@ -120,6 +132,10 @@ public class BuySellRamFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public String getEOSAmount() {
+        return edtBuySellRam.getText().toString().trim();
     }
 
     /**

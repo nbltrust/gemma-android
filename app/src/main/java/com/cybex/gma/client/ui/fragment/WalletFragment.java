@@ -177,7 +177,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             String json = curWallet.getEosNameJson();
             List<String> eosNamelist = GsonUtils.parseString2List(json, String.class);
             //TODO
-            eosNamelist.add("暂时测试用");
+//            eosNamelist.add("暂时测试用");
             if (EmptyUtils.isNotEmpty(eosNamelist) && eosNamelist.size() > 1) {
                 textViewUsername.setCompoundDrawables(null, null,
                         getResources().getDrawable(R.drawable.ic_common_drop_white), null);
