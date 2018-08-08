@@ -109,7 +109,7 @@
                 title:sDividerLineType="none"
                 title:sLeftTextString="@string/balance"
                 title:sLeftTextSize="@dimen/font_3"
-                title:sRightTextString="0.000 EOS"
+                title:sRightTextString="0.0000 EOS"
                 title:sRightTextSize="@dimen/font_4">
 
             </com.allen.library.SuperTextView>
@@ -134,7 +134,7 @@
                 title:sUseShape="true"
                 title:sLeftTextString="@string/redeem"
                 title:sLeftTextSize="@dimen/font_3"
-                title:sRightTextString="0.000 EOS"
+                title:sRightTextString="0.0000 EOS"
                 title:sRightTextSize="@dimen/font_4">
 
             </com.allen.library.SuperTextView>

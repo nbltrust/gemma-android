@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_wallet_home3x"
@@ -55,9 +55,9 @@
                     android:layout_marginStart="@dimen/dimen_30"
                     android:layout_marginTop="@dimen/dimen_18"
                     android:clickable="true"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="5dp"
                     android:drawableRight="@drawable/ic_common_drop_white"
-                    android:text="GEMMA1234567"
+                    tools:text="GEMMA1234567"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_7"
                     title:layout_constraintStart_toEndOf="@id/imageView_portrait"
