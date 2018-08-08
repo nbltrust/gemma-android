@@ -95,7 +95,7 @@ public class ChangePasswordFragment extends XFragment {
                 if (!EmptyUtils.isEmpty(curWallet)){
                     curWallet.setCypher(newCypher);
                     curWallet.setPasswordTip(getPassHint());
-                    DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                    DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
                     GemmaToastUtils.showLongToast("修改密码成功");
                     UISkipMananger.launchHome(getActivity());
                 }
