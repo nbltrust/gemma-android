@@ -14,21 +14,28 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.PollEvent;
+import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
 import com.tapadoo.alerter.Alerter;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +52,6 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  */
 public class WalletFragment extends XFragment<WalletPresenter> {
 
-    private final String testUsername = "helloeoscoin";
     @BindView(R.id.superTextView_card_vote) SuperTextView superTextViewCardVote;
     @BindView(R.id.superTextView_card_buy_ram) SuperTextView superTextViewCardBuyRam;
     private WalletEntity curWallet;
@@ -70,15 +76,24 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.progressbar_ram_small) RoundCornerProgressBar progressBarRAM;
     Unbinder unbinder;
 
-    @OnClick(R.id.tv_backup_wallet)
-    public void backUpWallet() {
-        if (!EmptyUtils.isEmpty(curWallet)) {
-            walletID = curWallet.getId();
-            EventBusProvider.postSticky(new WalletIDEvent(walletID));
-            //todo 跳转逻辑还需要调整，为了方便测试，跳转放在空判断外
-            //UISkipMananger.launchBakupGuide(getActivity());
+    @OnClick({R.id.tv_backup_wallet, R.id.textView_username})
+    public void backUpWallet(View v) {
+        switch (v.getId()) {
+            case R.id.tv_backup_wallet:
+                if (!EmptyUtils.isEmpty(curWallet)) {
+                    walletID = curWallet.getId();
+                    EventBusProvider.postSticky(new WalletIDEvent(walletID));
+                    UISkipMananger.launchBakupGuide(getActivity());
+                }
+                break;
+            case R.id.textView_username:
+                GemmaToastUtils.showShortToast("Test");
+                break;
+            default:
+                break;
         }
-        UISkipMananger.launchBakupGuide(getActivity());
+
+
     }
 
     @Override
@@ -124,6 +139,17 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onTabSelctedEvent(TabSelectedEvent event) {
+        if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
+            LoggerManager.d("wallet tab selected");
+            //
+
+        }
+
+    }
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
@@ -148,7 +174,28 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                         .show();
             }
 
+            String json = curWallet.getEosNameJson();
+            List<String> eosNamelist = GsonUtils.parseString2List(json, String.class);
+            //TODO
+            eosNamelist.add("暂时测试用");
+            if (EmptyUtils.isNotEmpty(eosNamelist) && eosNamelist.size() > 1) {
+                textViewUsername.setCompoundDrawables(null, null,
+                        getResources().getDrawable(R.drawable.ic_common_drop_white), null);
+                textViewUsername.setClickable(true);
+            } else {
+                textViewUsername.setCompoundDrawables(null, null,
+                        null, null);
+                textViewUsername.setClickable(false);
+
+            }
+
+        } else {
+            textViewUsername.setCompoundDrawables(null, null,
+                    null, null);
+
+            textViewUsername.setClickable(false);
         }
+
         LoggerManager.d(isCurWalletBackUp());
         if (isCurWalletBackUp()) {
             textViewBackupWallet.setVisibility(View.GONE);
@@ -200,9 +247,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                         .show();
             }
 
-            if (isCurWalletBackUp()){
+            if (isCurWalletBackUp()) {
                 textViewBackupWallet.setVisibility(View.GONE);
-            }else{
+            } else {
                 textViewBackupWallet.setVisibility(View.VISIBLE);
             }
         }
@@ -242,6 +289,37 @@ public class WalletFragment extends XFragment<WalletPresenter> {
      */
     public void setCurWalletData(WalletEntity wallet) {
         String walletName = wallet.getWalletName();
+    }
+
+
+    /**
+     * 切换eos账户
+     */
+    private void showChangeEosNameDialog() {
+        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (entity != null) {
+            List<String> eosNameList = GsonUtils.parseString2List(entity.getEosNameJson(), String.class);
+
+            if (EmptyUtils.isNotEmpty(eosNameList) && eosNameList.size() > 1) {
+                List<EOSNameVO> voList = new ArrayList<>();
+
+                for (int i = 0; i < eosNameList.size(); i++) {
+                    String eosName = eosNameList.get(i);
+                    EOSNameVO vo = new EOSNameVO();
+                    if (eosName.equals(entity.getCurrentEosName())) {
+                        vo.isChecked = true;
+                    } else {
+                        vo.isChecked = false;
+                    }
+
+                    vo.setEosName(eosName);
+                    voList.add(vo);
+                }
+            }
+
+
+        }
+
     }
 
 

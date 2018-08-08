@@ -3,13 +3,21 @@ package com.cybex.gma.client.event;
 
 public class TabSelectedEvent {
 
-    public int position;
+    private int position;
 
     public TabSelectedEvent() {
 
     }
 
     public TabSelectedEvent(int position) {
+        this.position = position;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
         this.position = position;
     }
 }

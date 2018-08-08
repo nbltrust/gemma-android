@@ -74,7 +74,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                 banlance = array.optString(0);
                                 getV().showInitData(banlance);
                             } else {
-                               // GemmaToastUtils.showShortToast("没有可用余额");
+                                // GemmaToastUtils.showShortToast("没有可用余额");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -123,7 +123,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
-                            getInfo(from, to, quantity, memo, privateKey, binargs);
+                            getInfo(from, privateKey, binargs);
 
 
                         } else {
@@ -140,13 +140,10 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
      * 获取配置信息成功后，再到C++库获取交易体
      *
      * @param from
-     * @param to
-     * @param quantity
-     * @param memo
      * @param privateKey
      * @param abiStr
      */
-    public void getInfo(String from, String to, String quantity, String memo, String privateKey, String abiStr) {
+    public void getInfo(String from, String privateKey, String abiStr) {
         new EOSConfigInfoRequest(String.class)
                 .getInfo(new StringCallback() {
 
