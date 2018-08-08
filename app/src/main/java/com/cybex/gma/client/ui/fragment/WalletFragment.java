@@ -1,13 +1,18 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
@@ -18,6 +23,7 @@ import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.adapter.ChangeAccountAdapter;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
@@ -26,9 +32,9 @@ import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.tapadoo.alerter.Alerter;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -86,7 +92,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 }
                 break;
             case R.id.textView_username:
-                GemmaToastUtils.showShortToast("Test");
+                showChangeEOSNameDialog();
                 break;
             default:
                 break;
@@ -176,15 +182,20 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             String json = curWallet.getEosNameJson();
             List<String> eosNamelist = GsonUtils.parseString2List(json, String.class);
             //TODO
-            if(EmptyUtils.isEmpty(eosNamelist)){
+            if (EmptyUtils.isEmpty(eosNamelist)) {
                 eosNamelist = new ArrayList<>();
                 eosNamelist.add("暂时测试1");
                 eosNamelist.add("暂时测试2");
             }
+            eosNamelist.add("暂时测试3");
 
             if (EmptyUtils.isNotEmpty(eosNamelist) && eosNamelist.size() > 1) {
-                textViewUsername.setCompoundDrawables(null, null,
-                        getResources().getDrawable(R.drawable.ic_common_drop_white), null);
+                Drawable drawable = getResources().getDrawable(
+                        R.drawable.ic_common_drop_white);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                        drawable.getMinimumHeight());
+                textViewUsername.setCompoundDrawables(null, null, drawable, null);
+
                 textViewUsername.setClickable(true);
             } else {
                 textViewUsername.setCompoundDrawables(null, null,
@@ -296,33 +307,54 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     }
 
 
-    /**
-     * 切换eos账户
-     */
-    private void showChangeEosNameDialog() {
-        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (entity != null) {
-            List<String> eosNameList = GsonUtils.parseString2List(entity.getEosNameJson(), String.class);
+    private void showChangeEOSNameDialog() {
+        int[] listenedItems = {R.id.imv_close};
 
-            if (EmptyUtils.isNotEmpty(eosNameList) && eosNameList.size() > 1) {
-                List<EOSNameVO> voList = new ArrayList<>();
+        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+                R.layout.dialog_change_account, listenedItems, false, Gravity.BOTTOM);
 
-                for (int i = 0; i < eosNameList.size(); i++) {
-                    String eosName = eosNameList.get(i);
-                    EOSNameVO vo = new EOSNameVO();
-                    if (eosName.equals(entity.getCurrentEosName())) {
-                        vo.isChecked = true;
-                    } else {
-                        vo.isChecked = false;
-                    }
-
-                    vo.setEosName(eosName);
-                    voList.add(vo);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imv_close:
+                        dialog.cancel();
+                        break;
+                    default:
+                        break;
                 }
             }
+        });
+        dialog.show();
 
+        RecyclerView mRecyclerView = dialog.findViewById(R.id.rv_list);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(manager);
+        List<EOSNameVO> voList = getP().getEOSNameVOList();
+        ChangeAccountAdapter adapter = new ChangeAccountAdapter(voList);
+        mRecyclerView.setAdapter(adapter);
 
-        }
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (EmptyUtils.isNotEmpty(voList)) {
+                    for (int i = 0; i < voList.size(); i++) {
+                        EOSNameVO vo = voList.get(i);
+                        if (i == position) {
+                            vo.isChecked = true;
+                        } else {
+                            vo.isChecked = false;
+                        }
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    getP().saveNewEntity(voList.get(position).getEosName());
+
+                    dialog.cancel();
+
+                }
+            }
+        });
 
     }
 

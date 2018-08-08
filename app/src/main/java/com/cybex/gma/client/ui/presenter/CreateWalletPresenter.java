@@ -224,10 +224,10 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         if (walletNum > 0) {
             WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
             curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+            DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
         }
         //最后执行存入操作，此前包此时为当前钱包
-        DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);
+        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
     }
 
     /**
@@ -245,14 +245,14 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                 WalletEntity newCurWallt = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
                         (walletEntityList.size());
                 newCurWallt.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(newCurWallt);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(newCurWallt);
             }
         }
     }
 
     public void updateWalletConfirmStatus(WalletEntity walletEntity ,String txId){
         walletEntity.setTxId(txId);
-        DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);
+        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
     }
 
 
