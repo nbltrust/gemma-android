@@ -246,6 +246,8 @@ dependencies {
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.third.overscroll
     implementation deps.gma.tapadoo
+    implementation 'com.github.ksoichiro:android-observablescrollview:1.5.0'
+
 
     //日志打印
     implementation deps.gma.logger

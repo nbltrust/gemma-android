@@ -5,7 +5,6 @@ import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
@@ -22,6 +21,7 @@ import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
+import com.cybex.gma.client.widget.MyScrollView;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -43,7 +43,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.hypertrack.smart_scheduler.SmartScheduler;
 import jdenticon.AvatarHelper;
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 钱包Fragment
@@ -70,7 +69,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.layout_info) ConstraintLayout layoutInfo;
     @BindView(R.id.superTextView_card_record) SuperTextView superTextViewCardRecord;
     @BindView(R.id.superTextView_card_delegate) SuperTextView superTextViewCardDelegate;
-    @BindView(R.id.scroll_wallet_tab) ScrollView scrollViewWalletTab;
+    @BindView(R.id.scroll_wallet_tab) MyScrollView scrollViewWalletTab;
     @BindView(R.id.progressbar_cpu_small) RoundCornerProgressBar progressBarCPU;
     @BindView(R.id.progressbar_net_small) RoundCornerProgressBar progressBarNET;
     @BindView(R.id.progressbar_ram_small) RoundCornerProgressBar progressBarRAM;
@@ -159,7 +158,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     public void initData(Bundle savedInstanceState) {
         textViewBackupWallet.setVisibility(View.VISIBLE);
         setNavibarTitle("GEMMA", false);
-        OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
+        //OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)) {
             textViewUsername.setText(curWallet.getCurrentEosName());
@@ -177,7 +176,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             String json = curWallet.getEosNameJson();
             List<String> eosNamelist = GsonUtils.parseString2List(json, String.class);
             //TODO
-            eosNamelist.add("暂时测试用");
+            if(EmptyUtils.isEmpty(eosNamelist)){
+                eosNamelist = new ArrayList<>();
+                eosNamelist.add("暂时测试1");
+                eosNamelist.add("暂时测试2");
+            }
+
             if (EmptyUtils.isNotEmpty(eosNamelist) && eosNamelist.size() > 1) {
                 textViewUsername.setCompoundDrawables(null, null,
                         getResources().getDrawable(R.drawable.ic_common_drop_white), null);

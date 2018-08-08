@@ -10,7 +10,7 @@
 
     <include layout="@layout/ui_navibar"/>
 
-    <ScrollView
+    <com.cybex.gma.client.widget.MyScrollView
         android:id="@+id/root_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -241,7 +241,7 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </com.cybex.gma.client.widget.MyScrollView>
 
 
 </RelativeLayout>

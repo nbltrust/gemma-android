@@ -7,7 +7,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
@@ -18,6 +17,7 @@ import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
+import com.cybex.gma.client.widget.MyScrollView;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -32,7 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 转账Fragment
@@ -58,7 +57,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @BindView(R.id.btn_transfer)
     Button btnTransfer; //确认转账
     @BindView(R.id.root_scrollview)
-    ScrollView rootScrollview;
+    MyScrollView rootScrollview;
     Unbinder unbinder;
 
     private String maxValue = "";
@@ -79,7 +78,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle(getString(R.string.title_transfer), false);
-        OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
     }
 
 

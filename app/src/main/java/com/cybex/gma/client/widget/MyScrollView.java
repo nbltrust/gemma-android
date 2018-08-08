@@ -16,7 +16,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.OverScroller;
 
-
+/**
+ * 回弹效果ScrollView
+ *
+ * Created by wanglin on 2018/8/8.
+ */
 public class MyScrollView extends FrameLayout {
 
     final static String TAG = MyScrollView.class.getSimpleName();
