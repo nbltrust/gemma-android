@@ -7,6 +7,9 @@ import com.cybex.gma.client.ui.fragment.BuySellRamFragment;
 import com.cybex.gma.client.ui.model.request.GetRamMarketReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
+import com.cybex.gma.client.ui.model.response.GetRamMarketResult;
+import com.cybex.gma.client.ui.model.response.RamMarketBase;
+import com.cybex.gma.client.ui.model.response.RamMarketRows;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
@@ -15,14 +18,10 @@ import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
-import com.hxlx.core.lib.utils.android.logger.Log;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -212,9 +211,10 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
 
     /**
      * 获取当前链上ram市场信息
+     * @return List中的三个参数依次为base_balance, quote_balance,quote_weight
      */
-   public List<JSONObject> getRamMarketInfo(){
-       List<JSONObject> args = new ArrayList<>();
+   public List<String> getRamMarketInfo(){
+       List<String> args = new ArrayList<>();
        GetRamMarketReqParams params = new GetRamMarketReqParams();
        params.setScope(SCOPE);
        params.setCode(CODE);
@@ -228,15 +228,24 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                .getRamMarketRequest(new StringCallback() {
                    @Override
                    public void onSuccess(Response<String> response) {
-                       Log.d("on Success");
                        String infoJson = response.body();
-                       LoggerManager.d("transaction info:" + infoJson);
+                       LoggerManager.d("ram market info:" + infoJson);
                        try {
-                           JSONObject obj = new JSONObject(infoJson);
-                           if (obj != null) {
+                           GetRamMarketResult result = GsonUtils.jsonToBean(infoJson, GetRamMarketResult.class);
+                           if (result != null){
+                               List<RamMarketRows> rows = result.rows;
+                               RamMarketBase base = rows.get(0).base;
+                               RamMarketBase quote = rows.get(0).quote;
 
+                               String base_balance = base.balance;
+                               String quote_balance = quote.balance;
+                               String quote_weight = quote.weight;
+
+                               args.add(base_balance);
+                               args.add(quote_balance);
+                               args.add(quote_weight);
                            }
-                       } catch (JSONException e) {
+                       } catch (Exception e) {
                            e.printStackTrace();
                        }
                    }
@@ -248,6 +257,20 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                });
 
         return args;
+   }
+
+    /**
+     * 估算EOS和RAM之间的换算关系
+     */
+   public double calculateApproxiValue(List<String> args, double cardinalNum){
+       double baseBalance = Double.parseDouble(args.get(0));
+       double quoteBalance = Double.parseDouble(args.get(1));
+       double quoteWeight = Double.parseDouble(args.get(2));
+
+       double ramPrice = (quoteBalance/baseBalance) * quoteWeight;
+       double price = ramPrice * cardinalNum;
+
+       return price;
    }
 
 }
