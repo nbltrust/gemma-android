@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
+import com.cybex.gma.client.db.dao.WalletEntityDao;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.fragment.WalletFragment;
@@ -52,6 +53,16 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
 
         return voList;
 
+    }
+
+
+    public void saveNewEntity(String currentEOSName) {
+        WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
+        WalletEntity entity = dao.getCurrentWalletEntity();
+        if (entity != null) {
+            entity.setCurrentEosName(currentEOSName);
+            dao.saveOrUpateEntity(entity);
+        }
     }
 
 }

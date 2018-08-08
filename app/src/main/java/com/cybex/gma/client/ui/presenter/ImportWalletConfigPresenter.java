@@ -96,10 +96,10 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                                 WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao()
                                         .getCurrentWalletEntity();
                                 curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-                                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
                             }
                             //最后执行存入操作，此前包此时为当前钱包
-                            DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(walletEntity);
+                            DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
 
                             UISkipMananger.launchHome(getV().getActivity());
                         } else {

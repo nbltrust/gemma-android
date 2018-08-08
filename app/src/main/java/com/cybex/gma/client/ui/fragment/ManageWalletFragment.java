@@ -165,8 +165,8 @@ public class ManageWalletFragment extends XFragment {
                 WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
                 curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
                 thisWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
-                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(thisWallet);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(thisWallet);
                 adapter.notifyDataSetChanged();
                 UISkipMananger.launchHome(getActivity());
             }

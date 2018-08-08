@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
@@ -332,6 +333,28 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         List<EOSNameVO> voList = getP().getEOSNameVOList();
         ChangeAccountAdapter adapter = new ChangeAccountAdapter(voList);
         mRecyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (EmptyUtils.isNotEmpty(voList)) {
+                    for (int i = 0; i < voList.size(); i++) {
+                        EOSNameVO vo = voList.get(i);
+                        if (i == position) {
+                            vo.isChecked = true;
+                        } else {
+                            vo.isChecked = false;
+                        }
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    getP().saveNewEntity(voList.get(position).getEosName());
+
+                    dialog.cancel();
+
+                }
+            }
+        });
 
     }
 

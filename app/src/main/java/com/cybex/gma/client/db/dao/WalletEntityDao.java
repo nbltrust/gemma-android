@@ -51,21 +51,21 @@ public interface WalletEntityDao {
      *
      * @param entity
      */
-    void saveOrUpateMedia(WalletEntity entity);
+    void saveOrUpateEntity(WalletEntity entity);
 
     /**
      * 批量同步保存WalletEntity 列表对象
      *
      * @param list
      */
-    void batchSaveMediaListSync(List<WalletEntity> list);
+    void batchSaveEntityListSync(List<WalletEntity> list);
 
     /**
      * 批量异步保存WalletEntity 列表对象
      *
      * @param list
      */
-    void batchSaveMediaListASync(List<WalletEntity> list, DBCallback callback);
+    void batchSaveEntityListASync(List<WalletEntity> list, DBCallback callback);
 
 
 }

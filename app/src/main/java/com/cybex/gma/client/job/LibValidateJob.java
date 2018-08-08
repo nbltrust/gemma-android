@@ -234,7 +234,7 @@ public class LibValidateJob {
                                         .getCurrentWalletEntity();
                                 if (EmptyUtils.isNotEmpty(curWallet)){
                                     curWallet.setIsConfirmLib(CacheConstants.CONFIRM_FAILED);
-                                    DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                                    DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
                                     //todo 调取重新创建请求
                                     CreateWalletPresenter presenter = new CreateWalletPresenter();
                                     presenter.reCreateAccount(curWallet);
@@ -249,7 +249,7 @@ public class LibValidateJob {
                                 WalletEntity successWallet = DBManager.getInstance().getWalletEntityDao()
                                         .getCurrentWalletEntity();
                                 successWallet.setIsConfirmLib(CacheConstants.IS_CONFIRMED);
-                                DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(successWallet);
+                                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(successWallet);
                                 EventBusProvider.postSticky(new PollEvent(true));
                                 removeJob();
                                 break;

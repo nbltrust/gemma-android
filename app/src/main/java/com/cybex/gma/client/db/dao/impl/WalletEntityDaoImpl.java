@@ -60,7 +60,7 @@ public class WalletEntityDaoImpl implements WalletEntityDao {
     }
 
     @Override
-    public void saveOrUpateMedia(WalletEntity entity) {
+    public void saveOrUpateEntity(WalletEntity entity) {
         DBFlowUtil.execTransactionAsync(GemmaDatabase.class, new ITransaction() {
             @Override
             public void execute(DatabaseWrapper databaseWrapper) {
@@ -71,13 +71,13 @@ public class WalletEntityDaoImpl implements WalletEntityDao {
     }
 
     @Override
-    public void batchSaveMediaListSync(List<WalletEntity> list) {
+    public void batchSaveEntityListSync(List<WalletEntity> list) {
         ITransaction transaction = DBFlowUtil.getTransaction(list, OperationType.TYPE_SAVE);
         DBFlowUtil.execTransactionSync(GemmaDatabase.class, transaction);
     }
 
     @Override
-    public void batchSaveMediaListASync(List<WalletEntity> list, DBCallback callback) {
+    public void batchSaveEntityListASync(List<WalletEntity> list, DBCallback callback) {
         if (list == null || list.size() == 0) {
             if (null != callback) {
                 callback.onFailed(new Throwable("object is null"));

@@ -70,7 +70,7 @@ public class ChangeWalletNameFragment extends XFragment {
                     }else if (EmptyUtils.isNotEmpty(getWalletName())){
                         final String name = getWalletName();
                         curWallet.setWalletName(name);
-                        DBManager.getInstance().getWalletEntityDao().saveOrUpateMedia(curWallet);
+                        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
                         GemmaToastUtils.showLongToast(ParamConstants.CHANGE_NAME_SUCCESS);
                         UISkipMananger.launchWalletManagement(getActivity());
                     }else{
