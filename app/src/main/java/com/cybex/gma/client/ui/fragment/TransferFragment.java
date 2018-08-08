@@ -192,7 +192,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
-        if (event != null) {
+        if (event != null&&event.getPosition()==1) {
             LoggerManager.d("tab transfer selected");
             getP().requestBanlanceInfo();
         }

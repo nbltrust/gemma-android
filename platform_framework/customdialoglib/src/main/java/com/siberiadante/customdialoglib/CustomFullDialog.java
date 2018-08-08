@@ -141,7 +141,7 @@ public class CustomFullDialog extends Dialog implements View.OnClickListener {
         WindowManager windowManager = ((Activity) context).getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.width = display.getWidth() ; // 设置dialog宽度为屏幕的4/5
+        lp.width = display.getWidth() ;
         getWindow().setAttributes(lp);
         setCanceledOnTouchOutside(mIsDismissTouchOut);
         //遍历控件id,添加点击事件，添加资源到集合

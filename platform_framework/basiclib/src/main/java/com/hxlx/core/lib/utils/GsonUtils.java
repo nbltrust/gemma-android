@@ -106,7 +106,7 @@ public class GsonUtils {
     return list;
   }
 
-  public static <T> List<T> fromJsonArray(String json, Class<T> clazz) throws Exception {
+  public static <T> List<T> fromJsonArray(String json, Class<T> clazz)  {
     List<T> lst = new ArrayList<T>();
 
     JsonArray array = new JsonParser().parse(json).getAsJsonArray();

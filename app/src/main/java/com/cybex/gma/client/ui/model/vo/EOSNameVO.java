@@ -5,6 +5,8 @@ public class EOSNameVO {
     public String getEosName() {
         return eosName;
     }
+    public boolean isChecked = false;
+
 
     public void setEosName(String eosName) {
         this.eosName = eosName;

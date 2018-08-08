@@ -55,10 +55,8 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
 
-                if (position == 1) {
-                    //转账
-                    EventBusProvider.postSticky(new TabSelectedEvent());
-                }
+                EventBusProvider.postSticky(new TabSelectedEvent(position));
+
             }
 
             @Override

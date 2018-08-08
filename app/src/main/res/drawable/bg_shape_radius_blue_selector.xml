@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bg_shape_radius_blue_selcted" android:state_pressed="true"/>
+    <!-- 被选中时 -->
+    <item android:drawable="@drawable/bg_shape_radius_blue_selcted" android:state_selected="true"/>
+
+    <item android:drawable="@drawable/bg_shape_radius_blue_selcted" android:state_checked="true"/>
+
+    <!-- 默认时 -->
+    <item android:drawable="@drawable/bg_shape_radius_white"/>
+</selector>

@@ -2,73 +2,77 @@
 
 
 <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:title="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_wallet_home3x">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_wallet_home3x"
+    android:orientation="vertical">
 
-        <com.hxlx.core.lib.widget.titlebar.view.TitleBar
-            android:id="@+id/btn_navibar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_48"
-            android:background="#00ffffff"
-            >
-        </com.hxlx.core.lib.widget.titlebar.view.TitleBar>
+    <com.hxlx.core.lib.widget.titlebar.view.TitleBar
+        android:id="@+id/btn_navibar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="#00ffffff"
+        >
+    </com.hxlx.core.lib.widget.titlebar.view.TitleBar>
+
+
+    <ScrollView
+        android:id="@+id/scroll_wallet_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        title:layout_constraintBottom_toBottomOf="parent"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        title:layout_constraintTop_toBottomOf="@id/imageView_portrait">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/imageView_portrait"
-                android:layout_width="@dimen/dimen_62"
-                android:layout_height="@dimen/dimen_62"
-                android:layout_marginStart="38dp"
-                android:layout_marginTop="@dimen/dimen_14"
-                title:layout_constraintStart_toStartOf="parent"
-                title:layout_constraintTop_toBottomOf="@id/btn_navibar"/>
-
-            <TextView
-                android:id="@+id/textView_username"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="@dimen/dimen_30"
-                android:layout_marginTop="@dimen/dimen_18"
-                android:text="GEMMA1234567"
-                android:textSize="@dimen/font_7"
-                android:textColor="@color/white"
-                title:layout_constraintStart_toEndOf="@id/imageView_portrait"
-                title:layout_constraintTop_toBottomOf="@id/btn_navibar"/>
-
-        </LinearLayout>
-
-        <ScrollView
-            android:id="@+id/scroll_wallet_tab"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            title:layout_constraintBottom_toBottomOf="parent"
-            title:layout_constraintEnd_toEndOf="parent"
-            title:layout_constraintStart_toStartOf="parent"
-            title:layout_constraintTop_toBottomOf="@id/imageView_portrait">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dimen_10">
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dimen_10"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <include
-                    layout="@layout/ui_wallet_home_info">
+                <ImageView
+                    android:id="@+id/imageView_portrait"
+                    android:layout_width="@dimen/dimen_62"
+                    android:layout_height="@dimen/dimen_62"
+                    android:layout_marginStart="38dp"
+                    android:layout_marginTop="@dimen/dimen_14"
+                    title:layout_constraintStart_toStartOf="parent"
+                    title:layout_constraintTop_toBottomOf="@id/btn_navibar"/>
 
-                </include>
+                <TextView
+                    android:id="@+id/textView_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_18"
+                    android:clickable="true"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/ic_common_drop_white"
+                    android:text="GEMMA1234567"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_7"
+                    title:layout_constraintStart_toEndOf="@id/imageView_portrait"
+                    title:layout_constraintTop_toBottomOf="@id/btn_navibar"/>
 
             </LinearLayout>
 
-        </ScrollView>
+            <include
+                layout="@layout/ui_wallet_home_info">
+
+            </include>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
 
