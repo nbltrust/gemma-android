@@ -10,6 +10,16 @@ import java.math.BigDecimal;
 public class AmountUtil {
 
     /**
+     * 由于Java的简单类型不能够精确的对浮点数进行运算，这个工具类提供精
+     * 确的浮点数运算，包括加减乘除和四舍五入。
+     */
+    //默认除法运算精度
+    private static final int DEF_DIV_SCALE = 10;
+
+    private AmountUtil() {
+    }
+
+    /**
      * 提供精确的加法运算
      *
      * @param v1 被加数
@@ -132,6 +142,67 @@ public class AmountUtil {
         BigDecimal b2 = new BigDecimal(v2);
         return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).toString();
     }
+
+
+    /**
+     * 提供精确的类型转换(Float)
+     *
+     * @param v 需要被转换的数字
+     * @return 返回转换结果
+     */
+    public static float convertsToFloat(double v) {
+        BigDecimal b = new BigDecimal(v);
+        return b.floatValue();
+    }
+
+    /**
+     * 提供精确的类型转换(Int)不进行四舍五入
+     *
+     * @param v 需要被转换的数字
+     * @return 返回转换结果
+     */
+    public static int convertsToInt(double v) {
+        BigDecimal b = new BigDecimal(v);
+        return b.intValue();
+    }
+
+    /**
+     * 提供精确的类型转换(Long)
+     *
+     * @param v 需要被转换的数字
+     * @return 返回转换结果
+     */
+    public static long convertsToLong(double v) {
+        BigDecimal b = new BigDecimal(v);
+        return b.longValue();
+    }
+
+    /**
+     * 返回两个数中大的一个值
+     *
+     * @param v1 需要被对比的第一个数
+     * @param v2 需要被对比的第二个数
+     * @return 返回两个数中大的一个值
+     */
+    public static double returnMax(double v1, double v2) {
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
+        return b1.max(b2).doubleValue();
+    }
+
+    /**
+     * 返回两个数中小的一个值
+     *
+     * @param v1 需要被对比的第一个数
+     * @param v2 需要被对比的第二个数
+     * @return 返回两个数中小的一个值
+     */
+    public static double returnMin(double v1, double v2) {
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
+        return b1.min(b2).doubleValue();
+    }
+
 
     /**
      * 提供精确的小数位四舍五入处理
