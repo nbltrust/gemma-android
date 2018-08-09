@@ -36,5 +36,8 @@ public class ApiPath {
     //eosweb.net,一个外网节点，拥有当前eos链上所有数据
     public static final String HOST_EOS_WEB = "https://eosweb.net";
 
+    //价格地址
+    public static final String URL_UNIT_PRICE = "https://app.cybex.io/price";
+
     /**------------EOS 项目情况配置---------------*/
 }

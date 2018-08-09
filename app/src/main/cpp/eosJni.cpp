@@ -114,3 +114,238 @@ Java_com_cybex_gma_client_ui_JNIUtil_create_1abi_1req_1transfer(JNIEnv *env, jcl
 
     return env->NewStringUTF(returnValue.c_str());
 }
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_cybex_gma_client_ui_JNIUtil_signTransaction_1buyram(JNIEnv *env, jclass type, jstring priv_key_str_,
+                                                             jstring contract_, jstring payer_str_, jstring infostr_,
+                                                             jstring abistr_, jlong max_cpu_usage_ms,
+                                                             jlong max_net_usage_words, jlong tx_expiration) {
+    const char *priv_key_str = env->GetStringUTFChars(priv_key_str_, 0);
+    const char *contract = env->GetStringUTFChars(contract_, 0);
+    const char *payer_str = env->GetStringUTFChars(payer_str_, 0);
+    const char *infostr = env->GetStringUTFChars(infostr_, 0);
+    const char *abistr = env->GetStringUTFChars(abistr_, 0);
+
+    env->ReleaseStringUTFChars(priv_key_str_, priv_key_str);
+    env->ReleaseStringUTFChars(contract_, contract);
+    env->ReleaseStringUTFChars(payer_str_, payer_str);
+    env->ReleaseStringUTFChars(infostr_, infostr);
+    env->ReleaseStringUTFChars(abistr_, abistr);
+
+    std::string returnValue = k.signTransaction_buyram
+            (priv_key_str, contract,
+             payer_str, infostr, abistr,
+             max_cpu_usage_ms,
+             max_net_usage_words,
+             tx_expiration);
+
+    return env->NewStringUTF(returnValue.c_str());
+}
+
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_cybex_gma_client_ui_JNIUtil_signTransaction_1sellram(JNIEnv *env, jclass type, jstring priv_key_str_,
+                                                              jstring contract_, jstring account_str_, jstring infostr_,
+                                                              jstring abistr_, jlong max_cpu_usage_ms,
+                                                              jlong max_net_usage_words, jlong tx_expiration) {
+    const char *priv_key_str = env->GetStringUTFChars(priv_key_str_, 0);
+    const char *contract = env->GetStringUTFChars(contract_, 0);
+    const char *account_str = env->GetStringUTFChars(account_str_, 0);
+    const char *infostr = env->GetStringUTFChars(infostr_, 0);
+    const char *abistr = env->GetStringUTFChars(abistr_, 0);
+
+    env->ReleaseStringUTFChars(priv_key_str_, priv_key_str);
+    env->ReleaseStringUTFChars(contract_, contract);
+    env->ReleaseStringUTFChars(account_str_, account_str);
+    env->ReleaseStringUTFChars(infostr_, infostr);
+    env->ReleaseStringUTFChars(abistr_, abistr);
+
+    std::string returnValue = k.signTransaction_sellram
+            (priv_key_str, contract,
+             account_str, infostr,
+             abistr, max_cpu_usage_ms,
+             max_net_usage_words, tx_expiration);
+
+    return env->NewStringUTF(returnValue.c_str());
+}
+
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_cybex_gma_client_ui_JNIUtil_fincreate_1abi_1req_1buyram(JNIEnv *env, jclass type, jstring code_,
+                                                                 jstring action_, jstring payer_, jstring receiver_,
+                                                                 jstring quant_) {
+    const char *code = env->GetStringUTFChars(code_, 0);
+    const char *action = env->GetStringUTFChars(action_, 0);
+    const char *payer = env->GetStringUTFChars(payer_, 0);
+    const char *receiver = env->GetStringUTFChars(receiver_, 0);
+    const char *quant = env->GetStringUTFChars(quant_, 0);
+
+    env->ReleaseStringUTFChars(code_, code);
+    env->ReleaseStringUTFChars(action_, action);
+    env->ReleaseStringUTFChars(payer_, payer);
+    env->ReleaseStringUTFChars(receiver_, receiver);
+    env->ReleaseStringUTFChars(quant_, quant);
+
+    std::string returnValue = k.create_abi_req_buyram(code, action, payer, receiver, quant);
+
+    return env->NewStringUTF(returnValue.c_str());
+}
+
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_cybex_gma_client_ui_JNIUtil_create_1abi_1req_1sellram(JNIEnv *env, jclass type,
+                                                               jstring code_, jstring action_,
+                                                               jstring account_, jlong bytes) {
+    const char *code = env->GetStringUTFChars(code_, 0);
+    const char *action = env->GetStringUTFChars(action_, 0);
+    const char *account = env->GetStringUTFChars(account_, 0);
+
+    env->ReleaseStringUTFChars(code_, code);
+    env->ReleaseStringUTFChars(action_, action);
+    env->ReleaseStringUTFChars(account_, account);
+
+    std::string returnValue = k.create_abi_req_sellram(code, action, account, bytes);
+
+    return env->NewStringUTF(returnValue.c_str());
+}
+
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_cybex_gma_client_ui_JNIUtil_signTransaction_1delegatebw(JNIEnv *env, jclass type, jstring priv_key_str_,
+                                                                 jstring contract_, jstring from_str_, jstring infostr_,
+                                                                 jstring abistr_, jlong max_cpu_usage_ms,
+                                                                 jlong max_net_usage_words, jlong tx_expiration) {
+    const char *priv_key_str = env->GetStringUTFChars(priv_key_str_, 0);
+    const char *contract = env->GetStringUTFChars(contract_, 0);
+    const char *from_str = env->GetStringUTFChars(from_str_, 0);
+    const char *infostr = env->GetStringUTFChars(infostr_, 0);
+    const char *abistr = env->GetStringUTFChars(abistr_, 0);
+
+    env->ReleaseStringUTFChars(priv_key_str_, priv_key_str);
+    env->ReleaseStringUTFChars(contract_, contract);
+    env->ReleaseStringUTFChars(from_str_, from_str);
+    env->ReleaseStringUTFChars(infostr_, infostr);
+    env->ReleaseStringUTFChars(abistr_, abistr);
+
+    std::string returnValue = k.signTransaction_delegatebw(priv_key_str, contract,
+                                                           from_str, infostr,
+                                                           abistr, max_cpu_usage_ms, max_net_usage_words,
+                                                           tx_expiration);
+
+    return env->NewStringUTF(returnValue.c_str());
+}
+
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_cybex_gma_client_ui_JNIUtil_signTransaction_1undelegatebw(JNIEnv *env, jclass type, jstring priv_key_str_,
+                                                                   jstring contract_, jstring from_str_,
+                                                                   jstring infostr_, jstring abistr_,
+                                                                   jlong max_cpu_usage_ms, jlong max_net_usage_words,
+                                                                   jlong tx_expiration) {
+    const char *priv_key_str = env->GetStringUTFChars(priv_key_str_, 0);
+    const char *contract = env->GetStringUTFChars(contract_, 0);
+    const char *from_str = env->GetStringUTFChars(from_str_, 0);
+    const char *infostr = env->GetStringUTFChars(infostr_, 0);
+    const char *abistr = env->GetStringUTFChars(abistr_, 0);
+
+    env->ReleaseStringUTFChars(priv_key_str_, priv_key_str);
+    env->ReleaseStringUTFChars(contract_, contract);
+    env->ReleaseStringUTFChars(from_str_, from_str);
+    env->ReleaseStringUTFChars(infostr_, infostr);
+    env->ReleaseStringUTFChars(abistr_, abistr);
+
+    std::string returnValue = k.signTransaction_undelegatebw
+            (priv_key_str, contract,
+             from_str, infostr, abistr, max_cpu_usage_ms,
+             max_net_usage_words, tx_expiration);
+
+    return env->NewStringUTF(returnValue.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_cybex_gma_client_ui_JNIUtil_create_1abi_1req_1delegatebw(JNIEnv *env, jclass type, jstring code_,
+                                                                  jstring action_, jstring from_, jstring receiver_,
+                                                                  jstring stake_net_quantity_,
+                                                                  jstring stake_cpu_quantity_) {
+    const char *code = env->GetStringUTFChars(code_, 0);
+    const char *action = env->GetStringUTFChars(action_, 0);
+    const char *from = env->GetStringUTFChars(from_, 0);
+    const char *receiver = env->GetStringUTFChars(receiver_, 0);
+    const char *stake_net_quantity = env->GetStringUTFChars(stake_net_quantity_, 0);
+    const char *stake_cpu_quantity = env->GetStringUTFChars(stake_cpu_quantity_, 0);
+
+    env->ReleaseStringUTFChars(code_, code);
+    env->ReleaseStringUTFChars(action_, action);
+    env->ReleaseStringUTFChars(from_, from);
+    env->ReleaseStringUTFChars(receiver_, receiver);
+    env->ReleaseStringUTFChars(stake_net_quantity_, stake_net_quantity);
+    env->ReleaseStringUTFChars(stake_cpu_quantity_, stake_cpu_quantity);
+
+
+    std::string returnValue = k.create_abi_req_delegatebw(code, action, from, receiver,
+                                                          stake_net_quantity, stake_cpu_quantity);
+
+    return env->NewStringUTF(returnValue.c_str());
+}
+
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_cybex_gma_client_ui_JNIUtil_create_1abi_1req_1undelegatebw(JNIEnv *env, jclass type, jstring code_,
+                                                                    jstring action_, jstring from_, jstring receiver_,
+                                                                    jstring unstake_net_quantity_,
+                                                                    jstring unstake_cpu_quantity_) {
+    const char *code = env->GetStringUTFChars(code_, 0);
+    const char *action = env->GetStringUTFChars(action_, 0);
+    const char *from = env->GetStringUTFChars(from_, 0);
+    const char *receiver = env->GetStringUTFChars(receiver_, 0);
+    const char *unstake_net_quantity = env->GetStringUTFChars(unstake_net_quantity_, 0);
+    const char *unstake_cpu_quantity = env->GetStringUTFChars(unstake_cpu_quantity_, 0);
+
+    env->ReleaseStringUTFChars(code_, code);
+    env->ReleaseStringUTFChars(action_, action);
+    env->ReleaseStringUTFChars(from_, from);
+    env->ReleaseStringUTFChars(receiver_, receiver);
+    env->ReleaseStringUTFChars(unstake_net_quantity_, unstake_net_quantity);
+    env->ReleaseStringUTFChars(unstake_cpu_quantity_, unstake_cpu_quantity);
+
+    std::string returnValue = k.create_abi_req_undelegatebw(code, action, from, receiver,
+                                                            unstake_net_quantity, unstake_cpu_quantity);
+
+    return env->NewStringUTF(returnValue.c_str());
+}
+
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_cybex_gma_client_ui_JNIUtil_signTransaction_1voteproducer(JNIEnv *env, jclass type, jstring priv_key_str_,
+                                                                   jstring contract_, jstring voter_str_,
+                                                                   jstring infostr_, jstring abistr_,
+                                                                   jlong max_cpu_usage_ms, jlong max_net_usage_words,
+                                                                   jlong tx_expiration) {
+    const char *priv_key_str = env->GetStringUTFChars(priv_key_str_, 0);
+    const char *contract = env->GetStringUTFChars(contract_, 0);
+    const char *voter_str = env->GetStringUTFChars(voter_str_, 0);
+    const char *infostr = env->GetStringUTFChars(infostr_, 0);
+    const char *abistr = env->GetStringUTFChars(abistr_, 0);
+
+    env->ReleaseStringUTFChars(priv_key_str_, priv_key_str);
+    env->ReleaseStringUTFChars(contract_, contract);
+    env->ReleaseStringUTFChars(voter_str_, voter_str);
+    env->ReleaseStringUTFChars(infostr_, infostr);
+    env->ReleaseStringUTFChars(abistr_, abistr);
+
+    std::string returnValue = k.signTransaction_voteproducer
+            (priv_key_str, contract,
+             voter_str, infostr, abistr,
+             max_cpu_usage_ms, max_net_usage_words, tx_expiration);
+
+    return env->NewStringUTF(returnValue.c_str());
+}
