@@ -9,12 +9,9 @@ import java.math.BigDecimal;
  */
 public class AmountUtil {
 
-    /**
-     * 由于Java的简单类型不能够精确的对浮点数进行运算，这个工具类提供精
-     * 确的浮点数运算，包括加减乘除和四舍五入。
-     */
-    //默认除法运算精度
-    private static final int DEF_DIV_SCALE = 10;
+
+    //默认EOS运算精度，保留小数点后四位
+    public static final int DEFALT_EOS_SCALE = 4;
 
     private AmountUtil() {
     }
