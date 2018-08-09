@@ -52,7 +52,7 @@
            android:id="@+id/layout_more"
            android:layout_width="wrap_content"
            android:layout_height="match_parent"
-           android:layout_marginEnd="@dimen/dimen_10">
+           android:paddingEnd="@dimen/dimen_10">
            <ImageView
                android:id="@+id/iv_ic_more"
                android:layout_width="wrap_content"

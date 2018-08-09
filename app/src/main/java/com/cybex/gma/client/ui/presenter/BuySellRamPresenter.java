@@ -29,6 +29,10 @@ import java.util.List;
 
 public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
 
+    private static final int OPERATION_BUY_RAM = 1;
+    private static final int OPERATION_SELL_RAM = 2;
+    private static final int OPERATION_DELEGATE = 3;
+    private static final int OPERATION_UNDELEGATE = 4;
     private static final String SCOPE = "eosio";
     private static final String CODE = "eosio";
     private static final String TABLE = "rammarket";
@@ -36,9 +40,24 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
     private static final String VALUE_CONTRACT = "eosio.token";
     private static final String VALUE_COMPRESSION = "none";
 
-    public void executeBuyRamLogic(String from, String to, String quantity, String memo, String privateKey){
+    public void executeTransactionLogic(int operation_type, String from, String to, String quantity, String memo,
+            String privateKey){
+        String abijson = "";
         //通过C++获取abi操作体
-        String abijson = ""; //JNIUtil.create_abi_req_buyram()
+        switch (operation_type){
+            case OPERATION_BUY_RAM:
+                abijson = "";
+                break;
+            case OPERATION_SELL_RAM:
+                abijson = "";
+                break;
+            case OPERATION_DELEGATE:
+                abijson = "";
+                break;
+            case OPERATION_UNDELEGATE:
+                abijson = "";
+                break;
+        }
 
         //链上接口请求 abi_json_to_bin
         new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)
@@ -77,50 +96,6 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
 
 
     }
-
-    public void executeSellRamLogic(String from, String to, String quantity, String memo, String privateKey){
-
-        //通过C++获取abi操作体
-        String abijson = ""; //JNIUtil.create_abi_req_sellram()
-
-        //链上接口请求 abi_json_to_bin
-        new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)
-                .setJsonParams(abijson)
-                .getAbiJsonToBean(new JsonCallback<AbiJsonToBeanResult>() {
-                    @Override
-                    public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
-                        super.onStart(request);
-                        getV().showProgressDialog("操作处理中...");
-                    }
-
-                    @Override
-                    public void onError(Response<AbiJsonToBeanResult> response) {
-                        super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
-                        getV().dissmisProgressDialog();
-                    }
-
-                    @Override
-                    public void onSuccess(Response<AbiJsonToBeanResult> response) {
-                        if (response != null && response.body() != null) {
-                            AbiJsonToBeanResult result = response.body();
-                            String binargs = result.binargs;
-                            LoggerManager.d("abiStr: " + binargs);
-
-                            getInfo(from, privateKey, binargs);
-
-
-                        } else {
-                            GemmaToastUtils.showShortToast("操作失败");
-                        }
-
-                    }
-                });
-
-    }
-
-
-
 
     /**
      * 获取配置信息成功后，再到C++库获取交易体
