@@ -118,6 +118,8 @@ public class LibValidateJob {
                                 String code = obj.optString("code");
                                 LoggerManager.d("block_num", block_num);
                                 res[0] = block_num;
+                                //todo 是否需要添加判断处理code不为400的其他错误情况？
+                                // （需要确认链上是否只会返回400？）
                                 if (code.equals("400")) {
                                     res[1] = "false";
                                 } else {

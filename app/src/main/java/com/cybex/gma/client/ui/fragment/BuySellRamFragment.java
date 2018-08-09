@@ -63,6 +63,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             tvApproximatelyAmount.setVisibility(View.VISIBLE);
         }else{
             tvApproximatelyAmount.setVisibility(View.GONE);
+            btBuyRam.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
+            btSellRam.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
         }
     }
 
