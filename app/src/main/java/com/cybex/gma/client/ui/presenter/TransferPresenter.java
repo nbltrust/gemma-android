@@ -193,32 +193,32 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     }
 
     /**
-         * 最后执行push transaction
-         */
-        public void pushTransaction(String jsonParams) {
-            new PushTransactionRequest(String.class)
-                    .setJsonParams(jsonParams)
-                    .pushTransaction(new StringCallback() {
-                        @Override
-                        public void onError(Response<String> response) {
-                            super.onError(response);
-                            getV().dissmisProgressDialog();
-                        }
+     * 最后执行push transaction
+     */
+    public void pushTransaction(String jsonParams) {
+        new PushTransactionRequest(String.class)
+                .setJsonParams(jsonParams)
+                .pushTransaction(new StringCallback() {
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        getV().dissmisProgressDialog();
+                    }
 
-                        @Override
-                        public void onSuccess(Response<String> response) {
-                            getV().dissmisProgressDialog();
-                            if (response != null && EmptyUtils.isNotEmpty(response.body())) {
-                                String jsonStr = response.body();
-                                LoggerManager.d("pushTransaction json:" + jsonStr);
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        getV().dissmisProgressDialog();
+                        if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                            String jsonStr = response.body();
+                            LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                                GemmaToastUtils.showLongToast("转账成功");
-                                getV().clearData();
-
-                            }
+                            GemmaToastUtils.showLongToast("转账成功");
+                            getV().clearData();
 
                         }
-                    });
+
+                    }
+                });
 
     }
 }
