@@ -224,8 +224,6 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                                 banlance = array.optString(0);
                             }
 
-                            getV().showBanlance(banlance);
-
                             emitter.onNext(banlance);
                             emitter.onComplete();
                         }

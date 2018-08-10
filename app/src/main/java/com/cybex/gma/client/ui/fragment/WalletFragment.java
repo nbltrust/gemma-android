@@ -179,20 +179,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     }
 
-    /**
-     * 显示账户余额
-     *
-     * @param mBanlance
-     */
-    public void showBanlance(final String mBanlance){
-        TaskManager.runOnUIThread(new Runnable() {
-            @Override
-            public void run() {
-                tvBalance.setCenterString(mBanlance);
-            }
-        });
-    }
-
+   
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
