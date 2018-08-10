@@ -133,6 +133,7 @@ public class CommonRequest<T> {
     public void getJsonNoRx(
             String tag, String path,
             final AbsCallback<T> callback) {
+
         OkGo.<T>get(path)
                 .tag(tag)
                 .execute(callback);
