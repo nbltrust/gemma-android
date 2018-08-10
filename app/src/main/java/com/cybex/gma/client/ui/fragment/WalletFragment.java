@@ -17,6 +17,7 @@ import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
@@ -157,6 +158,16 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onChangeAccountEvent(ChangeAccountEvent event) {
+        if (EmptyUtils.isNotEmpty(event)) {
+            LoggerManager.d("---changeAccount event---");
+            getP().requestHomeCombineDataVO();
+
+        }
+
+    }
+
     /**
      * 显示主界面信息
      *
@@ -172,8 +183,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                     String unitPrice = vo.getUnitPrice();
                     AccountInfo info = vo.getAccountInfo();
 
-                    //显示余额
-                    tvBalance.setCenterString(banlance);
                     //显示总资产信息
                     showTotalPriceInfo(banlance, unitPrice, info);
                     //显示cpu，net，ram进度
@@ -461,6 +470,10 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
                     adapter.notifyDataSetChanged();
                     getP().saveNewEntity(voList.get(position).getEosName());
+                    textViewUsername.setText(voList.get(position).getEosName());
+
+                    EventBusProvider.postSticky(new ChangeAccountEvent());
+
 
                     dialog.cancel();
 
