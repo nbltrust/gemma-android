@@ -98,7 +98,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 break;
         }
 
-
     }
 
     @Override
@@ -136,7 +135,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onReceivePollevent(PollEvent pollEvent) {
         if (EmptyUtils.isNotEmpty(pollEvent) && pollEvent.isDone()) {
-            LoggerManager.d("isDone", pollEvent.isDone());
             if (Alerter.isShowing()) {
                 Alerter.hide();
                 LoggerManager.d("Alert Hide");

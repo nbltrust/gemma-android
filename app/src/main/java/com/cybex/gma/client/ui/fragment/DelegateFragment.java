@@ -13,8 +13,12 @@ import com.cybex.base.view.tablayout.CommonTabLayout;
 import com.cybex.base.view.tablayout.listener.CustomTabEntity;
 import com.cybex.base.view.tablayout.listener.OnTabSelectListener;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
+import com.cybex.gma.client.ui.presenter.DelegatePresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -32,8 +36,10 @@ import butterknife.Unbinder;
  * 资源抵押界面
  */
 
-public class DelegateFragment extends XFragment {
+public class DelegateFragment extends XFragment<DelegatePresenter> {
 
+    private final int OPERATION_DELEGATE = 1;
+    private final int OPERATION_UNDELEGATE = 2;
     Unbinder unbinder;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_cpu_amount) SuperTextView superTextViewCpuAmount;
@@ -57,10 +63,14 @@ public class DelegateFragment extends XFragment {
     @BindView(R.id.layout_tab_delegate) View tab_delegate;
     @BindView(R.id.layout_tab_undelegate) View tab_undelegate;
 
-
     @OnClick(R.id.bt_delegate_cpu_net)
     public void showDialog() {
         showConfirmDelegateiDialog();
+    }
+
+    @OnClick(R.id.bt_undelegate_cpu_net)
+    public void showUnDialog(){
+        showConfirmUndelegateiDialog();
     }
 
     public static DelegateFragment newInstance() {
@@ -145,8 +155,8 @@ public class DelegateFragment extends XFragment {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public DelegatePresenter newP() {
+        return new DelegatePresenter();
     }
 
     @Override
@@ -195,7 +205,7 @@ public class DelegateFragment extends XFragment {
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
     }
     /**
-     * 显示确认质押dialog
+     * 显示确认抵押dialog
      */
     private void showConfirmDelegateiDialog() {
         int[] listenedItems = {R.id.btn_delegate, R.id.btn_close};
@@ -210,7 +220,33 @@ public class DelegateFragment extends XFragment {
                         break;
                     case R.id.btn_delegate:
                         dialog.cancel();
-                        showConfirmAuthoriDialog();
+                        showConfirmAuthoriDialog(OPERATION_DELEGATE);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    /**
+     * 显示确认解抵押dialog
+     */
+    private void showConfirmUndelegateiDialog() {
+        int[] listenedItems = {R.id.btn_delegate, R.id.btn_close};
+        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+                R.layout.dialog_delegate_confirm, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.btn_close:
+                        dialog.cancel();
+                        break;
+                    case R.id.btn_delegate:
+                        dialog.cancel();
+                        showConfirmAuthoriDialog(OPERATION_UNDELEGATE);
                         break;
                     default:
                         break;
@@ -223,7 +259,7 @@ public class DelegateFragment extends XFragment {
     /**
      * 显示确认授权dialog
      */
-    private void showConfirmAuthoriDialog() {
+    private void showConfirmAuthoriDialog(int operation_type) {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
                 R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
@@ -235,6 +271,37 @@ public class DelegateFragment extends XFragment {
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_authorization:
+                        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                        switch (operation_type){
+                            case OPERATION_DELEGATE:
+                                if (EmptyUtils.isNotEmpty(curWallet)){
+                                    //抵押操作
+                                    EditText mPass = dialog.findViewById(R.id.et_password);
+                                    String inputPass = mPass.getText().toString().trim();
+                                    final String cypher = curWallet.getCypher();
+                                    final String key = JNIUtil.get_private_key(cypher, inputPass);
+                                    final String curEOSName = curWallet.getCurrentEosName();
+                                    String stake_net_quantity = getDelegateNet() + " EOS";
+                                    String stake_cpu_quantity = getDelegateCpu() + " EOS";
+                                    //getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
+                                    //        stake_cpu_quantity, key);
+                                }
+                                break;
+                            case OPERATION_UNDELEGATE:
+                                if (EmptyUtils.isNotEmpty(curWallet)){
+                                    //解抵押操作
+                                    EditText mPass = dialog.findViewById(R.id.et_password);
+                                    String inputPass = mPass.getText().toString().trim();
+                                    final String cypher = curWallet.getCypher();
+                                    final String key = JNIUtil.get_private_key(cypher, inputPass);
+                                    final String curEOSName = curWallet.getCurrentEosName();
+                                    String unstake_net_quantity = getunDelegateNet() + " EOS";
+                                    String unstake_cpu_quantity = getUndelegateCpu() + " EOS";
+                                    //getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
+                                    //        unstake_cpu_quantity, key);
+                                }
+                                break;
+                        }
                         break;
                     default:
                         break;

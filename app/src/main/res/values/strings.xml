@@ -219,13 +219,18 @@
     <string name="buy">买入</string>
     <string name="sell">卖出</string>
     <string name="transaction">交易</string>
-    <string name="transfer_amount">交易数量(EOS)</string>
+    <string name="transfer_eos_amount">交易数量(EOS)</string>
+    <string name="transfer_ram_amount">交易数量(KB)</string>
     <string name="available">可用</string>
     <string name="price">价格</string>
     <string name="input_ram_amount">输入RAM数量</string>
     <string name="input_eos_amount">输入EOS数量</string>
-    <string name="ram_amount">预估可兑换%1$s KB</string>
-    <string name="eos_amount">预估可兑换%1$s EOS</string>
+
+    <string name="ram_amount">预估可兑换 %1$s KB</string>
+    <string name="eos_amount">预估可兑换 %1$s EOS</string>
+    <string name="available_eos">可用 %1$s EOS</string>
+    <string name="available_ram">可用 %1$s KB</string>
+
     <string name="confirm_buy">确认买入</string>
     <string name="confirm_sell">确认卖出</string>
     <string name="explanation">说明</string>
@@ -251,6 +256,8 @@
     <string name="priKey_encrypted">私钥已加密存储，请输入之前设置的密码以解锁查看</string>
     <string name="copy">复制</string>
     <string name="priKey_en">私钥 Private Key</string>
+    <string name="buy_ram">Buy RAM</string>
+    <string name="sell_ram">Sell RAM</string>
 
 
 </resources>

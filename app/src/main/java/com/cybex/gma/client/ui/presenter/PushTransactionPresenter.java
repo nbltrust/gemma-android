@@ -27,7 +27,8 @@ import com.lzy.okgo.request.base.Request;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
+
+public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
 
     private static final int OPERATION_BUY_RAM = 1;
     private static final int OPERATION_SELL_RAM = 2;
@@ -43,6 +44,100 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
     private static final String VALUE_ACTION_SELL_RAM = "sellram";
     private static final String VALUE_ACTION_DELEGATE = "delegatebw";
     private static final String VALUE_ACTION_UNDELEGATE = "undelegatebw";
+    private static final String UNUSED_STRING = "";
+
+    /**
+     * 执行Delegate逻辑
+     * @param from 付EOS的账号
+     * @param to 收到资源的账号
+     * @param stake_net_quantity
+     * @param stake_cpu_quantity
+     * @param privateKey
+     */
+    public void executeDelegateLogic(String from, String to, String stake_net_quantity, String stake_cpu_quantity,
+            String privateKey){
+        //通过C++获取abi操作体
+        String abijson = JNIUtil.create_abi_req_delegatebw(RAM_CODE, VALUE_ACTION_DELEGATE, from, to,
+                stake_net_quantity, stake_cpu_quantity);
+
+        //链上接口请求 abi_json_to_bin
+        new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)
+                .setJsonParams(abijson)
+                .getAbiJsonToBean(new JsonCallback<AbiJsonToBeanResult>() {
+                    @Override
+                    public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
+                        super.onStart(request);
+                        getV().showProgressDialog("操作处理中...");
+                    }
+
+                    @Override
+                    public void onError(Response<AbiJsonToBeanResult> response) {
+                        super.onError(response);
+                        GemmaToastUtils.showShortToast("操作失败");
+                        getV().dissmisProgressDialog();
+                    }
+
+                    @Override
+                    public void onSuccess(Response<AbiJsonToBeanResult> response) {
+                        if (response != null && response.body() != null) {
+                            AbiJsonToBeanResult result = response.body();
+                            String binargs = result.binargs;
+                            LoggerManager.d("abiStr: " + binargs);
+
+                            getInfo(OPERATION_DELEGATE ,from, privateKey, binargs);
+
+
+                        } else {
+                            GemmaToastUtils.showShortToast("操作失败");
+                        }
+
+                    }
+                });
+    }
+
+    public void executeUndelegateLogic(String from, String to, String unstake_net_quantity, String unstake_cpu_quantity,
+            String privateKey){
+
+        //通过C++获取abi操作体
+        String abijson = JNIUtil.create_abi_req_undelegatebw(RAM_CODE, VALUE_ACTION_UNDELEGATE, from, to,
+                unstake_net_quantity, unstake_cpu_quantity);
+
+        //链上接口请求 abi_json_to_bin
+        new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)
+                .setJsonParams(abijson)
+                .getAbiJsonToBean(new JsonCallback<AbiJsonToBeanResult>() {
+                    @Override
+                    public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
+                        super.onStart(request);
+                        getV().showProgressDialog("操作处理中...");
+                    }
+
+                    @Override
+                    public void onError(Response<AbiJsonToBeanResult> response) {
+                        super.onError(response);
+                        GemmaToastUtils.showShortToast("操作失败");
+                        getV().dissmisProgressDialog();
+                    }
+
+                    @Override
+                    public void onSuccess(Response<AbiJsonToBeanResult> response) {
+                        if (response != null && response.body() != null) {
+                            AbiJsonToBeanResult result = response.body();
+                            String binargs = result.binargs;
+                            LoggerManager.d("abiStr: " + binargs);
+
+                            getInfo(OPERATION_UNDELEGATE ,from, privateKey, binargs);
+
+
+                        } else {
+                            GemmaToastUtils.showShortToast("操作失败");
+                        }
+
+                    }
+                });
+
+    }
+
 
     public void executeBuyRamLogic(String from, String to, String quantity,
             String privateKey){
@@ -134,6 +229,8 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                 });
 
     }
+
+
     /**
      * 获取配置信息成功后，再到C++库获取交易体
      *
@@ -161,7 +258,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             String transactionStr = "";
                             switch (operation_type){
                                 case OPERATION_DELEGATE:
-                                    transactionStr = JNIUtil.signTransaction_delegatebw(privateKey, VALUE_CONTRACT,
+                                     transactionStr = JNIUtil.signTransaction_delegatebw(privateKey, VALUE_CONTRACT,
                                             from, infostr, abiStr, 0,0,120);
                                     break;
                                 case OPERATION_UNDELEGATE:
@@ -242,66 +339,66 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
      * 获取当前链上ram市场信息
      * @return List中的三个参数依次为base_balance, quote_balance,quote_weight
      */
-    public List<String> getRamMarketInfo(){
-        List<String> args = new ArrayList<>();
-        GetRamMarketReqParams params = new GetRamMarketReqParams();
-        params.setScope(RAM_SCOPE);
-        params.setCode(RAM_CODE);
-        params.setTable(RAM_TABLE);
-        params.setJson(true);
+   public List<String> getRamMarketInfo(){
+       List<String> args = new ArrayList<>();
+       GetRamMarketReqParams params = new GetRamMarketReqParams();
+       params.setScope(RAM_SCOPE);
+       params.setCode(RAM_CODE);
+       params.setTable(RAM_TABLE);
+       params.setJson(true);
 
-        String jsonParams = GsonUtils.objectToJson(params);
+       String jsonParams = GsonUtils.objectToJson(params);
 
-        new GetRamMarketRequest(String.class)
-                .setJsonParams(jsonParams)
-                .getRamMarketRequest(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        String infoJson = response.body();
-                        LoggerManager.d("ram market info:" + infoJson);
-                        try {
-                            GetRamMarketResult result = GsonUtils.jsonToBean(infoJson, GetRamMarketResult.class);
-                            if (result != null){
-                                List<RamMarketRows> rows = result.rows;
-                                RamMarketBase base = rows.get(0).base;
-                                RamMarketBase quote = rows.get(0).quote;
+       new GetRamMarketRequest(String.class)
+               .setJsonParams(jsonParams)
+               .getRamMarketRequest(new StringCallback() {
+                   @Override
+                   public void onSuccess(Response<String> response) {
+                       String infoJson = response.body();
+                       LoggerManager.d("ram market info:" + infoJson);
+                       try {
+                           GetRamMarketResult result = GsonUtils.jsonToBean(infoJson, GetRamMarketResult.class);
+                           if (result != null){
+                               List<RamMarketRows> rows = result.rows;
+                               RamMarketBase base = rows.get(0).base;
+                               RamMarketBase quote = rows.get(0).quote;
 
-                                String[] base_balance = base.balance.split(" ");
-                                String[] quote_balance = quote.balance.split(" ");
-                                String quote_weight = quote.weight;
+                               String[] base_balance = base.balance.split(" ");
+                               String[] quote_balance = quote.balance.split(" ");
+                               String quote_weight = quote.weight;
 
-                                args.add(base_balance[0]);
-                                args.add(quote_balance[0]);
-                                args.add(quote_weight);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+                               args.add(base_balance[0]);
+                               args.add(quote_balance[0]);
+                               args.add(quote_weight);
+                           }
+                       } catch (Exception e) {
+                           e.printStackTrace();
+                       }
+                   }
 
-                    @Override
-                    public void onError(Response<String> response) {
-                        LoggerManager.d("on Error");
-                    }
-                });
+                   @Override
+                   public void onError(Response<String> response) {
+                       LoggerManager.d("on Error");
+                   }
+               });
 
         return args;
-    }
+   }
 
     /**
      * 输入EOS数额得RAM数量估值
      */
-    public String calEos2Ram(List<String> args, String eosNum){
+   public String calEos2Ram(List<String> args, String eosNum){
 
-        String baseBalance = args.get(0);
-        String quoteBalance = args.get(1);
-        String quoteWeight = args.get(2);
+           String baseBalance = args.get(0);
+           String quoteBalance = args.get(1);
+           String quoteWeight = args.get(2);
 
-        String ramRatio = AmountUtil.div(quoteBalance, baseBalance, 10);
-        String ramUnitPrice = AmountUtil.mul(ramRatio, quoteWeight, 10);
-        String ramPrice = AmountUtil.mul(ramUnitPrice, eosNum, 10);
-        return ramPrice;
-    }
+           String ramRatio = AmountUtil.div(quoteBalance, baseBalance, 10);
+           String ramUnitPrice = AmountUtil.mul(ramRatio, quoteWeight, 10);
+           String ramPrice = AmountUtil.mul(ramUnitPrice, eosNum, 10);
+           return ramPrice;
+   }
 
     /**
      * 输入RAM数额得EOS估值
@@ -313,7 +410,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
         String quoteWeight = args.get(2);
 
 
-        return "";
+       return "";
     }
 
 }
