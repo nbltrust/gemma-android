@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
@@ -81,7 +82,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
 
-    public void showInitData(String banlance) {
+    public void showInitData(String banlance, String eosName) {
+        currentEOSName = eosName;
+        tvPayAccount.setText(currentEOSName);
+
         if (EmptyUtils.isEmpty(banlance)) {
             return;
         }
@@ -131,16 +135,17 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onChangeAccountEvent(ChangeAccountEvent event) {
+        if (EmptyUtils.isNotEmpty(event)) {
+            LoggerManager.d("---changeAccount event---");
+            getP().requestBanlanceInfo();
+
+        }
+    }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (entity != null) {
-            currentEOSName = entity.getCurrentEosName();
-        }
-
-        tvPayAccount.setText(currentEOSName);
-
         etCollectionAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -189,7 +194,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
-        if (event != null&&event.getPosition()==1) {
+        if (event != null && event.getPosition() == 1) {
             LoggerManager.d("tab transfer selected");
             getP().requestBanlanceInfo();
         }
