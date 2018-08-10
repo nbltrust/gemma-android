@@ -59,12 +59,6 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
         WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (entity != null) {
             List<String> eosNameList = GsonUtils.parseString2List(entity.getEosNameJson(), String.class);
-            //TODO test
-            eosNameList.add("test22");
-            eosNameList.add("test23");
-            eosNameList.add("test24");
-            eosNameList.add("test25");
-            eosNameList.add("test26");
 
             if (EmptyUtils.isNotEmpty(eosNameList) && eosNameList.size() > 1) {
                 for (int i = 0; i < eosNameList.size(); i++) {
