@@ -31,18 +31,14 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
 
     private static final int OPERATION_BUY_RAM = 1;
     private static final int OPERATION_SELL_RAM = 2;
-    private static final int OPERATION_DELEGATE = 3;
-    private static final int OPERATION_UNDELEGATE = 4;
     private static final String RAM_SCOPE = "eosio";
     private static final String RAM_CODE = "eosio";
     private static final String RAM_TABLE = "rammarket";
-    private static final String VALUE_CODE = "eosio";
     private static final String VALUE_CONTRACT = "eosio";
     private static final String VALUE_COMPRESSION = "none";
     private static final String VALUE_ACTION_BUY_RAM = "buyram";
     private static final String VALUE_ACTION_SELL_RAM = "sellram";
-    private static final String VALUE_ACTION_DELEGATE = "delegatebw";
-    private static final String VALUE_ACTION_UNDELEGATE = "undelegatebw";
+
 
     public void executeBuyRamLogic(String from, String to, String quantity,
             String privateKey){
@@ -76,7 +72,6 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             LoggerManager.d("abiStr: " + binargs);
 
                             getInfo(OPERATION_BUY_RAM ,from, privateKey, binargs);
-
 
                         } else {
                             GemmaToastUtils.showShortToast("操作失败");
@@ -160,14 +155,6 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             //C++库获取Transaction交易体
                             String transactionStr = "";
                             switch (operation_type){
-                                case OPERATION_DELEGATE:
-                                    transactionStr = JNIUtil.signTransaction_delegatebw(privateKey, VALUE_CONTRACT,
-                                            from, infostr, abiStr, 0,0,120);
-                                    break;
-                                case OPERATION_UNDELEGATE:
-                                    transactionStr = JNIUtil.signTransaction_undelegatebw(privateKey, VALUE_CONTRACT,
-                                            from, infostr, abiStr, 0,0,120);
-                                    break;
                                 case OPERATION_BUY_RAM:
                                     transactionStr = JNIUtil.signTransaction_buyram(privateKey, VALUE_CONTRACT,
                                             from, infostr, abiStr, 0,0,120);
@@ -312,8 +299,12 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
         String quoteBalance = args.get(1);
         String quoteWeight = args.get(2);
 
+        String ramRatio = AmountUtil.div(quoteBalance, baseBalance, 10);
+        String ramUnitPrice = AmountUtil.mul(ramRatio, quoteWeight, 10);
+        String tmpPrice = AmountUtil.div("1", ramUnitPrice, 10);
+        String price = AmountUtil.mul(tmpPrice, ramAmount, 10);
 
-        return "";
+        return price;
     }
 
 }

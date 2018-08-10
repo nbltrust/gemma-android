@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 title:sLeftIconHeight="@dimen/dimen_8"
-                title:sLeftIconRes="@drawable/ic_blue_dot"
+                title:sLeftIconRes="@drawable/ic_dot_blue"
                 title:sLeftIconWidth="@dimen/dimen_8"
                 title:sLeftTextColor="@color/cloudyBlue"
                 title:sLeftTextSize="@dimen/font_3"

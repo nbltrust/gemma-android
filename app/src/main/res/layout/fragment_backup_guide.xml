@@ -44,7 +44,7 @@
             android:layout_width="@dimen/dimen_10"
             android:layout_height="@dimen/dimen_10"
             android:layout_marginTop="@dimen/dimen_10"
-            android:background="@drawable/ic_point"
+            android:background="@drawable/ic_dot_red"
             android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -63,7 +63,7 @@
             android:layout_width="@dimen/dimen_10"
             android:layout_height="@dimen/dimen_10"
             android:layout_marginTop="@dimen/dimen_20"
-            android:background="@drawable/ic_point"
+            android:background="@drawable/ic_dot_red"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_look_around_hint"/>
 

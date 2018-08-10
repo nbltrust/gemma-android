@@ -258,6 +258,8 @@
     <string name="priKey_en">私钥 Private Key</string>
     <string name="buy_ram">Buy RAM</string>
     <string name="sell_ram">Sell RAM</string>
+    <string name="delegate_memo">Delegate %1$s EOS for CPU, %2$s EOS for NET</string>
+    <string name="unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
 
 
 </resources>

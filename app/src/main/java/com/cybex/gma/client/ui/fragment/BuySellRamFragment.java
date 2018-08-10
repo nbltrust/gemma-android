@@ -14,6 +14,7 @@ import com.cybex.base.view.tablayout.CommonTabLayout;
 import com.cybex.base.view.tablayout.listener.CustomTabEntity;
 import com.cybex.base.view.tablayout.listener.OnTabSelectListener;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
@@ -57,8 +58,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     @BindView(R.id.tv_eos_ram_amount) TextView tvEosRamAmount;
     @BindView(R.id.tv_available_eos_ram) TextView tvAvaEosRam;
 
-
-
     private final String testPrikey = "5KhjpbahW1ahQHi5GeW8baTwFx3n7W249gEp8xRHMJ45AVGeT58";
     private final String testEosName = "test1";
     private final String testQuantity = "0.0100 EOS";
@@ -79,7 +78,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         if (EmptyUtils.isNotEmpty(getEOSAmount())){
             setClickable(btBuyRam);
             //String amount = getP().calculateApproxiValue(ramMarketStaus, getEOSAmount());
-            tvApproximatelyAmount.setText("≈ " + "0.0010" + " EOS");
+            tvApproximatelyAmount.setText("≈ " + "0.0010" + " KB");
             tvApproximatelyAmount.setVisibility(View.VISIBLE);
         }else{
             tvApproximatelyAmount.setVisibility(View.GONE);
@@ -151,7 +150,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
             }
         });
-        getP().getRamMarketInfo();
+
     }
 
     @Override
@@ -196,6 +195,25 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     public void setUnclickable(Button button){
         button.setClickable(false);
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
+    }
+
+    /**
+     * 初始化Progress样式
+     * 85%progress以上要用红色显示
+     * @param progress
+     */
+    public void initProgressBar(float progress){
+        RoundCornerProgressBar progressBar = progressbarRam;
+        if (progress >= ParamConstants.PROGRESS_ALERT){
+            //显示值>=85%
+            progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
+            progressBar.setProgress(progress);
+            superTextViewRamStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
+        }else{
+            progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
+            progressBar.setProgress(progress);
+            superTextViewRamStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
+        }
     }
 
     /**
