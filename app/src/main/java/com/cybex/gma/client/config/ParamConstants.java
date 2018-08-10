@@ -21,4 +21,6 @@ public interface ParamConstants {
     String EMPTY_WALLET_NAME = "钱包名称不能为空！";
     String CHANGE_NAME_SUCCESS = "更改成功";
 
+    float PROGRESS_ALERT = 85;//progress bar 中大于85%使用
+
 }

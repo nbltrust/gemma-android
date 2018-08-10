@@ -68,9 +68,7 @@ public class TransferRecordDetailFragment extends XFragment {
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle("收支详情", true, false);
-
         OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
-
     }
 
     @Override

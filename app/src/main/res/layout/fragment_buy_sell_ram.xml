@@ -54,7 +54,7 @@
                 title:sLeftTextString="@string/RAM"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="0.1000 EOS"
+                title:sRightTextString="--- EOS"
                 title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
                 title:sShapeCornersTopRightRadius="@dimen/dimen_6"
                 title:sUseShape="true"
@@ -83,14 +83,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 title:sLeftIconHeight="@dimen/dimen_8"
-                title:sLeftIconRes="@drawable/ic_blue_dot"
+                title:sLeftIconRes="@drawable/ic_dot_blue"
                 title:sLeftIconWidth="@dimen/dimen_8"
                 title:sLeftTextColor="@color/cloudyBlue"
                 title:sLeftTextSize="@dimen/font_3"
-                title:sLeftTextString="已用 0.000 ms"
+                title:sLeftTextString="已用 -- KB"
                 title:sRightTextColor="@color/cloudyBlue"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="总量 10.91 ms"
+                title:sRightTextString="总量 -- KB"
                 title:sUseShape="true"
                 >
 
@@ -118,7 +118,7 @@
                 title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="≈0.32915259 EOS/KB"
+                title:sRightTextString="≈ -- EOS/KB"
                 >
 
             </com.allen.library.SuperTextView>
@@ -188,16 +188,17 @@
                 android:layout_marginTop="@dimen/dimen_16">
 
                 <TextView
+                    android:id="@+id/tv_eos_ram_amount"
                     android:layout_width="0dp"
                     android:textSize="@dimen/font_3.5"
                     android:textColor="@color/steel"
                     android:layout_height="wrap_content"
-                    android:text="@string/transfer_amount"
-
+                    android:text="@string/transfer_eos_amount"
                     android:layout_weight="1"/>
 
                 <TextView
-                    tools:text="可用 0.17 EOS"
+                    android:id="@+id/tv_available_eos_ram"
+                    android:text="可用 -- "
                     android:textSize="@dimen/font_3"
                     android:textColor="@color/darkSlateBlueTwo"
                     android:layout_width="wrap_content"
@@ -206,11 +207,25 @@
 
 
             <EditText
-                android:id="@+id/edt_buy_sell_ram"
+                android:id="@+id/edt_buy_ram"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50"
                 android:textSize="@dimen/font_4"
                 android:hint="@string/input_eos_amount"
+                android:textColorHint="@color/cloudyBlue"
+                android:inputType="numberDecimal"
+                style="@style/editText_config_wallet"
+                android:layout_marginStart="0dp"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/cursor_custom"/>
+
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/edt_sell_ram"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:textSize="@dimen/font_4"
+                android:hint="@string/input_ram_amount"
                 android:textColorHint="@color/cloudyBlue"
                 android:inputType="numberDecimal"
                 style="@style/editText_config_wallet"
