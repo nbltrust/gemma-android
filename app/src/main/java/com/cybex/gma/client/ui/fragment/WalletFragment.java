@@ -153,6 +153,21 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     }
 
+    /**
+     * 显示主界面信息
+     *
+     * @param banlance 可用余额
+     * @param redeem 正在赎回
+     * @param remainTime 赎回剩余时间
+     * @param totalPrice 总资产
+     * @param totalPriceCNY 总资产CNY
+     */
+    public void showMainInfo(
+            String banlance, String redeem,String remainTime,
+            String totalPrice, String totalPriceCNY) {
+
+    }
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
