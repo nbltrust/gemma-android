@@ -147,6 +147,8 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
             }
         });
 
+        
+
     }
 
     @Override

@@ -54,7 +54,7 @@
                 title:sLeftTextString="@string/CPU"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="0.1000 EOS"
+                title:sRightTextString="-- EOS"
                 title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
                 title:sShapeCornersTopRightRadius="@dimen/dimen_6"
                 title:sUseShape="true"
@@ -87,10 +87,10 @@
                 title:sLeftIconWidth="@dimen/dimen_8"
                 title:sLeftTextColor="@color/cloudyBlue"
                 title:sLeftTextSize="@dimen/font_3"
-                title:sLeftTextString="已用 0.000 ms"
+                title:sLeftTextString="已用 -- ms"
                 title:sRightTextColor="@color/cloudyBlue"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="总量 10.91 ms"
+                title:sRightTextString="总量 -- ms"
                 title:sUseShape="true"
                 >
 
@@ -116,7 +116,7 @@
                 title:sLeftTextString="@string/NET"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="0.1000 EOS"
+                title:sRightTextString="-- EOS"
                 title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
                 title:sShapeCornersTopRightRadius="@dimen/dimen_6"
                 title:sUseShape="true"
@@ -149,10 +149,10 @@
                 title:sLeftIconWidth="@dimen/dimen_8"
                 title:sLeftTextColor="@color/cloudyBlue"
                 title:sLeftTextSize="@dimen/font_3"
-                title:sLeftTextString="已用 0.000 KB"
+                title:sLeftTextString="已用 -- KB"
                 title:sRightTextColor="@color/cloudyBlue"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="总量 10.91 KB"
+                title:sRightTextString="总量 -- KB"
                 title:sUseShape="true"
                 >
 
@@ -183,7 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/dimen_10"
-                android:text="余额： 0.1 EOS"
+                android:text="余额： -- EOS"
                 android:textColor="@color/dusk"
                 android:textSize="@dimen/font_3"
                 />

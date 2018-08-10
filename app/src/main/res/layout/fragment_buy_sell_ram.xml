@@ -54,7 +54,7 @@
                 title:sLeftTextString="@string/RAM"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="0.1000 EOS"
+                title:sRightTextString="--- EOS"
                 title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
                 title:sShapeCornersTopRightRadius="@dimen/dimen_6"
                 title:sUseShape="true"
