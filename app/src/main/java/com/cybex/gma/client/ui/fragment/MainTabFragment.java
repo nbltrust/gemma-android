@@ -75,7 +75,7 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
+        EventBusProvider.postSticky(new TabSelectedEvent(0));
     }
 
     @Override

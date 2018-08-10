@@ -24,10 +24,13 @@ import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.ChangeAccountAdapter;
+import com.cybex.gma.client.ui.model.response.AccountInfo;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
+import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.cybex.gma.client.widget.MyScrollView;
+import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -40,7 +43,6 @@ import com.tapadoo.alerter.Alerter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -65,8 +67,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
     @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
     @BindView(R.id.total_CNY_amount) SuperTextView totalCNYAmount;
-    @BindView(R.id.balance) SuperTextView balance;
-    @BindView(R.id.redeem) SuperTextView redeem;
+    @BindView(R.id.balance) SuperTextView tvBalance;
+    @BindView(R.id.redeem) SuperTextView tvRedeem;
     @BindView(R.id.layout_top_info) LinearLayout layoutTopInfo;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.imageView_portrait) ImageView imageViewPortrait;
@@ -149,7 +151,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
             LoggerManager.d("wallet tab selected");
-            //
+            getP().requestHomeCombineDataVO();
 
         }
 
@@ -158,16 +160,39 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     /**
      * 显示主界面信息
      *
-     * @param banlance 可用余额
-     * @param redeem 正在赎回
-     * @param remainTime 赎回剩余时间
-     * @param totalPrice 总资产
-     * @param totalPriceCNY 总资产CNY
+     * @param vo 账户聚合数据信息
      */
-    public void showMainInfo(
-            String banlance, String redeem,String remainTime,
-            String totalPrice, String totalPriceCNY) {
+    public void showMainInfo(final HomeCombineDataVO vo) {
 
+        TaskManager.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                if(vo!=null){
+                    String banlance = vo.getBanlance();
+                    String unitPrice = vo.getUnitPrice();
+                    AccountInfo accountInfo = vo.getAccountInfo();
+                    tvBalance.setCenterString(banlance);
+
+
+                }
+
+            }
+        });
+
+    }
+
+    /**
+     * 显示账户余额
+     *
+     * @param mBanlance
+     */
+    public void showBanlance(final String mBanlance){
+        TaskManager.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                tvBalance.setCenterString(mBanlance);
+            }
+        });
     }
 
     @Override
@@ -196,14 +221,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
             String json = curWallet.getEosNameJson();
             List<String> eosNamelist = GsonUtils.parseString2List(json, String.class);
-            //TODO
-            if (EmptyUtils.isEmpty(eosNamelist)) {
-                eosNamelist = new ArrayList<>();
-                eosNamelist.add("暂时测试1");
-                eosNamelist.add("暂时测试2");
-            }
-            eosNamelist.add("暂时测试3");
-
             if (EmptyUtils.isNotEmpty(eosNamelist) && eosNamelist.size() > 1) {
                 Drawable drawable = getResources().getDrawable(
                         R.drawable.ic_common_drop_white);

@@ -10,6 +10,7 @@ import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
 import com.cybex.gma.client.ui.model.response.UnitPrice;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
+import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
 import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
 import com.cybex.gma.client.ui.request.UnitPriceRequest;
@@ -21,16 +22,15 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.exceptions.Exceptions;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
@@ -46,6 +46,10 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
     private static final String VALUE_CONTRACT = "eosio.token";
     private static final String VALUE_COMPRESSION = "none";
     private static final String VALUE_SYMBOL = "EOS";
+
+    private static final String MAP_KEY_ACCOUNT_INFO = "account_info";
+    private static final String MAP_KEY_UNIT_PRICE = "unit_price";
+    private static final String MAP_KEY_BANLANCE = "key_banlance";
 
     /**
      * 切换eos账户
@@ -94,20 +98,28 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
 
 
     /**
-     * 请求价格单位换算
+     * 获取首页聚合数据
      */
-    public void requestUnitPrice() {
-        Observable.zip(getAccountObserver, unitPriceObserver, banlanceObserver,
-                new Function3<AccountInfo, String, String, HashMap>() {
+    public void requestHomeCombineDataVO() {
+        Observable.combineLatest(getAccountObserver, unitPriceObserver, banlanceObserver,
+                new Function3<AccountInfo, String, String, HomeCombineDataVO>() {
                     @Override
-                    public HashMap apply(AccountInfo accountInfo, String unitPrice, String banlance) throws Exception {
-                        return null;
+                    public HomeCombineDataVO apply(AccountInfo accountInfo, String unitPrice, String banlance) throws
+                            Exception {
+
+                        HomeCombineDataVO vo = new HomeCombineDataVO();
+                        vo.setAccountInfo(accountInfo);
+                        vo.setBanlance(banlance);
+                        vo.setUnitPrice(unitPrice);
+
+                        return vo;
                     }
 
                 }).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HashMap>() {
+                .subscribe(new Consumer<HomeCombineDataVO>() {
                     @Override
-                    public void accept(HashMap dataMap) throws Exception {
+                    public void accept(HomeCombineDataVO vo) throws Exception {
+                        getV().showMainInfo(vo);
 
                     }
                 }, new Consumer<Throwable>() {
@@ -124,43 +136,50 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
             Observable.create(new ObservableOnSubscribe<AccountInfo>() {
 
                 @Override
-                public void subscribe(ObservableEmitter<AccountInfo> e) throws Exception {
-                    new GetAccountinfoRequest(AccountInfo.class)
-                            .getAccountInfo(new JsonCallback<AccountInfo>() {
-                                @Override
-                                public void onSuccess(Response<AccountInfo> response) {
-                                    if (response != null && response.body() != null) {
-                                        AccountInfo info = response.body();
-                                        if (info != null) {
-                                            e.onNext(info);
-                                            e.onComplete();
+                public void subscribe(ObservableEmitter<AccountInfo> e) {
+                    try {
+                        new GetAccountinfoRequest(AccountInfo.class)
+                                .getAccountInfo(new JsonCallback<AccountInfo>() {
+                                    @Override
+                                    public void onSuccess(Response<AccountInfo> response) {
+                                        if (response != null && response.body() != null) {
+                                            AccountInfo info = response.body();
+                                            if (info != null) {
+                                                e.onNext(info);
+                                                e.onComplete();
+                                            }
                                         }
-                                    }
 
-                                }
-                            });
+                                    }
+                                });
+                    } catch (Throwable t) {
+                        throw Exceptions.propagate(t);
+                    }
                 }
             }).subscribeOn(Schedulers.io());
 
 
     Observable<String> unitPriceObserver = Observable.create(new ObservableOnSubscribe<String>() {
         @Override
-        public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-            new UnitPriceRequest(UnitPrice.class)
-                    .getUnitPriceRequest(new JsonCallback<UnitPrice>() {
-                        @Override
-                        public void onSuccess(Response<UnitPrice> response) {
-                            if (response != null && response.body() != null) {
-                                UnitPrice unitPrice = response.body();
-                                List<UnitPrice.PricesBean> prices = unitPrice.getPrices();
-                                if (EmptyUtils.isNotEmpty(prices)) {
-                                    for (int i = 0; i < prices.size(); i++) {
-                                        UnitPrice.PricesBean bean = prices.get(i);
-                                        if (bean != null && bean.getName().equals(VALUE_SYMBOL)) {
-                                            double value = bean.getValue();
+        public void subscribe(ObservableEmitter<String> emitter) {
+            try {
+                new UnitPriceRequest(UnitPrice.class)
+                        .getUnitPriceRequest(new JsonCallback<UnitPrice>() {
+                            @Override
+                            public void onSuccess(Response<UnitPrice> response) {
+                                if (response != null && response.body() != null) {
+                                    UnitPrice unitPrice = response.body();
+                                    List<UnitPrice.PricesBean> prices = unitPrice.getPrices();
+                                    if (EmptyUtils.isNotEmpty(prices)) {
+                                        for (int i = 0; i < prices.size(); i++) {
+                                            UnitPrice.PricesBean bean = prices.get(i);
+                                            if (bean != null && bean.getName().equals(VALUE_SYMBOL)) {
+                                                double value = bean.getValue();
 
-                                            emitter.onNext(Double.toString(value));
-                                            emitter.onComplete();
+                                                emitter.onNext(Double.toString(value));
+                                                emitter.onComplete();
+                                            }
+
                                         }
 
                                     }
@@ -168,16 +187,18 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                                 }
 
                             }
+                        });
+            } catch (Throwable t) {
+                throw Exceptions.propagate(t);
+            }
 
-                        }
-                    });
 
         }
     }).subscribeOn(Schedulers.io());
 
     Observable<String> banlanceObserver = Observable.create(new ObservableOnSubscribe<String>() {
         @Override
-        public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+        public void subscribe(ObservableEmitter<String> emitter) {
             requestBanlanceInfo(new StringCallback() {
 
                 String banlance = "0.0000";
@@ -197,19 +218,27 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
 
                 @Override
                 public void onSuccess(Response<String> response) {
-                    String jsonStr = response.body();
-                    LoggerManager.d("json:" + jsonStr);
+
                     try {
-                        JSONArray array = new JSONArray(jsonStr);
-                        if (array != null && array.length() > 0) {
-                            banlance = array.optString(0);
+
+                        if (response != null) {
+                            String jsonStr = response.body();
+                            LoggerManager.d("response json:" + jsonStr);
+
+                            JSONArray array = new JSONArray(jsonStr);
+                            if (array != null && array.length() > 0) {
+                                banlance = array.optString(0);
+                            }
+
+                            getV().showBanlance(banlance);
+
+                            emitter.onNext(banlance);
+                            emitter.onComplete();
                         }
 
-                        emitter.onNext(banlance);
-                        emitter.onComplete();
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    } catch (Throwable t) {
+                        throw Exceptions.propagate(t);
                     }
 
                 }
