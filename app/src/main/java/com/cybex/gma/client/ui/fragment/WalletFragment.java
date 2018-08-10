@@ -179,7 +179,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     }
 
-   
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
