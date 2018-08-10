@@ -123,6 +123,21 @@ public class CommonRequest<T> {
                 .execute(callback);
     }
 
+    /**
+     * 非RX的Post json请求方式
+     *
+     * @param tag
+     * @param path
+     * @param callback
+     */
+    public void getJsonNoRx(
+            String tag, String path,
+            final AbsCallback<T> callback) {
+        OkGo.<T>get(path)
+                .tag(tag)
+                .execute(callback);
+    }
+
 
     private static CompositeDisposable compositeDisposable;
 
