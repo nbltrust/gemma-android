@@ -12,22 +12,22 @@ public class AccountInfo extends BaseOnchainModel {
     /**
      * 账户名
      */
-    public String account_name;
+    private String account_name;
 
-    public String head_block_num;
-    public String ram_quota;
-    public String net_weight;
-    public String cpu_weight;
+    private String head_block_num;
+    private int ram_quota;
+    private int net_weight;
+    private int cpu_weight;
 
     /**
      * 有多少的net cpu 和ram 相关资产信息
      */
-    public AccountTotalResources total_resources;
+    private AccountTotalResources total_resources;
 
     /**
      * //正在赎回 可能没有
      */
-    public AccountRefoundRequest refund_request;
+    private AccountRefoundRequest refund_request;
 
     private NetLimitBean net_limit;
     private CpuLimitBean cpu_limit;
@@ -114,5 +114,61 @@ public class AccountInfo extends BaseOnchainModel {
         public String getCpu_weightX() { return cpu_weightX;}
 
         public void setCpu_weightX(String cpu_weightX) { this.cpu_weightX = cpu_weightX;}
+    }
+
+    public String getAccount_name() {
+        return account_name;
+    }
+
+    public void setAccount_name(String account_name) {
+        this.account_name = account_name;
+    }
+
+    public String getHead_block_num() {
+        return head_block_num;
+    }
+
+    public void setHead_block_num(String head_block_num) {
+        this.head_block_num = head_block_num;
+    }
+
+    public AccountTotalResources getTotal_resources() {
+        return total_resources;
+    }
+
+    public void setTotal_resources(AccountTotalResources total_resources) {
+        this.total_resources = total_resources;
+    }
+
+    public int getRam_quota() {
+        return ram_quota;
+    }
+
+    public void setRam_quota(int ram_quota) {
+        this.ram_quota = ram_quota;
+    }
+
+    public int getNet_weight() {
+        return net_weight;
+    }
+
+    public void setNet_weight(int net_weight) {
+        this.net_weight = net_weight;
+    }
+
+    public int getCpu_weight() {
+        return cpu_weight;
+    }
+
+    public void setCpu_weight(int cpu_weight) {
+        this.cpu_weight = cpu_weight;
+    }
+
+    public AccountRefoundRequest getRefund_request() {
+        return refund_request;
+    }
+
+    public void setRefund_request(AccountRefoundRequest refund_request) {
+        this.refund_request = refund_request;
     }
 }

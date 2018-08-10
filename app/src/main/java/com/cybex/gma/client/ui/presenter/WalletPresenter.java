@@ -6,6 +6,7 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.fragment.WalletFragment;
+import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
 import com.cybex.gma.client.ui.model.response.UnitPrice;
@@ -132,7 +133,20 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                 @Override
                 public void subscribe(ObservableEmitter<AccountInfo> e) {
                     try {
+                        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                        if (entity == null) {
+                            e.onComplete();
+                            return;
+                        }
+
+                        String account_name = entity.getCurrentEosName();
+
+                        GetAccountInfoReqParams params = new GetAccountInfoReqParams();
+                        params.setAccount_name(account_name);
+
+                        String jsonParams = GsonUtils.objectToJson(params);
                         new GetAccountinfoRequest(AccountInfo.class)
+                                .setJsonParams(jsonParams)
                                 .getAccountInfo(new JsonCallback<AccountInfo>() {
                                     @Override
                                     public void onSuccess(Response<AccountInfo> response) {
@@ -222,6 +236,7 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                             JSONArray array = new JSONArray(jsonStr);
                             if (array != null && array.length() > 0) {
                                 banlance = array.optString(0);
+                                getV().showBanlance(banlance);
                             }
 
                             emitter.onNext(banlance);

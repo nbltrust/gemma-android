@@ -25,9 +25,11 @@ import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.ChangeAccountAdapter;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
+import com.cybex.gma.client.ui.model.response.AccountTotalResources;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
+import com.cybex.gma.client.utils.AmountUtil;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.cybex.gma.client.widget.MyScrollView;
 import com.hxlx.core.lib.common.async.TaskManager;
@@ -165,15 +167,108 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         TaskManager.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                if(vo!=null){
+                if (vo != null) {
                     String banlance = vo.getBanlance();
                     String unitPrice = vo.getUnitPrice();
-                    AccountInfo accountInfo = vo.getAccountInfo();
-                    tvBalance.setCenterString(banlance);
+                    AccountInfo info = vo.getAccountInfo();
 
+                    //显示余额
+                    tvBalance.setCenterString(banlance);
+                    //显示总资产信息
+                    showTotalPriceInfo(banlance, unitPrice, info);
+                    //显示cpu，net，ram进度
+                    showResourceInfo(info);
 
                 }
 
+            }
+        });
+
+    }
+
+
+    private void showResourceInfo(AccountInfo info) {
+        if (info != null) {
+            //CPU使用进度
+            AccountInfo.CpuLimitBean cpuLimitBean = info.getCpu_limit();
+            int cpuWeight = info.getCpu_weight();
+            int cpuUsed = 0;
+            if (cpuLimitBean != null) {
+                cpuUsed = cpuLimitBean.getUsed();
+            }
+            float cpuProgress = (float) cpuUsed / cpuWeight * 100;
+            progressBarCPU.setProgress(cpuProgress);
+            progressBarCPU.setMax(100);
+
+            //NET使用进度
+            AccountInfo.NetLimitBean netLimitBean = info.getNet_limit();
+            int netWeight = info.getNet_weight();
+            int netUsed = 0;
+            if (netLimitBean != null) {
+                netUsed = netLimitBean.getUsed();
+            }
+            float netProgress = (float) netUsed / netWeight * 100;
+            progressBarNET.setProgress(netProgress);
+
+            int ramTotal = info.getRam_quota();
+            int ramUsed = info.getRam_usage();
+            float ramProgress = (float) ramUsed / ramTotal * 100;
+            progressBarRAM.setProgress(ramProgress);
+        }
+
+    }
+
+
+    private void showTotalPriceInfo(String banlance, String unitPrice, AccountInfo info) {
+        String banlanceNumber = "0";
+        String netNumber = "0";
+        String cpuNumber = "0";
+        String[] banlanceNumberArr = banlance.split(" ");
+        if (EmptyUtils.isNotEmpty(banlanceNumberArr)) {
+            banlanceNumber = banlanceNumberArr[0];
+        }
+        if (info != null) {
+            AccountTotalResources totalResources = info.getTotal_resources();
+            if (totalResources != null) {
+                String netWeight = totalResources.getNet_weight();
+                String cpuWeight = totalResources.getCpu_weight();
+                if (EmptyUtils.isNotEmpty(netWeight)) {
+                    String[] netWeightArr = netWeight.split(" ");
+                    if (EmptyUtils.isNotEmpty(netWeightArr)) {
+                        netNumber = netWeightArr[0];
+                    }
+                }
+
+                if (EmptyUtils.isNotEmpty(cpuWeight)) {
+                    String[] cpuWieghtArr = cpuWeight.split(" ");
+                    if (EmptyUtils.isNotEmpty(cpuWieghtArr)) {
+                        cpuNumber = cpuWieghtArr[0];
+                    }
+                }
+            }
+
+        }
+
+        String tempPrice = AmountUtil.add(banlanceNumber, netNumber, 4);
+
+        String totalPrice = AmountUtil.add(tempPrice, cpuNumber, 4);
+        String totalCNY = AmountUtil.mul(unitPrice, totalPrice, 4);
+        totalEOSAmount.setText(totalPrice + " EOS");
+        totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+
+
+    }
+
+    /**
+     * 账户余额
+     *
+     * @param banlance
+     */
+    public void showBanlance(String banlance) {
+        TaskManager.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                tvBalance.setRightString(banlance);
             }
         });
 
