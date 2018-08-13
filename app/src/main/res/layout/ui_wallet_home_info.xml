@@ -158,7 +158,7 @@
                         title:rcBackgroundColor="@color/cloudyBlue"
                         title:rcBackgroundPadding="0dp"
                         title:rcMax="100"
-                        title:rcProgress="30"
+                        title:rcProgress="0"
                         title:rcProgressColor="@color/dark_sky_blue"
                         title:rcRadius="10dp"
                         >
@@ -224,7 +224,7 @@
                         title:rcBackgroundColor="@color/cloudyBlue"
                         title:rcBackgroundPadding="0dp"
                         title:rcMax="100"
-                        title:rcProgress="70"
+                        title:rcProgress="0"
                         title:rcProgressColor="@color/scarlet"
                         title:rcRadius="10dp"
                         >

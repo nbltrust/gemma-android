@@ -32,6 +32,10 @@ public class GMAHttpRequest<T> extends CommonRequest<T> {
         super.postJsonNoRx(tag, mPath, jsonParams, callback);
     }
 
+    public void getJsonNoRxRequest(String tag, AbsCallback<T> callback){
+        super.getJsonNoRx(tag,mPath,callback);
+    }
+
 
     public void postJson(CustomRequestCallback<T> callback) {
         //TODO 表单参数扩展

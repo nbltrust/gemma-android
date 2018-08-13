@@ -30,7 +30,7 @@ public class UnitPriceRequest extends GMAHttpRequest<UnitPrice> {
 
 
     public UnitPriceRequest getUnitPriceRequest(JsonCallback<UnitPrice> callback) {
-        postJsonNoRxRequest(TAG, callback);
+        super.getJsonNoRxRequest(TAG, callback);
 
         return this;
     }

@@ -66,15 +66,15 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onSuccess(Response<String> response) {
                         String jsonStr = response.body();
-                        String banlance = "";
+                        String banlance = "0.0000";
                         LoggerManager.d("json:" + jsonStr);
                         try {
                             JSONArray array = new JSONArray(jsonStr);
                             if (array != null && array.length() > 0) {
                                 banlance = array.optString(0);
-                                getV().showInitData(banlance);
+                                getV().showInitData(banlance,currentEOSName);
                             } else {
-                                // GemmaToastUtils.showShortToast("没有可用余额");
+                                getV().showInitData(banlance,currentEOSName);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

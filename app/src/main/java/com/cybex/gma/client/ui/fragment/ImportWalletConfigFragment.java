@@ -75,19 +75,19 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     }
 
     @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onSetPassChanged(){
-        if (isAllFilled() && checkboxConfig.isChecked()){
+    public void onSetPassChanged() {
+        if (isAllFilled() && checkboxConfig.isChecked()) {
             setButtonClickableStyle();
-        }else{
+        } else {
             setButtonUnClickableStyle();
         }
     }
 
     @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onRepeatPassChanged(){
-        if (isAllFilled() && checkboxConfig.isChecked()){
+    public void onRepeatPassChanged() {
+        if (isAllFilled() && checkboxConfig.isChecked()) {
             setButtonClickableStyle();
-        }else{
+        } else {
             setButtonUnClickableStyle();
         }
     }
@@ -134,7 +134,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     public void onDestroyView() {
         super.onDestroyView();
         Validate.unreg(this);
-        unbinder.unbind();
+//        unbinder.unbind();
     }
 
     public void showProgressDialog(final String prompt) {
@@ -175,9 +175,9 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         edtSetPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
-                }else{
+                } else {
                     tvSetPass.setTextColor(getResources().getColor(R.color.steel));
                 }
             }
@@ -187,16 +187,16 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
 
-                if (EmptyUtils.isNotEmpty(getRepeatPass())){
-                    if (getRepeatPass().equals(getPassword())){
+                if (EmptyUtils.isNotEmpty(getRepeatPass())) {
+                    if (getRepeatPass().equals(getPassword())) {
                         setRepeatPassValidStyle();
-                        if (hasFocus)setRepeatPassFocusStyle();
-                    }else{
+                        if (hasFocus) { setRepeatPassFocusStyle(); }
+                    } else {
                         setRepeatPassInvalidStyle();
                     }
-                }else{
+                } else {
                     setRepeatPassValidStyle();
-                    if (hasFocus)setRepeatPassFocusStyle();
+                    if (hasFocus) { setRepeatPassFocusStyle(); }
                 }
             }
         });
@@ -204,9 +204,9 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         edtPassHint.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
-                }else{
+                } else {
                     tvPassHint.setTextColor(getResources().getColor(R.color.steel));
                 }
             }
@@ -234,6 +234,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     /**
      * 输入框空判断
+     *
      * @return
      */
     public boolean isAllFilled() {
@@ -251,6 +252,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         btnCompleteImport.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
 
     }
+
     /**
      * Button不可点击样式
      */
@@ -258,43 +260,65 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         btnCompleteImport.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
 
     }
+
     /**
      * 重置密码区域默认样式
      */
-    public void setRepeatPassValidStyle(){
+    public void setRepeatPassValidStyle() {
         tvRepeatPass.setText("重复密码");
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
-    public void setRepeatPassFocusStyle(){
+
+    public void setRepeatPassFocusStyle() {
         tvRepeatPass.setText("重复密码");
         tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
+
     /**
      * 重置密码区域不匹配时的样式
      */
-    public void setRepeatPassInvalidStyle(){
+    public void setRepeatPassInvalidStyle() {
         tvRepeatPass.setText("密码不一致");
         tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }
 
     public String getPassword() {
-        return edtSetPass.getText().toString().trim();
+        if(edtSetPass==null) return "";
+        String pwd = String.valueOf(edtSetPass.getText());
+        if(EmptyUtils.isNotEmpty(pwd)){
+            pwd.trim();
+        }
+
+        return pwd;
     }
 
     public String getPassHint() {
-        return edtPassHint.getText().toString().trim();
+        if (edtPassHint == null) { return ""; }
+
+        String hint = String.valueOf(edtPassHint.getText());
+        if (EmptyUtils.isNotEmpty(hint)) {
+            hint.trim();
+        }
+
+        return hint;
     }
 
     public String getRepeatPass() {
-        return edtRepeatPass.getText().toString().trim();
+        if (edtRepeatPass == null) { return ""; }
+
+        String passwrod = String.valueOf(edtRepeatPass.getText());
+        if (EmptyUtils.isNotEmpty(passwrod)) {
+            passwrod.trim();
+        }
+        return passwrod;
     }
 
-    public void setEditTextHintStyle(EditText editText, int resId){
+    public void setEditTextHintStyle(EditText editText, int resId) {
         String hintStr = getResources().getString(resId);
-        SpannableString ss =  new SpannableString(hintStr);
+        SpannableString ss = new SpannableString(hintStr);
         AbsoluteSizeSpan ass = new AbsoluteSizeSpan(14, true);
         editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

@@ -17,6 +17,7 @@ import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
@@ -24,10 +25,15 @@ import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.ChangeAccountAdapter;
+import com.cybex.gma.client.ui.model.response.AccountInfo;
+import com.cybex.gma.client.ui.model.response.AccountTotalResources;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
+import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
+import com.cybex.gma.client.utils.AmountUtil;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.cybex.gma.client.widget.MyScrollView;
+import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -40,7 +46,6 @@ import com.tapadoo.alerter.Alerter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -65,8 +70,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
     @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
     @BindView(R.id.total_CNY_amount) SuperTextView totalCNYAmount;
-    @BindView(R.id.balance) SuperTextView balance;
-    @BindView(R.id.redeem) SuperTextView redeem;
+    @BindView(R.id.balance) SuperTextView tvBalance;
+    @BindView(R.id.redeem) SuperTextView tvRedeem;
     @BindView(R.id.layout_top_info) LinearLayout layoutTopInfo;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.imageView_portrait) ImageView imageViewPortrait;
@@ -147,7 +152,17 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
             LoggerManager.d("wallet tab selected");
-            //
+            getP().requestHomeCombineDataVO();
+
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onChangeAccountEvent(ChangeAccountEvent event) {
+        if (EmptyUtils.isNotEmpty(event)) {
+            LoggerManager.d("---changeAccount event---");
+            getP().requestHomeCombineDataVO();
 
         }
 
@@ -156,17 +171,118 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     /**
      * 显示主界面信息
      *
-     * @param banlance 可用余额
-     * @param redeem 正在赎回
-     * @param remainTime 赎回剩余时间
-     * @param totalPrice 总资产
-     * @param totalPriceCNY 总资产CNY
+     * @param vo 账户聚合数据信息
      */
-    public void showMainInfo(
-            String banlance, String redeem,String remainTime,
-            String totalPrice, String totalPriceCNY) {
+    public void showMainInfo(final HomeCombineDataVO vo) {
+
+        TaskManager.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                if (vo != null) {
+                    String banlance = vo.getBanlance();
+                    String unitPrice = vo.getUnitPrice();
+                    AccountInfo info = vo.getAccountInfo();
+
+                    //显示总资产信息
+                    showTotalPriceInfo(banlance, unitPrice, info);
+                    //显示cpu，net，ram进度
+                    showResourceInfo(info);
+
+                }
+
+            }
+        });
 
     }
+
+
+    private void showResourceInfo(AccountInfo info) {
+        if (info != null) {
+            //CPU使用进度
+            AccountInfo.CpuLimitBean cpuLimitBean = info.getCpu_limit();
+            int cpuWeight = info.getCpu_weight();
+            int cpuUsed = 0;
+            if (cpuLimitBean != null) {
+                cpuUsed = cpuLimitBean.getUsed();
+            }
+            float cpuProgress = (float) cpuUsed / cpuWeight * 100;
+            progressBarCPU.setProgress(cpuProgress);
+            progressBarCPU.setMax(100);
+
+            //NET使用进度
+            AccountInfo.NetLimitBean netLimitBean = info.getNet_limit();
+            int netWeight = info.getNet_weight();
+            int netUsed = 0;
+            if (netLimitBean != null) {
+                netUsed = netLimitBean.getUsed();
+            }
+            float netProgress = (float) netUsed / netWeight * 100;
+            progressBarNET.setProgress(netProgress);
+
+            int ramTotal = info.getRam_quota();
+            int ramUsed = info.getRam_usage();
+            float ramProgress = (float) ramUsed / ramTotal * 100;
+            progressBarRAM.setProgress(ramProgress);
+        }
+
+    }
+
+
+    private void showTotalPriceInfo(String banlance, String unitPrice, AccountInfo info) {
+        String banlanceNumber = "0";
+        String netNumber = "0";
+        String cpuNumber = "0";
+        String[] banlanceNumberArr = banlance.split(" ");
+        if (EmptyUtils.isNotEmpty(banlanceNumberArr)) {
+            banlanceNumber = banlanceNumberArr[0];
+        }
+        if (info != null) {
+            AccountTotalResources totalResources = info.getTotal_resources();
+            if (totalResources != null) {
+                String netWeight = totalResources.getNet_weight();
+                String cpuWeight = totalResources.getCpu_weight();
+                if (EmptyUtils.isNotEmpty(netWeight)) {
+                    String[] netWeightArr = netWeight.split(" ");
+                    if (EmptyUtils.isNotEmpty(netWeightArr)) {
+                        netNumber = netWeightArr[0];
+                    }
+                }
+
+                if (EmptyUtils.isNotEmpty(cpuWeight)) {
+                    String[] cpuWieghtArr = cpuWeight.split(" ");
+                    if (EmptyUtils.isNotEmpty(cpuWieghtArr)) {
+                        cpuNumber = cpuWieghtArr[0];
+                    }
+                }
+            }
+
+        }
+
+        String tempPrice = AmountUtil.add(banlanceNumber, netNumber, 4);
+
+        String totalPrice = AmountUtil.add(tempPrice, cpuNumber, 4);
+        String totalCNY = AmountUtil.mul(unitPrice, totalPrice, 4);
+        totalEOSAmount.setText(totalPrice + " EOS");
+        totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+
+
+    }
+
+    /**
+     * 账户余额
+     *
+     * @param banlance
+     */
+    public void showBanlance(String banlance) {
+        TaskManager.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                tvBalance.setRightString(banlance);
+            }
+        });
+
+    }
+
 
     @Override
     public void bindUI(View rootView) {
@@ -194,14 +310,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
             String json = curWallet.getEosNameJson();
             List<String> eosNamelist = GsonUtils.parseString2List(json, String.class);
-            //TODO
-            if (EmptyUtils.isEmpty(eosNamelist)) {
-                eosNamelist = new ArrayList<>();
-                eosNamelist.add("暂时测试1");
-                eosNamelist.add("暂时测试2");
-            }
-            eosNamelist.add("暂时测试3");
-
             if (EmptyUtils.isNotEmpty(eosNamelist) && eosNamelist.size() > 1) {
                 Drawable drawable = getResources().getDrawable(
                         R.drawable.ic_common_drop_white);
@@ -362,6 +470,10 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
                     adapter.notifyDataSetChanged();
                     getP().saveNewEntity(voList.get(position).getEosName());
+                    textViewUsername.setText(voList.get(position).getEosName());
+
+                    EventBusProvider.postSticky(new ChangeAccountEvent());
+
 
                     dialog.cancel();
 
