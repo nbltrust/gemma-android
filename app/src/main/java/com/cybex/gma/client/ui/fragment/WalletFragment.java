@@ -29,6 +29,7 @@ import com.cybex.gma.client.ui.model.response.AccountInfo;
 import com.cybex.gma.client.ui.model.response.AccountTotalResources;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
+import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
@@ -85,6 +86,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.progressbar_net_small) RoundCornerProgressBar progressBarNET;
     @BindView(R.id.progressbar_ram_small) RoundCornerProgressBar progressBarRAM;
     Unbinder unbinder;
+
+    private ResourceInfoVO resourceInfoVO;
 
     @OnClick({R.id.tv_backup_wallet, R.id.textView_username})
     public void backUpWallet(View v) {
@@ -186,7 +189,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                     //显示总资产信息
                     showTotalPriceInfo(banlance, unitPrice, info);
                     //显示cpu，net，ram进度
-                    showResourceInfo(info);
+                    showResourceInfo(banlance, info);
 
                 }
 
@@ -196,7 +199,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     }
 
 
-    private void showResourceInfo(AccountInfo info) {
+    private void showResourceInfo(String banlance, AccountInfo info) {
         if (info != null) {
             //CPU使用进度
             AccountInfo.CpuLimitBean cpuLimitBean = info.getCpu_limit();
@@ -232,6 +235,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             progressBarRAM.setMax(100);
             progressBarRAM.setProgress(ramProgress);
 
+            resourceInfoVO = new ResourceInfoVO();
+            resourceInfoVO.setBanlance(banlance);
+            resourceInfoVO.setCpuProgress(cpuProgress);
+            resourceInfoVO.setCpuTotal(cpuTotal);
+            resourceInfoVO.setNetTotal(netTotal);
+            resourceInfoVO.setNetProgress(netProgress);
+            resourceInfoVO.setNetUsed(netUsed);
         }
 
     }
