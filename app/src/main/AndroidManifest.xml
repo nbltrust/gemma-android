@@ -55,7 +55,9 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <!-- 创建方式容器界面 -->
-        <activity android:name=".ui.activity.CreateMethodActivity">
+        <activity
+            android:name=".ui.activity.CreateMethodActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
@@ -65,43 +67,65 @@
             android:screenOrientation="portrait">
         </activity>
         <!-- 投票界面 -->
-        <activity android:name=".ui.activity.VoteActivity">
+        <activity
+            android:name=".ui.activity.VoteActivity"
+            android:screenOrientation="portrait"
+            >
 
         </activity>
         <!-- 买卖RAM界面 -->
-        <activity android:name=".ui.activity.BuySellRamActivity">
+        <activity
+            android:name=".ui.activity.BuySellRamActivity"
+            android:screenOrientation="portrait">
 
         </activity>
         <!-- 资源质押界面 -->
-        <activity android:name=".ui.activity.DelegateActivity">
+        <activity
+            android:name=".ui.activity.DelegateActivity"
+            android:screenOrientation="portrait">
         </activity>
         <!-- 钱包管理界面 -->
-        <activity android:name=".ui.activity.ManageWalletActivity">
+        <activity
+            android:name=".ui.activity.ManageWalletActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <!-- 导入钱包界面 -->
-        <activity android:name=".ui.activity.ImportWalletActivity">
+        <activity
+            android:name=".ui.activity.ImportWalletActivity"
+            android:screenOrientation="portrait">
         </activity>
         <!-- 创建钱包后提醒界面 -->
-        <activity android:name=".ui.activity.CreateManageActivity">
+        <activity
+            android:name=".ui.activity.CreateManageActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.activity.CreateWalletActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
         </activity>
 
         <!-- 初始页面 -->
-        <activity android:name=".ui.activity.InitialActivity">
+        <activity
+            android:name=".ui.activity.InitialActivity"
+            android:screenOrientation="portrait">
 
         </activity>
         <!-- 关于页面 -->
-        <activity android:name=".ui.activity.AboutActivity">
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:screenOrientation="portrait">
         </activity>
         <!-- 通用设置界面 -->
-        <activity android:name=".ui.activity.GeneralSettingActivity">
+        <activity
+            android:name=".ui.activity.GeneralSettingActivity"
+            android:screenOrientation="portrait">
         </activity>
         <!-- 安全设置界面 -->
-        <activity android:name=".ui.activity.SecuritySettingActivity">
+        <activity
+            android:name=".ui.activity.SecuritySettingActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <!-- 应用内浏览器窗口 -->
