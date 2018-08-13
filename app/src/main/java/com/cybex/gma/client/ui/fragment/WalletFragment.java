@@ -200,29 +200,38 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         if (info != null) {
             //CPU使用进度
             AccountInfo.CpuLimitBean cpuLimitBean = info.getCpu_limit();
-            int cpuWeight = info.getCpu_weight();
             int cpuUsed = 0;
+            int cpuTotal = 0;
             if (cpuLimitBean != null) {
                 cpuUsed = cpuLimitBean.getUsed();
+                cpuTotal = cpuLimitBean.getMax();
             }
-            float cpuProgress = (float) cpuUsed / cpuWeight * 100;
-            progressBarCPU.setProgress(cpuProgress);
+            double i = cpuUsed / (double) cpuTotal * 100;
+            int cpuProgress = (int) Math.ceil(i);
             progressBarCPU.setMax(100);
+            progressBarCPU.setProgress(cpuProgress);
 
             //NET使用进度
             AccountInfo.NetLimitBean netLimitBean = info.getNet_limit();
-            int netWeight = info.getNet_weight();
             int netUsed = 0;
+            int netTotal = 0;
             if (netLimitBean != null) {
                 netUsed = netLimitBean.getUsed();
+                netTotal = netLimitBean.getMax();
             }
-            float netProgress = (float) netUsed / netWeight * 100;
+            double j = netUsed / (double) netTotal * 100;
+            int netProgress = (int) Math.ceil(j);
+            progressBarNET.setMax(100);
             progressBarNET.setProgress(netProgress);
 
+            //ram使用进度
             int ramTotal = info.getRam_quota();
             int ramUsed = info.getRam_usage();
-            float ramProgress = (float) ramUsed / ramTotal * 100;
+            double k = ramUsed / (double) ramTotal * 100;
+            int ramProgress = (int) Math.ceil(k);
+            progressBarRAM.setMax(100);
             progressBarRAM.setProgress(ramProgress);
+
         }
 
     }
