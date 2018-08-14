@@ -184,7 +184,6 @@
     <string name="used">已用</string>
     <string name="total_amount">总量</string>
     <string name="delegate">抵押</string>
-    <string name="remain_balance">余额</string>
     <string name="delegate_cpu">抵押CPU</string>
     <string name="delegate_hint">输入需要抵押的EOS数量</string>
     <string name="refund_hint">输入解除抵押的EOS数量</string>
@@ -226,14 +225,14 @@
     <string name="input_ram_amount">输入RAM数量</string>
     <string name="input_eos_amount">输入EOS数量</string>
 
-    <string name="ram_amount">预估可兑换 %1$s KB</string>
-    <string name="eos_amount">预估可兑换 %1$s EOS</string>
+    <string name="ram_amount_about">预估可兑换 %1$s KB</string>
+    <string name="eos_amount_about">预估可兑换 %1$s EOS</string>
     <string name="available_eos">可用 %1$s</string>
     <string name="available_ram">可用 %1$s KB</string>
-    <string name="eos_ram_amount">%1$s EOS</string>
-    <string name="cpu_available">可用 %1$s ms</string>
+    <string name="eos_ram_amount">≈ %1$s EOS</string>
+    <string name="cpu_available">已用 %1$s ms</string>
     <string name="cpu_total">总量 %1$s ms</string>
-    <string name="net_available">可用 %1$s KB</string>
+    <string name="net_available">已用 %1$s KB</string>
     <string name="net_total">总量 %1$s KB</string>
 
     <string name="confirm_buy">确认买入</string>

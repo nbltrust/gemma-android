@@ -566,6 +566,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                     adapter.notifyDataSetChanged();
                     getP().saveNewEntity(voList.get(position).getEosName());
                     textViewUsername.setText(voList.get(position).getEosName());
+                    generatePortrait(voList.get(position).getEosName());
 
                     EventBusProvider.postSticky(new ChangeAccountEvent());
 

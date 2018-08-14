@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.BuySellRamFragment;
 import com.cybex.gma.client.ui.model.request.GetRamMarketReqParams;
@@ -217,8 +218,8 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
                             GemmaToastUtils.showLongToast("操作成功");
-                            //todo 页面刷新，什么数据该更新显示？
-
+                            //跳转到收支记录
+                            UISkipMananger.launchTransferRecord(getV().getActivity());
                         }
 
                     }
@@ -261,10 +262,10 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                                 //args.add(bae_balance[0]);
                                 //args.add(quote_balance[0]);
                                 //args.add(quote_weight);
-                                String ramRatio = AmountUtil.div(quote_balance[0], base_balance[0], 8);
+                                String ramRatio = AmountUtil.div(quote_balance[0],base_balance[0] , 8);
                                 String ramUnitPrice = AmountUtil.mul(ramRatio, quote_weight, 8);
-                                LoggerManager.d(ramUnitPrice);
-                                getV().setRamUnitPrice(ramUnitPrice);
+                                String ramUnitPriceKB = AmountUtil.mul(ramUnitPrice, "1024", 4);
+                                getV().setRamUnitPrice(ramUnitPriceKB);
                                 //args.add(ramUnitPrice);
                                 }
                             } catch (Exception e) {

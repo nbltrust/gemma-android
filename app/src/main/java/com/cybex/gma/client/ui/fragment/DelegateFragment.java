@@ -153,11 +153,12 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
         if (getArguments()!= null){
             ResourceInfoVO resourceInfoVO = getArguments().getParcelable("resourceInfo");
             if (EmptyUtils.isNotEmpty(resourceInfoVO)){
-                tvRemainBalance.setText(resourceInfoVO.getBanlance());
+                String balance = "余额 " + resourceInfoVO.getBanlance();
+                tvRemainBalance.setText(balance);
                 //cpu总量及已用显示
                 String cpuUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuUsed()), "1024", 2);
-                String cpuTotal = AmountUtil.add(String.valueOf(resourceInfoVO.getCpuTotal()), "0", 2);
-                String cpuAmount = AmountUtil.add(String.valueOf(resourceInfoVO.getCpuWeight()), "0", 2);
+                String cpuTotal = AmountUtil.round(String.valueOf(resourceInfoVO.getCpuTotal()),  2);
+                String cpuAmount = AmountUtil.round(String.valueOf(resourceInfoVO.getCpuWeight()), 4);
                 superTextViewCpuStatus.setLeftString(String.format(getResources().getString(R.string.cpu_available),
                         cpuUsed));
                 superTextViewCpuStatus.setRightString(String.format(getResources().getString(R.string.cpu_total), cpuTotal));
@@ -166,8 +167,9 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                 initCPUProgressBar(resourceInfoVO.getCpuProgress());
                 //NET 总量及已用显示
                 String netUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getNetUsed()), "1024", 2);
-                String netTotal = AmountUtil.add(String.valueOf(resourceInfoVO.getNetTotal()), "0", 2);
-                String netAmount = AmountUtil.add(String.valueOf(resourceInfoVO.getNetWeight()), "0", 2);
+
+                String netTotal = AmountUtil.round(String.valueOf(resourceInfoVO.getNetTotal()),  2);
+                String netAmount = AmountUtil.round(String.valueOf(resourceInfoVO.getNetWeight()), 4);
                 superTextViewNetStatus.setLeftString(String.format(getResources().getString(R.string.net_available),
                         netUsed));
                 superTextViewNetStatus.setRightString(String.format(getResources().getString(R.string.net_total),
@@ -271,6 +273,10 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
     public void setUnclickable(Button button){
         button.setClickable(false);
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
+    }
+
+    public void updateUI(){
+
     }
     /**
      * 显示确认抵押dialog

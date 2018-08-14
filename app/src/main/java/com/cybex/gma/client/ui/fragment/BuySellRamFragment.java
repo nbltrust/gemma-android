@@ -51,6 +51,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     private final int OPERATION_BUY_RAM = 1;
     private final int OPERATION_SELL_RAM = 2;
     private ResourceInfoVO resourceInfoVO;
+    private String kbPerEOS;
+    private String eosPerKb;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_ram_amount) SuperTextView superTextViewRamAmount;
     @BindView(R.id.progressbar_ram) RoundCornerProgressBar progressbarRam;
@@ -84,8 +86,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     public void onChanged(Editable s) {
         if (EmptyUtils.isNotEmpty(getEOSAmount())){
             setClickable(btBuyRam);
-            //String amount = getP().calculateApproxiValue(ramMarketStaus, getEOSAmount());
-            tvApproximatelyAmount.setText("≈ " + "0.0010" + " KB");
+            String amount = "预估可兑换 " + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4) + " KB";
+            tvApproximatelyAmount.setText(amount);
             tvApproximatelyAmount.setVisibility(View.VISIBLE);
         }else{
             tvApproximatelyAmount.setVisibility(View.GONE);
@@ -95,11 +97,14 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     @OnTextChanged(value = R.id.edt_sell_ram, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onSellChanged(Editable s){
-        if (EmptyUtils.isNotEmpty(getRamAmount())){
+        if (EmptyUtils.isNotEmpty(getRamAmount()) && EmptyUtils.isNotEmpty(eosPerKb)){
             setClickable(btSellRam);
-
+            String amount = "预估可兑换 " + AmountUtil.mul(eosPerKb, getRamAmount(), 4) + " EOS";
+            tvApproximatelyAmount.setVisibility(View.VISIBLE);
+            tvApproximatelyAmount.setText(amount);
         }else{
             setUnclickable(btSellRam);
+            tvApproximatelyAmount.setVisibility(View.GONE);
         }
 
     }
@@ -136,16 +141,26 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                     btSellRam.setVisibility(View.GONE);
                     edtBuyRam.setVisibility(View.VISIBLE);
                     edtSellRam.setVisibility(View.GONE);
+                    tvApproximatelyAmount.setVisibility(View.GONE);
+                    edtBuyRam.setText("");
                     tvEosRamAmount.setText(getResources().getString(R.string.transfer_eos_amount));
-
-                    //tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_eos), ));
+                    if (EmptyUtils.isNotEmpty(resourceInfoVO)){
+                        String available_eos = resourceInfoVO.getBanlance();
+                        tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_eos), available_eos));
+                    }
                 } else if (position == 1) {
                     btBuyRam.setVisibility(View.GONE);
                     btSellRam.setVisibility(View.VISIBLE);
                     edtBuyRam.setVisibility(View.GONE);
                     edtSellRam.setVisibility(View.VISIBLE);
+                    edtSellRam.setText("");
+                    tvApproximatelyAmount.setVisibility(View.GONE);
                     tvEosRamAmount.setText(getResources().getString(R.string.transfer_ram_amount));
-                    //tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_ram), ));
+                    if (EmptyUtils.isNotEmpty(resourceInfoVO)){
+                        String ramAvailable = calAvailableRam(resourceInfoVO);
+                        tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_ram),
+                                ramAvailable));
+                    }
                 }
             }
 
@@ -158,10 +173,10 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         if (getArguments() != null){
             resourceInfoVO = getArguments().getParcelable("ramInfo");
             if (EmptyUtils.isNotEmpty(resourceInfoVO)){
-                String ramUsed = AmountUtil.add(String.valueOf(resourceInfoVO.getRamUsed()), "0", 4);
+                String ramUsed = AmountUtil.round(String.valueOf(resourceInfoVO.getRamUsed()), 4);
                 String ramUsedKB = AmountUtil.div(ramUsed, "1024", 2);
                 superTextViewRamStatus.setLeftString("已用 " +ramUsedKB + " KB");
-                String ramTotal = AmountUtil.add(String.valueOf(resourceInfoVO.getRamTotal()), "0", 4);
+                String ramTotal = AmountUtil.round(String.valueOf(resourceInfoVO.getRamTotal()), 4);
                 String ramTotalKB = AmountUtil.div(ramTotal, "1024", 2);
                 superTextViewRamStatus.setRightString("总量" + ramTotalKB + " KB");
                 tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_eos), String.valueOf(resourceInfoVO.getBanlance())));
@@ -214,13 +229,21 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
     }
 
-    public void setRamUnitPrice(String ramUnitPrice){
-        tvRamUnitPrice.setRightString(String.format(getResources().getString(R.string.ram_unit_price), ramUnitPrice));
-        String ramUsedKB = AmountUtil.div(String.valueOf(resourceInfoVO.getRamUsed()), "1024", 2);
-        LoggerManager.d(ramUsedKB);
-        String ramPrice = AmountUtil.mul(ramUnitPrice, ramUsedKB,8);
-        LoggerManager.d(ramPrice);
+    public void setRamUnitPrice(String ramUnitPriceKB){
+        eosPerKb = ramUnitPriceKB;
+        tvRamUnitPrice.setRightString(String.format(getResources().getString(R.string.ram_unit_price), ramUnitPriceKB));
+        String ramTotalKB = AmountUtil.div(String.valueOf(resourceInfoVO.getRamTotal()), "1024", 2);
+        String ramPrice = AmountUtil.mul(ramUnitPriceKB, ramTotalKB,4);
         superTextViewRamAmount.setRightString(String.format(getResources().getString(R.string.eos_ram_amount), ramPrice));
+        kbPerEOS = AmountUtil.div("1", ramUnitPriceKB, 8);
+    }
+
+    public String calAvailableRam(ResourceInfoVO vo){
+        String ramUsed = String.valueOf(vo.getRamUsed());
+        String ramTotal = String.valueOf(vo.getRamTotal());
+        String ramAvailable = AmountUtil.sub(ramTotal, ramUsed, 2);
+        String ramAvailableKB = AmountUtil.div(ramAvailable, "1024", 2);
+        return ramAvailableKB;
     }
 
     /**

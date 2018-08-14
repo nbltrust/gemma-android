@@ -209,7 +209,8 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
                             GemmaToastUtils.showLongToast("操作成功");
-                            //todo 页面刷新，什么数据该更新显示？
+                            //页面跳转至收支记录
+                            //UISkipMananger.launchTransferRecord(getV().getActivity());
 
                         }
 
