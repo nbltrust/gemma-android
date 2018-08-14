@@ -148,6 +148,7 @@
                 style="@style/show_cpu_status_area">
 
                 <LinearLayout
+                    android:id="@+id/view_cpu"
                     android:orientation="vertical"
                     style="@style/cpu_net_ram"
                     android:layout_weight="1">
@@ -181,6 +182,7 @@
                 </View>
 
                 <LinearLayout
+                    android:id="@+id/view_net"
                     android:orientation="vertical"
                     style="@style/cpu_net_ram"
                     android:layout_weight="1">
@@ -214,6 +216,7 @@
                 </View>
 
                 <LinearLayout
+                    android:id="@+id/view_ram"
                     android:orientation="vertical"
                     style="@style/cpu_net_ram"
                     android:layout_weight="1">

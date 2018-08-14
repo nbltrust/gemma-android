@@ -62,16 +62,17 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                     @Override
                     public void onSuccess(Response<AbiJsonToBeanResult> response) {
                         if (response != null && response.body() != null) {
+
                             AbiJsonToBeanResult result = response.body();
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
                             getInfo(OPERATION_DELEGATE ,from, privateKey, binargs);
 
-
                         } else {
                             GemmaToastUtils.showShortToast("操作失败");
                         }
+                        getV().dissmisProgressDialog();
 
                     }
                 });
@@ -114,6 +115,7 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                         } else {
                             GemmaToastUtils.showShortToast("操作失败");
                         }
+                        getV().dissmisProgressDialog();
 
                     }
                 });
@@ -207,7 +209,8 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
                             GemmaToastUtils.showLongToast("操作成功");
-                            //todo 页面刷新，什么数据该更新显示？
+                            //页面跳转至收支记录
+                            //UISkipMananger.launchTransferRecord(getV().getActivity());
 
                         }
 

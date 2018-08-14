@@ -17,6 +17,11 @@ public class ResourceInfoVO implements Parcelable {
     private int netTotal;//NET总量
     private int netUsed;//NET已用
     private int netProgress;//NET进度
+    private int ramUsed;//RAM已用
+    private int ramProgress;//RAM进度
+    private int ramTotal;//RAM总量
+    private int cpuWeight;//拥有的CPU价值EOS的量
+    private int netWeight;//拥有的NET价值EOS的量
 
     public String getBanlance() {
         return banlance;
@@ -86,6 +91,11 @@ public class ResourceInfoVO implements Parcelable {
         dest.writeInt(this.netTotal);
         dest.writeInt(this.netUsed);
         dest.writeInt(this.netProgress);
+        dest.writeInt(ramUsed);
+        dest.writeInt(ramProgress);
+        dest.writeInt(ramTotal);
+        dest.writeInt(cpuWeight);
+        dest.writeInt(netWeight);
     }
 
     public ResourceInfoVO() {}
@@ -98,6 +108,11 @@ public class ResourceInfoVO implements Parcelable {
         this.netTotal = in.readInt();
         this.netUsed = in.readInt();
         this.netProgress = in.readInt();
+        this.ramUsed  =in.readInt();
+        this.ramProgress = in.readInt();
+        this.ramTotal = in.readInt();
+        this.cpuWeight = in.readInt();
+        this.netWeight = in.readInt();
     }
 
     public static final Parcelable.Creator<ResourceInfoVO> CREATOR = new Parcelable.Creator<ResourceInfoVO>() {
@@ -107,4 +122,44 @@ public class ResourceInfoVO implements Parcelable {
         @Override
         public ResourceInfoVO[] newArray(int size) {return new ResourceInfoVO[size];}
     };
+
+    public int getRamUsed() {
+        return ramUsed;
+    }
+
+    public void setRamUsed(int ramUsed) {
+        this.ramUsed = ramUsed;
+    }
+
+    public int getRamProgress() {
+        return ramProgress;
+    }
+
+    public void setRamProgress(int ramProgress) {
+        this.ramProgress = ramProgress;
+    }
+
+    public int getRamTotal() {
+        return ramTotal;
+    }
+
+    public void setRamTotal(int ramTotal) {
+        this.ramTotal = ramTotal;
+    }
+
+    public int getCpuWeight() {
+        return cpuWeight;
+    }
+
+    public void setCpuWeight(int cpuWeight) {
+        this.cpuWeight = cpuWeight;
+    }
+
+    public int getNetWeight() {
+        return netWeight;
+    }
+
+    public void setNetWeight(int netWeight) {
+        this.netWeight = netWeight;
+    }
 }

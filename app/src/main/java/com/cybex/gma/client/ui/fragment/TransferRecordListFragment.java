@@ -12,13 +12,16 @@ import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.presenter.TransferRecordListPresenter;
 import com.cybex.gma.client.ui.request.TransferHistoryListRequest;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.lzy.okgo.OkGo;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -38,9 +41,12 @@ import butterknife.Unbinder;
 public class TransferRecordListFragment extends XFragment<TransferRecordListPresenter> {
 
     Unbinder unbinder;
+    private static final int TAB_WALLET = 0;//钱包
+
     @BindView(R.id.list_multiple_status_view) MultipleStatusView listMultipleStatusView;
     @BindView(R.id.view_refresh) CommonRefreshLayout viewRefresh;
     @BindView(R.id.rv_list) RecyclerView mRecyclerView;
+    @BindView(R.id.btn_navibar) TitleBar naviBar;
 
     private TransferRecordListAdapter mAdapter;
     private String currentEosName = "";
@@ -67,8 +73,31 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         if (entity != null) {
             currentEosName = entity.getCurrentEosName();
         }
+    }
 
-
+    @Override
+    protected void setNavibarTitle(String title, boolean isShowBack, boolean isOnBackFinishActivity) {
+        mTitleBar = naviBar;
+        mTitleBar.setTitle(title);
+        mTitleBar.setTitleColor(com.hxlx.core.lib.R.color.ffffff_white_1000);
+        mTitleBar.setTitleSize(20);
+        mTitleBar.setImmersive(true);
+        if (isShowBack) {
+            mTitleBar.setLeftImageResource(com.hxlx.core.lib.R.drawable.ic_btn_back);
+            mTitleBar.setLeftClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TabSelectedEvent tabSelectedEvent = new TabSelectedEvent();
+                    tabSelectedEvent.setPosition(TAB_WALLET);
+                    EventBusProvider.postSticky(tabSelectedEvent);
+                    if (isOnBackFinishActivity) {
+                        getActivity().finish();
+                    } else {
+                        pop();
+                    }
+                }
+            });
+        }
     }
 
     @Override

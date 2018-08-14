@@ -125,8 +125,6 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                     public void accept(Throwable throwable) throws Exception {
                     }
                 });
-
-
     }
 
 

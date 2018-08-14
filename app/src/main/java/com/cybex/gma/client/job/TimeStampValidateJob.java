@@ -26,6 +26,7 @@ import java.util.List;
 /**
  * 通过比较时间戳方法验证账户是否存在的方法
  * 邀请好友创建钱包，导入钱包时使用
+ *
  */
 public class TimeStampValidateJob {
     /**
@@ -120,5 +121,12 @@ public class TimeStampValidateJob {
         new GetBlockRequest(String.class)
                 .setJsonParams(jsonParams)
                 .getBlock(callback);
+    }
+
+    /**
+     * 执行比较时间戳逻辑
+     */
+    private static void executeTimeStampLogic(){
+
     }
 }
