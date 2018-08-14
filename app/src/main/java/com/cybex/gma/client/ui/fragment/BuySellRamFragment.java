@@ -353,15 +353,20 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                     final String cypher = curWallet.getCypher();
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     String inputPass = mPass.getText().toString().trim();
-                                    final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                    if (key.equals("wrong password")){
-                                        GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                    if (EmptyUtils.isNotEmpty(inputPass)){
+                                        final String key = JNIUtil.get_private_key(cypher, inputPass);
+                                        if (key.equals("wrong password")){
+                                            GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                        }else{
+                                            final String curEOSName = curWallet.getCurrentEosName();
+                                            String quantity = AmountUtil.add(getEOSAmount(), "0", 4)+ " EOS";
+                                            getP().executeBuyRamLogic(curEOSName, curEOSName, quantity, key);
+                                            dialog.cancel();
+                                        }
                                     }else{
-                                        final String curEOSName = curWallet.getCurrentEosName();
-                                        String quantity = AmountUtil.add(getEOSAmount(), "0", 4)+ " EOS";
-                                        getP().executeBuyRamLogic(curEOSName, curEOSName, quantity, key);
-                                        dialog.cancel();
+                                        GemmaToastUtils.showLongToast("请输入密码！");
                                     }
+
                                 }
                                 break;
                                 //卖出RAM操作
@@ -370,17 +375,20 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                     final String cypher = curWallet.getCypher();
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     String inputPass = mPass.getText().toString().trim();
-                                    final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                    if (key.equals("wrong password")){
-                                        GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                    if (EmptyUtils.isNotEmpty(inputPass)){
+                                        final String key = JNIUtil.get_private_key(cypher, inputPass);
+                                        if (key.equals("wrong password")){
+                                            GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                        }else{
+                                            final String curEOSName = curWallet.getCurrentEosName();
+                                            long ramAmount = Long.parseLong(getRamAmount());
+                                            long bytes = ramAmount * 1024;
+                                            getP().executeSellRamLogic(curEOSName, bytes,key);
+                                            dialog.cancel();
+                                        }
                                     }else{
-                                        final String curEOSName = curWallet.getCurrentEosName();
-                                        long ramAmount = Long.parseLong(getRamAmount());
-                                        long bytes = ramAmount * 1024;
-                                        getP().executeSellRamLogic(curEOSName, bytes,key);
-                                        dialog.cancel();
+                                        GemmaToastUtils.showLongToast("请输入密码!");
                                     }
-
                                 }
                                 break;
                             default:

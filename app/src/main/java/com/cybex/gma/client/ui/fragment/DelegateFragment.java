@@ -381,16 +381,20 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     String inputPass = mPass.getText().toString().trim();
                                     final String cypher = curWallet.getCypher();
-                                    final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                    if (key.equals("wrong password")){
-                                        GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                    if (EmptyUtils.isNotEmpty(inputPass)){
+                                        final String key = JNIUtil.get_private_key(cypher, inputPass);
+                                        if (key.equals("wrong password")){
+                                            GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                        }else{
+                                            final String curEOSName = curWallet.getCurrentEosName();
+                                            String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
+                                            String stake_cpu_quantity = AmountUtil.add(getDelegateCpu(), "0", 4) + " EOS";
+                                            getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
+                                                    stake_cpu_quantity, key);
+                                            dialog.cancel();
+                                        }
                                     }else{
-                                        final String curEOSName = curWallet.getCurrentEosName();
-                                        String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
-                                        String stake_cpu_quantity = AmountUtil.add(getDelegateCpu(), "0", 4) + " EOS";
-                                        getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
-                                                stake_cpu_quantity, key);
-                                        dialog.cancel();
+                                        GemmaToastUtils.showLongToast("请输入密码！");
                                     }
                                 }
                                 break;
@@ -399,18 +403,23 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                     //解抵押操作
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     String inputPass = mPass.getText().toString().trim();
-                                    final String cypher = curWallet.getCypher();
-                                    final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                    if (key.equals("wrong password")){
-                                        GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                    if (EmptyUtils.isNotEmpty(inputPass)){
+                                        final String cypher = curWallet.getCypher();
+                                        final String key = JNIUtil.get_private_key(cypher, inputPass);
+                                        if (key.equals("wrong password")){
+                                            GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                        }else{
+                                            final String curEOSName = curWallet.getCurrentEosName();
+                                            String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
+                                            String unstake_cpu_quantity = AmountUtil.add(getUndelegateCpu(), "0", 4) + " EOS";
+                                            getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
+                                                    unstake_cpu_quantity, key);
+                                            dialog.cancel();
+                                        }
                                     }else{
-                                        final String curEOSName = curWallet.getCurrentEosName();
-                                        String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
-                                        String unstake_cpu_quantity = AmountUtil.add(getUndelegateCpu(), "0", 4) + " EOS";
-                                        getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
-                                                unstake_cpu_quantity, key);
-                                        dialog.cancel();
+                                        GemmaToastUtils.showLongToast("请输入密码！");
                                     }
+
                                 }
                                 break;
                         }
