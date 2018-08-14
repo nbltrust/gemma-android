@@ -24,7 +24,10 @@ import com.lzy.okgo.request.base.Request;
 
 import org.json.JSONArray;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -270,6 +273,75 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
         new GetCurrencyBalanceRequest(String.class)
                 .setJsonParams(jsonParams)
                 .getCurrencyBalance(callback);
+    }
+
+
+    /**
+     * 计算时间差
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public String dateDistance(Date startDate, Date endDate) {
+        String tip = "";
+
+        if (startDate == null || endDate == null) {
+            return null;
+        }
+        long timeLong = endDate.getTime() - startDate.getTime();
+        if (timeLong < 0) {
+            timeLong = 0;
+        }
+
+
+        Integer ss = 1000;
+        Integer mi = ss * 60;
+        Integer hh = mi * 60;
+        Integer dd = hh * 24;
+
+        Long day = timeLong / dd;
+        Long hour = (timeLong - day * dd) / hh;
+
+        if (timeLong < 60 * 60 * 24 * 1000) {
+            if (hour < 10) {
+                tip = "剩余00天0" + hour + "小时";
+            } else {
+                tip = "剩余00天" + hour + "小时";
+            }
+        } else if ((timeLong / 1000 / 60 / 60 / 24) < 3 && (timeLong / 1000 / 60 / 60 / 24) > 1) {
+            if(hour>0){
+                if(hour<10){
+                    tip = "剩余"+day+"天0" + hour + "小时";
+                }else{
+                    tip = "剩余"+day+"天" + hour + "小时";
+                }
+
+            }
+        }
+
+        return tip;
+    }
+
+
+    /**
+     * 获得当前时间的时间差
+     *
+     * @param oldms 旧时间
+     * @param format
+     * @return
+     */
+    public String dateDistance2now(long oldms, String format) {
+        SimpleDateFormat DateF = new SimpleDateFormat(format);
+        try {
+            Long time = new Long(oldms);
+            String oldTime = DateF.format(time);
+            Date oldDate = DateF.parse(oldTime);
+            Date nowDate = Calendar.getInstance().getTime();
+            return dateDistance(oldDate, nowDate);
+        } catch (Exception e) {
+        }
+        return null;
     }
 
 
