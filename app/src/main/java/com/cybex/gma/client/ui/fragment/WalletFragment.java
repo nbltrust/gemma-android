@@ -26,6 +26,7 @@ import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.ChangeAccountAdapter;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
+import com.cybex.gma.client.ui.model.response.AccountRefoundRequest;
 import com.cybex.gma.client.ui.model.response.AccountTotalResources;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
@@ -39,6 +40,7 @@ import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.DateUtil;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
 import com.siberiadante.customdialoglib.CustomFullDialog;
@@ -190,11 +192,66 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                     showTotalPriceInfo(banlance, unitPrice, info);
                     //显示cpu，net，ram进度
                     showResourceInfo(banlance, info);
+                    //显示赎回信息
+                    showRefoundInfo(info);
 
                 }
 
             }
         });
+
+    }
+
+
+    /**
+     * 显示赎回信息
+     *
+     * 上一次请求时间 需要加上72小时跟本地时间对比
+     */
+    private void showRefoundInfo(AccountInfo info) {
+        if (info != null) {
+            AccountRefoundRequest request = info.getRefund_request();
+            if (request != null) {
+                String requestTime = request.request_time;
+                if (EmptyUtils.isNotEmpty(requestTime)) {
+                    long requestOldMills = DateUtil.getMills(requestTime, DateUtil.Format.EOS_DATE_FORMAT);
+                    requestOldMills = requestOldMills + 72 * 60 * 60 * 1000;
+                    String refoundTime = getP().dateDistance2now(requestOldMills, DateUtil.Format.EOS_DATE_FORMAT);
+
+                    String netAmount = request.net_amount;
+                    String netNum = "0";
+                    if (EmptyUtils.isNotEmpty(netAmount)) {
+                        String[] netArr = netAmount.split(" ");
+                        if (EmptyUtils.isNotEmpty(netArr)) {
+                            netNum = netArr[0];
+                        }
+                    }
+
+                    String cpuAmount = request.cpu_amount;
+                    String cpuNum = "0";
+                    if (EmptyUtils.isNotEmpty(cpuAmount)) {
+                        String[] cpuArr = cpuAmount.split(" ");
+                        if (EmptyUtils.isNotEmpty(cpuArr)) {
+                            cpuNum = cpuArr[0];
+                        }
+                    }
+
+                    String totalNum = AmountUtil.add(netNum, cpuNum, 4);
+
+                    if(Double.parseDouble(totalNum)>0){
+                        String totalRefound = totalNum + " EOS";
+                        tvRedeem.setRightString(totalRefound);
+                    }
+
+                    if(EmptyUtils.isNotEmpty(refoundTime)){
+                        tvRedeem.setRightBottomString(refoundTime);
+
+                    }
+
+                }
+            }
+
+        }
 
     }
 

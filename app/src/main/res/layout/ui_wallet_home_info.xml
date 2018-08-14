@@ -128,13 +128,17 @@
             <com.allen.library.SuperTextView
                 android:id="@+id/redeem"
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_marginTop="-3dp"
+                android:layout_height="wrap_content"
+                android:minHeight="42dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 title:sDividerLineType="none"
                 title:sUseShape="true"
                 title:sLeftTextString="@string/redeem"
                 title:sLeftTextSize="@dimen/font_3"
                 title:sRightTextString="0.0000 EOS"
+                title:sRightBottomTextColor="#3381e0"
+                title:sRightBottomTextSize="12sp"
                 title:sRightTextSize="@dimen/font_4">
 
             </com.allen.library.SuperTextView>

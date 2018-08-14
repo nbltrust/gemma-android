@@ -571,6 +571,92 @@ public class DateUtil {
     }
 
 
+    /**
+     * 计算时间差
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public static String dateDistance(Date startDate, Date endDate, String format) {
+        if (startDate == null || endDate == null) {
+            return null;
+        }
+        long timeLong = endDate.getTime() - startDate.getTime();
+        if (timeLong < 0) {
+            timeLong = 0;
+        }
+        if (timeLong < 60 * 1000) { return timeLong / 1000 + "秒前"; } else if (timeLong < 60 * 60 * 1000) {
+            timeLong = timeLong / 1000 / 60;
+            return timeLong + "分钟前";
+        } else if (timeLong < 60 * 60 * 24 * 1000) {
+            timeLong = timeLong / 60 / 60 / 1000;
+            return timeLong + "小时前";
+        } else if ((timeLong / 1000 / 60 / 60 / 24) < 7) {
+            timeLong = timeLong / 1000 / 60 / 60 / 24;
+            return timeLong + "天前";
+        } else {
+            SimpleDateFormat formatter = new SimpleDateFormat(format);
+            return formatter.format(startDate);
+        }
+    }
+
+
+    /**
+     * 获得当前时间的时间差
+     *
+     * @param oldms 旧时间
+     * @param format
+     * @return
+     */
+    public static String dateDistance2now(long oldms, String format) {
+        SimpleDateFormat DateF = new SimpleDateFormat(format);
+        try {
+            Long time = new Long(oldms);
+            String oldTime = DateF.format(time);
+            Date oldDate = DateF.parse(oldTime);
+            Date nowDate = Calendar.getInstance().getTime();
+            return dateDistance(oldDate, nowDate, format);
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    /*
+     * 毫秒转化时分秒毫秒
+     */
+    public static String formatTime(Long ms) {
+        Integer ss = 1000;
+        Integer mi = ss * 60;
+        Integer hh = mi * 60;
+        Integer dd = hh * 24;
+
+        Long day = ms / dd;
+        Long hour = (ms - day * dd) / hh;
+        Long minute = (ms - day * dd - hour * hh) / mi;
+        Long second = (ms - day * dd - hour * hh - minute * mi) / ss;
+        Long milliSecond = ms - day * dd - hour * hh - minute * mi - second * ss;
+
+        StringBuffer sb = new StringBuffer();
+        if (day > 0) {
+            sb.append(day + "天");
+        }
+        if (hour > 0) {
+            sb.append(hour + "小时");
+        }
+        if (minute > 0) {
+            sb.append(minute + "分");
+        }
+        if (second > 0) {
+            sb.append(second + "秒");
+        }
+        if (milliSecond > 0) {
+            sb.append(milliSecond + "毫秒");
+        }
+        return sb.toString();
+    }
+
+
     public static class Format {
 
         public static final String YEAR_MOUTH_DAY_HOUR_MINUTE_SECOND_NEW = "yyyy:MM:dd HH:mm:ss";
