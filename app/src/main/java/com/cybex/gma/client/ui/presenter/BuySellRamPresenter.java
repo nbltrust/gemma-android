@@ -40,8 +40,9 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
     private static final String VALUE_ACTION_SELL_RAM = "sellram";
 
 
-    public void executeBuyRamLogic(String from, String to, String quantity,
-            String privateKey){
+    public void executeBuyRamLogic(
+            String from, String to, String quantity,
+            String privateKey) {
 
         //通过C++获取abi操作体
         String abijson = JNIUtil.fincreate_abi_req_buyram(RAM_CODE, VALUE_ACTION_BUY_RAM, from, to, quantity);
@@ -71,11 +72,12 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
-                            getInfo(OPERATION_BUY_RAM ,from, privateKey, binargs);
+                            getInfo(OPERATION_BUY_RAM, from, privateKey, binargs);
 
                         } else {
                             GemmaToastUtils.showShortToast("操作失败");
                         }
+                        getV().dissmisProgressDialog();
 
                     }
                 });
@@ -83,13 +85,12 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
     }
 
     /**
-     *
      * @param
      * @param account 谁收到卖出RAM对应的EOS，这里应该设置为本账号
      * @param bytes
      * @param privateKey
      */
-    public void executeSellRamLogic(String account, long bytes,  String privateKey){
+    public void executeSellRamLogic(String account, long bytes, String privateKey) {
 
         //通过C++获取abi操作体
         String abijson = JNIUtil.create_abi_req_sellram(RAM_CODE, VALUE_ACTION_SELL_RAM, account, bytes);
@@ -118,17 +119,17 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
-                            getInfo(OPERATION_SELL_RAM ,account, privateKey, binargs);
-
+                            getInfo(OPERATION_SELL_RAM, account, privateKey, binargs);
 
                         } else {
                             GemmaToastUtils.showShortToast("操作失败");
                         }
-
+                        getV().dissmisProgressDialog();
                     }
                 });
 
     }
+
     /**
      * 获取配置信息成功后，再到C++库获取交易体
      *
@@ -154,14 +155,14 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             LoggerManager.d("config info:" + infostr);
                             //C++库获取Transaction交易体
                             String transactionStr = "";
-                            switch (operation_type){
+                            switch (operation_type) {
                                 case OPERATION_BUY_RAM:
                                     transactionStr = JNIUtil.signTransaction_buyram(privateKey, VALUE_CONTRACT,
-                                            from, infostr, abiStr, 0,0,120);
+                                            from, infostr, abiStr, 0, 0, 120);
                                     break;
                                 case OPERATION_SELL_RAM:
                                     transactionStr = JNIUtil.signTransaction_sellram(privateKey, VALUE_CONTRACT,
-                                            from, infostr, abiStr, 0,0,120);
+                                            from, infostr, abiStr, 0, 0, 120);
                                     break;
                                 default:
                                     LoggerManager.d("参数错误");
@@ -227,10 +228,12 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
 
     /**
      * 获取当前链上ram市场信息
-     * @return List中的三个参数依次为base_balance, quote_balance,quote_weight
+     *
+     * @return List中的四个参数依次为base_balance, quote_balance,quote_weight, 1EOS对应的RAM价格
      */
-    public List<String> getRamMarketInfo(){
+    public void getRamMarketInfo() {
         List<String> args = new ArrayList<>();
+        String price = "";
         GetRamMarketReqParams params = new GetRamMarketReqParams();
         params.setScope(RAM_SCOPE);
         params.setCode(RAM_CODE);
@@ -248,37 +251,39 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                         LoggerManager.d("ram market info:" + infoJson);
                         try {
                             GetRamMarketResult result = GsonUtils.jsonToBean(infoJson, GetRamMarketResult.class);
-                            if (result != null){
+                            if (result != null) {
                                 List<RamMarketRows> rows = result.rows;
                                 RamMarketBase base = rows.get(0).base;
                                 RamMarketBase quote = rows.get(0).quote;
-
                                 String[] base_balance = base.balance.split(" ");
                                 String[] quote_balance = quote.balance.split(" ");
                                 String quote_weight = quote.weight;
-
-                                args.add(base_balance[0]);
-                                args.add(quote_balance[0]);
-                                args.add(quote_weight);
-                            }
-                        } catch (Exception e) {
+                                //args.add(bae_balance[0]);
+                                //args.add(quote_balance[0]);
+                                //args.add(quote_weight);
+                                String ramRatio = AmountUtil.div(quote_balance[0], base_balance[0], 8);
+                                String ramUnitPrice = AmountUtil.mul(ramRatio, quote_weight, 8);
+                                LoggerManager.d(ramUnitPrice);
+                                getV().setRamUnitPrice(ramUnitPrice);
+                                //args.add(ramUnitPrice);
+                                }
+                            } catch (Exception e) {
                             e.printStackTrace();
+                                        }
+                                    }
+
+                            @Override
+                            public void onError(Response<String> response) {
+                                LoggerManager.d("on Error");
                         }
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        LoggerManager.d("on Error");
-                    }
-                });
-
-        return args;
+                        }
+                );
     }
 
     /**
      * 输入EOS数额得RAM数量估值
      */
-    public String calEos2Ram(List<String> args, String eosNum){
+    public String calEos2Ram(List<String> args, String eosNum) {
 
         String baseBalance = args.get(0);
         String quoteBalance = args.get(1);
@@ -293,7 +298,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
     /**
      * 输入RAM数额得EOS估值
      */
-    public String calRam2Eos(List<String> args, String ramAmount){
+    public String calRam2Eos(List<String> args, String ramAmount) {
 
         String baseBalance = args.get(0);
         String quoteBalance = args.get(1);

@@ -19,11 +19,14 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleBuyRamVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleSellRamVO;
 import com.cybex.gma.client.ui.presenter.BuySellRamPresenter;
+import com.cybex.gma.client.utils.AmountUtil;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
@@ -41,10 +44,13 @@ import butterknife.Unbinder;
  * 买卖RAM Fragment
  */
 public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
-
+    private static final String RAM_SCOPE = "eosio";
+    private static final String RAM_CODE = "eosio";
+    private static final String RAM_TABLE = "rammarket";
     private List<String> ramMarketStaus;
     private final int OPERATION_BUY_RAM = 1;
     private final int OPERATION_SELL_RAM = 2;
+    private ResourceInfoVO resourceInfoVO;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_ram_amount) SuperTextView superTextViewRamAmount;
     @BindView(R.id.progressbar_ram) RoundCornerProgressBar progressbarRam;
@@ -57,6 +63,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     @BindView(R.id.tv_approximately_amount) TextView tvApproximatelyAmount;
     @BindView(R.id.tv_eos_ram_amount) TextView tvEosRamAmount;
     @BindView(R.id.tv_available_eos_ram) TextView tvAvaEosRam;
+    @BindView(R.id.tv_ram_unitPrice) SuperTextView tvRamUnitPrice;
 
     private final String testPrikey = "5KhjpbahW1ahQHi5GeW8baTwFx3n7W249gEp8xRHMJ45AVGeT58";
     private final String testEosName = "test1";
@@ -96,8 +103,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         }
 
     }
-    public static BuySellRamFragment newInstance() {
-        Bundle args = new Bundle();
+    public static BuySellRamFragment newInstance(Bundle args) {
         BuySellRamFragment fragment = new BuySellRamFragment();
         fragment.setArguments(args);
         return fragment;
@@ -116,8 +122,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         tvApproximatelyAmount.setVisibility(View.GONE);
         setUnclickable(btSellRam);
         setUnclickable(btBuyRam);
-        ramMarketStaus = getP().getRamMarketInfo();
-
         ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
         list.add(new TabTitleBuyRamVO());
         list.add(new TabTitleSellRamVO());
@@ -151,6 +155,20 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             }
         });
 
+        if (getArguments() != null){
+            resourceInfoVO = getArguments().getParcelable("ramInfo");
+            if (EmptyUtils.isNotEmpty(resourceInfoVO)){
+                String ramUsed = AmountUtil.add(String.valueOf(resourceInfoVO.getRamUsed()), "0", 4);
+                String ramUsedKB = AmountUtil.div(ramUsed, "1024", 2);
+                superTextViewRamStatus.setLeftString("已用 " +ramUsedKB + " KB");
+                String ramTotal = AmountUtil.add(String.valueOf(resourceInfoVO.getRamTotal()), "0", 4);
+                String ramTotalKB = AmountUtil.div(ramTotal, "1024", 2);
+                superTextViewRamStatus.setRightString("总量" + ramTotalKB + " KB");
+                tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_eos), String.valueOf(resourceInfoVO.getBanlance())));
+                initProgressBar(resourceInfoVO.getRamProgress());
+            }
+        }
+        getP().getRamMarketInfo();
     }
 
     @Override
@@ -171,7 +189,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     @Override
     public void onStart() {
         super.onStart();
-        ramMarketStaus = getP().getRamMarketInfo();
     }
 
     @Override
@@ -195,6 +212,15 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     public void setUnclickable(Button button){
         button.setClickable(false);
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
+    }
+
+    public void setRamUnitPrice(String ramUnitPrice){
+        tvRamUnitPrice.setRightString(String.format(getResources().getString(R.string.ram_unit_price), ramUnitPrice));
+        String ramUsedKB = AmountUtil.div(String.valueOf(resourceInfoVO.getRamUsed()), "1024", 2);
+        LoggerManager.d(ramUsedKB);
+        String ramPrice = AmountUtil.mul(ramUnitPrice, ramUsedKB,8);
+        LoggerManager.d(ramPrice);
+        superTextViewRamAmount.setRightString(String.format(getResources().getString(R.string.eos_ram_amount), ramPrice));
     }
 
     /**
@@ -280,7 +306,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         memo.setText(getResources().getString(R.string.sell_ram));
     }
 
-
     /**
      * 显示确认买入授权dialog
      */
@@ -306,9 +331,14 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     String inputPass = mPass.getText().toString().trim();
                                     final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                    final String curEOSName = curWallet.getCurrentEosName();
-                                    String quantity = getEOSAmount() + " EOS";
-                                    //getP().executeBuyRamLogic(curEOSName, curEOSName, quantity, key);
+                                    if (key.equals("wrong password")){
+                                        GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                    }else{
+                                        final String curEOSName = curWallet.getCurrentEosName();
+                                        String quantity = AmountUtil.add(getEOSAmount(), "0", 4)+ " EOS";
+                                        getP().executeBuyRamLogic(curEOSName, curEOSName, quantity, key);
+                                        dialog.cancel();
+                                    }
                                 }
                                 break;
                                 //卖出RAM操作
@@ -318,16 +348,21 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     String inputPass = mPass.getText().toString().trim();
                                     final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                    final String curEOSName = curWallet.getCurrentEosName();
-                                    long ramAmount = Long.parseLong(getRamAmount());
-                                    long bytes = ramAmount * 1024;
-                                    //getP().executeSellRamLogic(curEOSName, bytes,key);
+                                    if (key.equals("wrong password")){
+                                        GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                    }else{
+                                        final String curEOSName = curWallet.getCurrentEosName();
+                                        long ramAmount = Long.parseLong(getRamAmount());
+                                        long bytes = ramAmount * 1024;
+                                        getP().executeSellRamLogic(curEOSName, bytes,key);
+                                        dialog.cancel();
+                                    }
+
                                 }
                                 break;
                             default:
                                 LoggerManager.d("参数错误");
                         }
-                        //getP().executeBuyRamLogic(testEosName, testEosName, testQuantity, testPrikey);
                         break;
                     default:
                         break;
@@ -336,7 +371,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         });
         dialog.show();
     }
-
 
 
 }

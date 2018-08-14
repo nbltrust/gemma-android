@@ -17,12 +17,14 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
 import com.cybex.gma.client.ui.presenter.DelegatePresenter;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
@@ -75,8 +77,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
         showConfirmUndelegateiDialog();
     }
 
-    public static DelegateFragment newInstance() {
-        Bundle args = new Bundle();
+    public static DelegateFragment newInstance(Bundle args) {
         DelegateFragment fragment = new DelegateFragment();
         fragment.setArguments(args);
         return fragment;
@@ -149,8 +150,33 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
             }
         });
 
-
-
+        if (getArguments()!= null){
+            ResourceInfoVO resourceInfoVO = getArguments().getParcelable("resourceInfo");
+            if (EmptyUtils.isNotEmpty(resourceInfoVO)){
+                tvRemainBalance.setText(resourceInfoVO.getBanlance());
+                //cpu总量及已用显示
+                String cpuUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuUsed()), "1024", 2);
+                String cpuTotal = AmountUtil.add(String.valueOf(resourceInfoVO.getCpuTotal()), "0", 2);
+                String cpuAmount = AmountUtil.add(String.valueOf(resourceInfoVO.getCpuWeight()), "0", 2);
+                superTextViewCpuStatus.setLeftString(String.format(getResources().getString(R.string.cpu_available),
+                        cpuUsed));
+                superTextViewCpuStatus.setRightString(String.format(getResources().getString(R.string.cpu_total), cpuTotal));
+                superTextViewCpuAmount.setRightString(cpuAmount + " EOS");
+                //CPU Progress
+                initCPUProgressBar(resourceInfoVO.getCpuProgress());
+                //NET 总量及已用显示
+                String netUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getNetUsed()), "1024", 2);
+                String netTotal = AmountUtil.add(String.valueOf(resourceInfoVO.getNetTotal()), "0", 2);
+                String netAmount = AmountUtil.add(String.valueOf(resourceInfoVO.getNetWeight()), "0", 2);
+                superTextViewNetStatus.setLeftString(String.format(getResources().getString(R.string.net_available),
+                        netUsed));
+                superTextViewNetStatus.setRightString(String.format(getResources().getString(R.string.net_total),
+                        netTotal));
+                superTextViewNetAmount.setRightString(netAmount + " EOS");
+                //Net Progress
+                initNETProgressBar(resourceInfoVO.getNetProgress());
+            }
+        }
     }
 
     @Override
@@ -281,8 +307,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
             String totalAmount = AmountUtil.add(getDelegateCpu(), getDelegateNet(), 4);
             String showAmount = totalAmount + " EOS";
             tv_amount.setText(showAmount);
-            tv_note.setText(
-                    String.format(getResources().getString(R.string.delegate_memo), getDelegateCpu(), getDelegateNet()));
+            tv_note.setText(String.format(getResources().getString(R.string.delegate_memo), getDelegateCpu(), getDelegateNet()));
         }
 
     }
@@ -291,9 +316,9 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
      * 显示确认解抵押dialog
      */
     private void showConfirmUndelegateiDialog() {
-        int[] listenedItems = {R.id.btn_delegate, R.id.btn_close};
+        int[] listenedItems = {R.id.btn_confirm_refund, R.id.btn_close};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_delegate_confirm, listenedItems, false, Gravity.BOTTOM);
+                R.layout.dialog_undelegate_confirm, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -301,7 +326,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                     case R.id.btn_close:
                         dialog.cancel();
                         break;
-                    case R.id.btn_delegate:
+                    case R.id.btn_confirm_refund:
                         dialog.cancel();
                         showConfirmAuthoriDialog(OPERATION_UNDELEGATE);
                         break;
@@ -315,16 +340,15 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
         //给dialog各个TextView设置值
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)){
-            TextView tv_payee = dialog.findViewById(R.id.tv_payee);
-            TextView tv_amount = dialog.findViewById(R.id.tv_amount);
-            TextView tv_note = dialog.findViewById(R.id.tv_note);
-            tv_payee.setText(curWallet.getCurrentEosName());
-            String totalAmount = AmountUtil.add(getUndelegateCpu(), getunDelegateNet(), 4);
-            String showAmount = totalAmount + " EOS";
-            tv_amount.setText(showAmount);
-            tv_note.setText(
-                    String.format(getResources().getString(R.string.unDelegate_memo), getUndelegateCpu(),
-                            getunDelegateNet()));
+            TextView tv_receiver = dialog.findViewById(R.id.tv_undelegate_account);
+            TextView tv_fund_amount = dialog.findViewById(R.id.tv_undelegate_amount);
+            TextView tv_memo = dialog.findViewById(R.id.tv_undelegate_memo);
+
+            tv_receiver.setText(curWallet.getCurrentEosName());
+            String total_amount = AmountUtil.add(getunDelegateNet(), getUndelegateCpu(), 4) + " EOS";
+            tv_fund_amount.setText(total_amount);
+            tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo), getUndelegateCpu(), getunDelegateNet
+                    ()));
         }
     }
 
@@ -352,11 +376,16 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                     String inputPass = mPass.getText().toString().trim();
                                     final String cypher = curWallet.getCypher();
                                     final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                    final String curEOSName = curWallet.getCurrentEosName();
-                                    String stake_net_quantity = getDelegateNet() + " EOS";
-                                    String stake_cpu_quantity = getDelegateCpu() + " EOS";
-                                    //getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
-                                    //        stake_cpu_quantity, key);
+                                    if (key.equals("wrong password")){
+                                        GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                    }else{
+                                        final String curEOSName = curWallet.getCurrentEosName();
+                                        String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
+                                        String stake_cpu_quantity = AmountUtil.add(getDelegateCpu(), "0", 4) + " EOS";
+                                        getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
+                                                stake_cpu_quantity, key);
+                                        dialog.cancel();
+                                    }
                                 }
                                 break;
                             case OPERATION_UNDELEGATE:
@@ -366,11 +395,16 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                     String inputPass = mPass.getText().toString().trim();
                                     final String cypher = curWallet.getCypher();
                                     final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                    final String curEOSName = curWallet.getCurrentEosName();
-                                    String unstake_net_quantity = getunDelegateNet() + " EOS";
-                                    String unstake_cpu_quantity = getUndelegateCpu() + " EOS";
-                                    //getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
-                                    //        unstake_cpu_quantity, key);
+                                    if (key.equals("wrong password")){
+                                        GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                    }else{
+                                        final String curEOSName = curWallet.getCurrentEosName();
+                                        String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
+                                        String unstake_cpu_quantity = AmountUtil.add(getUndelegateCpu(), "0", 4) + " EOS";
+                                        getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
+                                                unstake_cpu_quantity, key);
+                                        dialog.cancel();
+                                    }
                                 }
                                 break;
                         }

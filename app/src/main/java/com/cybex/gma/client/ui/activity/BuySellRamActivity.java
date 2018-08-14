@@ -7,6 +7,7 @@ import android.view.WindowManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.fragment.BuySellRamFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.EmptyUtils;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -15,8 +16,9 @@ public class BuySellRamActivity extends XActivity {
 
     @Override
     public void bindUI(View view){
-        if (findFragment(BuySellRamFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_buy_sell_ram, BuySellRamFragment.newInstance());
+        Bundle bundle = getIntent().getExtras();
+        if (findFragment(BuySellRamFragment.class) == null && EmptyUtils.isNotEmpty(bundle)) {
+            loadRootFragment(R.id.fl_container_buy_sell_ram, BuySellRamFragment.newInstance(bundle));
         }
 
         //让布局向上移来显示软键盘

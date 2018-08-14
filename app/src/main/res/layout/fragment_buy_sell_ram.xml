@@ -108,6 +108,7 @@
             </View>
 
             <com.allen.library.SuperTextView
+                android:id="@+id/tv_ram_unitPrice"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bt_inInitPage_height"
                 title:sLeftTextString="@string/price"

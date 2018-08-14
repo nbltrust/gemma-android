@@ -24,7 +24,6 @@
         android:text="@string/refund_detail"
         />
 
-
     <LinearLayout
         android:background="@drawable/bg_shape_radius_white"
         android:layout_width="match_parent"
@@ -45,13 +44,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="@string/CPU"
+                android:text="@string/refund_username"
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 
 
             <TextView
-                android:id="@+id/tv_refund_cpu"
+                android:id="@+id/tv_undelegate_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -80,13 +79,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="@string/NET"
+                android:text="@string/fund"
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 
 
             <TextView
-                android:id="@+id/tv_refund_net"
+                android:id="@+id/tv_undelegate_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -116,19 +115,23 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="@string/refund_username"
+                android:text="@string/memo"
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 
 
             <TextView
-                android:id="@+id/tv_refund_account"
+                android:id="@+id/tv_undelegate_memo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
+                android:layout_marginStart="@dimen/dimen_20"
                 android:textSize="@dimen/font_4"
+                android:textAlignment="viewEnd"
+                android:maxLines="3"
+                android:ellipsize="end"
                 android:textColor="@color/darkSlateBlue"
                 tools:text="\ufeff@gemma12345"/>
 

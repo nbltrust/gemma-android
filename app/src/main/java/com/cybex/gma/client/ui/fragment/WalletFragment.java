@@ -85,9 +85,28 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.progressbar_cpu_small) RoundCornerProgressBar progressBarCPU;
     @BindView(R.id.progressbar_net_small) RoundCornerProgressBar progressBarNET;
     @BindView(R.id.progressbar_ram_small) RoundCornerProgressBar progressBarRAM;
+    @BindView(R.id.view_cpu) View viewCPU;
+    @BindView(R.id.view_net) View viewNET;
+    @BindView(R.id.view_ram) View viewRAM;
+
     Unbinder unbinder;
 
     private ResourceInfoVO resourceInfoVO;
+
+    @OnClick({R.id.view_cpu, R.id.view_net, R.id.view_ram})
+    public void clickViews(View view){
+        switch (view.getId()){
+            case R.id.view_cpu:
+                goToDelegate();
+                break;
+            case R.id.view_net:
+                goToDelegate();
+                break;
+            case R.id.view_ram:
+                goToBuySellRam();
+                break;
+        }
+    }
 
     @OnClick({R.id.tv_backup_wallet, R.id.textView_username})
     public void backUpWallet(View v) {
@@ -120,12 +139,16 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.superTextView_card_delegate)
     public void goToDelegate() {
-        UISkipMananger.launchDelegate(getActivity());
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("resourceInfo", resourceInfoVO);
+        UISkipMananger.launchDelegate(getActivity(), bundle);
     }
 
     @OnClick(R.id.superTextView_card_buy_ram)
     public void goToBuySellRam() {
-        UISkipMananger.launchRamTransaction(getActivity());
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("ramInfo", resourceInfoVO);
+        UISkipMananger.launchRamTransaction(getActivity(), bundle);
     }
 
     @OnClick(R.id.superTextView_card_vote)
@@ -238,10 +261,16 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             resourceInfoVO = new ResourceInfoVO();
             resourceInfoVO.setBanlance(banlance);
             resourceInfoVO.setCpuProgress(cpuProgress);
+            resourceInfoVO.setCpuUsed(cpuUsed);
             resourceInfoVO.setCpuTotal(cpuTotal);
             resourceInfoVO.setNetTotal(netTotal);
             resourceInfoVO.setNetProgress(netProgress);
             resourceInfoVO.setNetUsed(netUsed);
+            resourceInfoVO.setRamUsed(ramUsed);
+            resourceInfoVO.setRamProgress(ramProgress);
+            resourceInfoVO.setRamTotal(ramTotal);
+            resourceInfoVO.setCpuWeight(info.getCpu_weight());
+            resourceInfoVO.setNetWeight(info.getNet_weight());
         }
 
     }
@@ -436,16 +465,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
         return false;
     }
-
-    /**
-     * 将获取到的信息填入页面中相应控件
-     *
-     * @param wallet
-     */
-    public void setCurWalletData(WalletEntity wallet) {
-        String walletName = wallet.getWalletName();
-    }
-
 
     private void showChangeEOSNameDialog() {
         int[] listenedItems = {R.id.imv_close};

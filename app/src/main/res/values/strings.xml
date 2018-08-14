@@ -195,9 +195,9 @@
     <string name="RAM">RAM</string>
 
     <string name="refund_detail">赎回详情</string>
-    <string name="confirm_refund">确认赎回</string>
+    <string name="confirm_refund">确认解除抵押</string>
     <string name="undelegate">解除抵押</string>
-    <string name="refund_username">赎回账户</string>
+    <string name="refund_username">收款人</string>
 
     <string name="curwallets">已有钱包</string>
     <string name="walletManege">钱包管理</string>
@@ -228,8 +228,13 @@
 
     <string name="ram_amount">预估可兑换 %1$s KB</string>
     <string name="eos_amount">预估可兑换 %1$s EOS</string>
-    <string name="available_eos">可用 %1$s EOS</string>
+    <string name="available_eos">可用 %1$s</string>
     <string name="available_ram">可用 %1$s KB</string>
+    <string name="eos_ram_amount">%1$s EOS</string>
+    <string name="cpu_available">可用 %1$s ms</string>
+    <string name="cpu_total">总量 %1$s ms</string>
+    <string name="net_available">可用 %1$s KB</string>
+    <string name="net_total">总量 %1$s KB</string>
 
     <string name="confirm_buy">确认买入</string>
     <string name="confirm_sell">确认卖出</string>
@@ -248,7 +253,7 @@
 
     <string name="method_one">方法一</string>
     <string name="method_two">方法二</string>
-    <string name="method_one_hint">请持有EOS的好友向智能合约<a href = ''>signupeoseos</a>转账并须将以下文字作为备注(memo)
+    <string name="method_one_hint">请持有EOS的好友向智能合约 signupeoseos 转账并须将以下文字作为备注(memo)
         ，即可完成创建。创建成功后请重新打开App，即可使用该账户。</string>
     <string name="method_one_hint_2">为保证顺利创建账户，建议至少转 2EOS ：账户将抵押 0.01EOS 作为CPU，0.01EOS 作为NET，剩余1.8EOS将按现价购买RAM。</string>
     <string name="method_two_hint">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
@@ -260,6 +265,7 @@
     <string name="sell_ram">Sell RAM</string>
     <string name="delegate_memo">Delegate %1$s EOS for CPU, %2$s EOS for NET</string>
     <string name="unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
+    <string name="ram_unit_price">≈ %1$s EOS/KB</string>
 
 
 </resources>

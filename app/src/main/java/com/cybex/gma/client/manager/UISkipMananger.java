@@ -72,8 +72,8 @@ public final class UISkipMananger {
      *
      * @param context
      */
-    public static void launchRamTransaction(Activity context) {
-        launchIntent(context, BuySellRamActivity.class);
+    public static void launchRamTransaction(Activity context, Bundle bundle) {
+        launchIntent(context, BuySellRamActivity.class, bundle);
     }
 
     /**
@@ -125,8 +125,8 @@ public final class UISkipMananger {
      * 跳转到资源抵押界面
      */
 
-    public static void launchDelegate(Activity context) {
-        launchIntent(context, DelegateActivity.class);
+    public static void launchDelegate(Activity context, Bundle bundle) {
+        launchIntent(context, DelegateActivity.class, bundle);
     }
 
     /**
