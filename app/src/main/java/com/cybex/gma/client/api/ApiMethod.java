@@ -79,5 +79,7 @@ public interface ApiMethod {
      */
     String API_GET_RAM_MARKET = "/v1/chain/get_table_rows";
 
+    String API_FETCH_BP_DETAILS = "/api/v1/producer/fetch";
+
 
 }

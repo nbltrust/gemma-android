@@ -96,8 +96,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     private ResourceInfoVO resourceInfoVO;
 
     @OnClick({R.id.view_cpu, R.id.view_net, R.id.view_ram})
-    public void clickViews(View view){
-        switch (view.getId()){
+    public void clickViews(View view) {
+        switch (view.getId()) {
             case R.id.view_cpu:
                 goToDelegate();
                 break;
@@ -175,15 +175,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
-
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
             LoggerManager.d("wallet tab selected");
             getP().requestHomeCombineDataVO();
-
         }
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -191,9 +188,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         if (EmptyUtils.isNotEmpty(event)) {
             LoggerManager.d("---changeAccount event---");
             getP().requestHomeCombineDataVO();
-
         }
-
     }
 
     /**
@@ -261,12 +256,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
                     String totalNum = AmountUtil.add(netNum, cpuNum, 4);
 
-                    if(Double.parseDouble(totalNum)>0){
+                    if (Double.parseDouble(totalNum) > 0) {
                         String totalRefound = totalNum + " EOS";
                         tvRedeem.setRightString(totalRefound);
                     }
 
-                    if(EmptyUtils.isNotEmpty(refoundTime)){
+                    if (EmptyUtils.isNotEmpty(refoundTime)) {
                         tvRedeem.setRightBottomString(refoundTime);
 
                     }
@@ -404,13 +399,15 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             textViewUsername.setText(curWallet.getCurrentEosName());
             generatePortrait(curWallet.getCurrentEosName());
             if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
-                Alerter.create(getActivity())
-                        .setText(getResources().getString(R.string.please_confirm_alert))
-                        .setBackgroundColorRes(R.color.scarlet)
-                        .enableSwipeToDismiss()
-                        .enableInfiniteDuration(true)
-                        .setTextAppearance(R.style.myAlert)
-                        .show();
+                if (Alerter.isShowing()) {
+                    Alerter.create(getActivity())
+                            .setText(getResources().getString(R.string.please_confirm_alert))
+                            .setBackgroundColorRes(R.color.scarlet)
+                            .enableSwipeToDismiss()
+                            .enableInfiniteDuration(true)
+                            .setTextAppearance(R.style.myAlert)
+                            .show();
+                }
             }
 
             String json = curWallet.getEosNameJson();
@@ -437,7 +434,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             textViewUsername.setClickable(false);
         }
 
-        LoggerManager.d(isCurWalletBackUp());
         if (isCurWalletBackUp()) {
             textViewBackupWallet.setVisibility(View.GONE);
         }
