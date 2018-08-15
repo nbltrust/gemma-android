@@ -7,4 +7,6 @@ package com.cybex.gma.client.ui.model.vo;
  */
 public class VoteNodeVO {
 
+    public boolean ischecked = false;
+
 }
