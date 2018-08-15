@@ -5,14 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_corner"
+    android:background="@drawable/selector_shape_corner_pressed"
     android:orientation="horizontal"
     android:padding="@dimen/dimen_16">
-    
-    <RadioButton
-        android:id="@+id/redioButton_is_chosen"
+    <TextView
+        android:id="@+id/btn_checked"
         android:button="@null"
-        android:drawableRight="@drawable/selector_radio_button"
+        android:background="@drawable/ic_radio_button_unselected"
         android:layout_gravity="center"
         android:layout_width="@dimen/dimen_16"
         android:layout_height="@dimen/dimen_16"/>
