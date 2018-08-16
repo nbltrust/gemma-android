@@ -10,7 +10,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/platform_framework" />
-            <option value="$PROJECT_DIR$/platform_framework/FingerprintIdentifyLib" />
             <option value="$PROJECT_DIR$/platform_framework/base-res" />
             <option value="$PROJECT_DIR$/platform_framework/base-view" />
             <option value="$PROJECT_DIR$/platform_framework/basiclib" />
