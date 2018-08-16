@@ -267,6 +267,7 @@ dependencies {
     implementation project(':platform_framework:jdenticon')
     implementation project(':platform_framework:qrcodecore')
     implementation project(':platform_framework:smart-scheduler')
+    implementation project(':platform_framework:FingerprintIdentifyLib')
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 

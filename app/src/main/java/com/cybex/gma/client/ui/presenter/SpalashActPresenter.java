@@ -7,7 +7,6 @@ import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.activity.SpalashActivity;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
-import com.hxlx.core.lib.utils.EmptyUtils;
 
 import java.util.List;
 
@@ -20,12 +19,12 @@ public class SpalashActPresenter extends XPresenter<SpalashActivity> {
 
         WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
         List<WalletEntity> entityList = dao.getWalletEntityList();
-        if (EmptyUtils.isNotEmpty(entityList)) {
+       // if (EmptyUtils.isNotEmpty(entityList)) {
             //跳转到主界面
             UISkipMananger.launchHome(getV());
-        } else {
-            UISkipMananger.launchLogin(getV());
-        }
+//        } else {
+//            UISkipMananger.launchLogin(getV());
+//        }
 
         getV().finish();
         getV().overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
