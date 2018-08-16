@@ -27,30 +27,14 @@ public class VoteNodeListAdapter extends BaseQuickAdapter<VoteNodeVO, BaseViewHo
         TextView tv_alias = helper.getView(R.id.tv_node_alias);
         TextView tv_url = helper.getView(R.id.tv_node_url);
         TextView tv_percentage = helper.getView(R.id.tv_node_percentage);
-        TextView tv_ranking = helper.getView(R.id.tv_node_ranking);
         TextView tv_checkbox = helper.getView(R.id.tv_node_checked);
 
         tv_account.setText(item.getAccount());
         tv_alias.setText(item.getAlias());
         tv_url.setText(item.getUrl());
         tv_percentage.setText(item.getPercentage());
-        tv_ranking.setText(item.getRanking());
 
-        helper.addOnClickListener(R.id.tv_node_checked);
-
-        /*
-        tv_checkbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //单击改变点选状态
-                if (item.ischecked){
-                    item.ischecked = false;
-                }else{
-                    item.ischecked = true;
-                }
-            }
-        });
-        */
+        helper.addOnClickListener(R.id.view_is_node_checked);
 
         if(item.ischecked){
             //如果该选项卡被选择

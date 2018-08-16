@@ -1,11 +1,14 @@
 package com.cybex.gma.client.ui.model.vo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 投票节点VO对象
  *
  * Created by wanglin on 2018/8/14.
  */
-public class VoteNodeVO {
+public class VoteNodeVO implements Parcelable {
 
     public boolean ischecked = false;//是否被选择
 
@@ -64,4 +67,38 @@ public class VoteNodeVO {
     public void setRanking(int ranking) {
         this.ranking = ranking;
     }
+
+    @Override
+    public int describeContents() { return 0; }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.ischecked ? (byte) 1 : (byte) 0);
+        dest.writeString(this.account);
+        dest.writeString(this.alias);
+        dest.writeString(this.votes);
+        dest.writeString(this.url);
+        dest.writeString(this.percentage);
+        dest.writeInt(this.ranking);
+    }
+
+    public VoteNodeVO() {}
+
+    protected VoteNodeVO(Parcel in) {
+        this.ischecked = in.readByte() != 0;
+        this.account = in.readString();
+        this.alias = in.readString();
+        this.votes = in.readString();
+        this.url = in.readString();
+        this.percentage = in.readString();
+        this.ranking = in.readInt();
+    }
+
+    public static final Parcelable.Creator<VoteNodeVO> CREATOR = new Parcelable.Creator<VoteNodeVO>() {
+        @Override
+        public VoteNodeVO createFromParcel(Parcel source) {return new VoteNodeVO(source);}
+
+        @Override
+        public VoteNodeVO[] newArray(int size) {return new VoteNodeVO[size];}
+    };
 }

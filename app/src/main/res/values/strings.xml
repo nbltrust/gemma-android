@@ -266,5 +266,8 @@
     <string name="unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
     <string name="ram_unit_price">≈ %1$s EOS/KB</string>
 
+    <string name="vote_num">%1$s/30</string>
+    <string name="nodes_selected_num">已选节点(%1$s/30)</string>
+
 
 </resources>
