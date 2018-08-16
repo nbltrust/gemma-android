@@ -121,8 +121,22 @@ public class VoteFragment extends XFragment<VotePresenter> {
         vo2.setUrl("http://www.tuolian.com");
         vo2.setAccount("EOS New York");
 
+        VoteNodeVO vo3 = new VoteNodeVO();
+        vo3.setAlias("@eoscanada");
+        vo3.setPercentage("0.11%");
+        vo3.setUrl("http://www.tuolian.com");
+        vo3.setAccount("EOS Canada");
+
+        VoteNodeVO vo4 = new VoteNodeVO();
+        vo4.setAlias("@eosasla");
+        vo4.setPercentage("10.11%");
+        vo4.setUrl("http://www.tuolian.com");
+        vo4.setAccount("EOS Asla");
+
         nodeVOList.add(vo);
         nodeVOList.add(vo2);
+        nodeVOList.add(vo3);
+        nodeVOList.add(vo4);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
