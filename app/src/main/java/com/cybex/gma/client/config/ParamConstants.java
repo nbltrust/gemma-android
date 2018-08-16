@@ -25,4 +25,7 @@ public interface ParamConstants {
 
     int BP_NODE_NUMBERS = 999;//投票时获取的bp节点数量
 
+    boolean NODE_SELECTED = true;//节点被选择
+    boolean NODE_NOT_SELECT = false;//节点未被选择
+
 }
