@@ -15,7 +15,7 @@ public class FetchBPDetailRequest extends GMAHttpRequest {
 
     public FetchBPDetailRequest(Class clazz) {
         super(clazz);
-        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_KEY_ACCOUNTS);
+        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_FETCH_BP_DETAILS);
     }
 
     public FetchBPDetailRequest setJsonParams(String jsonParams) {

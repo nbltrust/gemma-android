@@ -23,4 +23,6 @@ public interface ParamConstants {
 
     float PROGRESS_ALERT = 85;//progress bar 中大于85%使用
 
+    int BP_NODE_NUMBERS = 999;//投票时获取的bp节点数量
+
 }

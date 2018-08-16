@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.adapter;
 
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -22,6 +23,41 @@ public class VoteNodeListAdapter extends BaseQuickAdapter<VoteNodeVO, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder helper, VoteNodeVO item) {
+        TextView tv_account = helper.getView(R.id.tv_node_name);
+        TextView tv_alias = helper.getView(R.id.tv_node_alias);
+        TextView tv_url = helper.getView(R.id.tv_node_url);
+        TextView tv_percentage = helper.getView(R.id.tv_node_percentage);
+        TextView tv_ranking = helper.getView(R.id.tv_node_ranking);
+        TextView tv_checkbox = helper.getView(R.id.tv_node_checked);
 
+        tv_account.setText(item.getAccount());
+        tv_alias.setText(item.getAlias());
+        tv_url.setText(item.getUrl());
+        tv_percentage.setText(item.getPercentage());
+        tv_ranking.setText(item.getRanking());
+
+        helper.addOnClickListener(R.id.tv_node_checked);
+
+        /*
+        tv_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //单击改变点选状态
+                if (item.ischecked){
+                    item.ischecked = false;
+                }else{
+                    item.ischecked = true;
+                }
+            }
+        });
+        */
+
+        if(item.ischecked){
+            //如果该选项卡被选择
+            tv_checkbox.setBackgroundResource(R.drawable.ic_radio_button_selected);
+        }else {
+            //如果该选项卡未被选择
+            tv_checkbox.setBackgroundResource(R.drawable.ic_radio_button_unselected);
+        }
     }
 }
