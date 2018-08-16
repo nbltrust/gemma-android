@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     android:padding="@dimen/dimen_16">
     <TextView
-        android:id="@+id/btn_checked"
+        android:id="@+id/tv_node_checked"
         android:button="@null"
         android:background="@drawable/ic_radio_button_unselected"
         android:layout_gravity="center"
@@ -47,7 +47,7 @@
                 tools:text="11.33%"/>
 
             <TextView
-                android:id="@+id/tv_node_range"
+                android:id="@+id/tv_node_ranking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="#4"
@@ -70,7 +70,7 @@
             />
 
         <TextView
-            android:id="@+id/tv_node_announcement"
+            android:id="@+id/tv_node_url"
             android:layout_marginTop="@dimen/dimen_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
