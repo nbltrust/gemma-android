@@ -5,6 +5,8 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -34,14 +36,14 @@ public final class LiveDataBus {
         return SingletonHolder.DEFAULT_BUS;
     }
 
-    public <T> MutableLiveData<T> with(String key, Class<T> type) {
+    public synchronized <T> BusMutableLiveData<T> with(String key, Class<T> type) {
         if (!bus.containsKey(key)) {
             bus.put(key, new BusMutableLiveData<>());
         }
-        return (MutableLiveData<T>) bus.get(key);
+        return (BusMutableLiveData<T>) bus.get(key);
     }
 
-    public MutableLiveData<Object> with(String key) {
+    public BusMutableLiveData<Object> with(String key) {
         return with(key, Object.class);
     }
 
@@ -77,9 +79,29 @@ public final class LiveDataBus {
         }
     }
 
-    private static class BusMutableLiveData<T> extends MutableLiveData<T> {
+    public static class BusMutableLiveData<T> extends MutableLiveData<T> {
+
+        private class PostValueTask implements Runnable {
+
+            private Object newValue;
+
+            public PostValueTask(@NonNull Object newValue) {
+                this.newValue = newValue;
+            }
+
+            @Override
+            public void run() {
+                setValue((T) newValue);
+            }
+        }
 
         private Map<Observer, Observer> observerMap = new HashMap<>();
+        private Handler mainHandler = new Handler(Looper.getMainLooper());
+
+        @Override
+        public void postValue(T value) {
+            mainHandler.post(new PostValueTask(value));
+        }
 
         @Override
         public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer) {
@@ -91,12 +113,20 @@ public final class LiveDataBus {
             }
         }
 
+        public void observeSticky(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer) {
+            super.observe(owner, observer);
+        }
+
         @Override
         public void observeForever(@NonNull Observer<T> observer) {
             if (!observerMap.containsKey(observer)) {
                 observerMap.put(observer, new ObserverWrapper(observer));
             }
             super.observeForever(observerMap.get(observer));
+        }
+
+        public void observeStickyForever(@NonNull Observer<T> observer) {
+            super.observeForever(observer);
         }
 
         @Override
@@ -138,4 +168,5 @@ public final class LiveDataBus {
             fieldLastVersion.set(objectWrapper, objectVersion);
         }
     }
+
 }
