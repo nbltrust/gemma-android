@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.support.supportV4
     implementation deps.support.appcompatV7
     implementation deps.support.constraint

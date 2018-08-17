@@ -35,9 +35,11 @@ android {
 
         externalNativeBuild {
             cmake {
-                cppFlags "-fexceptions"
-                arguments '-DANDROID_STL=c++_shared',
-                        '-DANDROID_TOOLCHAIN=gcc'
+//                cppFlags "-fexceptions"
+//                arguments '-DANDROID_STL=c++_shared',
+//                        '-DANDROID_TOOLCHAIN=gcc'
+                cppFlags ""
+                arguments "-DANDROID_STL=c++_shared"
             }
         }
 
@@ -267,7 +269,7 @@ dependencies {
     implementation project(':platform_framework:jdenticon')
     implementation project(':platform_framework:qrcodecore')
     implementation project(':platform_framework:smart-scheduler')
-    //implementation project(':platform_framework:FingerprintIdentifyLib')
+
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
