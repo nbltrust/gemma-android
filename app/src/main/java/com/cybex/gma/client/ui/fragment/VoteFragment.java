@@ -107,6 +107,8 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     }else {
                         //已选节点数为0
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.btn_vote_left_light));
+                        tvExecVote.setClickable(false);
+                        tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_light));
                     }
                     break;
                 case EVENT_DOWN:
