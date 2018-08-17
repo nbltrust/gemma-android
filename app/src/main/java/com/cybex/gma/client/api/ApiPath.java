@@ -26,7 +26,7 @@ public class ApiPath {
      */
 
     //中心化服务器host
-    public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3002";
+    public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3001";
     //链上服务器host
     public static final String HOST_ON_CHAIN = "http://139.224.135.236:18888";// "http://47.75.154.248:50003";
     // "http://139.224.135.236:18888" ;

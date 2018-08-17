@@ -20,6 +20,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,22 +33,47 @@ public class NodeSelectedFragment extends XFragment {
     @BindView(R.id.recycler_node_selected) RecyclerView mRecyclerView;
 
     Unbinder unbinder;
-    private int nodeSelected;//被选择的节点数
+    private final int EVENT_THIS_PAGE = 0;//本页面发送的事件
+    private final int EVENT_DOWN = 1;//上级页面发送的事件
+    private final int EVENT_UP = 2;//下级页面返回发送的事件
+    private int nodeSelected = 0;//被选择的节点数
     private VoteSelectedNodeAdapter adapter;
-    private ArrayList<VoteNodeVO> voteNodeVOArrayList = new ArrayList<>();
+    private List<VoteNodeVO> voteNodeVOArrayList = new ArrayList<>();//上级页面传过来的节点列表，用于显示
+    private List<VoteNodeVO> actualSelectedNodes = new ArrayList<>();//真实被选中的节点列表，用于返回上级时做参数
 
-    public static NodeSelectedFragment newInstance(Bundle args) {
+    public static NodeSelectedFragment newInstance() {
+        Bundle args = new Bundle();
         NodeSelectedFragment fragment = new NodeSelectedFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING)
-    public void onNodeSelectedChanged(NodeSelectedEvent event){
-        if (EmptyUtils.isNotEmpty(event)){
-            setNavibarTitle(String.format(getString(R.string.nodes_selected_num), String.valueOf(nodeSelected)), true, false);
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
+    public void onNodeSelectedChanged(NodeSelectedEvent event) {
+        if (EmptyUtils.isNotEmpty(event)) {
+            switch (event.getEventType()){
+                case EVENT_THIS_PAGE:
+                    //当前页面发送的事件
+                    //动态更新顶部状态栏的已选节点数
+                    setNavibarTitle(String.format(getString(R.string.nodes_selected_num),
+                            String.valueOf(nodeSelected)), true, false);
+                    break;
+                case EVENT_DOWN:
+                    //上级页面发送的事件
+                    //从上级页面接收已选节点列表
+                    nodeSelected = event.getVoteNodeVOList().size();
+                    voteNodeVOArrayList.clear();
+                    actualSelectedNodes.clear();
+                    voteNodeVOArrayList.addAll(event.getVoteNodeVOList());
+                    actualSelectedNodes.addAll(event.getVoteNodeVOList());
+                    break;
+                case EVENT_UP:
+                    //此页面无下级页面发送的事件
+                    break;
+            }
         }
     }
+
     @Override
     public boolean useEventBus() {
         return true;
@@ -70,9 +96,11 @@ public class NodeSelectedFragment extends XFragment {
             mTitleBar.setLeftClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NodeSelectedEvent event = new NodeSelectedEvent();
-                    event.setVoteNodeVOList(voteNodeVOArrayList);
-                    EventBusProvider.postSticky(event);
+                    //此事件用于向上级页面返回数据
+                    NodeSelectedEvent event_up = new NodeSelectedEvent();
+                    event_up.setVoteNodeVOList(actualSelectedNodes);
+                    event_up.setEventType(EVENT_UP);
+                    EventBusProvider.postSticky(event_up);
                     if (isOnBackFinishActivity) {
                         getActivity().finish();
                     } else {
@@ -85,23 +113,13 @@ public class NodeSelectedFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("已选节点(0/30)", true, false);
-        if (getArguments() != null) {
-            ArrayList<VoteNodeVO> voteNodeVOList = getArguments().getParcelableArrayList("selected nodes");
-            if (EmptyUtils.isNotEmpty(voteNodeVOList)) {
-                setNavibarTitle(String.format(getString(R.string.nodes_selected_num), String.valueOf(voteNodeVOList.size
-                        ())), true, false);
-                voteNodeVOArrayList.addAll(voteNodeVOList);
-                adapter = new VoteSelectedNodeAdapter(voteNodeVOArrayList);
-                nodeSelected = voteNodeVOList.size();
-            }else{
-                adapter = null;
-            }
-        }
+        setNavibarTitle(String.format(getString(R.string.nodes_selected_num),
+                String.valueOf(nodeSelected)), true, false);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
+        adapter = new VoteSelectedNodeAdapter(voteNodeVOArrayList);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -110,16 +128,18 @@ public class NodeSelectedFragment extends XFragment {
                 if (curVO.ischecked) {
                     //从点选到取消
                     curVO.ischecked = false;
-                    voteNodeVOArrayList.remove(curVO);
-                    voteNodeVOArrayList.add(curVO);
-                    nodeSelected--;
-                    EventBusProvider.post(new NodeSelectedEvent());
+                    actualSelectedNodes.remove(curVO);
+                    nodeSelected = actualSelectedNodes.size();
                 } else {
                     //点选
                     curVO.ischecked = true;
-                    nodeSelected++;
-                    EventBusProvider.post(new NodeSelectedEvent());
+                    actualSelectedNodes.add(curVO);
+                    nodeSelected =actualSelectedNodes.size();
                 }
+                //此事件用于更新本页面UI
+                NodeSelectedEvent eventThisPage = new NodeSelectedEvent();
+                eventThisPage.setEventType(EVENT_THIS_PAGE);
+                EventBusProvider.postSticky(eventThisPage);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -139,5 +159,6 @@ public class NodeSelectedFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        actualSelectedNodes.clear();
     }
 }

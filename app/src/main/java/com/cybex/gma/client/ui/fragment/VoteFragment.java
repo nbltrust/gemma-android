@@ -3,21 +3,29 @@ package com.cybex.gma.client.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.NodeSelectedEvent;
+import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.adapter.VoteNodeListAdapter;
 import com.cybex.gma.client.ui.model.vo.VoteNodeVO;
 import com.cybex.gma.client.ui.presenter.VotePresenter;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -40,17 +48,30 @@ public class VoteFragment extends XFragment<VotePresenter> {
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_resource) TextView tvResource;
     @BindView(R.id.tv_vote_number) TextView tvVoteNumber;
+    @BindView(R.id.tv_exec_vote) TextView tvExecVote;
 
+    private final int EVENT_THIS_PAGE = 0;//本页面发送的事件
+    private final int EVENT_DOWN = 1;//上级页面发送的事件
+    private final int EVENT_UP = 2;//下级页面返回发送的事件
+    private boolean hasDelegateRes = false;//是否有被抵押的资源
     private VoteNodeListAdapter adapter;
     private List<VoteNodeVO> nodeVOList = new ArrayList<>();
-    private ArrayList<VoteNodeVO> selectedNodes = new ArrayList<>();//已选择的节点
+    private List<VoteNodeVO> selectedNodes = new ArrayList<>();//已选择的节点
     Unbinder unbinder;
 
+    @OnClick(R.id.tv_exec_vote)
+    public void vote(){
+        showConfirmAuthorDialog();
+    }
+
     @OnClick(R.id.tv_vote_number)
-    public void goToSeeSelectedNodes(){
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("selected nodes", selectedNodes);
-        start(NodeSelectedFragment.newInstance(bundle));
+    public void goToSeeSelectedNodes() {
+        //此事件用于向下级页面传递数据
+        NodeSelectedEvent event = new NodeSelectedEvent();
+        event.setEventType(EVENT_DOWN);
+        event.setVoteNodeVOList(selectedNodes);
+        EventBusProvider.postSticky(event);
+        start(NodeSelectedFragment.newInstance());
     }
 
     public static VoteFragment newInstance() {
@@ -60,38 +81,46 @@ public class VoteFragment extends XFragment<VotePresenter> {
         return fragment;
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
+    @Subscribe(threadMode = ThreadMode.POSTING      , sticky = true)
     public void onNodeSelectChanged(NodeSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event)) {
-            if (EmptyUtils.isNotEmpty(event.getVoteNodeVOList())){
-                //如果是从已选节点页面返回
-                selectedNodes.clear();
-                selectedNodes.addAll(event.getVoteNodeVOList());
-                int newSelectedNodesNum = selectedNodes.size();
-                for (VoteNodeVO vo : selectedNodes){
-                    if (!vo.ischecked)newSelectedNodesNum--;
-                }
-                tvVoteNumber.setText(String.format(getResources().getString(R.string.vote_num), String.valueOf(newSelectedNodesNum)));
-
-                for (int i = 0; i < nodeVOList.size(); i++){
-                    for (int j = 0; j < selectedNodes.size(); j++){
-                        if (nodeVOList.get(i).getAccount().equals(selectedNodes.get(j).getAccount())){
-                            //如果两个节点名称相同
-                            nodeVOList.get(i).ischecked = selectedNodes.get(j).ischecked;
+            switch (event.getEventType()){
+                case EVENT_THIS_PAGE:
+                    //当前页面发送的事件
+                    //动态更新底部已选投票数
+                    tvVoteNumber.setText(String.format(getResources().getString(R.string.vote_num),
+                            String.valueOf(selectedNodes.size())));
+                    //动态设置底部textView颜色
+                    if (selectedNodes.size() != 0){
+                        //已选节点数不为0
+                        tvVoteNumber.setBackground(getResources().getDrawable(R.drawable
+                                .btn_vote_left_deep));
+                        if (hasDelegateRes){
+                            //如果有抵押的资源
+                            tvExecVote.setClickable(true);
+                            tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_deep));
+                        }else{
+                            //没有被抵押的资源
+                            tvExecVote.setClickable(false);
+                            tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_light));
                         }
+                    }else {
+                        //已选节点数为0
+                        tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.btn_vote_left_light));
                     }
-                }
-
-                for (int k = 0; k < selectedNodes.size(); k++){
-                    if (!selectedNodes.get(k).ischecked)selectedNodes.remove(k);//此选项卡在之前页面被取消选中
-                }
-
-            }else{
-                //如果是从主页面进入
-                tvVoteNumber.setText(String.format(getResources().getString(R.string.vote_num), String.valueOf(selectedNodes
-                        .size())));
+                    break;
+                case EVENT_DOWN:
+                    //上级页面发送的事件
+                    break;
+                case EVENT_UP:
+                    //下级页面发送的事件
+                    selectedNodes.clear();
+                    selectedNodes.addAll(event.getVoteNodeVOList());
+                    tvVoteNumber.setText(String.format(getResources().getString(R.string.vote_num),
+                            String.valueOf(selectedNodes.size())));
+                    break;
             }
-           adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -107,47 +136,15 @@ public class VoteFragment extends XFragment<VotePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        tvExecVote.setClickable(false);
+        //getP().getTotalDelegatedRes();
         setNavibarTitle("投票", true, true);
-
-        VoteNodeVO vo = new VoteNodeVO();
-        vo.setAlias("@eoscannon");
-        vo.setPercentage("0.5%");
-        vo.setUrl("http://www.tuolian.com");
-        vo.setAccount("EOS Cannon");
-
-        VoteNodeVO vo2 = new VoteNodeVO();
-        vo2.setAlias("@eosnewyork");
-        vo2.setPercentage("0.24%");
-        vo2.setUrl("http://www.tuolian.com");
-        vo2.setAccount("EOS New York");
-
-        VoteNodeVO vo3 = new VoteNodeVO();
-        vo3.setAlias("@eoscanada");
-        vo3.setPercentage("0.11%");
-        vo3.setUrl("http://www.tuolian.com");
-        vo3.setAccount("EOS Canada");
-
-        VoteNodeVO vo4 = new VoteNodeVO();
-        vo4.setAlias("@eosasla");
-        vo4.setPercentage("10.11%");
-        vo4.setUrl("http://www.tuolian.com");
-        vo4.setAccount("EOS Asla");
-
-        nodeVOList.add(vo);
-        nodeVOList.add(vo2);
-        nodeVOList.add(vo3);
-        nodeVOList.add(vo4);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
 
         mRecyclerView.setLayoutManager(layoutManager);
-        adapter = new VoteNodeListAdapter(nodeVOList);
-        mRecyclerView.setAdapter(adapter);
-
-
-
-        //getP().fetchBPDetail(ParamConstants.BP_NODE_NUMBERS);
+        getP().fetchBPDetail(ParamConstants.BP_NODE_NUMBERS);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -158,14 +155,16 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     curVoteNodeVO.ischecked = false;
                     //从已选列表中删除
                     selectedNodes.remove(curVoteNodeVO);
-                    EventBusProvider.postSticky(new NodeSelectedEvent());
                 } else {
                     //点选
                     curVoteNodeVO.ischecked = true;
                     //向已选列表中添加
                     selectedNodes.add(curVoteNodeVO);
-                    EventBusProvider.postSticky(new NodeSelectedEvent());
                 }
+                //此事件用于更新本页面UI
+                NodeSelectedEvent event_this = new NodeSelectedEvent();
+                event_this.setEventType(EVENT_THIS_PAGE);
+                EventBusProvider.post(event_this);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -173,13 +172,6 @@ public class VoteFragment extends XFragment<VotePresenter> {
     }
 
     public void initAdapterData(List<VoteNodeVO> voteNodeVOList) {
-
-        /*
-        for (VoteNodeVO node : voteNodeVOList){
-            nodeVOList.add(node);
-        }
-        */
-
         nodeVOList.addAll(voteNodeVOList);
         adapter = new VoteNodeListAdapter(nodeVOList);
         mRecyclerView.setAdapter(adapter);
@@ -204,5 +196,66 @@ public class VoteFragment extends XFragment<VotePresenter> {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        selectedNodes.clear();
+    }
+
+    public void hasDelegatedRes(String cpu_amount, String net_amount){
+        if (Double.parseDouble(cpu_amount) > 0 || Double.parseDouble(net_amount) > 0) {
+            hasDelegateRes = true;
+        }
+        hasDelegateRes = false;
+    }
+
+    public void getTotalDelegatedResource(String total_amount){
+        tvResource.setText(total_amount);
+    }
+
+    /**
+     * 显示确认买入授权dialog
+     */
+    private void showConfirmAuthorDialog() {
+        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
+        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+                R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
+
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imc_cancel:
+                        dialog.cancel();
+                        break;
+                    case R.id.btn_confirm_authorization:
+                        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                        if (EmptyUtils.isNotEmpty(curWallet)){
+                            final String cypher = curWallet.getCypher();
+                            EditText mPass = dialog.findViewById(R.id.et_password);
+                            String inputPass = mPass.getText().toString().trim();
+                            if (EmptyUtils.isNotEmpty(inputPass)){
+                                final String key = JNIUtil.get_private_key(cypher, inputPass);
+                                if (key.equals("wrong password")){
+                                    GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                }else{
+                                    //密码正确，执行投票操作
+                                    final String curEOSName = curWallet.getCurrentEosName();
+                                    List<String> producers = new ArrayList<>();
+                                    for(VoteNodeVO vo : selectedNodes){
+                                        producers.add(vo.getAccount());
+                                    }
+                                   // getP().executeVoteLogic(curEOSName, producers, key);
+                                    dialog.cancel();
+                                }
+                            }else{
+                                GemmaToastUtils.showLongToast("请输入密码！");
+                            }
+
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
     }
 }

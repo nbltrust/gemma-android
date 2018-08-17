@@ -1,13 +1,13 @@
 package com.cybex.gma.client.ui.model.request;
 
 public class FetchBPDetailReqParams {
-    private int number;
+    private int show_num;
 
     public int getNumber() {
-        return number;
+        return show_num;
     }
 
     public void setNumber(int number) {
-        this.number = number;
+        this.show_num = number;
     }
 }
