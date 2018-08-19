@@ -3,9 +3,21 @@ package com.cybex.gma.client.ui.fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import com.allen.library.SuperTextView;
+import com.cybex.base.view.switchbutton.SwitchButton;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.event.RefreshGestureEvent;
+import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.utils.SPUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -16,6 +28,13 @@ import butterknife.Unbinder;
 public class SecuritySettingFragment extends XFragment {
 
     Unbinder unbinder;
+    //指纹解锁
+    @BindView(R.id.switch_fingerprint) SwitchButton switchFingerprint;
+    //手势密码
+    @BindView(R.id.switch_pattern) SwitchButton switchGesture;
+    //修改手势密码
+    @BindView(R.id.superTextView_change_pattern) SuperTextView tvChangePattern;
+
     public static SecuritySettingFragment newInstance() {
         Bundle args = new Bundle();
         SecuritySettingFragment fragment = new SecuritySettingFragment();
@@ -31,6 +50,50 @@ public class SecuritySettingFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle("安全设置", true, true);
+        this.isShowChangeGestureView();
+
+        switchFingerprint.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                SPUtils.getInstance().put(CacheConstants.KEY_OPEN__FINGER_PRINT, isChecked);
+            }
+        });
+
+        switchGesture.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                if (isChecked) {
+                    //创建手势密码
+                    UISkipMananger.lauchCreateGestureActivity(getActivity());
+                } else {
+                    SPUtils.getInstance().put(CacheConstants.KEY_OPEN_GESTURE, false);
+                }
+            }
+        });
+    }
+
+    private void isShowChangeGestureView() {
+        boolean isopenGesture = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_GESTURE);
+        switchGesture.setChecked(isopenGesture);
+        if (isopenGesture) {
+            tvChangePattern.setVisibility(View.VISIBLE);
+        } else {
+            tvChangePattern.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveRefreshEvent(RefreshGestureEvent gestureEvent) {
+        GemmaToastUtils.showShortToast("refresh");
+        if (EmptyUtils.isNotEmpty(gestureEvent)) {
+            isShowChangeGestureView();
+        }
     }
 
 
@@ -49,4 +112,6 @@ public class SecuritySettingFragment extends XFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 }

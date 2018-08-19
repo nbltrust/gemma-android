@@ -14,6 +14,7 @@ import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
+import com.cybex.gma.client.ui.activity.CreateGestureActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
@@ -136,6 +137,17 @@ public final class UISkipMananger {
      */
     public static void launchGeneralSetting(Activity context) {
         launchIntent(context, GeneralSettingActivity.class);
+    }
+
+
+    /**
+     * 跳转到创建手势密码
+     *
+     * @param context
+     */
+    public static void lauchCreateGestureActivity(Activity context) {
+
+        launchIntent(context, CreateGestureActivity.class);
     }
 
     /**

@@ -11,6 +11,26 @@ import java.util.List;
 
 public class LockPatternUtil {
 
+    public static final int MIN_LOCK_PATTERN_SIZE = 4;
+    /**
+     * The maximum number of incorrect attempts before the user is prevented
+     * from trying again for {@link #FAILED_ATTEMPT_TIMEOUT_MS}.
+     */
+    public static final int FAILED_ATTEMPTS_BEFORE_TIMEOUT = 5;
+    /**
+     * The minimum number of dots the user must include in a wrong pattern
+     * attempt for it to be counted against the counts that affect
+     * {@link #FAILED_ATTEMPTS_BEFORE_TIMEOUT} and
+     */
+    public static final int MIN_PATTERN_REGISTER_FAIL = MIN_LOCK_PATTERN_SIZE;
+    /**
+     * How long the user is prevented from trying again after entering the wrong
+     * pattern too many times.
+     */
+    public static final long FAILED_ATTEMPT_TIMEOUT_MS = 30000L;
+
+    public static final long DELAYTIME = 600l;
+
     /**
      * change string value (ex: 10.0dip => 20) to int value
      *
