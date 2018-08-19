@@ -29,4 +29,7 @@ public interface ParamConstants {
     boolean NODE_NOT_SELECT = false;//节点未被选择
 
 
+    int EVENT_DOWN = 1;//事件从上级页面发送
+    int EVENT_THIS_PAGE = 0;//事件在本页面发送
+    int EVENT_UP = 2;//事件从下级页面发送
 }

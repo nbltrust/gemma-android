@@ -21,9 +21,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/btn_navibar"
+            android:layout_above="@+id/view_vote_bot"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"
             app:contentView="@layout/content_recycler_view"
             app:emptyView="@layout/empty_view"
             app:errorView="@layout/error_view"
@@ -34,6 +36,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/view_vote_bot"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
@@ -72,7 +75,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/btn_vote_enabled"
                 android:orientation="horizontal">
 
                 <TextView
@@ -81,22 +83,23 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:background="@drawable/btn_vote_left_light"
                     android:text="0/30"
                     android:textColor="#ffffff"
                     android:textSize="14sp"/>
 
                 <TextView
+                    android:id="@+id/tv_exec_vote"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:background="@drawable/btn_vote_right_light"
                     android:text="票数不足"
                     android:textColor="#ffffff"
                     android:textSize="14sp"/>
 
-
             </LinearLayout>
-
 
         </RelativeLayout>
 

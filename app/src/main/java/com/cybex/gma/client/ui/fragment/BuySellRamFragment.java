@@ -86,9 +86,11 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     public void onChanged(Editable s) {
         if (EmptyUtils.isNotEmpty(getEOSAmount())){
             setClickable(btBuyRam);
-            String amount = "预估可兑换 " + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4) + " KB";
-            tvApproximatelyAmount.setText(amount);
-            tvApproximatelyAmount.setVisibility(View.VISIBLE);
+            if (EmptyUtils.isNotEmpty(kbPerEOS)){
+                String amount = "预估可兑换 " + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4) + " KB";
+                tvApproximatelyAmount.setText(amount);
+                tvApproximatelyAmount.setVisibility(View.VISIBLE);
+            }
         }else{
             tvApproximatelyAmount.setVisibility(View.GONE);
             setUnclickable(btBuyRam);
@@ -99,9 +101,11 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     public void onSellChanged(Editable s){
         if (EmptyUtils.isNotEmpty(getRamAmount()) && EmptyUtils.isNotEmpty(eosPerKb)){
             setClickable(btSellRam);
-            String amount = "预估可兑换 " + AmountUtil.mul(eosPerKb, getRamAmount(), 4) + " EOS";
-            tvApproximatelyAmount.setVisibility(View.VISIBLE);
-            tvApproximatelyAmount.setText(amount);
+            if (EmptyUtils.isNotEmpty(eosPerKb)){
+                String amount = "预估可兑换 " + AmountUtil.mul(eosPerKb, getRamAmount(), 4) + " EOS";
+                tvApproximatelyAmount.setVisibility(View.VISIBLE);
+                tvApproximatelyAmount.setText(amount);
+            }
         }else{
             setUnclickable(btSellRam);
             tvApproximatelyAmount.setVisibility(View.GONE);

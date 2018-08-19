@@ -6,6 +6,7 @@
 
     <color name="paleGrey">#f5f6f8</color>
     <color name="paleGreyTwo">#e7e9f8</color>
+    <color name="pale_grey_two">#dadce8</color>
 
     <color name="darkSlateBlue80">#212c67</color>
     <color name="darkSkyBlue">#5596dc</color>
