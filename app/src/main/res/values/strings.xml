@@ -88,6 +88,7 @@
     <string name="payingAccount">付款账户</string>
     <string name="fund">金额</string>
     <string name="memo">备注</string>
+    <string name="memo_optional">备注（可选）</string>
     <string name="confirmTransfer">确认转账</string>
 
     <string name="lock_pattern_1">请设置新的解锁密码</string>
@@ -266,15 +267,35 @@
     <string name="unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
     <string name="ram_unit_price">≈ %1$s EOS/KB</string>
 
+    <!-- Vote activity-->
     <string name="vote_num">%1$s/30</string>
+    <string name="vote_num_init">0/30</string>
     <string name="nodes_selected_num">已选节点(%1$s/30)</string>
+    <string name="delegate_res">抵押资源</string>
+    <string name="zero_balance">0.0000 EOS</string>
+    <string name="no_avail_votes">票数不足</string>
+    <!-- Transfer activity-->
+    <string name="account_name">账户名</string>
+    <string name="remain_balance_zero">余额： 0.0000 EOS</string>
+    <string name="transfer_hint">输入转账金额，最多四位小数</string>
+    <string name="input_transfer_hint">输入转账备注</string>
 
+    <!-- Delegate activity-->
+    <string name="remain_balance">余额： -- EOS</string>
 
+    <!-- Dialogs -->
+    <string name="switch_account">切换账户</string>
+    <string name="confirm_delegate">确认抵押</string>
+    <string name="input_pass_hint">请输入@账户名的密码</string>
+    <string name="gemma_password_hint">Gemma不曾知晓钱包密码，每次操作需要输入密码以授权</string>
+    <string name="confirm_author">确认以授权</string>
 
     <!-- Barcode scan activity -->
-    <string name="scan_hint">将条码放入框内，即可自动扫描</string>
+    <string name="barcode_scan_hint">将条码放入框内，即可自动扫描</string>
+    <string name="qr_scan_hint">请将二维码放入框内，即可自动扫描</string>
+    <string name="scan_qr_code">扫描二维码</string>
 
-    
+
     <!-- Gesture login activity -->
     <string name="gesture_forget_gesture">忘记手势密码</string>
     <string name="gesture_default">请输入手势密码</string>

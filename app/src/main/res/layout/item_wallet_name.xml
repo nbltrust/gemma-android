@@ -6,26 +6,6 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-
-<!--
-    <com.allen.library.SuperTextView
-        android:id="@+id/superTV_Item_WalletName"
-        style="@style/card_style"
-        title:sDividerLineType="none"
-        title:sLeftTextColor="@color/darkSlateBlue"
-        title:sLeftTextString="EOS-WALLET-DEFAULT"
-        title:sRightTvDrawableRight="@drawable/ic_tab_more"
-        title:sShapeSelectorPressedColor="@color/item_pressed"
-        title:sShapeCornersRadius="@dimen/dimen_3"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginEnd="@dimen/dimen_20"
-        android:layout_marginTop="@dimen/dimen_5"
-        android:translationZ="@dimen/dimen_2"
-        title:sUseShape="true">
-
-    </com.allen.library.SuperTextView>
-
--->
    <LinearLayout
        android:id="@+id/layout_item_wallet"
        android:orientation="horizontal"
