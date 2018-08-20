@@ -63,7 +63,6 @@ public class ChangeWalletNameFragment extends XFragment {
             mTitleBar.addAction(new TitleBar.TextAction("保存") {
                 @Override
                 public void performAction(View view) {
-                    //todo 保存钱包名
 
                     if (isWalletNameExist(getWalletName())){
                         GemmaToastUtils.showLongToast(ParamConstants.SAME_WALLET_NAME);

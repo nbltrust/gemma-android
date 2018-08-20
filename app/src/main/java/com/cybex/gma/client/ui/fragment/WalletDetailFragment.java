@@ -37,6 +37,7 @@ public class WalletDetailFragment extends XFragment {
 
     private WalletEntity curWallet;
     private Integer currentID;
+    private String thisWalletName;
 
     @BindView(R.id.layout_wallet_briefInfo) ConstraintLayout layoutWalletBriefInfo;
     @BindView(R.id.superTextView_exportPriKey) SuperTextView superTextViewExportPriKey;
