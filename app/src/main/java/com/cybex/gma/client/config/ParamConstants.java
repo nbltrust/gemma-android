@@ -28,7 +28,14 @@ public interface ParamConstants {
     boolean NODE_SELECTED = true;//节点被选择
     boolean NODE_NOT_SELECT = false;//节点未被选择
 
+
     int EVENT_DOWN = 1;//事件从上级页面发送
     int EVENT_THIS_PAGE = 0;//事件在本页面发送
     int EVENT_UP = 2;//事件从下级页面发送
+
+
+    String GESTURE_SKIP_TYPE = "gesture_skip_type";//手势设置类型
+    int GESTURE_SKIP_TYPE_CHANGE = 0x1001;//修改手势密码
+    int GESTURE_SKIP_TYPE_LOGIN_VERIFY = 0X1002;//登录验证手势密码
+
 }

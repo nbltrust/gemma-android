@@ -26,6 +26,8 @@ public class LockPatternView extends View {
     private boolean isActionDown = false;//default action down is false
     private boolean isActionUp = true;//default action up is true
 
+    private boolean isEnableGesture = true;
+
     private int width, height;
     private int cellRadius, cellInnerRadius;
     private int cellBoxWidth, cellBoxHeight;
@@ -92,6 +94,14 @@ public class LockPatternView extends View {
         this.initCellSize();
         this.set9CellsSize();
         this.invalidate();
+    }
+
+    public boolean isEnableGesture() {
+        return isEnableGesture;
+    }
+
+    public void setEnableGesture(boolean enableGesture) {
+        isEnableGesture = enableGesture;
     }
 
     /**
@@ -456,21 +466,23 @@ public class LockPatternView extends View {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (isEnableGesture) {
+            float ex = event.getX();
+            float ey = event.getY();
 
-        float ex = event.getX();
-        float ey = event.getY();
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                handleActionDown(ex, ey);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                handleActionMove(ex, ey);
-                break;
-            case MotionEvent.ACTION_UP:
-                handleActionUp();
-                break;
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    handleActionDown(ex, ey);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    handleActionMove(ex, ey);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    handleActionUp();
+                    break;
+            }
         }
+
         return true;
     }
 

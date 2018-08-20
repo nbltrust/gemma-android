@@ -40,7 +40,6 @@
             android:name=".ui.activity.SpalashActivity"
             android:theme="@style/SplashScreen">
 
-
         </activity>
 
         <!-- 主TAB界面 -->
@@ -128,6 +127,14 @@
             android:name=".ui.activity.SecuritySettingActivity"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".ui.activity.GestureCreateActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.activity.GestureVerifyActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- 应用内浏览器窗口 -->
         <activity
