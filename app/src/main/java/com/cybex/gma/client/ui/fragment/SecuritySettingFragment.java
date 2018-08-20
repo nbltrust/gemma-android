@@ -67,6 +67,7 @@ public class SecuritySettingFragment extends XFragment {
                     UISkipMananger.lauchCreateGestureActivity(getActivity());
                 } else {
                     SPUtils.getInstance().put(CacheConstants.KEY_OPEN_GESTURE, false);
+                    isShowChangeGestureView();
                 }
             }
         });
