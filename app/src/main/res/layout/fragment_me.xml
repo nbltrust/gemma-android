@@ -142,7 +142,7 @@
                         android:layout_height="@dimen/dimen_44"
                         title:sLeftTextColor="@color/darkSlateBlue"
                         title:sLeftTextSize="@dimen/font_3.5"
-                        title:sLeftTextString="@string/about"
+                        title:sLeftTextString="@string/about_gemma"
                         title:sLeftTextGravity="center"
                         title:sLeftIconRes="@drawable/ic_about"
                         title:sLeftIconHeight="@dimen/dimen_24"

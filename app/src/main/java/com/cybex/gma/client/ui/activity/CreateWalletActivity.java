@@ -173,7 +173,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     public void initView() {
         //动态设置hint样式
         setEditTextHintStyle(edtEosName, R.string.EOS_username_hint);
-        setEditTextHintStyle(edtSetPass, R.string.password_hint);
+        setEditTextHintStyle(edtSetPass, R.string.password_input_hint);
         setEditTextHintStyle(edtRepeatPass, R.string.repeatPassword_hint);
         setEditTextHintStyle(edtPassHint, R.string.password_hint_hint);
         setEditTextHintStyle(edtInvCode, R.string.input_invCode_hint);

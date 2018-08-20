@@ -12,7 +12,6 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -49,7 +48,7 @@ public class BackUpPriKeyFragment extends XFragment {
         if (getActivity() != null) {
             ClipboardUtils.copyText(getActivity(), curPriKey);
         }
-        GemmaToastUtils.showLongToast("私钥已复制，请在使用后及时清空系统剪贴板！");
+        GemmaToastUtils.showLongToast(getResources().getString(R.string.prikey_copied));
     }
 
     @OnClick(R.id.bt_copied_priKey)
@@ -82,7 +81,6 @@ public class BackUpPriKeyFragment extends XFragment {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void getID(WalletIDEvent message) {
         walletID = message.getWalletID();
-        LoggerManager.d("walletID", walletID);
     }
 
     @Override

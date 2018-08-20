@@ -1,30 +1,17 @@
 <resources>
+
+    <!-- Common -->
     <string name="app_name">Gemma</string>
     <string name="title">我是标题</string>
-    <string name="wallet">Wallet</string>
-    <string name="Transfer">Transfer</string>
-    <string name="Me">Me</string>
-    <string name="hello">Hello,</string>
-    <string name="not_backup">钱包未备份</string>
-    <string name="go_symbol">-></string>
 
-    <string name="wallet_name">钱包名称</string>
-    <string name="wallet_name_short">钱包名</string>
-    <string name="set_password">设置密码</string>
-    <string name="hint_at_create_wallet">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储</string>
-    <string name="repeat_password">重复密码</string>
-    <string name="agreement">我已阅读并同意</string>
-    <string name="agreement2"><u>服务协议</u></string>
-    <string name="create_wallet">创建钱包</string>
-    <string name="import_wallet">导入钱包</string>
-
-    <string name="contact">联系人</string>
+    <!-- Initial Activity -->
     <string name="createNewWallet">创建新钱包</string>
     <string name="restoreWallet">从备份恢复已有钱包</string>
 
-    <string name="password_hint">密码提示</string>
-    <string name="wallet_name_hint">请输入钱包名称</string>
-    <string name="walletName">钱包名称</string>
+    <!-- Create Wallet Activity-->
+    <string name="set_password">设置密码</string>
+    <string name="create_wallet">创建钱包</string>
+    <string name="repeatPassword">重复密码</string>
     <string name="EOS_username">EOS账户名</string>
     <string name="EOS_username_hint">由小写字母a-z与数字1-5组成，须为12个字符</string>
     <string name="password_input_hint">最少8位，建议混合大小写字母、数字及符号</string>
@@ -33,56 +20,28 @@
     <string name="invitation_code">邀请码</string>
     <string name="input_inv_code">输入邀请码</string>
     <string name="get_invitation">获取邀请码</string>
-    <string name="new_password">新密码</string>
-
-    <string name="repeatPassword">重复密码</string>
+    <string name="agreement">我已阅读并同意</string>
+    <string name="agreement2"><u>服务协议</u></string>
+    <string name="password_hint">密码提示</string>
     <string name="security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不储存密码，无法提供密码找回服务</string>
-    <string name="createAWallet">创建钱包</string>
-    <string name="confirm_change">确认修改</string>
 
-    <string name="createWalletSuccess">恭喜！创建钱包成功</string>
-    <string name="exportMnemonic">导出私钥助记词</string>
-    <string name="changePass">修改密码</string>
-    <string name="backupHint">钱包私钥是资产的唯一认证方式，及时备份私钥，可防止手机丢失、忘记密码等意外无法使用钱包的情况。请将私钥助记词备份并妥善保存，以备将来不时之需。</string>
-    <string name="backupLater">稍后备份</string>
+    <!-- Main Tab Activity-->
+    <string name="tab_wallet">钱包</string>
+    <string name="tab_transfer">转账</string>
+    <string name="tab_mine">我的</string>
 
-    <string name="lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
-    <string name="lookAround_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
-    <string name="backUp_wallet">备份钱包</string>
-    <string name="backupSafely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
-    <string name="showMnemonic">明白了，显示助记词</string>
-    <string name="showPriKey">明白了，显示私钥</string>
-    <string name="start_import">明白了，开始导入</string>
+    <!-- Transfer Record Detail Fragment-->
+    <string name="income">收入</string>
+    <string name="payment">支出</string>
+    <string name="income_amount">+ %1$s</string>
+    <string name="payment_amount">- %1$s</string>
+    <string name="transfer_status">交易状态</string>
+    <string name="transfer_id">交易号</string>
+    <string name="block_num">区块</string>
+    <string name="block_time">交易时间</string>
+    <string name="see_in_explorer">在区块链浏览器上查看</string>
 
-    <string name="backupYourMne">请记下你的钱包私钥助记词并保存在安全的地方</string>
-    <string name="backupHint2">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
-    <string name="copied">已抄写</string>
-
-    <string name="writeDown">请输入抄下的钱包密钥助记词以验证</string>
-    <string name="input_mne">请按顺序点击已抄下的助记词以验证抄写是否正确</string>
-
-    <string name="general">通用</string>
-    <string name="security">安全设置</string>
-    <string name="help">帮助与反馈</string>
-    <string name="service_agreement">服务协议</string>
-    <string name="about">关于Gemma</string>
-
-
-    <string name="face">面容解锁</string>
-    <string name="fingerprints">指纹解锁</string>
-    <string name="pattern">手势解锁</string>
-    <string name="changePattern">修改手势密码</string>
-
-
-    <string name="export_privateKey">导出私钥</string>
-    <string name="export_mne">导出助记词</string>
-    <string name="accounts">钱包下账户（点击切换）</string>
-    <string name="signUp">注册新用户名</string>
-    <string name="input_original_pass">请输入原密码</string>
-    <string name="verify_password">验证密码</string>
-    <string name="input_password">请输入@账户名的密码</string>
-
-
+    <!-- Transfer Fragment-->
     <string name="receiver">收款人</string>
     <string name="payer">转账人</string>
     <string name="payingAccount">付款账户</string>
@@ -90,6 +49,206 @@
     <string name="memo">备注</string>
     <string name="memo_optional">备注（可选）</string>
     <string name="confirmTransfer">确认转账</string>
+    <string name="at_char">\ufeff@</string>
+    <string name="title_transfer">转账</string>
+
+    <!-- Delegate -->
+    <string name="brief_info">概况</string>
+    <string name="used">已用</string>
+    <string name="total_amount">总量</string>
+    <string name="delegate">抵押</string>
+    <string name="delegate_cpu">抵押CPU</string>
+    <string name="delegate_hint">输入需要抵押的EOS数量</string>
+    <string name="refund_hint">输入解除抵押的EOS数量</string>
+    <string name="delegate_net">抵押NET</string>
+    <string name="delegate_cpu_net">抵押</string>
+
+    <string name="cpu_available">已用 %1$s ms</string>
+    <string name="cpu_total">总量 %1$s ms</string>
+    <string name="net_available">已用 %1$s KB</string>
+    <string name="net_total">总量 %1$s KB</string>
+
+    <!-- Buy Sell Ram-->
+    <string name="buy_sell_ram">买卖RAM</string>
+    <string name="buy">买入</string>
+    <string name="sell">卖出</string>
+    <string name="transaction">交易</string>
+    <string name="transfer_eos_amount">交易数量(EOS)</string>
+    <string name="transfer_ram_amount">交易数量(KB)</string>
+    <string name="available">可用</string>
+    <string name="price">价格</string>
+    <string name="input_ram_amount">输入RAM数量</string>
+    <string name="input_eos_amount">输入EOS数量</string>
+    <string name="ram_amount_about">预估可兑换 %1$s KB</string>
+    <string name="eos_amount_about">预估可兑换 %1$s EOS</string>
+    <string name="available_eos">可用 %1$s</string>
+    <string name="available_ram">可用 %1$s KB</string>
+    <string name="eos_ram_amount">≈ %1$s EOS</string>
+    <string name="ram_unit_price">≈ %1$s EOS/KB</string>
+
+    <!-- About -->
+    <string name="general">通用</string>
+    <string name="security">安全设置</string>
+    <string name="help">帮助与反馈</string>
+    <string name="service_agreement">服务协议</string>
+    <string name="about_gemma">关于Gemma</string>
+    <string name="about">关于</string>
+
+    <string name="face">面容解锁</string>
+    <string name="fingerprints">指纹解锁</string>
+    <string name="pattern">手势解锁</string>
+    <string name="changePattern">修改手势密码</string>
+
+    <!-- Import Wallet-->
+    <string name="import_wallet">导入钱包</string>
+
+    <!-- Export(BackUp) Wallet-->
+    <string name="lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
+    <string name="lookAround_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
+    <string name="backUp_wallet">备份钱包</string>
+    <string name="backupSafely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
+    <string name="showMnemonic">明白了，显示助记词</string>
+    <string name="showPriKey">明白了，显示私钥</string>
+    <string name="start_import">明白了，开始导入</string>
+    <string name="backupLater">稍后备份</string>
+
+    <string name="no_screenshot">请勿截图</string>
+    <string name="no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
+    <string name="i_understand">我知道了</string>
+    <string name="safety_first">安全第一</string>
+    <string name="safety_first_hint">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
+    <string name="save_offline">离线储存</string>
+    <string name="save_offline_hint">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
+    <string name="encrypto_save">加密储存</string>
+    <string name="encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
+
+    <string name="look_around">注意周围</string>
+    <string name="look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
+    <string name="no_screenshot_hint2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
+    <string name="show_QR">显示二维码</string>
+
+    <!-- Change Password Fragment-->
+    <string name="new_password">新密码</string>
+    <string name="confirm_change">确认修改</string>
+
+    <!-- Wallet Fragment-->
+    <string name="total_assets">账户总资产</string>
+    <string name="balance">可用余额</string>
+    <string name="redeem">正在赎回</string>
+    <string name="transfer_records">收支记录</string>
+    <string name="resource">资源管理</string>
+    <string name="get_cpu_net">获取CPU、NET</string>
+    <string name="CPU">CPU</string>
+    <string name="NET">NET</string>
+    <string name="RAM">RAM</string>
+
+    <!-- create methods -->
+    <string name="method_one">方法一</string>
+    <string name="method_two">方法二</string>
+    <string name="method_one_hint">请持有EOS的好友向智能合约 signupeoseos 转账并须将以下文字作为备注(memo)
+        ，即可完成创建。创建成功后请重新打开App，即可使用该账户。</string>
+    <string name="method_one_hint_2">为保证顺利创建账户，建议至少转 2EOS ：账户将抵押 0.01EOS 作为CPU，0.01EOS 作为NET，剩余1.8EOS将按现价购买RAM。</string>
+    <string name="method_two_hint">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
+    <string name="show_priKey">查看私钥</string>
+    <string name="priKey_encrypted">私钥已加密存储，请输入之前设置的密码以解锁查看</string>
+    <string name="copy">复制</string>
+    <string name="priKey_en">私钥 Private Key</string>
+
+    <string name="backup_prikey">备份私钥</string>
+    <string name="please_input_pass">请输入密码</string>
+    <string name="wrong_password">密码错误请重新输入！</string>
+    <string name="manage_wallet">管理钱包</string>
+    <string name="save">保存</string>
+
+    <!-- Vote activity-->
+    <string name="vote_num">%1$s/30</string>
+    <string name="vote_num_init">0/30</string>
+    <string name="nodes_selected_num">已选节点(%1$s/30)</string>
+    <string name="delegate_res">抵押资源</string>
+    <string name="zero_balance">0.0000 EOS</string>
+    <string name="no_avail_votes">票数不足</string>
+    <!-- Transfer activity-->
+    <string name="account_name">账户名</string>
+    <string name="remain_balance_zero">余额： 0.0000 EOS</string>
+    <string name="transfer_hint">输入转账金额，最多四位小数</string>
+    <string name="input_transfer_hint">输入转账备注</string>
+
+    <!-- Delegate activity-->
+    <string name="remain_balance">余额： -- EOS</string>
+
+    <!-- Dialogs -->
+    <string name="delegate_memo">Delegate %1$s EOS for CPU, %2$s EOS for NET</string>
+    <string name="unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
+    <string name="switch_account">切换账户</string>
+    <string name="confirm_delegate">确认抵押</string>
+    <string name="input_pass_hint">请输入@账户名的密码</string>
+    <string name="gemma_password_hint">Gemma不曾知晓钱包密码，每次操作需要输入密码以授权</string>
+    <string name="confirm_author">确认以授权</string>
+    <string name="confirm_buy">确认买入</string>
+    <string name="confirm_sell">确认卖出</string>
+    <string name="explanation">说明</string>
+    <string name="buy_ram">Buy RAM</string>
+    <string name="sell_ram">Sell RAM</string>
+
+    <!-- Barcode scan activity -->
+    <string name="barcode_scan_hint">将条码放入框内，即可自动扫描</string>
+    <string name="qr_scan_hint">请将二维码放入框内，即可自动扫描</string>
+    <string name="scan_qr_code">扫描二维码</string>
+
+    <!-- Gesture login activity -->
+    <string name="gesture_forget_gesture">忘记手势密码</string>
+    <string name="gesture_default">请输入手势密码</string>
+    <string name="gesture_error">手势密码输入错误</string>
+    <string name="gesture_error_max_retry">手势密码输入错误次数太多，%1$d秒后重试</string>
+    <string name="gesture_correct">输入正确</string>
+    <string name="gesture_error_tip_total">次机会</string>
+    <string name="gesture_tip_password_error_retry">密码错误，还剩</string>
+
+    <!-- Create gesture activity -->
+    <string name="create_gesture_activity">CreateGestureActivity</string>
+    <string name="create_gesture_default">绘制解锁图案</string>
+    <string name="create_gesture_correct">再次绘制解锁图案</string>
+    <string name="create_gesture_less_error">至少连接4个点，请重新输入</string>
+    <string name="create_gesture_confirm_error">与上一次绘制不一致，请重新绘制</string>
+    <string name="create_gesture_confirm_correct">设置成功</string>
+    <string name="create_gesture_reset">重新设置</string>
+
+    <!-- Change Node Setting -->
+    <string name="node_cybex">http://52.77.177.200:8888(eoscybex)</string>
+    <string name="node_starteos">http://api-mainnet.starteos.io</string>
+    <string name="node_eosnewyork">https://api.eosnewyork.io</string>
+    <string name="node_greymass">https://eos.greymass.com</string>
+    <string name="node_eosasia">https://api-direct.eosasia.one</string>
+    <string name="node_eosgravity">https://api-mainnet.eosgravity.com</string>
+    <string name="node_helloeos">https://api.helloeos.com.cn</string>
+    <string name="node_hkeos">https://api.hkeos.com</string>
+    <string name="node_eos42">https://nodes.eos42.io</string>
+    <string name="node_cypherglass">https://api.cypherglass.com</string>
+    <string name="node_select">节点设置</string>
+
+    <!-- Change Wallet Name fragment-->
+    <string name="wallet_name_short">钱包名</string>
+
+
+
+    <string name="wallet_name_hint">请输入钱包名称</string>
+    <string name="walletName">钱包名称</string>
+
+    <string name="createWalletSuccess">恭喜！创建钱包成功</string>
+    <string name="exportMnemonic">导出私钥助记词</string>
+    <string name="changePass">修改密码</string>
+    <string name="backupHint">钱包私钥是资产的唯一认证方式，及时备份私钥，可防止手机丢失、忘记密码等意外无法使用钱包的情况。请将私钥助记词备份并妥善保存，以备将来不时之需。</string>
+
+
+    <string name="backupYourMne">请记下你的钱包私钥助记词并保存在安全的地方</string>
+    <string name="backupHint2">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
+
+
+    <string name="export_privateKey">导出私钥</string>
+    <string name="input_original_pass">请输入原密码</string>
+    <string name="verify_password">验证密码</string>
+    <string name="input_password">请输入@账户名的密码</string>
+
 
     <string name="lock_pattern_1">请设置新的解锁密码</string>
     <string name="lock_pattern_2">再次输入解锁密码，以确认</string>
@@ -100,27 +259,9 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="tab_wallet">钱包</string>
-    <string name="tab_transfer">转账</string>
-    <string name="tab_mine">我的</string>
-
-    <string name="total_assets">账户总资产</string>
-    <string name="balance">可用余额</string>
-    <string name="redeem">正在赎回</string>
-    <string name="transfer_records">收支记录</string>
-    <string name="resource">资源管理</string>
-    <string name="get_cpu_net">获取CPU、NET</string>
-
-    <string name="expire_time">过期时间</string>
-    <string name="transfer_status">交易状态</string>
-    <string name="transfer_id">交易号</string>
-    <string name="block_num">区块</string>
-    <string name="block_time">交易时间</string>
-    <string name="see_in_explorer">在区块链浏览器上查看</string>
     <string name="eos">EOS</string>
 
-    <string name="at_char">\ufeff@</string>
-    <string name="title_transfer">转账</string>
+
     <string name="title_me">我的</string>
     <string name="title_transfer_record">收支记录</string>
     <string name="press_again_exit">再按一次退出</string>
@@ -135,26 +276,15 @@
     <string name="fast_load_more_load_failed">加载失败,请点我重试</string>
     <string name="fast_load_more_loading">正在加载中...</string>
 
-    <string name="no_screenshot">请勿截图</string>
-    <string name="no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
-    <string name="i_understand">我知道了</string>
-    <string name="safety_first">安全第一</string>
-    <string name="safety_first_hint">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
-    <string name="save_offline">离线储存</string>
-    <string name="save_offline_hint">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
-    <string name="encrypto_save">加密储存</string>
-    <string name="encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
-    <string name="copy_prikey">复制私钥</string>
-    <string name="look_around">注意周围</string>
-    <string name="look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
-    <string name="no_screenshot_hint2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
-    <string name="show_QR">显示二维码</string>
+
+
     <string name="creating">账户创建中</string>
     <string name="please_confirm">请勿在EOS区块100%确认之前往账户转账</string>
     <string name="please_confirm_alert">请勿在EOS区块100%确认之前往账户转账(滑动取消提醒)</string>
 
     <string name="input_key_hint">请完整输入备份的私钥</string>
     <string name="input_key_hint2">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>
+    <string name="prikey_copied">私钥已复制，请在使用后及时清空系统剪贴板！</string>
     <string name="start_input">开始导入</string>
     <string name="complete_input">完成导入</string>
 
@@ -181,18 +311,7 @@
     <string name="english">English</string>
     <string name="follow_system">跟随系统</string>
 
-    <string name="brief_info">概况</string>
-    <string name="used">已用</string>
-    <string name="total_amount">总量</string>
-    <string name="delegate">抵押</string>
-    <string name="delegate_cpu">抵押CPU</string>
-    <string name="delegate_hint">输入需要抵押的EOS数量</string>
-    <string name="refund_hint">输入解除抵押的EOS数量</string>
-    <string name="delegate_net">抵押NET</string>
-    <string name="delegate_cpu_net">抵押</string>
-    <string name="CPU">CPU</string>
-    <string name="NET">NET</string>
-    <string name="RAM">RAM</string>
+
 
     <string name="refund_detail">赎回详情</string>
     <string name="confirm_refund">确认解除抵押</string>
@@ -201,10 +320,7 @@
 
     <string name="curwallets">已有钱包</string>
     <string name="walletManege">钱包管理</string>
-    <string name="income">收入</string>
-    <string name="payment">支出</string>
-    <string name="income_amount">+ %1$s</string>
-    <string name="payment_amount">- %1$s</string>
+
 
     <string name="setting_language_auto">跟随系统</string>
     <string name="setting_language_english">English</string>
@@ -214,31 +330,9 @@
     <string name="version_update">版本更新</string>
     <string name="copyright">Copyright @2018 Tuolian. All Rights Reserved</string>
 
-    <string name="vote">节点投票</string>
-    <string name="buy_sell_ram">买卖RAM</string>
-    <string name="buy">买入</string>
-    <string name="sell">卖出</string>
-    <string name="transaction">交易</string>
-    <string name="transfer_eos_amount">交易数量(EOS)</string>
-    <string name="transfer_ram_amount">交易数量(KB)</string>
-    <string name="available">可用</string>
-    <string name="price">价格</string>
-    <string name="input_ram_amount">输入RAM数量</string>
-    <string name="input_eos_amount">输入EOS数量</string>
+    <string name="title_vote">节点投票</string>
 
-    <string name="ram_amount_about">预估可兑换 %1$s KB</string>
-    <string name="eos_amount_about">预估可兑换 %1$s EOS</string>
-    <string name="available_eos">可用 %1$s</string>
-    <string name="available_ram">可用 %1$s KB</string>
-    <string name="eos_ram_amount">≈ %1$s EOS</string>
-    <string name="cpu_available">已用 %1$s ms</string>
-    <string name="cpu_total">总量 %1$s ms</string>
-    <string name="net_available">已用 %1$s KB</string>
-    <string name="net_total">总量 %1$s KB</string>
 
-    <string name="confirm_buy">确认买入</string>
-    <string name="confirm_sell">确认卖出</string>
-    <string name="explanation">说明</string>
     <string name="change_wallet_name_hint">请输入新的钱包名称</string>
     <string name="click_to_copy">点击复制</string>
     <string name="key_saved">我已安全储存私钥</string>
@@ -250,69 +344,6 @@
     <string name="create_use_invCode">VIP邀请码创建</string>
     <string name="how_to_get_invCode">如何获取邀请码</string>
     <string name="input_invCode_hint">请输入邀请码</string>
-
-    <string name="method_one">方法一</string>
-    <string name="method_two">方法二</string>
-    <string name="method_one_hint">请持有EOS的好友向智能合约 signupeoseos 转账并须将以下文字作为备注(memo)
-        ，即可完成创建。创建成功后请重新打开App，即可使用该账户。</string>
-    <string name="method_one_hint_2">为保证顺利创建账户，建议至少转 2EOS ：账户将抵押 0.01EOS 作为CPU，0.01EOS 作为NET，剩余1.8EOS将按现价购买RAM。</string>
-    <string name="method_two_hint">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
-    <string name="show_priKey">查看私钥</string>
-    <string name="priKey_encrypted">私钥已加密存储，请输入之前设置的密码以解锁查看</string>
-    <string name="copy">复制</string>
-    <string name="priKey_en">私钥 Private Key</string>
-    <string name="buy_ram">Buy RAM</string>
-    <string name="sell_ram">Sell RAM</string>
-    <string name="delegate_memo">Delegate %1$s EOS for CPU, %2$s EOS for NET</string>
-    <string name="unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
-    <string name="ram_unit_price">≈ %1$s EOS/KB</string>
-
-    <!-- Vote activity-->
-    <string name="vote_num">%1$s/30</string>
-    <string name="vote_num_init">0/30</string>
-    <string name="nodes_selected_num">已选节点(%1$s/30)</string>
-    <string name="delegate_res">抵押资源</string>
-    <string name="zero_balance">0.0000 EOS</string>
-    <string name="no_avail_votes">票数不足</string>
-    <!-- Transfer activity-->
-    <string name="account_name">账户名</string>
-    <string name="remain_balance_zero">余额： 0.0000 EOS</string>
-    <string name="transfer_hint">输入转账金额，最多四位小数</string>
-    <string name="input_transfer_hint">输入转账备注</string>
-
-    <!-- Delegate activity-->
-    <string name="remain_balance">余额： -- EOS</string>
-
-    <!-- Dialogs -->
-    <string name="switch_account">切换账户</string>
-    <string name="confirm_delegate">确认抵押</string>
-    <string name="input_pass_hint">请输入@账户名的密码</string>
-    <string name="gemma_password_hint">Gemma不曾知晓钱包密码，每次操作需要输入密码以授权</string>
-    <string name="confirm_author">确认以授权</string>
-
-    <!-- Barcode scan activity -->
-    <string name="barcode_scan_hint">将条码放入框内，即可自动扫描</string>
-    <string name="qr_scan_hint">请将二维码放入框内，即可自动扫描</string>
-    <string name="scan_qr_code">扫描二维码</string>
-
-
-    <!-- Gesture login activity -->
-    <string name="gesture_forget_gesture">忘记手势密码</string>
-    <string name="gesture_default">请输入手势密码</string>
-    <string name="gesture_error">手势密码输入错误</string>
-    <string name="gesture_error_max_retry">手势密码输入错误次数太多，%1$d秒后重试</string>
-    <string name="gesture_correct">输入正确</string>
-    <string name="gesture_error_tip_total">次机会</string>
-    <string name="gesture_tip_password_error_retry">密码错误，还剩</string>
-
-    <!-- Create gesture activity -->
-    <string name="create_gesture_activity">CreateGestureActivity</string>
-    <string name="create_gesture_default">绘制解锁图案</string>
-    <string name="create_gesture_correct">再次绘制解锁图案</string>
-    <string name="create_gesture_less_error">至少连接4个点，请重新输入</string>
-    <string name="create_gesture_confirm_error">与上一次绘制不一致，请重新绘制</string>
-    <string name="create_gesture_confirm_correct">设置成功</string>
-    <string name="create_gesture_reset">重新设置</string>
 
 
 </resources>

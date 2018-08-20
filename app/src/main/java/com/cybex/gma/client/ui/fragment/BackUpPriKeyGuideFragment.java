@@ -74,7 +74,8 @@ public class BackUpPriKeyGuideFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("备份私钥", true, true);
+        setNavibarTitle(getResources().getString(R.string.backup_prikey), true,
+                true);
     }
 
     @Override
@@ -118,7 +119,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                         EditText password = dialog.findViewById(R.id.et_password);
                         final String inputPass = password.getText().toString().trim();
                         if (EmptyUtils.isEmpty(inputPass)){
-                            GemmaToastUtils.showLongToast("请输入密码");
+                            GemmaToastUtils.showLongToast(getString(R.string.please_input_pass));
                             return;
                         }else{
                             if (!EmptyUtils.isEmpty(curWallet)){
@@ -127,7 +128,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                                 //验证密码是否正确
                                 if ("wrong password".equals(priKey)){
                                     //密码错误
-                                    GemmaToastUtils.showLongToast("密码错误请重新输入！");
+                                    GemmaToastUtils.showLongToast(getString(R.string.wrong_password));
                                 }else {
                                     //密码正确
                                     EventBusProvider.postSticky(new KeySendEvent(priKey));
