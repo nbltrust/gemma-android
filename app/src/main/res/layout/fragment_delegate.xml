@@ -183,7 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/dimen_10"
-                android:text="余额： -- EOS"
+                android:text="@string/remain_balance"
                 android:textColor="@color/dusk"
                 android:textSize="@dimen/font_3"
                 />

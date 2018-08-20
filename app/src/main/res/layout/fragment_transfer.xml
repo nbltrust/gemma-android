@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="15dp"
-                android:text="收款人"
+                android:text="@string/receiver"
                 android:textColor="#8e8e93"
                 android:textSize="16sp"
                 />
@@ -67,7 +67,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/view_divider"
                     android:background="@null"
-                    android:hint="账户名"
+                    android:hint="@string/account_name"
                     android:paddingLeft="18dp"
                     android:textColor="@color/font_dark_state_blue"
                     android:textColorHint="#9ea3bd"
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
-                        android:text="付款账户"
+                        android:text="@string/payingAccount"
                         android:textColor="#8e8e93"
                         android:textSize="16sp"
                         />
@@ -126,7 +126,7 @@
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="12dp"
                             android:singleLine="true"
-                            android:text="余额：0.0000 EOS"
+                            android:text="@string/remain_balance_zero"
                             android:textColor="#535c8a"
                             android:textSize="14sp"
                             />
@@ -154,7 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
-                        android:text="金额"
+                        android:text="@string/fund"
                         android:textColor="#8e8e93"
                         android:textSize="16sp"
                         />
@@ -169,7 +169,7 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="14dp"
                         android:background="@null"
-                        android:hint="输入转账金额，最多四位小数"
+                        android:hint="@string/transfer_hint"
                         android:textColorHint="#c6cade"
                         android:inputType="numberDecimal"
                         android:singleLine="true"
@@ -197,7 +197,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
-                        android:text="备注（可选）"
+                        android:text="@string/memo_optional"
                         android:textColor="#8e8e93"
                         android:textSize="16sp"
                         />
@@ -211,7 +211,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:background="@null"
-                        android:hint="输入转账备注"
+                        android:hint="@string/input_transfer_hint"
                         android:textColorHint="#c6cade"
                         android:maxLines="3"
                         android:minHeight="50dp"
@@ -234,7 +234,7 @@
                 android:layout_marginTop="60dp"
                 android:background="@drawable/selector_btn_transfer"
                 android:enabled="false"
-                android:text="确认转账"
+                android:text="@string/confirmTransfer"
                 android:textColor="@color/white"
                 android:textSize="16sp"/>
 

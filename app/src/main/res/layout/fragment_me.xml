@@ -66,7 +66,6 @@
                     title:sShapeCornersRadius="@dimen/dimen_6"
                     title:sUseShape="true"
                     title:sShapeSelectorPressedColor="@color/item_pressed">
-                    >
 
                 </com.allen.library.SuperTextView>
 
