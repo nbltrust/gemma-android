@@ -317,4 +317,18 @@
     <string name="finger_tip_device_no_support">该设备不支持</string>
     <string name="finger_tip_verify_failed">指纹验证失败，请重试</string>
 
+    <!-- Change Node Setting -->
+    <string name="node_cybex">http://52.77.177.200:8888(eoscybex)</string>
+    <string name="node_starteos">http://api-mainnet.starteos.io</string>
+    <string name="node_eosnewyork">https://api.eosnewyork.io</string>
+    <string name="node_greymass">https://eos.greymass.com</string>
+    <string name="node_eosasia">https://api-direct.eosasia.one</string>
+    <string name="node_eosgravity">https://api-mainnet.eosgravity.com</string>
+    <string name="node_helloeos">https://api.helloeos.com.cn</string>
+    <string name="node_hkeos">https://api.hkeos.com</string>
+    <string name="node_eos42">https://nodes.eos42.io</string>
+    <string name="node_cypherglass">https://api.cypherglass.com</string>
+    <string name="node_select">节点设置</string>
+
+
 </resources>
