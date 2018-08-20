@@ -270,6 +270,11 @@
     <string name="nodes_selected_num">已选节点(%1$s/30)</string>
 
 
+
+    <!-- Barcode scan activity -->
+    <string name="scan_hint">将条码放入框内，即可自动扫描</string>
+
+    
     <!-- Gesture login activity -->
     <string name="gesture_forget_gesture">忘记手势密码</string>
     <string name="gesture_default">请输入手势密码</string>
