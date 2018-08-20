@@ -281,7 +281,7 @@
         title:sUseShape="true"
         title:sShapeSelectorPressedColor="@color/item_pressed"
         title:sShapeCornersRadius="6dp"
-        title:sLeftTextString="@string/vote"
+        title:sLeftTextString="@string/title_vote"
         title:sLeftTextSize="@dimen/font_3.5"
         title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
         title:sRightTvDrawableRight="@drawable/ic_arrow"

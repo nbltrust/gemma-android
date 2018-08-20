@@ -53,14 +53,14 @@ public class ChangeWalletNameFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("管理钱包", true);
+        setNavibarTitle(getResources().getString(R.string.manage_wallet), true);
         mTitleBar.setActionTextColor(getResources().getColor(R.color.whiteTwo));
         mTitleBar.setActionTextSize(18);
         int currentID = getArguments().getInt("walletID");
         curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentID);
         if (EmptyUtils.isNotEmpty(curWallet)){
             setWalletName.setHint(curWallet.getWalletName());
-            mTitleBar.addAction(new TitleBar.TextAction("保存") {
+            mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.save)) {
                 @Override
                 public void performAction(View view) {
 
