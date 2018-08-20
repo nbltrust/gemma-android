@@ -37,5 +37,6 @@ public interface ParamConstants {
     String GESTURE_SKIP_TYPE = "gesture_skip_type";//手势设置类型
     int GESTURE_SKIP_TYPE_CHANGE = 0x1001;//修改手势密码
     int GESTURE_SKIP_TYPE_LOGIN_VERIFY = 0X1002;//登录验证手势密码
+    int GESTURE_SKIP_TYPE_CLOSE =0X1003;//关闭手势密码
 
 }

@@ -314,5 +314,7 @@
     <string name="create_gesture_confirm_correct">设置成功</string>
     <string name="create_gesture_reset">重新设置</string>
 
+    <string name="finger_tip_device_no_support">该设备不支持</string>
+    <string name="finger_tip_verify_failed">指纹验证失败，请重试</string>
 
 </resources>

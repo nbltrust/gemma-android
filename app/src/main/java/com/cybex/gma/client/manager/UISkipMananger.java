@@ -14,6 +14,7 @@ import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
+import com.cybex.gma.client.ui.activity.FingerprintVerifyActivity;
 import com.cybex.gma.client.ui.activity.GestureCreateActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
@@ -156,9 +157,18 @@ public final class UISkipMananger {
      *
      * @param context
      */
-    public static void launchVerifyGestureActivity(Activity context,Bundle bd) {
+    public static void launchVerifyGestureActivity(Activity context, Bundle bd) {
 
-        launchIntent(context, GestureVerifyActivity.class,bd);
+        launchIntent(context, GestureVerifyActivity.class, bd);
+    }
+
+    /**
+     * 跳转到指纹验证
+     *
+     * @param context
+     */
+    public static void lauchFingerprintVerifyActivity(Activity context) {
+        launchIntent(context, FingerprintVerifyActivity.class);
     }
 
 

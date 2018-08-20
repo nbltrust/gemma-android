@@ -18,9 +18,11 @@ import com.cybex.base.view.lockpattern.widget.LockPatternView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.RefreshGestureEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.SPUtils;
 import com.hxlx.core.lib.common.cache.ACache;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import java.util.Date;
@@ -248,6 +250,12 @@ public class GestureVerifyActivity extends XActivity {
             case ParamConstants.GESTURE_SKIP_TYPE_LOGIN_VERIFY:
                 //登录进入跳转逻辑
                 UISkipMananger.launchHome(this);
+                break;
+            case ParamConstants.GESTURE_SKIP_TYPE_CLOSE:
+                //关闭手势密码跳转逻辑
+                SPUtils.getInstance().put(CacheConstants.KEY_OPEN_GESTURE, false);
+                EventBusProvider.post(new RefreshGestureEvent());
+                finish();
                 break;
             default:
                 break;

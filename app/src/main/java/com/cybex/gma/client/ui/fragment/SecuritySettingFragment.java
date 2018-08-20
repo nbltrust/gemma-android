@@ -66,8 +66,10 @@ public class SecuritySettingFragment extends XFragment {
                     //创建手势密码
                     UISkipMananger.lauchCreateGestureActivity(getActivity());
                 } else {
-                    SPUtils.getInstance().put(CacheConstants.KEY_OPEN_GESTURE, false);
-                    isShowChangeGestureView();
+                    //关闭手势密码，需要先验证原来手势
+                    Bundle bd = new Bundle();
+                    bd.putInt(ParamConstants.GESTURE_SKIP_TYPE, ParamConstants.GESTURE_SKIP_TYPE_CLOSE);
+                    UISkipMananger.launchVerifyGestureActivity(getActivity(), bd);
                 }
             }
         });

@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.cybex.base.view.fingerprint.FingerprintScanHelper;
+import com.cybex.base.view.fingerprint.OnAuthResultListener;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +34,33 @@ public class FingerprintVerifyActivity extends XActivity {
 
             @Override
             public void onClick(View v) {
+                new FingerprintScanHelper(FingerprintVerifyActivity.this)
+                        .startAuth(new OnAuthResultListener() {
+                            @Override
+                            public void onSuccess() {
+                                //指纹验证成功
+                                UISkipMananger.launchHome(FingerprintVerifyActivity.this);
+                                finish();
+
+                            }
+
+                            @Override
+                            public void onInputPwd(String pwd) {
+
+                            }
+
+                            @Override
+                            public void onFailed(String msg) {
+                                GemmaToastUtils.showShortToast(msg);
+
+                            }
+
+                            @Override
+                            public void onDeviceNotSupport() {
+                                GemmaToastUtils.showShortToast(getString(R.string.finger_tip_device_no_support));
+
+                            }
+                        });
 
             }
         });
