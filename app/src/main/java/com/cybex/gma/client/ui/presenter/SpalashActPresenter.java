@@ -31,10 +31,10 @@ public class SpalashActPresenter extends XPresenter<SpalashActivity> {
                 Bundle bd = new Bundle();
                 bd.putInt(ParamConstants.GESTURE_SKIP_TYPE, ParamConstants.GESTURE_SKIP_TYPE_LOGIN_VERIFY);
                 UISkipMananger.launchVerifyGestureActivity(getV(), bd);
+            } else {
+                //跳转到主界面
+                UISkipMananger.launchHome(getV());
             }
-
-            //跳转到主界面
-            UISkipMananger.launchHome(getV());
         } else {
             UISkipMananger.launchLogin(getV());
         }

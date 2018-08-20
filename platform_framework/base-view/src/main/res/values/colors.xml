@@ -11,5 +11,10 @@
     <color name="round_corner_progress_bar_progress_default">#7f7f7f</color>
     <color name="round_corner_progress_bar_secondary_progress_default">@android:color/transparent</color>
 
+    <color name="error_color">#ff0000</color>
+    <color name="warning_color">#f4511e</color>
+    <color name="hint_color">#42000000</color>
+    <color name="success_color">#3381e0</color>
+    <color name="auth_title">#000000</color>
 
 </resources>
