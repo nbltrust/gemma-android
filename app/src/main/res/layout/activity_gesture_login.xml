@@ -29,7 +29,7 @@
         android:layout_marginTop="60dp"
         android:orientation="vertical">
 
-        <com.star.lockpattern.widget.LockPatternView
+        <com.cybex.base.view.lockpattern.widget.LockPatternView
             android:id="@+id/lockPatternView"
             android:layout_width="270dp"
             android:layout_height="270dp"

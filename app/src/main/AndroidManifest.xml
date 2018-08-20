@@ -39,11 +39,7 @@
         <activity
             android:name=".ui.activity.SpalashActivity"
             android:theme="@style/SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <!-- 主TAB界面 -->
@@ -52,6 +48,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <!-- 创建方式容器界面 -->
         <activity
@@ -128,11 +129,11 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.CreateGestureActivity"
+            android:name=".ui.activity.GestureCreateActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.activity.GestureLoginActivity"
+            android:name=".ui.activity.GestureVerifyActivity"
             android:screenOrientation="portrait"/>
 
         <!-- 应用内浏览器窗口 -->

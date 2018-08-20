@@ -14,11 +14,12 @@ import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
-import com.cybex.gma.client.ui.activity.CreateGestureActivity;
+import com.cybex.gma.client.ui.activity.GestureCreateActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
 import com.cybex.gma.client.ui.activity.GeneralSettingActivity;
+import com.cybex.gma.client.ui.activity.GestureVerifyActivity;
 import com.cybex.gma.client.ui.activity.ImportWalletActivity;
 import com.cybex.gma.client.ui.activity.InitialActivity;
 import com.cybex.gma.client.ui.activity.MainTabActivity;
@@ -147,8 +148,19 @@ public final class UISkipMananger {
      */
     public static void lauchCreateGestureActivity(Activity context) {
 
-        launchIntent(context, CreateGestureActivity.class);
+        launchIntent(context, GestureCreateActivity.class);
     }
+
+    /**
+     * 跳转到验证手势密码
+     *
+     * @param context
+     */
+    public static void launchVerifyGestureActivity(Activity context,Bundle bd) {
+
+        launchIntent(context, GestureVerifyActivity.class,bd);
+    }
+
 
     /**
      * 跳转到about界面

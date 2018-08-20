@@ -7,12 +7,12 @@ import com.allen.library.SuperTextView;
 import com.cybex.base.view.switchbutton.SwitchButton;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.RefreshGestureEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.SPUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -70,6 +70,16 @@ public class SecuritySettingFragment extends XFragment {
                 }
             }
         });
+
+
+        tvChangePattern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bd = new Bundle();
+                bd.putInt(ParamConstants.GESTURE_SKIP_TYPE, ParamConstants.GESTURE_SKIP_TYPE_CHANGE);
+                UISkipMananger.launchVerifyGestureActivity(getActivity(), bd);
+            }
+        });
     }
 
     private void isShowChangeGestureView() {
@@ -90,7 +100,6 @@ public class SecuritySettingFragment extends XFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceiveRefreshEvent(RefreshGestureEvent gestureEvent) {
-        GemmaToastUtils.showShortToast("refresh");
         if (EmptyUtils.isNotEmpty(gestureEvent)) {
             isShowChangeGestureView();
         }

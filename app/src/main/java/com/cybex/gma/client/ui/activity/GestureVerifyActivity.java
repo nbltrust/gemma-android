@@ -12,12 +12,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cybex.base.view.lockpattern.util.LockPatternUtil;
 import com.cybex.base.view.lockpattern.widget.LockPatternView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.SPUtils;
 import com.hxlx.core.lib.common.cache.ACache;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -36,7 +37,7 @@ import butterknife.OnClick;
  *
  * Created by wanglin on 2018/8/17.
  */
-public class GestureLoginActivity extends XActivity {
+public class GestureVerifyActivity extends XActivity {
 
     private static final String TAG = "LoginGestureActivity";
 
@@ -65,6 +66,8 @@ public class GestureLoginActivity extends XActivity {
     private boolean mError;
     // 手势密码输入错误超过5次时间
     private static final String GESTURE_TIME = "gesture_time";
+
+    private int gestureType = -1;
 
 
     //接受TimerTask消息,通知UI
@@ -110,7 +113,12 @@ public class GestureLoginActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        aCache = ACache.get(GestureLoginActivity.this);
+        Bundle bd = getIntent().getExtras();
+        if (bd != null) {
+            gestureType = bd.getInt(ParamConstants.GESTURE_SKIP_TYPE);
+        }
+
+        aCache = ACache.get(GestureVerifyActivity.this);
         //得到当前用户的手势密码
         gesturePassword = aCache.getAsBinary(CacheConstants.GESTURE_PASSWORD);
         lockPatternView.setOnPatternListener(patternListener);
@@ -228,18 +236,30 @@ public class GestureLoginActivity extends XActivity {
     }
 
     /**
-     * 手势登录成功（去首页）
+     * 手势登录成功
      */
     private void loginGestureSuccess() {
-        Toast.makeText(GestureLoginActivity.this, "success", Toast.LENGTH_SHORT).show();
+        switch (gestureType) {
+            case ParamConstants.GESTURE_SKIP_TYPE_CHANGE:
+                //修改手势密码验证逻辑跳转
+                UISkipMananger.lauchCreateGestureActivity(this);
+                finish();
+                break;
+            case ParamConstants.GESTURE_SKIP_TYPE_LOGIN_VERIFY:
+                //登录进入跳转逻辑
+                UISkipMananger.launchHome(this);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
-     * 忘记手势密码（去账号登录界面）
+     * 忘记手势密码
      */
     @OnClick(R.id.forgetGestureBtn)
     void forgetGesturePasswrod() {
-        Intent intent = new Intent(GestureLoginActivity.this, CreateGestureActivity.class);
+        Intent intent = new Intent(GestureVerifyActivity.this, GestureCreateActivity.class);
         startActivity(intent);
         this.finish();
     }

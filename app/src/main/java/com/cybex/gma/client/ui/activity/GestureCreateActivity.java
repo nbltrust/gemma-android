@@ -29,7 +29,7 @@ import butterknife.OnClick;
  *
  * Created by wanglin on 2018/8/17.
  */
-public class CreateGestureActivity extends XActivity {
+public class GestureCreateActivity extends XActivity {
 
     @BindView(R.id.lockPatterIndicator)
     LockPatternIndicator lockPatternIndicator;
@@ -43,7 +43,7 @@ public class CreateGestureActivity extends XActivity {
     private List<LockPatternView.Cell> mChosenPattern = null;
     private ACache aCache;
     private static final long DELAYTIME = 600L;
-    private static final String TAG = "CreateGestureActivity";
+    private static final String TAG = "GestureCreateActivity";
 
 
     @Override
@@ -63,7 +63,7 @@ public class CreateGestureActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        aCache = ACache.get(CreateGestureActivity.this);
+        aCache = ACache.get(GestureCreateActivity.this);
         lockPatternView.setOnPatternListener(patternListener);
     }
 
