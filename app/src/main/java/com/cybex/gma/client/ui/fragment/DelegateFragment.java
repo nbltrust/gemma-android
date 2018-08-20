@@ -126,7 +126,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("资源管理", true, true);
+        setNavibarTitle(getResources().getString(R.string.title_delegate), true, true);
         setUnclickable(btundelegateCpuNet);
         setUnclickable(btDelegateCpuNet);
         ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
@@ -153,7 +153,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
         if (getArguments()!= null){
             ResourceInfoVO resourceInfoVO = getArguments().getParcelable("resourceInfo");
             if (EmptyUtils.isNotEmpty(resourceInfoVO)){
-                String balance = "余额 " + resourceInfoVO.getBanlance();
+                String balance = getResources().getString(R.string.remain_balance_pure) + resourceInfoVO.getBanlance();
                 tvRemainBalance.setText(balance);
                 //cpu总量及已用显示
                 String cpuUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuUsed()), "1024", 2);
@@ -384,7 +384,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                     if (EmptyUtils.isNotEmpty(inputPass)){
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")){
-                                            GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
@@ -394,7 +394,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                             dialog.cancel();
                                         }
                                     }else{
-                                        GemmaToastUtils.showLongToast("请输入密码！");
+                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
                                     }
                                 }
                                 break;
@@ -407,7 +407,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                         final String cypher = curWallet.getCypher();
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")){
-                                            GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
@@ -417,9 +417,8 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                             dialog.cancel();
                                         }
                                     }else{
-                                        GemmaToastUtils.showLongToast("请输入密码！");
+                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
                                     }
-
                                 }
                                 break;
                         }

@@ -22,7 +22,8 @@ public class CreateByFriendFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("邀请好友帮忙创建", true, true);
+        setNavibarTitle(getResources().getString(R.string.title_invite_friend),
+                true, true);
     }
 
     @Override

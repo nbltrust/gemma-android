@@ -77,7 +77,7 @@ public class WalletDetailFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("管理钱包", true);
+        setNavibarTitle(getResources().getString(R.string.manage_wallet), true);
         if (getArguments() != null){
             curWallet = getArguments().getParcelable("thisWallet");
             if (!EmptyUtils.isEmpty(curWallet)){
@@ -162,7 +162,7 @@ public class WalletDetailFragment extends XFragment {
                                 start(ChangePasswordFragment.newInstance(priKey,currentID));
                                 dialog.cancel();
                             }else {
-                                GemmaToastUtils.showLongToast("密码错误，请重新输入");
+                                GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
                             }
                         }
 

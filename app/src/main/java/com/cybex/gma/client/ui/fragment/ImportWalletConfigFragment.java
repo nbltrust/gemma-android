@@ -134,7 +134,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     public void onDestroyView() {
         super.onDestroyView();
         Validate.unreg(this);
-//        unbinder.unbind();
+        unbinder.unbind();
     }
 
     public void showProgressDialog(final String prompt) {

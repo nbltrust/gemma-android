@@ -44,7 +44,7 @@ public class ChangeNodeFragment extends XFragment {
         setNavibarTitle(getResources().getString(R.string.node_select), true, false);
         mTitleBar.setActionTextColor(getResources().getColor(R.color.whiteTwo));
         mTitleBar.setActionTextSize(18);
-        mTitleBar.addAction(new TitleBar.TextAction("保存") {
+        mTitleBar.addAction(new TitleBar.TextAction(getResources().getString(R.string.save)) {
             @Override
             public void performAction(View view) {
 

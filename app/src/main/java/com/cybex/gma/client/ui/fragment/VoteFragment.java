@@ -140,7 +140,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
     public void initData(Bundle savedInstanceState) {
         tvExecVote.setClickable(false);
         //getP().getTotalDelegatedRes();
-        setNavibarTitle("投票", true, true);
+        setNavibarTitle(getResources().getString(R.string.vote), true, true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
@@ -236,7 +236,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                             if (EmptyUtils.isNotEmpty(inputPass)){
                                 final String key = JNIUtil.get_private_key(cypher, inputPass);
                                 if (key.equals("wrong password")){
-                                    GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                    GemmaToastUtils.showLongToast(getString(R.string.wrong_password));
                                 }else{
                                     //密码正确，执行投票操作
                                     final String curEOSName = curWallet.getCurrentEosName();
@@ -248,7 +248,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                                     dialog.cancel();
                                 }
                             }else{
-                                GemmaToastUtils.showLongToast("请输入密码！");
+                                GemmaToastUtils.showLongToast(getString(R.string.please_input_pass));
                             }
 
                         }

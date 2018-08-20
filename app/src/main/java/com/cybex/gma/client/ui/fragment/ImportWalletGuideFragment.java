@@ -47,7 +47,7 @@ public class ImportWalletGuideFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("导入钱包", true, true);
+        setNavibarTitle(getResources().getString(R.string.import_wallet), true, true);
     }
 
     @Override

@@ -96,7 +96,7 @@ public class ChangePasswordFragment extends XFragment {
                     curWallet.setCypher(newCypher);
                     curWallet.setPasswordTip(getPassHint());
                     DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
-                    GemmaToastUtils.showLongToast("修改密码成功");
+                    GemmaToastUtils.showLongToast(getResources().getString(R.string.change_pass_success));
                     UISkipMananger.launchHome(getActivity());
                 }
             }
@@ -148,7 +148,7 @@ public class ChangePasswordFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("修改密码", true, false);
+        setNavibarTitle(getResources().getString(R.string.title_change_pass), true, false);
         if (getArguments() != null){
             final int currentId = getArguments().getInt("walletID");
             //LoggerManager.d("currentID", currentId);
@@ -239,19 +239,19 @@ public class ChangePasswordFragment extends XFragment {
     }
 
     public void setRepeatPassValidStyle(){
-        tvRepeatNewPass.setText("重复密码");
+        tvRepeatNewPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.steel));
         edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
     public void setRepeatPassFocusStyle(){
-        tvRepeatNewPass.setText("重复密码");
+        tvRepeatNewPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
     public void setRepeatPassInvalidStyle(){
-        tvRepeatNewPass.setText("密码不一致");
+        tvRepeatNewPass.setText(getResources().getString(R.string.pass_no_match));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.scarlet));
         edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }

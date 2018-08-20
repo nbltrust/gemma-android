@@ -64,7 +64,7 @@ public class CreatingWalletFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("创建钱包", true, true);
+        setNavibarTitle(getResources().getString(R.string.create_wallet), true, true);
     }
 
 
