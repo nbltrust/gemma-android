@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -55,13 +56,13 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("操作处理中...");
+                        getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         LoggerManager.d(response.code());
                         getV().dissmisProgressDialog();
                     }
@@ -76,7 +77,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             getInfo(OPERATION_BUY_RAM, from, privateKey, binargs);
 
                         } else {
-                            GemmaToastUtils.showShortToast("操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
                         getV().dissmisProgressDialog();
 
@@ -103,13 +104,13 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("操作处理中...");
+                        getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -123,7 +124,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             getInfo(OPERATION_SELL_RAM, account, privateKey, binargs);
 
                         } else {
-                            GemmaToastUtils.showShortToast("操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
                         getV().dissmisProgressDialog();
                     }
@@ -145,7 +146,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -166,7 +167,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                                             from, infostr, abiStr, 0, 0, 120);
                                     break;
                                 default:
-                                    LoggerManager.d("参数错误");
+                                    break;
                             }
 
                             LoggerManager.d("transactionJson:" + transactionStr);
@@ -189,7 +190,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             }
 
                         } else {
-                            GemmaToastUtils.showShortToast("getInfo操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                             getV().dissmisProgressDialog();
                         }
 
@@ -217,7 +218,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                            GemmaToastUtils.showLongToast("操作成功");
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
                             //跳转到收支记录
                             UISkipMananger.launchTransferRecord(getV().getActivity());
                         }
@@ -246,38 +247,38 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
         new GetRamMarketRequest(String.class)
                 .setJsonParams(jsonParams)
                 .getRamMarketRequest(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        String infoJson = response.body();
-                        LoggerManager.d("ram market info:" + infoJson);
-                        try {
-                            GetRamMarketResult result = GsonUtils.jsonToBean(infoJson, GetRamMarketResult.class);
-                            if (result != null) {
-                                List<RamMarketRows> rows = result.rows;
-                                RamMarketBase base = rows.get(0).base;
-                                RamMarketBase quote = rows.get(0).quote;
-                                String[] base_balance = base.balance.split(" ");
-                                String[] quote_balance = quote.balance.split(" ");
-                                String quote_weight = quote.weight;
-                                //args.add(bae_balance[0]);
-                                //args.add(quote_balance[0]);
-                                //args.add(quote_weight);
-                                String ramRatio = AmountUtil.div(quote_balance[0],base_balance[0] , 8);
-                                String ramUnitPrice = AmountUtil.mul(ramRatio, quote_weight, 8);
-                                String ramUnitPriceKB = AmountUtil.mul(ramUnitPrice, "1024", 4);
-                                getV().setRamUnitPrice(ramUnitPriceKB);
-                                //args.add(ramUnitPrice);
-                                }
-                            } catch (Exception e) {
-                            e.printStackTrace();
-                                        }
-                                    }
+                                         @Override
+                                         public void onSuccess(Response<String> response) {
+                                             String infoJson = response.body();
+                                             LoggerManager.d("ram market info:" + infoJson);
+                                             try {
+                                                 GetRamMarketResult result = GsonUtils.jsonToBean(infoJson, GetRamMarketResult.class);
+                                                 if (result != null) {
+                                                     List<RamMarketRows> rows = result.rows;
+                                                     RamMarketBase base = rows.get(0).base;
+                                                     RamMarketBase quote = rows.get(0).quote;
+                                                     String[] base_balance = base.balance.split(" ");
+                                                     String[] quote_balance = quote.balance.split(" ");
+                                                     String quote_weight = quote.weight;
+                                                     //args.add(bae_balance[0]);
+                                                     //args.add(quote_balance[0]);
+                                                     //args.add(quote_weight);
+                                                     String ramRatio = AmountUtil.div(quote_balance[0], base_balance[0], 8);
+                                                     String ramUnitPrice = AmountUtil.mul(ramRatio, quote_weight, 8);
+                                                     String ramUnitPriceKB = AmountUtil.mul(ramUnitPrice, "1024", 4);
+                                                     getV().setRamUnitPrice(ramUnitPriceKB);
+                                                     //args.add(ramUnitPrice);
+                                                 }
+                                             } catch (Exception e) {
+                                                 e.printStackTrace();
+                                             }
+                                         }
 
-                            @Override
-                            public void onError(Response<String> response) {
-                                LoggerManager.d("on Error");
-                        }
-                        }
+                                         @Override
+                                         public void onError(Response<String> response) {
+                                             LoggerManager.d("on Error");
+                                         }
+                                     }
                 );
     }
 

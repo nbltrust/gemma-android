@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
@@ -48,14 +49,16 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
 
     /**
      * 执行Delegate逻辑
+     *
      * @param from 付EOS的账号
      * @param to 收到资源的账号
      * @param stake_net_quantity
      * @param stake_cpu_quantity
      * @param privateKey
      */
-    public void executeDelegateLogic(String from, String to, String stake_net_quantity, String stake_cpu_quantity,
-            String privateKey){
+    public void executeDelegateLogic(
+            String from, String to, String stake_net_quantity, String stake_cpu_quantity,
+            String privateKey) {
         //通过C++获取abi操作体
         String abijson = JNIUtil.create_abi_req_delegatebw(RAM_CODE, VALUE_ACTION_DELEGATE, from, to,
                 stake_net_quantity, stake_cpu_quantity);
@@ -67,13 +70,13 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("操作处理中...");
+                        getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -84,19 +87,21 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
-                            getInfo(OPERATION_DELEGATE ,from, privateKey, binargs);
+                            getInfo(OPERATION_DELEGATE, from, privateKey, binargs);
 
 
                         } else {
-                            GemmaToastUtils.showShortToast("操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
+
                         }
 
                     }
                 });
     }
 
-    public void executeUndelegateLogic(String from, String to, String unstake_net_quantity, String unstake_cpu_quantity,
-            String privateKey){
+    public void executeUndelegateLogic(
+            String from, String to, String unstake_net_quantity, String unstake_cpu_quantity,
+            String privateKey) {
 
         //通过C++获取abi操作体
         String abijson = JNIUtil.create_abi_req_undelegatebw(RAM_CODE, VALUE_ACTION_UNDELEGATE, from, to,
@@ -109,13 +114,13 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("操作处理中...");
+                        getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -126,11 +131,11 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
-                            getInfo(OPERATION_UNDELEGATE ,from, privateKey, binargs);
+                            getInfo(OPERATION_UNDELEGATE, from, privateKey, binargs);
 
 
                         } else {
-                            GemmaToastUtils.showShortToast("操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
 
                     }
@@ -139,8 +144,9 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
     }
 
 
-    public void executeBuyRamLogic(String from, String to, String quantity,
-            String privateKey){
+    public void executeBuyRamLogic(
+            String from, String to, String quantity,
+            String privateKey) {
 
         //通过C++获取abi操作体
         String abijson = JNIUtil.fincreate_abi_req_buyram(RAM_CODE, VALUE_ACTION_BUY_RAM, from, to, quantity);
@@ -152,13 +158,13 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("操作处理中...");
+                        getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         LoggerManager.d(response.code());
                         getV().dissmisProgressDialog();
                     }
@@ -170,11 +176,11 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
-                            getInfo(OPERATION_BUY_RAM ,from, privateKey, binargs);
+                            getInfo(OPERATION_BUY_RAM, from, privateKey, binargs);
 
 
                         } else {
-                            GemmaToastUtils.showShortToast("操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
 
                     }
@@ -183,13 +189,12 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
     }
 
     /**
-     *
      * @param
      * @param account 谁收到卖出RAM对应的EOS，这里应该设置为本账号
      * @param bytes
      * @param privateKey
      */
-    public void executeSellRamLogic(String account, long bytes,  String privateKey){
+    public void executeSellRamLogic(String account, long bytes, String privateKey) {
 
         //通过C++获取abi操作体
         String abijson = JNIUtil.create_abi_req_sellram(RAM_CODE, VALUE_ACTION_SELL_RAM, account, bytes);
@@ -201,13 +206,13 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("操作处理中...");
+                        getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -218,11 +223,11 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
-                            getInfo(OPERATION_SELL_RAM ,account, privateKey, binargs);
+                            getInfo(OPERATION_SELL_RAM, account, privateKey, binargs);
 
 
                         } else {
-                            GemmaToastUtils.showShortToast("操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
 
                     }
@@ -245,7 +250,7 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -256,25 +261,25 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                             LoggerManager.d("config info:" + infostr);
                             //C++库获取Transaction交易体
                             String transactionStr = "";
-                            switch (operation_type){
+                            switch (operation_type) {
                                 case OPERATION_DELEGATE:
-                                     transactionStr = JNIUtil.signTransaction_delegatebw(privateKey, VALUE_CONTRACT,
-                                            from, infostr, abiStr, 0,0,120);
+                                    transactionStr = JNIUtil.signTransaction_delegatebw(privateKey, VALUE_CONTRACT,
+                                            from, infostr, abiStr, 0, 0, 120);
                                     break;
                                 case OPERATION_UNDELEGATE:
                                     transactionStr = JNIUtil.signTransaction_undelegatebw(privateKey, VALUE_CONTRACT,
-                                            from, infostr, abiStr, 0,0,120);
+                                            from, infostr, abiStr, 0, 0, 120);
                                     break;
                                 case OPERATION_BUY_RAM:
                                     transactionStr = JNIUtil.signTransaction_buyram(privateKey, VALUE_CONTRACT,
-                                            from, infostr, abiStr, 0,0,120);
+                                            from, infostr, abiStr, 0, 0, 120);
                                     break;
                                 case OPERATION_SELL_RAM:
                                     transactionStr = JNIUtil.signTransaction_sellram(privateKey, VALUE_CONTRACT,
-                                            from, infostr, abiStr, 0,0,120);
+                                            from, infostr, abiStr, 0, 0, 120);
                                     break;
                                 default:
-                                    LoggerManager.d("参数错误");
+                                    break;
                             }
 
                             LoggerManager.d("transactionJson:" + transactionStr);
@@ -297,7 +302,7 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                             }
 
                         } else {
-                            GemmaToastUtils.showShortToast("getInfo操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                             getV().dissmisProgressDialog();
                         }
 
@@ -325,7 +330,7 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                            GemmaToastUtils.showLongToast("操作成功");
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
                             //todo 页面刷新，什么数据该更新显示？
 
                         }
@@ -337,80 +342,81 @@ public class PushTransactionPresenter extends XPresenter<BuySellRamFragment> {
 
     /**
      * 获取当前链上ram市场信息
+     *
      * @return List中的三个参数依次为base_balance, quote_balance,quote_weight
      */
-   public List<String> getRamMarketInfo(){
-       List<String> args = new ArrayList<>();
-       GetRamMarketReqParams params = new GetRamMarketReqParams();
-       params.setScope(RAM_SCOPE);
-       params.setCode(RAM_CODE);
-       params.setTable(RAM_TABLE);
-       params.setJson(true);
+    public List<String> getRamMarketInfo() {
+        List<String> args = new ArrayList<>();
+        GetRamMarketReqParams params = new GetRamMarketReqParams();
+        params.setScope(RAM_SCOPE);
+        params.setCode(RAM_CODE);
+        params.setTable(RAM_TABLE);
+        params.setJson(true);
 
-       String jsonParams = GsonUtils.objectToJson(params);
+        String jsonParams = GsonUtils.objectToJson(params);
 
-       new GetRamMarketRequest(String.class)
-               .setJsonParams(jsonParams)
-               .getRamMarketRequest(new StringCallback() {
-                   @Override
-                   public void onSuccess(Response<String> response) {
-                       String infoJson = response.body();
-                       LoggerManager.d("ram market info:" + infoJson);
-                       try {
-                           GetRamMarketResult result = GsonUtils.jsonToBean(infoJson, GetRamMarketResult.class);
-                           if (result != null){
-                               List<RamMarketRows> rows = result.rows;
-                               RamMarketBase base = rows.get(0).base;
-                               RamMarketBase quote = rows.get(0).quote;
+        new GetRamMarketRequest(String.class)
+                .setJsonParams(jsonParams)
+                .getRamMarketRequest(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        String infoJson = response.body();
+                        LoggerManager.d("ram market info:" + infoJson);
+                        try {
+                            GetRamMarketResult result = GsonUtils.jsonToBean(infoJson, GetRamMarketResult.class);
+                            if (result != null) {
+                                List<RamMarketRows> rows = result.rows;
+                                RamMarketBase base = rows.get(0).base;
+                                RamMarketBase quote = rows.get(0).quote;
 
-                               String[] base_balance = base.balance.split(" ");
-                               String[] quote_balance = quote.balance.split(" ");
-                               String quote_weight = quote.weight;
+                                String[] base_balance = base.balance.split(" ");
+                                String[] quote_balance = quote.balance.split(" ");
+                                String quote_weight = quote.weight;
 
-                               args.add(base_balance[0]);
-                               args.add(quote_balance[0]);
-                               args.add(quote_weight);
-                           }
-                       } catch (Exception e) {
-                           e.printStackTrace();
-                       }
-                   }
+                                args.add(base_balance[0]);
+                                args.add(quote_balance[0]);
+                                args.add(quote_weight);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
 
-                   @Override
-                   public void onError(Response<String> response) {
-                       LoggerManager.d("on Error");
-                   }
-               });
+                    @Override
+                    public void onError(Response<String> response) {
+                        LoggerManager.d("on Error");
+                    }
+                });
 
         return args;
-   }
+    }
 
     /**
      * 输入EOS数额得RAM数量估值
      */
-   public String calEos2Ram(List<String> args, String eosNum){
+    public String calEos2Ram(List<String> args, String eosNum) {
 
-           String baseBalance = args.get(0);
-           String quoteBalance = args.get(1);
-           String quoteWeight = args.get(2);
+        String baseBalance = args.get(0);
+        String quoteBalance = args.get(1);
+        String quoteWeight = args.get(2);
 
-           String ramRatio = AmountUtil.div(quoteBalance, baseBalance, 10);
-           String ramUnitPrice = AmountUtil.mul(ramRatio, quoteWeight, 10);
-           String ramPrice = AmountUtil.mul(ramUnitPrice, eosNum, 10);
-           return ramPrice;
-   }
+        String ramRatio = AmountUtil.div(quoteBalance, baseBalance, 10);
+        String ramUnitPrice = AmountUtil.mul(ramRatio, quoteWeight, 10);
+        String ramPrice = AmountUtil.mul(ramUnitPrice, eosNum, 10);
+        return ramPrice;
+    }
 
     /**
      * 输入RAM数额得EOS估值
      */
-    public String calRam2Eos(List<String> args, String ramAmount){
+    public String calRam2Eos(List<String> args, String ramAmount) {
 
         String baseBalance = args.get(0);
         String quoteBalance = args.get(1);
         String quoteWeight = args.get(2);
 
 
-       return "";
+        return "";
     }
 
 }

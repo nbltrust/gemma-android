@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
@@ -72,9 +73,9 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             JSONArray array = new JSONArray(jsonStr);
                             if (array != null && array.length() > 0) {
                                 banlance = array.optString(0);
-                                getV().showInitData(banlance,currentEOSName);
+                                getV().showInitData(banlance, currentEOSName);
                             } else {
-                                getV().showInitData(banlance,currentEOSName);
+                                getV().showInitData(banlance, currentEOSName);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -105,13 +106,13 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("转账处理中...");
+                        getV().showProgressDialog(getV().getString(R.string.transfer_trade_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("转账失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -126,7 +127,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
 
                         } else {
-                            GemmaToastUtils.showShortToast("转账失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
                         }
 
                     }
@@ -149,7 +150,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("转账失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -184,7 +185,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             }
 
                         } else {
-                            GemmaToastUtils.showShortToast("转账失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
                             getV().dissmisProgressDialog();
                         }
 
@@ -212,7 +213,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                            GemmaToastUtils.showLongToast("转账成功");
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.transfer_oprate_success));
                             getV().clearData();
 
                         }

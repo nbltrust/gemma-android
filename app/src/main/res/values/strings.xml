@@ -342,7 +342,6 @@
     <string name="password_no_match">两次输入的密码不匹配，请重新输入</string>
     <string name="repeat_input_pass">请再次输入您的密码</string>
 
-
     <string name="lock_pattern_1">请设置新的解锁密码</string>
     <string name="lock_pattern_2">再次输入解锁密码，以确认</string>
     <string name="lock_pattern_3">请输入原手势密码</string>
@@ -365,7 +364,6 @@
     <string name="walletManege">钱包管理</string>
 
 
-
     <string name="click_to_copy">点击复制</string>
     <string name="key_saved">我已安全储存私钥</string>
 
@@ -379,5 +377,35 @@
 
     <string name="finger_tip_device_no_support">该设备不支持</string>
     <string name="finger_tip_verify_failed">指纹验证失败，请重试</string>
+
+    <string name="setting_password_success">成功设置手势密码</string>
+    <string name="setting_new_gesture_pwd">设置新手势密码</string>
+    
+    <string name="status_un_confirmed">未确认</string>
+    <string name="status_confirmed_ing">正在确认</string>
+    <string name="status_confirmed_ok">已确认</string>
+    <string name="status_trade_failed">交易失败</string>
+
+    <string name="title_security_settings">安全设置</string>
+    <string name="operate_deal_ing">操作处理中...</string>
+    <string name="operate_deal_failed">操作失败</string>
+    <string name="operate_deal_success">操作成功</string>
+
+    <string name="config_wallet_ing">正在配置钱包...</string>
+    <string name="import_wallet_failed">导入钱包失败,请检查输入后重试</string>
+
+    <string name="transfer_trade_ing">转账处理中...</string>
+    <string name="transfer_oprate_failed">转账失败</string>
+    <string name="transfer_oprate_success">转账成功</string>
+
+    <string name="loading_in">正在加载...</string>
+    <string name="tip_remaining_zero_zero_day_zero">剩余00天0</string>
+    <string name="tip_remaining_zero_zero_day">剩余00天</string>
+    <string name="unit_hours">小时</string>
+    <string name="tip_remain">剩余</string>
+    <string name="tip_day_zero">天0</string>
+    <string name="tip_day">天</string>
+
+
 
 </resources>

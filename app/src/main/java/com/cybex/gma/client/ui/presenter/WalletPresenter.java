@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.db.dao.WalletEntityDao;
 import com.cybex.gma.client.db.entity.WalletEntity;
@@ -303,16 +304,18 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
 
         if (timeLong < 60 * 60 * 24 * 1000) {
             if (hour < 10) {
-                tip = "剩余00天0" + hour + "小时";
+                tip = getV().getString(R.string.tip_remaining_zero_zero_day_zero) + hour + getV().getString(R.string.unit_hours);
             } else {
-                tip = "剩余00天" + hour + "小时";
+                tip = getV().getString(R.string.tip_remaining_zero_zero_day) + hour + getV().getString(R.string.unit_hours);
             }
         } else if ((timeLong / 1000 / 60 / 60 / 24) < 3 && (timeLong / 1000 / 60 / 60 / 24) > 1) {
             if(hour>0){
                 if(hour<10){
-                    tip = "剩余"+day+"天0" + hour + "小时";
+                    tip =getV().getString(R.string.tip_remain)+day+getV().getString(R.string.tip_day_zero) + hour +
+                            getV().getString(R.string.unit_hours);
                 }else{
-                    tip = "剩余"+day+"天" + hour + "小时";
+                    tip = getV().getString(R.string.tip_remain)+day+getV().getString(R.string.tip_day) + hour + getV
+                            ().getString(R.string.unit_hours);
                 }
 
             }

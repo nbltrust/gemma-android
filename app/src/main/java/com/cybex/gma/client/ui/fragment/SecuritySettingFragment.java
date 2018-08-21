@@ -55,7 +55,7 @@ public class SecuritySettingFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("安全设置", true, true);
+        setNavibarTitle(getString(R.string.title_security_settings), true, true);
         this.isShowChangeGestureView();
 
         switchFingerprint.setEnableCheckedListener(true);

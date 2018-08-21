@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
@@ -30,14 +31,16 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
 
     /**
      * 执行Delegate逻辑
+     *
      * @param from 付EOS的账号
      * @param to 收到资源的账号
      * @param stake_net_quantity
      * @param stake_cpu_quantity
      * @param privateKey
      */
-    public void executeDelegateLogic(String from, String to, String stake_net_quantity, String stake_cpu_quantity,
-            String privateKey){
+    public void executeDelegateLogic(
+            String from, String to, String stake_net_quantity, String stake_cpu_quantity,
+            String privateKey) {
         //通过C++获取abi操作体
         String abijson = JNIUtil.create_abi_req_delegatebw(VALUE_CODE, VALUE_ACTION_DELEGATE, from, to,
                 stake_net_quantity, stake_cpu_quantity);
@@ -49,13 +52,13 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("操作处理中...");
+                        getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -67,10 +70,10 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
-                            getInfo(OPERATION_DELEGATE ,from, privateKey, binargs);
+                            getInfo(OPERATION_DELEGATE, from, privateKey, binargs);
 
                         } else {
-                            GemmaToastUtils.showShortToast("操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
                         getV().dissmisProgressDialog();
 
@@ -78,8 +81,9 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                 });
     }
 
-    public void executeUndelegateLogic(String from, String to, String unstake_net_quantity, String unstake_cpu_quantity,
-            String privateKey){
+    public void executeUndelegateLogic(
+            String from, String to, String unstake_net_quantity, String unstake_cpu_quantity,
+            String privateKey) {
 
         //通过C++获取abi操作体
         String abijson = JNIUtil.create_abi_req_undelegatebw(VALUE_CODE, VALUE_ACTION_UNDELEGATE, from, to,
@@ -92,13 +96,13 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("操作处理中...");
+                        getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -109,11 +113,11 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
-                            getInfo(OPERATION_UNDELEGATE ,from, privateKey, binargs);
+                            getInfo(OPERATION_UNDELEGATE, from, privateKey, binargs);
 
 
                         } else {
-                            GemmaToastUtils.showShortToast("操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
                         getV().dissmisProgressDialog();
 
@@ -136,7 +140,7 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -147,17 +151,17 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                             LoggerManager.d("config info:" + infostr);
                             //C++库获取Transaction交易体
                             String transactionStr = "";
-                            switch (operation_type){
+                            switch (operation_type) {
                                 case OPERATION_DELEGATE:
                                     transactionStr = JNIUtil.signTransaction_delegatebw(privateKey, VALUE_CONTRACT,
-                                            from, infostr, abiStr, 0,0,120);
+                                            from, infostr, abiStr, 0, 0, 120);
                                     break;
                                 case OPERATION_UNDELEGATE:
                                     transactionStr = JNIUtil.signTransaction_undelegatebw(privateKey, VALUE_CONTRACT,
-                                            from, infostr, abiStr, 0,0,120);
+                                            from, infostr, abiStr, 0, 0, 120);
                                     break;
                                 default:
-                                    LoggerManager.d("参数错误");
+                                    break;
                             }
 
                             LoggerManager.d("transactionJson:" + transactionStr);
@@ -180,7 +184,7 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                             }
 
                         } else {
-                            GemmaToastUtils.showShortToast("getInfo操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                             getV().dissmisProgressDialog();
                         }
 
@@ -208,7 +212,7 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                            GemmaToastUtils.showLongToast("操作成功");
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
                             //页面跳转至收支记录
                             //UISkipMananger.launchTransferRecord(getV().getActivity());
 
