@@ -39,16 +39,16 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
         String statusResult = "";
         switch (STATUS) {
             case UN_CONFIRMED:
-                statusResult = "未确认";
+                statusResult = mContext.getString(R.string.status_un_confirmed);
                 break;
             case ING_CONFIRMED:
-                statusResult = "正在确认";
+                statusResult = mContext.getString(R.string.status_confirmed_ing);
                 break;
             case HAS_CONFIRMED:
-                statusResult = "已确认";
+                statusResult = mContext.getString(R.string.status_confirmed_ok);
                 break;
             case TRANSACTION_FAILED:
-                statusResult = "交易失败";
+                statusResult = mContext.getString(R.string.status_trade_failed);
                 break;
             default:
                 break;

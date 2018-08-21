@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
@@ -55,7 +56,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                 .FetchBPDetailRequest(new JsonCallback<FetchBPDetailsResult>() {
                     @Override
                     public void onStart(Request<FetchBPDetailsResult, ? extends Request> request) {
-                        getV().showProgressDialog("加载节点信息");
+                        getV().showProgressDialog(getV().getString(R.string.loading_in));
                     }
 
                     @Override
@@ -133,7 +134,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast("操作失败");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         getV().dissmisProgressDialog();
                     }
 
@@ -165,7 +166,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                             }
 
                         } else {
-                            GemmaToastUtils.showShortToast("getInfo操作失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                             getV().dissmisProgressDialog();
                         }
 
@@ -193,7 +194,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                            GemmaToastUtils.showLongToast("操作成功");
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
                             //todo停留在投票页面，更新数据
 
                         }

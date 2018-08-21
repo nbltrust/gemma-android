@@ -50,7 +50,7 @@ public class GestureCreateActivity extends XActivity {
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
 
-        setNavibarTitle("设置新手势密码", true);
+        setNavibarTitle(getString(R.string.setting_new_gesture_pwd), true);
         mTitleBar.setLeftClickListener(new View.OnClickListener() {
 
             @Override
@@ -162,7 +162,7 @@ public class GestureCreateActivity extends XActivity {
      * 成功设置了手势密码
      */
     private void setLockPatternSuccess() {
-        GemmaToastUtils.showShortToast("成功设置手势密码");
+        GemmaToastUtils.showShortToast(getString(R.string.setting_password_success));
         SPUtils.getInstance().put(CacheConstants.KEY_OPEN_GESTURE, true);
         EventBusProvider.post(new RefreshGestureEvent());
         finish();

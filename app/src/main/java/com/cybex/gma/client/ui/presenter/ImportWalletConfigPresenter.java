@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
@@ -67,7 +68,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                     @Override
                     public void onStart(Request<GetKeyAccountsResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog("正在配置钱包...");
+                        getV().showProgressDialog(getV().getString(R.string.config_wallet_ing));
 
                     }
 
@@ -75,7 +76,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                     public void onError(Response<GetKeyAccountsResult> response) {
                         super.onError(response);
                         getV().dissmisProgressDialog();
-                        GemmaToastUtils.showShortToast("导入钱包失败,请检查输入后重试");
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.import_wallet_failed));
                     }
 
                     @Override
@@ -103,7 +104,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
 
                             UISkipMananger.launchHome(getV().getActivity());
                         } else {
-                            GemmaToastUtils.showShortToast("导入钱包失败");
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.import_wallet_failed));
                         }
                     }
                 });
