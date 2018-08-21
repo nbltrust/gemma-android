@@ -162,7 +162,7 @@ public class GestureVerifyActivity extends XActivity {
                         .startAuth(new OnAuthResultListener() {
                             @Override
                             public void onSuccess() {
-                                //指纹验证成功
+                                //指纹验证成功，直接跳转到主页
                                 UISkipMananger.launchHome(GestureVerifyActivity.this);
                             }
 
