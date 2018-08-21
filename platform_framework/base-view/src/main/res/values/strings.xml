@@ -16,4 +16,7 @@
     <string name="use_password">使用手势密码</string>
     <string name="finger_ok">确认</string>
 
+    <string name="set_password_first">请先设置锁屏密码</string>
+    <string name="one_fingerprint_at_least">请录入至少一个指纹</string>
+
 </resources>

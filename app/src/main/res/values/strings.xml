@@ -28,6 +28,8 @@
     <string name="password_hint">密码提示</string>
     <string name="password_input_hint_2">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不存储密码，无法提供密码找回服务</string>
     <string name="security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不储存密码，无法提供密码找回服务</string>
+    <string name="eos_username">EOS账户名</string>
+
 
     <!-- Main Tab Activity-->
     <string name="tab_wallet">钱包</string>
@@ -141,7 +143,6 @@
     <string name="prikey_copied">私钥已复制，请在使用后及时清空系统剪贴板！</string>
     <string name="start_input">开始导入</string>
     <string name="complete_input">完成导入</string>
-    <string name="set_camera_permission">请设置相机相关权限</string>
 
     <!-- Export(BackUp) Wallet-->
     <string name="lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
@@ -320,7 +321,19 @@
     <!-- Toast -->
     <string name="copy_success">复制成功</string>
     <string name="change_pass_success">修改密码成功</string>
+    <string name="set_camera_permission">请设置相机相关权限</string>
+    <string name="agree_service_agreement">请阅读并同意我们的服务协议</string>
+    <string name="invalid_eos_username">EOS用户名不符合规范，请重新输入</string>
 
+    <string name="invCode_used">创建失败，邀请码已被使用！</string>
+    <string name="invCode_not_exist">创建失败，邀请码不存在！</string>
+    <string name="eos_name_used">创建失败，eos账户名已存在！</string>
+    <string name="eos_name_invalid">创建失败，eos账户名格式错误！</string>
+    <string name="eos_name_len_invalid">创建失败，eos账户名长度不为12位！</string>
+    <string name="params_invalid">创建失败，参数错误！</string>
+    <string name="pubKey_invalid">创建失败，无效的公钥！</string>
+    <string name="no_balance">创建失败，账户余额不足！</string>
+    <string name="default_create_fail_info">创建失败，请重新尝试</string>
 
 
 

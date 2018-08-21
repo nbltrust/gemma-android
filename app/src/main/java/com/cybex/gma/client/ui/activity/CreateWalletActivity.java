@@ -163,9 +163,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 }
             });
         } else if (!checkboxConfig.isChecked() && getP().isUserNameValid()) {
-            GemmaToastUtils.showLongToast("请阅读并同意我们的服务协议");
+            GemmaToastUtils.showLongToast(getString(R.string.agree_service_agreement));
         } else if (checkboxConfig.isChecked() && !getP().isUserNameValid()) {
-            GemmaToastUtils.showLongToast("EOS用户名不符合规范，请重新输入");
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.invalid_eos_username));
         }
 
     }
@@ -217,7 +217,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
                 }
             }
         });
-        setNavibarTitle("创建钱包", true);
+        setNavibarTitle(getResources().getString(R.string.create_wallet), true);
         /**
          * eos用户名输入区域样式设置
          */
@@ -332,38 +332,38 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         }
         //当eos用户名为12位时，恢复初始样式
         tvEosName.setTextColor(getResources().getColor(R.color.steel));
-        tvEosName.setText("EOS账户名");
+        tvEosName.setText(getResources().getString(R.string.eos_username));
 
     }
 
     public void setEOSNameInvalidStyle() {
         //不为12位时，更改样式示意
-        tvEosName.setText("由小写字母a-z与数字1-5组成，须为12位");
+        tvEosName.setText(getResources().getString(R.string.EOS_username_hint));
         tvEosName.setTextColor(getResources().getColor(R.color.scarlet));
 
     }
 
     public void setEOSNameFocusedStyle(){
         tvEosName.setTextColor(getResources().getColor(R.color.darkSlateBlue));
-        tvEosName.setText("EOS账户名");
+        tvEosName.setText(getResources().getString(R.string.eos_username));
     }
 
     public void setRepeatPassValidStyle() {
         //两次输入密码匹配
-        tvRepeatPass.setText("重复密码");
+        tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
     public void setRepeatPassFocusStyle(){
-        tvRepeatPass.setText("重复密码");
+        tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
     public void setRepeatPassInvalidStyle() {
         //两次输入密码不匹配
-        tvRepeatPass.setText("密码不一致");
+        tvRepeatPass.setText(getResources().getString(R.string.pass_no_match));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }
@@ -404,38 +404,37 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
      * @param errorCode
      */
     public void showOnErrorInfo(int errorCode) {
-        //todo 根据返回值判断提醒的内容
+
         switch (errorCode) {
             case (HttpConst.INVCODE_USED):
-                GemmaToastUtils.showLongToast("创建失败，邀请码已被使用！");
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.invCode_used));
                 break;
             case (HttpConst.INVCODE_NOTEXIST):
-                GemmaToastUtils.showLongToast("创建失败，邀请码不存在！");
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.invCode_not_exist));
                 break;
             case (HttpConst.EOSNAME_USED):
-                GemmaToastUtils.showLongToast("创建失败，eos账户名已存在！");
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_name_used));
                 break;
             case (HttpConst.EOSNAME_INVALID):
-                GemmaToastUtils.showLongToast("创建失败，eos账户名格式错误！");
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_name_invalid));
                 break;
             case (HttpConst.EOSNAME_LENGTH_INVALID):
-                GemmaToastUtils.showLongToast("创建失败，eos账户名长度不为12位！");
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_name_len_invalid));
                 break;
             case (HttpConst.PARAMETERS_INVALID):
-                GemmaToastUtils.showLongToast("创建失败，参数错误！");
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.params_invalid));
                 break;
             case (HttpConst.PUBLICKEY_INVALID):
-                GemmaToastUtils.showLongToast("创建失败，无效的公钥！");
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.pubKey_invalid));
                 break;
             case (HttpConst.BALANCE_NOT_ENOUGH):
-                GemmaToastUtils.showLongToast("创建失败，账户余额不足！");
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.no_balance));
                 break;
             case (HttpConst.CREATE_ACCOUNT_FAIL):
-                GemmaToastUtils.showLongToast("创建失败，请重新尝试");
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.default_create_fail_info));
                 break;
             default:
-
-                GemmaToastUtils.showLongToast("创建失败，请重新尝试");
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.default_create_fail_info));
                 break;
         }
 
