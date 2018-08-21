@@ -146,6 +146,7 @@ ext {
                     "tapadoo"           : "com.tapadoo.android:alerter:2.0.6",
                     "spinkit"           : "com.github.ybq:Android-SpinKit:1.1.0",
                     "smartscheduler"    : "io.hypertrack:smart-scheduler:0.0.13",
+                    "saripaar"          : "com.mobsandgeeks:android-saripaar:2.0.3",
             ],
             'debug'       : [
                     'debugdb': "com.amitshekhar.android:debug-db:1.0.2",

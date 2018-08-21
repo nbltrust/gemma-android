@@ -8,7 +8,6 @@ import android.text.style.AbsoluteSizeSpan;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -20,66 +19,91 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.xujiaji.happybubble.BubbleLayout;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import cxy.com.validate.IValidateResult;
-import cxy.com.validate.Validate;
-import cxy.com.validate.ValidateAnimation;
-import cxy.com.validate.annotation.Index;
-import cxy.com.validate.annotation.MaxLength;
-import cxy.com.validate.annotation.MinLength;
-import cxy.com.validate.annotation.NotNull;
-import cxy.com.validate.annotation.Password1;
-import cxy.com.validate.annotation.Password2;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 创建钱包页面
  */
-public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
+public class CreateWalletActivity extends XActivity<CreateWalletPresenter> implements Validator.ValidationListener{
 
+    private Validator validator;
     @BindView(R.id.scroll_create_wallet) ScrollView scrollViewCreateWallet;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
     @BindView(R.id.bubble) BubbleLayout bubble;
     @BindView(R.id.tv_eos_name) TextView tvEosName;
-    @Index(1)
-    @NotNull(msg = "EOS 账户名不能为空")
-    @MinLength(length = 12, msg = "EOS账户名需为12位")
-    @MaxLength(length = 12, msg = "EOS账户名需为12位")
+
+    @NotEmpty(messageResId = R.string.eos_name_not_empty, sequence = 3)
     @BindView(R.id.edt_eos_name) EditText edtEosName;
     @BindView(R.id.tv_set_pass) TextView tvSetPass;
-    @Index(2)
-    @NotNull(msg = "密码不能为空")
-    @Password1()
-    @MinLength(length = 8, msg = "密码请至少输入8位")
+
+    @NotEmpty(messageResId = R.string.pass_not_empty, sequence = 2)
+    @Password(min = 8, messageResId = R.string.pass_lenth_invalid, sequence = 2)
     @BindView(R.id.edt_set_pass) EditText edtSetPass;
     @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
-    @Index(3)
-    @Password2(msg = "两次输入的密码不匹配，请重新输入！")
-    @NotNull(msg = "请再次输入您的密码")
+
+    @NotEmpty(messageResId = R.string.repeat_input_pass, sequence = 1)
+    @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 1)
     @BindView(R.id.edt_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.tv_pass_hint) TextView tvPassHint;
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
     @BindView(R.id.tv_invCode) TextView tvInvCode;
     @BindView(R.id.tv_get_invCode) TextView tvGetInvCode;
-    @Index(4)
-    @NotNull(msg = "邀请码不能为空")
+
     @BindView(R.id.edt_invCode) EditText edtInvCode;
+    @Checked(messageResId = R.string.check_agreement,sequence = 0)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.service_agreement_config) TextView serviceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
+
+    @Override
+    public void onValidationSucceeded() {
+        /*
+        String[] keyPair = getP().getKeypair();
+        final String publicKey = keyPair[0];
+        final String privateKey = keyPair[1];
+        getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[1], keyPair[0],
+                getPassHint(), getInvCode());
+                */
+        LoggerManager.d("succeed!");
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors){
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            if (view instanceof EditText){
+              //((EditText) view).setError(message);
+              GemmaToastUtils.showLongToast(message);
+            }else{
+                GemmaToastUtils.showLongToast(message);
+            }
+        }
+    }
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterEosNameChanged(Editable s) {
@@ -136,6 +160,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @OnClick(R.id.bt_create_wallet)
     public void checkAndCreateWallet() {
+        validator.validate();
+        /*
         //先判断checkbox是否勾选以及EOS账户名是否合法
         if (checkboxConfig.isChecked() && getP().isUserNameValid()) {
             //判断表单验证结果
@@ -167,6 +193,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         } else if (checkboxConfig.isChecked() && !getP().isUserNameValid()) {
             GemmaToastUtils.showLongToast(getResources().getString(R.string.invalid_eos_username));
         }
+        */
 
     }
 
@@ -178,7 +205,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
         setEditTextHintStyle(edtPassHint, R.string.password_hint_hint);
         setEditTextHintStyle(edtInvCode, R.string.input_invCode_hint);
         bubble.setVisibility(View.GONE);
-        setUnclickable(btCreateWallet);
+        //setUnclickable(btCreateWallet);
+        setClickable(btCreateWallet);
         edtSetPass.setOnTouchListener(new View.OnTouchListener() {
             int flag = 0;
 
@@ -301,7 +329,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        Validate.reg(this);
+        //Validate.reg(this);
+        validator = new Validator(this);
+        validator.setValidationListener(this);
         initView();
     }
 
@@ -443,7 +473,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Validate.unreg(this);
+        //Validate.unreg(this);
     }
 
 
