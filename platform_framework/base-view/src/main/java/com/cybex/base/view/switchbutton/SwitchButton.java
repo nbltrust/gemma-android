@@ -44,6 +44,9 @@ public class SwitchButton extends View implements Checkable {
     private final int ANIMATE_STATE_PENDING_SETTLE = 4;
     private final int ANIMATE_STATE_SWITCH = 5;
 
+    private boolean enableCheckedListener = true;
+
+
     public SwitchButton(Context context) {
         super(context);
         init(context, null);
@@ -495,7 +498,7 @@ public class SwitchButton extends View implements Checkable {
         toggle(animate, true);
     }
 
-    private void toggle(boolean animate, boolean broadcast) {
+    public void toggle(boolean animate, boolean broadcast) {
         if (!isEnabled()) {return;}
 
         if (isEventBroadcast) {
@@ -543,10 +546,13 @@ public class SwitchButton extends View implements Checkable {
      *
      */
     private void broadcastEvent() {
-        if (onCheckedChangeListener != null) {
-            isEventBroadcast = true;
-            onCheckedChangeListener.onCheckedChanged(this, isChecked());
+        if(isEnableCheckedListener()){
+            if (onCheckedChangeListener != null) {
+                isEventBroadcast = true;
+                onCheckedChangeListener.onCheckedChanged(this, isChecked());
+            }
         }
+
         isEventBroadcast = false;
     }
 
@@ -1164,4 +1170,11 @@ public class SwitchButton extends View implements Checkable {
         }
     }
 
+    public boolean isEnableCheckedListener() {
+        return enableCheckedListener;
+    }
+
+    public void setEnableCheckedListener(boolean enableCheckedListener) {
+        this.enableCheckedListener = enableCheckedListener;
+    }
 }

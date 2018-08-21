@@ -47,7 +47,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <!-- 创建方式容器界面 -->
         <activity
@@ -105,11 +109,7 @@
         <activity
             android:name=".ui.activity.InitialActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <!-- 关于页面 -->
         <activity
@@ -137,6 +137,7 @@
 
         <activity android:name=".ui.activity.FingerprintVerifyActivity"
             android:screenOrientation="portrait">
+
         </activity>
 
         <!-- 应用内浏览器窗口 -->

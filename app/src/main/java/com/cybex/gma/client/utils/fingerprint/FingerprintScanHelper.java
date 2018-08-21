@@ -1,4 +1,4 @@
-package com.cybex.base.view.fingerprint;
+package com.cybex.gma.client.utils.fingerprint;
 
 import android.app.KeyguardManager;
 import android.content.Context;
@@ -54,6 +54,18 @@ public class FingerprintScanHelper {
 
     public void startAuth(OnAuthResultListener listener) {
         startAuth(listener, true, true);
+    }
+
+
+    public boolean isDeviceSupported() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+                || fingerprintManager == null
+                || keyguardManager == null
+                || !fingerprintManager.isHardwareDetected()) {
+            return false;
+        }
+
+        return true;
     }
 
     public void startAuth(OnAuthResultListener listener, boolean cancelAble, boolean canTouchOutsideCancel) {

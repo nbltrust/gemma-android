@@ -1,4 +1,4 @@
-package com.cybex.base.view.fingerprint;
+package com.cybex.gma.client.utils.fingerprint;
 
 /**
  * 认证回调监听

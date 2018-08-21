@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.allen.library.SuperTextView;
@@ -8,11 +9,16 @@ import com.cybex.base.view.switchbutton.SwitchButton;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.FingerprintEvent;
 import com.cybex.gma.client.event.RefreshGestureEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.SPUtils;
+import com.cybex.gma.client.utils.fingerprint.FingerprintScanHelper;
+import com.cybex.gma.client.utils.fingerprint.OnAuthResultListener;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -52,19 +58,95 @@ public class SecuritySettingFragment extends XFragment {
         setNavibarTitle("安全设置", true, true);
         this.isShowChangeGestureView();
 
+        switchFingerprint.setEnableCheckedListener(true);
+        switchGesture.setEnableCheckedListener(true);
+
+        switchFingerprint.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switchFingerprint.setEnableCheckedListener(true);
+                return false;
+            }
+        });
+
+
+        switchGesture.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switchGesture.setEnableCheckedListener(true);
+                return false;
+            }
+        });
+
         switchFingerprint.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
-                SPUtils.getInstance().put(CacheConstants.KEY_OPEN__FINGER_PRINT, isChecked);
+                boolean isOpenFinger = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_FINGER_PRINT);
+                new FingerprintScanHelper(getActivity())
+                        .startAuth(new OnAuthResultListener() {
+                            @Override
+                            public void onSuccess() {
+                                SPUtils.getInstance().put(CacheConstants.KEY_OPEN_FINGER_PRINT, !isOpenFinger);
+                                EventBusProvider.post(new FingerprintEvent());
+                            }
+
+                            @Override
+                            public void onInputPwd(String pwd) {
+
+                            }
+
+                            @Override
+                            public void onFailed(String msg) {
+                                GemmaToastUtils.showShortToast(msg);
+                            }
+
+                            @Override
+                            public void onDeviceNotSupport() {
+                                GemmaToastUtils.showShortToast(getString(R.string.finger_tip_device_no_support));
+
+                            }
+                        }, false, false);
             }
         });
+
 
         switchGesture.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
                 if (isChecked) {
-                    //创建手势密码
-                    UISkipMananger.lauchCreateGestureActivity(getActivity());
+                    boolean isOpenFinger = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_FINGER_PRINT);
+                    if (isOpenFinger) {
+                        new FingerprintScanHelper(getActivity())
+                                .startAuth(new OnAuthResultListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        //指纹验证成功
+                                        UISkipMananger.lauchCreateGestureActivity(getActivity());
+                                    }
+
+                                    @Override
+                                    public void onInputPwd(String pwd) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailed(String msg) {
+                                        GemmaToastUtils.showShortToast(msg);
+
+                                    }
+
+                                    @Override
+                                    public void onDeviceNotSupport() {
+                                        GemmaToastUtils.showShortToast(
+                                                getString(R.string.finger_tip_device_no_support));
+
+                                    }
+                                },false,false);
+                    } else {
+                        //创建手势密码
+                        UISkipMananger.lauchCreateGestureActivity(getActivity());
+                    }
+
                 } else {
                     //关闭手势密码，需要先验证原来手势
                     Bundle bd = new Bundle();
@@ -83,9 +165,12 @@ public class SecuritySettingFragment extends XFragment {
                 UISkipMananger.launchVerifyGestureActivity(getActivity(), bd);
             }
         });
+
+
     }
 
     private void isShowChangeGestureView() {
+        switchGesture.setEnableCheckedListener(false);
         boolean isopenGesture = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_GESTURE);
         switchGesture.setChecked(isopenGesture);
         if (isopenGesture) {
@@ -93,6 +178,9 @@ public class SecuritySettingFragment extends XFragment {
         } else {
             tvChangePattern.setVisibility(View.GONE);
         }
+        switchFingerprint.setEnableCheckedListener(false);
+        boolean isopenFinger = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_FINGER_PRINT);
+        switchFingerprint.setChecked(isopenFinger);
     }
 
     @Override
@@ -106,6 +194,14 @@ public class SecuritySettingFragment extends XFragment {
         if (EmptyUtils.isNotEmpty(gestureEvent)) {
             isShowChangeGestureView();
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveFingerprintEvent(FingerprintEvent fingerEvent) {
+        if (EmptyUtils.isNotEmpty(fingerEvent)) {
+            isShowChangeGestureView();
+        }
+
     }
 
 

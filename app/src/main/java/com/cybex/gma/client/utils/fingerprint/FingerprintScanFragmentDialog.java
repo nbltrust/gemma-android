@@ -1,4 +1,4 @@
-package com.cybex.base.view.fingerprint;
+package com.cybex.gma.client.utils.fingerprint;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -18,7 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cybex.gma.client.event.FingerprintEvent;
 import com.cybex.gma.framework.view.R;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 
 /**
  * 指纹认证弹窗
@@ -104,6 +106,7 @@ public class FingerprintScanFragmentDialog extends Dialog
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EventBusProvider.post(new FingerprintEvent());
                 dismiss();
             }
         });
@@ -261,4 +264,5 @@ public class FingerprintScanFragmentDialog extends Dialog
         NEW_FINGERPRINT_ENROLLED,//新指纹认证
         PASSWORD//密码认证
     }
+    
 }
