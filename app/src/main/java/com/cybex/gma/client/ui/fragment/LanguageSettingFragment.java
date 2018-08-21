@@ -57,7 +57,6 @@ public class LanguageSettingFragment extends XFragment {
                 break;
             case R.id.radioButton_simC:
                 selectedLanguage = LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED;
-
                 break;
             case R.id.radioButton_EN:
                 selectedLanguage = LanguageManager.LanguageType.LANGUAGE_EN;
@@ -67,7 +66,6 @@ public class LanguageSettingFragment extends XFragment {
         }
 
         LanguageManager.getInstance().updateLanguage(selectedLanguage);
-
 
     }
 
