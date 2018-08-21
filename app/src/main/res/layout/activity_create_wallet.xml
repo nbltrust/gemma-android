@@ -78,7 +78,7 @@
                     android:id="@+id/tv_repeat_pass"
                     style="@style/text_title_config_wallet"
                     android:layout_marginTop="@dimen/dimen_10"
-                    android:text="@string/repeatPassword"/>
+                    android:text="@string/repeat_pass"/>
 
                 <EditText
                     android:id="@+id/edt_repeat_pass"

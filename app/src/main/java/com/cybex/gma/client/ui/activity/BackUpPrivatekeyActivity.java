@@ -37,7 +37,7 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
-        setNavibarTitle("备份私钥", true);
+        setNavibarTitle(getResources().getString(R.string.backup_prikey), true);
     }
 
     @Override

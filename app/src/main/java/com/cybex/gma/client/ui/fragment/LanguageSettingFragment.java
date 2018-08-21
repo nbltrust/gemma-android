@@ -32,7 +32,7 @@ public class LanguageSettingFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("语言", true, false);
+        setNavibarTitle(getResources().getString(R.string.language), true, false);
     }
 
 

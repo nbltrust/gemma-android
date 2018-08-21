@@ -87,7 +87,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         if (EmptyUtils.isNotEmpty(getEOSAmount())){
             setClickable(btBuyRam);
             if (EmptyUtils.isNotEmpty(kbPerEOS)){
-                String amount = "预估可兑换 " + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4) + " KB";
+                String amount = getResources().getString(R.string.approxy_amount) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4) + " KB";
                 tvApproximatelyAmount.setText(amount);
                 tvApproximatelyAmount.setVisibility(View.VISIBLE);
             }
@@ -102,7 +102,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         if (EmptyUtils.isNotEmpty(getRamAmount()) && EmptyUtils.isNotEmpty(eosPerKb)){
             setClickable(btSellRam);
             if (EmptyUtils.isNotEmpty(eosPerKb)){
-                String amount = "预估可兑换 " + AmountUtil.mul(eosPerKb, getRamAmount(), 4) + " EOS";
+                String amount = getResources().getString(R.string.approxy_amount) + AmountUtil.mul(eosPerKb, getRamAmount(),
+                        4) + " EOS";
                 tvApproximatelyAmount.setVisibility(View.VISIBLE);
                 tvApproximatelyAmount.setText(amount);
             }
@@ -127,7 +128,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("买卖RAM", true, true);
+        setNavibarTitle(getResources().getString(R.string.buy_sell_ram), true, true);
         tvApproximatelyAmount.setVisibility(View.GONE);
         setUnclickable(btSellRam);
         setUnclickable(btBuyRam);
@@ -179,10 +180,10 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             if (EmptyUtils.isNotEmpty(resourceInfoVO)){
                 String ramUsed = AmountUtil.round(String.valueOf(resourceInfoVO.getRamUsed()), 4);
                 String ramUsedKB = AmountUtil.div(ramUsed, "1024", 2);
-                superTextViewRamStatus.setLeftString("已用 " +ramUsedKB + " KB");
+                superTextViewRamStatus.setLeftString(getResources().getString(R.string.used) +ramUsedKB + " KB");
                 String ramTotal = AmountUtil.round(String.valueOf(resourceInfoVO.getRamTotal()), 4);
                 String ramTotalKB = AmountUtil.div(ramTotal, "1024", 2);
-                superTextViewRamStatus.setRightString("总量" + ramTotalKB + " KB");
+                superTextViewRamStatus.setRightString(getResources().getString(R.string.total_amount) + ramTotalKB + " KB");
                 tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_eos), String.valueOf(resourceInfoVO.getBanlance())));
                 initProgressBar(resourceInfoVO.getRamProgress());
             }
@@ -360,7 +361,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                     if (EmptyUtils.isNotEmpty(inputPass)){
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")){
-                                            GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             String quantity = AmountUtil.add(getEOSAmount(), "0", 4)+ " EOS";
@@ -368,7 +369,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             dialog.cancel();
                                         }
                                     }else{
-                                        GemmaToastUtils.showLongToast("请输入密码！");
+                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
                                     }
 
                                 }
@@ -382,7 +383,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                     if (EmptyUtils.isNotEmpty(inputPass)){
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")){
-                                            GemmaToastUtils.showLongToast("密码错误！请重新输入！");
+                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             long ramAmount = Long.parseLong(getRamAmount());
@@ -391,7 +392,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             dialog.cancel();
                                         }
                                     }else{
-                                        GemmaToastUtils.showLongToast("请输入密码!");
+                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
                                     }
                                 }
                                 break;

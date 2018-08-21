@@ -88,7 +88,7 @@ public class BarcodeScanActivity extends XActivity implements QRCodeView.Delegat
 
                                       @Override
                                       public void onPermissionDenied(List<String> permissions) {
-                                          GemmaToastUtils.showShortToast("请设置相机相关权限");
+                                          GemmaToastUtils.showShortToast(getResources().getString(R.string.set_camera_permission));
                                           if (AndPermission.hasAlwaysDeniedPermission(mContext, permissions)) {
                                               manager.showSettingDialog(mContext, permissions);
                                           }

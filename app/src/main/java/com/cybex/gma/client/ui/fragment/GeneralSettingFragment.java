@@ -38,7 +38,7 @@ public class GeneralSettingFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("通用", true, true);
+        setNavibarTitle(getResources().getString(R.string.general), true, true);
 
         superTextViewChangeLanguage.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override

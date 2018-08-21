@@ -82,7 +82,7 @@ public class ImportWalletInputKeyFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setButtonUnclickable(btStartInput);
-        setNavibarTitle("导入钱包", true, false);
+        setNavibarTitle(getResources().getString(R.string.import_wallet), true, false);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class ImportWalletInputKeyFragment extends XFragment {
 
                                       @Override
                                       public void onPermissionDenied(List<String> permissions) {
-                                          GemmaToastUtils.showShortToast("请设置相机相关权限");
+                                          GemmaToastUtils.showShortToast(getResources().getString(R.string.set_camera_permission));
                                           if (AndPermission.hasAlwaysDeniedPermission(getActivity(), permissions)) {
                                               manager.showSettingDialog(getContext(), permissions);
                                           }

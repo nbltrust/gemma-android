@@ -67,7 +67,7 @@ public class TransferRecordDetailFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        setNavibarTitle("收支详情", true, false);
+        setNavibarTitle(getResources().getString(R.string.title_transfer_detail), true, false);
         OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
     }
 
@@ -118,7 +118,7 @@ public class TransferRecordDetailFragment extends XFragment {
         String text = String.valueOf(tvShowTransferId.getText());
         if (EmptyUtils.isNotEmpty(text)) {
             ClipboardUtils.copyText(getActivity(), text);
-            GemmaToastUtils.showShortToast("复制成功");
+            GemmaToastUtils.showShortToast(getString(R.string.copy_success));
         }
 
     }

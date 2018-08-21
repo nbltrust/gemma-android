@@ -97,7 +97,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
 
         maxValue = spiltBanlance[0].trim();
-        tvBanlance.setText("余额：" + banlance);
+        tvBanlance.setText(getString(R.string.show_remain_balance) + banlance);
 
         etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
                 .Type.decimal, 4, maxValue) {
@@ -225,7 +225,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     public void onClickSubmitTransfer(View view) {
         String toAccount = String.valueOf(etCollectionAccount.getText());
         if (toAccount.equals(currentEOSName)) {
-            GemmaToastUtils.showShortToast("不能给自己的账户转账");
+            GemmaToastUtils.showShortToast(getResources().getString(R.string.cant_transfer_to_yourself));
             return;
         }
         validateAmountValue();
@@ -309,7 +309,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         EditText etPasword = dialog.findViewById(R.id.et_password);
                         String pwd = String.valueOf(etPasword.getText());
                         if (EmptyUtils.isEmpty(pwd)) {
-                            GemmaToastUtils.showLongToast("请输入密码");
+                            GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
                             return;
                         } else {
                             //获取当前账户的私钥
@@ -321,7 +321,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
 
                                 if ("wrong password".equals(privateKey)) {
-                                    GemmaToastUtils.showShortToast("密码输入错误，请重试");
+                                    GemmaToastUtils.showShortToast(getResources().getString(R.string.wrong_password));
                                 } else {
                                     getP().executeTransferLogic(entity.getCurrentEosName(),
                                             collectionAccount, amount + " " + "EOS", memo, privateKey);

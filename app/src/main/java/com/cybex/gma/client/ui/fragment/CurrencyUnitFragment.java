@@ -30,7 +30,7 @@ public class CurrencyUnitFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("货币单位", true, false);
+        setNavibarTitle(getResources().getString(R.string.title_currency_unit), true, false);
     }
 
 
