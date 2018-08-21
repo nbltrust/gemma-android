@@ -55,7 +55,6 @@ public class GeneralSettingFragment extends XFragment {
         });
     }
 
-
     @Override
     public int getLayoutId() {
         return R.layout.fragment_general_setting;

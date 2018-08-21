@@ -303,7 +303,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> {
     public void initData(Bundle savedInstanceState) {
         Validate.reg(this);
         initView();
-
     }
 
     @Override

@@ -57,6 +57,25 @@
 
         </com.allen.library.SuperTextView>
 
+        <com.allen.library.SuperTextView
+            android:translationZ="@dimen/dimen_2"
+            android:id="@+id/superTextView_change_node"
+            title:sUseShape="true"
+            title:sShapeSelectorPressedColor="@color/item_pressed"
+            title:sShapeCornersRadius="@dimen/dimen_3"
+            title:sLeftTextString="@string/node_select"
+            title:sLeftTextSize="@dimen/font_3.5"
+            title:sLeftTextColor="@color/darkSlateBlue"
+            title:sRightTextColor="@color/blueyGrey"
+            title:sRightTextSize="@dimen/font_3.5"
+            title:sRightTvDrawableRight="@drawable/ic_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44"
+            android:layout_marginTop="@dimen/dimen_10"
+            >
+
+        </com.allen.library.SuperTextView>
+
     </LinearLayout>
 
 </LinearLayout>

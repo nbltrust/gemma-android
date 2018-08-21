@@ -95,7 +95,7 @@
     <string name="ram_unit_price">≈ %1$s EOS/KB</string>
     <string name="approxy_amount">预估可兑换</string>
 
-    <!-- About -->
+    <!-- Me/General/About -->
     <string name="general">通用</string>
     <string name="security">安全设置</string>
     <string name="help">帮助与反馈</string>
