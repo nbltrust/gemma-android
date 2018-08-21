@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cybex.base.view.fingerprint.FingerprintScanHelper;
-import com.cybex.base.view.fingerprint.OnAuthResultListener;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.utils.fingerprint.FingerprintScanHelper;
+import com.cybex.gma.client.utils.fingerprint.OnAuthResultListener;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 

@@ -20,7 +20,7 @@ public interface CacheConstants {
 
     String GESTURE_PASSWORD = "GesturePassword";
     String KEY_OPEN_GESTURE = "is_open_gesture";
-    String KEY_OPEN__FINGER_PRINT = "is_open_finger_print";
+    String KEY_OPEN_FINGER_PRINT = "is_open_finger_print";
 
 
 }

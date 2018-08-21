@@ -21,9 +21,12 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.RefreshGestureEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.SPUtils;
+import com.cybex.gma.client.utils.fingerprint.FingerprintScanHelper;
+import com.cybex.gma.client.utils.fingerprint.OnAuthResultListener;
 import com.hxlx.core.lib.common.cache.ACache;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -120,6 +123,8 @@ public class GestureVerifyActivity extends XActivity {
             gestureType = bd.getInt(ParamConstants.GESTURE_SKIP_TYPE);
         }
 
+        this.showFingerVerify();
+
         aCache = ACache.get(GestureVerifyActivity.this);
         //得到当前用户的手势密码
         gesturePassword = aCache.getAsBinary(CacheConstants.GESTURE_PASSWORD);
@@ -146,6 +151,43 @@ public class GestureVerifyActivity extends XActivity {
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void showFingerVerify() {
+        if (gestureType == ParamConstants.GESTURE_SKIP_TYPE_LOGIN_VERIFY) {
+            boolean isOpenFinger = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_FINGER_PRINT);
+            if (isOpenFinger) {
+                new FingerprintScanHelper(this)
+                        .startAuth(new OnAuthResultListener() {
+                            @Override
+                            public void onSuccess() {
+                                //指纹验证成功
+                                UISkipMananger.launchHome(GestureVerifyActivity.this);
+                            }
+
+                            @Override
+                            public void onInputPwd(String pwd) {
+
+                            }
+
+                            @Override
+                            public void onFailed(String msg) {
+                                GemmaToastUtils.showShortToast(msg);
+
+                            }
+
+                            @Override
+                            public void onDeviceNotSupport() {
+                                GemmaToastUtils.showShortToast(
+                                        getString(R.string.finger_tip_device_no_support));
+
+                            }
+                        }, false, false);
+            }
+
+        }
+
     }
 
     @Override

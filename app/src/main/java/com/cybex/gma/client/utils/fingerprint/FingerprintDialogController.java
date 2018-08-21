@@ -1,4 +1,4 @@
-package com.cybex.base.view.fingerprint;
+package com.cybex.gma.client.utils.fingerprint;
 
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
