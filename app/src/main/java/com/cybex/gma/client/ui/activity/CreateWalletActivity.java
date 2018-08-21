@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -26,9 +27,8 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.Max;
-import com.mobsandgeeks.saripaar.annotation.Min;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.siberiadante.customdialoglib.CustomFullDialog;
@@ -54,19 +54,17 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.bubble) BubbleLayout bubble;
     @BindView(R.id.tv_eos_name) TextView tvEosName;
 
-    @NotEmpty(emptyTextResId = R.string.eos_name_not_empty, sequence = 0)
-    @Min(value = 12, messageResId = R.string.EOS_username_hint, sequence = 3)
-    @Max(value = 12, messageResId = R.string.EOS_username_hint, sequence = 4)
+    @NotEmpty(messageResId = R.string.eos_name_not_empty, sequence = 3)
     @BindView(R.id.edt_eos_name) EditText edtEosName;
     @BindView(R.id.tv_set_pass) TextView tvSetPass;
 
-    @NotEmpty(emptyTextResId = R.string.pass_not_empty, sequence = 1)
-    @Password(min = 8, messageResId = R.string.pass_lenth_invalid, sequence = 5)
+    @NotEmpty(messageResId = R.string.pass_not_empty, sequence = 2)
+    @Password(min = 8, messageResId = R.string.pass_lenth_invalid, sequence = 2)
     @BindView(R.id.edt_set_pass) EditText edtSetPass;
     @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
 
-    @NotEmpty(emptyTextResId = R.string.repeat_input_pass, sequence = 2)
-    @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 6)
+    @NotEmpty(messageResId = R.string.repeat_input_pass, sequence = 1)
+    @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 1)
     @BindView(R.id.edt_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.tv_pass_hint) TextView tvPassHint;
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
@@ -74,6 +72,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.tv_get_invCode) TextView tvGetInvCode;
 
     @BindView(R.id.edt_invCode) EditText edtInvCode;
+    @Checked(messageResId = R.string.check_agreement,sequence = 0)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.service_agreement_config) TextView serviceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
@@ -81,16 +80,29 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     @Override
     public void onValidationSucceeded() {
+        /*
         String[] keyPair = getP().getKeypair();
         final String publicKey = keyPair[0];
         final String privateKey = keyPair[1];
         getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[1], keyPair[0],
                 getPassHint(), getInvCode());
+                */
+        LoggerManager.d("succeed!");
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors){
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
 
+            if (view instanceof EditText){
+              //((EditText) view).setError(message);
+              GemmaToastUtils.showLongToast(message);
+            }else{
+                GemmaToastUtils.showLongToast(message);
+            }
+        }
     }
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)

@@ -341,6 +341,9 @@
     <string name="pass_lenth_invalid">密码请至少输入8位</string>
     <string name="password_no_match">两次输入的密码不匹配，请重新输入</string>
     <string name="repeat_input_pass">请再次输入您的密码</string>
+    <string name="check_agreement">请同意我们的服务协议</string>
+
+
 
     <string name="lock_pattern_1">请设置新的解锁密码</string>
     <string name="lock_pattern_2">再次输入解锁密码，以确认</string>
