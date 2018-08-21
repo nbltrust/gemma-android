@@ -335,6 +335,12 @@
     <string name="no_balance">创建失败，账户余额不足！</string>
     <string name="default_create_fail_info">创建失败，请重新尝试</string>
 
+    <!-- Annotation -->
+    <string name="eos_name_not_empty">EOS账户名不能为空</string>
+    <string name="pass_not_empty">密码不能为空</string>
+    <string name="pass_lenth_invalid">密码请至少输入8位</string>
+    <string name="password_no_match">两次输入的密码不匹配，请重新输入</string>
+    <string name="repeat_input_pass">请再次输入您的密码</string>
 
 
     <string name="lock_pattern_1">请设置新的解锁密码</string>

@@ -248,6 +248,7 @@ dependencies {
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.third.overscroll
     implementation deps.gma.tapadoo
+    implementation deps.gma.saripaar
 
     //日志打印
     implementation deps.gma.logger
