@@ -91,7 +91,7 @@ public class CommonRefreshHeader extends LinearLayout implements RefreshHeader {
     public int onFinish(RefreshLayout layout, boolean success) {
         ivRefresh.setVisibility(View.GONE);
         progressRefresh.setVisibility(View.GONE);
-        tvRefresh.setText("刷新完成");
+        tvRefresh.setText(getResources().getString(R.string.finish_refresh));
         return 500;//延迟500毫秒之后再弹回
     }
 
@@ -105,18 +105,18 @@ public class CommonRefreshHeader extends LinearLayout implements RefreshHeader {
         switch (newState) {
             case None:
             case PullDownToRefresh:
-                tvRefresh.setText("下拉刷新");
+                tvRefresh.setText(getResources().getString(R.string.pull_to_refresh));
                 progressRefresh.setVisibility(GONE);
                 ivRefresh.setVisibility(VISIBLE);
                 ivRefresh.animate().rotation(0);
                 break;
             case Refreshing:
-                tvRefresh.setText("加载中");
+                tvRefresh.setText(getResources().getString(R.string.loading));
                 progressRefresh.setVisibility(VISIBLE);
                 ivRefresh.setVisibility(GONE);
                 break;
             case ReleaseToRefresh:
-                tvRefresh.setText("释放刷新");
+                tvRefresh.setText(getResources().getString(R.string.unleash_refresh));
                 ivRefresh.animate().rotation(180);
                 break;
         }

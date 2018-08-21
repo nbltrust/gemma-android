@@ -63,10 +63,10 @@ public class CommonRefreshFooter extends LinearLayout implements RefreshFooter {
         if (mLoadmoreFinished != finished) {
             mLoadmoreFinished = finished;
             if (mLoadmoreFinished) {
-                tvRefresh.setText("没有更多数据");
+                tvRefresh.setText(getResources().getString(R.string.no_more_data));
                 progressRefresh.setVisibility(View.GONE);
             } else {
-                tvRefresh.setText("上拉加载更多");
+                tvRefresh.setText(getResources().getString(R.string.load_more));
             }
         }
         return true;
@@ -106,7 +106,7 @@ public class CommonRefreshFooter extends LinearLayout implements RefreshFooter {
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
         if (!mLoadmoreFinished) {
-            tvRefresh.setText("加载完成");
+            tvRefresh.setText(getResources().getString(R.string.finish_loading));
             progressRefresh.setVisibility(View.GONE);
         }
         return 500;
@@ -123,22 +123,21 @@ public class CommonRefreshFooter extends LinearLayout implements RefreshFooter {
             switch (newState) {
                 case None:
                 case PullToUpLoad:
-                    tvRefresh.setText("上拉加载更多");
+                    tvRefresh.setText(getResources().getString(R.string.load_more));
                     progressRefresh.setVisibility(View.GONE);
                     break;
                 case ReleaseToLoad:
-                    tvRefresh.setText("释放立即刷新");
+                    tvRefresh.setText(getResources().getString(R.string.unleash_to_refresh));
                     progressRefresh.setVisibility(View.GONE);
                     break;
                 case Loading:
-                    tvRefresh.setText("加载中...");
+                    tvRefresh.setText(getResources().getString(R.string.loading));
                     progressRefresh.setVisibility(View.VISIBLE);
                     break;
                 case LoadFinish:
-                    tvRefresh.setText("加载完成");
+                    tvRefresh.setText(getResources().getString(R.string.finish_loading));
                     progressRefresh.setVisibility(View.GONE);
                     break;
-
             }
         }
     }
