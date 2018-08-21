@@ -43,7 +43,7 @@
                 title:sCenterTextString="@string/total_assets"
                 title:sCenterTextGravity="center"
                 title:sCenterTextSize="@dimen/font_3.5"
-                title:sCenterTextColor="@color/darkSlateBlue"
+                title:sCenterTextColor="@color/darkSlateBlueTwo"
                 title:sCenterTvDrawableLeft="@drawable/ic_asset"
                 android:layout_marginTop="@dimen/dimen_15"
                 >
@@ -70,6 +70,7 @@
                 title:sDividerLineType="none"
                 title:sCenterTextString="≈0.0000 CNY"
                 title:sCenterTextSize="@dimen/font_3.5"
+                title:sCenterTextColor="@color/darkSlateBlueTwo"
                 android:layout_marginTop="@dimen/dimen_5"
                 >
 
@@ -107,9 +108,11 @@
                 android:layout_height="38dp"
                 title:sUseShape="true"
                 title:sDividerLineType="none"
+                title:sLeftTextColor="@color/darkSlateBlueTwo"
                 title:sLeftTextString="@string/balance"
                 title:sLeftTextSize="@dimen/font_3"
                 title:sRightTextString="0.0000 EOS"
+                title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightTextSize="@dimen/font_4">
 
             </com.allen.library.SuperTextView>
@@ -135,8 +138,10 @@
                 title:sDividerLineType="none"
                 title:sUseShape="true"
                 title:sLeftTextString="@string/redeem"
+                title:sLeftTextColor="@color/darkSlateBlueTwo"
                 title:sLeftTextSize="@dimen/font_3"
                 title:sRightTextString="0.0000 EOS"
+                title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightBottomTextColor="#3381e0"
                 title:sRightBottomTextSize="12sp"
                 title:sRightTextSize="@dimen/font_4">
@@ -262,6 +267,7 @@
         title:sShapeSelectorPressedColor="@color/item_pressed"
         title:sShapeCornersRadius="6dp"
         title:sLeftTextString="@string/transfer_records"
+        title:sLeftTextColor="@color/darkSlateBlue"
         title:sLeftTextSize="@dimen/font_3.5"
         title:layout_constraintTop_toBottomOf="@id/layout_info"
         title:sRightTvDrawableRight="@drawable/ic_arrow"
@@ -282,6 +288,7 @@
         title:sShapeSelectorPressedColor="@color/item_pressed"
         title:sShapeCornersRadius="6dp"
         title:sLeftTextString="@string/vote"
+        title:sLeftTextColor="@color/darkSlateBlue"
         title:sLeftTextSize="@dimen/font_3.5"
         title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
         title:sRightTvDrawableRight="@drawable/ic_arrow"
@@ -302,6 +309,7 @@
         title:sShapeSelectorPressedColor="@color/item_pressed"
         title:sShapeCornersRadius="6dp"
         title:sLeftTextString="@string/buy_sell_ram"
+        title:sLeftTextColor="@color/darkSlateBlue"
         title:sLeftTextSize="@dimen/font_3.5"
         title:layout_constraintTop_toBottomOf="@id/superTextView_card_vote"
         title:sRightTvDrawableRight="@drawable/ic_arrow"
@@ -322,6 +330,7 @@
         title:sShapeSelectorPressedColor="@color/item_pressed"
         title:sShapeCornersRadius="6dp"
         title:sLeftTextString="@string/resource"
+        title:sLeftTextColor="@color/darkSlateBlue"
         title:sLeftTextSize="@dimen/font_3.5"
         title:sRightTextString="@string/get_cpu_net"
         title:sRightTextSize="@dimen/font_3.5"

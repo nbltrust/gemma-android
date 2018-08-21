@@ -27,7 +27,11 @@
 
     </style>
 
+    <style name="input_style">
+        <item name="android:textStyle">bold</item>
+    </style>
 
+    <!-- Radio Button 样式-->
     <style name="mRadioButton">
         <item name="android:layout_marginStart">@dimen/dimen_10</item>
         <item name="android:layout_marginEnd">@dimen/dimen_10</item>

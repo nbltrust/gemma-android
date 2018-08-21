@@ -91,7 +91,7 @@ public class BackUpPriKeyFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         showAlertDialog();
-        tvShowPriKeyArea.setText(key);
+        tvShowPriKeyArea.setText(formatKey(key));
         curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
         if (!EmptyUtils.isEmpty(curWallet)) {
             curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
@@ -124,6 +124,19 @@ public class BackUpPriKeyFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public String formatKey(String key){
+        String res = "";
+        for (int i = 0; i < key.length(); i++){
+            if (i+4 < key.length()){
+                res += key.substring(i, i+4) + " ";
+            }else{
+                res += key.substring(i, key.length());
+            }
+            i += 3;
+        }
+        return res;
     }
 
     /**
