@@ -171,7 +171,7 @@ public class FingerprintScanFragmentDialog extends Dialog
      * button. This can also happen when the user had too many fingerprint attempts.
      */
     private void goToBackup() {
-        mStage = Stage.PASSWORD;
+       // mStage = Stage.PASSWORD;
         updateStage();
         mPassword.requestFocus();
 
@@ -221,18 +221,19 @@ public class FingerprintScanFragmentDialog extends Dialog
                 mBackupContent.setVisibility(View.GONE);
                 break;
             case NEW_FINGERPRINT_ENROLLED:
-                // Intentional fall through
-            case PASSWORD:
-                mCancelButton.setText(R.string.finger_auth_cancel);
-                mSecondDialogButton.setText(R.string.finger_ok);
-                mFingerprintContent.setVisibility(View.GONE);
-                mBackupContent.setVisibility(View.VISIBLE);
-                if (mStage == Stage.NEW_FINGERPRINT_ENROLLED) {
-                    mPasswordDescriptionTextView.setVisibility(View.GONE);
-                    mNewFingerprintEnrolledTextView.setVisibility(View.VISIBLE);
-                    mUseFingerprintFutureCheckBox.setVisibility(View.VISIBLE);
-                }
                 break;
+                // Intentional fall through
+//            case PASSWORD:
+//                mCancelButton.setText(R.string.finger_auth_cancel);
+//                mSecondDialogButton.setText(R.string.finger_ok);
+//                mFingerprintContent.setVisibility(View.GONE);
+//                mBackupContent.setVisibility(View.VISIBLE);
+//                if (mStage == Stage.NEW_FINGERPRINT_ENROLLED) {
+//                    mPasswordDescriptionTextView.setVisibility(View.GONE);
+//                    mNewFingerprintEnrolledTextView.setVisibility(View.VISIBLE);
+//                    mUseFingerprintFutureCheckBox.setVisibility(View.VISIBLE);
+//                }
+//                break;
         }
     }
 
@@ -262,7 +263,7 @@ public class FingerprintScanFragmentDialog extends Dialog
     public enum Stage {
         FINGERPRINT,//正常认证
         NEW_FINGERPRINT_ENROLLED,//新指纹认证
-        PASSWORD//密码认证
+//        PASSWORD//密码认证
     }
     
 }
