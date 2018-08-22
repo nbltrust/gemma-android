@@ -19,6 +19,7 @@ import com.cybex.gma.client.ui.request.UnitPriceRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
@@ -119,11 +120,13 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                     @Override
                     public void accept(HomeCombineDataVO vo) throws Exception {
                         getV().showMainInfo(vo);
+                        getV().dissmisProgressDialog();
 
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        getV().dissmisProgressDialog();
                     }
                 });
     }
@@ -151,6 +154,18 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                                 .setJsonParams(jsonParams)
                                 .getAccountInfo(new JsonCallback<AccountInfo>() {
                                     @Override
+                                    public void onStart(Request<AccountInfo, ? extends Request> request) {
+                                        super.onStart(request);
+                                        getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                                    }
+
+                                    @Override
+                                    public void onError(Response<AccountInfo> response) {
+                                        getV().dissmisProgressDialog();
+                                        GemmaToastUtils.showLongToast(getV().getString(R.string.load_account_info_fail));
+                                    }
+
+                                    @Override
                                     public void onSuccess(Response<AccountInfo> response) {
                                         if (response != null && response.body() != null) {
                                             AccountInfo info = response.body();
@@ -159,7 +174,6 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                                                 e.onComplete();
                                             }
                                         }
-
                                     }
                                 });
                     } catch (Throwable t) {
@@ -175,6 +189,18 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
             try {
                 new UnitPriceRequest(UnitPrice.class)
                         .getUnitPriceRequest(new JsonCallback<UnitPrice>() {
+                            @Override
+                            public void onStart(Request<UnitPrice, ? extends Request> request) {
+                                super.onStart(request);
+                                getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                            }
+
+                            @Override
+                            public void onError(Response<UnitPrice> response) {
+                                super.onError(response);
+                                GemmaToastUtils.showLongToast(getV().getString(R.string.load_account_info_fail));
+                            }
+
                             @Override
                             public void onSuccess(Response<UnitPrice> response) {
                                 if (response != null && response.body() != null) {
@@ -216,12 +242,14 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                 @Override
                 public void onStart(Request<String, ? extends Request> request) {
                     super.onStart(request);
+                    getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
                 }
 
                 @Override
                 public void onError(Response<String> response) {
                     super.onError(response);
                     getV().dissmisProgressDialog();
+                    GemmaToastUtils.showLongToast(getV().getString(R.string.load_account_info_fail));
                     emitter.onNext(banlance);
                     emitter.onComplete();
                 }
@@ -252,8 +280,6 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
 
                 }
             });
-
-
         }
     }).subscribeOn(Schedulers.io());
 

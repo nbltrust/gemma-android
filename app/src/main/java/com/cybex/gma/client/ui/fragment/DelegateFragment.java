@@ -157,7 +157,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                 tvRemainBalance.setText(balance);
                 //cpu总量及已用显示
                 String cpuUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuUsed()), "1024", 2);
-                String cpuTotal = AmountUtil.round(String.valueOf(resourceInfoVO.getCpuTotal()),  2);
+                String cpuTotal = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuTotal()), "1000", 2);
                 String cpuAmount = AmountUtil.round(String.valueOf(resourceInfoVO.getCpuWeight()), 4);
                 superTextViewCpuStatus.setLeftString(String.format(getResources().getString(R.string.cpu_available),
                         cpuUsed));
@@ -167,8 +167,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                 initCPUProgressBar(resourceInfoVO.getCpuProgress());
                 //NET 总量及已用显示
                 String netUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getNetUsed()), "1024", 2);
-
-                String netTotal = AmountUtil.round(String.valueOf(resourceInfoVO.getNetTotal()),  2);
+                String netTotal = AmountUtil.div(String.valueOf(resourceInfoVO.getNetTotal()), "1024", 2);
                 String netAmount = AmountUtil.round(String.valueOf(resourceInfoVO.getNetWeight()), 4);
                 superTextViewNetStatus.setLeftString(String.format(getResources().getString(R.string.net_available),
                         netUsed));

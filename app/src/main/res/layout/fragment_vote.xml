@@ -27,7 +27,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginBottom="4dp"
             app:contentView="@layout/content_recycler_view_no_fresh"
-            app:emptyView="@layout/empty_view"
+            app:emptyView="@layout/empty_view_nodes"
             app:errorView="@layout/error_view"
             app:loadingView="@layout/loading_view"
             app:noNetworkView="@layout/no_network_view"

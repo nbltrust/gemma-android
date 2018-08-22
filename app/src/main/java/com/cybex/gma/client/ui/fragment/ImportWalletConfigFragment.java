@@ -156,7 +156,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle("配置钱包", true, false);
+        setNavibarTitle(getResources().getString(R.string.title_config_wallet), true, false);
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

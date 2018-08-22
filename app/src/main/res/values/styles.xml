@@ -53,7 +53,7 @@
     <!-- checkbox样式 -->
     <style name="myCheckBox" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
         <item name="android:colorControlActivated">@color/cornflowerBlue</item>
-        <item name="android:colorControlNormal">@color/colorPrimary</item>
+        <item name="android:colorControlNormal">@color/cloudyBlue</item>
     </style>
 
     <!-- 通用switch样式 -->

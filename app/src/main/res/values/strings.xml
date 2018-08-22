@@ -345,6 +345,7 @@
 
 
 
+    <!--others-->
     <string name="lock_pattern_1">请设置新的解锁密码</string>
     <string name="lock_pattern_2">再次输入解锁密码，以确认</string>
     <string name="lock_pattern_3">请输入原手势密码</string>
@@ -409,6 +410,13 @@
     <string name="tip_day_zero">天0</string>
     <string name="tip_day">天</string>
 
-
-
+    <string name="loading_avail_resource">正在获取可用资源数量</string>
+    <string name="load_node_info_fail">获取节点信息失败，请检查网络或切换节点重试</string>
+    <string name="load_avail_res_fail">获取可用资源失败，请检查网络或切换节点重试</string>
+    <string name="loading_account_info">正在获取账户信息</string>
+    <string name="load_account_info_fail">获取账户信息失败，请检查网络或切换节点重试</string>
+    <string name="not_enough_delegated_res">没有可以用于投票的资源，请先抵押资源</string>
+    <string name="loading_cur_ram_price">正在获取当前RAM估值</string>
+    <string name="load_cur_ram_price_fail">获取当前RAM价格失败，请检查网络或切换节点重试</string>
+    <string name="title_config_wallet">配置钱包</string>
 </resources>

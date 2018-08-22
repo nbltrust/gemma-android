@@ -5,6 +5,8 @@ public class TabSelectedEvent {
 
     private int position;
 
+    private boolean isRefresh;
+
     public TabSelectedEvent() {
 
     }
@@ -19,5 +21,13 @@ public class TabSelectedEvent {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public boolean isRefresh() {
+        return isRefresh;
+    }
+
+    public void setRefresh(boolean refresh) {
+        isRefresh = refresh;
     }
 }

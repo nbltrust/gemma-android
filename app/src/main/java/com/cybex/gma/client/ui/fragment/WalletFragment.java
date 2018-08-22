@@ -18,6 +18,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
+import com.cybex.gma.client.event.HomeDataRefreshEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
@@ -32,6 +33,9 @@ import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
+import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
+import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
+import com.cybex.gma.client.ui.request.UnitPriceRequest;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.cybex.gma.client.widget.MyScrollView;
@@ -42,6 +46,7 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.common.utils.DateUtil;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.lzy.okgo.OkGo;
 import com.pixplicity.sharp.Sharp;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.tapadoo.alerter.Alerter;
@@ -175,10 +180,26 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
-            LoggerManager.d("wallet tab selected");
+            if (event.isRefresh()){
+                LoggerManager.d("wallet tab selected and refreshed");
+                getP().requestHomeCombineDataVO();
+            }else {
+                LoggerManager.d("wallet tab selected");
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
+    public void onDataRefreshEvent(HomeDataRefreshEvent event){
+        if (EmptyUtils.isNotEmpty(event)){
+
+            OkGo.getInstance().cancelTag(GetAccountinfoRequest.TAG);
+            OkGo.getInstance().cancelTag(UnitPriceRequest.TAG);
+            OkGo.getInstance().cancelTag(GetCurrencyBalanceRequest.TAG);
+
             getP().requestHomeCombineDataVO();
         }
     }
@@ -574,6 +595,5 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         });
 
     }
-
 
 }
