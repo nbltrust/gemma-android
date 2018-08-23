@@ -139,6 +139,8 @@ public class GestureCreateActivity extends XActivity {
         }
     }
 
+
+
     /**
      * 更新 Indicator
      */

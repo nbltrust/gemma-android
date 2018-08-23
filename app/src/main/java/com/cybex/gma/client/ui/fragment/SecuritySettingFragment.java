@@ -60,7 +60,7 @@ public class SecuritySettingFragment extends XFragment {
 
         switchFingerprint.setEnableCheckedListener(true);
         switchGesture.setEnableCheckedListener(true);
-        
+
         switchFingerprint.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
