@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.OnChangeLanguageEvent;
 import com.cybex.gma.client.manager.LanguageManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -47,7 +48,8 @@ public class GeneralSettingFragment extends XFragment {
         superTextViewChangeLanguage.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-                start(LanguageSettingFragment.newInstance());
+                startForResult(LanguageSettingFragment.newInstance(), ParamConstants.REQUEST_CODE_CHANGE_LANGUAGE);
+
             }
         });
 
@@ -62,21 +64,17 @@ public class GeneralSettingFragment extends XFragment {
     }
 
 
-    @Override
-    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
-        super.onFragmentResult(requestCode, resultCode, data);
-    }
 
     private void showLanguage() {
         int savedLanguageType = LanguageManager.getInstance().getLanguageType();
         switch (savedLanguageType) {
-            case R.id.radioButton_follow_system:
+            case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
                 superTextViewChangeLanguage.setRightString(getString(R.string.follow_system));
                 break;
-            case R.id.radioButton_simC:
+            case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
                 superTextViewChangeLanguage.setRightString(getString(R.string.simplified_C));
                 break;
-            case R.id.radioButton_EN:
+            case LanguageManager.LanguageType.LANGUAGE_EN:
                 superTextViewChangeLanguage.setRightString(getString(R.string.english));
                 break;
             default:
@@ -118,4 +116,5 @@ public class GeneralSettingFragment extends XFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+    
 }
