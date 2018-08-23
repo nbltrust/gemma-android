@@ -133,8 +133,8 @@
         <item name="android:theme">@style/myEditText</item>
         <item name="android:background">@drawable/selector_edt_bg</item>
         <item name="android:textCursorDrawable">@drawable/cursor_custom</item>
-        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
-        <item name="android:layout_marginStart">@dimen/dimen_10</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_12</item>
+        <item name="android:layout_marginStart">@dimen/dimen_12</item>
 
     </style>
 

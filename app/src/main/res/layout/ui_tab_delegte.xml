@@ -11,7 +11,8 @@
         android:textColor="@color/steel"
         android:layout_height="wrap_content"
         android:text="@string/delegate_cpu"
-        android:layout_marginTop="@dimen/dimen_10"/>
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_12"/>
 
     <EditText
         android:id="@+id/edt_delegate_cpu"
@@ -22,6 +23,7 @@
         android:hint="@string/delegate_hint"
         android:textColorHint="@color/cloudyBlue"
         style="@style/editText_config_wallet"
+        android:paddingStart="0dp"
         android:textCursorDrawable="@drawable/cursor_custom"/>
 
     <TextView
@@ -31,7 +33,8 @@
         android:textColor="@color/steel"
         android:layout_height="wrap_content"
         android:text="@string/delegate_net"
-        android:layout_marginTop="@dimen/dimen_10"/>
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_12"/>
 
     <EditText
         android:id="@+id/edt_delegate_net"

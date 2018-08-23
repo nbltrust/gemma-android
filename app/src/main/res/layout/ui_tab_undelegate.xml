@@ -11,7 +11,9 @@
         android:layout_marginTop="@dimen/dimen_10"
         android:text="@string/CPU"
         android:textColor="@color/steel"
-        android:textSize="@dimen/font_3.5"/>
+        android:textSize="@dimen/font_3.5"
+        android:layout_marginStart="@dimen/dimen_12"
+        android:layout_marginEnd="@dimen/dimen_12"/>
 
     <EditText
         android:id="@+id/edt_undelegate_cpu"
@@ -20,6 +22,7 @@
         android:layout_height="@dimen/dimen_50"
         android:hint="@string/refund_hint"
         android:inputType="numberDecimal"
+        android:paddingStart="0dp"
         android:textColorHint="@color/cloudyBlue"
         android:textCursorDrawable="@drawable/cursor_custom"
         android:textSize="@dimen/font_4"/>
@@ -29,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_12"
         android:text="@string/NET"
         android:textColor="@color/steel"
         android:textSize="@dimen/font_3.5"/>

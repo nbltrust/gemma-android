@@ -16,6 +16,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
@@ -156,7 +157,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                 String balance = getResources().getString(R.string.remain_balance_pure) + resourceInfoVO.getBanlance();
                 tvRemainBalance.setText(balance);
                 //cpu总量及已用显示
-                String cpuUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuUsed()), "1024", 2);
+                String cpuUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuUsed()), "1000", 2);
                 String cpuTotal = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuTotal()), "1000", 2);
                 String cpuAmount = AmountUtil.round(String.valueOf(resourceInfoVO.getCpuWeight()), 4);
                 superTextViewCpuStatus.setLeftString(String.format(getResources().getString(R.string.cpu_available),
@@ -203,14 +204,28 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
      */
     public void initCPUProgressBar(float progress){
         RoundCornerProgressBar progressBar = progressbarCpu;
-        if (progress >= ParamConstants.PROGRESS_ALERT){
-            //显示值>=85%
-            progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
-            progressBar.setProgress(progress);
-            superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
-        }else{
+
+        if (progress >= ParamConstants.PROGRESS_MIN){
+            if (progress >= ParamConstants.PROGRESS_ALERT && progress <= ParamConstants.PROGRESS_MAX){
+                //显示值在85% ～ 100%之间
+                progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
+                progressBar.setProgress(progress);
+                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
+            }else if (progress >= ParamConstants.PROGRESS_MAX){
+                //progress > 100%
+                progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
+                progressBar.setProgress(ParamConstants.PROGRESS_MAX);
+                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
+            }else {
+                //progress 0 ~ 85%
+                progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
+                progressBar.setProgress(progress);
+                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
+            }
+        }else {
+            //progress < 0
             progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
-            progressBar.setProgress(progress);
+            progressBar.setProgress(ParamConstants.PROGRESS_MIN);
             superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
         }
     }
@@ -222,15 +237,29 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
      */
     public void initNETProgressBar(float progress){
         RoundCornerProgressBar progressBar = progressbarNet;
-        if (progress >= ParamConstants.PROGRESS_ALERT){
-            //显示值>=85%
-            progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
-            progressBar.setProgress(progress);
-            superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
-        }else{
+
+        if (progress >= ParamConstants.PROGRESS_MIN){
+            if (progress >= ParamConstants.PROGRESS_ALERT && progress <= ParamConstants.PROGRESS_MAX){
+                //显示值在85% ～ 100%之间
+                progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
+                progressBar.setProgress(progress);
+                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
+            }else if (progress >= ParamConstants.PROGRESS_MAX){
+                //progress > 100%
+                progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
+                progressBar.setProgress(ParamConstants.PROGRESS_MAX);
+                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
+            }else {
+                //progress 0 ~ 85%
+                progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
+                progressBar.setProgress(progress);
+                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
+            }
+        }else {
+            //progress < 0
             progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
-            progressBar.setProgress(progress);
-            superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
+            progressBar.setProgress(ParamConstants.PROGRESS_MIN);
+            superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
         }
     }
 

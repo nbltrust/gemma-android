@@ -5,7 +5,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -15,49 +14,49 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.presenter.ImportWalletConfigPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
-import cxy.com.validate.IValidateResult;
-import cxy.com.validate.Validate;
-import cxy.com.validate.ValidateAnimation;
-import cxy.com.validate.annotation.Index;
-import cxy.com.validate.annotation.MinLength;
-import cxy.com.validate.annotation.NotNull;
-import cxy.com.validate.annotation.Password1;
-import cxy.com.validate.annotation.Password2;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 配置钱包界面
  */
 
-public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPresenter> {
+public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPresenter> implements
+        Validator.ValidationListener {
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_set_pass) TextView tvSetPass;
-    @Index(1)
-    @NotNull(msg = "密码不能为空")
-    @MinLength(length = 8, msg = "密码请至少输入8位！")
-    @Password1()
+
+    @NotEmpty(messageResId = R.string.pass_not_empty, sequence = 3)
+    @Password(min = 8, messageResId = R.string.pass_lenth_invalid, sequence = 3)
     @BindView(R.id.edt_set_pass) EditText edtSetPass;
     @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
-    @Index(2)
-    @NotNull(msg = "重复密码不能为空")
-    @Password2(msg = "两次密码不一致")
+
+    @NotEmpty(messageResId = R.string.repeatPassword_hint, sequence = 2)
+    @ConfirmPassword (messageResId = R.string.password_no_match, sequence = 2)
     @BindView(R.id.edt_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.tv_pass_hint) TextView tvPassHint;
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
+    @Checked(messageResId = R.string.check_agreement, sequence = 1)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.service_agreement_config) TextView serviceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
@@ -65,6 +64,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     @BindView(R.id.scroll_wallet_config) ScrollView scrollViewWalletConfig;
 
     Unbinder unbinder;
+    private Validator validator;
 
     public static ImportWalletConfigFragment newInstance(String privateKey) {
         Bundle args = new Bundle();
@@ -97,8 +97,11 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
      */
     @OnClick(R.id.btn_complete_import)
     public void checkValidation() {
-        //先检查表单
+        validator.validate();
+        /*
+
         Validate.check(this, new IValidateResult() {
+            //先检查表单
             @Override
             public void onValidateSuccess() {
                 if (checkboxConfig.isChecked() && getArguments() != null) {//再检查checkBox
@@ -121,19 +124,20 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                 return ValidateAnimation.horizontalTranslate();
             }
         });
+        */
     }
 
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        Validate.reg(this);
+        //Validate.reg(this);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletConfig);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Validate.unreg(this);
+       //Validate.unreg(this);
         unbinder.unbind();
     }
 
@@ -156,7 +160,10 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        validator = new Validator(this);
+        validator.setValidationListener(this);
         setNavibarTitle(getResources().getString(R.string.title_config_wallet), true, false);
+
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -265,13 +272,13 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
      * 重置密码区域默认样式
      */
     public void setRepeatPassValidStyle() {
-        tvRepeatPass.setText("重复密码");
+        tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
     public void setRepeatPassFocusStyle() {
-        tvRepeatPass.setText("重复密码");
+        tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
@@ -280,7 +287,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
      * 重置密码区域不匹配时的样式
      */
     public void setRepeatPassInvalidStyle() {
-        tvRepeatPass.setText("密码不一致");
+        tvRepeatPass.setText(getResources().getString(R.string.pass_no_match));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }
@@ -326,4 +333,24 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     }
 
 
+    @Override
+    public void onValidationSucceeded() {
+        final String priKey = getArguments().getString("priKey");
+        getP().saveConfigWallet(priKey, getPassword(), getPassHint());
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors){
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(getActivity());
+
+            if (view instanceof EditText){
+                //todo 设置onError样式？
+                GemmaToastUtils.showLongToast(message);
+            }else{
+                GemmaToastUtils.showLongToast(message);
+            }
+        }
+    }
 }

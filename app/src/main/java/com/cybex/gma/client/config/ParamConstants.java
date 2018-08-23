@@ -22,6 +22,8 @@ public interface ParamConstants {
     String CHANGE_NAME_SUCCESS = "更改成功";
 
     float PROGRESS_ALERT = 85;//progress bar 中大于85%使用
+    float PROGRESS_MAX = 100;
+    float PROGRESS_MIN = 0;
 
     int BP_NODE_NUMBERS = 999;//投票时获取的bp节点数量
 

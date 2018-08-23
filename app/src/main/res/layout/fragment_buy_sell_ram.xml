@@ -187,7 +187,9 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16">
+                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginStart="@dimen/dimen_12"
+                android:layout_marginEnd="@dimen/dimen_12">
 
                 <TextView
                     android:id="@+id/tv_eos_ram_amount"
@@ -217,7 +219,7 @@
                 android:textColorHint="@color/cloudyBlue"
                 android:inputType="numberDecimal"
                 style="@style/editText_config_wallet"
-                android:layout_marginStart="0dp"
+                android:layout_marginStart="@dimen/dimen_12"
                 android:background="@null"
                 android:textCursorDrawable="@drawable/cursor_custom"/>
 
@@ -231,7 +233,7 @@
                 android:textColorHint="@color/cloudyBlue"
                 android:inputType="numberDecimal"
                 style="@style/editText_config_wallet"
-                android:layout_marginStart="0dp"
+                android:layout_marginStart="@dimen/dimen_12"
                 android:background="@null"
                 android:textCursorDrawable="@drawable/cursor_custom"/>
 
