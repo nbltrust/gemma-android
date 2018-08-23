@@ -75,8 +75,8 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                                     curNodeVO.setPercentage(percentage);
                                     list.add(curNodeVO);
                                 }
-
                                 getV().initAdapterData(list);
+                                getTotalDelegatedRes();
                             }
                         }
                         getV().dissmisProgressDialog();
@@ -85,7 +85,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     @Override
                     public void onError(Response<FetchBPDetailsResult> response) {
                         super.onError(response);
-                        LoggerManager.d("fetchBP error");
+                        GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.load_node_info_fail));
                         getV().dissmisProgressDialog();
                     }
                 });
@@ -213,37 +213,55 @@ public class VotePresenter extends XPresenter<VoteFragment> {
             GetAccountInfoReqParams params = new GetAccountInfoReqParams();
             params.setAccount_name(eosName);
             String jsonParams = GsonUtils.objectToJson(params);
+            LoggerManager.d("jsonParams", jsonParams);
 
             new GetAccountinfoRequest(AccountInfo.class)
                     .setJsonParams(jsonParams)
                     .getAccountInfo(new JsonCallback<AccountInfo>() {
                         @Override
+                        public void onStart(Request<AccountInfo, ? extends Request> request) {
+                            getV().showProgressDialog(getV().getResources().getString(R.string.loading_avail_resource));
+                        }
+
+                        @Override
                         public void onSuccess(Response<AccountInfo> response) {
-                            if(EmptyUtils.isNotEmpty(response.body())){
-                                String delegated_cpu = response.body().getSelf_delegated_bandwidth()
-                                        .getCpu_weightX();
-                                String delegated_net = response.body().getSelf_delegated_bandwidth()
-                                        .getNet_weightX();
-                                String[] cpu_amount_arr = delegated_cpu.split(" ");
-                                String[] net_amount_arr = delegated_net.split(" ");
+                            if(response != null && response.body() != null){
+                                AccountInfo info = response.body();
+                                if (EmptyUtils.isNotEmpty(info)){
+                                    AccountInfo.SelfDelegatedBandwidthBean resource = info
+                                            .getSelf_delegated_bandwidth();
+                                   if (EmptyUtils.isNotEmpty(resource)){
+                                       //有抵押资源
+                                       String delegated_cpu = resource.getCpu_weightX();
+                                       String delegated_net = resource.getNet_weightX();
 
-                                String cpu_amount = cpu_amount_arr[0];
-                                String net_amount = net_amount_arr[0];
+                                       String[] cpu_amount_arr = delegated_cpu.split(" ");
+                                       String[] net_amount_arr = delegated_net.split(" ");
 
-                                getV().hasDelegatedRes(cpu_amount, net_amount);
+                                       String cpu_amount = cpu_amount_arr[0];
+                                       String net_amount = net_amount_arr[0];
 
-                                String total_resource = AmountUtil.add(cpu_amount, net_amount, 4) + " EOS";
-                                getV().getTotalDelegatedResource(total_resource);
+                                       String total_resource = AmountUtil.add(cpu_amount, net_amount, 4) + " EOS";
+                                       getV().hasDelegatedRes(true);
+                                       getV().getTotalDelegatedResource(total_resource);
+
+                                   }else{
+                                       //该账号没有给自己抵押资源
+                                       getV().hasDelegatedRes(false);
+                                       GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.not_enough_delegated_res));
+                                   }
+                                }
                             }
+                            getV().dissmisProgressDialog();
                         }
 
                         @Override
                         public void onError(Response<AccountInfo> response) {
+                            getV().dissmisProgressDialog();
+                            GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.load_avail_res_fail));
                             super.onError(response);
                         }
                     });
-
-
 
         }
     }

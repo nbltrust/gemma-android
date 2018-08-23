@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -78,18 +77,23 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
 
+    /**
+     * 验证框架验证成功回调
+     */
     @Override
     public void onValidationSucceeded() {
-        /*
+
         String[] keyPair = getP().getKeypair();
         final String publicKey = keyPair[0];
         final String privateKey = keyPair[1];
         getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[1], keyPair[0],
                 getPassHint(), getInvCode());
-                */
-        LoggerManager.d("succeed!");
-    }
+        }
 
+    /**
+     * 验证失败回调
+      * @param errors
+     */
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors){
@@ -97,7 +101,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             String message = error.getCollatedErrorMessage(this);
 
             if (view instanceof EditText){
-              //((EditText) view).setError(message);
               GemmaToastUtils.showLongToast(message);
             }else{
                 GemmaToastUtils.showLongToast(message);
@@ -161,6 +164,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @OnClick(R.id.bt_create_wallet)
     public void checkAndCreateWallet() {
         validator.validate();
+        if (checkboxConfig.isChecked() && !getP().isUserNameValid()) {
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.invalid_eos_username));
+        }
         /*
         //先判断checkbox是否勾选以及EOS账户名是否合法
         if (checkboxConfig.isChecked() && getP().isUserNameValid()) {
@@ -475,7 +481,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         super.onDestroy();
         //Validate.unreg(this);
     }
-
 
     /**
      * 代替监听器检查是否所有edittext输入框都不为空值

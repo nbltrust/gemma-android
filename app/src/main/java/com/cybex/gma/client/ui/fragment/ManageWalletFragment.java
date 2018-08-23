@@ -13,10 +13,12 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.WalletManageListAdapter;
 import com.cybex.gma.client.ui.model.vo.WalletVO;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 
@@ -168,6 +170,10 @@ public class ManageWalletFragment extends XFragment {
                 DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
                 DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(thisWallet);
                 adapter.notifyDataSetChanged();
+                TabSelectedEvent event = new TabSelectedEvent();
+                event.setPosition(0);
+                event.setRefresh(true);
+                EventBusProvider.postSticky(event);
                 UISkipMananger.launchHome(getActivity());
             }
         });

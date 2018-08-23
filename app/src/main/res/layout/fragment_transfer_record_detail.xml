@@ -91,7 +91,7 @@
             <LinearLayout
                 android:id="@+id/layout_detail_1"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 >
@@ -160,9 +160,10 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/whiteTwo"
-                    android:orientation="horizontal">
+                    android:paddingTop="@dimen/dimen_16"
+                    android:paddingBottom="@dimen/dimen_16">
 
                     <TextView
                         android:id="@+id/tv_memo"

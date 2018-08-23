@@ -10,6 +10,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.BarcodeScanEvent;
 import com.cybex.gma.client.manager.PermissionManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.utils.listener.PermissionResultListener;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -42,8 +43,13 @@ public class ImportWalletInputKeyFragment extends XFragment {
 
     @OnClick(R.id.bt_start_input)
     public void goConfigWallet() {
-        final String key = edtShowPrikey.getText().toString().trim();
-        start(ImportWalletConfigFragment.newInstance(key));
+        final String inputKey = edtShowPrikey.getText().toString().trim();
+        final String key = JNIUtil.get_public_key(inputKey);
+        if (EmptyUtils.isNotEmpty(key)){
+            start(ImportWalletConfigFragment.newInstance(key));
+        }else {
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.prikey_format_invalid));
+        }
     }
 
 

@@ -54,9 +54,10 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
-
-                EventBusProvider.postSticky(new TabSelectedEvent(position));
-
+                TabSelectedEvent event_no_fresh = new TabSelectedEvent();
+                event_no_fresh.setPosition(position);
+                event_no_fresh.setRefresh(false);
+                EventBusProvider.postSticky(event_no_fresh);
             }
 
             @Override
@@ -75,7 +76,10 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        EventBusProvider.postSticky(new TabSelectedEvent(0));
+        TabSelectedEvent event_fresh = new TabSelectedEvent();
+        event_fresh.setPosition(0);
+        event_fresh.setRefresh(true);
+        EventBusProvider.postSticky(event_fresh);
     }
 
     @Override

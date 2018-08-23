@@ -59,7 +59,7 @@ public class ChangeWalletNameFragment extends XFragment {
         int currentID = getArguments().getInt("walletID");
         curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentID);
         if (EmptyUtils.isNotEmpty(curWallet)){
-            setWalletName.setHint(curWallet.getWalletName());
+            setWalletName.setText(curWallet.getWalletName());
             mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.save)) {
                 @Override
                 public void performAction(View view) {

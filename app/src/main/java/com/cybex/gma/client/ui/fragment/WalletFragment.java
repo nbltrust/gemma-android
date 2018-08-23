@@ -18,6 +18,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
+import com.cybex.gma.client.event.HomeDataRefreshEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
@@ -175,10 +176,24 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
-            LoggerManager.d("wallet tab selected");
+            if (event.isRefresh()){
+                LoggerManager.d("wallet tab selected and refreshed");
+                getP().requestHomeCombineDataVO();
+            }else {
+                LoggerManager.d("wallet tab selected");
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
+    public void onDataRefreshEvent(HomeDataRefreshEvent event){
+        if (EmptyUtils.isNotEmpty(event)){
+            //OkGo.getInstance().cancelTag(GetAccountinfoRequest.TAG);
+            //OkGo.getInstance().cancelTag(UnitPriceRequest.TAG);
+            //OkGo.getInstance().cancelTag(GetCurrencyBalanceRequest.TAG);
             getP().requestHomeCombineDataVO();
         }
     }
@@ -212,9 +227,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                     showResourceInfo(banlance, info);
                     //显示赎回信息
                     showRefoundInfo(info);
-
                 }
-
             }
         });
 
@@ -272,7 +285,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
 
     }
-
 
     private void showResourceInfo(String banlance, AccountInfo info) {
         if (info != null) {
@@ -574,6 +586,5 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         });
 
     }
-
 
 }

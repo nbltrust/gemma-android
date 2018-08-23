@@ -26,7 +26,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
@@ -234,8 +233,8 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
      * @return List中的四个参数依次为base_balance, quote_balance,quote_weight, 1EOS对应的RAM价格
      */
     public void getRamMarketInfo() {
-        List<String> args = new ArrayList<>();
-        String price = "";
+        //List<String> args = new ArrayList<>();
+        //String price = "";
         GetRamMarketReqParams params = new GetRamMarketReqParams();
         params.setScope(RAM_SCOPE);
         params.setCode(RAM_CODE);
@@ -247,6 +246,12 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
         new GetRamMarketRequest(String.class)
                 .setJsonParams(jsonParams)
                 .getRamMarketRequest(new StringCallback() {
+                                         @Override
+                                         public void onStart(Request<String, ? extends Request> request) {
+                                             super.onStart(request);
+                                             getV().showProgressDialog(getV().getResources().getString(R.string.loading_cur_ram_price));
+                                         }
+
                                          @Override
                                          public void onSuccess(Response<String> response) {
                                              String infoJson = response.body();
@@ -272,46 +277,18 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                                              } catch (Exception e) {
                                                  e.printStackTrace();
                                              }
+                                             getV().dissmisProgressDialog();
                                          }
 
                                          @Override
                                          public void onError(Response<String> response) {
                                              LoggerManager.d("on Error");
+                                             GemmaToastUtils.showLongToast(getV().getResources().getString(R.string
+                                                     .load_cur_ram_price_fail));
+                                             getV().dissmisProgressDialog();
                                          }
                                      }
                 );
-    }
-
-    /**
-     * 输入EOS数额得RAM数量估值
-     */
-    public String calEos2Ram(List<String> args, String eosNum) {
-
-        String baseBalance = args.get(0);
-        String quoteBalance = args.get(1);
-        String quoteWeight = args.get(2);
-
-        String ramRatio = AmountUtil.div(quoteBalance, baseBalance, 10);
-        String ramUnitPrice = AmountUtil.mul(ramRatio, quoteWeight, 10);
-        String ramPrice = AmountUtil.mul(ramUnitPrice, eosNum, 10);
-        return ramPrice;
-    }
-
-    /**
-     * 输入RAM数额得EOS估值
-     */
-    public String calRam2Eos(List<String> args, String ramAmount) {
-
-        String baseBalance = args.get(0);
-        String quoteBalance = args.get(1);
-        String quoteWeight = args.get(2);
-
-        String ramRatio = AmountUtil.div(quoteBalance, baseBalance, 10);
-        String ramUnitPrice = AmountUtil.mul(ramRatio, quoteWeight, 10);
-        String tmpPrice = AmountUtil.div("1", ramUnitPrice, 10);
-        String price = AmountUtil.mul(tmpPrice, ramAmount, 10);
-
-        return price;
     }
 
 }

@@ -44,7 +44,7 @@ import butterknife.Unbinder;
 public class VoteFragment extends XFragment<VotePresenter> {
 
     @BindView(R.id.rv_list) RecyclerView mRecyclerView;
-    @BindView(R.id.list_multiple_status_view) MultipleStatusView mStatusView;
+    @BindView(R.id.list_multiple_status_view) MultipleStatusView listMultipleStatusView;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_resource) TextView tvResource;
     @BindView(R.id.tv_vote_number) TextView tvVoteNumber;
@@ -54,7 +54,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
     private final int EVENT_DOWN = 1;//上级页面发送的事件
     private final int EVENT_UP = 2;//下级页面返回发送的事件
     private boolean hasDelegateRes = false;//是否有被抵押的资源
-    private VoteNodeListAdapter adapter;
+    private VoteNodeListAdapter mAdapter;
     private List<VoteNodeVO> nodeVOList = new ArrayList<>();
     private List<VoteNodeVO> selectedNodes = new ArrayList<>();//已选择的节点
     Unbinder unbinder;
@@ -98,16 +98,19 @@ public class VoteFragment extends XFragment<VotePresenter> {
                         if (hasDelegateRes){
                             //如果有抵押的资源
                             tvExecVote.setClickable(true);
+                            tvExecVote.setText(getResources().getString(R.string.title_vote));
                             tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_deep));
                         }else{
                             //没有被抵押的资源
                             tvExecVote.setClickable(false);
+                            tvExecVote.setText(getResources().getString(R.string.no_avail_votes));
                             tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_light));
                         }
                     }else {
                         //已选节点数为0
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.btn_vote_left_light));
                         tvExecVote.setClickable(false);
+                        tvExecVote.setText(getResources().getString(R.string.title_vote));
                         tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_light));
                     }
                     break;
@@ -122,7 +125,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                             String.valueOf(selectedNodes.size())));
                     break;
             }
-            adapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -139,7 +142,6 @@ public class VoteFragment extends XFragment<VotePresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         tvExecVote.setClickable(false);
-        //getP().getTotalDelegatedRes();
         setNavibarTitle(getResources().getString(R.string.vote), true, true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
@@ -170,13 +172,12 @@ public class VoteFragment extends XFragment<VotePresenter> {
                 adapter.notifyDataSetChanged();
             }
         });
-
     }
 
     public void initAdapterData(List<VoteNodeVO> voteNodeVOList) {
         nodeVOList.addAll(voteNodeVOList);
-        adapter = new VoteNodeListAdapter(nodeVOList);
-        mRecyclerView.setAdapter(adapter);
+        mAdapter = new VoteNodeListAdapter(nodeVOList);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -201,15 +202,39 @@ public class VoteFragment extends XFragment<VotePresenter> {
         selectedNodes.clear();
     }
 
-    public void hasDelegatedRes(String cpu_amount, String net_amount){
-        if (Double.parseDouble(cpu_amount) > 0 || Double.parseDouble(net_amount) > 0) {
-            hasDelegateRes = true;
+    /**
+     * 显示加载更多完成和空数据界面逻辑
+     */
+    public void showEmptyOrFinish() {
+        if (mAdapter != null) {
+            List<VoteNodeVO> nodeVOList = mAdapter.getData();
+            if (EmptyUtils.isEmpty(nodeVOList)) {
+                listMultipleStatusView.showEmpty();
+            } else {
+                listMultipleStatusView.showContent();
+            }
+
+        } else {
+            listMultipleStatusView.showEmpty();
         }
+    }
+
+    public void hasDelegatedRes(boolean status){
+        if (status)hasDelegateRes = true;
         hasDelegateRes = false;
     }
 
     public void getTotalDelegatedResource(String total_amount){
         tvResource.setText(total_amount);
+        /*
+        if (EmptyUtils.isNotEmpty(selectedNodes)){
+            tvExecVote.setClickable(true);
+            tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_deep));
+        }else {
+            tvExecVote.setClickable(false);
+            tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_light));
+        }
+        */
     }
 
     /**

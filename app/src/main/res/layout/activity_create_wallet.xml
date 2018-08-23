@@ -135,7 +135,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/layout_checkBox"
                 android:layout_width="match_parent"

@@ -12,6 +12,7 @@ import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.HomeDataRefreshEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
@@ -61,6 +62,11 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
     }
 
     @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle(getString(R.string.title_transfer_record), true, true);
@@ -89,7 +95,8 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
                 public void onClick(View v) {
                     TabSelectedEvent tabSelectedEvent = new TabSelectedEvent();
                     tabSelectedEvent.setPosition(TAB_WALLET);
-                    EventBusProvider.postSticky(tabSelectedEvent);
+                    tabSelectedEvent.setRefresh(true);
+                    EventBusProvider.postSticky(new HomeDataRefreshEvent());
                     if (isOnBackFinishActivity) {
                         getActivity().finish();
                     } else {
@@ -141,7 +148,6 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
             }
         });
     }
-
 
     public void doRequest(int currentLastPos) {
         getP().requestHistory(currentEosName, currentLastPos, isFirstLoad);

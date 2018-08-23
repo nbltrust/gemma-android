@@ -5,7 +5,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -21,41 +20,40 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
-import cxy.com.validate.IValidateResult;
-import cxy.com.validate.Validate;
-import cxy.com.validate.ValidateAnimation;
-import cxy.com.validate.annotation.Index;
-import cxy.com.validate.annotation.MinLength;
-import cxy.com.validate.annotation.NotNull;
-import cxy.com.validate.annotation.Password1;
-import cxy.com.validate.annotation.Password2;
 
 /**
  * 配置钱包界面
  */
 
-public class ChangePasswordFragment extends XFragment {
+public class ChangePasswordFragment extends XFragment implements Validator.ValidationListener {
 
     Unbinder unbinder;
     private WalletEntity curWallet;
     private String priKey;
+    private Validator validator;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_set_new_pass) TextView tvSetNewPass;
-    @Index(1)
-    @NotNull(msg = "密码请至少输入8位")
-    @Password1()
-    @MinLength(length = 8, msg = "密码请至少输入8位")
+
+    @NotEmpty(messageResId = R.string.pass_not_empty, sequence = 2)
+    @Password(min = 8, messageResId = R.string.pass_lenth_invalid, sequence = 2)
     @BindView(R.id.edt_set_new_pass) EditText edtSetNewPass;
     @BindView(R.id.tv_repeat_new_pass) TextView tvRepeatNewPass;
-    @Index(2)
-    @NotNull(msg = "请再次输入您的密码！")
-    @Password2(msg = "两次输入的密码不一致！")
+
+    @NotEmpty(messageResId = R.string.repeatPassword_hint, sequence = 1)
+    @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 1)
     @BindView(R.id.edt_repeat_new_pass) EditText edtRepeatNewPass;
     @BindView(R.id.tv_new_pass_hint) TextView tvNewPassHint;
     @BindView(R.id.edt_new_pass_hint) EditText edtNewPassHint;
@@ -87,6 +85,8 @@ public class ChangePasswordFragment extends XFragment {
 
     @OnClick(R.id.btn_confirm_change_pass)
     public void checkValidation() {
+        validator.validate();
+        /*
         //先检查表单
         Validate.check(this, new IValidateResult() {
             @Override
@@ -114,18 +114,19 @@ public class ChangePasswordFragment extends XFragment {
                 return ValidateAnimation.horizontalTranslate();
             }
         });
+        */
     }
 
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        Validate.reg(this);
+        //Validate.reg(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Validate.unreg(this);
+        //Validate.unreg(this);
         unbinder.unbind();
     }
 
@@ -148,6 +149,9 @@ public class ChangePasswordFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        validator = new Validator(this);
+        validator.setValidationListener(this);
+
         setNavibarTitle(getResources().getString(R.string.title_change_pass), true, false);
         if (getArguments() != null){
             final int currentId = getArguments().getInt("walletID");
@@ -256,8 +260,6 @@ public class ChangePasswordFragment extends XFragment {
         edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }
 
-
-
     public void setEditTextHintStyle(EditText editText, int resId){
         String hintStr = getResources().getString(resId);
         SpannableString ss =  new SpannableString(hintStr);
@@ -267,4 +269,30 @@ public class ChangePasswordFragment extends XFragment {
         editText.setHint(new SpannableString(ss));
     }
 
+    @Override
+    public void onValidationSucceeded() {
+        final String newCypher = JNIUtil.get_cypher(getPassword(), priKey);
+        if (!EmptyUtils.isEmpty(curWallet)){
+            curWallet.setCypher(newCypher);
+            curWallet.setPasswordTip(getPassHint());
+            DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.change_pass_success));
+            UISkipMananger.launchHome(getActivity());
+        }
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors){
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(getActivity());
+
+            if (view instanceof EditText){
+                //todo 设置onError样式？
+                GemmaToastUtils.showLongToast(message);
+            }else{
+                GemmaToastUtils.showLongToast(message);
+            }
+        }
+    }
 }
