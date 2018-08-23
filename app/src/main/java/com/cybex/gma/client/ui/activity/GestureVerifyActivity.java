@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -186,6 +187,19 @@ public class GestureVerifyActivity extends XActivity {
                         }, false, false);
             }
 
+        }
+
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            EventBusProvider.post(new RefreshGestureEvent());
+
+            return super.onKeyDown(keyCode, event);
+        }else {
+            return super.onKeyDown(keyCode, event);
         }
 
     }
