@@ -45,10 +45,11 @@ public class ImportWalletInputKeyFragment extends XFragment {
     public void goConfigWallet() {
         final String inputKey = edtShowPrikey.getText().toString().trim();
         final String key = JNIUtil.get_public_key(inputKey);
-        if (EmptyUtils.isNotEmpty(key)){
-            start(ImportWalletConfigFragment.newInstance(key));
-        }else {
+
+        if (key.equals("invalid priv string!")) {
             GemmaToastUtils.showLongToast(getResources().getString(R.string.prikey_format_invalid));
+        } else {
+            start(ImportWalletConfigFragment.newInstance(inputKey));
         }
     }
 
@@ -59,11 +60,12 @@ public class ImportWalletInputKeyFragment extends XFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @OnTextChanged(value = R.id.edt_show_priKey, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onTextChanged(Editable s){
-        if (EmptyUtils.isEmpty(edtShowPrikey.getText().toString().trim())){
+    public void onTextChanged(Editable s) {
+        if (EmptyUtils.isEmpty(edtShowPrikey.getText().toString().trim())) {
             setButtonUnclickable(btStartInput);
-        }else{
+        } else {
             setButtonClickable(btStartInput);
         }
     }
@@ -144,12 +146,12 @@ public class ImportWalletInputKeyFragment extends XFragment {
         unbinder.unbind();
     }
 
-    public void setButtonUnclickable(Button button){
+    public void setButtonUnclickable(Button button) {
         button.setClickable(false);
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
     }
 
-    public void setButtonClickable(Button button){
+    public void setButtonClickable(Button button) {
         button.setClickable(true);
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
     }

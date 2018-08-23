@@ -55,6 +55,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                 .getCurrencyBalance(new StringCallback() {
                     @Override
                     public void onStart(Request<String, ? extends Request> request) {
+                        getV().showProgressDialog(getV().getResources().getString(R.string.loading_pretransfer_info));
                         super.onStart(request);
                     }
 
@@ -80,7 +81,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
+                        getV().dissmisProgressDialog();
                     }
                 });
     }

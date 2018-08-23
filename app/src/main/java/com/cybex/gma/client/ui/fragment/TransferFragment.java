@@ -323,8 +323,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                 if ("wrong password".equals(privateKey)) {
                                     GemmaToastUtils.showShortToast(getResources().getString(R.string.wrong_password));
                                 } else {
+                                    //密码正确，执行转账逻辑
                                     getP().executeTransferLogic(entity.getCurrentEosName(),
                                             collectionAccount, amount + " " + "EOS", memo, privateKey);
+                                    dialog.cancel();
                                 }
 
                             } else {

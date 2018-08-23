@@ -420,4 +420,5 @@
     <string name="load_cur_ram_price_fail">获取当前RAM价格失败，请检查网络或切换节点重试</string>
     <string name="title_config_wallet">配置钱包</string>
     <string name="prikey_format_invalid">私钥格式错误，请检查私钥</string>
+    <string name="loading_pretransfer_info">加载账户信息</string>
 </resources>
