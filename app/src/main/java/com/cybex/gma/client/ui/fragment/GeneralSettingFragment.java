@@ -5,8 +5,13 @@ import android.view.View;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.event.OnChangeLanguageEvent;
+import com.cybex.gma.client.manager.LanguageManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,7 +20,6 @@ import butterknife.Unbinder;
 /**
  * 通用设置界面
  */
-
 public class GeneralSettingFragment extends XFragment {
 
     Unbinder unbinder;
@@ -53,6 +57,50 @@ public class GeneralSettingFragment extends XFragment {
                 start(CurrencyUnitFragment.newInstance());
             }
         });
+
+        this.showLanguage();
+    }
+
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+    }
+
+    private void showLanguage() {
+        int savedLanguageType = LanguageManager.getInstance().getLanguageType();
+        switch (savedLanguageType) {
+            case R.id.radioButton_follow_system:
+                superTextViewChangeLanguage.setRightString(getString(R.string.follow_system));
+                break;
+            case R.id.radioButton_simC:
+                superTextViewChangeLanguage.setRightString(getString(R.string.simplified_C));
+                break;
+            case R.id.radioButton_EN:
+                superTextViewChangeLanguage.setRightString(getString(R.string.english));
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    /**
+     * 更改语言事件
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onChangeLanguageEvent(OnChangeLanguageEvent event) {
+        if (event != null) {
+            showLanguage();
+        }
+
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 
     @Override

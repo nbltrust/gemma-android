@@ -9,6 +9,10 @@ public class OnChangeLanguageEvent {
 
     public int languageType;
 
+    public OnChangeLanguageEvent(){
+
+    }
+
     public OnChangeLanguageEvent(int languageType) {
         this.languageType = languageType;
     }

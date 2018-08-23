@@ -10,6 +10,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.FingerprintEvent;
+import com.cybex.gma.client.event.OnChangeLanguageEvent;
 import com.cybex.gma.client.event.RefreshGestureEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.SPUtils;
@@ -60,6 +61,15 @@ public class SecuritySettingFragment extends XFragment {
 
         switchFingerprint.setEnableCheckedListener(true);
         switchGesture.setEnableCheckedListener(true);
+
+
+        mTitleBar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBusProvider.post(new OnChangeLanguageEvent());
+                pop();
+            }
+        });
 
         switchFingerprint.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -141,7 +151,7 @@ public class SecuritySettingFragment extends XFragment {
                                                 getString(R.string.finger_tip_device_no_support));
 
                                     }
-                                },false,false);
+                                }, false, false);
                     } else {
                         //创建手势密码
                         UISkipMananger.lauchCreateGestureActivity(getActivity());

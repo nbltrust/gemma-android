@@ -110,7 +110,7 @@ public class LanguageManager {
     public void updateLanguage(int languageType) {
         SPUtils.getInstance().put(LanguageManager.SAVE_LANGUAGE, languageType);
         LanguageManager.getInstance().setConfiguration();
-        EventBusProvider.post(new OnChangeLanguageEvent(languageType));
+        EventBusProvider.postSticky(new OnChangeLanguageEvent(languageType));
     }
 
     public String getLanguageName(Context context) {
