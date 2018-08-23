@@ -16,7 +16,6 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
@@ -243,23 +242,23 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                 //显示值在85% ～ 100%之间
                 progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
                 progressBar.setProgress(progress);
-                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
+                superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
             }else if (progress >= ParamConstants.PROGRESS_MAX){
                 //progress > 100%
                 progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
                 progressBar.setProgress(ParamConstants.PROGRESS_MAX);
-                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
+                superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
             }else {
                 //progress 0 ~ 85%
                 progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
                 progressBar.setProgress(progress);
-                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
+                superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
             }
         }else {
             //progress < 0
             progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
             progressBar.setProgress(ParamConstants.PROGRESS_MIN);
-            superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
+            superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
         }
     }
 

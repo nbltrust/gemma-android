@@ -54,7 +54,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     @NotEmpty(messageResId = R.string.repeatPassword_hint, sequence = 2)
     @ConfirmPassword (messageResId = R.string.password_no_match, sequence = 2)
     @BindView(R.id.edt_repeat_pass) EditText edtRepeatPass;
-    @BindView(R.id.tv_pass_hint) TextView tvPassHint;
+    @BindView(R.id.tv_pass_hint_f) TextView tvPassHint;
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
     @Checked(messageResId = R.string.check_agreement, sequence = 1)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;

@@ -55,7 +55,7 @@
                     android:hint="@string/repeatPassword_hint"/>
 
                 <TextView
-                    android:id="@+id/tv_pass_hint"
+                    android:id="@+id/tv_pass_hint_f"
                     style="@style/text_title_config_wallet"
                     android:text="@string/password_hint"
                     android:layout_marginTop="@dimen/dimen_10"/>
