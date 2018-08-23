@@ -136,6 +136,10 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     @Override
     public void onDestroyView() {
+        edtPassHint.setOnFocusChangeListener(null);
+        edtSetPass.setOnFocusChangeListener(null);
+        edtRepeatPass.setOnFocusChangeListener(null);
+        checkboxConfig.setOnCheckedChangeListener(null);
         super.onDestroyView();
        //Validate.unreg(this);
         unbinder.unbind();

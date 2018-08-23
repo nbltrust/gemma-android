@@ -38,8 +38,9 @@
             android:id="@+id/iv_real_QR"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
-            android:layout_width="180dp"
-            android:layout_height="180dp"/>
+            android:layout_width="188dp"
+            android:layout_height="188dp"
+            android:background="@color/white"/>
 
         <Button
             android:id="@+id/bt_show_QR"

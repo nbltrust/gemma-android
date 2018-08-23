@@ -126,7 +126,9 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //Validate.unreg(this);
+        edtNewPassHint.setOnFocusChangeListener(null);
+        edtRepeatNewPass.setOnFocusChangeListener(null);
+        edtSetNewPass.setOnFocusChangeListener(null);
         unbinder.unbind();
     }
 
@@ -197,7 +199,6 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
                     }
                 }
             });
-
 
         }
 
