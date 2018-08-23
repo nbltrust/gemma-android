@@ -116,5 +116,6 @@ public class GeneralSettingFragment extends XFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-    
+
+
 }
