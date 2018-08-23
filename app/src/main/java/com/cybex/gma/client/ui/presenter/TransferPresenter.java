@@ -5,6 +5,7 @@ import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.TransferFragment;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
@@ -215,10 +216,9 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
                             GemmaToastUtils.showLongToast(getV().getString(R.string.transfer_oprate_success));
+                            UISkipMananger.launchTransferRecord(getV().getActivity());
                             getV().clearData();
-
                         }
-
                     }
                 });
 

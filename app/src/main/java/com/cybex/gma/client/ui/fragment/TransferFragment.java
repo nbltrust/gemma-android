@@ -97,6 +97,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
 
         maxValue = spiltBanlance[0].trim();
+        LoggerManager.d("maxValue", maxValue);
         tvBanlance.setText(getString(R.string.show_remain_balance) + banlance);
 
         etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
@@ -107,7 +108,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                 validateButton();
             }
         });
-
 
         etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -198,7 +198,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             LoggerManager.d("tab transfer selected");
             getP().requestBanlanceInfo();
         }
-
     }
 
     @Override
@@ -362,8 +361,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        etCollectionAccount.setText("");
+        etAmount.setText("");
+        etNote.setText("");
         unbinder.unbind();
     }
-
-
 }

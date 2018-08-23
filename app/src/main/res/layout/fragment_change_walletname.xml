@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
 
-            <com.rengwuxian.materialedittext.MaterialEditText
+            <EditText
                 android:id="@+id/editText_setWalletName"
                 android:hint="@string/change_wallet_name_hint"
                 android:layout_width="100dp"
@@ -47,10 +47,9 @@
                 android:layout_height="match_parent"
                 android:textSize="@dimen/font_3.5"
                 android:textCursorDrawable="@drawable/cursor_custom"
-                app:met_baseColor="@color/darkSlateBlue"
-                app:met_hideUnderline="true"
-                app:met_textColor="@color/darkSlateBlue"
-                />
+                android:background="@null"
+                android:textColor="@color/darkSlateBlue"
+                android:textColorHint="@color/steel"/>
 
             <ImageView
                 android:id="@+id/clear_wallet_name"
