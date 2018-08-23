@@ -5,8 +5,14 @@ import android.view.View;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.OnChangeLanguageEvent;
+import com.cybex.gma.client.manager.LanguageManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,7 +21,6 @@ import butterknife.Unbinder;
 /**
  * 通用设置界面
  */
-
 public class GeneralSettingFragment extends XFragment {
 
     Unbinder unbinder;
@@ -43,7 +48,8 @@ public class GeneralSettingFragment extends XFragment {
         superTextViewChangeLanguage.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-                start(LanguageSettingFragment.newInstance());
+                startForResult(LanguageSettingFragment.newInstance(), ParamConstants.REQUEST_CODE_CHANGE_LANGUAGE);
+
             }
         });
 
@@ -53,6 +59,46 @@ public class GeneralSettingFragment extends XFragment {
                 start(CurrencyUnitFragment.newInstance());
             }
         });
+
+        this.showLanguage();
+    }
+
+
+
+    private void showLanguage() {
+        int savedLanguageType = LanguageManager.getInstance().getLanguageType();
+        switch (savedLanguageType) {
+            case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+                superTextViewChangeLanguage.setRightString(getString(R.string.follow_system));
+                break;
+            case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
+                superTextViewChangeLanguage.setRightString(getString(R.string.simplified_C));
+                break;
+            case LanguageManager.LanguageType.LANGUAGE_EN:
+                superTextViewChangeLanguage.setRightString(getString(R.string.english));
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    /**
+     * 更改语言事件
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onChangeLanguageEvent(OnChangeLanguageEvent event) {
+        if (event != null) {
+            showLanguage();
+        }
+
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 
     @Override
@@ -70,4 +116,6 @@ public class GeneralSettingFragment extends XFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 }

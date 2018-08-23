@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RadioButton;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.LanguageManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
@@ -45,6 +46,14 @@ public class LanguageSettingFragment extends XFragment {
 
         savedLanguageType = LanguageManager.getInstance().getLanguageType();
         this.showCheckedLanguage();
+
+        mTitleBar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+                setFragmentResult(ParamConstants.CODE_CHANGE_RESULT,null);
+            }
+        });
     }
 
 

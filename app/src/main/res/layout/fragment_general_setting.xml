@@ -28,7 +28,7 @@
             title:sLeftTextString="@string/language"
             title:sLeftTextSize="@dimen/font_3.5"
             title:sLeftTextColor="@color/darkSlateBlue"
-            title:sRightTextString="@string/simplified_C"
+            title:sRightTextString="@string/follow_system"
             title:sRightTextColor="@color/blueyGrey"
             title:sRightTextSize="@dimen/font_3.5"
             title:sRightTvDrawableRight="@drawable/ic_arrow"

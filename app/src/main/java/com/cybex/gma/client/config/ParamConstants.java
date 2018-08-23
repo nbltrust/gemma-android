@@ -41,4 +41,7 @@ public interface ParamConstants {
     int GESTURE_SKIP_TYPE_LOGIN_VERIFY = 0X1002;//登录验证手势密码
     int GESTURE_SKIP_TYPE_CLOSE =0X1003;//关闭手势密码
 
+    int REQUEST_CODE_CHANGE_LANGUAGE = 1001;
+    int CODE_CHANGE_RESULT = 1002;
+
 }

@@ -60,7 +60,7 @@ public class SecuritySettingFragment extends XFragment {
 
         switchFingerprint.setEnableCheckedListener(true);
         switchGesture.setEnableCheckedListener(true);
-
+        
         switchFingerprint.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -141,7 +141,7 @@ public class SecuritySettingFragment extends XFragment {
                                                 getString(R.string.finger_tip_device_no_support));
 
                                     }
-                                },false,false);
+                                }, false, false);
                     } else {
                         //创建手势密码
                         UISkipMananger.lauchCreateGestureActivity(getActivity());
