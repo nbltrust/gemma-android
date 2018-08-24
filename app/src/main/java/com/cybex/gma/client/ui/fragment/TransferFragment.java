@@ -266,10 +266,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         TextView tv_note = dialog.findViewById(R.id.tv_note); //备注
         TextView tv_payment_account = dialog.findViewById(R.id.tv_payment_account);//付款账户
 
-
         collectionAccount = String.valueOf(etCollectionAccount.getText());
-        amount = String.valueOf(etAmount.getText());
-        memo = String.valueOf(etNote.getText());
+        amount = String.valueOf(etAmount.getText()) + " EOS";
 
         if (EmptyUtils.isNotEmpty(collectionAccount)) {
             tv_payee.setText(collectionAccount);
@@ -279,17 +277,18 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             tv_amount.setText(amount);
         }
 
-        if (EmptyUtils.isNotEmpty(memo)) {
-            tv_note.setText(memo);
-        }
-
         if (EmptyUtils.isNotEmpty(currentEOSName)) {
             tv_payment_account.setText(currentEOSName);
+
+            if (EmptyUtils.isEmpty(etNote.getText().toString().trim())){
+                memo = String.format(getString(R.string.default_memo), currentEOSName);
+            }else {
+                memo = String.valueOf(etNote.getText());
+            }
+            tv_note.setText(memo);
+            tv_note.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         }
-
-
     }
-
 
     CustomFullDialog dialog = null;
 
@@ -321,7 +320,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                     .getCurrentWalletEntity();
                             if (entity != null) {
                                 String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
-
 
                                 if ("wrong password".equals(privateKey)) {
                                     GemmaToastUtils.showShortToast(getResources().getString(R.string.wrong_password));

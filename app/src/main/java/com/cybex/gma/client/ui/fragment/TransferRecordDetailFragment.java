@@ -105,7 +105,18 @@ public class TransferRecordDetailFragment extends XFragment {
                 }
                 //设置固定的值
                 superTextViewBlockTime.setRightString(curTransfer.time);
-                tvShowMemo.setText(curTransfer.memo);
+                tvShowMemo.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (tvShowMemo.getLineCount() > 1){
+                            tvShowMemo.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+                            tvShowMemo.setText(curTransfer.memo);
+                        }else {
+                            tvShowMemo.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+                            tvShowMemo.setText(curTransfer.memo);
+                        }
+                    }
+                });
                 superTextViewBlockId.setRightString(String.valueOf(curTransfer.block));
                 setTransferStatus(curTransfer.status);
                 tvShowTransferId.setText(curTransfer.hash);

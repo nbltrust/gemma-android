@@ -54,10 +54,7 @@ public class WalletDetailFragment extends XFragment {
         start(ChangeWalletNameFragment.newInstance(curWallet.getId()));
     }
 
-    public static WalletDetailFragment newInstance(Bundle bundle) {
-        Bundle args = new Bundle();
-        WalletEntity walletEntity = bundle.getParcelable("curWallet");
-        args.putParcelable("thisWallet", walletEntity);
+    public static WalletDetailFragment newInstance(Bundle args) {
         WalletDetailFragment fragment = new WalletDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -74,12 +71,11 @@ public class WalletDetailFragment extends XFragment {
         return true;
     }
 
-
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getResources().getString(R.string.manage_wallet), true);
         if (getArguments() != null){
-            curWallet = getArguments().getParcelable("thisWallet");
+            curWallet = getArguments().getParcelable("curWallet");
             if (!EmptyUtils.isEmpty(curWallet)){
                 currentID = curWallet.getId();
                 //显示当前钱包名称

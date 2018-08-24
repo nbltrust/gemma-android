@@ -110,4 +110,8 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                 });
     }
 
+    public boolean isPasswordMatch(){
+        if (getV().getPassword().equals(getV().getRepeatPass()))return true;
+        return false;
+    }
 }

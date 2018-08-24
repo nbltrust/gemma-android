@@ -158,7 +158,8 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                 //cpu总量及已用显示
                 String cpuUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuUsed()), "1000", 2);
                 String cpuTotal = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuTotal()), "1000", 2);
-                String cpuAmount = AmountUtil.round(String.valueOf(resourceInfoVO.getCpuWeight()), 4);
+                String cpuWeight = AmountUtil.round(String.valueOf(resourceInfoVO.getCpuWeight()), 4);
+                String cpuAmount = AmountUtil.div(cpuWeight, "10000", 4);
                 superTextViewCpuStatus.setLeftString(String.format(getResources().getString(R.string.cpu_available),
                         cpuUsed));
                 superTextViewCpuStatus.setRightString(String.format(getResources().getString(R.string.cpu_total), cpuTotal));
@@ -168,7 +169,8 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                 //NET 总量及已用显示
                 String netUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getNetUsed()), "1024", 2);
                 String netTotal = AmountUtil.div(String.valueOf(resourceInfoVO.getNetTotal()), "1024", 2);
-                String netAmount = AmountUtil.round(String.valueOf(resourceInfoVO.getNetWeight()), 4);
+                String netWeight = AmountUtil.round(String.valueOf(resourceInfoVO.getNetWeight()), 4);
+                String netAmount = AmountUtil.div(netWeight, "10000", 4);
                 superTextViewNetStatus.setLeftString(String.format(getResources().getString(R.string.net_available),
                         netUsed));
                 superTextViewNetStatus.setRightString(String.format(getResources().getString(R.string.net_total),

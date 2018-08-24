@@ -174,6 +174,11 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         return res;
     }
 
+    public boolean isPasswordMatch(){
+        if (getV().getPassword().equals(getV().getRepeatPassword()))return true;
+        return false;
+    }
+
     /**
      * 调用DB Manager将钱包信息存入表中
      *

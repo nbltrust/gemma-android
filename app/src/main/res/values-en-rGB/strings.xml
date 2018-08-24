@@ -415,4 +415,22 @@
     <string name="tip_day_zero"></string>
     <string name="tip_day">days(s)</string>
 
+    <string name="loading_avail_resource">Loading available resources</string>
+    <string name="load_node_info_fail">Load nodes information fail，please check your network or switch
+        nodes</string>
+    <string name="load_avail_res_fail">Load available resource fail，please check your network or switch
+        nodes</string>
+    <string name="loading_account_info">Loading account information</string>
+    <string name="load_account_info_fail">Load account information fail，please check your network or switch
+        nodes</string>
+    <string name="not_enough_delegated_res">No resource available for vote，please delegate eos first</string>
+    <string name="loading_cur_ram_price">Acquiring current estimate RAM price</string>
+    <string name="load_cur_ram_price_fail">Acquiring RAM price fail，please check your network or switch
+        nodes</string>
+    <string name="title_config_wallet">Wallet Configuration</string>
+    <string name="prikey_format_invalid">Private Key format invalid，please check it</string>
+    <string name="loading_pretransfer_info">Loading account information</string>
+    <string name="dont_import_same_wallet">This wallet is already existed in Gemma</string>
+    <string name="default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://xxxx</string>
+
 </resources>

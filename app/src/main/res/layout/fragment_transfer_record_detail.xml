@@ -174,7 +174,6 @@
                         android:text="@string/memo"
                         android:textColor="@color/steel"
                         android:textSize="@dimen/font_3.5"
-                        title:layout_constraintBottom_toBottomOf="parent"
                         title:layout_constraintStart_toStartOf="parent"
                         title:layout_constraintTop_toTopOf="parent"
                         />
@@ -185,14 +184,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dimen_10"
                         android:layout_marginStart="@dimen/dimen_10"
-                        android:ellipsize="end"
-                        android:maxLines="3"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/darkSlateBlue"
                         title:layout_constraintBottom_toBottomOf="parent"
                         title:layout_constraintEnd_toEndOf="parent"
                         title:layout_constraintTop_toTopOf="parent"
-
+                        tools:text="资金用途随便写几行，资金用途随便写几行，资金用途随便写几行，资金用途随便写几行，资金用途随便写几行，资金用途随便写几行"
                         />
                 </android.support.constraint.ConstraintLayout>
 
