@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -78,6 +79,9 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
 
     @OnTextChanged(value = R.id.edt_repeat_new_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onRepeatPassChanged(){
+        if (EmptyUtils.isEmpty(getRepeatPass())){
+            setRepeatPassFocusStyle();
+        }
         if (isAllFilled()){
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
         }
@@ -126,9 +130,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        edtNewPassHint.setOnFocusChangeListener(null);
-        edtRepeatNewPass.setOnFocusChangeListener(null);
-        edtSetNewPass.setOnFocusChangeListener(null);
+        clearListeners();
         unbinder.unbind();
     }
 
@@ -166,8 +168,10 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus){
                         tvSetNewPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                        edtSetNewPass.setTypeface(Typeface.DEFAULT_BOLD);
                     }else{
                         tvSetNewPass.setTextColor(getResources().getColor(R.color.steel));
+                        edtSetNewPass.setTypeface(Typeface.DEFAULT);
                     }
                 }
             });
@@ -185,6 +189,11 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
                     }else{
                         setRepeatPassValidStyle();
                         if (hasFocus)setRepeatPassFocusStyle();
+                    }
+                    if (hasFocus){
+                        edtRepeatNewPass.setTypeface(Typeface.DEFAULT_BOLD);
+                    }else {
+                        edtRepeatNewPass.setTypeface(Typeface.DEFAULT);
                     }
                 }
             });
@@ -268,6 +277,12 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         editText.setHint(new SpannableString(ss));
+    }
+
+    private void clearListeners(){
+        edtNewPassHint.setOnFocusChangeListener(null);
+        edtRepeatNewPass.setOnFocusChangeListener(null);
+        edtSetNewPass.setOnFocusChangeListener(null);
     }
 
     @Override

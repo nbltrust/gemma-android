@@ -80,6 +80,9 @@ public class ChangeWalletNameFragment extends XFragment {
                 });
             }
         }
+        setWalletName.setFocusable(true);
+        setWalletName.setFocusableInTouchMode(true);
+        setWalletName.requestFocus();
     }
 
     @Override

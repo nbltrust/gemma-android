@@ -116,10 +116,12 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="16dp"
                 android:layout_toEndOf="@id/tv_note_title"
+                android:layout_alignParentRight="true"
+                android:textAlignment="viewEnd"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@color/darkSlateBlue"
-                tools:text="资金用途描述不超过50个字，资金用途资金用途描述不超过50个字，资金用途"/>
+                android:text="@string/default_memo"/>
 
         </RelativeLayout>
 

@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -93,6 +94,10 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         } else {
             setButtonUnClickableStyle();
         }
+
+        if (EmptyUtils.isEmpty(getRepeatPass())){
+            setRepeatPassFocusStyle();
+        }
     }
 
     /**
@@ -139,10 +144,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     @Override
     public void onDestroyView() {
-        edtPassHint.setOnFocusChangeListener(null);
-        edtSetPass.setOnFocusChangeListener(null);
-        edtRepeatPass.setOnFocusChangeListener(null);
-        checkboxConfig.setOnCheckedChangeListener(null);
+        clearListener();
         super.onDestroyView();
        //Validate.unreg(this);
         unbinder.unbind();
@@ -191,8 +193,10 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    edtSetPass.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
                     tvSetPass.setTextColor(getResources().getColor(R.color.steel));
+                    edtSetPass.setTypeface(Typeface.DEFAULT);
                 }
             }
         });
@@ -212,6 +216,12 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                     setRepeatPassValidStyle();
                     if (hasFocus) { setRepeatPassFocusStyle(); }
                 }
+
+                if (hasFocus){
+                    edtRepeatPass.setTypeface(Typeface.DEFAULT_BOLD);
+                }else {
+                    edtRepeatPass.setTypeface(Typeface.DEFAULT);
+                }
             }
         });
 
@@ -220,8 +230,10 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
                     tvPassHint.setTextColor(getResources().getColor(R.color.steel));
+                    edtPassHint.setTypeface(Typeface.DEFAULT);
                 }
             }
         });
@@ -337,6 +349,13 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         editText.setHint(new SpannableString(ss));
+    }
+
+    public void clearListener(){
+        edtPassHint.setOnFocusChangeListener(null);
+        edtSetPass.setOnFocusChangeListener(null);
+        edtRepeatPass.setOnFocusChangeListener(null);
+        checkboxConfig.setOnCheckedChangeListener(null);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.activity;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -147,8 +148,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         } else {
             setUnclickable(btCreateWallet);
         }
-
-
     }
 
     @OnTextChanged(value = R.id.edt_invCode, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -272,8 +271,12 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                     }
                 }
 
+                if (hasFocus){
+                    edtEosName.setTypeface(Typeface.DEFAULT_BOLD);
+                }else {
+                    edtEosName.setTypeface(Typeface.DEFAULT);
+                }
             }
-
         });
 
         /**
@@ -284,8 +287,11 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    edtSetPass.setTypeface(Typeface.DEFAULT_BOLD);
+
                 } else {
                     tvSetPass.setTextColor(getResources().getColor(R.color.steel));
+                    edtSetPass.setTypeface(Typeface.DEFAULT);
                 }
             }
         });
@@ -309,6 +315,12 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                         setRepeatPassInvalidStyle();
                     }
                 }
+
+                if (hasFocus){
+                    edtRepeatPass.setTypeface(Typeface.DEFAULT_BOLD);
+                }else {
+                    edtRepeatPass.setTypeface(Typeface.DEFAULT);
+                }
             }
         });
         /**
@@ -319,8 +331,10 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
                     tvPassHint.setTextColor(getResources().getColor(R.color.steel));
+                    edtPassHint.setTypeface(Typeface.DEFAULT);
                 }
             }
         });
@@ -478,12 +492,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     @Override
     protected void onDestroy() {
-        edtEosName.setOnFocusChangeListener(null);
-        edtRepeatPass.setOnFocusChangeListener(null);
-        edtSetPass.setOnFocusChangeListener(null);
-        edtPassHint.setOnFocusChangeListener(null);
-        edtInvCode.setOnFocusChangeListener(null);
-        checkboxConfig.setOnCheckedChangeListener(null);
+        clearListeners();
         super.onDestroy();
         //Validate.unreg(this);
     }
@@ -510,6 +519,15 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         editText.setHint(new SpannableString(ss));
+    }
+
+    private void clearListeners(){
+        edtEosName.setOnFocusChangeListener(null);
+        edtRepeatPass.setOnFocusChangeListener(null);
+        edtSetPass.setOnFocusChangeListener(null);
+        edtPassHint.setOnFocusChangeListener(null);
+        edtInvCode.setOnFocusChangeListener(null);
+        checkboxConfig.setOnCheckedChangeListener(null);
     }
 
     /**

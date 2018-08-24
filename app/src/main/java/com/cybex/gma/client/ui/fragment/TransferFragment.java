@@ -195,6 +195,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (event != null && event.getPosition() == 1) {
+            etCollectionAccount.setText("");
+            etAmount.setText("");
+            etNote.setText("");
             LoggerManager.d("tab transfer selected");
             getP().requestBanlanceInfo();
         }
@@ -303,6 +306,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                 switch (view.getId()) {
                     case R.id.imc_cancel:
                         dialog.cancel();
+                        showConfirmTransferDialog();
                         break;
                     case R.id.btn_confirm_authorization:
                         EditText etPasword = dialog.findViewById(R.id.et_password);
@@ -361,9 +365,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        etCollectionAccount.setText("");
-        etAmount.setText("");
-        etNote.setText("");
         unbinder.unbind();
     }
 }
