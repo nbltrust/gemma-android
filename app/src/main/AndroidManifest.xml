@@ -52,6 +52,7 @@
             android:name=".ui.activity.MainTabActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:configChanges="locale"
             android:windowSoftInputMode="stateHidden|adjustResize">
 
 
