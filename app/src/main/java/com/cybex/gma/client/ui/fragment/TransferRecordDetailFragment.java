@@ -52,6 +52,9 @@ public class TransferRecordDetailFragment extends XFragment {
     @BindView(R.id.view_scroll) ScrollView mScrollView;
 
     Unbinder unbinder;
+    /**
+     * 交易状态：1：未确认 2：正在确认 3：已确认 4: 交易失败
+     */
 
     public static TransferRecordDetailFragment newInstance(Bundle args) {
         TransferRecordDetailFragment fragment = new TransferRecordDetailFragment();
@@ -89,7 +92,6 @@ public class TransferRecordDetailFragment extends XFragment {
                             String.format(getResources().getString(R.string.payment_amount), curTransfer.value));
                     tvIncomeOrOut.setText(getResources().getString(R.string.payment));
                     superTextViewReceiver.setLeftString(getResources().getString(R.string.receiver));
-
                     superTextViewReceiver.setRightString(curTransfer.to);
                 } else {
                     //收入操作
@@ -105,12 +107,10 @@ public class TransferRecordDetailFragment extends XFragment {
                 superTextViewBlockTime.setRightString(curTransfer.time);
                 tvShowMemo.setText(curTransfer.memo);
                 superTextViewBlockId.setRightString(String.valueOf(curTransfer.block));
-                superTextViewTransferStatus.setRightString(String.valueOf(curTransfer.status));
+                setTransferStatus(curTransfer.status);
                 tvShowTransferId.setText(curTransfer.hash);
             }
-
         }
-
     }
 
     @OnClick(R.id.tv_show_transfer_id)
@@ -120,7 +120,6 @@ public class TransferRecordDetailFragment extends XFragment {
             ClipboardUtils.copyText(getActivity(), text);
             GemmaToastUtils.showShortToast(getString(R.string.copy_success));
         }
-
     }
 
     @Override
@@ -138,5 +137,22 @@ public class TransferRecordDetailFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void setTransferStatus(int status){
+        switch (status){
+            case ParamConstants.STATUS_NOT_CONFIRMED:
+                superTextViewTransferStatus.setRightString(getResources().getString(R.string.status_un_confirmed));
+                break;
+            case ParamConstants.STATUS_CONFIRMING:
+                superTextViewTransferStatus.setRightString(getResources().getString(R.string.status_confirmed_ing));
+                break;
+            case ParamConstants.STATUS_CONFIRMED:
+                superTextViewTransferStatus.setRightString(getResources().getString(R.string.status_confirmed_ok));
+                break;
+            case ParamConstants.STATUS_FAIL:
+                superTextViewTransferStatus.setRightString(getResources().getString(R.string.status_trade_failed));
+                break;
+        }
     }
 }

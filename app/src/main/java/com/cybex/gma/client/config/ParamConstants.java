@@ -44,4 +44,11 @@ public interface ParamConstants {
     int REQUEST_CODE_CHANGE_LANGUAGE = 1001;
     int CODE_CHANGE_RESULT = 1002;
 
+    /**
+     * 交易状态：1：未确认 2：正在确认 3：已确认 4: 交易失败
+     */
+    int STATUS_NOT_CONFIRMED = 1;
+    int STATUS_CONFIRMING = 2;
+    int STATUS_CONFIRMED = 3;
+    int STATUS_FAIL = 4;
 }

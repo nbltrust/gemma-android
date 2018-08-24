@@ -14,6 +14,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.presenter.ImportWalletConfigPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -136,6 +139,10 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     @Override
     public void onDestroyView() {
+        edtPassHint.setOnFocusChangeListener(null);
+        edtSetPass.setOnFocusChangeListener(null);
+        edtRepeatPass.setOnFocusChangeListener(null);
+        checkboxConfig.setOnCheckedChangeListener(null);
         super.onDestroyView();
        //Validate.unreg(this);
         unbinder.unbind();
@@ -332,10 +339,21 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         editText.setHint(new SpannableString(ss));
     }
 
-
     @Override
     public void onValidationSucceeded() {
         final String priKey = getArguments().getString("priKey");
+        final String pubKey = JNIUtil.get_public_key(priKey);
+        //验证此公钥是否已在数据库中
+        List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
+        if (EmptyUtils.isNotEmpty(walletEntityList)){
+            for (WalletEntity entity : walletEntityList){
+                if (pubKey.equals(entity.getPublicKey())){
+                    //已有相同的钱包
+                    GemmaToastUtils.showLongToast(getResources().getString(R.string.dont_import_same_wallet));
+                    return;
+                }
+            }
+        }
         getP().saveConfigWallet(priKey, getPassword(), getPassHint());
     }
 

@@ -478,6 +478,12 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     @Override
     protected void onDestroy() {
+        edtEosName.setOnFocusChangeListener(null);
+        edtRepeatPass.setOnFocusChangeListener(null);
+        edtSetPass.setOnFocusChangeListener(null);
+        edtPassHint.setOnFocusChangeListener(null);
+        edtInvCode.setOnFocusChangeListener(null);
+        checkboxConfig.setOnCheckedChangeListener(null);
         super.onDestroy();
         //Validate.unreg(this);
     }

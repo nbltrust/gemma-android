@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
@@ -13,7 +14,6 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
-import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ import butterknife.Unbinder;
  */
 public class ChangeWalletNameFragment extends XFragment {
 
-    @BindView(R.id.editText_setWalletName) MaterialEditText setWalletName;
+    @BindView(R.id.editText_setWalletName) EditText setWalletName;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.clear_wallet_name) ImageView clearWalletName;
     Unbinder unbinder;
@@ -56,30 +56,31 @@ public class ChangeWalletNameFragment extends XFragment {
         setNavibarTitle(getResources().getString(R.string.manage_wallet), true);
         mTitleBar.setActionTextColor(getResources().getColor(R.color.whiteTwo));
         mTitleBar.setActionTextSize(18);
-        int currentID = getArguments().getInt("walletID");
-        curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentID);
-        if (EmptyUtils.isNotEmpty(curWallet)){
-            setWalletName.setText(curWallet.getWalletName());
-            mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.save)) {
-                @Override
-                public void performAction(View view) {
+        if (getArguments() != null){
+            int currentID = getArguments().getInt("walletID");
+            curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentID);
+            if (EmptyUtils.isNotEmpty(curWallet)){
+                setWalletName.setText(curWallet.getWalletName());
+                mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.save)) {
+                    @Override
+                    public void performAction(View view) {
 
-                    if (isWalletNameExist(getWalletName())){
-                        GemmaToastUtils.showLongToast(ParamConstants.SAME_WALLET_NAME);
-                    }else if (EmptyUtils.isNotEmpty(getWalletName())){
-                        final String name = getWalletName();
-                        curWallet.setWalletName(name);
-                        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
-                        GemmaToastUtils.showLongToast(ParamConstants.CHANGE_NAME_SUCCESS);
-                        UISkipMananger.launchWalletManagement(getActivity());
-                    }else{
-                        GemmaToastUtils.showLongToast(ParamConstants.EMPTY_WALLET_NAME);
+                        if (isWalletNameExist(getWalletName())){
+                            GemmaToastUtils.showLongToast(ParamConstants.SAME_WALLET_NAME);
+                        }else if (EmptyUtils.isNotEmpty(getWalletName())){
+                            final String name = getWalletName();
+                            curWallet.setWalletName(name);
+                            DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
+                            GemmaToastUtils.showLongToast(ParamConstants.CHANGE_NAME_SUCCESS);
+                            UISkipMananger.launchWalletManagement(getActivity());
+                        }else{
+                            GemmaToastUtils.showLongToast(ParamConstants.EMPTY_WALLET_NAME);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
-
 
     @Override
     public int getLayoutId() {
