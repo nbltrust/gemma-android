@@ -384,7 +384,7 @@
 
     <string name="setting_password_success">成功设置手势密码</string>
     <string name="setting_new_gesture_pwd">设置新手势密码</string>
-    
+
     <string name="status_un_confirmed">未确认</string>
     <string name="status_confirmed_ing">正在确认</string>
     <string name="status_confirmed_ok">已确认</string>
