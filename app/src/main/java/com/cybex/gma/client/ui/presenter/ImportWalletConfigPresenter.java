@@ -7,6 +7,8 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.activity.InitialActivity;
+import com.cybex.gma.client.ui.activity.ManageWalletActivity;
 import com.cybex.gma.client.ui.fragment.ImportWalletConfigFragment;
 import com.cybex.gma.client.ui.model.request.GetkeyAccountReqParams;
 import com.cybex.gma.client.ui.model.response.GetKeyAccountsResult;
@@ -14,6 +16,7 @@ import com.cybex.gma.client.ui.request.GetKeyAccountsRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
@@ -45,7 +48,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
         walletEntity.setCypher(cypher);
         walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);// 设置是否为当前钱包，默认新建钱包为当前钱包
         walletEntity.setPasswordTip(passwordTips);   //设置密码提示
-        walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);      //设置为未备份
+        walletEntity.setIsBackUp(CacheConstants.ALREADY_BACKUP);      //设置为未备份
         walletEntity.setIsConfirmLib(CacheConstants.IS_CONFIRMED); //导入的钱包设置为已被确认
         postGetKeyAccountRequest(walletEntity, walletEntityList, pubKey, walletNum);
     }
@@ -102,8 +105,10 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                             //最后执行存入操作，此前包此时为当前钱包
                             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
                             //销毁当前Activity
-                            getV().getActivity().finish();
-                            UISkipMananger.launchHome(getV().getActivity());
+                            AppManager.getAppManager().finishActivity();
+                            AppManager.getAppManager().finishActivity(InitialActivity.class);
+                            AppManager.getAppManager().finishActivity(ManageWalletActivity.class);
+                            UISkipMananger.launchHomeSingle(getV().getActivity());
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.import_wallet_failed));
                         }

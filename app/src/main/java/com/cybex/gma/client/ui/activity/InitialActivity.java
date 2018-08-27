@@ -3,13 +3,13 @@ package com.cybex.gma.client.ui.activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
+import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import java.lang.reflect.Field;
 
@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class InitialActivity extends AppCompatActivity {
+public class InitialActivity extends XActivity {
 
     @BindView(R.id.bt_create_new) Button btCreateNew;
     @BindView(R.id.bt_import) Button btImport;
@@ -40,8 +40,27 @@ public class InitialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setNavigationBarStatusBarTranslucent();
-        setContentView(R.layout.activity_initial);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void bindUI(View rootView) {
+
+    }
+
+    @Override
+    public void initData(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_initial;
+    }
+
+    @Override
+    public Object newP() {
+        return null;
     }
 
     public void setNavigationBarStatusBarTranslucent() {
