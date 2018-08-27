@@ -5,7 +5,9 @@ import android.view.View;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
 import butterknife.BindView;
@@ -36,7 +38,32 @@ public class AboutFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        //版本说明
+        superTextViewVersionInfo.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
+            @Override
+            public void onClickListener(SuperTextView superTextView) {
+                int savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
+                switch (savedLanguageType){
+                    case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
+                        String url = "https://nebuladownload.oss-cn-beijing.aliyuncs.com/gemma/gemma_release_desc_cn.html";
+                        CommonWebViewActivity.startWebView(getActivity(), url, getResources().getString(R.string.version_info));
+                        break;
+                    case LanguageManager.LanguageType.LANGUAGE_EN:
+                        String url_en = "https://nebuladownload.oss-cn-beijing.aliyuncs"
+                                + ".com/gemma/gemma_release_desc_en.html";
+                        CommonWebViewActivity.startWebView(getActivity(), url_en, getResources().getString(R.string
+                                .version_info));
+                        break;
+                }
+            }
+        });
+        //版本更新
+        superTextViewUpdate.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
+            @Override
+            public void onClickListener(SuperTextView superTextView) {
 
+            }
+        });
 
     }
 
