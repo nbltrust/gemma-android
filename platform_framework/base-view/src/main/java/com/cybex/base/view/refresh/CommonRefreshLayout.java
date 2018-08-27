@@ -3,6 +3,7 @@ package com.cybex.base.view.refresh;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import com.cybex.base.view.refresh.footer.CommonRefreshFooter;
 import com.cybex.base.view.refresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
@@ -10,7 +11,6 @@ import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 
 /**
  * Refresh刷新样式定制
@@ -53,7 +53,7 @@ public class CommonRefreshLayout extends SmartRefreshLayout {
         SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                return new ClassicsFooter(context);
+                return new CommonRefreshFooter(context);
             }
         });
     }
