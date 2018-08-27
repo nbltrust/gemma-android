@@ -17,6 +17,7 @@ import com.cybex.gma.client.utils.fingerprint.OnAuthResultListener;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
