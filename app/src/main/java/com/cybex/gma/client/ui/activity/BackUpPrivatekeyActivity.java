@@ -14,7 +14,6 @@ import com.cybex.gma.client.ui.presenter.BackUpPrivateKeyPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,12 +53,16 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
         listFragment.add(BackUpPriKeyQRFragment.newInstance());
 
         TabLayoutManager.getInstance().setSlidingTabData(this, mSlidingTab, vpContent,
-                getTitles(R.array.arrays_tab_backup_private_key), listFragment);
+                getTitles(), listFragment);
         mSlidingTab.setCurrentTab(0);
     }
 
-    private List<String> getTitles(int array) {
-        return Arrays.asList(getResources().getStringArray(array));
+    private List<String> getTitles() {
+        List<String> list = new ArrayList<>();
+        list.add(getResources().getString(R.string.tab_title_private_key));
+        list.add(getResources().getString(R.string.tab_title_qr_code));
+
+        return list;
     }
 
     @Override

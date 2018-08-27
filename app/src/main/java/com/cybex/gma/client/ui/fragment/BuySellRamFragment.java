@@ -44,6 +44,7 @@ import butterknife.Unbinder;
  * 买卖RAM Fragment
  */
 public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
+
     private static final String RAM_SCOPE = "eosio";
     private static final String RAM_CODE = "eosio";
     private static final String RAM_TABLE = "rammarket";
@@ -84,35 +85,39 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     @OnTextChanged(value = R.id.edt_buy_ram, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onChanged(Editable s) {
-        if (EmptyUtils.isNotEmpty(getEOSAmount())){
+        if (EmptyUtils.isNotEmpty(getEOSAmount())) {
             setClickable(btBuyRam);
-            if (EmptyUtils.isNotEmpty(kbPerEOS)){
-                String amount = getResources().getString(R.string.approxy_amount) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4) + " KB";
+            if (EmptyUtils.isNotEmpty(kbPerEOS)) {
+                String amount =
+                        getResources().getString(R.string.approxy_amount) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4)
+                                + " KB";
                 tvApproximatelyAmount.setText(amount);
                 tvApproximatelyAmount.setVisibility(View.VISIBLE);
             }
-        }else{
+        } else {
             tvApproximatelyAmount.setVisibility(View.GONE);
             setUnclickable(btBuyRam);
         }
     }
 
     @OnTextChanged(value = R.id.edt_sell_ram, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onSellChanged(Editable s){
-        if (EmptyUtils.isNotEmpty(getRamAmount()) && EmptyUtils.isNotEmpty(eosPerKb)){
+    public void onSellChanged(Editable s) {
+        if (EmptyUtils.isNotEmpty(getRamAmount()) && EmptyUtils.isNotEmpty(eosPerKb)) {
             setClickable(btSellRam);
-            if (EmptyUtils.isNotEmpty(eosPerKb)){
-                String amount = getResources().getString(R.string.approxy_amount) + AmountUtil.mul(eosPerKb, getRamAmount(),
-                        4) + " EOS";
+            if (EmptyUtils.isNotEmpty(eosPerKb)) {
+                String amount =
+                        getResources().getString(R.string.approxy_amount) + AmountUtil.mul(eosPerKb, getRamAmount(),
+                                4) + " EOS";
                 tvApproximatelyAmount.setVisibility(View.VISIBLE);
                 tvApproximatelyAmount.setText(amount);
             }
-        }else{
+        } else {
             setUnclickable(btSellRam);
             tvApproximatelyAmount.setVisibility(View.GONE);
         }
 
     }
+
     public static BuySellRamFragment newInstance(Bundle args) {
         BuySellRamFragment fragment = new BuySellRamFragment();
         fragment.setArguments(args);
@@ -133,8 +138,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         setUnclickable(btSellRam);
         setUnclickable(btBuyRam);
         ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
-        list.add(new TabTitleBuyRamVO());
-        list.add(new TabTitleSellRamVO());
+        list.add(new TabTitleBuyRamVO(getString(R.string.tab_title_buy)));
+        list.add(new TabTitleSellRamVO(getString(R.string.tab_title_sell)));
         mTab.setTabData(list);
         mTab.setCurrentTab(0);
 
@@ -149,9 +154,10 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                     tvApproximatelyAmount.setVisibility(View.GONE);
                     edtBuyRam.setText("");
                     tvEosRamAmount.setText(getResources().getString(R.string.transfer_eos_amount));
-                    if (EmptyUtils.isNotEmpty(resourceInfoVO)){
+                    if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
                         String available_eos = resourceInfoVO.getBanlance();
-                        tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_eos), available_eos));
+                        tvAvaEosRam.setText(
+                                String.format(getResources().getString(R.string.available_eos), available_eos));
                     }
                 } else if (position == 1) {
                     btBuyRam.setVisibility(View.GONE);
@@ -161,7 +167,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                     edtSellRam.setText("");
                     tvApproximatelyAmount.setVisibility(View.GONE);
                     tvEosRamAmount.setText(getResources().getString(R.string.transfer_ram_amount));
-                    if (EmptyUtils.isNotEmpty(resourceInfoVO)){
+                    if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
                         String ramAvailable = calAvailableRam(resourceInfoVO);
                         tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_ram),
                                 ramAvailable));
@@ -175,16 +181,18 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             }
         });
 
-        if (getArguments() != null){
+        if (getArguments() != null) {
             resourceInfoVO = getArguments().getParcelable("ramInfo");
-            if (EmptyUtils.isNotEmpty(resourceInfoVO)){
+            if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
                 String ramUsed = AmountUtil.round(String.valueOf(resourceInfoVO.getRamUsed()), 4);
                 String ramUsedKB = AmountUtil.div(ramUsed, "1024", 2);
-                superTextViewRamStatus.setLeftString(getResources().getString(R.string.used) +ramUsedKB + " KB");
+                superTextViewRamStatus.setLeftString(getResources().getString(R.string.used) + ramUsedKB + " KB");
                 String ramTotal = AmountUtil.round(String.valueOf(resourceInfoVO.getRamTotal()), 4);
                 String ramTotalKB = AmountUtil.div(ramTotal, "1024", 2);
-                superTextViewRamStatus.setRightString(getResources().getString(R.string.total_amount) + ramTotalKB + " KB");
-                tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_eos), String.valueOf(resourceInfoVO.getBanlance())));
+                superTextViewRamStatus.setRightString(
+                        getResources().getString(R.string.total_amount) + ramTotalKB + " KB");
+                tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_eos),
+                        String.valueOf(resourceInfoVO.getBanlance())));
                 initProgressBar(resourceInfoVO.getRamProgress());
             }
         }
@@ -220,30 +228,32 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     public String getEOSAmount() {
         return edtBuyRam.getText().toString().trim();
     }
-    public String getRamAmount(){
+
+    public String getRamAmount() {
         return edtSellRam.getText().toString().trim();
     }
 
-    public void setClickable(Button button){
+    public void setClickable(Button button) {
         button.setClickable(true);
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
     }
 
-    public void setUnclickable(Button button){
+    public void setUnclickable(Button button) {
         button.setClickable(false);
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
     }
 
-    public void setRamUnitPrice(String ramUnitPriceKB){
+    public void setRamUnitPrice(String ramUnitPriceKB) {
         eosPerKb = ramUnitPriceKB;
         tvRamUnitPrice.setRightString(String.format(getResources().getString(R.string.ram_unit_price), ramUnitPriceKB));
         String ramTotalKB = AmountUtil.div(String.valueOf(resourceInfoVO.getRamTotal()), "1024", 2);
-        String ramPrice = AmountUtil.mul(ramUnitPriceKB, ramTotalKB,4);
-        superTextViewRamAmount.setRightString(String.format(getResources().getString(R.string.eos_ram_amount), ramPrice));
+        String ramPrice = AmountUtil.mul(ramUnitPriceKB, ramTotalKB, 4);
+        superTextViewRamAmount.setRightString(
+                String.format(getResources().getString(R.string.eos_ram_amount), ramPrice));
         kbPerEOS = AmountUtil.div("1", ramUnitPriceKB, 8);
     }
 
-    public String calAvailableRam(ResourceInfoVO vo){
+    public String calAvailableRam(ResourceInfoVO vo) {
         String ramUsed = String.valueOf(vo.getRamUsed());
         String ramTotal = String.valueOf(vo.getRamTotal());
         String ramAvailable = AmountUtil.sub(ramTotal, ramUsed, 2);
@@ -254,16 +264,17 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     /**
      * 初始化Progress样式
      * 85%progress以上要用红色显示
+     *
      * @param progress
      */
-    public void initProgressBar(float progress){
+    public void initProgressBar(float progress) {
         RoundCornerProgressBar progressBar = progressbarRam;
-        if (progress >= ParamConstants.PROGRESS_ALERT){
+        if (progress >= ParamConstants.PROGRESS_ALERT) {
             //显示值>=85%
             progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
             progressBar.setProgress(progress);
             superTextViewRamStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
-        }else{
+        } else {
             progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
             progressBar.setProgress(progress);
             superTextViewRamStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
@@ -351,48 +362,52 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                         break;
                     case R.id.btn_confirm_authorization:
                         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                        switch (operation_type){
+                        switch (operation_type) {
                             case OPERATION_BUY_RAM:
                                 //买入RAM操作
-                                if (EmptyUtils.isNotEmpty(curWallet)){
+                                if (EmptyUtils.isNotEmpty(curWallet)) {
                                     final String cypher = curWallet.getCypher();
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     String inputPass = mPass.getText().toString().trim();
-                                    if (EmptyUtils.isNotEmpty(inputPass)){
+                                    if (EmptyUtils.isNotEmpty(inputPass)) {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                        if (key.equals("wrong password")){
-                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
-                                        }else{
+                                        if (key.equals("wrong password")) {
+                                            GemmaToastUtils.showLongToast(
+                                                    getResources().getString(R.string.wrong_password));
+                                        } else {
                                             final String curEOSName = curWallet.getCurrentEosName();
-                                            String quantity = AmountUtil.add(getEOSAmount(), "0", 4)+ " EOS";
+                                            String quantity = AmountUtil.add(getEOSAmount(), "0", 4) + " EOS";
                                             getP().executeBuyRamLogic(curEOSName, curEOSName, quantity, key);
                                             dialog.cancel();
                                         }
-                                    }else{
-                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
+                                    } else {
+                                        GemmaToastUtils.showLongToast(
+                                                getResources().getString(R.string.please_input_pass));
                                     }
 
                                 }
                                 break;
-                                //卖出RAM操作
+                            //卖出RAM操作
                             case OPERATION_SELL_RAM:
-                                if (EmptyUtils.isNotEmpty(curWallet)){
+                                if (EmptyUtils.isNotEmpty(curWallet)) {
                                     final String cypher = curWallet.getCypher();
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     String inputPass = mPass.getText().toString().trim();
-                                    if (EmptyUtils.isNotEmpty(inputPass)){
+                                    if (EmptyUtils.isNotEmpty(inputPass)) {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                        if (key.equals("wrong password")){
-                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
-                                        }else{
+                                        if (key.equals("wrong password")) {
+                                            GemmaToastUtils.showLongToast(
+                                                    getResources().getString(R.string.wrong_password));
+                                        } else {
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             long ramAmount = Long.parseLong(getRamAmount());
                                             long bytes = ramAmount * 1024;
-                                            getP().executeSellRamLogic(curEOSName, bytes,key);
+                                            getP().executeSellRamLogic(curEOSName, bytes, key);
                                             dialog.cancel();
                                         }
-                                    }else{
-                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
+                                    } else {
+                                        GemmaToastUtils.showLongToast(
+                                                getResources().getString(R.string.please_input_pass));
                                     }
                                 }
                                 break;

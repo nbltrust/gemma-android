@@ -3,9 +3,16 @@ package com.cybex.gma.client.ui.model.vo;
 import com.cybex.base.view.tablayout.listener.CustomTabEntity;
 
 public class TabTitleBuyRamVO implements CustomTabEntity {
+
+    private String mTitle;
+
+    public TabTitleBuyRamVO(String mTitle) {
+        this.mTitle = mTitle;
+    }
+
     @Override
     public String getTabTitle() {
-        return "买入";
+        return mTitle;
     }
 
     @Override
