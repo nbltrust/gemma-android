@@ -12,6 +12,7 @@ import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.activity.SpalashActivity;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 
 import java.util.List;
 
