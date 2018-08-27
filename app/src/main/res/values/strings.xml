@@ -420,4 +420,16 @@
     <string name="loading_pretransfer_info">加载账户信息</string>
     <string name="dont_import_same_wallet">Gemma中已有此钱包</string>
     <string name="default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://xxxx</string>
+
+
+
+    <string name="tab_title_private_key">私钥</string>
+    <string name="tab_title_qr_code">二维码</string>
+
+    <string name="tab_title_delegate">抵押资源</string>
+    <string name="tab_title_un_delegate">解除抵押</string>
+
+    <string name="tab_title_buy">买入</string>
+    <string name="tab_title_sell">卖出</string>
+
 </resources>

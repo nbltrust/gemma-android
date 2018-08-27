@@ -4,9 +4,15 @@ import com.cybex.base.view.tablayout.listener.CustomTabEntity;
 
 public class TabTitleRefundVO implements CustomTabEntity {
 
+    private String mTitle;
+
+    public TabTitleRefundVO(String mTitle) {
+        this.mTitle = mTitle;
+    }
+
     @Override
     public String getTabTitle() {
-        return "解除抵押";
+        return mTitle;
     }
 
     @Override

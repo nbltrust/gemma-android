@@ -430,4 +430,13 @@
     <string name="dont_import_same_wallet">This wallet is already existed in Gemma</string>
     <string name="default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://xxxx</string>
 
+    <string name="tab_title_private_key">Private key</string>
+    <string name="tab_title_qr_code">Qr code</string>
+
+    <string name="tab_title_delegate">Delegate</string>
+    <string name="tab_title_un_delegate">Undelegate</string>
+
+    <string name="tab_title_buy">Buy</string>
+    <string name="tab_title_sell">Sell</string>
+
 </resources>

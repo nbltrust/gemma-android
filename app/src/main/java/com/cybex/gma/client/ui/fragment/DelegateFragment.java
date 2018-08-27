@@ -130,8 +130,8 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
         setUnclickable(btundelegateCpuNet);
         setUnclickable(btDelegateCpuNet);
         ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
-        list.add(new TabTitleDelegateVO());
-        list.add(new TabTitleRefundVO());
+        list.add(new TabTitleDelegateVO(getString(R.string.tab_title_delegate)));
+        list.add(new TabTitleRefundVO(getString(R.string.tab_title_un_delegate)));
         mTab.setTabData(list);
         mTab.setCurrentTab(0);
         mTab.setOnTabSelectListener(new OnTabSelectListener() {
