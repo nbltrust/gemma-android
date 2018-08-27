@@ -25,6 +25,7 @@ public class VoteSelectedNodeAdapter extends BaseQuickAdapter<VoteNodeVO,BaseVie
         tv_node_select_name.setText(item.getAccount());
         tv_node_select_alais.setText(item.getAlias());
 
+        helper.addOnClickListener(R.id.view_is_node_checked);
 
         if(item.ischecked){
             //如果该选项卡被选择

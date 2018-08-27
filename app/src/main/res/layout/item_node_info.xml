@@ -27,6 +27,7 @@
     </LinearLayout>
     
     <LinearLayout
+        android:id="@+id/view_node_info"
         android:padding="@dimen/dimen_10"
         android:layout_marginStart="@dimen/dimen_20"
         android:orientation="vertical"

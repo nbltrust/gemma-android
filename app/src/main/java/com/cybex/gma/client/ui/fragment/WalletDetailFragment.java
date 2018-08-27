@@ -49,9 +49,12 @@ public class WalletDetailFragment extends XFragment {
     @BindView(R.id.iv_arrow_in_detailPage) ImageView ivArrowInDetailPage;
     Unbinder unbinder;
 
+    private final int requestCode = 1;
+
     @OnClick(R.id.layout_wallet_briefInfo)
     public void goChangeWalletName() {
-        start(ChangeWalletNameFragment.newInstance(curWallet.getId()));
+        //start(ChangeWalletNameFragment.newInstance(curWallet.getId()));
+        startForResult(ChangeWalletNameFragment.newInstance(curWallet.getId()), requestCode);
     }
 
     public static WalletDetailFragment newInstance(Bundle args) {
@@ -129,6 +132,16 @@ public class WalletDetailFragment extends XFragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == 2){
+            WalletEntity walletEntity = data.getParcelable("curWallet");
+            if (EmptyUtils.isNotEmpty(walletEntity))
+            tvWalletNameInDetailPage.setText(walletEntity.getWalletName());
+        }
     }
 
     /**

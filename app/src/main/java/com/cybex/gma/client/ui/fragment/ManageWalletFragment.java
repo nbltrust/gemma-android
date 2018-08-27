@@ -44,6 +44,7 @@ public class ManageWalletFragment extends XFragment {
     @BindView(R.id.tv_existed_wallet) TextView tvExistedWallet;
     Unbinder unbinder;
     private WalletManageListAdapter adapter;
+    private final int requestCode = 0;
 
     public static ManageWalletFragment newInstance() {
         Bundle args = new Bundle();
@@ -146,7 +147,8 @@ public class ManageWalletFragment extends XFragment {
                         (position+1);//当前卡片对应的wallet
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("curWallet", thisWallet);
-                start(WalletDetailFragment.newInstance(bundle));
+                //start(WalletDetailFragment.newInstance(bundle));
+                startForResult(WalletDetailFragment.newInstance(bundle), requestCode);
             }
 
             @Override
