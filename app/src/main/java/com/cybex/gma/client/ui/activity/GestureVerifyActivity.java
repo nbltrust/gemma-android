@@ -307,6 +307,7 @@ public class GestureVerifyActivity extends XActivity {
             case ParamConstants.GESTURE_SKIP_TYPE_LOGIN_VERIFY:
                 //登录进入跳转逻辑
                 UISkipMananger.launchHome(this);
+                finish();
                 break;
             case ParamConstants.GESTURE_SKIP_TYPE_CLOSE:
                 //关闭手势密码跳转逻辑
