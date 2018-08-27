@@ -51,7 +51,8 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
     private static final String VALUE_CODE = "eosio.token";
     private static final String VALUE_CONTRACT = "eosio.token";
     private static final String VALUE_COMPRESSION = "none";
-    private static final String VALUE_SYMBOL = "EOS";
+    private static final String VALUE_SYMBOL_EOS = "EOS";
+    private static final String VALUE_SYMBOL_USDT = "USDT";
 
     private static final String MAP_KEY_ACCOUNT_INFO = "account_info";
     private static final String MAP_KEY_UNIT_PRICE = "unit_price";
@@ -102,15 +103,16 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
      */
     public void requestHomeCombineDataVO() {
         Observable.combineLatest(getAccountObserver, unitPriceObserver, banlanceObserver,
-                new Function3<AccountInfo, String, String, HomeCombineDataVO>() {
+                new Function3<AccountInfo, String[], String, HomeCombineDataVO>() {
                     @Override
-                    public HomeCombineDataVO apply(AccountInfo accountInfo, String unitPrice, String banlance) throws
+                    public HomeCombineDataVO apply(AccountInfo accountInfo, String[] unitPrice, String banlance) throws
                             Exception {
 
                         HomeCombineDataVO vo = new HomeCombineDataVO();
                         vo.setAccountInfo(accountInfo);
                         vo.setBanlance(banlance);
-                        vo.setUnitPrice(unitPrice);
+                        vo.setUnitPrice(unitPrice[1]);
+                        vo.setUnitPriceUSDT(unitPrice[0]);
 
                         return vo;
                     }
@@ -183,9 +185,9 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
             }).subscribeOn(Schedulers.io());
 
 
-    Observable<String> unitPriceObserver = Observable.create(new ObservableOnSubscribe<String>() {
+    Observable<String[]> unitPriceObserver = Observable.create(new ObservableOnSubscribe<String[]>() {
         @Override
-        public void subscribe(ObservableEmitter<String> emitter) {
+        public void subscribe(ObservableEmitter<String[]> emitter) {
             try {
                 new UnitPriceRequest(UnitPrice.class)
                         .getUnitPriceRequest(new JsonCallback<UnitPrice>() {
@@ -207,16 +209,32 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                                     UnitPrice unitPrice = response.body();
                                     List<UnitPrice.PricesBean> prices = unitPrice.getPrices();
                                     if (EmptyUtils.isNotEmpty(prices)) {
+                                        String[] str = new String[2];
                                         for (int i = 0; i < prices.size(); i++) {
                                             UnitPrice.PricesBean bean = prices.get(i);
-                                            if (bean != null && bean.getName().equals(VALUE_SYMBOL)) {
+                                            /*
+                                            if (bean != null && bean.getName().equals(VALUE_SYMBOL_EOS)) {
+
                                                 double value = bean.getValue();
+
 
                                                 emitter.onNext(Double.toString(value));
                                                 emitter.onComplete();
                                             }
+                                            */
+
+                                            if (bean != null){
+                                                if (bean.getName().equals(VALUE_SYMBOL_EOS)){
+                                                    str[1] = String.valueOf(bean.getValue());
+                                                }
+                                                if (bean.getName().equals(VALUE_SYMBOL_USDT)){
+                                                    str[0] = String.valueOf(bean.getValue());
+                                                }
+                                            }
 
                                         }
+                                        emitter.onNext(str);
+                                        emitter.onComplete();
 
                                     }
 
@@ -292,7 +310,7 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
         GetCurrencyBalanceReqParams params = new GetCurrencyBalanceReqParams();
         params.setAccount(currentEOSName);
         params.setCode(VALUE_CODE);
-        params.setSymbol(VALUE_SYMBOL);
+        params.setSymbol(VALUE_SYMBOL_EOS);
         String jsonParams = GsonUtils.objectToJson(params);
 
         new GetCurrencyBalanceRequest(String.class)

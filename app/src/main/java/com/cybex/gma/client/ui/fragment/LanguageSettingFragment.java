@@ -29,7 +29,6 @@ public class LanguageSettingFragment extends XFragment {
 
     private int savedLanguageType;
 
-
     public static LanguageSettingFragment newInstance() {
         Bundle args = new Bundle();
         LanguageSettingFragment fragment = new LanguageSettingFragment();

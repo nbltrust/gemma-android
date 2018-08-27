@@ -12,6 +12,7 @@ public class HomeCombineDataVO {
     private AccountInfo accountInfo;
     private String unitPrice;
     private String banlance;
+    private String unitPriceUSDT;
 
     public AccountInfo getAccountInfo() {
         return accountInfo;
@@ -35,5 +36,13 @@ public class HomeCombineDataVO {
 
     public void setBanlance(String banlance) {
         this.banlance = banlance;
+    }
+
+    public String getUnitPriceUSDT() {
+        return unitPriceUSDT;
+    }
+
+    public void setUnitPriceUSDT(String unitPriceUSDT) {
+        this.unitPriceUSDT = unitPriceUSDT;
     }
 }
