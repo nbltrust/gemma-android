@@ -78,40 +78,11 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
 
-    /**
-     * 验证框架验证成功回调
-     */
-    @Override
-    public void onValidationSucceeded() {
 
-        String[] keyPair = getP().getKeypair();
-        final String publicKey = keyPair[0];
-        final String privateKey = keyPair[1];
-        getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[1], keyPair[0],
-                getPassHint(), getInvCode());
-        }
-
-    /**
-     * 验证失败回调
-      * @param errors
-     */
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors){
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(this);
-
-            if (view instanceof EditText){
-              GemmaToastUtils.showLongToast(message);
-            }else{
-                GemmaToastUtils.showLongToast(message);
-            }
-        }
-    }
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterEosNameChanged(Editable s) {
-        if (isAllTextFilled() && checkboxConfig.isChecked()) {
+        if (isAllTextFilled() && checkboxConfig.isChecked() && getP().isPasswordMatch()) {
             setClickable(btCreateWallet);
         } else {
             setUnclickable(btCreateWallet);
@@ -131,7 +102,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterPassChanged(Editable s) {
-        if (isAllTextFilled() && checkboxConfig.isChecked()) {
+        if (isAllTextFilled() && checkboxConfig.isChecked() && getP().isPasswordMatch()) {
             setClickable(btCreateWallet);
         } else {
             setUnclickable(btCreateWallet);
@@ -143,7 +114,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         if (EmptyUtils.isEmpty(getRepeatPassword())) {
             if (edtRepeatPass.hasFocus())setRepeatPassFocusStyle();
         }
-        if (isAllTextFilled() && checkboxConfig.isChecked()) {
+        if (isAllTextFilled() && checkboxConfig.isChecked() && getP().isPasswordMatch()) {
             setClickable(btCreateWallet);
         } else {
             setUnclickable(btCreateWallet);
@@ -199,7 +170,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             GemmaToastUtils.showLongToast(getResources().getString(R.string.invalid_eos_username));
         }
         */
-
     }
 
     public void initView() {
@@ -210,8 +180,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         setEditTextHintStyle(edtPassHint, R.string.password_hint_hint);
         setEditTextHintStyle(edtInvCode, R.string.input_invCode_hint);
         bubble.setVisibility(View.GONE);
-        //setUnclickable(btCreateWallet);
-        setClickable(btCreateWallet);
+        setUnclickable(btCreateWallet);
         edtSetPass.setOnTouchListener(new View.OnTouchListener() {
             int flag = 0;
 
@@ -243,7 +212,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && isAllTextFilled() && getP().isUserNameValid()) {
+                if (isChecked && isAllTextFilled() && getP().isUserNameValid() && getP().isPasswordMatch()) {
                     setClickable(btCreateWallet);
                 } else {
                     setUnclickable(btCreateWallet);
@@ -584,6 +553,39 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             }
         });
         dialog.show();
+    }
+
+    /**
+     * 验证框架验证成功回调
+     */
+    @Override
+    public void onValidationSucceeded() {
+        if (getP().isUserNameValid()){
+            String[] keyPair = getP().getKeypair();
+            final String publicKey = keyPair[0];
+            final String privateKey = keyPair[1];
+            getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[1], keyPair[0],
+                    getPassHint(), getInvCode());
+        }
+    }
+
+    /**
+     * 验证失败回调
+     * @param errors
+     */
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+
+        for (ValidationError error : errors){
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            if (view instanceof EditText){
+                GemmaToastUtils.showLongToast(message);
+            }else{
+                GemmaToastUtils.showLongToast(message);
+            }
+        }
     }
 
 }

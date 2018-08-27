@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
-import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -72,8 +71,10 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
 
     @OnTextChanged(value = R.id.edt_set_new_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onPasswordChanged(){
-        if (isAllFilled()){
+        if (isAllFilled() && isPasswordMatch()){
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+        }else{
+            btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
         }
     }
 
@@ -82,8 +83,10 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         if (EmptyUtils.isEmpty(getRepeatPass())){
             setRepeatPassFocusStyle();
         }
-        if (isAllFilled()){
+        if (isAllFilled() && isPasswordMatch()){
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+        }else {
+            btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
         }
     }
 
@@ -239,7 +242,6 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         return true;
     }
 
-
     public String getPassword() {
         return edtSetNewPass.getText().toString().trim();
     }
@@ -285,6 +287,11 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         edtSetNewPass.setOnFocusChangeListener(null);
     }
 
+    private boolean isPasswordMatch(){
+        if (getPassword().equals(getRepeatPass()))return true;
+        return false;
+    }
+
     @Override
     public void onValidationSucceeded() {
         final String newCypher = JNIUtil.get_cypher(getPassword(), priKey);
@@ -293,7 +300,9 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
             curWallet.setPasswordTip(getPassHint());
             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
             GemmaToastUtils.showLongToast(getResources().getString(R.string.change_pass_success));
-            UISkipMananger.launchHome(getActivity());
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("curWallet", curWallet);
+            start(WalletDetailFragment.newInstance(bundle));
         }
     }
 

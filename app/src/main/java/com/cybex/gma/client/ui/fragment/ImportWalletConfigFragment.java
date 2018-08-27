@@ -80,7 +80,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onSetPassChanged() {
-        if (isAllFilled() && checkboxConfig.isChecked()) {
+        if (isAllFilled() && checkboxConfig.isChecked() && getP().isPasswordMatch()) {
             setButtonClickableStyle();
         } else {
             setButtonUnClickableStyle();
@@ -89,7 +89,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onRepeatPassChanged() {
-        if (isAllFilled() && checkboxConfig.isChecked()) {
+        if (isAllFilled() && checkboxConfig.isChecked() && getP().isPasswordMatch()) {
             setButtonClickableStyle();
         } else {
             setButtonUnClickableStyle();
@@ -177,7 +177,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (isAllFilled()) {
+                    if (isAllFilled() && getP().isPasswordMatch()) {
                         setButtonClickableStyle();
                     } else {
                         setButtonUnClickableStyle();
@@ -351,7 +351,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         editText.setHint(new SpannableString(ss));
     }
 
-    public void clearListener(){
+    private void clearListener(){
         edtPassHint.setOnFocusChangeListener(null);
         edtSetPass.setOnFocusChangeListener(null);
         edtRepeatPass.setOnFocusChangeListener(null);
