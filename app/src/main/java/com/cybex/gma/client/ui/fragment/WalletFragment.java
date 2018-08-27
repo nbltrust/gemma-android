@@ -95,6 +95,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     Unbinder unbinder;
 
     private ResourceInfoVO resourceInfoVO;
+    private String curUSDTPrice;
 
     @OnClick({R.id.view_cpu, R.id.view_net, R.id.view_ram})
     public void clickViews(View view) {
@@ -217,11 +218,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             public void run() {
                 if (vo != null) {
                     String banlance = vo.getBanlance();
-                    String unitPrice = vo.getUnitPrice();
+                    String unitPriceEOS = vo.getUnitPrice();
+                    curUSDTPrice = vo.getUnitPriceUSDT();
                     AccountInfo info = vo.getAccountInfo();
 
+
                     //显示总资产信息
-                    showTotalPriceInfo(banlance, unitPrice, info);
+                    showTotalPriceInfo(banlance, unitPriceEOS, info);
                     //显示cpu，net，ram进度
                     showResourceInfo(banlance, info);
                     //显示赎回信息
@@ -373,8 +376,10 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
         String totalPrice = AmountUtil.add(tempPrice, cpuNumber, 4);
         String totalCNY = AmountUtil.mul(unitPrice, totalPrice, 4);
+        String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 4);
         totalEOSAmount.setText(totalPrice + " EOS");
         totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+        //totalCNYAmount.setCenterString("≈" + totalUSD + " USD");
 
 
     }
@@ -587,4 +592,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     }
 
+    public void setCurUSDTPrice(String curUSDTPrice) {
+        this.curUSDTPrice = curUSDTPrice;
+    }
 }
