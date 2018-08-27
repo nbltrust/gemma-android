@@ -101,7 +101,8 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                             }
                             //最后执行存入操作，此前包此时为当前钱包
                             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
-
+                            //销毁当前Activity
+                            getV().getActivity().finish();
                             UISkipMananger.launchHome(getV().getActivity());
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.import_wallet_failed));

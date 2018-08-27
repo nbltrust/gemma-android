@@ -33,7 +33,7 @@ public class ChangeWalletNameFragment extends XFragment {
     Unbinder unbinder;
     private int textChangedCount;//TextChanged执行次数
     private WalletEntity curWallet;
-    private final int requestCode = 2;
+    private final int requestCode = 3;
 
     @OnTextChanged(value = R.id.editText_setWalletName, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextChanged() {
