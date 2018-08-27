@@ -6,7 +6,6 @@ import android.view.View;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.fragment.TransferRecordListFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.lzy.okgo.OkGo;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -46,9 +45,4 @@ public class TransferRecordActivity extends XActivity {
         return null;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        OkGo.getInstance().cancelAll();
-    }
 }

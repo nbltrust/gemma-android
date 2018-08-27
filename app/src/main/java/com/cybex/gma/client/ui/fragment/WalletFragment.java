@@ -178,7 +178,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
             if (event.isRefresh()) {
@@ -190,12 +190,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onDataRefreshEvent(HomeDataRefreshEvent event) {
         if (EmptyUtils.isNotEmpty(event)) {
-            //OkGo.getInstance().cancelTag(GetAccountinfoRequest.TAG);
-            //OkGo.getInstance().cancelTag(UnitPriceRequest.TAG);
-            //OkGo.getInstance().cancelTag(GetCurrencyBalanceRequest.TAG);
             getP().requestHomeCombineDataVO();
         }
     }
