@@ -5,8 +5,8 @@ import android.view.View;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.event.OnChangeLanguageEvent;
-import com.cybex.gma.client.manager.LanguageManager;
+import com.hxlx.core.lib.utils.OnChangeLanguageEvent;
+import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 

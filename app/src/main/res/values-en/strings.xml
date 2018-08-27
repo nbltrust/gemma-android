@@ -112,10 +112,7 @@
 
     <string name="title_currency_unit">Currency</string>
 
-    <string name="setting_language_auto">System</string>
-    <string name="setting_language_english">English</string>
-    <string name="setting_simplified_chinese">简体中文</string>
-    <string name="setting_traditional_chinese">繁體中文</string>
+
     <string name="version_info">What\'s Fresh</string>
     <string name="version_update">Version Update</string>
     <string name="copyright">Copyright @2018 Tuolian. All Rights Reserved</string>

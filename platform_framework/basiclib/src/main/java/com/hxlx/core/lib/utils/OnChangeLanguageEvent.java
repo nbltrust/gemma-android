@@ -1,4 +1,4 @@
-package com.cybex.gma.client.event;
+package com.hxlx.core.lib.utils;
 
 /**
  * 语言切换event

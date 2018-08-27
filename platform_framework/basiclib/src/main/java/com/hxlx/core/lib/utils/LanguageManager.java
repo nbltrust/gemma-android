@@ -1,4 +1,4 @@
-package com.cybex.gma.client.manager;
+package com.hxlx.core.lib.utils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -8,10 +8,8 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
 
-import com.cybex.gma.client.R;
-import com.cybex.gma.client.event.OnChangeLanguageEvent;
+import com.hxlx.core.lib.R;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
-import com.hxlx.core.lib.utils.SPUtils;
 
 import java.util.Locale;
 
@@ -98,7 +96,6 @@ public class LanguageManager {
             return Locale.TRADITIONAL_CHINESE;
         }
         getSystemLanguage(getSysLocale());
-        LoggerManager.e("getLanguageLocale" + languageType + languageType);
         return Locale.SIMPLIFIED_CHINESE;
     }
 
@@ -157,7 +154,6 @@ public class LanguageManager {
         } else if (languageType == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
             return LanguageType.LANGUAGE_FOLLOW_SYSTEM;
         }
-        LoggerManager.e("getLanguageType" + languageType);
         return languageType;
     }
 

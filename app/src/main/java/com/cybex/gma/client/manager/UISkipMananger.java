@@ -53,9 +53,19 @@ public final class UISkipMananger {
      *
      * @param context
      */
+    public static void launchHomeSingle(Activity context) {
+        launchNewTaskIntent(context, MainTabActivity.class);
+    }
+
+    /**
+     * 跳转到主界面(MainTab)
+     *
+     * @param context
+     */
     public static void launchHome(Activity context) {
         launchIntent(context, MainTabActivity.class);
     }
+
 
     /**
      * 跳转到创建钱包页面
