@@ -16,6 +16,7 @@ import com.hxlx.core.lib.R;
 import com.hxlx.core.lib.common.eventbus.BaseEvent;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.utils.OSUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -193,10 +194,9 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         if (OSUtils.checkDeviceHasNavigationBar(this)) {
             OSUtils.solveNavigationBar(getWindow());
         }
+
+        LanguageManager.getInstance(this).setConfiguration();
     }
-
-
-
 
 
     @Override
