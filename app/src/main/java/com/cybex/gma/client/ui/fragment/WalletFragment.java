@@ -127,7 +127,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             default:
                 break;
         }
-
     }
 
     @Override

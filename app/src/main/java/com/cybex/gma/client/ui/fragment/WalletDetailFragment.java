@@ -49,9 +49,13 @@ public class WalletDetailFragment extends XFragment {
     @BindView(R.id.iv_arrow_in_detailPage) ImageView ivArrowInDetailPage;
     Unbinder unbinder;
 
+    private final int requestCodeDown = 2;
+    private final int requestCodeUp = 1;
+
     @OnClick(R.id.layout_wallet_briefInfo)
     public void goChangeWalletName() {
-        start(ChangeWalletNameFragment.newInstance(curWallet.getId()));
+        //start(ChangeWalletNameFragment.newInstance(curWallet.getId()));
+        startForResult(ChangeWalletNameFragment.newInstance(curWallet.getId()), requestCodeDown);
     }
 
     public static WalletDetailFragment newInstance(Bundle args) {
@@ -84,6 +88,12 @@ public class WalletDetailFragment extends XFragment {
                 //显示当前钱包公钥
                 final String pubKey = curWallet.getPublicKey();
                 tvPublicKey.setText(pubKey);
+
+                //设置钱包名为回传参数
+                Bundle bundle = new Bundle();
+                bundle.putInt("walletID", currentID);
+                bundle.putString("walletName", curWallet.getWalletName());
+                setFragmentResult(requestCodeUp, bundle);
             }
         }
 
@@ -129,6 +139,16 @@ public class WalletDetailFragment extends XFragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == 2 && resultCode == 3){
+            WalletEntity walletEntity = data.getParcelable("curWallet");
+            if (EmptyUtils.isNotEmpty(walletEntity))
+            tvWalletNameInDetailPage.setText(walletEntity.getWalletName());
+        }
     }
 
     /**

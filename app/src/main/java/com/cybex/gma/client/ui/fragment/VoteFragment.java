@@ -9,13 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.NodeSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.adapter.VoteNodeListAdapter;
 import com.cybex.gma.client.ui.model.vo.VoteNodeVO;
@@ -149,9 +150,36 @@ public class VoteFragment extends XFragment<VotePresenter> {
 
         mRecyclerView.setLayoutManager(layoutManager);
         getP().fetchBPDetail(ParamConstants.BP_NODE_NUMBERS);
-        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+        mRecyclerView.addOnItemTouchListener(new SimpleClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                VoteNodeVO curVoteNodeVO = nodeVOList.get(position);
+                LoggerManager.d("position", position);
+                if (curVoteNodeVO.ischecked) {
+                    //从点选到取消
+                    curVoteNodeVO.ischecked = false;
+                    //从已选列表中删除
+                    selectedNodes.remove(curVoteNodeVO);
+                } else {
+                    //点选
+                    curVoteNodeVO.ischecked = true;
+                    //向已选列表中添加
+                    selectedNodes.add(curVoteNodeVO);
+                }
+                //此事件用于更新本页面UI
+                NodeSelectedEvent event_this = new NodeSelectedEvent();
+                event_this.setEventType(EVENT_THIS_PAGE);
+                EventBusProvider.post(event_this);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 VoteNodeVO curVoteNodeVO = nodeVOList.get(position);
 
                 if (curVoteNodeVO.ischecked) {
@@ -171,7 +199,13 @@ public class VoteFragment extends XFragment<VotePresenter> {
                 EventBusProvider.post(event_this);
                 adapter.notifyDataSetChanged();
             }
+
+            @Override
+            public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
         });
+
     }
 
     public void initAdapterData(List<VoteNodeVO> voteNodeVOList) {

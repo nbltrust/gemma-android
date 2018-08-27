@@ -33,6 +33,7 @@ public class ChangeWalletNameFragment extends XFragment {
     Unbinder unbinder;
     private int textChangedCount;//TextChanged执行次数
     private WalletEntity curWallet;
+    private final int requestCode = 3;
 
     @OnTextChanged(value = R.id.editText_setWalletName, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextChanged() {
@@ -124,7 +125,9 @@ public class ChangeWalletNameFragment extends XFragment {
                         GemmaToastUtils.showLongToast(ParamConstants.CHANGE_NAME_SUCCESS);
                         Bundle bundle = new Bundle();
                         bundle.putParcelable("curWallet", curWallet);
-                        start(WalletDetailFragment.newInstance(bundle));
+                        //start(WalletDetailFragment.newInstance(bundle));
+                        setFragmentResult(requestCode, bundle);
+                        pop();
                     } else {
                         //钱包名为空
                         GemmaToastUtils.showLongToast(ParamConstants.EMPTY_WALLET_NAME);

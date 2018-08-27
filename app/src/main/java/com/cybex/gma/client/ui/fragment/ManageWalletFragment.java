@@ -44,6 +44,7 @@ public class ManageWalletFragment extends XFragment {
     @BindView(R.id.tv_existed_wallet) TextView tvExistedWallet;
     Unbinder unbinder;
     private WalletManageListAdapter adapter;
+    private final int requestCode = 0;
 
     public static ManageWalletFragment newInstance() {
         Bundle args = new Bundle();
@@ -106,6 +107,21 @@ public class ManageWalletFragment extends XFragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == 1){
+            final int walletID = data.getInt("walletID");
+            final String walletName = data.getString("walletName");
+            WalletVO vo = walletVOList.get(walletID-1);
+            if (EmptyUtils.isNotEmpty(vo)){
+                vo.setWalletName(walletName);
+                walletVOList.clear();
+                setWalletListViewData();
+            }
+        }
+    }
+
     /**
      * 把钱包名称数据放入RecyclerView中显示出来
      */
@@ -146,7 +162,8 @@ public class ManageWalletFragment extends XFragment {
                         (position+1);//当前卡片对应的wallet
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("curWallet", thisWallet);
-                start(WalletDetailFragment.newInstance(bundle));
+                //start(WalletDetailFragment.newInstance(bundle));
+                startForResult(WalletDetailFragment.newInstance(bundle), requestCode);
             }
 
             @Override

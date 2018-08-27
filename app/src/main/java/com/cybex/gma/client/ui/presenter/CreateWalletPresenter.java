@@ -19,6 +19,7 @@ import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,10 +72,11 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             if (registerResult != null) {
                                 String txId = registerResult.txId;
                                 saveAccount(publicKey, privateKey, password, accountname, passwordTip, txId, invCode);
-                                //UISkipMananger.launchHome(getV());
+                                getV().finish();
+                                AppManager.getAppManager().finishAllActivity();
+
                                 UISkipMananger.launchCreateManage(getV());
                                 LibValidateJob.startPolling(10000);
-                                getV().finish();
                             }
                         } else {
                             getV().showOnErrorInfo(data.code);
