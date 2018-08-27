@@ -198,7 +198,7 @@ public class GestureVerifyActivity extends XActivity {
             EventBusProvider.post(new RefreshGestureEvent());
 
             return super.onKeyDown(keyCode, event);
-        }else {
+        } else {
             return super.onKeyDown(keyCode, event);
         }
 
@@ -244,7 +244,8 @@ public class GestureVerifyActivity extends XActivity {
                                 lockPatternView.postClearPatternRunnable(LockPatternUtil.DELAYTIME);
                             } else {
                                 messageTv.setText(
-                                        getString(R.string.gesture_tip_password_error_retry) + retry + getString(
+                                        getString(R.string.gesture_tip_password_error_retry) + " " + retry + " "
+                                                + getString(
                                                 R.string.gesture_error_tip_total));
                                 messageTv.setTextColor(Color.RED);
                                 lockPatternView.postClearPatternRunnable(LockPatternUtil.DELAYTIME);
