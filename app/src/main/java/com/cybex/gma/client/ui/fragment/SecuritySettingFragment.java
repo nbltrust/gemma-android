@@ -12,7 +12,6 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.FingerprintEvent;
 import com.cybex.gma.client.event.RefreshGestureEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.utils.SPUtils;
 import com.cybex.gma.client.utils.fingerprint.FingerprintScanHelper;
 import com.cybex.gma.client.utils.fingerprint.OnAuthResultListener;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;

@@ -21,12 +21,12 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.RefreshGestureEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.utils.SPUtils;
 import com.cybex.gma.client.utils.fingerprint.FingerprintScanHelper;
 import com.cybex.gma.client.utils.fingerprint.OnAuthResultListener;
 import com.hxlx.core.lib.common.cache.ACache;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import java.util.Date;

@@ -10,8 +10,8 @@ import android.util.DisplayMetrics;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.OnChangeLanguageEvent;
-import com.cybex.gma.client.utils.SPUtils;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
+import com.hxlx.core.lib.utils.SPUtils;
 
 import java.util.Locale;
 
