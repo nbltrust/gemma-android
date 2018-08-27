@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.OnChangeLanguageEvent;
 import com.cybex.gma.client.manager.LanguageManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -48,7 +47,7 @@ public class GeneralSettingFragment extends XFragment {
         superTextViewChangeLanguage.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-                startForResult(LanguageSettingFragment.newInstance(), ParamConstants.REQUEST_CODE_CHANGE_LANGUAGE);
+                start(LanguageSettingFragment.newInstance());
 
             }
         });
