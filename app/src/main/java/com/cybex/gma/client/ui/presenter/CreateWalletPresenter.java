@@ -74,7 +74,6 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                                 saveAccount(publicKey, privateKey, password, accountname, passwordTip, txId, invCode);
                                 getV().finish();
                                 AppManager.getAppManager().finishAllActivity();
-
                                 UISkipMananger.launchCreateManage(getV());
                                 LibValidateJob.startPolling(10000);
                             }
