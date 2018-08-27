@@ -44,7 +44,7 @@ public class LanguageSettingFragment extends XFragment {
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getResources().getString(R.string.language), true, false);
 
-        savedLanguageType = LanguageManager.getInstance().getLanguageType();
+        savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
         this.showCheckedLanguage();
 
         mTitleBar.setLeftClickListener(new View.OnClickListener() {
@@ -74,7 +74,7 @@ public class LanguageSettingFragment extends XFragment {
                 break;
         }
 
-        LanguageManager.getInstance().updateLanguage(selectedLanguage);
+        LanguageManager.getInstance(getContext()).updateLanguage(selectedLanguage);
 
     }
 

@@ -66,7 +66,7 @@ public class GeneralSettingFragment extends XFragment {
 
 
     private void showLanguage() {
-        int savedLanguageType = LanguageManager.getInstance().getLanguageType();
+        int savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
         switch (savedLanguageType) {
             case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
                 superTextViewChangeLanguage.setRightString(getString(R.string.follow_system));
