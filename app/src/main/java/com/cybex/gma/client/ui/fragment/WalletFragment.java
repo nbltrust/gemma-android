@@ -380,6 +380,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     }
 
+
     /**
      * 账户余额
      *

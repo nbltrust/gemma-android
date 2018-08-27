@@ -6,8 +6,10 @@ import android.widget.RadioButton;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,6 +77,8 @@ public class LanguageSettingFragment extends XFragment {
         }
 
         LanguageManager.getInstance(getContext()).updateLanguage(selectedLanguage);
+        AppManager.getAppManager().finishAllActivity();
+        UISkipMananger.launchHomeSingle(getActivity());
 
     }
 

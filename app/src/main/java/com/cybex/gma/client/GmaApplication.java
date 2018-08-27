@@ -29,6 +29,7 @@ public class GmaApplication extends BaseApplication {
         initRefresh();
     }
 
+
     private void initRefresh() {
         CommonRefreshLayout.initRefresh();
     }
@@ -37,19 +38,18 @@ public class GmaApplication extends BaseApplication {
         FlowLog.setMinimumLoggingLevel(FlowLog.Level.D);
 
         /**
-        FlowManager.init(new FlowConfig.Builder(this)
-                .addDatabaseConfig(
-                        new DatabaseConfig.Builder(GemmaDatabase.class)
-                                .openHelper(new DatabaseConfig.OpenHelperCreator() {
-                                    @Override
-                                    public OpenHelper createHelper(
-                                            DatabaseDefinition databaseDefinition,
-                                            DatabaseHelperListener helperListener) {
-                                        return new SQLCipherHelperImpl(databaseDefinition, helperListener);
-                                    }
-                                })
-                                .build())
-                .build());*/
+         FlowManager.init(new FlowConfig.Builder(this)
+         .addDatabaseConfig(
+         new DatabaseConfig.Builder(GemmaDatabase.class)
+         .openHelper(new DatabaseConfig.OpenHelperCreator() {
+        @Override public OpenHelper createHelper(
+        DatabaseDefinition databaseDefinition,
+        DatabaseHelperListener helperListener) {
+        return new SQLCipherHelperImpl(databaseDefinition, helperListener);
+        }
+        })
+         .build())
+         .build());*/
 
         FlowManager.init(new FlowConfig.Builder(this)
                 .addDatabaseConfig(new DatabaseConfig.Builder(GemmaDatabase.class)
