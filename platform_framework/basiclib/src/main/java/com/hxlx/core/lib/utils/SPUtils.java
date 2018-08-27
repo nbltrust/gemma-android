@@ -1,10 +1,10 @@
-package com.cybex.gma.client.utils;
+package com.hxlx.core.lib.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-import com.cybex.gma.client.GmaApplication;
+import com.hxlx.core.lib.base.BaseApplication;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class SPUtils {
     }
 
     private SPUtils(String spName) {
-        sp = GmaApplication.getAppContext().getSharedPreferences(spName, Context.MODE_PRIVATE);
+        sp = BaseApplication.getAppContext().getSharedPreferences(spName, Context.MODE_PRIVATE);
     }
 
     /**

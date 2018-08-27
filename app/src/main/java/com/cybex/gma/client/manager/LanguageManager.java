@@ -10,8 +10,8 @@ import android.util.DisplayMetrics;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.OnChangeLanguageEvent;
-import com.cybex.gma.client.utils.SPUtils;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
+import com.hxlx.core.lib.utils.SPUtils;
 
 import java.util.Locale;
 
@@ -27,7 +27,11 @@ public class LanguageManager {
     public static final String SAVE_LANGUAGE = "save_language";
 
 
-    public static void init(Context mContext) {
+    private LanguageManager(Context context) {
+        this.mContext = context;
+    }
+
+    public static LanguageManager getInstance(Context mContext) {
         if (instance == null) {
             synchronized (LanguageManager.class) {
                 if (instance == null) {
@@ -35,18 +39,10 @@ public class LanguageManager {
                 }
             }
         }
-    }
 
-    public static LanguageManager getInstance() {
-        if (instance == null) {
-            throw new IllegalStateException("You must be init LanguageManager first");
-        }
         return instance;
     }
 
-    private LanguageManager(Context context) {
-        this.mContext = context;
-    }
 
     /**
      * 设置语言
@@ -63,6 +59,26 @@ public class LanguageManager {
         DisplayMetrics dm = resources.getDisplayMetrics();
         resources.updateConfiguration(configuration, dm);//语言更换生效的代码!
     }
+
+    /**
+     * 设置语言类型
+     */
+    public void setConfiguration(Context context) {
+        Resources resources = context.getApplicationContext().getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        Locale locale = getLanguageLocale();
+        config.locale = locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            LocaleList localeList = new LocaleList(locale);
+            LocaleList.setDefault(localeList);
+            config.setLocales(localeList);
+            context.getApplicationContext().createConfigurationContext(config);
+            Locale.setDefault(locale);
+        }
+        resources.updateConfiguration(config, dm);
+    }
+
 
     /**
      * 如果不是英文、简体中文、繁体中文，默认返回简体中文
@@ -109,7 +125,7 @@ public class LanguageManager {
      */
     public void updateLanguage(int languageType) {
         SPUtils.getInstance().put(LanguageManager.SAVE_LANGUAGE, languageType);
-        LanguageManager.getInstance().setConfiguration();
+        setConfiguration();
         EventBusProvider.postSticky(new OnChangeLanguageEvent(languageType));
     }
 
@@ -145,20 +161,20 @@ public class LanguageManager {
         return languageType;
     }
 
-    public static Context attachBaseContext(Context context) {
+    public Context attachBaseContext(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return createConfigurationResources(context);
         } else {
-            LanguageManager.getInstance().setConfiguration();
+            setConfiguration(context);
             return context;
         }
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private static Context createConfigurationResources(Context context) {
+    private Context createConfigurationResources(Context context) {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-        Locale locale = getInstance().getLanguageLocale();
+        Locale locale = getLanguageLocale();
         configuration.setLocale(locale);
         return context.createConfigurationContext(configuration);
     }

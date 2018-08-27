@@ -185,7 +185,6 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -195,6 +194,9 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
             OSUtils.solveNavigationBar(getWindow());
         }
     }
+
+
+
 
 
     @Override

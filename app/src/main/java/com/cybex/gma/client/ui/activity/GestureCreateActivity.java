@@ -11,10 +11,10 @@ import com.cybex.base.view.lockpattern.widget.LockPatternView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.event.RefreshGestureEvent;
-import com.cybex.gma.client.utils.SPUtils;
 import com.hxlx.core.lib.common.cache.ACache;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import java.util.ArrayList;

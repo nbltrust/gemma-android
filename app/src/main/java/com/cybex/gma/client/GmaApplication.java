@@ -3,8 +3,6 @@ package com.cybex.gma.client;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.gma.client.config.HttpConfig;
 import com.cybex.gma.client.db.GemmaDatabase;
-import com.cybex.gma.client.manager.LanguageManager;
-import com.cybex.gma.client.service.InitializeService;
 import com.hxlx.core.lib.base.BaseApplication;
 import com.raizlabs.android.dbflow.config.DatabaseConfig;
 import com.raizlabs.android.dbflow.config.FlowConfig;
@@ -29,7 +27,6 @@ public class GmaApplication extends BaseApplication {
         initDBFlow();
         HttpConfig.init(this);
         initRefresh();
-        LanguageManager.init(this);
     }
 
     private void initRefresh() {
