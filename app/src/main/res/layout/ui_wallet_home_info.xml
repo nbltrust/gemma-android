@@ -237,7 +237,7 @@
                         title:rcBackgroundPadding="0dp"
                         title:rcMax="100"
                         title:rcProgress="0"
-                        title:rcProgressColor="@color/scarlet"
+                        title:rcProgressColor="@color/dark_sky_blue"
                         title:rcRadius="10dp"
                         >
 

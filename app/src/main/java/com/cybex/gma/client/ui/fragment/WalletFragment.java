@@ -178,18 +178,18 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
-            if (event.isRefresh()){
+            if (event.isRefresh()) {
                 LoggerManager.d("wallet tab selected and refreshed");
                 getP().requestHomeCombineDataVO();
-            }else {
+            } else {
                 LoggerManager.d("wallet tab selected");
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
-    public void onDataRefreshEvent(HomeDataRefreshEvent event){
-        if (EmptyUtils.isNotEmpty(event)){
+    public void onDataRefreshEvent(HomeDataRefreshEvent event) {
+        if (EmptyUtils.isNotEmpty(event)) {
             //OkGo.getInstance().cancelTag(GetAccountinfoRequest.TAG);
             //OkGo.getInstance().cancelTag(UnitPriceRequest.TAG);
             //OkGo.getInstance().cancelTag(GetCurrencyBalanceRequest.TAG);
@@ -299,6 +299,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             int cpuProgress = (int) Math.ceil(i);
             progressBarCPU.setMax(100);
             progressBarCPU.setProgress(cpuProgress);
+            setProgressColor(progressBarCPU, cpuProgress);
+
 
             //NET使用进度
             AccountInfo.NetLimitBean netLimitBean = info.getNet_limit();
@@ -312,6 +314,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             int netProgress = (int) Math.ceil(j);
             progressBarNET.setMax(100);
             progressBarNET.setProgress(netProgress);
+            setProgressColor(progressBarNET, netProgress);
+
 
             //ram使用进度
             int ramTotal = info.getRam_quota();
@@ -320,6 +324,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             int ramProgress = (int) Math.ceil(k);
             progressBarRAM.setMax(100);
             progressBarRAM.setProgress(ramProgress);
+            setProgressColor(progressBarRAM, ramProgress);
 
             resourceInfoVO = new ResourceInfoVO();
             resourceInfoVO.setBanlance(banlance);
@@ -336,6 +341,14 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             resourceInfoVO.setNetWeight(info.getNet_weight());
         }
 
+    }
+
+    private void setProgressColor(RoundCornerProgressBar progressBar, int progress) {
+        if (progress < 85) {
+            progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
+        } else {
+            progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
+        }
     }
 
 
