@@ -65,14 +65,14 @@ android {
     applicationVariants.all { variant ->
         if (variant.buildType.name.equals('release')) {
             variant.outputs.all { output ->
-                def buildName = "Fantasy"
+                def buildName = "Gemma"
                 def type = variant.buildType.name
                 def releaseApkName = buildName + '_' + type + "_" + versionName + '_' + releaseTime() + '.apk'
                 outputFileName = releaseApkName
             }
         } else {
             variant.outputs.all { output ->
-                def buildName = "Fantasy"
+                def buildName = "Gemma"
                 def releaseApkName = buildName + '_' + "test" + "_" + versionName + '_' + releaseTime() + '.apk'
                 outputFileName = releaseApkName
             }
@@ -168,7 +168,7 @@ android {
         release {
             // 接口地址配置
             buildConfigField('int', 'API_PATH', "2")
-            minifyEnabled false
+            minifyEnabled true
             zipAlignEnabled true
             // 移除无用的resource文件
             shrinkResources false
