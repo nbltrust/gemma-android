@@ -155,6 +155,7 @@ android {
             buildConfigField('int', 'API_PATH', "0")
             zipAlignEnabled true
             minifyEnabled false
+            debuggable true
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
             buildConfigField "boolean", "DEVELOPER_MODE", "true"
@@ -171,7 +172,8 @@ android {
             minifyEnabled true
             zipAlignEnabled true
             // 移除无用的resource文件
-            shrinkResources false
+            shrinkResources true
+            debuggable true
 
             buildConfigField "boolean", "DEVELOPER_MODE", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
@@ -226,13 +228,10 @@ dependencies {
     implementation deps.butterknife.core
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     annotationProcessor deps.butterknife.compiler
-    implementation deps.gma.novacrypto
-    implementation deps.gma.PatternLocker
     implementation deps.gma.happybubble
     implementation deps.gma.zxing
     implementation deps.gma.androidanimations
     api deps.gma.MaterialEditText
-    implementation deps.gma.MaterialDialog
     implementation deps.gma.agentweb
 
     annotationProcessor deps.dbflow.processor
@@ -241,13 +240,10 @@ dependencies {
     api deps.dbflow.sqlciperDatabase
     api deps.dbflow.sqlcipher
 
-    implementation deps.gma.badgeview
-    annotationProcessor deps.gma.badgeviewCompiler
-
     implementation deps.yanzhenjie.permission
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.third.overscroll
-    implementation deps.gma.tapadoo
+    implementation deps.gma.alerter
     implementation deps.gma.saripaar
 
     //日志打印
@@ -255,18 +251,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation deps.gma.svgImageViewer
 
-    //For Lifecycles, LiveData, and ViewModel
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation "android.arch.lifecycle:viewmodel:1.1.1"
-    implementation "android.arch.lifecycle:livedata:1.1.1"
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 
     implementation project(':platform_framework:basiclib')
     implementation project(':platform_framework:base-view')
     implementation project(':platform_framework:update-app')
     implementation project(':platform_framework:customdialoglib')
     implementation project(':platform_framework:superTextview')
-    //implementation project(':platform_framework:validate')
     implementation project(':platform_framework:jdenticon')
     implementation project(':platform_framework:qrcodecore')
     implementation project(':platform_framework:smart-scheduler')
