@@ -172,9 +172,10 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
                     if (hasFocus){
                         tvSetNewPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                         edtSetNewPass.setTypeface(Typeface.DEFAULT_BOLD);
+
                     }else{
                         tvSetNewPass.setTextColor(getResources().getColor(R.color.steel));
-                        edtSetNewPass.setTypeface(Typeface.DEFAULT);
+                        if (EmptyUtils.isEmpty(getPassword()))edtSetNewPass.setTypeface(Typeface.DEFAULT);
                     }
                 }
             });
@@ -195,7 +196,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
                     }
                     if (hasFocus){
                         edtRepeatNewPass.setTypeface(Typeface.DEFAULT_BOLD);
-                    }else {
+                    }else if (EmptyUtils.isEmpty(getRepeatPass())){
                         edtRepeatNewPass.setTypeface(Typeface.DEFAULT);
                     }
                 }
@@ -206,17 +207,57 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus){
                         tvNewPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                        edtNewPassHint.setTypeface(Typeface.DEFAULT_BOLD);
                     }else{
                         tvNewPassHint.setTextColor(getResources().getColor(R.color.steel));
+                        if (EmptyUtils.isEmpty(getPassHint()))edtNewPassHint.setTypeface(Typeface.DEFAULT);
                     }
                 }
             });
-
         }
 
         setEditTextHintStyle(edtSetNewPass, R.string.new_password);
         setEditTextHintStyle(edtRepeatNewPass, R.string.repeatPassword_hint);
         setEditTextHintStyle(edtNewPassHint, R.string.password_hint_hint);
+        /*
+        edtSetNewPass.setOnTouchListener(new View.OnTouchListener() {
+            //按住和松开的标识
+            int touch_flag=0;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                touch_flag++;
+                if(touch_flag==2){
+
+                }
+                return false;
+            }
+        });
+        edtRepeatNewPass.setOnTouchListener(new View.OnTouchListener() {
+            //按住和松开的标识
+            int touch_flag=0;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                touch_flag++;
+                if(touch_flag==2){
+
+                }
+                return false;
+            }
+        });
+        edtNewPassHint.setOnTouchListener(new View.OnTouchListener() {
+            //按住和松开的标识
+            int touch_flag=0;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                touch_flag++;
+                if(touch_flag==2){
+
+                }
+                return false;
+            }
+        });
+        */
+
     }
 
     @Override
@@ -300,9 +341,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
             curWallet.setPasswordTip(getPassHint());
             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
             GemmaToastUtils.showLongToast(getResources().getString(R.string.change_pass_success));
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("curWallet", curWallet);
-            start(WalletDetailFragment.newInstance(bundle));
+            pop();
         }
     }
 

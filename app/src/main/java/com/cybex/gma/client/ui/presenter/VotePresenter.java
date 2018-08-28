@@ -56,7 +56,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                 .FetchBPDetailRequest(new JsonCallback<FetchBPDetailsResult>() {
                     @Override
                     public void onStart(Request<FetchBPDetailsResult, ? extends Request> request) {
-                        getV().showProgressDialog(getV().getString(R.string.loading_in));
+                        getV().showLoading();
                     }
 
                     @Override
@@ -77,16 +77,18 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                                 }
                                 getV().initAdapterData(list);
                                 getTotalDelegatedRes();
+
                             }
+                        }else {
+                            getV().showEmptyOrFinish();
                         }
-                        getV().dissmisProgressDialog();
                     }
 
                     @Override
                     public void onError(Response<FetchBPDetailsResult> response) {
                         super.onError(response);
                         GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.load_node_info_fail));
-                        getV().dissmisProgressDialog();
+                        getV().showError();
                     }
                 });
     }
@@ -130,14 +132,6 @@ public class VotePresenter extends XPresenter<VoteFragment> {
     public void getInfo(String from, String privateKey, String abiStr) {
         new EOSConfigInfoRequest(String.class)
                 .getInfo(new StringCallback() {
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                        getV().dissmisProgressDialog();
-                    }
-
                     @Override
                     public void onSuccess(Response<String> response) {
                         if (response != null && EmptyUtils.isNotEmpty(response.body())) {
@@ -170,6 +164,13 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                             getV().dissmisProgressDialog();
                         }
 
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
+                        getV().dissmisProgressDialog();
                     }
                 });
     }
@@ -220,7 +221,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     .getAccountInfo(new JsonCallback<AccountInfo>() {
                         @Override
                         public void onStart(Request<AccountInfo, ? extends Request> request) {
-                            getV().showProgressDialog(getV().getResources().getString(R.string.loading_avail_resource));
+                           super.onStart(request);
                         }
 
                         @Override
@@ -245,9 +246,11 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                                        getV().hasDelegatedRes(true);
                                        getV().getTotalDelegatedResource(total_resource);
 
+                                       getV().showContent();
                                    }else{
                                        //该账号没有给自己抵押资源
                                        getV().hasDelegatedRes(false);
+                                       getV().showEmptyOrFinish();
                                        GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.not_enough_delegated_res));
                                    }
                                 }
@@ -257,7 +260,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
 
                         @Override
                         public void onError(Response<AccountInfo> response) {
-                            getV().dissmisProgressDialog();
+                            getV().showError();
                             GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.load_avail_res_fail));
                             super.onError(response);
                         }

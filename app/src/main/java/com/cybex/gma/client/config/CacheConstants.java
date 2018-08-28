@@ -22,5 +22,8 @@ public interface CacheConstants {
     String KEY_OPEN_GESTURE = "is_open_gesture";
     String KEY_OPEN_FINGER_PRINT = "is_open_finger_print";
 
+    int CURRENCY_CNY = 1;
+    int CURRENCY_USD = 2;
+
 
 }

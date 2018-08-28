@@ -236,6 +236,18 @@ public class VoteFragment extends XFragment<VotePresenter> {
         selectedNodes.clear();
     }
 
+    public void showLoading(){
+        listMultipleStatusView.showLoading();
+    }
+
+    public void showError() {
+        listMultipleStatusView.showError();
+    }
+
+    public void showContent() {
+        listMultipleStatusView.showContent();
+    }
+
     /**
      * 显示加载更多完成和空数据界面逻辑
      */

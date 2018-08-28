@@ -264,7 +264,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
                 if (hasFocus){
                     edtEosName.setTypeface(Typeface.DEFAULT_BOLD);
-                }else {
+                }else if (EmptyUtils.isEmpty(getEOSUserName())){
                     edtEosName.setTypeface(Typeface.DEFAULT);
                 }
             }
@@ -282,7 +282,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
                 } else {
                     tvSetPass.setTextColor(getResources().getColor(R.color.steel));
-                    edtSetPass.setTypeface(Typeface.DEFAULT);
+                    if (EmptyUtils.isEmpty(getPassword()))edtSetPass.setTypeface(Typeface.DEFAULT);
                 }
             }
         });
@@ -309,7 +309,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
                 if (hasFocus){
                     edtRepeatPass.setTypeface(Typeface.DEFAULT_BOLD);
-                }else {
+                }else if (EmptyUtils.isEmpty(getRepeatPassword())){
                     edtRepeatPass.setTypeface(Typeface.DEFAULT);
                 }
             }
@@ -325,7 +325,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                     edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
                     tvPassHint.setTextColor(getResources().getColor(R.color.steel));
-                    edtPassHint.setTypeface(Typeface.DEFAULT);
+                    if (EmptyUtils.isEmpty(getPassHint()))edtPassHint.setTypeface(Typeface.DEFAULT);
                 }
             }
         });
@@ -340,7 +340,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        //Validate.reg(this);
         validator = new Validator(this);
         validator.setValidationListener(this);
         initView();
