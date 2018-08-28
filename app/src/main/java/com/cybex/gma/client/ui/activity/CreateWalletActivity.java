@@ -329,7 +329,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 }
             }
         });
-
+        /**
+         * 邀请码输入区域样式设置
+         */
         edtInvCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

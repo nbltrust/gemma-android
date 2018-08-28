@@ -96,6 +96,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                         //已选节点数不为0
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable
                                 .btn_vote_left_deep));
+                        LoggerManager.d("hasDelegateRes", hasDelegateRes);
                         if (hasDelegateRes){
                             //如果有抵押的资源
                             tvExecVote.setClickable(true);
@@ -266,8 +267,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
     }
 
     public void hasDelegatedRes(boolean status){
-        if (status)hasDelegateRes = true;
-        hasDelegateRes = false;
+        hasDelegateRes = status;
     }
 
     public void getTotalDelegatedResource(String total_amount){
