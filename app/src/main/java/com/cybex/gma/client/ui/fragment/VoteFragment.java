@@ -315,7 +315,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                                     for(VoteNodeVO vo : selectedNodes){
                                         producers.add(vo.getAccount());
                                     }
-                                   // getP().executeVoteLogic(curEOSName, producers, key);
+                                    getP().executeVoteLogic(curEOSName, producers, key);
                                     dialog.cancel();
                                 }
                             }else{

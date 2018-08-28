@@ -18,7 +18,6 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
-import com.cybex.gma.client.event.HomeDataRefreshEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
@@ -189,13 +188,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             } else {
                 LoggerManager.d("wallet tab selected");
             }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onDataRefreshEvent(HomeDataRefreshEvent event) {
-        if (EmptyUtils.isNotEmpty(event)) {
-            getP().requestHomeCombineDataVO();
         }
     }
 

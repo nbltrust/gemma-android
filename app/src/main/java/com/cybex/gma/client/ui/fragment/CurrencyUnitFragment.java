@@ -53,6 +53,11 @@ public class CurrencyUnitFragment extends XFragment {
     }
 
     @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
     }

@@ -330,6 +330,19 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             }
         });
 
+        edtInvCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    tvInvCode.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    edtInvCode.setTypeface(Typeface.DEFAULT_BOLD);
+                } else {
+                    tvInvCode.setTextColor(getResources().getColor(R.color.steel));
+                    if (EmptyUtils.isEmpty(getPassHint()))edtInvCode.setTypeface(Typeface.DEFAULT);
+                }
+            }
+        });
+
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewCreateWallet);
     }
 

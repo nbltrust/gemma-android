@@ -26,6 +26,7 @@ public class GeneralSettingFragment extends XFragment {
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_change_language) SuperTextView superTextViewChangeLanguage;
     @BindView(R.id.superTextView_change_unit) SuperTextView superTextViewChangeUnit;
+    @BindView(R.id.superTextView_change_node) SuperTextView superTextViewChangeNode;
 
     public static GeneralSettingFragment newInstance() {
         Bundle args = new Bundle();
@@ -43,7 +44,7 @@ public class GeneralSettingFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getResources().getString(R.string.general), true, true);
-
+        //切换语言
         superTextViewChangeLanguage.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
@@ -51,13 +52,22 @@ public class GeneralSettingFragment extends XFragment {
 
             }
         });
-
+        //切换货币显示单位
         superTextViewChangeUnit.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
                 start(CurrencyUnitFragment.newInstance());
             }
         });
+        //切换节点
+        superTextViewChangeNode.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
+            @Override
+            public void onClickListener(SuperTextView superTextView) {
+                start(ChangeNodeFragment.newInstance());
+            }
+        });
+
+
 
         this.showLanguage();
     }
