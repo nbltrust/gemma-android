@@ -44,6 +44,7 @@ public class CurrencyUnitFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getResources().getString(R.string.title_currency_unit), true, false);
+
     }
 
 

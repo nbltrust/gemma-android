@@ -20,9 +20,11 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -74,7 +76,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.edt_invCode) EditText edtInvCode;
     @Checked(messageResId = R.string.check_agreement,sequence = 0)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
-    @BindView(R.id.service_agreement_config) TextView serviceAgreementConfig;
+    @BindView(R.id.tv_service_agreement_config) TextView tvServiceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
 
@@ -170,6 +172,26 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             GemmaToastUtils.showLongToast(getResources().getString(R.string.invalid_eos_username));
         }
         */
+    }
+
+    @OnClick(R.id.tv_service_agreement_config)
+    public void goSeeServiceAgreement(){
+        int savedLanguageType = LanguageManager.getInstance(this).getLanguageType();
+        switch (savedLanguageType){
+            case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
+                final String url = "https://nebuladownload.oss-cn-beijing.aliyuncs.com/gemma/gemma_policy_cn"
+                        + ".html";
+                CommonWebViewActivity.startWebView(this, url, getResources().getString(R
+                        .string.service_agreement));
+                break;
+            case LanguageManager.LanguageType.LANGUAGE_EN:
+                final String url_en = "https://nebuladownload.oss-cn-beijing.aliyuncs"
+                        + ".com/gemma/gemma_policy_en"
+                        + ".html";
+                CommonWebViewActivity.startWebView(this, url_en, getResources().getString(R
+                        .string.service_agreement));
+                break;
+        }
     }
 
     public void initView() {

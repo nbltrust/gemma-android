@@ -18,9 +18,11 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.presenter.ImportWalletConfigPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -62,7 +64,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
     @Checked(messageResId = R.string.check_agreement, sequence = 1)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
-    @BindView(R.id.service_agreement_config) TextView serviceAgreementConfig;
+    @BindView(R.id.tv_service_agreement_config) TextView serviceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     @BindView(R.id.btn_complete_import) Button btnCompleteImport;
     @BindView(R.id.scroll_wallet_config) ScrollView scrollViewWalletConfig;
@@ -97,6 +99,26 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
         if (EmptyUtils.isEmpty(getRepeatPass())){
             setRepeatPassFocusStyle();
+        }
+    }
+
+    @OnClick(R.id.tv_service_agreement_config)
+    public void goSeeServiceAgreement(){
+        int savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
+        switch (savedLanguageType){
+            case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
+                final String url = "https://nebuladownload.oss-cn-beijing.aliyuncs.com/gemma/gemma_policy_cn"
+                        + ".html";
+                CommonWebViewActivity.startWebView(getActivity(), url, getResources().getString(R
+                        .string.service_agreement));
+                break;
+            case LanguageManager.LanguageType.LANGUAGE_EN:
+                final String url_en = "https://nebuladownload.oss-cn-beijing.aliyuncs"
+                        + ".com/gemma/gemma_policy_en"
+                        + ".html";
+                CommonWebViewActivity.startWebView(getActivity(), url_en, getResources().getString(R
+                        .string.service_agreement));
+                break;
         }
     }
 
