@@ -13,6 +13,7 @@ import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.WalletIDEvent;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
@@ -89,7 +90,7 @@ public class WalletDetailFragment extends XFragment {
                 final String pubKey = curWallet.getPublicKey();
                 tvPublicKey.setText(pubKey);
 
-                //设置钱包名为回传参数
+                //设置钱包ID和钱包名为回传参数
                 Bundle bundle = new Bundle();
                 bundle.putInt("walletID", currentID);
                 bundle.putString("walletName", curWallet.getWalletName());
@@ -169,8 +170,11 @@ public class WalletDetailFragment extends XFragment {
                         //检查密码是否正确
                         EditText edtPassword = dialog.findViewById(R.id.et_password);
                         final String inputPass = edtPassword.getText().toString().trim();
-                        if (!EmptyUtils.isEmpty(curWallet)){
-                            final String cypher = curWallet.getCypher();
+                        //重新获取curWallet，为确保修改密码过后验证的是新的密码
+                        WalletEntity walletEntity = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
+                                (currentID);
+                        if (!EmptyUtils.isEmpty(walletEntity)){
+                            final String cypher = walletEntity.getCypher();
                             final String priKey = JNIUtil.get_private_key(cypher, inputPass);
                             final String generatedCypher = JNIUtil.get_cypher(inputPass, priKey);
                             if (cypher.equals(generatedCypher)){

@@ -18,7 +18,6 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
-import com.cybex.gma.client.event.HomeDataRefreshEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
@@ -42,6 +41,7 @@ import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.common.utils.DateUtil;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -98,6 +98,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     private ResourceInfoVO resourceInfoVO;
     private String curUSDTPrice;
+    private int savedCurrency;
 
     @OnClick({R.id.view_cpu, R.id.view_net, R.id.view_ram})
     public void clickViews(View view) {
@@ -187,13 +188,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             } else {
                 LoggerManager.d("wallet tab selected");
             }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onDataRefreshEvent(HomeDataRefreshEvent event) {
-        if (EmptyUtils.isNotEmpty(event)) {
-            getP().requestHomeCombineDataVO();
         }
     }
 
@@ -390,10 +384,17 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         String totalCNY = AmountUtil.mul(unitPrice, totalPrice, 4);
         String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 4);
         totalEOSAmount.setText(totalPrice + " EOS");
-        totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
-        //totalCNYAmount.setCenterString("≈" + totalUSD + " USD");
-
-
+        savedCurrency = SPUtils.getInstance().getInt("currency_unit");
+        if (EmptyUtils.isNotEmpty(savedCurrency)){
+            switch (savedCurrency){
+                case CacheConstants.CURRENCY_CNY:
+                    totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+                    break;
+                case CacheConstants.CURRENCY_USD:
+                    totalCNYAmount.setCenterString("≈" + totalUSD + " USD");
+                    break;
+            }
+        }
     }
 
 
@@ -466,6 +467,15 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
         if (isCurWalletBackUp()) {
             textViewBackupWallet.setVisibility(View.GONE);
+        }
+
+        switch (SPUtils.getInstance().getInt("currency_unit")){
+            case CacheConstants.CURRENCY_CNY:
+                totalCNYAmount.setCenterString("≈" + " -- " + " CNY");
+                break;
+            case CacheConstants.CURRENCY_USD:
+                totalCNYAmount.setCenterString("≈" + " -- " + " USD");
+                break;
         }
 
     }

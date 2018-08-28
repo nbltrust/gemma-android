@@ -236,6 +236,18 @@ public class VoteFragment extends XFragment<VotePresenter> {
         selectedNodes.clear();
     }
 
+    public void showLoading(){
+        listMultipleStatusView.showLoading();
+    }
+
+    public void showError() {
+        listMultipleStatusView.showError();
+    }
+
+    public void showContent() {
+        listMultipleStatusView.showContent();
+    }
+
     /**
      * 显示加载更多完成和空数据界面逻辑
      */
@@ -303,7 +315,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                                     for(VoteNodeVO vo : selectedNodes){
                                         producers.add(vo.getAccount());
                                     }
-                                   // getP().executeVoteLogic(curEOSName, producers, key);
+                                    getP().executeVoteLogic(curEOSName, producers, key);
                                     dialog.cancel();
                                 }
                             }else{

@@ -26,6 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * 已选节点页面，由投票界面点击进入
+ */
 public class NodeSelectedFragment extends XFragment {
 
 

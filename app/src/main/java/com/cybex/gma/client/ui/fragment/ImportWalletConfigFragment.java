@@ -218,7 +218,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                     edtSetPass.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
                     tvSetPass.setTextColor(getResources().getColor(R.color.steel));
-                    edtSetPass.setTypeface(Typeface.DEFAULT);
+                    if (EmptyUtils.isEmpty(getPassword()))edtSetPass.setTypeface(Typeface.DEFAULT);
                 }
             }
         });
@@ -241,7 +241,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
                 if (hasFocus){
                     edtRepeatPass.setTypeface(Typeface.DEFAULT_BOLD);
-                }else {
+                }else if (EmptyUtils.isEmpty(getRepeatPass())){
                     edtRepeatPass.setTypeface(Typeface.DEFAULT);
                 }
             }
@@ -255,7 +255,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                     edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
                     tvPassHint.setTextColor(getResources().getColor(R.color.steel));
-                    edtPassHint.setTypeface(Typeface.DEFAULT);
+                    if (EmptyUtils.isEmpty(getPassHint()))edtPassHint.setTypeface(Typeface.DEFAULT);
                 }
             }
         });
@@ -263,6 +263,46 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         setEditTextHintStyle(edtSetPass, R.string.password_input_hint);
         setEditTextHintStyle(edtPassHint, R.string.password_hint_hint);
         setEditTextHintStyle(edtRepeatPass, R.string.repeatPassword_hint);
+
+        /*
+        edtSetPass.setOnTouchListener(new View.OnTouchListener() {
+            //按住和松开的标识
+            int touch_flag=0;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                touch_flag++;
+                if(touch_flag==2){
+
+                }
+                return false;
+            }
+        });
+        edtRepeatPass.setOnTouchListener(new View.OnTouchListener() {
+            //按住和松开的标识
+            int touch_flag=0;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                touch_flag++;
+                if(touch_flag==2){
+
+                }
+                return false;
+            }
+        });
+        edtPassHint.setOnTouchListener(new View.OnTouchListener() {
+            //按住和松开的标识
+            int touch_flag=0;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                touch_flag++;
+                if(touch_flag==2){
+
+                }
+                return false;
+            }
+        });
+        */
+
     }
 
     @Override

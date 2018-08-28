@@ -215,7 +215,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                            GemmaToastUtils.showLongToast(getV().getString(R.string.transfer_oprate_success));
+                            //GemmaToastUtils.showLongToast(getV().getString(R.string.transfer_oprate_success));
                             UISkipMananger.launchTransferRecord(getV().getActivity());
                             getV().clearData();
                         }

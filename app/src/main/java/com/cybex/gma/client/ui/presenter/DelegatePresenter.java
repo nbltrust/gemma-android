@@ -212,7 +212,7 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                            GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
+                            //GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
                             //页面跳转至收支记录
                             //UISkipMananger.launchTransferRecord(getV().getActivity());
 
