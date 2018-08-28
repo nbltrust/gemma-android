@@ -232,7 +232,6 @@ dependencies {
     implementation deps.gma.zxing
     implementation deps.gma.androidanimations
     api deps.gma.MaterialEditText
-    implementation deps.gma.MaterialDialog
     implementation deps.gma.agentweb
 
     annotationProcessor deps.dbflow.processor
@@ -240,9 +239,6 @@ dependencies {
     api deps.dbflow.runtime
     api deps.dbflow.sqlciperDatabase
     api deps.dbflow.sqlcipher
-
-    implementation deps.gma.badgeview
-    annotationProcessor deps.gma.badgeviewCompiler
 
     implementation deps.yanzhenjie.permission
     implementation deps.third.recyclerviewadapterhelper
