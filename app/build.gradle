@@ -250,13 +250,13 @@ dependencies {
     implementation deps.gma.logger
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation deps.gma.svgImageViewer
+    implementation deps.gma.SuperTextView
 
 
     implementation project(':platform_framework:basiclib')
     implementation project(':platform_framework:base-view')
     implementation project(':platform_framework:update-app')
     implementation project(':platform_framework:customdialoglib')
-    implementation project(':platform_framework:superTextview')
     implementation project(':platform_framework:jdenticon')
     implementation project(':platform_framework:qrcodecore')
     implementation project(':platform_framework:smart-scheduler')
