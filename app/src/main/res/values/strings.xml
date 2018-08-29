@@ -432,4 +432,7 @@
     <string name="tab_title_buy">买入</string>
     <string name="tab_title_sell">卖出</string>
 
+    <item name="tag_key_data" type="id"/>
+    <item name="tag_key_position" type="id"/>
+
 </resources>
