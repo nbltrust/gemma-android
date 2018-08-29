@@ -58,23 +58,59 @@
                     style="@style/text_title_config_wallet"
                     android:text="@string/EOS_username"/>
 
-                <EditText
-                    android:id="@+id/edt_eos_name"
-                    style="@style/editText_config_wallet"
-                    android:hint="@string/EOS_username_hint"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <EditText
+                        android:id="@+id/edt_eos_name"
+                        style="@style/editText_config_wallet"
+                        android:hint="@string/EOS_username_hint"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:id="@+id/iv_eos_name_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
+
+                <!--
+                <View
+                    android:id="@+id/view_divider_eosName"
+                    style="@style/view_common_divider">
+                </View>
+                -->
 
                 <TextView
                     android:id="@+id/tv_set_pass"
                     style="@style/text_title_config_wallet"
                     android:text="@string/set_password"/>
 
-                <EditText
-                    android:id="@+id/edt_set_pass"
-                    style="@style/editText_config_wallet"
-                    android:inputType="textPassword"
-                    android:hint="@string/password_input_hint"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <EditText
+                        android:id="@+id/edt_set_pass"
+                        style="@style/editText_config_wallet"
+                        android:inputType="textPassword"
+                        android:hint="@string/password_input_hint"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:id="@+id/iv_set_pass_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
+
+                <!--
+                <View
+                    android:id="@+id/view_divider_setPass"
+                    style="@style/view_common_divider">
+                </View>
+                -->
 
                 <TextView
                     android:id="@+id/tv_repeat_pass"
@@ -82,11 +118,30 @@
                     android:layout_marginTop="@dimen/dimen_10"
                     android:text="@string/repeat_pass"/>
 
-                <EditText
-                    android:id="@+id/edt_repeat_pass"
-                    android:inputType="textPassword"
-                    style="@style/editText_config_wallet"
-                    android:hint="@string/repeatPassword_hint"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_repeat_pass"
+                        style="@style/editText_config_wallet"
+                        android:inputType="textPassword"
+                        android:hint="@string/repeatPassword_hint"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:id="@+id/iv_repeat_pass_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
+
+                <!--
+                <View
+                    android:id="@+id/view_divider_repeatPass"
+                    style="@style/view_common_divider">
+                </View>
+                -->
 
                 <TextView
                     android:id="@+id/tv_pass_hint"
@@ -94,11 +149,29 @@
                     android:layout_marginTop="@dimen/dimen_10"
                     android:text="@string/password_hint"/>
 
-                <EditText
-                    android:id="@+id/edt_pass_hint"
-                    style="@style/editText_config_wallet"
-                    android:hint="@string/password_hint_hint"
-                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_pass_hint"
+                        style="@style/editText_config_wallet"
+                        android:hint="@string/password_hint_hint"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:id="@+id/iv_pass_hint_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
+
+                <!--
+                <View
+                    android:id="@+id/view_divider_passHint"
+                    style="@style/view_common_divider">
+                </View>
+                -->
 
                 <LinearLayout
                     android:layout_width="match_parent"

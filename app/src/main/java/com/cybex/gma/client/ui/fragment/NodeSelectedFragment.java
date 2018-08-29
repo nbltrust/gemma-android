@@ -123,6 +123,7 @@ public class NodeSelectedFragment extends XFragment {
                 .VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         adapter = new VoteSelectedNodeAdapter(voteNodeVOArrayList);
+        adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override

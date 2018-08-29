@@ -22,6 +22,11 @@ public class VoteNodeListAdapter extends BaseQuickAdapter<VoteNodeVO, BaseViewHo
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     protected void convert(BaseViewHolder helper, VoteNodeVO item) {
         TextView tv_account = helper.getView(R.id.tv_node_name);
         TextView tv_alias = helper.getView(R.id.tv_node_alias);

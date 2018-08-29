@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -47,7 +48,8 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 /**
  * 创建钱包页面
  */
-public class CreateWalletActivity extends XActivity<CreateWalletPresenter> implements Validator.ValidationListener{
+public class CreateWalletActivity extends XActivity<CreateWalletPresenter> implements Validator.ValidationListener {
+
 
     private Validator validator;
     @BindView(R.id.scroll_create_wallet) ScrollView scrollViewCreateWallet;
@@ -55,6 +57,10 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
     @BindView(R.id.bubble) BubbleLayout bubble;
     @BindView(R.id.tv_eos_name) TextView tvEosName;
+    @BindView(R.id.iv_eos_name_clear) ImageView ivEosNameClear;
+    @BindView(R.id.iv_set_pass_clear) ImageView ivSetPassClear;
+    @BindView(R.id.iv_repeat_pass_clear) ImageView ivRepeatPassClear;
+    @BindView(R.id.iv_pass_hint_clear) ImageView ivPassHintClear;
 
     @NotEmpty(messageResId = R.string.eos_name_not_empty, sequence = 3)
     @BindView(R.id.edt_eos_name) EditText edtEosName;
@@ -67,19 +73,18 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     @NotEmpty(messageResId = R.string.repeat_input_pass, sequence = 1)
     @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 1)
-    @BindView(R.id.edt_repeat_pass) EditText edtRepeatPass;
+    @BindView(R.id.et_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.tv_pass_hint) TextView tvPassHint;
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
     @BindView(R.id.tv_invCode) TextView tvInvCode;
     @BindView(R.id.tv_get_invCode) TextView tvGetInvCode;
 
     @BindView(R.id.edt_invCode) EditText edtInvCode;
-    @Checked(messageResId = R.string.check_agreement,sequence = 0)
+    @Checked(messageResId = R.string.check_agreement, sequence = 0)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.tv_service_agreement_config) TextView tvServiceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
-
 
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -91,7 +96,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         }
 
         if (EmptyUtils.isEmpty(getEOSUserName())) {
-            if (edtEosName.hasFocus()) setEOSNameFocusedStyle();
+            if (edtEosName.hasFocus()) { setEOSNameFocusedStyle(); }
         } else if (getEOSUserName().length() == ParamConstants.VALID_EOSNAME_LENGTH) {
             if (getP().isUserNameValid()) {
                 setEOSNameFocusedStyle();
@@ -111,10 +116,10 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         }
     }
 
-    @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    @OnTextChanged(value = R.id.et_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterRepeatPassChanged(Editable s) {
         if (EmptyUtils.isEmpty(getRepeatPassword())) {
-            if (edtRepeatPass.hasFocus())setRepeatPassFocusStyle();
+            if (edtRepeatPass.hasFocus()) { setRepeatPassFocusStyle(); }
         }
         if (isAllTextFilled() && checkboxConfig.isChecked() && getP().isPasswordMatch()) {
             setClickable(btCreateWallet);
@@ -139,45 +144,12 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         if (checkboxConfig.isChecked() && !getP().isUserNameValid()) {
             GemmaToastUtils.showLongToast(getResources().getString(R.string.invalid_eos_username));
         }
-        /*
-        //先判断checkbox是否勾选以及EOS账户名是否合法
-        if (checkboxConfig.isChecked() && getP().isUserNameValid()) {
-            //判断表单验证结果
-            Validate.check(this, new IValidateResult() {
-                @Override
-                public void onValidateSuccess() {
-                    //所有验证通过，发送创建钱包请求
-                    String[] keyPair = getP().getKeypair();
-                    final String publicKey = keyPair[0];
-                    final String privateKey = keyPair[1];
-                    getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[1], keyPair[0],
-                            getPassHint(), getInvCode());
-                }
-
-                @Override
-                public void onValidateError(String msg, View view) {
-                    EditText editText = (EditText) view;
-                    editText.setHintTextColor(getResources().getColor(R.color.scarlet));
-                    GemmaToastUtils.showLongToast(msg);
-                }
-
-                @Override
-                public Animation onValidateErrorAnno() {
-                    return ValidateAnimation.horizontalTranslate();
-                }
-            });
-        } else if (!checkboxConfig.isChecked() && getP().isUserNameValid()) {
-            GemmaToastUtils.showLongToast(getString(R.string.agree_service_agreement));
-        } else if (checkboxConfig.isChecked() && !getP().isUserNameValid()) {
-            GemmaToastUtils.showLongToast(getResources().getString(R.string.invalid_eos_username));
-        }
-        */
     }
 
     @OnClick(R.id.tv_service_agreement_config)
-    public void goSeeServiceAgreement(){
+    public void goSeeServiceAgreement() {
         int savedLanguageType = LanguageManager.getInstance(this).getLanguageType();
-        switch (savedLanguageType){
+        switch (savedLanguageType) {
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
                 final String url = "https://nebuladownload.oss-cn-beijing.aliyuncs.com/gemma/gemma_policy_cn"
                         + ".html";
@@ -190,6 +162,28 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                         + ".html";
                 CommonWebViewActivity.startWebView(this, url_en, getResources().getString(R
                         .string.service_agreement));
+                break;
+        }
+    }
+
+    /**
+     * 清除按钮点击事件
+     * @param v
+     */
+    @OnClick({R.id.iv_eos_name_clear, R.id.iv_set_pass_clear, R.id.iv_repeat_pass_clear, R.id.iv_pass_hint_clear})
+    public void onClearClicked(View v){
+        switch (v.getId()){
+            case R.id.iv_eos_name_clear:
+                edtEosName.setText("");
+                break;
+            case R.id.iv_set_pass_clear:
+                edtSetPass.setText("");
+                break;
+            case R.id.iv_repeat_pass_clear:
+                edtRepeatPass.setText("");
+                break;
+            case R.id.iv_pass_hint_clear:
+                edtPassHint.setText("");
                 break;
         }
     }
@@ -210,9 +204,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             public boolean onTouch(View v, MotionEvent event) {
                 flag++;
                 if (flag % 2 == 0) {
-                    tvEosName.setVisibility(View.GONE);
-                    edtEosName.setVisibility(View.GONE);
-                    bubble.setVisibility(View.VISIBLE);
+                    showBubble();
                 }
                 return false;
             }
@@ -224,9 +216,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             public boolean onTouch(View v, MotionEvent event) {
                 flag++;
                 if (flag % 2 == 0) {
-                    bubble.setVisibility(View.GONE);
-                    tvEosName.setVisibility(View.VISIBLE);
-                    edtEosName.setVisibility(View.VISIBLE);
+                    hideBubble();
                 }
                 return false;
             }
@@ -251,22 +241,30 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
                 if (EmptyUtils.isEmpty(getEOSUserName())) {
                     setEOSNameValidStyle();
-                    if (hasFocus)setEOSNameFocusedStyle();
-                }else {
+                    if (hasFocus) { setEOSNameFocusedStyle(); }
+                } else {
                     if (getP().isUserNameValid()) {
                         setEOSNameValidStyle();
-                        if (hasFocus)setEOSNameFocusedStyle();
+                        if (hasFocus) { setEOSNameFocusedStyle(); }
                     } else {
                         setUnclickable(btCreateWallet);
                         setEOSNameInvalidStyle();
                     }
                 }
 
-                if (hasFocus){
+                if (hasFocus) {
                     edtEosName.setTypeface(Typeface.DEFAULT_BOLD);
-                }else if (EmptyUtils.isEmpty(getEOSUserName())){
+                } else if (EmptyUtils.isEmpty(getEOSUserName())) {
                     edtEosName.setTypeface(Typeface.DEFAULT);
                 }
+
+                /*
+                if (EmptyUtils.isNotEmpty(getEOSUserName())) {
+                    ivEosNameClear.setVisibility(View.VISIBLE);
+                }else {
+                    ivEosNameClear.setVisibility(View.GONE);
+                }
+                */
             }
         });
 
@@ -282,8 +280,16 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
                 } else {
                     tvSetPass.setTextColor(getResources().getColor(R.color.steel));
-                    if (EmptyUtils.isEmpty(getPassword()))edtSetPass.setTypeface(Typeface.DEFAULT);
+                    if (EmptyUtils.isEmpty(getPassword())) { edtSetPass.setTypeface(Typeface.DEFAULT); }
                 }
+
+                /*
+                if (EmptyUtils.isNotEmpty(getPassword())){
+                    ivSetPassClear.setVisibility(View.VISIBLE);
+                }else {
+                    ivSetPassClear.setVisibility(View.GONE);
+                }
+                */
             }
         });
         /**
@@ -295,23 +301,31 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
                 if (EmptyUtils.isEmpty(getRepeatPassword())) {
                     setRepeatPassValidStyle();
-                    if (hasFocus)setRepeatPassFocusStyle();
+                    if (hasFocus) { setRepeatPassFocusStyle(); }
                 } else {
                     if (getPassword().equals(getRepeatPassword())) {
                         //两次输入的密码一致
                         setRepeatPassValidStyle();
-                        if (hasFocus)setRepeatPassFocusStyle();
+                        if (hasFocus) { setRepeatPassFocusStyle(); }
                     } else {
                         //两次输入的密码不一致
                         setRepeatPassInvalidStyle();
                     }
                 }
 
-                if (hasFocus){
+                if (hasFocus) {
                     edtRepeatPass.setTypeface(Typeface.DEFAULT_BOLD);
-                }else if (EmptyUtils.isEmpty(getRepeatPassword())){
+                } else if (EmptyUtils.isEmpty(getRepeatPassword())) {
                     edtRepeatPass.setTypeface(Typeface.DEFAULT);
                 }
+
+                /*
+                if (EmptyUtils.isNotEmpty(getRepeatPassword())){
+                    ivRepeatPassClear.setVisibility(View.VISIBLE);
+                }else {
+                    ivRepeatPassClear.setVisibility(View.GONE);
+                }
+                */
             }
         });
         /**
@@ -325,8 +339,16 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                     edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
                     tvPassHint.setTextColor(getResources().getColor(R.color.steel));
-                    if (EmptyUtils.isEmpty(getPassHint()))edtPassHint.setTypeface(Typeface.DEFAULT);
+                    if (EmptyUtils.isEmpty(getPassHint())) { edtPassHint.setTypeface(Typeface.DEFAULT); }
                 }
+
+                /*
+                if (EmptyUtils.isNotEmpty(getPassHint())){
+                    ivPassHintClear.setVisibility(View.VISIBLE);
+                }else {
+                    ivPassHintClear.setVisibility(View.GONE);
+                }
+                */
             }
         });
         /**
@@ -340,7 +362,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                     edtInvCode.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
                     tvInvCode.setTextColor(getResources().getColor(R.color.steel));
-                    if (EmptyUtils.isEmpty(getPassHint()))edtInvCode.setTypeface(Typeface.DEFAULT);
+                    if (EmptyUtils.isEmpty(getPassHint())) { edtInvCode.setTypeface(Typeface.DEFAULT); }
                 }
             }
         });
@@ -397,7 +419,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     }
 
-    public void setEOSNameFocusedStyle(){
+    public void setEOSNameFocusedStyle() {
         tvEosName.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         tvEosName.setText(getResources().getString(R.string.eos_username));
     }
@@ -409,7 +431,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
-    public void setRepeatPassFocusStyle(){
+    public void setRepeatPassFocusStyle() {
         tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
@@ -526,13 +548,26 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         editText.setHint(new SpannableString(ss));
     }
 
-    private void clearListeners(){
+    private void clearListeners() {
         edtEosName.setOnFocusChangeListener(null);
         edtRepeatPass.setOnFocusChangeListener(null);
         edtSetPass.setOnFocusChangeListener(null);
         edtPassHint.setOnFocusChangeListener(null);
         edtInvCode.setOnFocusChangeListener(null);
         checkboxConfig.setOnCheckedChangeListener(null);
+    }
+
+
+    public void showBubble(){
+        tvEosName.setVisibility(View.GONE);
+        edtEosName.setVisibility(View.GONE);
+        bubble.setVisibility(View.VISIBLE);
+    }
+
+    public void hideBubble(){
+        tvEosName.setVisibility(View.VISIBLE);
+        edtEosName.setVisibility(View.VISIBLE);
+        bubble.setVisibility(View.GONE);
     }
 
     /**
@@ -596,7 +631,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
      */
     @Override
     public void onValidationSucceeded() {
-        if (getP().isUserNameValid()){
+        if (getP().isUserNameValid()) {
             String[] keyPair = getP().getKeypair();
             final String publicKey = keyPair[0];
             final String privateKey = keyPair[1];
@@ -607,18 +642,19 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     /**
      * 验证失败回调
+     *
      * @param errors
      */
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
 
-        for (ValidationError error : errors){
+        for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
 
-            if (view instanceof EditText){
+            if (view instanceof EditText) {
                 GemmaToastUtils.showLongToast(message);
-            }else{
+            } else {
                 GemmaToastUtils.showLongToast(message);
             }
         }

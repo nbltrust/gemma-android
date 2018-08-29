@@ -21,6 +21,7 @@ import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
+import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -93,6 +94,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.view_cpu) View viewCPU;
     @BindView(R.id.view_net) View viewNET;
     @BindView(R.id.view_ram) View viewRAM;
+
+    private static final String testTimestamp = "2017-07-21T03:35:16.500";
+    private static final String testCreated = "2017-07-21T03:34:17.500";
 
     Unbinder unbinder;
 
@@ -385,7 +389,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 4);
         totalEOSAmount.setText(totalPrice + " EOS");
         savedCurrency = SPUtils.getInstance().getInt("currency_unit");
-        if (EmptyUtils.isNotEmpty(savedCurrency)){
             switch (savedCurrency){
                 case CacheConstants.CURRENCY_CNY:
                     totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
@@ -393,8 +396,10 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 case CacheConstants.CURRENCY_USD:
                     totalCNYAmount.setCenterString("≈" + totalUSD + " USD");
                     break;
+                default:
+                    totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+                    break;
             }
-        }
     }
 
 
@@ -478,6 +483,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 break;
         }
 
+        String compareRes = TimeStampValidateJob.getLaterTimeStamp(testTimestamp, testCreated);
+        LoggerManager.d("Compare_Res", compareRes);
     }
 
     @Override

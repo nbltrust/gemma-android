@@ -2,6 +2,8 @@ package com.cybex.gma.client.ui.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * 链上服务器--->获取账户信息
  *
@@ -15,6 +17,7 @@ public class AccountInfo extends BaseOnchainModel {
     private String account_name;
 
     private String head_block_num;
+    private String created;
     private int ram_quota;
     private int net_weight;
     private int cpu_weight;
@@ -32,6 +35,17 @@ public class AccountInfo extends BaseOnchainModel {
     private NetLimitBean net_limit;
     private CpuLimitBean cpu_limit;
     private int ram_usage;
+
+    public List<PermissionsBean> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<PermissionsBean> permissions) {
+        this.permissions = permissions;
+    }
+
+    private List<PermissionsBean> permissions;
+
     /**
      * self_delegated_bandwidth : {"from":"awesome14","to":"awesome14","net_weight":"100.0000 EOS","cpu_weight":"100.0000 EOS"}
      */
@@ -53,6 +67,14 @@ public class AccountInfo extends BaseOnchainModel {
     public SelfDelegatedBandwidthBean getSelf_delegated_bandwidth() { return self_delegated_bandwidth;}
 
     public void setSelf_delegated_bandwidth(SelfDelegatedBandwidthBean self_delegated_bandwidth) { this.self_delegated_bandwidth = self_delegated_bandwidth;}
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
 
     public static class NetLimitBean {
 
@@ -114,6 +136,81 @@ public class AccountInfo extends BaseOnchainModel {
         public String getCpu_weightX() { return cpu_weightX;}
 
         public void setCpu_weightX(String cpu_weightX) { this.cpu_weightX = cpu_weightX;}
+    }
+
+    public static class PermissionsBean {
+
+        /**
+         * perm_name : active
+         * parent : owner
+         * required_auth : {"threshold":1,"keys":[{"key":"EOS5jXTcRmb1crPADnAfQRWGPe2cE1fbEvFVTW4JKGf6Ffr9HoFVo","weight":1}],"accounts":[],"waits":[]}
+         */
+
+        private String perm_name;
+        private String parent;
+        private RequiredAuthBean required_auth;
+
+        public String getPerm_name() { return perm_name;}
+
+        public void setPerm_name(String perm_name) { this.perm_name = perm_name;}
+
+        public String getParent() { return parent;}
+
+        public void setParent(String parent) { this.parent = parent;}
+
+        public RequiredAuthBean getRequired_auth() { return required_auth;}
+
+        public void setRequired_auth(RequiredAuthBean required_auth) { this.required_auth = required_auth;}
+
+        public static class RequiredAuthBean {
+
+            /**
+             * threshold : 1
+             * keys : [{"key":"EOS5jXTcRmb1crPADnAfQRWGPe2cE1fbEvFVTW4JKGf6Ffr9HoFVo","weight":1}]
+             * accounts : []
+             * waits : []
+             */
+
+            private int threshold;
+            private List<KeysBean> keys;
+            private List<?> accounts;
+            private List<?> waits;
+
+            public int getThreshold() { return threshold;}
+
+            public void setThreshold(int threshold) { this.threshold = threshold;}
+
+            public List<KeysBean> getKeys() { return keys;}
+
+            public void setKeys(List<KeysBean> keys) { this.keys = keys;}
+
+            public List<?> getAccounts() { return accounts;}
+
+            public void setAccounts(List<?> accounts) { this.accounts = accounts;}
+
+            public List<?> getWaits() { return waits;}
+
+            public void setWaits(List<?> waits) { this.waits = waits;}
+
+            public static class KeysBean {
+
+                /**
+                 * key : EOS5jXTcRmb1crPADnAfQRWGPe2cE1fbEvFVTW4JKGf6Ffr9HoFVo
+                 * weight : 1
+                 */
+
+                private String key;
+                private int weight;
+
+                public String getKey() { return key;}
+
+                public void setKey(String key) { this.key = key;}
+
+                public int getWeight() { return weight;}
+
+                public void setWeight(int weight) { this.weight = weight;}
+            }
+        }
     }
 
     public String getAccount_name() {

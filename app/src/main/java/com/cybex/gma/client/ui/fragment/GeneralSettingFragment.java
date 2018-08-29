@@ -8,6 +8,7 @@ import com.cybex.gma.client.R;
 import com.hxlx.core.lib.utils.OnChangeLanguageEvent;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -22,6 +23,8 @@ import butterknife.Unbinder;
  */
 public class GeneralSettingFragment extends XFragment {
 
+    private final int CURRENCY_CNY = 1;
+    private final int CURRENCY_USD = 2;
     Unbinder unbinder;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_change_language) SuperTextView superTextViewChangeLanguage;
@@ -68,7 +71,7 @@ public class GeneralSettingFragment extends XFragment {
         });
 
 
-
+        this.showCurrencyUnit();
         this.showLanguage();
     }
 
@@ -87,6 +90,21 @@ public class GeneralSettingFragment extends XFragment {
                 superTextViewChangeLanguage.setRightString(getString(R.string.english));
                 break;
             default:
+                break;
+        }
+    }
+
+    private void showCurrencyUnit() {
+        int savedCurrencyUnit = SPUtils.getInstance().getInt("currency_unit");
+        switch (savedCurrencyUnit) {
+            case CURRENCY_CNY:
+                superTextViewChangeUnit.setRightString(getString(R.string.CNY));
+                break;
+            case CURRENCY_USD:
+                superTextViewChangeUnit.setRightString(getString(R.string.USD));
+                break;
+            default:
+                superTextViewChangeUnit.setRightString(getString(R.string.CNY));
                 break;
         }
     }

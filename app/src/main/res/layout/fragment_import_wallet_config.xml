@@ -51,7 +51,7 @@
                     android:layout_marginTop="@dimen/dimen_10"/>
 
                 <EditText
-                    android:id="@+id/edt_repeat_pass"
+                    android:id="@+id/et_repeat_pass"
                     android:inputType="textPassword"
                     style="@style/editText_config_wallet"
                     android:hint="@string/repeatPassword_hint"/>

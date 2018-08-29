@@ -24,5 +24,7 @@ public interface HttpConst {
     int PAGE_NUM = 10;
     int ACTION_REFRESH = -1;//列表刷新操作
 
+    int SERVER_INTERNAL_ERR = 500;
+
 
 }

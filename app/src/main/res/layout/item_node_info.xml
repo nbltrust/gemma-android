@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:clickable="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:translationZ="@dimen/dimen_1"
-    android:background="@drawable/selector_shape_corner_pressed"
+    android:background="@drawable/bg_shape_radius_white_selector"
     android:orientation="horizontal"
     android:padding="@dimen/dimen_16"
     android:layout_marginTop="@dimen/dimen_10"

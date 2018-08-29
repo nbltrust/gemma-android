@@ -59,7 +59,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     @NotEmpty(messageResId = R.string.repeatPassword_hint, sequence = 2)
     @ConfirmPassword (messageResId = R.string.password_no_match, sequence = 2)
-    @BindView(R.id.edt_repeat_pass) EditText edtRepeatPass;
+    @BindView(R.id.et_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.tv_pass_hint_f) TextView tvPassHint;
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
     @Checked(messageResId = R.string.check_agreement, sequence = 1)
@@ -89,7 +89,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         }
     }
 
-    @OnTextChanged(value = R.id.edt_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    @OnTextChanged(value = R.id.et_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onRepeatPassChanged() {
         if (isAllFilled() && checkboxConfig.isChecked() && getP().isPasswordMatch()) {
             setButtonClickableStyle();

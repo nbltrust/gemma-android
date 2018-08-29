@@ -27,6 +27,25 @@
 
     </style>
 
+    <!-- 公用分割线样式-->
+    <style name="view_common_divider">
+        <item name="android:layout_marginStart">@dimen/dimen_10</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+        <item name="android:layerType">software</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_1</item>
+        <item name="android:background">@color/paleGrey</item>
+    </style>
+    <!-- 公用删除icon样式-->
+    <style name="clear_icon_common">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_close</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+    </style>
+
     <style name="input_style">
         <item name="android:textStyle">bold</item>
     </style>
@@ -116,8 +135,8 @@
     <style name="text_title_config_wallet">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_20</item>
-        <item name="android:layout_marginStart">@dimen/dimen_10</item>
-        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+        <item name="android:layout_marginStart">@dimen/dimen_12</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_12</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/font_3</item>
         <item name="android:textColor">@color/steel</item>

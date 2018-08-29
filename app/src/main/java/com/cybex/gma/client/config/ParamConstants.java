@@ -51,4 +51,10 @@ public interface ParamConstants {
     int STATUS_CONFIRMING = 2;
     int STATUS_CONFIRMED = 3;
     int STATUS_FAIL = 4;
+
+    /**
+     *导入钱包：1，创建钱包：0
+     */
+    int OPERATION_CREATE = 0;
+    int OPERATION_IMPORT = 1;
 }

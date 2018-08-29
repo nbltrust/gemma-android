@@ -212,6 +212,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
     public void initAdapterData(List<VoteNodeVO> voteNodeVOList) {
         nodeVOList.addAll(voteNodeVOList);
         mAdapter = new VoteNodeListAdapter(nodeVOList);
+        mAdapter.setHasStableIds(true);
         mRecyclerView.setAdapter(mAdapter);
     }
 
