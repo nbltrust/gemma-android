@@ -213,6 +213,12 @@ android {
 //        }
     }
 
+    repositories{
+        flatDir{
+            dirs 'libs'
+        }
+    }
+
 
 }
 
@@ -261,6 +267,7 @@ dependencies {
     implementation project(':platform_framework:qrcodecore')
     implementation project(':platform_framework:smart-scheduler')
 
+    implementation(name:'bluetoothlib-release', ext:'aar')
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
