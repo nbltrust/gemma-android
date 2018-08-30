@@ -10,12 +10,15 @@
     title:layout_constraintEnd_toEndOf="parent"
     title:layout_constraintStart_toStartOf="parent">
 
-   <!-- 顶部信息布局-->
-    <include layout="@layout/ui_wallet_home_top_info_layout" />
+    <!-- 顶部信息布局-->
+    <include layout="@layout/ui_wallet_home_top_info_layout"/>
 
-    <!-- 软钱包操作布局开始-->
-   <include layout="@layout/ui_soft_wallet_oprate_layout" />
-    <!-- 软钱包操作布局结束-->
+
+    <!-- 硬钱包start-->
+    <include layout="@layout/ui_bluetooth_wallet_oprate_layout"
+        />
+    <!-- 硬钱包end-->
+
 
 </android.support.constraint.ConstraintLayout>
 

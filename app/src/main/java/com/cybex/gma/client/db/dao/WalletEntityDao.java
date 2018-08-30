@@ -47,6 +47,12 @@ public interface WalletEntityDao {
     List<WalletEntity> getWalletEntityList();
 
     /**
+     * 获得蓝牙
+     * @return
+     */
+    List<WalletEntity> getBluetoothWalletList();
+
+    /**
      * 异步保存或更新单个WalletEntity
      *
      * @param entity

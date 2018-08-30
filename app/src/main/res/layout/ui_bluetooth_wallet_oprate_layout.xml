@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/view_hard_wallet"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical"
+    title:layout_constraintEnd_toEndOf="parent"
+    title:layout_constraintStart_toStartOf="parent"
+    title:layout_constraintTop_toBottomOf="@id/layout_info">
+
+    <!-- 硬件钱包收支记录-->
+    <com.allen.library.SuperTextView
+        android:id="@+id/superTextView_card_record_hard"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:elevation="@dimen/dimen_1"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        title:sLeftTextColor="@color/darkSlateBlue"
+        title:sLeftTextSize="@dimen/font_3.5"
+        title:sLeftTextString="@string/transfer_records"
+        title:sRightTvDrawableRight="@drawable/ic_arrow"
+        title:sShapeCornersRadius="6dp"
+        title:sShapeSelectorPressedColor="@color/item_pressed"
+        title:sUseShape="true">
+
+    </com.allen.library.SuperTextView>
+
+</android.support.constraint.ConstraintLayout>
+

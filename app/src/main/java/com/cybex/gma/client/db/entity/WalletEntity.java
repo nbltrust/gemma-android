@@ -92,6 +92,12 @@ public class WalletEntity extends BaseModel implements Parcelable {
     @Column
     private String invCode;
 
+    /**
+     * 钱包类型 (0--软件钱包   1--硬件钱包)
+     */
+    @Column(defaultValue = "0")
+    private int walletType;
+
     @ColumnIgnore
     public boolean isChecked = false;
 
@@ -200,6 +206,14 @@ public class WalletEntity extends BaseModel implements Parcelable {
 
     public void setInvCode(String invCode) {
         this.invCode = invCode;
+    }
+
+    public int getWalletType() {
+        return walletType;
+    }
+
+    public void setWalletType(int walletType) {
+        this.walletType = walletType;
     }
 
     @Override
