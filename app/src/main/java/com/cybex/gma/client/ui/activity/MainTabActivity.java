@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.fragment.MainTabFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.yanzhenjie.sofia.Sofia;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -48,7 +49,6 @@ public class MainTabActivity extends XActivity {
 
     }
 
-
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         // 设置横向(和安卓4.x动画相同)
@@ -57,6 +57,9 @@ public class MainTabActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        Sofia.with(this).invasionStatusBar()
+                .navigationBarBackgroundAlpha(0)
+                .statusBarBackgroundAlpha(0);
 
     }
 
@@ -69,4 +72,6 @@ public class MainTabActivity extends XActivity {
     public Object newP() {
         return null;
     }
+
+
 }

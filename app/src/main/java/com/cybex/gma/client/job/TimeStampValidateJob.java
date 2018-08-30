@@ -6,6 +6,7 @@ import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
@@ -17,6 +18,7 @@ import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
 import com.cybex.gma.client.ui.request.GetBlockRequest;
 import com.cybex.gma.client.ui.request.GetKeyAccountsRequest;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -39,6 +41,10 @@ public class TimeStampValidateJob {
     private static final int OPERATION_CREATE = 0;
     private static final int OPERATION_IMPORT = 1;
 
+    private static final int FAIL_OVERTIME = 2;
+    private static final int FAIL_EMPTY_ACCOUNT = 3;
+    private static final int FAIL_USERNAME_USED = 4;
+
     private static final String ACTIVE_KEY = "active";
     private static final String OWNER_KEY = "owner";
 
@@ -52,6 +58,10 @@ public class TimeStampValidateJob {
             public void onJobScheduled(Context context, Job job) {
                 LoggerManager.d("alarm executed");
                 removePollingJob();
+                //todo 失败，查询数据库中是否有其他钱包
+                ValidateResultEvent event = new ValidateResultEvent();
+                event.setFail_type(FAIL_OVERTIME);
+                EventBusProvider.postSticky(event);
             }
 
         };
@@ -65,15 +75,17 @@ public class TimeStampValidateJob {
      * 时间单位毫秒
      */
     public static void startgetAccountPolling(int intervalTime, String account_name, String public_key) {
+        //设置一个两分钟的Alarm，定时取消轮询
+        setStopAlarmForPolling(120000);
         SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
-        if (smartScheduler.contains(ParamConstants.POLLING_JOB)) {
+        if (!smartScheduler.contains(ParamConstants.POLLING_JOB)) {
             smartScheduler.removeJob(ParamConstants.POLLING_JOB);
         }
         SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
             @Override
             public void onJobScheduled(Context context, Job job) {
                 LoggerManager.d("get account polling executed");
-                    getAccount(account_name, public_key);
+                    getAccount(account_name, public_key, false);
             }
 
         };
@@ -86,7 +98,7 @@ public class TimeStampValidateJob {
      * 开启一次比较时间戳验证轮询
      * 时间单位毫秒
      */
-    public static void startValidatePolling(int intervalTime, String created) {
+    public static void startValidatePolling(int intervalTime, String created, String account_name, String public_key) {
         SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
         if (smartScheduler.contains(ParamConstants.POLLING_JOB)) {
             smartScheduler.removeJob(ParamConstants.POLLING_JOB);
@@ -95,7 +107,7 @@ public class TimeStampValidateJob {
             @Override
             public void onJobScheduled(Context context, Job job) {
                 LoggerManager.d("validate polling executed");
-                    getInfo(created);
+                    getInfo(created, account_name, public_key);
             }
 
         };
@@ -118,11 +130,17 @@ public class TimeStampValidateJob {
                 .getKeyAccountsRequest(new JsonCallback<GetKeyAccountsResult>() {
                     @Override
                     public void onSuccess(Response<GetKeyAccountsResult> response) {
-                        if (response != null && response.body() != null){
+                        if (response != null && response.body() != null && response.code() != HttpConst.SERVER_INTERNAL_ERR){
                             GetKeyAccountsResult result = response.body();
                             List<String> account_names = result.account_names;
                             final String curEOSName = account_names.get(0);
                             executeValidateLogic(curEOSName, public_key);
+                        }else if (response != null && response.body() != null && response.code() == HttpConst
+                                .SERVER_INTERNAL_ERR ){
+                            //todo 未找到此账号
+                            ValidateResultEvent event = new ValidateResultEvent();
+                            event.setFail_type(FAIL_EMPTY_ACCOUNT);
+                            EventBusProvider.postSticky(event);
                         }
                     }
 
@@ -134,11 +152,13 @@ public class TimeStampValidateJob {
     }
 
     /**
-     * 根据账户名查询账户信息
-     * 需要在callback中解析并获取该账户的创建时间
+     ** 根据账户名查询账户信息
+     *
      * @param account_name
+     * @param public_key
+     * @param isSuccess 时间戳比较是否已经成功
      */
-    public static void getAccount(String account_name, String public_key){
+    public static void getAccount(String account_name, String public_key, boolean isSuccess){
         GetAccountInfoReqParams params = new GetAccountInfoReqParams();
         params.setAccount_name(account_name);
 
@@ -151,6 +171,8 @@ public class TimeStampValidateJob {
                     public void onSuccess(Response<AccountInfo> response) {
                         if (response.body() != null && response.code() != HttpConst.SERVER_INTERNAL_ERR){
                             //已查询到此账户
+                            removeAlarmJob();//移除定时器
+                            removePollingJob();//移除轮询
                             AccountInfo info = response.body();
                             LoggerManager.d("account_info", info);
                             //获取此账户的创建时间戳
@@ -160,14 +182,28 @@ public class TimeStampValidateJob {
                             for (AccountInfo.PermissionsBean permission : permissions){
                                 //检查active key中是否是此公钥
                                 if (isBeanContainsPublicKey(permission, public_key)){
-                                    //如果有
-                                    startValidatePolling(15000, created);
+                                    //如果公钥在账户中
+                                    if (!isSuccess){
+                                        //如果时间戳比较还没有成功，需要启动轮询
+                                        startValidatePolling(15000, created, account_name, public_key);
+                                    }else {
+                                        //todo 如果已成功，表示创建成功
+                                        ValidateResultEvent event = new ValidateResultEvent();
+                                        event.setSuccess(true);
+                                        EventBusProvider.postSticky(event);
+                                        removePollingJob();
+
+                                    }
                                 }else {
-                                    //如果没有
+                                    //公钥不在账户中
+                                    //todo 失败，弹框提示账户名已被使用，查询数据库中是否有其他钱包
+                                    ValidateResultEvent event = new ValidateResultEvent();
+                                    event.setFail_type(FAIL_USERNAME_USED);
+                                    EventBusProvider.postSticky(event);
                                 }
                             }
 
-                        }else {
+                        }else if (response.body() != null && response.code() == HttpConst.SERVER_INTERNAL_ERR){
                             //未查询到此账户
                             startgetAccountPolling(20000, account_name, public_key);
                         }
@@ -186,7 +222,7 @@ public class TimeStampValidateJob {
      * 调取RPC get_info接口查询当前链的配置信息
      * 获取lib
      */
-    public static void getInfo(String created) {
+    public static void getInfo(String created, String account_name, String public_key) {
         new EOSConfigInfoRequest(String.class)
                 .getInfo(new StringCallback() {
                     @Override
@@ -199,7 +235,7 @@ public class TimeStampValidateJob {
                                     String lib_num = obj.optString("last_irreversible_block_num");
                                     LoggerManager.d("lib", lib_num);
 
-                                    getBlock(lib_num, created);
+                                    getBlock(lib_num, created, account_name, public_key);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -219,7 +255,7 @@ public class TimeStampValidateJob {
      * 需要在callback获取timestamp
      * @param block_num
      */
-    public static void getBlock(String block_num, String created){
+    public static void getBlock(String block_num, String created, String account_name, String public_key){
 
         GetBlockReqParams params = new GetBlockReqParams();
         params.setBlock_num_or_id(block_num);
@@ -241,11 +277,11 @@ public class TimeStampValidateJob {
                                     //比较timestamp 和 created
                                     String laterTimestamp = getLaterTimeStamp(timestamp, created);
                                     if (laterTimestamp.equals(timestamp)){
-                                        //成功
-                                        //todo 关闭所有网络请求及轮询
+                                        //todo 比较成功
+                                        getAccount(account_name, public_key, true);
                                         removePollingJob();
                                     }else {
-                                        //todo 失败，轮询
+                                        //失败，轮询
                                     }
 
                                 }
@@ -414,8 +450,15 @@ public class TimeStampValidateJob {
         }
     }
 
+    private static void removeAlarmJob() {
+        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+        if (smartScheduler != null && smartScheduler.contains(ParamConstants.ALARM_JOB)) {
+            smartScheduler.removeJob(ParamConstants.ALARM_JOB);
+        }
+    }
+
     public static void executeValidateLogic(String account_name, String public_key){
-        getAccount(account_name, public_key);
+        getAccount(account_name, public_key, false);
     }
 
     public static void executeImportLogic(String private_key){
@@ -424,7 +467,7 @@ public class TimeStampValidateJob {
     }
 
     public static void executedCreateLogic(String account_name, String public_key){
-        getAccount(account_name, public_key);
+        getAccount(account_name, public_key, false);
     }
 
 }

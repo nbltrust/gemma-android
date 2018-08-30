@@ -40,6 +40,11 @@ public class SpalashActivity extends XActivity<SpalashActPresenter> {
     }
 
     @Override
+    protected void setImmersiveStyle() {
+
+    }
+
+    @Override
     public void initData(Bundle savedInstanceState) {
         skipMain();
     }

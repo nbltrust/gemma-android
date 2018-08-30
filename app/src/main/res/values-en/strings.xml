@@ -439,4 +439,6 @@
     <string name="tab_title_buy">Buy</string>
     <string name="tab_title_sell">Sell</string>
 
+    <string name="selected_nodes_limit">Please choose less than 30 nodes</string>
+
 </resources>

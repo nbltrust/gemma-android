@@ -17,7 +17,6 @@ import com.hxlx.core.lib.common.eventbus.BaseEvent;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
-import com.hxlx.core.lib.utils.OSUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -75,6 +74,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         AppManager.getAppManager().addActivity(this);
         mContext = this;
 
+        setImmersiveStyle();
     }
 
 
@@ -105,6 +105,16 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
                 }
             });
         }
+    }
+
+    /**
+     * 设置沉浸状态栏和透明导航栏
+     */
+    protected void setImmersiveStyle(){
+            Sofia.with(mContext)
+                    .navigationBarBackgroundAlpha(0)
+                    .statusBarBackgroundAlpha(0)
+                    .invasionStatusBar();
     }
 
     /**
@@ -191,9 +201,9 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         super.onResume();
         getvDelegate().resume();
 
-        if (OSUtils.checkDeviceHasNavigationBar(this)) {
-            OSUtils.solveNavigationBar(getWindow());
-        }
+       // if (OSUtils.checkDeviceHasNavigationBar(this)) {
+       //     OSUtils.solveNavigationBar(getWindow());
+       // }
 
         LanguageManager.getInstance(this).setConfiguration();
     }

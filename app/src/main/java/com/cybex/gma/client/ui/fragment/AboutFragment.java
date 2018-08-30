@@ -5,14 +5,19 @@ import android.view.View;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.cybex.gma.client.config.ParamConstants.*;
 
 public class AboutFragment extends XFragment {
 
@@ -45,14 +50,29 @@ public class AboutFragment extends XFragment {
                 int savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
                 switch (savedLanguageType){
                     case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
-                        String url = "https://nebuladownload.oss-cn-beijing.aliyuncs.com/gemma/gemma_release_desc_cn.html";
-                        CommonWebViewActivity.startWebView(getActivity(), url, getResources().getString(R.string.version_info));
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_CN, getResources().getString(R.string.version_info));
                         break;
                     case LanguageManager.LanguageType.LANGUAGE_EN:
-                        String url_en = "https://nebuladownload.oss-cn-beijing.aliyuncs"
-                                + ".com/gemma/gemma_release_desc_en.html";
-                        CommonWebViewActivity.startWebView(getActivity(), url_en, getResources().getString(R.string
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_EN, getResources().getString(R.string
                                 .version_info));
+                        break;
+                    case  LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+                        Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
+                        switch (systemLanguageType.getDisplayLanguage()){
+                            case CN:
+                                CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_CN, getResources()
+                                        .getString(R
+                                        .string.version_info));
+                                break;
+                            case EN:
+                                CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_EN, getResources().getString(R
+                                        .string.version_info));
+                                break;
+                        }
+                        break;
+                    default:
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_CN, getResources().getString(R
+                                .string.version_info));
                         break;
                 }
             }

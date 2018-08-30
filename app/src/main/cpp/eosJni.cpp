@@ -107,9 +107,12 @@ Java_com_cybex_gma_client_ui_JNIUtil_create_1abi_1req_1transfer(JNIEnv *env, jcl
     env->ReleaseStringUTFChars(quantity_, quantity);
     env->ReleaseStringUTFChars(memo_, memo);
 
-
-    std::string returnValue = k.create_abi_req_transfer(code, action, from,
-                                                        to, quantity, memo);
+    std::string returnValue;
+    try{
+        returnValue = k.create_abi_req_transfer(code, action, from, to, quantity, memo);
+    } catch(...){
+        returnValue = std::string(code) + "__" + action + "__" + from + "__" + to + "__" + quantity + "__" + memo;
+    }
 
 
     return env->NewStringUTF(returnValue.c_str());

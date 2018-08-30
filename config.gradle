@@ -98,7 +98,7 @@ ext {
                     'jolyglot': "com.github.VictorAlbertos.Jolyglot:gson:0.0.3",
             ],
             'yanzhenjie'  : [
-                    'sofia'     : "com.yanzhenjie:sofia:1.0.4",
+                    'sofia'     : "com.yanzhenjie:sofia:1.0.5",
                     'permission': "com.yanzhenjie:permission:2.0.0-rc11",
             ],
 

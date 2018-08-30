@@ -41,4 +41,27 @@ public class ApiPath {
     public static final String URL_UNIT_PRICE = "https://app.cybex.io/price";
 
     /**------------EOS 项目情况配置---------------*/
+
+
+    /**------------URL 地址配置---------------*/
+    //服务协议
+    public static final String TERMS_OF_SERVICE_CN = "https://nebuladownload.oss-cn-beijing.aliyuncs"
+            + ".com/gemma/gemma_policy_cn" + ".html";
+    public static final String TERMS_OF_SERVICE_EN = "https://nebuladownload.oss-cn-beijing.aliyuncs"
+            + ".com/gemma/gemma_policy_en" + ".html";
+
+    //帮助与反馈
+    public static final String HELP_CN = "http://47.75.154.39:3009/gemma?lang=cn.html";
+    public static final String HELP_EN = "http://47.75.154.39:3009/gemma?lang=en";
+
+    //版本说明
+    public static final String VERSION_NOTE_CN = "https://nebuladownload.oss-cn-beijing.aliyuncs"
+            + ".com/gemma/gemma_release_desc_cn"
+            + ".html";
+    public static final String VERSION_NOTE_EN = "https://nebuladownload.oss-cn-beijing.aliyuncs"
+            + ".com/gemma/gemma_release_desc_en"
+            + ".html";
+
+    /**------------URL 地址配置---------------*/
+
 }

@@ -326,7 +326,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                 } else {
                                     //密码正确，执行转账逻辑
                                     getP().executeTransferLogic(entity.getCurrentEosName(),
-                                            collectionAccount, amount + " " + "EOS", memo, privateKey);
+                                            collectionAccount, amount, memo, privateKey);
                                     dialog.cancel();
                                 }
 

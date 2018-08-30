@@ -23,6 +23,7 @@ import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
+import com.cybex.gma.client.utils.SoftHideKeyBoardUtil;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
@@ -377,6 +378,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        SoftHideKeyBoardUtil.assistActivity(this);
         validator = new Validator(this);
         validator.setValidationListener(this);
         initView();

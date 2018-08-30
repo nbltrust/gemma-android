@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -26,6 +27,8 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -50,10 +53,12 @@ public class VoteFragment extends XFragment<VotePresenter> {
     @BindView(R.id.tv_resource) TextView tvResource;
     @BindView(R.id.tv_vote_number) TextView tvVoteNumber;
     @BindView(R.id.tv_exec_vote) TextView tvExecVote;
+    @BindView(R.id.view_refresh) CommonRefreshLayout viewRefresh;
 
     private final int EVENT_THIS_PAGE = 0;//本页面发送的事件
     private final int EVENT_DOWN = 1;//上级页面发送的事件
     private final int EVENT_UP = 2;//下级页面返回发送的事件
+    private final int SELECTED_NODES_LIMIT = 30;
     private boolean hasDelegateRes = false;//是否有被抵押的资源
     private VoteNodeListAdapter mAdapter;
     private List<VoteNodeVO> nodeVOList = new ArrayList<>();
@@ -163,9 +168,13 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     selectedNodes.remove(curVoteNodeVO);
                 } else {
                     //点选
-                    curVoteNodeVO.ischecked = true;
-                    //向已选列表中添加
-                    selectedNodes.add(curVoteNodeVO);
+                    if (selectedNodes.size() < SELECTED_NODES_LIMIT){
+                        //向已选列表中添加
+                        curVoteNodeVO.ischecked = true;
+                        selectedNodes.add(curVoteNodeVO);
+                    }else {
+                          GemmaToastUtils.showLongToast(getResources().getString(R.string.selected_nodes_limit));
+                    }
                 }
                 //此事件用于更新本页面UI
                 NodeSelectedEvent event_this = new NodeSelectedEvent();
@@ -207,9 +216,24 @@ public class VoteFragment extends XFragment<VotePresenter> {
             }
         });
 
+        viewRefresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+            }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                getP().fetchBPDetail(ParamConstants.BP_NODE_NUMBERS);
+                viewRefresh.finishRefresh();
+                viewRefresh.setLoadmoreFinished(true);
+            }
+        });
+
     }
 
     public void initAdapterData(List<VoteNodeVO> voteNodeVOList) {
+        nodeVOList.clear();
         nodeVOList.addAll(voteNodeVOList);
         mAdapter = new VoteNodeListAdapter(nodeVOList);
         mAdapter.setHasStableIds(true);

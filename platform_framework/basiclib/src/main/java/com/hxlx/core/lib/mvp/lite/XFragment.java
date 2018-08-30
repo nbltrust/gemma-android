@@ -15,6 +15,7 @@ import com.hxlx.core.lib.common.eventbus.BaseEvent;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.yanzhenjie.sofia.Sofia;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -111,6 +112,16 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
                 }
             });
         }
+    }
+
+    /**
+     * 设置沉浸状态栏和透明导航栏
+     */
+    protected void setImmersiveStyle(){
+        Sofia.with(context)
+                .navigationBarBackgroundAlpha(0)
+                .statusBarBackgroundAlpha(0)
+                .invasionStatusBar();
     }
 
     @Override

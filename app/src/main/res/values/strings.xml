@@ -432,4 +432,6 @@
     <string name="tab_title_buy">买入</string>
     <string name="tab_title_sell">卖出</string>
 
+    <string name="selected_nodes_limit">请最多选择30个节点投票</string>
+
 </resources>

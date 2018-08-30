@@ -6,6 +6,7 @@ import android.widget.ScrollView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.presenter.MinePresenter;
@@ -13,10 +14,14 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+import static com.cybex.gma.client.config.ParamConstants.*;
+
 
 /**
  * 我的
@@ -24,7 +29,6 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  * Created by wanglin on 2018/7/9.
  */
 public class MineFragment extends XFragment<MinePresenter> {
-
 
     Unbinder unbinder;
     @BindView(R.id.superTextView_general) SuperTextView superTextViewGeneral;
@@ -69,7 +73,34 @@ public class MineFragment extends XFragment<MinePresenter> {
         superTextViewHelp.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-
+                int savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
+                switch (savedLanguageType){
+                    case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.HELP_CN, getResources().getString(R
+                                .string.help));
+                        break;
+                    case LanguageManager.LanguageType.LANGUAGE_EN:
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.HELP_EN, getResources().getString(R
+                                .string.help));
+                        break;
+                    case  LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+                        Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
+                        switch (systemLanguageType.getDisplayLanguage()){
+                            case CN:
+                                CommonWebViewActivity.startWebView(getActivity(), ApiPath.HELP_CN, getResources().getString(R
+                                        .string.help));
+                                break;
+                            case EN:
+                                CommonWebViewActivity.startWebView(getActivity(), ApiPath.HELP_CN, getResources().getString(R
+                                        .string.help));
+                                break;
+                        }
+                        break;
+                    default:
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
+                                .string.service_agreement));
+                        break;
+                }
             }
         });
         //服务协议
@@ -80,16 +111,28 @@ public class MineFragment extends XFragment<MinePresenter> {
                         int savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
                         switch (savedLanguageType){
                             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
-                                final String url = "https://nebuladownload.oss-cn-beijing.aliyuncs.com/gemma/gemma_policy_cn"
-                                        + ".html";
-                                CommonWebViewActivity.startWebView(getActivity(), url, getResources().getString(R
+                                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
                                         .string.service_agreement));
                                 break;
                             case LanguageManager.LanguageType.LANGUAGE_EN:
-                                final String url_en = "https://nebuladownload.oss-cn-beijing.aliyuncs"
-                                        + ".com/gemma/gemma_policy_en"
-                                        + ".html";
-                                CommonWebViewActivity.startWebView(getActivity(), url_en, getResources().getString(R
+                                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
+                                        .string.service_agreement));
+                                break;
+                            case  LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+                                Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
+                                switch (systemLanguageType.getDisplayLanguage()){
+                                    case CN:
+                                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
+                                                .string.service_agreement));
+                                        break;
+                                    case EN:
+                                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
+                                                .string.service_agreement));
+                                        break;
+                                }
+                                break;
+                            default:
+                                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
                                         .string.service_agreement));
                                 break;
                         }

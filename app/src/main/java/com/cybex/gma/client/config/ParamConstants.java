@@ -57,4 +57,7 @@ public interface ParamConstants {
      */
     int OPERATION_CREATE = 0;
     int OPERATION_IMPORT = 1;
+
+     String CN = "中文";
+     String EN = "English";
 }
