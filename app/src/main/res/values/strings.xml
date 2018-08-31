@@ -435,4 +435,6 @@
     <item name="tag_key_data" type="id"/>
     <item name="tag_key_position" type="id"/>
 
+    <string name="match_wookong_bio">配对 WOOKONG Bio</string>
+
 </resources>

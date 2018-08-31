@@ -42,6 +42,9 @@ public class ManageWalletFragment extends XFragment {
     @BindView(R.id.scroll_wallet_manage) ScrollView scrollViewWalletManage;
     @BindView(R.id.recycler_wallet_manage) RecyclerView recyclerViewWalletManage;
     @BindView(R.id.tv_existed_wallet) TextView tvExistedWallet;
+    @BindView(R.id.tv_match_bluetooth) SuperTextView tvMathBluetooth;
+
+
     Unbinder unbinder;
     private WalletManageListAdapter adapter;
     private final int requestCode = 0;
@@ -77,6 +80,13 @@ public class ManageWalletFragment extends XFragment {
         });
 
         setWalletListViewData();
+
+        List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getBluetoothWalletList();
+        if (EmptyUtils.isNotEmpty(list)) {
+            tvMathBluetooth.setVisibility(View.VISIBLE);
+        } else {
+            tvMathBluetooth.setVisibility(View.GONE);
+        }
     }
 
 
@@ -110,11 +120,11 @@ public class ManageWalletFragment extends XFragment {
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
-        if (requestCode == 0 && resultCode == 1){
+        if (requestCode == 0 && resultCode == 1) {
             final int walletID = data.getInt("walletID");
             final String walletName = data.getString("walletName");
-            WalletVO vo = walletVOList.get(walletID-1);
-            if (EmptyUtils.isNotEmpty(vo)){
+            WalletVO vo = walletVOList.get(walletID - 1);
+            if (EmptyUtils.isNotEmpty(vo)) {
                 vo.setWalletName(walletName);
                 walletVOList.clear();
                 setWalletListViewData();
@@ -128,21 +138,22 @@ public class ManageWalletFragment extends XFragment {
     public void setWalletListViewData() {
         //从数据库中读取Wallet信息转换成WalletVO列表
         List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
-        if (walletEntityList.size() == 0){
+        if (walletEntityList.size() == 0) {
             //如果数据库中没有钱包，隐藏已有钱包提示
             tvExistedWallet.setVisibility(View.GONE);
-        }else{
+        } else {
             tvExistedWallet.setVisibility(View.VISIBLE);
         }
 
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (!EmptyUtils.isEmpty(curWallet)){
+        if (!EmptyUtils.isEmpty(curWallet)) {
             int chosenID = curWallet.getId();//当前被选中的钱包的ID
             for (int i = 0; i < walletEntityList.size(); i++) {
                 WalletVO curWalletVO = new WalletVO();
                 curWalletVO.setWalletName(walletEntityList.get(i).getWalletName());
+                curWalletVO.setWalletType(walletEntityList.get(i).getWalletType());
                 //设置当前钱包
-                if (i+1 == chosenID){
+                if (i + 1 == chosenID) {
                     curWalletVO.isSelected = true;
                 }
                 walletVOList.add(curWalletVO);
@@ -159,7 +170,7 @@ public class ManageWalletFragment extends XFragment {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 WalletEntity thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
-                        (position+1);//当前卡片对应的wallet
+                        (position + 1);//当前卡片对应的wallet
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("curWallet", thisWallet);
                 //start(WalletDetailFragment.newInstance(bundle));
@@ -170,12 +181,12 @@ public class ManageWalletFragment extends XFragment {
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //position与数据库表中的id对应，可直接根据position值来确定ID
                 WalletEntity thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
-                        (position+1);//当前卡片对应的wallet
+                        (position + 1);//当前卡片对应的wallet
                 walletVOList.get(position).isSelected = true;
                 //把其他的WalletVO对象设置为未被选取
 
-                for (int i = 0; i < walletVOList.size(); i++){
-                    if (i != position){
+                for (int i = 0; i < walletVOList.size(); i++) {
+                    if (i != position) {
                         walletVOList.get(i).isSelected = false;
                     }
                 }
@@ -198,7 +209,7 @@ public class ManageWalletFragment extends XFragment {
 
     }
 
-    public void updateCurWalletHighlight(){
+    public void updateCurWalletHighlight() {
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
 
     }
