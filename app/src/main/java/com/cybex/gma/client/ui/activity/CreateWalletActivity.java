@@ -51,8 +51,11 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  */
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> implements Validator.ValidationListener {
 
-
     private Validator validator;
+    @BindView(R.id.view_divider_eosName) View viewDividerEosName;
+    @BindView(R.id.view_divider_setPass) View viewDividerSetPass;
+    @BindView(R.id.view_divider_repeatPass) View viewDividerRepeatPass;
+    @BindView(R.id.view_divider_passHint) View viewDividerPassHint;
     @BindView(R.id.scroll_create_wallet) ScrollView scrollViewCreateWallet;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
@@ -62,6 +65,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.iv_set_pass_clear) ImageView ivSetPassClear;
     @BindView(R.id.iv_repeat_pass_clear) ImageView ivRepeatPassClear;
     @BindView(R.id.iv_pass_hint_clear) ImageView ivPassHintClear;
+    @BindView(R.id.iv_invCode_clear) ImageView ivInvCodeClear;
 
     @NotEmpty(messageResId = R.string.eos_name_not_empty, sequence = 3)
     @BindView(R.id.edt_eos_name) EditText edtEosName;
@@ -106,6 +110,12 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 setEOSNameInvalidStyle();
             }
         }
+
+        if (EmptyUtils.isNotEmpty(getEOSUserName())) {
+            ivEosNameClear.setVisibility(View.VISIBLE);
+        } else {
+            ivEosNameClear.setVisibility(View.GONE);
+        }
     }
 
     @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -115,17 +125,36 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         } else {
             setUnclickable(btCreateWallet);
         }
+
+        if (EmptyUtils.isNotEmpty(getPassword())) {
+            ivSetPassClear.setVisibility(View.VISIBLE);
+        } else {
+            ivSetPassClear.setVisibility(View.GONE);
+        }
     }
 
     @OnTextChanged(value = R.id.et_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterRepeatPassChanged(Editable s) {
         if (EmptyUtils.isEmpty(getRepeatPassword())) {
+            ivRepeatPassClear.setVisibility(View.GONE);
             if (edtRepeatPass.hasFocus()) { setRepeatPassFocusStyle(); }
+        } else {
+            ivRepeatPassClear.setVisibility(View.VISIBLE);
         }
+
         if (isAllTextFilled() && checkboxConfig.isChecked() && getP().isPasswordMatch()) {
             setClickable(btCreateWallet);
         } else {
             setUnclickable(btCreateWallet);
+        }
+    }
+
+    @OnTextChanged(value = R.id.edt_pass_hint, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterPassHintChanged(Editable s) {
+        if (EmptyUtils.isNotEmpty(getPassHint())) {
+            ivPassHintClear.setVisibility(View.VISIBLE);
+        } else {
+            ivPassHintClear.setVisibility(View.GONE);
         }
     }
 
@@ -135,6 +164,12 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             setClickable(btCreateWallet);
         } else {
             setUnclickable(btCreateWallet);
+        }
+
+        if (EmptyUtils.isNotEmpty(getInvCode())) {
+            ivInvCodeClear.setVisibility(View.VISIBLE);
+        } else {
+            ivInvCodeClear.setVisibility(View.GONE);
         }
 
     }
@@ -169,11 +204,13 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     /**
      * 清除按钮点击事件
+     *
      * @param v
      */
-    @OnClick({R.id.iv_eos_name_clear, R.id.iv_set_pass_clear, R.id.iv_repeat_pass_clear, R.id.iv_pass_hint_clear})
-    public void onClearClicked(View v){
-        switch (v.getId()){
+    @OnClick({R.id.iv_eos_name_clear, R.id.iv_set_pass_clear, R.id.iv_repeat_pass_clear, R.id.iv_pass_hint_clear, R
+            .id.iv_invCode_clear})
+    public void onClearClicked(View v) {
+        switch (v.getId()) {
             case R.id.iv_eos_name_clear:
                 edtEosName.setText("");
                 break;
@@ -184,6 +221,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 edtRepeatPass.setText("");
                 break;
             case R.id.iv_pass_hint_clear:
+                edtPassHint.setText("");
+                break;
+            case R.id.iv_invCode_clear:
                 edtPassHint.setText("");
                 break;
         }
@@ -254,18 +294,16 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 }
 
                 if (hasFocus) {
+                    setDividerFocusStyle(viewDividerEosName);
                     edtEosName.setTypeface(Typeface.DEFAULT_BOLD);
-                } else if (EmptyUtils.isEmpty(getEOSUserName())) {
-                    edtEosName.setTypeface(Typeface.DEFAULT);
+                } else {
+                    setDividerDefaultStyle(viewDividerEosName);
+                    ivEosNameClear.setVisibility(View.GONE);
+                    if (EmptyUtils.isEmpty(getEOSUserName())) {
+                        edtEosName.setTypeface(Typeface.DEFAULT);
+                    }
                 }
 
-                /*
-                if (EmptyUtils.isNotEmpty(getEOSUserName())) {
-                    ivEosNameClear.setVisibility(View.VISIBLE);
-                }else {
-                    ivEosNameClear.setVisibility(View.GONE);
-                }
-                */
             }
         });
 
@@ -276,21 +314,16 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
+                    setDividerFocusStyle(viewDividerSetPass);
                     tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                     edtSetPass.setTypeface(Typeface.DEFAULT_BOLD);
 
                 } else {
+                    setDividerDefaultStyle(viewDividerSetPass);
+                    ivSetPassClear.setVisibility(View.GONE);
                     tvSetPass.setTextColor(getResources().getColor(R.color.steel));
                     if (EmptyUtils.isEmpty(getPassword())) { edtSetPass.setTypeface(Typeface.DEFAULT); }
                 }
-
-                /*
-                if (EmptyUtils.isNotEmpty(getPassword())){
-                    ivSetPassClear.setVisibility(View.VISIBLE);
-                }else {
-                    ivSetPassClear.setVisibility(View.GONE);
-                }
-                */
             }
         });
         /**
@@ -316,17 +349,10 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
                 if (hasFocus) {
                     edtRepeatPass.setTypeface(Typeface.DEFAULT_BOLD);
-                } else if (EmptyUtils.isEmpty(getRepeatPassword())) {
-                    edtRepeatPass.setTypeface(Typeface.DEFAULT);
-                }
-
-                /*
-                if (EmptyUtils.isNotEmpty(getRepeatPassword())){
-                    ivRepeatPassClear.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     ivRepeatPassClear.setVisibility(View.GONE);
+                    if (EmptyUtils.isEmpty(getRepeatPassword())) { edtRepeatPass.setTypeface(Typeface.DEFAULT); }
                 }
-                */
             }
         });
         /**
@@ -336,20 +362,16 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
+                    if (EmptyUtils.isNotEmpty(getPassHint())) { ivPassHintClear.setVisibility(View.VISIBLE); }
                     tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                     edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
+                    setDividerFocusStyle(viewDividerPassHint);
                 } else {
+                    setDividerDefaultStyle(viewDividerPassHint);
+                    ivPassHintClear.setVisibility(View.GONE);
                     tvPassHint.setTextColor(getResources().getColor(R.color.steel));
                     if (EmptyUtils.isEmpty(getPassHint())) { edtPassHint.setTypeface(Typeface.DEFAULT); }
                 }
-
-                /*
-                if (EmptyUtils.isNotEmpty(getPassHint())){
-                    ivPassHintClear.setVisibility(View.VISIBLE);
-                }else {
-                    ivPassHintClear.setVisibility(View.GONE);
-                }
-                */
             }
         });
         /**
@@ -359,11 +381,13 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
+                    if (EmptyUtils.isEmpty(getInvCode())) { ivInvCodeClear.setVisibility(View.GONE); }
                     tvInvCode.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                     edtInvCode.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
+                    ivInvCodeClear.setVisibility(View.GONE);
                     tvInvCode.setTextColor(getResources().getColor(R.color.steel));
-                    if (EmptyUtils.isEmpty(getPassHint())) { edtInvCode.setTypeface(Typeface.DEFAULT); }
+                    if (EmptyUtils.isEmpty(getInvCode())) { edtInvCode.setTypeface(Typeface.DEFAULT); }
                 }
             }
         });
@@ -430,20 +454,38 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         //两次输入密码匹配
         tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
-        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        setDividerDefaultStyle(viewDividerRepeatPass);
+        if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
+            ivRepeatPassClear.setVisibility(View.VISIBLE);
+        } else {
+            ivRepeatPassClear.setVisibility(View.GONE);
+        }
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
     public void setRepeatPassFocusStyle() {
         tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
-        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        setDividerFocusStyle(viewDividerRepeatPass);
+        if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
+            ivRepeatPassClear.setVisibility(View.VISIBLE);
+        } else {
+            ivRepeatPassClear.setVisibility(View.GONE);
+        }
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
     public void setRepeatPassInvalidStyle() {
         //两次输入密码不匹配
         tvRepeatPass.setText(getResources().getString(R.string.pass_no_match));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
-        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+        setDividerAlertStyle(viewDividerRepeatPass);
+        if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
+            ivRepeatPassClear.setVisibility(View.VISIBLE);
+        } else {
+            ivRepeatPassClear.setVisibility(View.GONE);
+        }
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }
 
     public void setClickable(Button button) {
@@ -560,21 +602,52 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     }
 
 
-    public void showBubble(){
+    public void showBubble() {
         tvEosName.setVisibility(View.GONE);
         edtEosName.setVisibility(View.GONE);
         bubble.setVisibility(View.VISIBLE);
     }
 
-    public void hideBubble(){
+    public void hideBubble() {
         tvEosName.setVisibility(View.VISIBLE);
         edtEosName.setVisibility(View.VISIBLE);
         bubble.setVisibility(View.GONE);
     }
 
-    /**
-     * 显示选择创建方式dialog
-     */
+    public void setDividerFocusStyle(View divider){
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                3);
+        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+                .getDimension(R.dimen.dimen_12));
+        divider.setLayoutParams(params);
+        divider.setBackgroundColor(getResources().getColor(R.color.dark_slate_blue));
+
+    }
+
+    public void setDividerDefaultStyle(View divider){
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,2);
+        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+                .getDimension(R.dimen.dimen_12));
+        divider.setLayoutParams(params);
+        divider.setBackgroundColor(getResources().getColor(R.color.paleGrey));
+
+    }
+
+    public void setDividerAlertStyle(View divider){
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,3);
+        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+                .getDimension(R.dimen.dimen_12));
+        divider.setBackgroundColor(getResources().getColor(R.color.scarlet));
+    }
+
+    public void setHorizontalMargins(LinearLayout.LayoutParams params, int marginStart, int marginEnd){
+        params.setMarginStart(marginStart);
+        params.setMarginEnd(marginEnd);
+    }
+
+        /**
+         * 显示选择创建方式dialog
+         */
     private void showChooseMethodDialog() {
         int[] listenedItems = {R.id.btn_close, R.id.btn_use_invCode, R.id.btn_use_cybex, R.id.btn_invite_friend};
         CustomFullDialog dialog = new CustomFullDialog(this,

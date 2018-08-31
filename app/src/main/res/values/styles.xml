@@ -29,8 +29,8 @@
 
     <!-- 公用分割线样式-->
     <style name="view_common_divider">
-        <item name="android:layout_marginStart">@dimen/dimen_10</item>
-        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+        <item name="android:layout_marginStart">@dimen/dimen_12</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_12</item>
         <item name="android:layerType">software</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_1</item>
@@ -150,7 +150,7 @@
         <item name="android:textSize">@dimen/font_4</item>
         <item name="android:textColorHint">@color/cloudyBlue</item>
         <item name="android:theme">@style/myEditText</item>
-        <item name="android:background">@drawable/selector_edt_bg</item>
+        <item name="android:background"><!--@drawable/selector_edt_bg-->@null</item>
         <item name="android:textCursorDrawable">@drawable/cursor_custom</item>
         <item name="android:layout_marginEnd">@dimen/dimen_12</item>
         <item name="android:layout_marginStart">@dimen/dimen_12</item>

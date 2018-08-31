@@ -28,7 +28,7 @@ public class ApiPath {
     //中心化服务器host
     public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3001";
     //链上服务器host
-    public static final String HOST_ON_CHAIN = "http://52.77.177.200:8888";
+    public static String HOST_ON_CHAIN = "http://52.77.177.200:8888";
 
 
     //主链上的一个节点
@@ -64,4 +64,28 @@ public class ApiPath {
 
     /**------------URL 地址配置---------------*/
 
+
+
+    /**------------节点 地址配置---------------*/
+
+    public static final String EOS_CYBEX = "http://52.77.177.200:8888";
+    public static final String EOS_START_EOS = "http://api-mainnet.starteos.io";
+    public static final String EOS_NEW_YORK = "https://api.eosnewyork.io";
+    public static final String EOS_GREY_MASS = "https://eos.greymass.com";
+    public static final String EOS_AISA = "https://api-direct.eosasia.one";
+    public static final String EOS_GRAVITY = "https://api-mainnet.eosgravity.com";
+    public static final String EOS_HELLOEOS = "https://api.helloeos.com.cn";
+    public static final String EOS_HK_EOS = "https://api.hkeos.com";
+    public static final String EOS_42 = "https://nodes.eos42.io";
+    public static final String EOS_CYPHER_GLASS = "https://api.cypherglass.com";
+
+    /**------------节点 地址配置---------------*/
+
+    public static String getHOST_ON_CHAIN() {
+        return HOST_ON_CHAIN;
+    }
+
+    public static void setHOST_ON_CHAIN(String newUrl) {
+        HOST_ON_CHAIN = newUrl;
+    }
 }

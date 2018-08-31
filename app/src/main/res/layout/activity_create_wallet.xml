@@ -67,6 +67,7 @@
                         android:id="@+id/edt_eos_name"
                         style="@style/editText_config_wallet"
                         android:layout_weight="1"
+                        android:inputType="text"
                         android:hint="@string/EOS_username_hint"/>
 
                     <ImageView
@@ -75,12 +76,12 @@
 
                 </LinearLayout>
 
-                <!--
+
                 <View
                     android:id="@+id/view_divider_eosName"
                     style="@style/view_common_divider">
                 </View>
-                -->
+
 
                 <TextView
                     android:id="@+id/tv_set_pass"
@@ -105,12 +106,11 @@
 
                 </LinearLayout>
 
-                <!--
                 <View
                     android:id="@+id/view_divider_setPass"
                     style="@style/view_common_divider">
                 </View>
-                -->
+
 
                 <TextView
                     android:id="@+id/tv_repeat_pass"
@@ -136,12 +136,12 @@
 
                 </LinearLayout>
 
-                <!--
+
                 <View
                     android:id="@+id/view_divider_repeatPass"
                     style="@style/view_common_divider">
                 </View>
-                -->
+
 
                 <TextView
                     android:id="@+id/tv_pass_hint"
@@ -166,12 +166,12 @@
 
                 </LinearLayout>
 
-                <!--
+
                 <View
                     android:id="@+id/view_divider_passHint"
                     style="@style/view_common_divider">
                 </View>
-                -->
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -201,13 +201,23 @@
                 </LinearLayout>
 
 
-                <EditText
-                    android:id="@+id/edt_invCode"
-                    style="@style/editText_config_wallet"
-                    android:layout_marginEnd="@dimen/dimen_10"
-                    android:layout_marginStart="@dimen/dimen_10"
-                    android:background="@null"
-                    android:hint="@string/input_inv_code"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edt_invCode"
+                        style="@style/editText_config_wallet"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:background="@null"
+                        android:hint="@string/input_inv_code"/>
+
+                    <ImageView
+                        android:id="@+id/iv_invCode_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

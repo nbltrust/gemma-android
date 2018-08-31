@@ -76,22 +76,22 @@ public class TimeStampValidateJob {
      */
     public static void startgetAccountPolling(int intervalTime, String account_name, String public_key) {
         //设置一个两分钟的Alarm，定时取消轮询
-        setStopAlarmForPolling(120000);
+
         SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
         if (!smartScheduler.contains(ParamConstants.POLLING_JOB)) {
-            smartScheduler.removeJob(ParamConstants.POLLING_JOB);
-        }
-        SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
-            @Override
-            public void onJobScheduled(Context context, Job job) {
-                LoggerManager.d("get account polling executed");
+            setStopAlarmForPolling(120000);
+            SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
+                @Override
+                public void onJobScheduled(Context context, Job job) {
+                    LoggerManager.d("get account polling executed");
                     getAccount(account_name, public_key, false);
-            }
+                }
 
-        };
+            };
 
-        Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, intervalTime);
-        smartScheduler.addJob(job);
+            Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, intervalTime);
+            smartScheduler.addJob(job);
+        }
     }
 
     /**
@@ -100,20 +100,20 @@ public class TimeStampValidateJob {
      */
     public static void startValidatePolling(int intervalTime, String created, String account_name, String public_key) {
         SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
-        if (smartScheduler.contains(ParamConstants.POLLING_JOB)) {
-            smartScheduler.removeJob(ParamConstants.POLLING_JOB);
-        }
-        SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
-            @Override
-            public void onJobScheduled(Context context, Job job) {
-                LoggerManager.d("validate polling executed");
+        if (!smartScheduler.contains(ParamConstants.POLLING_JOB)) {
+            SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
+                @Override
+                public void onJobScheduled(Context context, Job job) {
+                    LoggerManager.d("validate polling executed");
                     getInfo(created, account_name, public_key);
-            }
+                }
 
-        };
+            };
 
-        Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, intervalTime);
-        smartScheduler.addJob(job);
+            Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, intervalTime);
+            smartScheduler.addJob(job);
+        }
+
     }
 
     /**

@@ -7,9 +7,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
@@ -18,7 +20,6 @@ import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
-import com.cybex.gma.client.widget.MyScrollView;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -28,6 +29,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +50,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     View viewDivider;
     @BindView(R.id.et_collection_account)
     EditText etCollectionAccount; //收款账户
+    @BindView(R.id.tv_collection_account)
+    TextView tvCollectionAmount;
     @BindView(R.id.tv_pay_account)
     TextView tvPayAccount; //付款账户
     @BindView(R.id.tv_banlance)
@@ -58,7 +63,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @BindView(R.id.btn_transfer)
     Button btnTransfer; //确认转账
     @BindView(R.id.root_scrollview)
-    MyScrollView rootScrollview;
+    ScrollView rootScrollview;
     Unbinder unbinder;
 
     private String maxValue = "";
@@ -149,8 +154,26 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         etCollectionAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
+                if (hasFocus) {
+                   if (EmptyUtils.isEmpty(etCollectionAccount.getText().toString().trim())){
+                       tvCollectionAmount.setText(getString(R.string.receiver));
+                       tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
+                   }
+                }else {
                     validateButton();
+                    if (EmptyUtils.isEmpty(etCollectionAccount.getText().toString().trim())){
+                        tvCollectionAmount.setText(getString(R.string.receiver));
+                        tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
+                    }
+                    if (!isAccountNameValid() && EmptyUtils.isNotEmpty(etCollectionAccount.getText().toString().trim())){
+                        //显示alert样式
+                        tvCollectionAmount.setText(getString(R.string.EOS_username_hint));
+                        tvCollectionAmount.setTextColor(getResources().getColor(R.color.scarlet));
+                    }else {
+                        //显示默认样式
+                        tvCollectionAmount.setText(getString(R.string.receiver));
+                        tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
+                    }
                 }
             }
         });
@@ -179,10 +202,13 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         String collectionAccount = String.valueOf(etCollectionAccount.getText());
         String amount = String.valueOf(etAmount.getText());
 
-        if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount)) {
+        if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount) && collectionAccount.length() ==
+                ParamConstants.VALID_EOSNAME_LENGTH) {
             btnTransfer.setEnabled(true);
+
         } else {
             btnTransfer.setEnabled(false);
+
         }
 
     }
@@ -230,8 +256,18 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             GemmaToastUtils.showShortToast(getResources().getString(R.string.cant_transfer_to_yourself));
             return;
         }
+
         validateAmountValue();
         showConfirmTransferDialog();
+    }
+
+    public boolean isAccountNameValid(){
+        String eosUsername = etCollectionAccount.getText().toString().trim();
+        String regEx = "^[a-z1-5]{12}$";
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher matcher = pattern.matcher((eosUsername));
+        boolean res = matcher.matches();
+        return res;
     }
 
     /**

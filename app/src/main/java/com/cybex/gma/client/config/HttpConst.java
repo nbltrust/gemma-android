@@ -27,4 +27,5 @@ public interface HttpConst {
     int SERVER_INTERNAL_ERR = 500;
 
 
+
 }
