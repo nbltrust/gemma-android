@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
@@ -39,12 +40,16 @@ import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.xujiaji.happybubble.BubbleLayout;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
+import static com.cybex.gma.client.config.ParamConstants.CN;
+import static com.cybex.gma.client.config.ParamConstants.EN;
 
 /**
  * 创建钱包页面
@@ -187,18 +192,33 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         int savedLanguageType = LanguageManager.getInstance(this).getLanguageType();
         switch (savedLanguageType) {
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
-                final String url = "https://nebuladownload.oss-cn-beijing.aliyuncs.com/gemma/gemma_policy_cn"
-                        + ".html";
-                CommonWebViewActivity.startWebView(this, url, getResources().getString(R
+                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
                         .string.service_agreement));
                 break;
             case LanguageManager.LanguageType.LANGUAGE_EN:
-                final String url_en = "https://nebuladownload.oss-cn-beijing.aliyuncs"
-                        + ".com/gemma/gemma_policy_en"
-                        + ".html";
-                CommonWebViewActivity.startWebView(this, url_en, getResources().getString(R
+                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
                         .string.service_agreement));
                 break;
+            case  LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+                Locale systemLanguageType = LanguageManager.getInstance(this).getSysLocale();
+                switch (systemLanguageType.getDisplayLanguage()){
+                    case CN:
+                        CommonWebViewActivity.startWebView(this, ApiPath.VERSION_NOTE_CN, getResources()
+                                .getString(R.string.version_info));
+                        break;
+                    case EN:
+                        CommonWebViewActivity.startWebView(this, ApiPath.VERSION_NOTE_EN, getResources()
+                                .getString(R.string.version_info));
+                        break;
+                    default:
+                        CommonWebViewActivity.startWebView(this, ApiPath.VERSION_NOTE_CN, getResources()
+                                .getString(R.string.version_info));
+                }
+                break;
+            default:
+                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
+                        .string.service_agreement));
+
         }
     }
 

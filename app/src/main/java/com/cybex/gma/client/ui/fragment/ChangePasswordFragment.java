@@ -8,6 +8,8 @@ import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -41,6 +43,11 @@ import butterknife.Unbinder;
 public class ChangePasswordFragment extends XFragment implements Validator.ValidationListener {
 
     Unbinder unbinder;
+    @BindView(R.id.iv_set_newPass_clear) ImageView ivSetNewPassClear;
+    @BindView(R.id.view_set_new_pass) View viewSetNewPass;
+    @BindView(R.id.iv_repeat_newPass_clear) ImageView ivRepeatNewPassClear;
+    @BindView(R.id.view_repeat_new_pass) View viewRepeatNewPass;
+    @BindView(R.id.iv_newPass_hint_clear) ImageView ivNewPassHintClear;
     private WalletEntity curWallet;
     private String priKey;
     private Validator validator;
@@ -70,23 +77,42 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     }
 
     @OnTextChanged(value = R.id.edt_set_new_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onPasswordChanged(){
-        if (isAllFilled() && isPasswordMatch()){
+    public void onPasswordChanged() {
+        if (isAllFilled() && isPasswordMatch()) {
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
-        }else{
+        } else {
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
+        }
+
+        if (EmptyUtils.isNotEmpty(getPassword())){
+            ivSetNewPassClear.setVisibility(View.VISIBLE);
+        }else {
+            ivSetNewPassClear.setVisibility(View.GONE);
         }
     }
 
     @OnTextChanged(value = R.id.edt_repeat_new_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onRepeatPassChanged(){
-        if (EmptyUtils.isEmpty(getRepeatPass())){
+    public void onRepeatPassChanged() {
+        if (EmptyUtils.isEmpty(getRepeatPass())) {
             setRepeatPassFocusStyle();
-        }
-        if (isAllFilled() && isPasswordMatch()){
-            btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+            ivRepeatNewPassClear.setVisibility(View.GONE);
         }else {
+            ivRepeatNewPassClear.setVisibility(View.VISIBLE);
+        }
+
+        if (isAllFilled() && isPasswordMatch()) {
+            btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+        } else {
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
+        }
+    }
+
+    @OnTextChanged(value = R.id.edt_new_pass_hint, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onPasshintChanged(){
+        if (EmptyUtils.isNotEmpty(getPassHint())){
+            ivNewPassHintClear.setVisibility(View.VISIBLE);
+        }else {
+            ivNewPassHintClear.setVisibility(View.GONE);
         }
     }
 
@@ -122,6 +148,21 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
             }
         });
         */
+    }
+
+    @OnClick({R.id.iv_set_newPass_clear, R.id.iv_repeat_newPass_clear, R.id.iv_newPass_hint_clear})
+    public void onTextClear(View v){
+        switch (v.getId()){
+            case R.id.iv_set_newPass_clear:
+                edtSetNewPass.setText("");
+                break;
+            case R.id.iv_repeat_newPass_clear:
+                edtRepeatNewPass.setText("");
+                break;
+            case R.id.iv_newPass_hint_clear:
+                edtNewPassHint.setText("");
+                break;
+        }
     }
 
     @Override
@@ -160,22 +201,27 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         validator.setValidationListener(this);
 
         setNavibarTitle(getResources().getString(R.string.title_change_pass), true, false);
-        if (getArguments() != null){
+        if (getArguments() != null) {
             final int currentId = getArguments().getInt("walletID");
-            //LoggerManager.d("currentID", currentId);
             curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentId);
             priKey = getArguments().getString("key");
 
             edtSetNewPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus){
+                    if (hasFocus) {
                         tvSetNewPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                         edtSetNewPass.setTypeface(Typeface.DEFAULT_BOLD);
+                        setDividerFocusStyle(viewSetNewPass);
+                        if (EmptyUtils.isNotEmpty(getPassword())){
+                            ivSetNewPassClear.setVisibility(View.VISIBLE);
+                        }
 
-                    }else{
+                    } else {
+                        ivSetNewPassClear.setVisibility(View.GONE);
                         tvSetNewPass.setTextColor(getResources().getColor(R.color.steel));
-                        if (EmptyUtils.isEmpty(getPassword()))edtSetNewPass.setTypeface(Typeface.DEFAULT);
+                        setDividerDefaultStyle(viewSetNewPass);
+                        if (EmptyUtils.isEmpty(getPassword())) { edtSetNewPass.setTypeface(Typeface.DEFAULT); }
                     }
                 }
             });
@@ -183,21 +229,25 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
             edtRepeatNewPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if (EmptyUtils.isNotEmpty(getRepeatPass())){
-                        if (getRepeatPass().equals(getPassword())){
+                    if (EmptyUtils.isNotEmpty(getRepeatPass())) {
+                        if (getRepeatPass().equals(getPassword())) {
                             setRepeatPassValidStyle();
-                            if (hasFocus)setRepeatPassFocusStyle();
-                        }else{
+                            if (hasFocus) { setRepeatPassFocusStyle(); }
+                        } else {
                             setRepeatPassInvalidStyle();
                         }
-                    }else{
+                    } else {
                         setRepeatPassValidStyle();
-                        if (hasFocus)setRepeatPassFocusStyle();
+                        if (hasFocus) { setRepeatPassFocusStyle(); }
                     }
-                    if (hasFocus){
+
+                    if (hasFocus) {
                         edtRepeatNewPass.setTypeface(Typeface.DEFAULT_BOLD);
-                    }else if (EmptyUtils.isEmpty(getRepeatPass())){
-                        edtRepeatNewPass.setTypeface(Typeface.DEFAULT);
+                    } else  {
+                        ivRepeatNewPassClear.setVisibility(View.GONE);
+                        if (EmptyUtils.isEmpty(getRepeatPass())){
+                            edtRepeatNewPass.setTypeface(Typeface.DEFAULT);
+                        }
                     }
                 }
             });
@@ -205,18 +255,22 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
             edtNewPassHint.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus){
+                    if (hasFocus) {
                         tvNewPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                         edtNewPassHint.setTypeface(Typeface.DEFAULT_BOLD);
-                    }else{
+                        if (EmptyUtils.isNotEmpty(getPassHint())){
+                            ivNewPassHintClear.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        ivNewPassHintClear.setVisibility(View.GONE);
                         tvNewPassHint.setTextColor(getResources().getColor(R.color.steel));
-                        if (EmptyUtils.isEmpty(getPassHint()))edtNewPassHint.setTypeface(Typeface.DEFAULT);
+                        if (EmptyUtils.isEmpty(getPassHint())) { edtNewPassHint.setTypeface(Typeface.DEFAULT); }
                     }
                 }
             });
         }
 
-        setEditTextHintStyle(edtSetNewPass, R.string.new_password);
+        setEditTextHintStyle(edtSetNewPass, R.string.password_input_hint);
         setEditTextHintStyle(edtRepeatNewPass, R.string.repeatPassword_hint);
         setEditTextHintStyle(edtNewPassHint, R.string.password_hint_hint);
         /*
@@ -295,48 +349,86 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         return edtRepeatNewPass.getText().toString().trim();
     }
 
-    public void setRepeatPassValidStyle(){
+    public void setRepeatPassValidStyle() {
         tvRepeatNewPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.steel));
-        edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        setDividerDefaultStyle(viewRepeatNewPass);
+        //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
-    public void setRepeatPassFocusStyle(){
+    public void setRepeatPassFocusStyle() {
         tvRepeatNewPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
-        edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        setDividerFocusStyle(viewRepeatNewPass);
+        //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
-    public void setRepeatPassInvalidStyle(){
+    public void setRepeatPassInvalidStyle() {
         tvRepeatNewPass.setText(getResources().getString(R.string.pass_no_match));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.scarlet));
-        edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+        setDividerAlertStyle(viewRepeatNewPass);
+        if (EmptyUtils.isNotEmpty(getRepeatPass())){
+            ivRepeatNewPassClear.setVisibility(View.VISIBLE);
+        }
+        //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }
 
-    public void setEditTextHintStyle(EditText editText, int resId){
+    public void setEditTextHintStyle(EditText editText, int resId) {
         String hintStr = getResources().getString(resId);
-        SpannableString ss =  new SpannableString(hintStr);
+        SpannableString ss = new SpannableString(hintStr);
         AbsoluteSizeSpan ass = new AbsoluteSizeSpan(14, true);
         editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         editText.setHint(new SpannableString(ss));
     }
 
-    private void clearListeners(){
+    public void setDividerFocusStyle(View divider){
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                3);
+        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+                .getDimension(R.dimen.dimen_12));
+        divider.setLayoutParams(params);
+        divider.setBackgroundColor(getResources().getColor(R.color.dark_slate_blue));
+
+    }
+
+    public void setDividerDefaultStyle(View divider){
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,2);
+        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+                .getDimension(R.dimen.dimen_12));
+        divider.setLayoutParams(params);
+        divider.setBackgroundColor(getResources().getColor(R.color.paleGrey));
+
+    }
+
+    public void setDividerAlertStyle(View divider){
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,3);
+        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+                .getDimension(R.dimen.dimen_12));
+        divider.setBackgroundColor(getResources().getColor(R.color.scarlet));
+    }
+
+    public void setHorizontalMargins(LinearLayout.LayoutParams params, int marginStart, int marginEnd){
+        params.setMarginStart(marginStart);
+        params.setMarginEnd(marginEnd);
+    }
+
+
+    private void clearListeners() {
         edtNewPassHint.setOnFocusChangeListener(null);
         edtRepeatNewPass.setOnFocusChangeListener(null);
         edtSetNewPass.setOnFocusChangeListener(null);
     }
 
-    private boolean isPasswordMatch(){
-        if (getPassword().equals(getRepeatPass()))return true;
+    private boolean isPasswordMatch() {
+        if (getPassword().equals(getRepeatPass())) { return true; }
         return false;
     }
 
     @Override
     public void onValidationSucceeded() {
         final String newCypher = JNIUtil.get_cypher(getPassword(), priKey);
-        if (!EmptyUtils.isEmpty(curWallet)){
+        if (!EmptyUtils.isEmpty(curWallet)) {
             curWallet.setCypher(newCypher);
             curWallet.setPasswordTip(getPassHint());
             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
@@ -347,14 +439,14 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors){
+        for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(getActivity());
 
-            if (view instanceof EditText){
+            if (view instanceof EditText) {
                 //todo 设置onError样式？
                 GemmaToastUtils.showLongToast(message);
-            }else{
+            } else {
                 GemmaToastUtils.showLongToast(message);
             }
         }

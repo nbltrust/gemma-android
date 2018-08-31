@@ -38,11 +38,29 @@
                     style="@style/text_title_config_wallet"
                     android:text="@string/set_password"/>
 
-                <EditText
-                    android:id="@+id/edt_set_pass"
-                    style="@style/editText_config_wallet"
-                    android:inputType="textPassword"
-                    android:hint="@string/password_input_hint"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_set_pass"
+                        style="@style/editText_config_wallet"
+                        android:inputType="textPassword"
+                        android:layout_weight="1"
+                        android:hint="@string/password_input_hint"/>
+
+                    <ImageView
+                        android:id="@+id/iv_set_pass_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/view_divider_set_pass"
+                    style="@style/view_common_divider">
+                </View>
 
                 <TextView
                     android:id="@+id/tv_repeat_pass"
@@ -50,11 +68,29 @@
                     android:text="@string/repeat_pass"
                     android:layout_marginTop="@dimen/dimen_10"/>
 
-                <EditText
-                    android:id="@+id/et_repeat_pass"
-                    android:inputType="textPassword"
-                    style="@style/editText_config_wallet"
-                    android:hint="@string/repeatPassword_hint"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_repeat_pass"
+                        android:inputType="textPassword"
+                        android:layout_weight="1"
+                        style="@style/editText_config_wallet"
+                        android:hint="@string/repeatPassword_hint"/>
+
+                    <ImageView
+                        android:id="@+id/iv_repeat_pass_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/view_divider_repeat_pass"
+                    style="@style/view_common_divider">
+                </View>
 
                 <TextView
                     android:id="@+id/tv_pass_hint_f"
@@ -62,12 +98,24 @@
                     android:text="@string/password_hint"
                     android:layout_marginTop="@dimen/dimen_10"/>
 
-                <EditText
-                    android:id="@+id/edt_pass_hint"
-                    style="@style/editText_config_wallet"
-                    android:hint="@string/password_hint_hint"
-                    android:layout_marginStart="@dimen/dimen_14"
-                    android:background="@null"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_pass_hint"
+                        style="@style/editText_config_wallet"
+                        android:hint="@string/password_hint_hint"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/dimen_14"
+                        android:background="@null"/>
+
+                    <ImageView
+                        android:id="@+id/iv_pass_hint_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -114,7 +162,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_3">
             </View>
-
 
         </LinearLayout>
 

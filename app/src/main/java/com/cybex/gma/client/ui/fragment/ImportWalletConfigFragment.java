@@ -10,11 +10,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.JNIUtil;
@@ -34,6 +36,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +44,9 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
+import static com.cybex.gma.client.config.ParamConstants.CN;
+import static com.cybex.gma.client.config.ParamConstants.EN;
 
 /**
  * 配置钱包界面
@@ -58,7 +64,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
 
     @NotEmpty(messageResId = R.string.repeatPassword_hint, sequence = 2)
-    @ConfirmPassword (messageResId = R.string.password_no_match, sequence = 2)
+    @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 2)
     @BindView(R.id.et_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.tv_pass_hint_f) TextView tvPassHint;
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
@@ -70,6 +76,11 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     @BindView(R.id.scroll_wallet_config) ScrollView scrollViewWalletConfig;
 
     Unbinder unbinder;
+    @BindView(R.id.iv_set_pass_clear) ImageView ivSetPassClear;
+    @BindView(R.id.view_divider_set_pass) View viewDividerSetPass;
+    @BindView(R.id.iv_repeat_pass_clear) ImageView ivRepeatPassClear;
+    @BindView(R.id.view_divider_repeat_pass) View viewDividerRepeatPass;
+    @BindView(R.id.iv_pass_hint_clear) ImageView ivPassHintClear;
     private Validator validator;
 
     public static ImportWalletConfigFragment newInstance(String privateKey) {
@@ -87,6 +98,12 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         } else {
             setButtonUnClickableStyle();
         }
+
+        if (EmptyUtils.isNotEmpty(getPassword())){
+            ivSetPassClear.setVisibility(View.VISIBLE);
+        }else {
+            ivSetPassClear.setVisibility(View.GONE);
+        }
     }
 
     @OnTextChanged(value = R.id.et_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -97,28 +114,54 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             setButtonUnClickableStyle();
         }
 
-        if (EmptyUtils.isEmpty(getRepeatPass())){
+        if (EmptyUtils.isEmpty(getRepeatPass())) {
             setRepeatPassFocusStyle();
+        }else {
+            ivRepeatPassClear.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @OnTextChanged(value = R.id.edt_pass_hint, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onPasshintChanged(){
+        if (EmptyUtils.isNotEmpty(getPassHint())){
+            ivPassHintClear.setVisibility(View.VISIBLE);
+        }else {
+            ivPassHintClear.setVisibility(View.GONE);
         }
     }
 
     @OnClick(R.id.tv_service_agreement_config)
-    public void goSeeServiceAgreement(){
+    public void goSeeServiceAgreement() {
         int savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
-        switch (savedLanguageType){
+        switch (savedLanguageType) {
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
-                final String url = "https://nebuladownload.oss-cn-beijing.aliyuncs.com/gemma/gemma_policy_cn"
-                        + ".html";
-                CommonWebViewActivity.startWebView(getActivity(), url, getResources().getString(R
+                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
                         .string.service_agreement));
                 break;
             case LanguageManager.LanguageType.LANGUAGE_EN:
-                final String url_en = "https://nebuladownload.oss-cn-beijing.aliyuncs"
-                        + ".com/gemma/gemma_policy_en"
-                        + ".html";
-                CommonWebViewActivity.startWebView(getActivity(), url_en, getResources().getString(R
+                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
                         .string.service_agreement));
                 break;
+            case  LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+                Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
+                switch (systemLanguageType.getDisplayLanguage()){
+                    case CN:
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_CN, getResources()
+                                .getString(R.string.version_info));
+                        break;
+                    case EN:
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_EN, getResources()
+                                .getString(R.string.version_info));
+                        break;
+                    default:
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_CN, getResources()
+                                .getString(R.string.version_info));
+                }
+                break;
+            default:
+                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
+                        .string.service_agreement));
+
         }
     }
 
@@ -128,39 +171,26 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     @OnClick(R.id.btn_complete_import)
     public void checkValidation() {
         validator.validate();
-        /*
+    }
 
-        Validate.check(this, new IValidateResult() {
-            //先检查表单
-            @Override
-            public void onValidateSuccess() {
-                if (checkboxConfig.isChecked() && getArguments() != null) {//再检查checkBox
-                    final String priKey = getArguments().getString("priKey");
-                    LoggerManager.d("priKey", priKey);
-                    getP().saveConfigWallet(priKey, getPassword(), getPassHint());
-                }
-            }
-
-            @Override
-            public void onValidateError(String msg, View view) {
-                EditText editText = (EditText) view;
-                editText.setHint(msg);
-                GemmaToastUtils.showLongToast(msg);
-                editText.setHintTextColor(getResources().getColor(R.color.scarlet));
-            }
-
-            @Override
-            public Animation onValidateErrorAnno() {
-                return ValidateAnimation.horizontalTranslate();
-            }
-        });
-        */
+    @OnClick({R.id.iv_set_pass_clear, R.id.iv_repeat_pass_clear, R.id.iv_pass_hint_clear})
+    public void onTextClear(View v){
+        switch (v.getId()) {
+            case R.id.iv_set_pass_clear:
+                edtSetPass.setText("");
+                break;
+            case R.id.iv_repeat_pass_clear:
+                edtRepeatPass.setText("");
+                break;
+            case R.id.iv_pass_hint_clear:
+                edtPassHint.setText("");
+                break;
+        }
     }
 
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        //Validate.reg(this);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletConfig);
     }
 
@@ -168,7 +198,6 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     public void onDestroyView() {
         clearListener();
         super.onDestroyView();
-       //Validate.unreg(this);
         unbinder.unbind();
     }
 
@@ -216,9 +245,13 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                 if (hasFocus) {
                     tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                     edtSetPass.setTypeface(Typeface.DEFAULT_BOLD);
+                    if (EmptyUtils.isNotEmpty(getPassword())){
+                        ivSetPassClear.setVisibility(View.VISIBLE);
+                    }
                 } else {
+                    ivSetPassClear.setVisibility(View.GONE);
                     tvSetPass.setTextColor(getResources().getColor(R.color.steel));
-                    if (EmptyUtils.isEmpty(getPassword()))edtSetPass.setTypeface(Typeface.DEFAULT);
+                    if (EmptyUtils.isEmpty(getPassword())) { edtSetPass.setTypeface(Typeface.DEFAULT); }
                 }
             }
         });
@@ -239,10 +272,17 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                     if (hasFocus) { setRepeatPassFocusStyle(); }
                 }
 
-                if (hasFocus){
+                if (hasFocus) {
+                    if (EmptyUtils.isNotEmpty(getRepeatPass())){
+                        ivRepeatPassClear.setVisibility(View.VISIBLE);
+                    }
                     edtRepeatPass.setTypeface(Typeface.DEFAULT_BOLD);
-                }else if (EmptyUtils.isEmpty(getRepeatPass())){
-                    edtRepeatPass.setTypeface(Typeface.DEFAULT);
+                } else  {
+                    ivRepeatPassClear.setVisibility(View.GONE);
+                    if (EmptyUtils.isEmpty(getRepeatPass())){
+                        edtRepeatPass.setTypeface(Typeface.DEFAULT);
+                    }
+
                 }
             }
         });
@@ -251,11 +291,15 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
+                    if (EmptyUtils.isNotEmpty(getPassHint())){
+                        ivPassHintClear.setVisibility(View.VISIBLE);
+                    }
                     tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                     edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
+                    ivPassHintClear.setVisibility(View.GONE);
                     tvPassHint.setTextColor(getResources().getColor(R.color.steel));
-                    if (EmptyUtils.isEmpty(getPassHint()))edtPassHint.setTypeface(Typeface.DEFAULT);
+                    if (EmptyUtils.isEmpty(getPassHint())) { edtPassHint.setTypeface(Typeface.DEFAULT); }
                 }
             }
         });
@@ -355,13 +399,25 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     public void setRepeatPassValidStyle() {
         tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
-        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        setDividerDefaultStyle(viewDividerRepeatPass);
+        if (EmptyUtils.isNotEmpty(getRepeatPass())) {
+            ivRepeatPassClear.setVisibility(View.VISIBLE);
+        } else {
+            ivRepeatPassClear.setVisibility(View.GONE);
+        }
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
     public void setRepeatPassFocusStyle() {
         tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
-        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        setDividerFocusStyle(viewDividerRepeatPass);
+        if (EmptyUtils.isNotEmpty(getRepeatPass())) {
+            ivRepeatPassClear.setVisibility(View.VISIBLE);
+        } else {
+            ivRepeatPassClear.setVisibility(View.GONE);
+        }
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
     /**
@@ -370,13 +426,50 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     public void setRepeatPassInvalidStyle() {
         tvRepeatPass.setText(getResources().getString(R.string.pass_no_match));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
-        edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+        setDividerAlertStyle(viewDividerRepeatPass);
+        if (EmptyUtils.isNotEmpty(getRepeatPass())) {
+            ivRepeatPassClear.setVisibility(View.VISIBLE);
+        } else {
+            ivRepeatPassClear.setVisibility(View.GONE);
+        }
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+    }
+
+    public void setDividerFocusStyle(View divider) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                3);
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
+                .getDimension(R.dimen.dimen_12));
+        divider.setLayoutParams(params);
+        divider.setBackgroundColor(getResources().getColor(R.color.dark_slate_blue));
+
+    }
+
+    public void setDividerDefaultStyle(View divider) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
+                .getDimension(R.dimen.dimen_12));
+        divider.setLayoutParams(params);
+        divider.setBackgroundColor(getResources().getColor(R.color.paleGrey));
+
+    }
+
+    public void setDividerAlertStyle(View divider) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 3);
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
+                .getDimension(R.dimen.dimen_12));
+        divider.setBackgroundColor(getResources().getColor(R.color.scarlet));
+    }
+
+    public void setHorizontalMargins(LinearLayout.LayoutParams params, int marginStart, int marginEnd) {
+        params.setMarginStart(marginStart);
+        params.setMarginEnd(marginEnd);
     }
 
     public String getPassword() {
-        if(edtSetPass==null) return "";
+        if (edtSetPass == null) { return ""; }
         String pwd = String.valueOf(edtSetPass.getText());
-        if(EmptyUtils.isNotEmpty(pwd)){
+        if (EmptyUtils.isNotEmpty(pwd)) {
             pwd.trim();
         }
 
@@ -413,7 +506,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         editText.setHint(new SpannableString(ss));
     }
 
-    private void clearListener(){
+    private void clearListener() {
         edtPassHint.setOnFocusChangeListener(null);
         edtSetPass.setOnFocusChangeListener(null);
         edtRepeatPass.setOnFocusChangeListener(null);
@@ -426,9 +519,9 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         final String pubKey = JNIUtil.get_public_key(priKey);
         //验证此公钥是否已在数据库中
         List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
-        if (EmptyUtils.isNotEmpty(walletEntityList)){
-            for (WalletEntity entity : walletEntityList){
-                if (pubKey.equals(entity.getPublicKey())){
+        if (EmptyUtils.isNotEmpty(walletEntityList)) {
+            for (WalletEntity entity : walletEntityList) {
+                if (pubKey.equals(entity.getPublicKey())) {
                     //已有相同的钱包
                     GemmaToastUtils.showLongToast(getResources().getString(R.string.dont_import_same_wallet));
                     return;
@@ -440,14 +533,14 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors){
+        for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(getActivity());
 
-            if (view instanceof EditText){
+            if (view instanceof EditText) {
                 //todo 设置onError样式？
                 GemmaToastUtils.showLongToast(message);
-            }else{
+            } else {
                 GemmaToastUtils.showLongToast(message);
             }
         }

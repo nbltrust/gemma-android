@@ -75,12 +75,15 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                                     curNodeVO.setPercentage(percentage);
                                     list.add(curNodeVO);
                                 }
-                                getV().initAdapterData(list);
-                                getTotalDelegatedRes();
-
+                                if (EmptyUtils.isNotEmpty(getV())){
+                                    getV().initAdapterData(list);
+                                    getTotalDelegatedRes();
+                                }
                             }
                         }else {
-                            getV().showEmptyOrFinish();
+                            if (EmptyUtils.isNotEmpty(getV())){
+                                getV().showEmptyOrFinish();
+                            }
                         }
                     }
 
@@ -161,16 +164,19 @@ public class VotePresenter extends XPresenter<VoteFragment> {
 
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                            getV().dissmisProgressDialog();
+                            if (EmptyUtils.isNotEmpty(getV())){
+                                getV().dissmisProgressDialog();
+                            }
                         }
-
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
                         GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                        getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            getV().dissmisProgressDialog();
+                        }
                     }
                 });
     }
@@ -190,15 +196,17 @@ public class VotePresenter extends XPresenter<VoteFragment> {
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        getV().dissmisProgressDialog();
-                        if (response != null && EmptyUtils.isNotEmpty(response.body())) {
-                            String jsonStr = response.body();
-                            LoggerManager.d("pushTransaction json:" + jsonStr);
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            getV().dissmisProgressDialog();
+                            if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                                String jsonStr = response.body();
+                                LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                            GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
-                            //todo停留在投票页面，更新数据
-
+                                GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
+                                //todo 停留在投票页面，更新数据
+                            }
                         }
+
 
                     }
                 });
@@ -243,15 +251,19 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                                        String net_amount = net_amount_arr[0];
 
                                        String total_resource = AmountUtil.add(cpu_amount, net_amount, 4) + " EOS";
-                                       getV().hasDelegatedRes(true);
-                                       getV().getTotalDelegatedResource(total_resource);
+                                       if (EmptyUtils.isNotEmpty(getV())){
+                                           getV().hasDelegatedRes(true);
+                                           getV().getTotalDelegatedResource(total_resource);
+                                           getV().showContent();
+                                       }
 
-                                       getV().showContent();
                                    }else{
                                        //该账号没有给自己抵押资源
-                                       getV().hasDelegatedRes(false);
-                                       getV().showEmptyOrFinish();
-                                       GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.not_enough_delegated_res));
+                                       if (EmptyUtils.isNotEmpty(getV())){
+                                           getV().hasDelegatedRes(false);
+                                           getV().showEmptyOrFinish();
+                                           GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.not_enough_delegated_res));
+                                       }
                                    }
                                 }
                             }

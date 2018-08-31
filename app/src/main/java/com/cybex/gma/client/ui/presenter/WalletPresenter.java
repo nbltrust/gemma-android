@@ -284,7 +284,7 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                             JSONArray array = new JSONArray(jsonStr);
                             if (array != null && array.length() > 0) {
                                 banlance = array.optString(0);
-                                if (banlance != null){
+                                if (EmptyUtils.isNotEmpty(banlance) && EmptyUtils.isNotEmpty(getV())){
                                     getV().showBanlance(banlance);
                                 }
                             }
