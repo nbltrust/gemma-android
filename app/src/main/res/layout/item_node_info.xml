@@ -10,9 +10,9 @@
     android:background="@drawable/bg_shape_radius_white_selector"
     android:orientation="horizontal"
     android:padding="@dimen/dimen_16"
-    android:layout_marginTop="@dimen/dimen_10"
-    android:layout_marginEnd="@dimen/dimen_4"
-    android:layout_marginStart="@dimen/dimen_4">
+    android:layout_marginTop="@dimen/dimen_12"
+    android:layout_marginEnd="@dimen/dimen_8"
+    android:layout_marginStart="@dimen/dimen_8">
 
     <LinearLayout
         android:id="@+id/view_is_node_checked"

@@ -46,6 +46,16 @@
         <item name="android:layout_marginEnd">@dimen/dimen_10</item>
     </style>
 
+    <!-- 公用明文密文icon样式-->
+    <style name="mask_icon_common">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_visible</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:visibility">visible</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+    </style>
+
     <style name="input_style">
         <item name="android:textStyle">bold</item>
     </style>

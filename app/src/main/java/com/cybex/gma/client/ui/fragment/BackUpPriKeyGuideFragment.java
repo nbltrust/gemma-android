@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
@@ -117,6 +118,13 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                         break;
                     case R.id.btn_confirm_authorization:
                         EditText password = dialog.findViewById(R.id.et_password);
+                        ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
+                        iv_clear.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                password.setText("");
+                            }
+                        });
                         final String inputPass = password.getText().toString().trim();
                         if (EmptyUtils.isEmpty(inputPass)){
                             GemmaToastUtils.showLongToast(getString(R.string.please_input_pass));
@@ -128,6 +136,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                                 //验证密码是否正确
                                 if ("wrong password".equals(priKey)){
                                     //密码错误
+                                    iv_clear.setVisibility(View.VISIBLE);
                                     GemmaToastUtils.showLongToast(getString(R.string.wrong_password));
                                 }else {
                                     //密码正确

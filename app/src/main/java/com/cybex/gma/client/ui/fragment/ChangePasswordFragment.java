@@ -4,6 +4,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.Button;
@@ -43,14 +45,18 @@ import butterknife.Unbinder;
 public class ChangePasswordFragment extends XFragment implements Validator.ValidationListener {
 
     Unbinder unbinder;
+    private WalletEntity curWallet;
+    private String priKey;
+    private Validator validator;
+    private boolean isMask;
     @BindView(R.id.iv_set_newPass_clear) ImageView ivSetNewPassClear;
     @BindView(R.id.view_set_new_pass) View viewSetNewPass;
     @BindView(R.id.iv_repeat_newPass_clear) ImageView ivRepeatNewPassClear;
     @BindView(R.id.view_repeat_new_pass) View viewRepeatNewPass;
     @BindView(R.id.iv_newPass_hint_clear) ImageView ivNewPassHintClear;
-    private WalletEntity curWallet;
-    private String priKey;
-    private Validator validator;
+    @BindView(R.id.iv_set_newPass_mask) ImageView ivSetNewPassMask;
+    @BindView(R.id.iv_repeat_newPass_mask) ImageView ivRepeatNewPassMask;
+
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_set_new_pass) TextView tvSetNewPass;
 
@@ -84,9 +90,9 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
         }
 
-        if (EmptyUtils.isNotEmpty(getPassword())){
+        if (EmptyUtils.isNotEmpty(getPassword())) {
             ivSetNewPassClear.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ivSetNewPassClear.setVisibility(View.GONE);
         }
     }
@@ -96,7 +102,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         if (EmptyUtils.isEmpty(getRepeatPass())) {
             setRepeatPassFocusStyle();
             ivRepeatNewPassClear.setVisibility(View.GONE);
-        }else {
+        } else {
             ivRepeatNewPassClear.setVisibility(View.VISIBLE);
         }
 
@@ -108,10 +114,10 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     }
 
     @OnTextChanged(value = R.id.edt_new_pass_hint, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onPasshintChanged(){
-        if (EmptyUtils.isNotEmpty(getPassHint())){
+    public void onPasshintChanged() {
+        if (EmptyUtils.isNotEmpty(getPassHint())) {
             ivNewPassHintClear.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ivNewPassHintClear.setVisibility(View.GONE);
         }
     }
@@ -151,8 +157,8 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     }
 
     @OnClick({R.id.iv_set_newPass_clear, R.id.iv_repeat_newPass_clear, R.id.iv_newPass_hint_clear})
-    public void onTextClear(View v){
-        switch (v.getId()){
+    public void onTextClear(View v) {
+        switch (v.getId()) {
             case R.id.iv_set_newPass_clear:
                 edtSetNewPass.setText("");
                 break;
@@ -165,10 +171,44 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         }
     }
 
+    @OnClick({R.id.iv_set_newPass_mask, R.id.iv_repeat_newPass_mask})
+    public  void onMaskClicked(View v){
+        switch (v.getId()){
+            case R.id.iv_set_newPass_mask:
+                if (isMask){
+                    //如果当前为密文
+                    isMask = false;
+                    edtSetNewPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivSetNewPassMask.setImageResource(R.drawable.ic_invisible);
+                    edtSetNewPass.setSelection(getPassword().length());
+                }else {
+                    isMask = true;
+                    edtSetNewPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivSetNewPassMask.setImageResource(R.drawable.ic_visible);
+                    edtSetNewPass.setSelection(getPassword().length());
+                }
+                break;
+            case R.id.iv_repeat_newPass_mask:
+                if (isMask){
+                    //如果当前为密文
+                    isMask = false;
+                    edtRepeatNewPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivRepeatNewPassMask.setImageResource(R.drawable.ic_invisible);
+                    edtRepeatNewPass.setSelection(getRepeatPass().length());
+                }else {
+                    //如果当前为明文
+                    isMask = true;
+                    edtRepeatNewPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivRepeatNewPassMask.setImageResource(R.drawable.ic_visible);
+                    edtRepeatNewPass.setSelection(getRepeatPass().length());
+                }
+                break;
+        }
+    }
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        //Validate.reg(this);
     }
 
     @Override
@@ -200,6 +240,8 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         validator = new Validator(this);
         validator.setValidationListener(this);
 
+        isMask = true;
+
         setNavibarTitle(getResources().getString(R.string.title_change_pass), true, false);
         if (getArguments() != null) {
             final int currentId = getArguments().getInt("walletID");
@@ -213,7 +255,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
                         tvSetNewPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                         edtSetNewPass.setTypeface(Typeface.DEFAULT_BOLD);
                         setDividerFocusStyle(viewSetNewPass);
-                        if (EmptyUtils.isNotEmpty(getPassword())){
+                        if (EmptyUtils.isNotEmpty(getPassword())) {
                             ivSetNewPassClear.setVisibility(View.VISIBLE);
                         }
 
@@ -243,9 +285,9 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
 
                     if (hasFocus) {
                         edtRepeatNewPass.setTypeface(Typeface.DEFAULT_BOLD);
-                    } else  {
+                    } else {
                         ivRepeatNewPassClear.setVisibility(View.GONE);
-                        if (EmptyUtils.isEmpty(getRepeatPass())){
+                        if (EmptyUtils.isEmpty(getRepeatPass())) {
                             edtRepeatNewPass.setTypeface(Typeface.DEFAULT);
                         }
                     }
@@ -258,7 +300,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
                     if (hasFocus) {
                         tvNewPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                         edtNewPassHint.setTypeface(Typeface.DEFAULT_BOLD);
-                        if (EmptyUtils.isNotEmpty(getPassHint())){
+                        if (EmptyUtils.isNotEmpty(getPassHint())) {
                             ivNewPassHintClear.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -367,7 +409,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         tvRepeatNewPass.setText(getResources().getString(R.string.pass_no_match));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.scarlet));
         setDividerAlertStyle(viewRepeatNewPass);
-        if (EmptyUtils.isNotEmpty(getRepeatPass())){
+        if (EmptyUtils.isNotEmpty(getRepeatPass())) {
             ivRepeatNewPassClear.setVisibility(View.VISIBLE);
         }
         //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
@@ -382,33 +424,33 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         editText.setHint(new SpannableString(ss));
     }
 
-    public void setDividerFocusStyle(View divider){
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+    public void setDividerFocusStyle(View divider) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 3);
-        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
                 .getDimension(R.dimen.dimen_12));
         divider.setLayoutParams(params);
         divider.setBackgroundColor(getResources().getColor(R.color.dark_slate_blue));
 
     }
 
-    public void setDividerDefaultStyle(View divider){
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,2);
-        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+    public void setDividerDefaultStyle(View divider) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
                 .getDimension(R.dimen.dimen_12));
         divider.setLayoutParams(params);
         divider.setBackgroundColor(getResources().getColor(R.color.paleGrey));
 
     }
 
-    public void setDividerAlertStyle(View divider){
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,3);
-        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+    public void setDividerAlertStyle(View divider) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 3);
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
                 .getDimension(R.dimen.dimen_12));
         divider.setBackgroundColor(getResources().getColor(R.color.scarlet));
     }
 
-    public void setHorizontalMargins(LinearLayout.LayoutParams params, int marginStart, int marginEnd){
+    public void setHorizontalMargins(LinearLayout.LayoutParams params, int marginStart, int marginEnd) {
         params.setMarginStart(marginStart);
         params.setMarginEnd(marginEnd);
     }

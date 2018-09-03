@@ -3,6 +3,7 @@ package com.cybex.gma.client.ui.fragment;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -105,18 +106,20 @@ public class TransferRecordDetailFragment extends XFragment {
                 }
                 //设置固定的值
                 superTextViewBlockTime.setRightString(curTransfer.time);
-                tvShowMemo.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (tvShowMemo.getLineCount() > 1){
-                            tvShowMemo.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
-                            tvShowMemo.setText(curTransfer.memo);
-                        }else {
-                            tvShowMemo.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-                            tvShowMemo.setText(curTransfer.memo);
-                        }
-                    }
-                });
+                tvShowMemo.setText(curTransfer.memo);
+                tvShowMemo.getViewTreeObserver().addOnGlobalLayoutListener(
+                        new ViewTreeObserver.OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                                int lineCount = tvShowMemo.getLineCount();
+                                if (lineCount > 1){
+                                    tvShowMemo.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+                                }else {
+                                    tvShowMemo.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+                                }
+                                tvShowMemo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                            }
+                        });
                 superTextViewBlockId.setRightString(String.valueOf(curTransfer.block));
                 setTransferStatus(curTransfer.status);
                 tvShowTransferId.setText(curTransfer.hash);

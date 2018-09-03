@@ -167,8 +167,15 @@ public class WalletDetailFragment extends XFragment {
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_authorization:
-                        //检查密码是否正确
                         EditText edtPassword = dialog.findViewById(R.id.et_password);
+                        ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
+                        iv_clear.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                edtPassword.setText("");
+                            }
+                        });
+                        //检查密码是否正确
                         final String inputPass = edtPassword.getText().toString().trim();
                         //重新获取curWallet，为确保修改密码过后验证的是新的密码
                         WalletEntity walletEntity = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
@@ -182,6 +189,7 @@ public class WalletDetailFragment extends XFragment {
                                 start(ChangePasswordFragment.newInstance(priKey,currentID));
                                 dialog.cancel();
                             }else {
+                                iv_clear.setVisibility(View.VISIBLE);
                                 GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
                             }
                         }

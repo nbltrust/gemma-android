@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
@@ -362,16 +363,25 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                         break;
                     case R.id.btn_confirm_authorization:
                         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+
                         switch (operation_type) {
                             case OPERATION_BUY_RAM:
                                 //买入RAM操作
                                 if (EmptyUtils.isNotEmpty(curWallet)) {
                                     final String cypher = curWallet.getCypher();
                                     EditText mPass = dialog.findViewById(R.id.et_password);
+                                    ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
+                                    iv_clear.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            mPass.setText("");
+                                        }
+                                    });
                                     String inputPass = mPass.getText().toString().trim();
                                     if (EmptyUtils.isNotEmpty(inputPass)) {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")) {
+                                            iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(
                                                     getResources().getString(R.string.wrong_password));
                                         } else {
@@ -392,10 +402,18 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                 if (EmptyUtils.isNotEmpty(curWallet)) {
                                     final String cypher = curWallet.getCypher();
                                     EditText mPass = dialog.findViewById(R.id.et_password);
+                                    ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
+                                    iv_clear.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            mPass.setText("");
+                                        }
+                                    });
                                     String inputPass = mPass.getText().toString().trim();
                                     if (EmptyUtils.isNotEmpty(inputPass)) {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")) {
+                                            iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(
                                                     getResources().getString(R.string.wrong_password));
                                         } else {

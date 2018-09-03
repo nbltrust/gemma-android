@@ -16,11 +16,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginEnd="@dimen/dimen_20">
+        android:padding="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_10"
+        android:layout_marginEnd="@dimen/dimen_10">
 
         <com.allen.library.SuperTextView
-            android:translationZ="@dimen/dimen_2"
+            android:translationZ="@dimen/dimen_1"
             android:id="@+id/superTextView_change_language"
             title:sUseShape="true"
             title:sShapeSelectorPressedColor="@color/item_pressed"
@@ -39,7 +40,7 @@
         </com.allen.library.SuperTextView>
 
         <com.allen.library.SuperTextView
-            android:translationZ="@dimen/dimen_2"
+            android:translationZ="@dimen/dimen_1"
             android:id="@+id/superTextView_change_unit"
             title:sUseShape="true"
             title:sShapeSelectorPressedColor="@color/item_pressed"
@@ -58,7 +59,7 @@
         </com.allen.library.SuperTextView>
 
         <com.allen.library.SuperTextView
-            android:translationZ="@dimen/dimen_2"
+            android:translationZ="@dimen/dimen_1"
             android:id="@+id/superTextView_change_node"
             title:sUseShape="true"
             title:sShapeSelectorPressedColor="@color/item_pressed"

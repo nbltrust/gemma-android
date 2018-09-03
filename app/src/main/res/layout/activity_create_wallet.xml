@@ -100,9 +100,19 @@
                         android:hint="@string/password_input_hint"
                         android:inputType="textPassword"/>
 
-                    <ImageView
-                        android:id="@+id/iv_set_pass_clear"
-                        style="@style/clear_icon_common"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/iv_set_pass_clear"
+                            style="@style/clear_icon_common"/>
+
+                        <ImageView
+                            android:id="@+id/iv_set_pass_mask"
+                            style="@style/mask_icon_common"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -130,9 +140,20 @@
                         android:hint="@string/repeatPassword_hint"
                         android:inputType="textPassword"/>
 
-                    <ImageView
-                        android:id="@+id/iv_repeat_pass_clear"
-                        style="@style/clear_icon_common"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_repeat_pass_clear"
+                            style="@style/clear_icon_common"/>
+
+                        <ImageView
+                            android:id="@+id/iv_repeat_pass_mask"
+                            style="@style/mask_icon_common"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

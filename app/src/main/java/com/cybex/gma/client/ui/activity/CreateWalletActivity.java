@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -56,6 +58,8 @@ import static com.cybex.gma.client.config.ParamConstants.EN;
  */
 public class CreateWalletActivity extends XActivity<CreateWalletPresenter> implements Validator.ValidationListener {
 
+    @BindView(R.id.iv_set_pass_mask) ImageView ivSetPassMask;
+    @BindView(R.id.iv_repeat_pass_mask) ImageView ivRepeatPassMask;
     private Validator validator;
     @BindView(R.id.view_divider_eosName) View viewDividerEosName;
     @BindView(R.id.view_divider_setPass) View viewDividerSetPass;
@@ -95,6 +99,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.tv_service_agreement_config) TextView tvServiceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
+
+    private boolean isMask;//true为密文显示密码
 
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -199,9 +205,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
                         .string.service_agreement));
                 break;
-            case  LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+            case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
                 Locale systemLanguageType = LanguageManager.getInstance(this).getSysLocale();
-                switch (systemLanguageType.getDisplayLanguage()){
+                switch (systemLanguageType.getDisplayLanguage()) {
                     case CN:
                         CommonWebViewActivity.startWebView(this, ApiPath.VERSION_NOTE_CN, getResources()
                                 .getString(R.string.version_info));
@@ -219,6 +225,41 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
                         .string.service_agreement));
 
+        }
+    }
+
+    @OnClick({R.id.iv_set_pass_mask, R.id.iv_repeat_pass_mask})
+    public  void onMaskClicked(View v){
+        switch (v.getId()){
+            case R.id.iv_set_pass_mask:
+                if (isMask){
+                    //如果当前为密文
+                    isMask = false;
+                    edtSetPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivSetPassMask.setImageResource(R.drawable.ic_invisible);
+                    edtSetPass.setSelection(getPassword().length());
+                }else {
+                    isMask = true;
+                    edtSetPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivSetPassMask.setImageResource(R.drawable.ic_visible);
+                    edtSetPass.setSelection(getPassword().length());
+                }
+                break;
+            case R.id.iv_repeat_pass_mask:
+                if (isMask){
+                    //如果当前为密文
+                    isMask = false;
+                    edtRepeatPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivRepeatPassMask.setImageResource(R.drawable.ic_invisible);
+                    edtRepeatPass.setSelection(getRepeatPassword().length());
+                }else {
+                    //如果当前为明文
+                    isMask = true;
+                    edtRepeatPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivRepeatPassMask.setImageResource(R.drawable.ic_visible);
+                    edtRepeatPass.setSelection(getRepeatPassword().length());
+                }
+                break;
         }
     }
 
@@ -316,6 +357,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 if (hasFocus) {
                     setDividerFocusStyle(viewDividerEosName);
                     edtEosName.setTypeface(Typeface.DEFAULT_BOLD);
+                    if (EmptyUtils.isNotEmpty(getEOSUserName())){
+                        ivEosNameClear.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     setDividerDefaultStyle(viewDividerEosName);
                     ivEosNameClear.setVisibility(View.GONE);
@@ -337,7 +381,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                     setDividerFocusStyle(viewDividerSetPass);
                     tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                     edtSetPass.setTypeface(Typeface.DEFAULT_BOLD);
-
+                    if (EmptyUtils.isNotEmpty(getPassword())){
+                        ivSetPassClear.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     setDividerDefaultStyle(viewDividerSetPass);
                     ivSetPassClear.setVisibility(View.GONE);
@@ -425,6 +471,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         SoftHideKeyBoardUtil.assistActivity(this);
         validator = new Validator(this);
         validator.setValidationListener(this);
+        isMask = true;
         initView();
     }
 
@@ -612,7 +659,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         editText.setHint(new SpannableString(ss));
     }
 
-    private void clearListeners() {
+    public void clearListeners() {
         edtEosName.setOnFocusChangeListener(null);
         edtRepeatPass.setOnFocusChangeListener(null);
         edtSetPass.setOnFocusChangeListener(null);
@@ -634,40 +681,40 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         bubble.setVisibility(View.GONE);
     }
 
-    public void setDividerFocusStyle(View divider){
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+    public void setDividerFocusStyle(View divider) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 3);
-        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
                 .getDimension(R.dimen.dimen_12));
         divider.setLayoutParams(params);
         divider.setBackgroundColor(getResources().getColor(R.color.dark_slate_blue));
 
     }
 
-    public void setDividerDefaultStyle(View divider){
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,2);
-        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+    public void setDividerDefaultStyle(View divider) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
                 .getDimension(R.dimen.dimen_12));
         divider.setLayoutParams(params);
         divider.setBackgroundColor(getResources().getColor(R.color.paleGrey));
 
     }
 
-    public void setDividerAlertStyle(View divider){
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,3);
-        setHorizontalMargins(params, (int)getResources().getDimension(R.dimen.dimen_12), (int)getResources()
+    public void setDividerAlertStyle(View divider) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 3);
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
                 .getDimension(R.dimen.dimen_12));
         divider.setBackgroundColor(getResources().getColor(R.color.scarlet));
     }
 
-    public void setHorizontalMargins(LinearLayout.LayoutParams params, int marginStart, int marginEnd){
+    public void setHorizontalMargins(LinearLayout.LayoutParams params, int marginStart, int marginEnd) {
         params.setMarginStart(marginStart);
         params.setMarginEnd(marginEnd);
     }
 
-        /**
-         * 显示选择创建方式dialog
-         */
+    /**
+     * 显示选择创建方式dialog
+     */
     private void showChooseMethodDialog() {
         int[] listenedItems = {R.id.btn_close, R.id.btn_use_invCode, R.id.btn_use_cybex, R.id.btn_invite_friend};
         CustomFullDialog dialog = new CustomFullDialog(this,

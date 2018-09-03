@@ -195,7 +195,7 @@
     <string name="method_one_hint_2">为保证顺利创建账户，建议至少转 2EOS ：账户将抵押 0.01EOS 作为CPU，0.01EOS 作为NET，剩余1.8EOS将按现价购买RAM。</string>
     <string name="method_two_hint">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
     <string name="show_priKey">查看私钥</string>
-    <string name="priKey_encrypted">私钥已加密存储，请输入之前设置的密码以解锁查看</string>
+    <string name="priKey_encrypted">私钥已加密存储，请输入之前设置的密码解锁查看</string>
     <string name="copy">复制</string>
     <string name="priKey_en">私钥 Private Key</string>
 
@@ -433,5 +433,19 @@
     <string name="tab_title_sell">卖出</string>
 
     <string name="selected_nodes_limit">请最多选择30个节点投票</string>
+
+    <string name="account_name_err">账户名错误</string>
+
+    <string name="eos_cybex">EOS CYBEX</string>
+    <string name="start_eos">START EOS</string>
+    <string name="eos_newyork">EOS NEW YORK</string>
+    <string name="eos_greymass">EOS GREYMASS</string>
+    <string name="eos_asia">EOS ASIA</string>
+    <string name="eos_gravity">EOS GRAVITY</string>
+    <string name="hello_eos">HELLO EOS</string>
+    <string name="hk_eos">HK EOS</string>
+    <string name="eos_42">EOS 42</string>
+    <string name="eos_cypher_glass">CYPHER GLASS</string>
+
 
 </resources>

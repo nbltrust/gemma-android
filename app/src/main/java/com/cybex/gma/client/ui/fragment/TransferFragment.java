@@ -167,7 +167,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     }
                     if (!isAccountNameValid() && EmptyUtils.isNotEmpty(etCollectionAccount.getText().toString().trim())){
                         //显示alert样式
-                        tvCollectionAmount.setText(getString(R.string.EOS_username_hint));
+                        tvCollectionAmount.setText(getString(R.string.account_name_err));
                         tvCollectionAmount.setTextColor(getResources().getColor(R.color.scarlet));
                     }else {
                         //显示默认样式

@@ -4,6 +4,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.Button;
@@ -81,7 +83,10 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     @BindView(R.id.iv_repeat_pass_clear) ImageView ivRepeatPassClear;
     @BindView(R.id.view_divider_repeat_pass) View viewDividerRepeatPass;
     @BindView(R.id.iv_pass_hint_clear) ImageView ivPassHintClear;
+    @BindView(R.id.iv_set_pass_mask) ImageView ivSetPassMask;
+    @BindView(R.id.iv_repeat_pass_mask) ImageView ivRepeatPassMask;
     private Validator validator;
+    private boolean isMask;
 
     public static ImportWalletConfigFragment newInstance(String privateKey) {
         Bundle args = new Bundle();
@@ -99,9 +104,9 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             setButtonUnClickableStyle();
         }
 
-        if (EmptyUtils.isNotEmpty(getPassword())){
+        if (EmptyUtils.isNotEmpty(getPassword())) {
             ivSetPassClear.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ivSetPassClear.setVisibility(View.GONE);
         }
     }
@@ -116,16 +121,16 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
         if (EmptyUtils.isEmpty(getRepeatPass())) {
             setRepeatPassFocusStyle();
-        }else {
+        } else {
             ivRepeatPassClear.setVisibility(View.VISIBLE);
         }
     }
 
     @OnTextChanged(value = R.id.edt_pass_hint, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onPasshintChanged(){
-        if (EmptyUtils.isNotEmpty(getPassHint())){
+    public void onPasshintChanged() {
+        if (EmptyUtils.isNotEmpty(getPassHint())) {
             ivPassHintClear.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ivPassHintClear.setVisibility(View.GONE);
         }
     }
@@ -135,16 +140,18 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         int savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
         switch (savedLanguageType) {
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
-                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                        .string.service_agreement));
+                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN,
+                        getResources().getString(R
+                                .string.service_agreement));
                 break;
             case LanguageManager.LanguageType.LANGUAGE_EN:
-                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
-                        .string.service_agreement));
+                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_EN,
+                        getResources().getString(R
+                                .string.service_agreement));
                 break;
-            case  LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+            case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
                 Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
-                switch (systemLanguageType.getDisplayLanguage()){
+                switch (systemLanguageType.getDisplayLanguage()) {
                     case CN:
                         CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_CN, getResources()
                                 .getString(R.string.version_info));
@@ -159,8 +166,9 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                 }
                 break;
             default:
-                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                        .string.service_agreement));
+                CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN,
+                        getResources().getString(R
+                                .string.service_agreement));
 
         }
     }
@@ -174,7 +182,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     }
 
     @OnClick({R.id.iv_set_pass_clear, R.id.iv_repeat_pass_clear, R.id.iv_pass_hint_clear})
-    public void onTextClear(View v){
+    public void onTextClear(View v) {
         switch (v.getId()) {
             case R.id.iv_set_pass_clear:
                 edtSetPass.setText("");
@@ -184,6 +192,41 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                 break;
             case R.id.iv_pass_hint_clear:
                 edtPassHint.setText("");
+                break;
+        }
+    }
+
+    @OnClick({R.id.iv_set_pass_mask, R.id.iv_repeat_pass_mask})
+    public void onMaskClicked(View v) {
+        switch (v.getId()) {
+            case R.id.iv_set_pass_mask:
+                if (isMask) {
+                    //如果当前为密文
+                    isMask = false;
+                    edtSetPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivSetPassMask.setImageResource(R.drawable.ic_invisible);
+                    edtSetPass.setSelection(getPassword().length());
+                } else {
+                    isMask = true;
+                    edtSetPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivSetPassMask.setImageResource(R.drawable.ic_visible);
+                    edtSetPass.setSelection(getPassword().length());
+                }
+                break;
+            case R.id.iv_repeat_pass_mask:
+                if (isMask) {
+                    //如果当前为密文
+                    isMask = false;
+                    edtRepeatPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivRepeatPassMask.setImageResource(R.drawable.ic_invisible);
+                    edtRepeatPass.setSelection(getRepeatPass().length());
+                } else {
+                    //如果当前为明文
+                    isMask = true;
+                    edtRepeatPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivRepeatPassMask.setImageResource(R.drawable.ic_visible);
+                    edtRepeatPass.setSelection(getRepeatPass().length());
+                }
                 break;
         }
     }
@@ -222,6 +265,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     public void initData(Bundle savedInstanceState) {
         validator = new Validator(this);
         validator.setValidationListener(this);
+        isMask = true;
         setNavibarTitle(getResources().getString(R.string.title_config_wallet), true, false);
 
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -245,7 +289,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                 if (hasFocus) {
                     tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                     edtSetPass.setTypeface(Typeface.DEFAULT_BOLD);
-                    if (EmptyUtils.isNotEmpty(getPassword())){
+                    if (EmptyUtils.isNotEmpty(getPassword())) {
                         ivSetPassClear.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -273,13 +317,13 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                 }
 
                 if (hasFocus) {
-                    if (EmptyUtils.isNotEmpty(getRepeatPass())){
+                    if (EmptyUtils.isNotEmpty(getRepeatPass())) {
                         ivRepeatPassClear.setVisibility(View.VISIBLE);
                     }
                     edtRepeatPass.setTypeface(Typeface.DEFAULT_BOLD);
-                } else  {
+                } else {
                     ivRepeatPassClear.setVisibility(View.GONE);
-                    if (EmptyUtils.isEmpty(getRepeatPass())){
+                    if (EmptyUtils.isEmpty(getRepeatPass())) {
                         edtRepeatPass.setTypeface(Typeface.DEFAULT);
                     }
 
@@ -291,7 +335,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    if (EmptyUtils.isNotEmpty(getPassHint())){
+                    if (EmptyUtils.isNotEmpty(getPassHint())) {
                         ivPassHintClear.setVisibility(View.VISIBLE);
                     }
                     tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
