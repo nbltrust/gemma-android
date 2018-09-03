@@ -40,6 +40,9 @@ public class ApiPath {
     //价格地址
     public static final String URL_UNIT_PRICE = "https://app.cybex.io/price";
 
+    //区块链浏览器地址
+    public static final String URL_BLOCK_CHAIN_BROWSER = "https://eosflare.io/tx/";
+
     /**------------EOS 项目情况配置---------------*/
 
 

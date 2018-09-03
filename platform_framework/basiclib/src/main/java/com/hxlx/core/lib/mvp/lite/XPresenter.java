@@ -26,4 +26,5 @@ public class XPresenter<V extends BaseView> implements BasePresenter<V> {
   protected V getV() {
     return weakReference != null ? weakReference.get() : null;
   }
+
 }

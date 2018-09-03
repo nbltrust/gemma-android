@@ -12,10 +12,11 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
-import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomDialog;
 
@@ -52,13 +53,14 @@ public class BackUpPriKeyFragment extends XFragment {
     }
 
     @OnClick(R.id.bt_copied_priKey)
-    public void goToMainTab(){
+    public void onFinishExport(){
         curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
         if (!EmptyUtils.isEmpty(curWallet)) {
             curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
         }
-        UISkipMananger.launchHome(getActivity());
+        AppManager.getAppManager().finishActivity();
+        AppManager.getAppManager().finishActivity(BackUpWalletGuideActivity.class);
     }
 
     public static BackUpPriKeyFragment newInstance() {

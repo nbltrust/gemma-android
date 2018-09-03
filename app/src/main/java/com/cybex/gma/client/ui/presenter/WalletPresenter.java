@@ -121,14 +121,17 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                 .subscribe(new Consumer<HomeCombineDataVO>() {
                     @Override
                     public void accept(HomeCombineDataVO vo) throws Exception {
-                        getV().showMainInfo(vo);
-                        getV().dissmisProgressDialog();
-
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            getV().showMainInfo(vo);
+                            getV().dissmisProgressDialog();
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            getV().dissmisProgressDialog();
+                        }
                     }
                 });
     }

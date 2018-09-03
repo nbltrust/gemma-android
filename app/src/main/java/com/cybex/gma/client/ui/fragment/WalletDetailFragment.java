@@ -55,6 +55,7 @@ public class WalletDetailFragment extends XFragment {
 
     @OnClick(R.id.layout_wallet_briefInfo)
     public void goChangeWalletName() {
+        //修改钱包名
         //start(ChangeWalletNameFragment.newInstance(curWallet.getId()));
         startForResult(ChangeWalletNameFragment.newInstance(curWallet.getId()), requestCodeDown);
     }

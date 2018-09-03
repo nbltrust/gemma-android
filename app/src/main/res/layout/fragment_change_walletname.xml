@@ -49,7 +49,7 @@
                 android:textCursorDrawable="@drawable/cursor_custom"
                 android:background="@null"
                 android:textColor="@color/darkSlateBlue"
-                android:textColorHint="@color/steel"/>
+                android:textColorHint="@color/color_et_hint"/>
 
             <ImageView
                 android:id="@+id/clear_wallet_name"

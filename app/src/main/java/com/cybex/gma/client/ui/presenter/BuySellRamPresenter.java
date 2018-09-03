@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
@@ -289,6 +290,17 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                                          }
                                      }
                 );
+    }
+
+
+    public String handleEosErrorCode(int err_code){
+        String code = ParamConstants.EOS_ERR_CODE_PREFIX + String.valueOf(err_code);
+        LoggerManager.d("code", code);
+        String package_name = getV().getActivity().getPackageName();
+        LoggerManager.d("packageName", package_name);
+        int resId = getV().getResources().getIdentifier(code, "string", package_name);
+        LoggerManager.d("resId", resId);
+        return getV().getResources().getString(resId);
     }
 
 }

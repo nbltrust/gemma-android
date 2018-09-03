@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -53,6 +55,14 @@ public class TransferRecordDetailFragment extends XFragment {
     @BindView(R.id.view_scroll) ScrollView mScrollView;
 
     Unbinder unbinder;
+    @OnClick(R.id.tv_see_in_explorer)
+    public void seeInExplorer(){
+        if (EmptyUtils.isNotEmpty(curTransfer)){
+            final String url = ApiPath.URL_BLOCK_CHAIN_BROWSER + curTransfer.hash;
+            CommonWebViewActivity.startWebView(getActivity(), url, getString(R.string.transfer_detail));
+        }
+    }
+
     /**
      * 交易状态：1：未确认 2：正在确认 3：已确认 4: 交易失败
      */

@@ -198,6 +198,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             }
         }
         getP().getRamMarketInfo();
+
+        String res = getP().handleEosErrorCode(3000000);
+        LoggerManager.d("String", res);
     }
 
     @Override

@@ -437,6 +437,7 @@
     <string name="selected_nodes_limit">请最多选择30个节点投票</string>
 
     <string name="account_name_err">账户名错误</string>
+    <string name="transfer_detail">交易详情</string>
 
 
 </resources>

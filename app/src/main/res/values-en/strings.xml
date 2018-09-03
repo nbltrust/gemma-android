@@ -442,5 +442,6 @@
     <string name="selected_nodes_limit">Please choose less than 30 nodes</string>
 
     <string name="account_name_err">EOS Username Invalid</string>
+    <string name="transfer_detail">Transfer Detail</string>
 
 </resources>
