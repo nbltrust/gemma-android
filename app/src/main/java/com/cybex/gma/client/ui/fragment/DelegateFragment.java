@@ -1,8 +1,10 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -270,7 +272,16 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
         tab_undelegate.setVisibility(View.GONE);
         btDelegateCpuNet.setVisibility(View.VISIBLE);
         btundelegateCpuNet.setVisibility(View.GONE);
+        //隐藏软键盘
+        if (EmptyUtils.isNotEmpty(getActivity()))hideSoftKeyboard(getActivity());
+    }
 
+    public static void hideSoftKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     private void showRefundTab(){
@@ -278,6 +289,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
         tab_undelegate.setVisibility(View.VISIBLE);
         btDelegateCpuNet.setVisibility(View.GONE);
         btundelegateCpuNet.setVisibility(View.VISIBLE);
+       if (EmptyUtils.isNotEmpty(getActivity()))hideSoftKeyboard(getActivity());
     }
 
     public String getDelegateCpu(){

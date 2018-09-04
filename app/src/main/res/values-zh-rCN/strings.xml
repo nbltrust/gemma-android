@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Alert -->
-    <string name="please_confirm_alert">请勿在EOS区块100%确认之前往账户转账(滑动取消提醒)</string>
+    <string name="please_confirm_alert">请勿在EOS区块100%确认之前往账户转账</string>
 
     <!-- Common -->
     <string name="app_name">Gemma</string>

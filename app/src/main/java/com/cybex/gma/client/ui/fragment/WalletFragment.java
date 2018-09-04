@@ -435,7 +435,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                     Alerter.create(getActivity())
                             .setText(getResources().getString(R.string.please_confirm_alert))
                             .setBackgroundColorRes(R.color.scarlet)
-                            .enableSwipeToDismiss()
                             .enableInfiniteDuration(true)
                             .setTextAppearance(R.style.myAlert)
                             .show();

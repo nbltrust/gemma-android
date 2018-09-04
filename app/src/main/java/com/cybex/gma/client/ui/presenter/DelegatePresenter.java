@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.DelegateFragment;
@@ -18,6 +19,13 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import com.tapadoo.alerter.Alert;
+import com.tapadoo.alerter.Alerter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class DelegatePresenter extends XPresenter<DelegateFragment> {
 
@@ -202,7 +210,21 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV()))getV().dissmisProgressDialog();
+                        try {
+                            String err_info_string = response.getRawResponse().body().string();
+                            try {
+                                JSONObject obj = new JSONObject(err_info_string);
+                                JSONObject error = obj.optJSONObject("error");
+                                String err_code = error.optString("code");
+                                handleEosErrorCode(err_code);
+
+                            }catch (JSONException ee){
+                                ee.printStackTrace();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
@@ -221,6 +243,23 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                     }
                 });
 
+    }
+
+    private void handleEosErrorCode(String err_code){
+        String code = ParamConstants.EOS_ERR_CODE_PREFIX + err_code;
+        if (EmptyUtils.isNotEmpty(getV()) && EmptyUtils.isNotEmpty(getV().getActivity())){
+            String package_name = getV().getActivity().getPackageName();
+            int resId = getV().getResources().getIdentifier(code, "string", package_name);
+            String err_info =  getV().getResources().getString(resId);
+
+            Alerter.create(getV().getActivity())
+                    .setText(err_info)
+                    .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
+                    .showIcon(false)
+                    .setDuration(3000)
+                    .setBackgroundColorRes(R.color.scarlet)
+                    .show();
+        }
     }
 
 }

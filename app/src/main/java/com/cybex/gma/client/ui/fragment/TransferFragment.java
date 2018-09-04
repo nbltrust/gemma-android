@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -35,6 +37,7 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
 /**
@@ -65,6 +68,13 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @BindView(R.id.root_scrollview)
     ScrollView rootScrollview;
     Unbinder unbinder;
+    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
+    @BindView(R.id.iv_transfer_account_clear) ImageView ivTransferAccountClear;
+    @BindView(R.id.tv_title_pay_account) TextView tvTitlePayAccount;
+    @BindView(R.id.tv_amount) TextView tvAmount;
+    @BindView(R.id.iv_transfer_amount_clear) ImageView ivTransferAmountClear;
+    @BindView(R.id.tv_note) TextView tvNote;
+    @BindView(R.id.iv_transfer_memo_clear) ImageView ivTransferMemoClear;
 
     private String maxValue = "";
     private String currentEOSName = "";
@@ -72,6 +82,39 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     private String collectionAccount = "";
     private String amount = "";
     private String memo = "";
+
+    @OnClick({R.id.iv_transfer_account_clear, R.id.iv_transfer_amount_clear, R.id.iv_transfer_memo_clear})
+    public void onClearClicked(View v){
+        switch (v.getId()){
+            case R.id.iv_transfer_account_clear:
+                etCollectionAccount.setText("");
+                break;
+            case R.id.iv_transfer_amount_clear:
+                etAmount.setText("");
+                break;
+            case R.id.iv_transfer_memo_clear:
+                etNote.setText("");
+                break;
+        }
+    }
+
+    @OnTextChanged(value = R.id.et_amount, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onAmountChanged(){
+        if (EmptyUtils.isNotEmpty(getAmount())){
+            ivTransferAmountClear.setVisibility(View.VISIBLE);
+        }else {
+            ivTransferAmountClear.setVisibility(View.GONE);
+        }
+    }
+
+    @OnTextChanged(value = R.id.et_note, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onNoteChanged(){
+        if (EmptyUtils.isNotEmpty(getNote())){
+            ivTransferMemoClear.setVisibility(View.VISIBLE);
+        }else {
+            ivTransferMemoClear.setVisibility(View.GONE);
+        }
+    }
 
     public static TransferFragment newInstance() {
         Bundle args = new Bundle();
@@ -120,6 +163,11 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                 if (!hasFocus) {
                     validateAmountValue();
                     validateButton();
+                    ivTransferAmountClear.setVisibility(View.GONE);
+                }else {
+                    if (EmptyUtils.isNotEmpty(getAmount())){
+                        ivTransferAmountClear.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -145,7 +193,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         if (EmptyUtils.isNotEmpty(event)) {
             LoggerManager.d("---changeAccount event---");
             getP().requestBanlanceInfo();
-
         }
     }
 
@@ -155,21 +202,25 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                   if (EmptyUtils.isEmpty(etCollectionAccount.getText().toString().trim())){
-                       tvCollectionAmount.setText(getString(R.string.receiver));
-                       tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
-                   }
-                }else {
+                    if (EmptyUtils.isEmpty(getCollectionAccount())) {
+                        tvCollectionAmount.setText(getString(R.string.receiver));
+                        tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
+                    }else {
+                        ivTransferAccountClear.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    ivTransferAccountClear.setVisibility(View.GONE);
                     validateButton();
-                    if (EmptyUtils.isEmpty(etCollectionAccount.getText().toString().trim())){
+                    if (EmptyUtils.isEmpty(getCollectionAccount())) {
                         tvCollectionAmount.setText(getString(R.string.receiver));
                         tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
                     }
-                    if (!isAccountNameValid() && EmptyUtils.isNotEmpty(etCollectionAccount.getText().toString().trim())){
+                    if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
+                            etCollectionAccount.getText().toString().trim())) {
                         //显示alert样式
                         tvCollectionAmount.setText(getString(R.string.account_name_err));
                         tvCollectionAmount.setTextColor(getResources().getColor(R.color.scarlet));
-                    }else {
+                    } else {
                         //显示默认样式
                         tvCollectionAmount.setText(getString(R.string.receiver));
                         tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
@@ -191,7 +242,25 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (EmptyUtils.isNotEmpty(getCollectionAccount())){
+                    ivTransferAccountClear.setVisibility(View.VISIBLE);
+                }else {
+                    ivTransferAccountClear.setVisibility(View.GONE);
+                }
                 validateButton();
+            }
+        });
+
+        etNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    if (EmptyUtils.isNotEmpty(getNote())){
+                        ivTransferMemoClear.setVisibility(View.VISIBLE);
+                    }
+                }else {
+                    ivTransferMemoClear.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -261,13 +330,25 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         showConfirmTransferDialog();
     }
 
-    public boolean isAccountNameValid(){
+    public boolean isAccountNameValid() {
         String eosUsername = etCollectionAccount.getText().toString().trim();
         String regEx = "^[a-z1-5]{12}$";
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher((eosUsername));
         boolean res = matcher.matches();
         return res;
+    }
+
+    public String getCollectionAccount(){
+        return etCollectionAccount.getText().toString().trim();
+    }
+
+    public String getAmount(){
+        return etAmount.getText().toString().trim();
+    }
+
+    public String getNote(){
+        return etNote.getText().toString().trim();
     }
 
     /**
@@ -316,9 +397,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         if (EmptyUtils.isNotEmpty(currentEOSName)) {
             tv_payment_account.setText(currentEOSName);
 
-            if (EmptyUtils.isEmpty(etNote.getText().toString().trim())){
+            if (EmptyUtils.isEmpty(etNote.getText().toString().trim())) {
                 memo = String.format(getString(R.string.default_memo), currentEOSName);
-            }else {
+            } else {
                 memo = String.valueOf(etNote.getText());
             }
             tv_note.setText(memo);

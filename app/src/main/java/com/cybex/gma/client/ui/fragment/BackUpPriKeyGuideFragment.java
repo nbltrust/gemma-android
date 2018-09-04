@@ -107,7 +107,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
 
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
+                R.layout.dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
 
             @Override

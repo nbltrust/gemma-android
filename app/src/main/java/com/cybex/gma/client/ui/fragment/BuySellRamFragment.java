@@ -1,9 +1,11 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -160,6 +162,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                         tvAvaEosRam.setText(
                                 String.format(getResources().getString(R.string.available_eos), available_eos));
                     }
+                    //切换TAB时隐藏软键盘
+                    if (EmptyUtils.isNotEmpty(getActivity()))hideSoftKeyboard(getActivity());
+
                 } else if (position == 1) {
                     btBuyRam.setVisibility(View.GONE);
                     btSellRam.setVisibility(View.VISIBLE);
@@ -173,6 +178,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                         tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_ram),
                                 ramAvailable));
                     }
+
+                    if (EmptyUtils.isNotEmpty(getActivity()))hideSoftKeyboard(getActivity());
                 }
             }
 
@@ -198,9 +205,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             }
         }
         getP().getRamMarketInfo();
-
-        String res = getP().handleEosErrorCode(3000000);
-        LoggerManager.d("String", res);
     }
 
     @Override
@@ -263,6 +267,14 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         String ramAvailable = AmountUtil.sub(ramTotal, ramUsed, 2);
         String ramAvailableKB = AmountUtil.div(ramAvailable, "1024", 2);
         return ramAvailableKB;
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     /**

@@ -395,6 +395,11 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         tvRepeatNewPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.steel));
         setDividerDefaultStyle(viewRepeatNewPass);
+        if (EmptyUtils.isNotEmpty(getRepeatPass())) {
+            ivRepeatNewPassClear.setVisibility(View.VISIBLE);
+        }else {
+            ivRepeatNewPassClear.setVisibility(View.GONE);
+        }
         //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
@@ -402,6 +407,11 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         tvRepeatNewPass.setText(getResources().getString(R.string.repeat_pass));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         setDividerFocusStyle(viewRepeatNewPass);
+        if (EmptyUtils.isNotEmpty(getRepeatPass())) {
+            ivRepeatNewPassClear.setVisibility(View.VISIBLE);
+        }else {
+            ivRepeatNewPassClear.setVisibility(View.GONE);
+        }
         //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
     }
 
@@ -411,6 +421,8 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         setDividerAlertStyle(viewRepeatNewPass);
         if (EmptyUtils.isNotEmpty(getRepeatPass())) {
             ivRepeatNewPassClear.setVisibility(View.VISIBLE);
+        }else {
+            ivRepeatNewPassClear.setVisibility(View.GONE);
         }
         //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
     }

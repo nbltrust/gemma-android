@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -133,8 +134,12 @@ public class TransferRecordDetailFragment extends XFragment {
                 superTextViewBlockId.setRightString(String.valueOf(curTransfer.block));
                 setTransferStatus(curTransfer.status);
                 tvShowTransferId.setText(curTransfer.hash);
+
+                //其他样式
+                tvSeeInExplorer.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG);
             }
         }
+
     }
 
     @OnClick(R.id.tv_show_transfer_id)

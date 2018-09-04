@@ -26,7 +26,13 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import com.tapadoo.alerter.Alert;
+import com.tapadoo.alerter.Alerter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
 
 public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
@@ -207,8 +213,24 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                 .pushTransaction(new StringCallback() {
                     @Override
                     public void onError(Response<String> response) {
-                        super.onError(response);
-                        getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            getV().dissmisProgressDialog();
+                        }
+
+                        try {
+                            String err_info_string = response.getRawResponse().body().string();
+                            try {
+                                JSONObject obj = new JSONObject(err_info_string);
+                                JSONObject error = obj.optJSONObject("error");
+                                String err_code = error.optString("code");
+                                handleEosErrorCode(err_code);
+
+                            }catch (JSONException ee){
+                                ee.printStackTrace();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
@@ -217,15 +239,12 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                         if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
-
                             GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
                             //跳转到收支记录
                             UISkipMananger.launchTransferRecord(getV().getActivity());
                         }
-
                     }
                 });
-
     }
 
     /**
@@ -293,14 +312,20 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
     }
 
 
-    public String handleEosErrorCode(int err_code){
-        String code = ParamConstants.EOS_ERR_CODE_PREFIX + String.valueOf(err_code);
-        LoggerManager.d("code", code);
-        String package_name = getV().getActivity().getPackageName();
-        LoggerManager.d("packageName", package_name);
-        int resId = getV().getResources().getIdentifier(code, "string", package_name);
-        LoggerManager.d("resId", resId);
-        return getV().getResources().getString(resId);
-    }
+    private void handleEosErrorCode(String err_code){
+        String code = ParamConstants.EOS_ERR_CODE_PREFIX + err_code;
+        if (EmptyUtils.isNotEmpty(getV()) && EmptyUtils.isNotEmpty(getV().getActivity())){
+            String package_name = getV().getActivity().getPackageName();
+            int resId = getV().getResources().getIdentifier(code, "string", package_name);
+            String err_info =  getV().getResources().getString(resId);
 
+            Alerter.create(getV().getActivity())
+                    .setText(err_info)
+                    .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
+                    .showIcon(false)
+                    .setDuration(3000)
+                    .setBackgroundColorRes(R.color.scarlet)
+                    .show();
+        }
+    }
 }

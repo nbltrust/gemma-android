@@ -1,6 +1,6 @@
 <resources>
     <!-- Alert -->
-    <string name="please_confirm_alert">请勿在EOS区块100%确认之前往账户转账(滑动取消提醒)</string>
+    <string name="please_confirm_alert">请勿在EOS区块100%确认之前往账户转账</string>
 
     <!-- Common -->
     <string name="app_name">Gemma</string>
@@ -45,7 +45,7 @@
     <string name="transfer_id">交易号</string>
     <string name="block_num">区块</string>
     <string name="block_time">交易时间</string>
-    <string name="see_in_explorer">在区块链浏览器上查看</string>
+    <string name="see_in_explorer"><u>在区块链浏览器上查看</u></string>
 
     <!-- Transfer Fragment-->
     <string name="receiver">收款人</string>
