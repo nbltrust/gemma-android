@@ -68,9 +68,25 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                        LoggerManager.d(response.code());
-                        getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     @Override
@@ -86,7 +102,6 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
                         getV().dissmisProgressDialog();
-
                     }
                 });
 
@@ -116,8 +131,25 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                        getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     @Override
@@ -151,9 +183,25 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
 
                     @Override
                     public void onError(Response<String> response) {
-                        super.onError(response);
-                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                        getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            getV().dissmisProgressDialog();
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     @Override

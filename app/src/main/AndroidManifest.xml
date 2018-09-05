@@ -57,7 +57,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize"
             >
 
-
         </activity>
         <!-- 创建方式容器界面 -->
         <activity

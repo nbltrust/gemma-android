@@ -245,6 +245,7 @@ dependencies {
     implementation deps.third.overscroll
     implementation deps.gma.alerter
     implementation deps.gma.saripaar
+    implementation deps.gma.spinkit
 
     //日志打印
     implementation deps.gma.logger

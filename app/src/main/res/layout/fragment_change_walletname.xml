@@ -30,6 +30,7 @@
 
             >
 
+            <!--
             <TextView
                 android:text="@string/wallet_name_short"
                 android:gravity="center"
@@ -38,13 +39,14 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-
+            -->
             <EditText
                 android:id="@+id/editText_setWalletName"
                 android:hint="@string/change_wallet_name_hint"
-                android:layout_width="100dp"
-                android:layout_weight="9"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:paddingStart="@dimen/dimen_10"
                 android:textSize="@dimen/font_3.5"
                 android:textCursorDrawable="@drawable/cursor_custom"
                 android:background="@null"

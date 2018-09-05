@@ -17,7 +17,7 @@
         android:layout_below="@id/btn_navibar"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         app:contentView="@layout/content_recycler_view"
         app:emptyView="@layout/empty_view"
         app:errorView="@layout/error_view"

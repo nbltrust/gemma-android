@@ -31,6 +31,7 @@ public class CustomFullDialog extends Dialog implements View.OnClickListener {
     private boolean mIsDismissTouchOut = true;//是否允许触摸dialog外部区域取消显示dialog
     private int mPosition = 0; //Dialog 相对页面显示的位置
     private List<View> mViews = new ArrayList<>();//监听的View的集合
+    private boolean mIsDim = true;//背景是否变暗
 
     private View allView ;
 
@@ -90,7 +91,6 @@ public class CustomFullDialog extends Dialog implements View.OnClickListener {
         this.mPosition = position;
         this.mIsDismiss = isDismiss;
     }
-
 
     /**
      * @param context

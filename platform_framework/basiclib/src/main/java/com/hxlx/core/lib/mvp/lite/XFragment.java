@@ -3,12 +3,14 @@ package com.hxlx.core.lib.mvp.lite;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.hxlx.core.lib.R;
 import com.hxlx.core.lib.common.eventbus.BaseEvent;
@@ -273,13 +275,20 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
                 @Override
                 public void run() {
                     if (kProgressHUD == null) {
+                        ImageView imageView = new ImageView(getActivity());
+                        imageView.setBackgroundResource(R.drawable.animation_loading_spin);
+                        AnimationDrawable drawable = (AnimationDrawable) imageView.getBackground();
+                        drawable.start();
+
                         kProgressHUD = KProgressHUD.create(getActivity())
                                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                                 .setCancellable(true)
-                                .setAnimationSpeed(2)
+                                .setCustomView(imageView)
+                                .setBackgroundColor(getResources().getColor(R.color.white))
+                                //.setAnimationSpeed(2)
                                 .setDimAmount(0.5f);
                     }
-                    kProgressHUD.setLabel(prompt);
+                    kProgressHUD.setLabel(prompt, getResources().getColor(R.color.cornflowerBlueTwo));
                     kProgressHUD.show();
                 }
             });

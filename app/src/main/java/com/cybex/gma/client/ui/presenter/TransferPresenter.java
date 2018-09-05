@@ -69,7 +69,24 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     @Override
@@ -120,8 +137,25 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
-                        getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     @Override
@@ -157,8 +191,26 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
-                        getV().dissmisProgressDialog();
+
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     @Override
@@ -210,21 +262,23 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        if (EmptyUtils.isNotEmpty(getV()))getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            getV().dissmisProgressDialog();
 
-                        try {
-                            String err_info_string = response.getRawResponse().body().string();
                             try {
-                                JSONObject obj = new JSONObject(err_info_string);
-                                JSONObject error = obj.optJSONObject("error");
-                                String err_code = error.optString("code");
-                                handleEosErrorCode(err_code);
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
 
-                            }catch (JSONException ee){
-                                ee.printStackTrace();
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
                     }
 

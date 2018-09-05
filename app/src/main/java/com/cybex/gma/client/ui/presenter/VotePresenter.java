@@ -97,8 +97,25 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     @Override
                     public void onError(Response<FetchBPDetailsResult> response) {
                         super.onError(response);
-                        GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.load_node_info_fail));
-                        getV().showError();
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.load_node_info_fail));
+                            getV().showError();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 });
     }
@@ -134,6 +151,21 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
+
+                        try {
+                            String err_info_string = response.getRawResponse().body().string();
+                            try {
+                                JSONObject obj = new JSONObject(err_info_string);
+                                JSONObject error = obj.optJSONObject("error");
+                                String err_code = error.optString("code");
+                                handleEosErrorCode(err_code);
+
+                            }catch (JSONException ee){
+                                ee.printStackTrace();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -183,6 +215,21 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                         GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         if (EmptyUtils.isNotEmpty(getV())){
                             getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });
@@ -198,7 +245,25 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        getV().dissmisProgressDialog();
+
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     @Override

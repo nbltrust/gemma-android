@@ -385,17 +385,17 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 4);
         totalEOSAmount.setText(totalPrice + " EOS");
         savedCurrency = SPUtils.getInstance().getInt("currency_unit");
-            switch (savedCurrency){
-                case CacheConstants.CURRENCY_CNY:
-                    totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
-                    break;
-                case CacheConstants.CURRENCY_USD:
-                    totalCNYAmount.setCenterString("≈" + totalUSD + " USD");
-                    break;
-                default:
-                    totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
-                    break;
-            }
+        switch (savedCurrency) {
+            case CacheConstants.CURRENCY_CNY:
+                totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+                break;
+            case CacheConstants.CURRENCY_USD:
+                totalCNYAmount.setCenterString("≈" + totalUSD + " USD");
+                break;
+            default:
+                totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+                break;
+        }
     }
 
 
@@ -469,7 +469,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             textViewBackupWallet.setVisibility(View.GONE);
         }
 
-        switch (SPUtils.getInstance().getInt("currency_unit")){
+        switch (SPUtils.getInstance().getInt("currency_unit")) {
             case CacheConstants.CURRENCY_CNY:
                 totalCNYAmount.setCenterString("≈" + " -- " + " CNY");
                 break;

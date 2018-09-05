@@ -17,7 +17,6 @@
         >
     </com.hxlx.core.lib.widget.titlebar.view.TitleBar>
 
-
     <com.cybex.gma.client.widget.MyScrollView
         android:id="@+id/scroll_wallet_tab"
         android:layout_width="match_parent"

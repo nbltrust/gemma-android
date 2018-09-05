@@ -15,6 +15,7 @@ import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.utils.AlertUtil;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -39,6 +40,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     Unbinder unbinder;
     private Integer walletID;
     private WalletEntity curWallet;
+    private static int inputCount;
 
     @OnClick(R.id.show_priKey)
     public void showPriKey() {
@@ -77,6 +79,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getResources().getString(R.string.backup_prikey), true,
                 true);
+        inputCount = 0;
     }
 
     @Override
@@ -97,6 +100,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        inputCount = 0;
         unbinder.unbind();
     }
 
@@ -117,6 +121,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_authorization:
+                        inputCount++;
                         EditText password = dialog.findViewById(R.id.et_password);
                         ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
                         iv_clear.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +136,12 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                             return;
                         }else{
                             if (!EmptyUtils.isEmpty(curWallet)){
+
+                                if (inputCount > 3){
+                                    String passHint = getString(R.string.password_hint) + curWallet.getPasswordTip();
+                                    AlertUtil.showLongUrgeAlert(getActivity(), passHint);
+                                }
+
                                 final String cypher = curWallet.getCypher();
                                 final String priKey = JNIUtil.get_private_key(cypher, inputPass);
                                 //验证密码是否正确
@@ -146,7 +157,6 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                                 }
                             }
                         }
-
 
                         break;
                     default:

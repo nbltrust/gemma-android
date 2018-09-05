@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.activity;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -26,6 +27,7 @@ import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
+import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.SoftHideKeyBoardUtil;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -307,6 +309,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 flag++;
                 if (flag % 2 == 0) {
                     showBubble();
+                    scheduleDismiss();
                 }
                 return false;
             }
@@ -318,7 +321,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             public boolean onTouch(View v, MotionEvent event) {
                 flag++;
                 if (flag % 2 == 0) {
-                    hideBubble();
+                    //hideBubble();
                 }
                 return false;
             }
@@ -768,6 +771,17 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         dialog.show();
     }
 
+    private void scheduleDismiss(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideBubble();
+            }
+        }, 5000);
+    }
+
+
     /**
      * 验证框架验证成功回调
      */
@@ -794,6 +808,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
 
+            AlertUtil.showShortUrgeAlert(this, message);
             if (view instanceof EditText) {
                 GemmaToastUtils.showLongToast(message);
             } else {

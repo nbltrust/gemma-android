@@ -71,11 +71,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     @BindView(R.id.tv_available_eos_ram) TextView tvAvaEosRam;
     @BindView(R.id.tv_ram_unitPrice) SuperTextView tvRamUnitPrice;
 
-    private final String testPrikey = "5KhjpbahW1ahQHi5GeW8baTwFx3n7W249gEp8xRHMJ45AVGeT58";
-    private final String testEosName = "test1";
-    private final String testQuantity = "0.0100 EOS";
-
-
     @OnClick(R.id.bt_buy_ram)
     public void showBuyDialog() {
         showConfirmBuyRamDialog();

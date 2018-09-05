@@ -23,7 +23,7 @@
         <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/actionsheet_dialog_out</item>
     </style>
-
+    <!-- 通用dialog样式 -->
     <style name="Custom_Dialog_Style" parent="@android:style/Theme.Dialog">
         <!--窗口背景色透明-->
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -38,6 +38,23 @@
         <!--是否半透明-->
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
+    <!-- 通用dialog样式 -->
+    <style name="Custom_Dialog_Style_No_Dim" parent="@android:style/Theme.Dialog">
+        <!--窗口背景色透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!--是否浮在界面上-->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否允许背景变暗 --> <!--背景是否模糊显示-->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!--是否有标题-->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否半透明-->
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <!-- dialog底部弹出菜单动画 -->
     <style name="bottom_animation_slide" parent="android:Animation">
         <!--
