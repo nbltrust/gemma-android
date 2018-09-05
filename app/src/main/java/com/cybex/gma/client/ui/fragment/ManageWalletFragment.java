@@ -79,13 +79,6 @@ public class ManageWalletFragment extends XFragment {
         setWalletListViewData();
     }
 
-
-    @Override
-    protected void setNavibarTitle(String title, boolean isShowBack) {
-        super.setNavibarTitle(title, isShowBack);
-
-    }
-
     @Override
     public int getLayoutId() {
         return R.layout.fragment_manage_wallet;
@@ -162,7 +155,6 @@ public class ManageWalletFragment extends XFragment {
                         (position+1);//当前卡片对应的wallet
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("curWallet", thisWallet);
-                //start(WalletDetailFragment.newInstance(bundle));
                 startForResult(WalletDetailFragment.newInstance(bundle), requestCode);
             }
 
@@ -198,9 +190,5 @@ public class ManageWalletFragment extends XFragment {
 
     }
 
-    public void updateCurWalletHighlight(){
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-
-    }
 
 }

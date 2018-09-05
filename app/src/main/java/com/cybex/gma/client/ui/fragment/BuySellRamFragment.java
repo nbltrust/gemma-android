@@ -31,6 +31,7 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     private ResourceInfoVO resourceInfoVO;
     private String kbPerEOS;
     private String eosPerKb;
+    private int inputCount;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_ram_amount) SuperTextView superTextViewRamAmount;
     @BindView(R.id.progressbar_ram) RoundCornerProgressBar progressbarRam;
@@ -132,6 +134,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getResources().getString(R.string.buy_sell_ram), true, true);
+        inputCount = 0;
         tvApproximatelyAmount.setVisibility(View.GONE);
         setUnclickable(btSellRam);
         setUnclickable(btBuyRam);
@@ -391,9 +394,14 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                     if (EmptyUtils.isNotEmpty(inputPass)) {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")) {
+                                            inputCount++;
                                             iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(
                                                     getResources().getString(R.string.wrong_password));
+                                            if (inputCount > 3){
+                                                dialog.cancel();
+                                                showPasswordHintDialog(OPERATION_BUY_RAM);
+                                            }
                                         } else {
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             String quantity = AmountUtil.add(getEOSAmount(), "0", 4) + " EOS";
@@ -423,9 +431,15 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                     if (EmptyUtils.isNotEmpty(inputPass)) {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")) {
+                                            inputCount++;
                                             iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(
                                                     getResources().getString(R.string.wrong_password));
+
+                                            if (inputCount > 3){
+                                                dialog.cancel();
+                                                showPasswordHintDialog(OPERATION_SELL_RAM);
+                                            }
                                         } else {
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             long ramAmount = Long.parseLong(getRamAmount());
@@ -449,6 +463,38 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             }
         });
         dialog.show();
+    }
+
+    /**
+     * 显示密码提示Dialog
+     */
+    private void showPasswordHintDialog(int operation_type) {
+        int[] listenedItems = {R.id.tv_i_understand};
+        CustomDialog dialog = new CustomDialog(getContext(),
+                R.layout.dialog_password_hint, listenedItems, false, Gravity.CENTER);
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.tv_i_understand:
+                        dialog.cancel();
+                        showConfirmAuthorDialog(operation_type);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+
+        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            String passHint = curWallet.getPasswordTip();
+            String showInfo = getString(R.string.password_hint_info) + " : " + passHint;
+            tv_pass_hint.setText(showInfo);
+        }
     }
 
 

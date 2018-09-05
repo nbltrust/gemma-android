@@ -15,11 +15,11 @@ import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
-import com.cybex.gma.client.utils.AlertUtil;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -40,7 +40,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     Unbinder unbinder;
     private Integer walletID;
     private WalletEntity curWallet;
-    private static int inputCount;
+    private int inputCount;
 
     @OnClick(R.id.show_priKey)
     public void showPriKey() {
@@ -121,7 +121,6 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_authorization:
-                        inputCount++;
                         EditText password = dialog.findViewById(R.id.et_password);
                         ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
                         iv_clear.setOnClickListener(new View.OnClickListener() {
@@ -136,19 +135,21 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                             return;
                         }else{
                             if (!EmptyUtils.isEmpty(curWallet)){
-
-                                if (inputCount > 3){
-                                    String passHint = getString(R.string.password_hint) + curWallet.getPasswordTip();
-                                    AlertUtil.showLongUrgeAlert(getActivity(), passHint);
-                                }
-
                                 final String cypher = curWallet.getCypher();
                                 final String priKey = JNIUtil.get_private_key(cypher, inputPass);
                                 //验证密码是否正确
                                 if ("wrong password".equals(priKey)){
+                                    inputCount++;
+
                                     //密码错误
                                     iv_clear.setVisibility(View.VISIBLE);
                                     GemmaToastUtils.showLongToast(getString(R.string.wrong_password));
+                                    //如果输错3次以上，弹框提醒
+                                    if (inputCount > 3){
+                                        dialog.cancel();
+                                        showPasswordHintDialog();
+                                    }
+
                                 }else {
                                     //密码正确
                                     EventBusProvider.postSticky(new KeySendEvent(priKey));
@@ -165,6 +166,37 @@ public class BackUpPriKeyGuideFragment extends XFragment {
             }
         });
         dialog.show();
+    }
+
+    /**
+     * 显示密码提示Dialog
+     */
+    private void showPasswordHintDialog() {
+        int[] listenedItems = {R.id.tv_i_understand};
+        CustomDialog dialog = new CustomDialog(getContext(),
+                R.layout.dialog_password_hint, listenedItems, false, Gravity.CENTER);
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.tv_i_understand:
+                        dialog.cancel();
+                        showConfirmAuthoriDialog();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+
+        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            String passHint = curWallet.getPasswordTip();
+            String showInfo = getString(R.string.password_hint_info) + " : " + passHint;
+            tv_pass_hint.setText(showInfo);
+        }
     }
 
 }

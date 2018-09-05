@@ -29,6 +29,7 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -54,6 +55,8 @@ public class VoteFragment extends XFragment<VotePresenter> {
     @BindView(R.id.tv_vote_number) TextView tvVoteNumber;
     @BindView(R.id.tv_exec_vote) TextView tvExecVote;
     @BindView(R.id.view_refresh) CommonRefreshLayout viewRefresh;
+
+    private int inputCount;
 
     private final int EVENT_THIS_PAGE = 0;//本页面发送的事件
     private final int EVENT_DOWN = 1;//上级页面发送的事件
@@ -149,6 +152,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         tvExecVote.setClickable(false);
+        inputCount = 0;
         setNavibarTitle(getResources().getString(R.string.vote), true, true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
@@ -333,6 +337,13 @@ public class VoteFragment extends XFragment<VotePresenter> {
                                 final String key = JNIUtil.get_private_key(cypher, inputPass);
                                 if (key.equals("wrong password")){
                                     GemmaToastUtils.showLongToast(getString(R.string.wrong_password));
+
+                                    inputCount++;
+                                    if (inputCount > 3){
+                                        dialog.cancel();
+                                        showPasswordHintDialog();
+                                    }
+
                                 }else{
                                     //密码正确，执行投票操作
                                     final String curEOSName = curWallet.getCurrentEosName();
@@ -355,5 +366,37 @@ public class VoteFragment extends XFragment<VotePresenter> {
             }
         });
         dialog.show();
+    }
+
+    /**
+     * 显示密码提示Dialog
+     */
+    private void showPasswordHintDialog() {
+        int[] listenedItems = {R.id.tv_i_understand};
+        CustomDialog dialog = new CustomDialog(getContext(),
+                R.layout.dialog_password_hint, listenedItems, false, Gravity.CENTER);
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.tv_i_understand:
+                        dialog.cancel();
+                        showConfirmAuthorDialog();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+
+        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            String passHint = curWallet.getPasswordTip();
+            String showInfo = getString(R.string.password_hint_info) + " : " + passHint;
+            tv_pass_hint.setText(showInfo);
+        }
     }
 }

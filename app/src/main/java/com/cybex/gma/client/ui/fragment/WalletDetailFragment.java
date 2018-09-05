@@ -21,6 +21,7 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import butterknife.BindView;
@@ -39,6 +40,7 @@ public class WalletDetailFragment extends XFragment {
     private WalletEntity curWallet;
     private Integer currentID;
     private String thisWalletName;
+    private int inputCount;
 
     @BindView(R.id.layout_wallet_briefInfo) ConstraintLayout layoutWalletBriefInfo;
     @BindView(R.id.superTextView_exportPriKey) SuperTextView superTextViewExportPriKey;
@@ -80,6 +82,7 @@ public class WalletDetailFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getResources().getString(R.string.manage_wallet), true);
+        inputCount = 0;
         if (getArguments() != null){
             curWallet = getArguments().getParcelable("curWallet");
             if (!EmptyUtils.isEmpty(curWallet)){
@@ -190,8 +193,13 @@ public class WalletDetailFragment extends XFragment {
                                 start(ChangePasswordFragment.newInstance(priKey,currentID));
                                 dialog.cancel();
                             }else {
+                                inputCount++;
                                 iv_clear.setVisibility(View.VISIBLE);
                                 GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
+                                if ( inputCount > 3 ){
+                                    dialog.cancel();
+                                    showPasswordHintDialog();
+                                }
                             }
                         }
 
@@ -202,5 +210,36 @@ public class WalletDetailFragment extends XFragment {
             }
         });
         dialog.show();
+    }
+
+    /**
+     * 显示密码提示Dialog
+     */
+    private void showPasswordHintDialog() {
+        int[] listenedItems = {R.id.tv_i_understand};
+        CustomDialog dialog = new CustomDialog(getContext(),
+                R.layout.dialog_password_hint, listenedItems, false, Gravity.CENTER);
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.tv_i_understand:
+                        dialog.cancel();
+                        showConfirmAuthoriDialog();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+
+        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            String passHint = curWallet.getPasswordTip();
+            String showInfo = getString(R.string.password_hint_info) + " : " + passHint;
+            tv_pass_hint.setText(showInfo);
+        }
     }
 }

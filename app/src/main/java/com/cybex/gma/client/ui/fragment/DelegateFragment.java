@@ -29,6 +29,7 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
 
     private final int OPERATION_DELEGATE = 1;
     private final int OPERATION_UNDELEGATE = 2;
+    private int inputCount;
     Unbinder unbinder;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_cpu_amount) SuperTextView superTextViewCpuAmount;
@@ -130,6 +132,7 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getResources().getString(R.string.title_delegate), true, true);
+        inputCount = 0;
         setUnclickable(btundelegateCpuNet);
         setUnclickable(btDelegateCpuNet);
         ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
@@ -435,6 +438,12 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                         if (key.equals("wrong password")){
                                             iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
+
+                                            inputCount++;
+                                            if (inputCount > 3){
+                                                dialog.cancel();
+                                                showPasswordHintDialog(OPERATION_DELEGATE);
+                                            }
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
@@ -466,6 +475,13 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                         if (key.equals("wrong password")){
                                             iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
+
+                                            inputCount++;
+                                            if (inputCount > 3){
+                                                dialog.cancel();
+                                                showPasswordHintDialog(OPERATION_UNDELEGATE);
+                                            }
+
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
@@ -487,5 +503,37 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
             }
         });
         dialog.show();
+    }
+
+    /**
+     * 显示密码提示Dialog
+     */
+    private void showPasswordHintDialog(int operation_type) {
+        int[] listenedItems = {R.id.tv_i_understand};
+        CustomDialog dialog = new CustomDialog(getContext(),
+                R.layout.dialog_password_hint, listenedItems, false, Gravity.CENTER);
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.tv_i_understand:
+                        dialog.cancel();
+                        showConfirmAuthoriDialog(operation_type);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+
+        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            String passHint = curWallet.getPasswordTip();
+            String showInfo = getString(R.string.password_hint_info) + " : " + passHint;
+            tv_pass_hint.setText(showInfo);
+        }
     }
 }

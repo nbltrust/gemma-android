@@ -125,35 +125,6 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     @OnClick(R.id.btn_confirm_change_pass)
     public void checkValidation() {
         validator.validate();
-        /*
-        //先检查表单
-        Validate.check(this, new IValidateResult() {
-            @Override
-            public void onValidateSuccess() {
-                final String newCypher = JNIUtil.get_cypher(getPassword(), priKey);
-                if (!EmptyUtils.isEmpty(curWallet)){
-                    curWallet.setCypher(newCypher);
-                    curWallet.setPasswordTip(getPassHint());
-                    DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
-                    GemmaToastUtils.showLongToast(getResources().getString(R.string.change_pass_success));
-                    UISkipMananger.launchHome(getActivity());
-                }
-            }
-
-            @Override
-            public void onValidateError(String msg, View view) {
-                EditText editText = (EditText) view;
-                editText.setHint(msg);
-                GemmaToastUtils.showLongToast(msg);
-                editText.setHintTextColor(getResources().getColor(R.color.scarlet));
-            }
-
-            @Override
-            public Animation onValidateErrorAnno() {
-                return ValidateAnimation.horizontalTranslate();
-            }
-        });
-        */
     }
 
     @OnClick({R.id.iv_set_newPass_clear, R.id.iv_repeat_newPass_clear, R.id.iv_newPass_hint_clear})
