@@ -40,12 +40,6 @@
             android:name=".ui.activity.SpalashActivity"
             android:configChanges="layoutDirection|locale"
             android:theme="@style/SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
         </activity>
 
         <!-- 主TAB界面 -->
@@ -198,6 +192,21 @@
             android:screenOrientation="portrait"
             >
         </activity>
+
+        <!--蓝牙start -->
+        <activity
+            android:name=".ui.activity.BluetoothPairActivity"
+            android:configChanges="layoutDirection|locale"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
+
+        <!--蓝牙end -->
 
 
         <!-- activity end -->

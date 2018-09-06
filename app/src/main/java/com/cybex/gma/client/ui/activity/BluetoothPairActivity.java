@@ -32,11 +32,12 @@ public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
+        setNavibarTitle(getString(R.string.title_paire_bluetooth), true);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        btnStartScan.setOnClickListener(new View.OnClickListener(){
+        btnStartScan.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

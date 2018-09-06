@@ -341,7 +341,6 @@
     <string name="check_agreement">请同意我们的服务协议</string>
 
 
-
     <!--others-->
     <string name="lock_pattern_1">请设置新的解锁密码</string>
     <string name="lock_pattern_2">再次输入解锁密码，以确认</string>
@@ -422,7 +421,6 @@
     <string name="default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://xxxx</string>
 
 
-
     <string name="tab_title_private_key">私钥</string>
     <string name="tab_title_qr_code">二维码</string>
 
@@ -445,8 +443,9 @@
         1.确保打开手机蓝牙\n2.启动WOOKONG Bio
     </string>
 
-   <string name="btn_start_pair">开始配对</string>
+    <string name="btn_start_pair">开始配对</string>
     <string name="title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>
+    <string name="title_paire_bluetooth">WOOKONG Bio</string>
     <!--蓝牙钱包配置end -->
 
 
