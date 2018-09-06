@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
@@ -30,16 +31,16 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <com.cybex.gma.client.widget.LabelsView
+        android:padding="@dimen/dimen_20"
+        android:id="@+id/view_labels"
         android:background="@drawable/shape_corner"
-        android:layout_margin="@dimen/dimen_10"
+        android:layout_margin="@dimen/dimen_20"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="vertical">
-
-    </LinearLayout>
+        android:layout_height="wrap_content"/>
 
     <Button
+        android:id="@+id/bt_copied_mne"
         style="@style/bt_long_in_linearLayout"
         android:layout_margin="@dimen/dimen_20"
         android:text="@string/mne_copied"/>

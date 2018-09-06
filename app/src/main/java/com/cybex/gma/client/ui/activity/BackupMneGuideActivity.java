@@ -6,6 +6,7 @@ import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.fragment.BackUpPriKeyGuideFragment;
+import com.cybex.gma.client.ui.fragment.BackupMneGuideFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -19,9 +20,8 @@ public class BackupMneGuideActivity extends XActivity {
 
     @Override
     public void bindUI(View view) {
-        if (findFragment(BackUpPriKeyGuideFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_backup_mne_guide, BackUpPriKeyGuideFragment.newInstance());
-
+        if (findFragment(BackupMneGuideFragment.class) == null) {
+            loadRootFragment(R.id.fl_container_backup_mne_guide, BackupMneGuideFragment.newInstance());
         }
 
         //让布局向上移来显示软键盘

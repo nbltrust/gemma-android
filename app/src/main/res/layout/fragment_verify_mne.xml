@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <include
         layout="@layout/ui_navibar">
@@ -10,26 +10,32 @@
     </include>
 
     <TextView
-        android:layout_marginTop="@dimen/dimen_20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
         android:text="@string/tip_verify_mne"
         android:textAlignment="center"/>
 
-    <LinearLayout
+
+    <com.cybex.gma.client.widget.LabelsView
+        android:layout_margin="@dimen/dimen_20"
+        android:padding="@dimen/dimen_20"
         android:background="@drawable/shape_corner"
-        android:layout_margin="@dimen/dimen_10"
+        android:id="@+id/view_click_to_show_mne"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_150">
+        android:layout_height="wrap_content">
 
-    </LinearLayout>
+    </com.cybex.gma.client.widget.LabelsView>
 
-    <LinearLayout
+
+    <com.cybex.gma.client.widget.LabelsView
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:padding="@dimen/dimen_20"
+        android:id="@+id/view_show_mne"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_150"
-        android:orientation="horizontal"
-        android:layout_margin="@dimen/dimen_20">
+        android:layout_height="wrap_content">
 
-    </LinearLayout>
+    </com.cybex.gma.client.widget.LabelsView>
 
 </LinearLayout>
