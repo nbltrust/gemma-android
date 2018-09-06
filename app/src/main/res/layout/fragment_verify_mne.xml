@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <TextView
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tip_verify_mne"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:background="@drawable/shape_corner"
+        android:layout_margin="@dimen/dimen_10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_150">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_150"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/dimen_20">
+
+    </LinearLayout>
+
+</LinearLayout>

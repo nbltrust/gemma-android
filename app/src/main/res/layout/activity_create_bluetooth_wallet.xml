@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+
+    <ScrollView
+        android:id="@+id/scroll_create_wallet"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_14"
+                android:background="@drawable/shape_corner"
+                android:orientation="vertical"
+                >
+
+                <com.xujiaji.happybubble.BubbleLayout
+                    android:id="@+id/bubble"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_70"
+                    android:visibility="gone"
+                    app:bubbleColor="@color/buff"
+                    app:bubblePadding="0dp"
+                    app:bubbleRadius="@dimen/bt_radius"
+                    app:lookLength="@dimen/bubble_lookLength"
+                    app:lookPosition="@dimen/bubble_lookPosition"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_in_bubble"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/dimen_10"
+                        android:text="@string/security_hint"
+                        android:textSize="@dimen/font_3"/>
+
+                </com.xujiaji.happybubble.BubbleLayout>
+
+                <TextView
+                    android:id="@+id/tv_eos_name"
+                    style="@style/text_title_config_wallet"
+                    android:text="@string/EOS_username"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_eos_name"
+                        style="@style/editText_config_wallet"
+                        android:layout_weight="1"
+                        android:inputType="text"
+                        android:hint="@string/EOS_username_hint"/>
+
+                    <ImageView
+                        android:id="@+id/iv_eos_name_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/view_divider_eosName"
+                    style="@style/view_common_divider">
+                </View>
+
+
+                <TextView
+                    android:id="@+id/tv_set_pass"
+                    style="@style/text_title_config_wallet"
+                    android:text="@string/title_set_wookong_password"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_set_pass"
+                        style="@style/editText_config_wallet"
+                        android:layout_weight="1"
+                        android:hint="@string/hint_set_wookong_password"
+                        android:inputType="textPassword"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/iv_set_pass_clear"
+                            style="@style/clear_icon_common"/>
+
+                        <ImageView
+                            android:id="@+id/iv_set_pass_mask"
+                            style="@style/mask_icon_common"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_divider_setPass"
+                    style="@style/view_common_divider">
+                </View>
+
+
+                <TextView
+                    android:id="@+id/tv_repeat_pass"
+                    style="@style/text_title_config_wallet"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:text="@string/repeat_pass"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_repeat_pass"
+                        style="@style/editText_config_wallet"
+                        android:layout_weight="1"
+                        android:hint="@string/repeatPassword_hint"
+                        android:inputType="textPassword"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_repeat_pass_clear"
+                            style="@style/clear_icon_common"/>
+
+                        <ImageView
+                            android:id="@+id/iv_repeat_pass_mask"
+                            style="@style/mask_icon_common"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/view_divider_repeatPass"
+                    style="@style/view_common_divider">
+                </View>
+
+
+                <TextView
+                    android:id="@+id/tv_pass_hint"
+                    style="@style/text_title_config_wallet"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:text="@string/password_hint"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_pass_hint"
+                        style="@style/editText_config_wallet"
+                        android:layout_weight="1"
+                        android:hint="@string/password_hint_hint"/>
+
+                    <ImageView
+                        android:id="@+id/iv_pass_hint_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/view_divider_passHint"
+                    style="@style/view_common_divider">
+                </View>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_4"
+                    android:layout_marginTop="@dimen/dimen_6"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_invCode"
+                        style="@style/text_title_config_wallet"
+                        android:layout_weight="1"
+                        android:text="@string/invitation_code"/>
+
+                    <TextView
+                        android:id="@+id/tv_get_invCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_12"
+                        android:layout_marginTop="@dimen/dimen_6"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/get_invitation"
+                        android:textColor="@color/cornflowerBlue"
+                        android:textSize="@dimen/font_3"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edt_invCode"
+                        style="@style/editText_config_wallet"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:background="@null"
+                        android:hint="@string/input_inv_code"/>
+
+                    <ImageView
+                        android:id="@+id/iv_invCode_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_checkBox"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginStart="@dimen/checkBox_marginStart"
+                android:layout_marginTop="@dimen/checkBox_marginTop"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbox_config"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/checkBox_length"
+                    android:text="@string/agreement"
+                    android:textColor="@color/blueyGrey"
+                    android:textSize="@dimen/font_3"
+                    android:theme="@style/myCheckBox"/>
+
+                <TextView
+                    android:id="@+id/tv_service_agreement_config"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/agreement2"
+                    android:textColor="@color/darkSlateBlue"
+                    android:textSize="@dimen/font_3"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_create_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bt_inInitPage_height"
+                android:layout_marginEnd="@dimen/button_margin"
+                android:layout_marginStart="@dimen/button_margin"
+                android:layout_marginTop="@dimen/button_margin"
+                android:background="@drawable/shape_corner_button_unclickable"
+                android:text="@string/create_wallet"
+                android:textColor="@color/whiteTwo"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
+

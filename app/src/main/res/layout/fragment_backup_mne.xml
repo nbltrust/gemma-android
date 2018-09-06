@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_20"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tip_memory_your_mne"
+            android:textColor="@color/darkSlateBlue"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:textColor="@color/steel"
+            android:text="@string/tip_use_your_mne"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/shape_corner"
+        android:layout_margin="@dimen/dimen_10"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <Button
+        style="@style/bt_long_in_linearLayout"
+        android:layout_margin="@dimen/dimen_20"
+        android:text="@string/mne_copied"/>
+</LinearLayout>
