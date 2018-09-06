@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.fragment.ManageWalletFragment;
+import com.cybex.gma.client.ui.fragment.WalletManageFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -15,8 +15,8 @@ public class ManageWalletActivity extends XActivity {
 
     @Override
     public void bindUI(View view){
-        if (findFragment(ManageWalletFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_manageWallet, ManageWalletFragment.newInstance());
+        if (findFragment(WalletManageFragment.class) == null) {
+            loadRootFragment(R.id.fl_container_manageWallet, WalletManageFragment.newInstance());
         }
 
         //让布局向上移来显示软键盘

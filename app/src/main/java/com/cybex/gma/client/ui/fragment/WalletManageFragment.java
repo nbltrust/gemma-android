@@ -14,6 +14,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.TabSelectedEvent;
+import com.cybex.gma.client.event.WalletNameChangedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.WalletManageListAdapter;
@@ -21,6 +22,9 @@ import com.cybex.gma.client.ui.model.vo.WalletVO;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +38,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
  * 管理钱包一级界面
  * 钱包主页面中点击右上角icon进入的界面
  */
-public class ManageWalletFragment extends XFragment {
+public class WalletManageFragment extends XFragment {
 
     List<WalletVO> walletVOList = new ArrayList<>();
     @BindView(R.id.superTextView_importWallet) SuperTextView superTextViewImportWallet;
@@ -46,17 +50,36 @@ public class ManageWalletFragment extends XFragment {
     private WalletManageListAdapter adapter;
     private final int requestCode = 0;
 
-    public static ManageWalletFragment newInstance() {
+    public static WalletManageFragment newInstance() {
         Bundle args = new Bundle();
-        ManageWalletFragment fragment = new ManageWalletFragment();
+        WalletManageFragment fragment = new WalletManageFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onWalletNameChanged(WalletNameChangedEvent event){
+        if (EmptyUtils.isNotEmpty(event)){
+            final int walletID = event.getWalletID();
+            final String walletName = event.getWalletName();
+            WalletVO vo = walletVOList.get(walletID-1);
+            if (EmptyUtils.isNotEmpty(vo)){
+                vo.setWalletName(walletName);
+                walletVOList.clear();
+                setWalletListViewData();
+            }
+        }
+    }
+
     @Override
     public void bindUI(View rootView) {
-        unbinder = ButterKnife.bind(ManageWalletFragment.this, rootView);
+        unbinder = ButterKnife.bind(WalletManageFragment.this, rootView);
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletManage);
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 
     @Override
@@ -155,7 +178,8 @@ public class ManageWalletFragment extends XFragment {
                         (position+1);//当前卡片对应的wallet
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("curWallet", thisWallet);
-                startForResult(WalletDetailFragment.newInstance(bundle), requestCode);
+                //startForResult(WalletDetailFragment.newInstance(bundle), requestCode);
+                start(WalletDetailFragment.newInstance(bundle));
             }
 
             @Override

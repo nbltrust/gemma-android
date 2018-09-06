@@ -210,6 +210,10 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             @Override
             public void run() {
                 if (vo != null) {
+
+                    String jsonVO = GsonUtils.objectToJson(vo);
+                    SPUtils.getInstance().put("HomeCombineData", jsonVO);
+
                     String banlance = vo.getBanlance();
                     String unitPriceEOS = vo.getUnitPrice();
                     curUSDTPrice = vo.getUnitPriceUSDT();

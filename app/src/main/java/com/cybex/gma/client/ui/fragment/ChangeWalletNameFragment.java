@@ -54,6 +54,11 @@ public class ChangeWalletNameFragment extends XFragment {
     }
 
     @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
     }
@@ -119,12 +124,25 @@ public class ChangeWalletNameFragment extends XFragment {
                         GemmaToastUtils.showLongToast(ParamConstants.SAME_WALLET_NAME);
                     } else if (EmptyUtils.isNotEmpty(getWalletName())) {
                         //允许修改，保存新钱包名
+
+
                         final String name = getWalletName();
                         curWallet.setWalletName(name);
                         DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
                         GemmaToastUtils.showLongToast(ParamConstants.CHANGE_NAME_SUCCESS);
                         Bundle bundle = new Bundle();
                         bundle.putParcelable("curWallet", curWallet);
+
+                        /*
+                        WalletNameChangedEvent event = new WalletNameChangedEvent();
+                        if (getArguments() != null){
+                            int walletID = getArguments().getInt("walletID");
+                            event.setWalletID(walletID);
+                            event.setWalletName(name);
+                        }
+                        EventBusProvider.postSticky(new WalletNameChangedEvent());
+                        */
+
                         //start(WalletDetailFragment.newInstance(bundle));
                         setFragmentResult(requestCode, bundle);
                         pop();
