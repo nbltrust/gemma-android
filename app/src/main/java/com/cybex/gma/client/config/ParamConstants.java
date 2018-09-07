@@ -51,4 +51,15 @@ public interface ParamConstants {
     int STATUS_CONFIRMING = 2;
     int STATUS_CONFIRMED = 3;
     int STATUS_FAIL = 4;
+
+    /**
+     *导入钱包：1，创建钱包：0
+     */
+    int OPERATION_CREATE = 0;
+    int OPERATION_IMPORT = 1;
+
+    String CN = "中文";
+    String EN = "English";
+
+    String EOS_ERR_CODE_PREFIX = "eos_err_code_";
 }

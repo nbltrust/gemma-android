@@ -31,6 +31,36 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- 公用分割线样式-->
+    <style name="view_common_divider">
+        <item name="android:layout_marginStart">@dimen/dimen_12</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_12</item>
+        <item name="android:layerType">software</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_1</item>
+        <item name="android:background">@color/paleGrey</item>
+    </style>
+
+    <!-- 公用删除icon样式-->
+    <style name="clear_icon_common">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_close</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+    </style>
+
+    <!-- 公用明文密文icon样式-->
+    <style name="mask_icon_common">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_visible</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:visibility">visible</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+    </style>
+
     <!-- Radio Button 样式-->
     <style name="mRadioButton">
         <item name="android:layout_marginStart">@dimen/dimen_10</item>

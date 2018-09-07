@@ -447,7 +447,24 @@
     <string name="title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>
     <string name="title_paire_bluetooth">WOOKONG Bio</string>
     <string name="empty_no_device">请点击图片重新扫描</string>
+
+    <string name="title_set_wookong_password">设置WOOKONG Bio密码</string>
+    <string name="hint_set_wookong_password">长度8-16， 建议混合大小写字母、数字及符号</string>
+
+    <string name="tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
     <!--蓝牙钱包配置end -->
+
+    <!-- 助记词相关-->
+    <string name="backup_mne">备份助记词</string>
+    <string name="show_mne">明白了， 显示助记词</string>
+    <string name="hint_no_screenshot_mne">如果有人获取你的助记词将直接获取你的资产！请抄写下助记词并存放在安全的地方！</string>
+    <string name="mne_copied">已抄写</string>
+    <string name="tip_memory_your_mne">请记下你的钱包私钥助记词并保存在安全的地方</string>
+    <string name="tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
+    <string name="tip_verify_mne">请按顺序点击已抄下的助记词以验证抄写是否正确</string>
+    <string name="tip_import_mne">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
+    <string name="import_mne">输入助记词，用空格分割</string>
+    <string name="title_verify_mne">验证助记词</string>
 
 
 </resources>

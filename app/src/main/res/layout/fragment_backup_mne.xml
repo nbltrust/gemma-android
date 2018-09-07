@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_20"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tip_memory_your_mne"
+            android:textSize="@dimen/font_3.5"
+            android:textColor="@color/darkSlateBlue"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_10"
+            android:textColor="@color/steel"
+            android:textSize="@dimen/font_3"
+            android:text="@string/tip_use_your_mne"/>
+
+
+    </LinearLayout>
+
+    <com.cybex.gma.client.widget.LabelsView
+        android:padding="@dimen/dimen_20"
+        android:id="@+id/view_labels"
+        android:background="@drawable/shape_corner"
+        android:layout_margin="@dimen/dimen_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/bt_copied_mne"
+        style="@style/bt_long_in_linearLayout"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:text="@string/mne_copied"/>
+</LinearLayout>

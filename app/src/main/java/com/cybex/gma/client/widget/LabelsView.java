@@ -124,7 +124,9 @@ public class LabelsView extends ViewGroup implements View.OnClickListener {
             mLineMargin = mTypedArray.getDimensionPixelOffset(R.styleable.labels_view_lineMargin, 0);
             mWordMargin = mTypedArray.getDimensionPixelOffset(R.styleable.labels_view_wordMargin, 0);
             int labelBgResId = mTypedArray.getResourceId(R.styleable.labels_view_labelBackground, 0);
-            mLabelBg = getResources().getDrawable(labelBgResId);
+            if(labelBgResId==0x0){
+                mLabelBg = getResources().getDrawable(R.drawable.label_bg);
+            }
             mTypedArray.recycle();
         }
     }

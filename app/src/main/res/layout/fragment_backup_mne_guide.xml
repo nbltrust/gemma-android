@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <ImageView
+        android:background="@drawable/ic_security"
+        android:layout_width="@dimen/dimen_54"
+        android:layout_height="@dimen/dimen_54"
+        android:layout_marginTop="@dimen/dimen_72"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:text="@string/backup_mne"
+        android:textSize="@dimen/font_4.5"
+        android:textColor="@color/darkSlateBlue"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:gravity="center"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:background="@drawable/shape_corner"
+        android:layout_marginTop="@dimen/dimen_60"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:padding="@dimen/dimen_20"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_200">
+
+        <ImageView
+            android:id="@+id/iv_dot_one"
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@drawable/ic_dot_red"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_look_around_hint"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_40"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:text="@string/lookAround"
+            app:layout_constraintStart_toEndOf="@id/iv_dot_one"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_dot_two"
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:background="@drawable/ic_dot_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_look_around_hint"/>
+
+        <TextView
+            android:id="@+id/tv_look_around_hint_two"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:text="@string/backupSafely"
+            app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_dot_two"
+            />
+
+        <Button
+            android:id="@+id/bt_show_mne"
+            style="@style/bt_long_in_linearLayout"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/show_mne"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/testTV"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/show_priKey"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

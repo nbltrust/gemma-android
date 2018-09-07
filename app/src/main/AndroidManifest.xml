@@ -183,6 +183,14 @@
         <activity android:name=".ui.activity.BackUpWalletGuideActivity">
         </activity>
 
+        <activity android:name=".ui.activity.BackupMneGuideActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
         <!-- 二维码扫描窗口 -->
         <activity
             android:name=".ui.activity.BarcodeScanActivity"
@@ -202,11 +210,15 @@
             android:name=".ui.activity.BluetoothPairActivity"
             android:configChanges="layoutDirection|locale"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
+        </activity>
+
+        <activity android:name=".ui.activity.ImportBluetoothWalletActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.ConfigBluetoothWalletActivity">
 
         </activity>
 
