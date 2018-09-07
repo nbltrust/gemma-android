@@ -19,13 +19,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tip_memory_your_mne"
+            android:textSize="@dimen/font_3.5"
             android:textColor="@color/darkSlateBlue"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_10"
             android:textColor="@color/steel"
+            android:textSize="@dimen/font_3"
             android:text="@string/tip_use_your_mne"/>
 
 
@@ -42,6 +45,8 @@
     <Button
         android:id="@+id/bt_copied_mne"
         style="@style/bt_long_in_linearLayout"
-        android:layout_margin="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
         android:text="@string/mne_copied"/>
 </LinearLayout>

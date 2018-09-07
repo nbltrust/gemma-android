@@ -210,6 +210,14 @@
 
         </activity>
 
+        <activity android:name=".ui.activity.ImportBluetoothWalletActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.ConfigBluetoothWalletActivity">
+
+        </activity>
+
         <!--蓝牙end -->
 
 

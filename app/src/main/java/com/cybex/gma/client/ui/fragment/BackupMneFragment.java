@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
@@ -8,6 +9,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.widget.LabelsView;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,7 @@ public class BackupMneFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setLabelView();
+        showAlertDialog();
     }
 
 
@@ -94,5 +97,28 @@ public class BackupMneFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    /**
+     * 显示请勿截图Dialog
+     */
+    private void showAlertDialog() {
+        int[] listenedItems = {R.id.tv_i_understand};
+        CustomDialog dialog = new CustomDialog(getContext(),
+                R.layout.dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.tv_i_understand:
+                        dialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
     }
 }
