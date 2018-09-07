@@ -356,11 +356,30 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         String banlanceNumber = "0";
         String netNumber = "0";
         String cpuNumber = "0";
+        String totalPrice = "0";
         String[] banlanceNumberArr = banlance.split(" ");
         if (EmptyUtils.isNotEmpty(banlanceNumberArr)) {
             banlanceNumber = banlanceNumberArr[0];
         }
         if (info != null) {
+            AccountInfo.SelfDelegatedBandwidthBean selfDelegatedBandwidth = info.getSelf_delegated_bandwidth();
+            if (selfDelegatedBandwidth == null){
+                //没有自己给自己抵押的资源,总资产为可用余额
+                 totalPrice = banlanceNumber;
+            }else {
+                //有抵押资源，总资产为可用余额加上抵押资源
+                String[] cpuNumber_arr = selfDelegatedBandwidth.getCpu_weightX().split(" ");
+                String[] netNumber_arr = selfDelegatedBandwidth.getNet_weightX().split(" ");
+
+                cpuNumber = cpuNumber_arr[0];
+                netNumber = netNumber_arr[0];
+
+                String totalResource = AmountUtil.add(cpuNumber, netNumber, 4);
+                totalPrice = AmountUtil.add(totalResource, banlanceNumber, 4);
+            }
+
+
+            /*
             AccountTotalResources totalResources = info.getTotal_resources();
             if (totalResources != null) {
                 String netWeight = totalResources.getNet_weight();
@@ -379,9 +398,29 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                     }
                 }
             }
+            */
 
         }
 
+
+        String totalCNY = AmountUtil.mul(unitPrice, totalPrice, 4);
+        String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 4);
+        totalEOSAmount.setText(totalPrice + " EOS");
+        savedCurrency = SPUtils.getInstance().getInt("currency_unit");
+        switch (savedCurrency) {
+            case CacheConstants.CURRENCY_CNY:
+                totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+                break;
+            case CacheConstants.CURRENCY_USD:
+                totalCNYAmount.setCenterString("≈" + totalUSD + " USD");
+                break;
+            default:
+                totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+                break;
+        }
+
+
+        /*
         String tempPrice = AmountUtil.add(banlanceNumber, netNumber, 4);
 
         String totalPrice = AmountUtil.add(tempPrice, cpuNumber, 4);
@@ -400,6 +439,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
                 break;
         }
+        */
+
     }
 
 

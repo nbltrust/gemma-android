@@ -53,13 +53,13 @@ public class VotePresenter extends XPresenter<VoteFragment> {
      */
     public void fetchBPDetail(int show_num){
         List<VoteNodeVO> list = new ArrayList<>();
-        FetchBPDetailReqParams params = new FetchBPDetailReqParams();
-        params.setNumber(show_num);
+        //FetchBPDetailReqParams params = new FetchBPDetailReqParams();
+        //params.setNumber(show_num);
 
-        String jsonParams = GsonUtils.objectToJson(params);
+        //String jsonParams = GsonUtils.objectToJson(params);
 
-        new FetchBPDetailRequest(FetchBPDetailsResult.class)
-                .setJsonParams(jsonParams)
+        new FetchBPDetailRequest(FetchBPDetailsResult.class, String.valueOf(ParamConstants.BP_NODE_NUMBERS))
+                //.setJsonParams(jsonParams)
                 .FetchBPDetailRequest(new JsonCallback<FetchBPDetailsResult>() {
                     @Override
                     public void onStart(Request<FetchBPDetailsResult, ? extends Request> request) {
@@ -68,7 +68,9 @@ public class VotePresenter extends XPresenter<VoteFragment> {
 
                     @Override
                     public void onSuccess(Response<FetchBPDetailsResult> response) {
-                        if (response.body() != null){
+                        LoggerManager.d(response);
+                        if (response.body() != null && response.body().getResult() != null && response.body()
+                                .getResult().getProducers() != null){
                             List<FetchBPDetailsResult.ResultBean.ProducersBean> producers = response.body().getResult
                                     ().getProducers();
                             if (EmptyUtils.isNotEmpty(producers)){

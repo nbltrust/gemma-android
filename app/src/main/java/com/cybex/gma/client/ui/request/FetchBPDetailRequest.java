@@ -13,18 +13,21 @@ public class FetchBPDetailRequest extends GMAHttpRequest {
      * @param clazz 想要请求返回的Bean
      */
 
-    public FetchBPDetailRequest(Class clazz) {
+    public FetchBPDetailRequest(Class clazz, String number) {
         super(clazz);
-        setMethod(ApiPath.HOST_CENTER_SERVER + ApiMethod.API_FETCH_BP_DETAILS);
+        setMethod(ApiPath.HOST_CENTER_SERVER + ApiMethod.API_FETCH_BP_DETAILS + number);
     }
 
+    /*
     public FetchBPDetailRequest setJsonParams(String jsonParams) {
         super.setJsonParams(jsonParams);
         return this;
     }
+    */
 
     public FetchBPDetailRequest FetchBPDetailRequest(JsonCallback<FetchBPDetailsResult> callback) {
-        postJsonNoRxRequest(TAG, callback);
+        getJsonNoRxRequest(TAG, callback);
+        //postJsonNoRxRequest(TAG, callback);
         return this;
     }
 }

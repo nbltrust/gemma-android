@@ -30,7 +30,7 @@ public interface ApiMethod {
     /**
      * 获取投票节点信息
      */
-    String API_FETCH_BP_DETAILS = "/api/v1/producer/fetch";
+    String API_FETCH_BP_DETAILS = "/api/v1/producer/";
 
 
     /*----------------链上服务器API Mehtod-----------------------*/

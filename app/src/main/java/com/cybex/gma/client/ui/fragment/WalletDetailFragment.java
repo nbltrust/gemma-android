@@ -13,6 +13,7 @@ import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.WalletIDEvent;
+import com.cybex.gma.client.event.WalletNameChangedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
@@ -132,6 +133,10 @@ public class WalletDetailFragment extends XFragment {
 
     @Override
     public void onDestroyView() {
+        WalletNameChangedEvent event = new WalletNameChangedEvent();
+        event.setWalletID(currentID);
+        event.setWalletName(tvWalletNameInDetailPage.getText().toString().trim());
+        EventBusProvider.postSticky(event);
         super.onDestroyView();
         unbinder.unbind();
     }
