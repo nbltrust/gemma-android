@@ -25,6 +25,10 @@
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.READ_SMS"/>
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".GmaApplication"
         android:allowBackup="true"
@@ -204,6 +208,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
+        </activity>
+
+        <activity android:name=".ui.activity.BluetoothScanResultDialogActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:theme="@style/Theme.ActivityDialogStyle">
         </activity>
 
         <!--蓝牙end -->

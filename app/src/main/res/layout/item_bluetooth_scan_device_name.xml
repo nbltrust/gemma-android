@@ -1,24 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="#f9f9f9"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#f9f9f9"
+                android:orientation="vertical">
 
-    <CheckedTextView
-        android:id="@+id/tv_device_name"
+    <RelativeLayout
+        android:id="@+id/view_child_item"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
         android:background="@drawable/bg_shape_radius_blue_selector"
-        android:checked="false"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:textColor="@color/account_change_color_selector"
-        android:textSize="16sp"
-        tools:text="gemma001"/>
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp">
 
-</LinearLayout>
+        <CheckedTextView
+            android:id="@+id/tv_device_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:checked="false"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:textColor="@color/account_change_color_selector"
+            android:textSize="16sp"
+            tools:text="WOOKONG-XXXXXXX"/>
+
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/view_progress"
+            style="@style/SpinKitView.Small.Wave"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            app:SpinKit_Color="#3F51B5"/>
+
+        <com.cybex.gma.client.widget.underline.UnderlineTextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/red_f3323b"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:text="未初始化"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

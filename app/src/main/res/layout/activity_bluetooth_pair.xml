@@ -59,7 +59,6 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="60dp"
         android:background="@drawable/bg_shape_btn_pressed"
-        android:enabled="false"
         android:text="@string/btn_start_pair"
         android:textColor="@color/white"
         android:textSize="16sp"/>

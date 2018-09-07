@@ -272,7 +272,7 @@ public class MultipleStatusView extends RelativeLayout {
         }
     }
 
-    private View inflateView(int layoutId) {
+    public View inflateView(int layoutId) {
         return mInflater.inflate(layoutId, null);
     }
 

@@ -446,6 +446,7 @@
     <string name="btn_start_pair">开始配对</string>
     <string name="title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>
     <string name="title_paire_bluetooth">WOOKONG Bio</string>
+    <string name="empty_no_device">请点击图片重新扫描</string>
     <!--蓝牙钱包配置end -->
 
 

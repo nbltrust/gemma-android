@@ -595,7 +595,7 @@ public class BlueToothWrapper extends Thread {
         }
     }
 
-    BlueToothWrapper(Handler mainHandler) {
+    public BlueToothWrapper(Handler mainHandler) {
         m_wrapperType = INVALID_WRAPPER;
         m_mainHandler = mainHandler;
         m_bAutoSendData = false;
@@ -617,13 +617,13 @@ public class BlueToothWrapper extends Thread {
         m_bAborting = false;
     }
 
-    boolean setInitWrapper(Activity activity) {
+    public boolean setInitWrapper(Activity activity) {
         m_wrapperType = INIT_WRAPPER;
         m_activity = activity;
         return true;
     }
 
-    boolean setEnumWrapper(Activity activity, String strFilter) {
+    public boolean setEnumWrapper(Activity activity, String strFilter) {
         m_wrapperType = ENUM_WRAPPER;
         if (strFilter == null) {
             m_strFilter = "";
@@ -636,7 +636,7 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
-    boolean setConnectWrapper(Activity activity, String strDevName) {
+    public boolean setConnectWrapper(Activity activity, String strDevName) {
         m_wrapperType = CONNECT_WRAPPER;
         if (strDevName == null) {
             return false;
@@ -669,7 +669,7 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
-    boolean setSendCmdWrapper(String strDevName, long devHandle, String strDataString) {
+    public boolean setSendCmdWrapper(String strDevName, long devHandle, String strDataString) {
         m_wrapperType = SEND_CMD_WRAPPER;
         if ((strDevName == null) || (strDataString == null)) {
             return false;
@@ -704,7 +704,7 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
-    boolean setRecvCmdWrapper(String strDevName, long devHandle) {
+    public boolean setRecvCmdWrapper(String strDevName, long devHandle) {
         m_wrapperType = RECV_CMD_WRAPPER;
         if (strDevName == null) {
             return false;
@@ -737,7 +737,7 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
-    boolean setAutoRecvCmdWrapper(String strDevName, long devHandle, String strDataString) {
+    public boolean setAutoRecvCmdWrapper(String strDevName, long devHandle, String strDataString) {
         m_wrapperType = AUTO_RECV_CMD_WRAPPER;
         if (strDevName == null) {
             return false;
@@ -770,12 +770,12 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
-    boolean stopAutoRecvCmd() {
+    public boolean stopAutoRecvCmd() {
         m_bAutoSendData = false;
         return true;
     }
 
-    boolean setSendAndRecvCmdWrapper(String strDevName, long devHandle, String strDataString) {
+    public boolean setSendAndRecvCmdWrapper(String strDevName, long devHandle, String strDataString) {
         m_wrapperType = SEND_AND_RECV_CMD_WRAPPER;
         if (strDataString == null) {
             return false;
@@ -1050,7 +1050,7 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
-    boolean setGetDevListWrapper(Activity activity, String strFilter) {
+    public boolean setGetDevListWrapper(Activity activity, String strFilter) {
         m_wrapperType = GET_DEV_LIST_WRAPPER;
         if (strFilter == null) {
             m_strFilter = "";
@@ -1063,7 +1063,7 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
-    boolean setClearScreenWrapper(long contextHandle, int devIndex) {
+    public boolean setClearScreenWrapper(long contextHandle, int devIndex) {
         m_wrapperType = CLEAR_SCREEN_WRAPPER;
 
         m_contextHandle = contextHandle;
