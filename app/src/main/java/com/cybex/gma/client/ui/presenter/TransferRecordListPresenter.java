@@ -25,14 +25,16 @@ public class TransferRecordListPresenter extends XPresenter<TransferRecordListFr
     public TransferHistoryList requestHistory(final String account_name, final int last_pos, boolean isFirstLoad) {
         TransferHistoryList historyList = null;
 
+        /*
         TransferRecordReqParams params = new TransferRecordReqParams();
         params.account_name = account_name;
         params.last_pos = last_pos;
         params.show_num = HttpConst.PAGE_NUM;
         String json = GsonUtils.objectToJson(params);
+        */
 
-        new TransferHistoryListRequest(TransferHistoryListData.class)
-                .setJsonParams(json)
+        new TransferHistoryListRequest(TransferHistoryListData.class, account_name, last_pos, HttpConst.PAGE_NUM)
+                //.setJsonParams(json)
                 .getTransferHistory(new JsonCallback<TransferHistoryListData>() {
                     @Override
                     public void onStart(Request<TransferHistoryListData, ? extends Request> request) {

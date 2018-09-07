@@ -18,19 +18,23 @@ public class TransferHistoryListRequest extends GMAHttpRequest<TransferHistoryLi
     /**
      * @param clazz 想要请求返回的Bean
      */
-    public TransferHistoryListRequest(Class clazz) {
+    public TransferHistoryListRequest(Class clazz, String account, int pos, int number) {
         super(clazz);
-        setMethod(ApiPath.HOST_CENTER_SERVER + ApiMethod.API_GET_TRANSACTION_HISTORY);
+        setMethod(ApiPath.HOST_CENTER_SERVER + ApiMethod.API_GET_TRANSACTION_HISTORY + account + "/" + pos + "/" +
+                number);
     }
 
 
+    /*
     public TransferHistoryListRequest setJsonParams(String jsonParams) {
         super.setJsonParams(jsonParams);
         return this;
     }
+    */
 
     public TransferHistoryListRequest getTransferHistory(JsonCallback<TransferHistoryListData> callback) {
-        postJsonNoRxRequest(TAG, callback);
+        getJsonNoRxRequest(TAG, callback);
+        //postJsonNoRxRequest(TAG, callback);
 
         return this;
     }
