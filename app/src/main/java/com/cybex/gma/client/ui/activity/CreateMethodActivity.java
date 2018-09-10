@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.fragment.CreateByFriendFragment;
+import com.cybex.gma.client.ui.fragment.ActivateByFriendFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -15,8 +15,8 @@ public class CreateMethodActivity extends XActivity {
 
     @Override
     public void bindUI(View view) {
-        if (findFragment(CreateByFriendFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_create_method, CreateByFriendFragment.newInstance());
+        if (findFragment(ActivateByFriendFragment.class) == null) {
+            loadRootFragment(R.id.fl_container_create_method, ActivateByFriendFragment.newInstance());
         }
 
         //让布局向上移来显示软键盘

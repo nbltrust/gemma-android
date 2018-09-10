@@ -3,6 +3,7 @@ package com.cybex.gma.client.utils;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Build;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -18,6 +19,7 @@ public class SoftHideKeyBoardUtil {
     private int contentHeight;//获取setContentView本来view的高度
     private boolean isfirst = true;//只用获取一次
     private  int statusBarHeight;//状态栏高度
+
     private SoftHideKeyBoardUtil(Activity activity) {
         //1､找到Activity的最外层布局控件，它其实是一个DecorView,它所用的控件就是FrameLayout
         FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);

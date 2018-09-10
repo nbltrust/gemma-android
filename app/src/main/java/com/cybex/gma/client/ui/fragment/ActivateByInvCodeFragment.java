@@ -6,29 +6,32 @@ import android.view.View;
 import com.cybex.gma.client.R;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
-public class CreateByFriendFragment extends XFragment {
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-    public static CreateByFriendFragment newInstance() {
+public class ActivateByInvCodeFragment extends XFragment {
+
+    Unbinder unbinder;
+    public static ActivateByInvCodeFragment newInstance() {
         Bundle args = new Bundle();
-        CreateByFriendFragment fragment = new CreateByFriendFragment();
+        ActivateByInvCodeFragment fragment = new ActivateByInvCodeFragment();
         fragment.setArguments(args);
         return fragment;
     }
-    
+
     @Override
     public void bindUI(View rootView) {
-        
+        unbinder = ButterKnife.bind(this, rootView);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.title_invite_friend),
-                true, true);
+
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_create_by_friend;
+        return R.layout.fragment_activate_by_invcode;
     }
 
     @Override

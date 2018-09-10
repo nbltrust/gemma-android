@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60"
+        android:background="@drawable/shape_corner"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_40"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:hint="@string/input_inv_code"
+            android:textColorHint="@color/cloudy_blue"
+            android:paddingStart="@dimen/dimen_20"
+            android:paddingTop="@dimen/dimen_5"
+            android:paddingBottom="@dimen/dimen_5"
+            android:layout_height="@dimen/dimen_60"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/how_to_get_invCode"
+        android:textColor="@color/cornflowerBlue"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:textSize="@dimen/font_3"/>
+
+    <Button
+        android:text="@string/activate"
+        style="@style/bt_long_in_linearLayout"
+        android:textSize="@dimen/font_3.5"
+        android:layout_marginTop="@dimen/dimen_40"
+        android:layout_marginStart="@dimen/dimen_38"
+        android:layout_marginEnd="@dimen/dimen_38"/>
+
+
+</LinearLayout>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_hint_activate_by_friend_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:text="@string/tip_backup_prikey_friend"
+        android:textColor="@color/scarlet"
+        android:textSize="@dimen/font_3"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_30"
+        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@drawable/shape_corner"
+        android:padding="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/tv_show_priKey_area"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:textColor="@color/darkSlateBlue"
+            android:textSize="@dimen/font_4"
+            android:textStyle="bold"
+            tools:text="1234 bb56 7aea f0b6 81bf b99a a426 ef96 56e1 6889 012b"
+            />
+
+        <Button
+            android:id="@+id/bt_click_to_copy_priKey"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_20"
+            android:background="@drawable/shape_corner_button_cornblue20"
+            android:text="@string/click_to_copy_priKey"
+            android:textColor="@color/cornflowerBlue"
+            android:textSize="@dimen/font_3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginStart="@dimen/dimen_36"
+        android:layout_marginTop="@dimen/dimen_36"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_tip_mid_friend_part_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            tools:text="@string/tip_activate_by_friend_part_one"
+            android:textColor="@color/blueyGrey"
+            android:textSize="@dimen/font_3"/>
+
+        <TextView
+            android:layout_marginStart="@dimen/dimen_2"
+            android:layout_marginEnd="@dimen/dimen_2"
+            android:id="@+id/tv_tip_mid_friend_part_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/tip_activate_by_friend_part_two"
+            android:textColor="@color/blueyGrey"
+            android:textSize="@dimen/font_3"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginStart="@dimen/dimen_36"
+        android:id="@+id/tv_tip_mid_friend_part_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/tip_activate_by_friend_part_three"
+        android:textColor="@color/blueyGrey"
+        android:textSize="@dimen/font_3"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_30"
+        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@drawable/shape_corner"
+        android:padding="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/tv_show_memo_area"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:textColor="@color/darkSlateBlue"
+            android:textSize="@dimen/font_4"
+            android:textStyle="bold"
+            tools:text="stevensteven-EOS1234bb567aeaf0b681b
+fb99aa426ef9656e16889012b"
+            />
+
+        <Button
+            android:id="@+id/bt_click_to_copy_memo"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_20"
+            android:background="@drawable/shape_corner_button_cornblue20"
+            android:text="@string/click_to_copy"
+            android:textColor="@color/cornflowerBlue"
+            android:textSize="@dimen/font_3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_hint_activate_by_friend_bot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blueyGrey"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:text="@string/tip_use_eos_to_activate"
+        android:textSize="@dimen/font_3"/>
+
+</LinearLayout>

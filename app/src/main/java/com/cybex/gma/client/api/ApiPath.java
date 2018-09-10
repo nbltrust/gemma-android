@@ -65,6 +65,9 @@ public class ApiPath {
             + ".com/gemma/gemma_release_desc_en"
             + ".html";
 
+    //signupeoseos Dapp 地址
+    public static final String DAPP_SINGUP_EOS = "https://mp.weixin.qq.com/s/wvrlzbj3EGv78s3gjoCvjw";
+
     /**------------URL 地址配置---------------*/
 
 

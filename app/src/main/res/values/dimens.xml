@@ -405,6 +405,7 @@
     <dimen name="font_4">16sp</dimen>
     <dimen name="font_4.2">17sp</dimen>
     <dimen name="font_4.5">18sp</dimen>
+    <dimen name="font_4.7">19sp</dimen>
     <dimen name="font_7">28sp</dimen>
 
     <dimen name="bottombar_height">48dp</dimen>

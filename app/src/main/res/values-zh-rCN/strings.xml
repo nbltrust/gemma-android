@@ -23,7 +23,7 @@
     <string name="repeatPassword_hint">请再次输入您的密码</string>
     <string name="password_hint_hint">(可选)请输入密码提示</string>
     <string name="invitation_code">邀请码</string>
-    <string name="input_inv_code">输入邀请码</string>
+    <string name="input_inv_code">请输入邀请码</string>
     <string name="get_invitation">获取邀请码</string>
     <string name="agreement">我已阅读并同意</string>
     <string name="agreement2"><u>服务协议</u></string>
@@ -439,6 +439,24 @@
 
     <string name="account_name_err">账户名错误</string>
     <string name="transfer_detail">交易详情</string>
+
+    <!-- 账户激活 -->
+    <string name="title_choose_activate_method">选择EOS账户激活方式</string>
+    <string name="tab_title_activate_by_RMB">付费激活</string>
+    <string name="tab_title_activate_by_friend">邀请好友帮助激活</string>
+    <string name="tab_title_activate_by_exchanges">交易所提现激活</string>
+    <string name="tab_title_activate_by_invCode">邀请码激活</string>
+    <string name="tip_activate_by_rmb">创建EOS账户需要消耗资源，包括CPU，NET，RAM。为了激活账户，你需要购买这些EOS资源</string>
+    <string name="tip_need_to_pay">需支付</string>
+    <string name="wechat_pay">微信支付</string>
+    <string name="tip_backup_prikey_friend">请务必备份私钥，待好友转账激活后，须将私钥再次导入钱包以使用EOS账户。私钥若丢失，账户将不可恢复。</string>
+    <string name="tip_backup_prikey_exchange">请务必备份私钥，待交易所提现激活后，须将私钥再次导入钱包以使用EOS账户。私钥若丢失，账户将不可恢复。</string>
+    <string name="tip_activate_by_friend">请持有EOS的好友向智能合约signupeoseos转账并将以下文字作为备注(memo)，即可完成账户创建。</string>
+    <string name="tip_activate_by_exchange">请从支持memo功能的交易所向智能合约signupeoseos转账并须将以下文字作为备注(memo)，即可完成账户创建。</string>
+
+    <string name="click_to_copy_priKey">复制私钥</string>
+
+
 
 
 </resources>

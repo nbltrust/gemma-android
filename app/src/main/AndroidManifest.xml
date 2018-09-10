@@ -40,11 +40,7 @@
             android:name=".ui.activity.SpalashActivity"
             android:configChanges="layoutDirection|locale"
             android:theme="@style/SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
 
         </activity>
 
@@ -198,11 +194,21 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
         </activity>
+
         <activity
             android:name=".ui.activity.BackUpPrivatekeyActivity"
             android:configChanges="layoutDirection|locale"
             android:screenOrientation="portrait"
             >
+        </activity>
+
+        <!--选择激活方式-->
+        <activity android:name=".ui.activity.ActivateAccountMethodActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
 
