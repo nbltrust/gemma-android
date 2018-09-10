@@ -456,6 +456,10 @@
     <string name="status_un_init">未初始化</string>
     <string name="status_init_no_pair">已经初始化但没有配对信息</string>
     <string name="status_init_pair">已经初始化但没有配对信息</string>
+
+    <string name="tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>
+
+
     <!--蓝牙钱包配置end -->
 
     <!-- 助记词相关-->
@@ -469,6 +473,7 @@
     <string name="tip_import_mne">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
     <string name="import_mne">输入助记词，用空格分割</string>
     <string name="title_verify_mne">验证助记词</string>
+    <string name="btn_import_mne">导入助记词</string>
 
 
 </resources>

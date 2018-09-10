@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,16 +100,24 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (EmptyUtils.isNotEmpty(deviceNameList)) {
                     String deviceName = deviceNameList.get(position).deviceName;
-                    if ((m_scanThread == null) || (m_scanThread.getState() == Thread.State.TERMINATED)) {
-                        connectThread = new BlueToothWrapper(mHandler);
-                        connectThread.setInitContextWithDevNameWrapper(BluetoothScanResultDialogActivity.this,
-                                deviceName);
-                        connectThread.start();
 
-                        updatePosition = position;
-                        deviceNameList.get(position).isShowProgress = true;
-                        mAdapter.notifyDataSetChanged();
+                    int status = deviceNameList.get(position).status;
+                    if (status == -1) {
+                        if ((m_scanThread == null) || (m_scanThread.getState() == Thread.State.TERMINATED)) {
+                            connectThread = new BlueToothWrapper(mHandler);
+                            connectThread.setInitContextWithDevNameWrapper(BluetoothScanResultDialogActivity.this,
+                                    deviceName);
+                            connectThread.start();
+
+                            updatePosition = position;
+                            deviceNameList.get(position).isShowProgress = true;
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    } else if (status == 0) {
+                        showInitWookongBioDialog();
+
                     }
+
                 }
             }
         });
@@ -121,6 +131,40 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+
+    /**
+     * 显示Wookong bio对话框
+     */
+    private void showInitWookongBioDialog() {
+        int[] listenedItems = {R.id.btn_close, R.id.btn_create_wallet, R.id.btn_import_mne};
+
+        CustomFullDialog dialog = new CustomFullDialog(this,
+                R.layout.dialog_un_init_wookongbio, listenedItems, false, Gravity.BOTTOM);
+
+
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.btn_close:
+                        dialog.cancel();
+                        break;
+                    case R.id.btn_create_wallet:
+                        dialog.cancel();
+                        break;
+                    case R.id.btn_import_mne:
+                        dialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+
 
     }
 

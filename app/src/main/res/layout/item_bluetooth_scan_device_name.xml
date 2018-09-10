@@ -2,25 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:background="#f9f9f9"
+                android:minHeight="60dp"
                 android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/view_child_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:background="@drawable/bg_shape_radius_blue_selector"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_shape_radius_blue_selector"
+        android:clickable="true">
 
         <CheckedTextView
             android:id="@+id/tv_device_name"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:checked="false"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
@@ -29,6 +29,19 @@
             android:textSize="13sp"
             tools:text="WOOKONG-XXXXXXX"/>
 
+
+        <com.cybex.gma.client.widget.underline.UnderlineTextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_device_name"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/red_f3323b"
+            android:textSize="12sp"
+            android:visibility="visible"
+            tools:text="未初始化z"/>
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/view_progress"
@@ -39,24 +52,10 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:visibility="gone"
             app:SpinKit_Color="#3F51B5"/>
-
-        <com.cybex.gma.client.widget.underline.UnderlineTextView
-            android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/tv_device_name"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/red_f3323b"
-            android:textSize="12sp"
-            android:visibility="gone"
-            tools:text="未初始化"/>
 
 
     </RelativeLayout>
