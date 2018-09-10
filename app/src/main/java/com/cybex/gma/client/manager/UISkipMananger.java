@@ -27,6 +27,7 @@ import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.activity.ManageWalletActivity;
 import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
+import com.cybex.gma.client.ui.activity.VerifyPriKeyActivity;
 import com.cybex.gma.client.ui.activity.VoteActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
@@ -224,6 +225,14 @@ public final class UISkipMananger {
      */
     public static void launchLogin(Activity context) {
         launchIntent(context, InitialActivity.class);
+    }
+
+    /**
+     * 跳转到验证私钥页面
+     * @param mContext
+     */
+    public static void launchVerifyPriKey(Activity mContext){
+        launchIntent(mContext, VerifyPriKeyActivity.class);
     }
 
 

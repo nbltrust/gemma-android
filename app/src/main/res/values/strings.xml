@@ -190,8 +190,8 @@
     <!-- create methods -->
     <string
         name="tip_use_eos_to_activate"><Data><![CDATA[为保证顺利创建账户，建议至少转<font color="#426bd4"> 2 EOS </font>
-        ：账户将抵押 <font color = "#426bd4"> 0.01 EOS</font>
-        作为CPU，<font color = "#426bd4"> 0.01 EOS</font> 作为NET，
+        ：账户将抵押 <font color = "#426bd4"> 0.1 EOS</font>
+        作为CPU，<font color = "#426bd4"> 0.1 EOS</font> 作为NET，
         剩余<font color="#426bd4"> 1.8 EOS </font>将按现价购买RAM。]]></Data></string>
 
     <string name="method_two_hint">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
@@ -482,6 +482,8 @@
     <string name="ok">确定</string>
     <string name="cancel_cn">取消</string>
     <string name="confirm_payment">确认支付</string>
+    <string name="verify">验证</string>
+    <string name="tip_verify_prikey">请输入备份的私钥，已验证是否正确</string>
 
     <!-- EOS Err Code-->
 

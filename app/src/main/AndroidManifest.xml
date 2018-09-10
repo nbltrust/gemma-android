@@ -41,6 +41,11 @@
             android:configChanges="layoutDirection|locale"
             android:theme="@style/SplashScreen">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
         </activity>
 
@@ -204,11 +209,11 @@
 
         <!--选择激活方式-->
         <activity android:name=".ui.activity.ActivateAccountMethodActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.activity.VerifyPriKeyActivity">
+
         </activity>
 
 

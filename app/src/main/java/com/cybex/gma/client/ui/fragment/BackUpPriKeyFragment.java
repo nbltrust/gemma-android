@@ -12,6 +12,7 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -59,8 +60,7 @@ public class BackUpPriKeyFragment extends XFragment {
             curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
         }
-        AppManager.getAppManager().finishActivity();
-        AppManager.getAppManager().finishActivity(BackUpWalletGuideActivity.class);
+        UISkipMananger.launchVerifyPriKey(getActivity());
     }
 
     public static BackUpPriKeyFragment newInstance() {

@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_60"
+        android:layout_height="@dimen/dimen_50"
         android:background="@drawable/shape_corner"
         android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginEnd="@dimen/dimen_20"
@@ -18,10 +18,13 @@
             android:background="@null"
             android:hint="@string/input_inv_code"
             android:textColorHint="@color/cloudy_blue"
+            android:textColor="@color/darkSlateBlue"
             android:paddingStart="@dimen/dimen_20"
             android:paddingTop="@dimen/dimen_5"
             android:paddingBottom="@dimen/dimen_5"
-            android:layout_height="@dimen/dimen_60"
+            android:layout_height="@dimen/dimen_50"
+            android:textSize="@dimen/font_4"
+            android:textCursorDrawable="@drawable/cursor_custom"
             />
 
     </LinearLayout>
@@ -42,6 +45,5 @@
         android:layout_marginTop="@dimen/dimen_40"
         android:layout_marginStart="@dimen/dimen_38"
         android:layout_marginEnd="@dimen/dimen_38"/>
-
 
 </LinearLayout>

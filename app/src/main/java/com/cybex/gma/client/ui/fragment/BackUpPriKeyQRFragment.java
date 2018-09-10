@@ -48,13 +48,13 @@ public class BackUpPriKeyQRFragment extends XFragment {
     }
 
     @OnClick(R.id.bt_key_saved)
-    public void goToMainTab(){
+    public void onExportFinish(){
         curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(walletID);
         if (EmptyUtils.isEmpty(curWallet)) {
             curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
         }
-        UISkipMananger.launchHome(getActivity());
+        UISkipMananger.launchVerifyPriKey(getActivity());
     }
 
     public static BackUpPriKeyQRFragment newInstance() {

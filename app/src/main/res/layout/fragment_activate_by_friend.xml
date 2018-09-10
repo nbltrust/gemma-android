@@ -62,7 +62,6 @@
             android:id="@+id/tv_tip_mid_friend_part_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             tools:text="@string/tip_activate_by_friend_part_one"
             android:textColor="@color/blueyGrey"
             android:textSize="@dimen/font_3"/>
@@ -75,7 +74,7 @@
             android:layout_height="wrap_content"
             tools:text="@string/tip_activate_by_friend_part_two"
             android:textColor="@color/blueyGrey"
-            android:textSize="@dimen/font_3"/>
+            android:textSize="@dimen/font_3.5"/>
 
     </LinearLayout>
 
