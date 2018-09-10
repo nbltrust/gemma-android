@@ -17,6 +17,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
+import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.utils.EmptyUtils;
 
 import java.util.ArrayList;
@@ -41,9 +42,16 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     private List<BluetoothDeviceVO> deviceNameList = new ArrayList<>();
 
     private BlueToothWrapper m_scanThread;
-    private ScanDeviceHandler mScanHandler;
+    private ScanDeviceHandler mHandler;
+    private BlueToothWrapper connectThread;
+    private BlueToothWrapper getDeviceInfoThread;
+    private BlueToothWrapper getFPListThread;
 
     private static final String DEVICE_PREFIX = "WOOKONG";
+
+    private int updatePosition = -1;
+    private static final int DEVICE_LIFE_CYCLE_PRODUCE = 2;//produce
+    private static final int DEVICE_LIFE_CYCLE_USER = 4;//user
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +61,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        mScanHandler = new ScanDeviceHandler();
+        mHandler = new ScanDeviceHandler();
         this.startScan();
 
         this.initView();
@@ -62,7 +70,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
     private void startScan() {
         if ((m_scanThread == null) || (m_scanThread.getState() == Thread.State.TERMINATED)) {
-            m_scanThread = new BlueToothWrapper(mScanHandler);
+            m_scanThread = new BlueToothWrapper(mHandler);
             m_scanThread.setGetDevListWrapper(this, null);
             m_scanThread.start();
 
@@ -89,8 +97,17 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (EmptyUtils.isNotEmpty(deviceNameList)) {
-                    deviceNameList.get(position).isShowProgress = true;
-                    mAdapter.notifyDataSetChanged();
+                    String deviceName = deviceNameList.get(position).deviceName;
+                    if ((m_scanThread == null) || (m_scanThread.getState() == Thread.State.TERMINATED)) {
+                        connectThread = new BlueToothWrapper(mHandler);
+                        connectThread.setInitContextWithDevNameWrapper(BluetoothScanResultDialogActivity.this,
+                                deviceName);
+                        connectThread.start();
+
+                        updatePosition = position;
+                        deviceNameList.get(position).isShowProgress = true;
+                        mAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         });
@@ -142,7 +159,61 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     break;
                 case BlueToothWrapper.MSG_ENUM_FINISH:
                     break;
+                case BlueToothWrapper.MSG_INIT_CONTEXT_START:
+                    break;
                 case BlueToothWrapper.MSG_INIT_CONTEXT_FINISH:
+                    BlueToothWrapper.InitContextReturnValue returnValue = (BlueToothWrapper.InitContextReturnValue) msg.obj;
+                    if ((returnValue != null) && (returnValue.getReturnValue()
+                            == MiddlewareInterface.PAEW_RET_SUCCESS)) {
+                        deviceNameList.get(updatePosition).isShowProgress = false;
+                        mAdapter.notifyDataSetChanged();
+
+                        if ((getDeviceInfoThread == null) || (getDeviceInfoThread.getState()
+                                == Thread.State.TERMINATED)) {
+                            getDeviceInfoThread = new BlueToothWrapper(mHandler);
+                            getDeviceInfoThread.setGetInfoWrapper(returnValue.getContextHandle()
+                                    , updatePosition);
+                            getDeviceInfoThread.start();
+                        }
+
+                    }
+                    break;
+                case BlueToothWrapper.MSG_GET_DEV_INFO_FINISH:
+                    //获得设备信息
+                    BlueToothWrapper.GetDevInfoReturnValue reValue = (BlueToothWrapper.GetDevInfoReturnValue) msg.obj;
+                    if (reValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        MiddlewareInterface.PAEW_DevInfo devInfo = reValue.getDeviceInfo();
+                        if (devInfo.ucLifeCycle == DEVICE_LIFE_CYCLE_PRODUCE) {
+                            //在全新（或已Format）的设备上
+                            deviceNameList.get(updatePosition).isShowProgress = false;
+                            deviceNameList.get(updatePosition).status = 0;
+                            mAdapter.notifyDataSetChanged();
+
+                        } else if (devInfo.ucLifeCycle == DEVICE_LIFE_CYCLE_USER) {
+                            //在InitPIN之后，LifeCycle变为User
+                            deviceNameList.get(updatePosition).isShowProgress = false;
+                            deviceNameList.get(updatePosition).status = 1;
+                            mAdapter.notifyDataSetChanged();
+
+                            if ((getFPListThread == null) || (getFPListThread.getState()
+                                    == Thread.State.TERMINATED)) {
+                                getFPListThread = new BlueToothWrapper(mHandler);
+                                getFPListThread.setGetFPListWrapper(0, updatePosition);
+                                getFPListThread.start();
+                            }
+                        }
+                    }
+
+                    break;
+                case BlueToothWrapper.MSG_GET_FP_LIST_FINISH:
+                    BlueToothWrapper.GetFPListReturnValue fpListReturnValue = (BlueToothWrapper.GetFPListReturnValue) msg.obj;
+                    if (fpListReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        if (fpListReturnValue.getFPCount() > 0) {
+                            deviceNameList.get(updatePosition).isShowProgress = false;
+                            deviceNameList.get(updatePosition).status = 2;
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
                     break;
                 default:
                     break;

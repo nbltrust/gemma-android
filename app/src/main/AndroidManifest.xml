@@ -183,12 +183,9 @@
         <activity android:name=".ui.activity.BackUpWalletGuideActivity">
         </activity>
 
+        <!-- 备份助记词引导页-->
         <activity android:name=".ui.activity.BackupMneGuideActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <!-- 二维码扫描窗口 -->
@@ -210,7 +207,11 @@
             android:name=".ui.activity.BluetoothPairActivity"
             android:configChanges="layoutDirection|locale"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
         </activity>
 

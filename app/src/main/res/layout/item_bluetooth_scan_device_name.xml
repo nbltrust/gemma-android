@@ -24,8 +24,9 @@
             android:checked="false"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
+            android:paddingRight="10dp"
             android:textColor="@color/account_change_color_selector"
-            android:textSize="16sp"
+            android:textSize="13sp"
             tools:text="WOOKONG-XXXXXXX"/>
 
 
@@ -38,7 +39,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:visibility="gone"
             app:SpinKit_Color="#3F51B5"/>
 
@@ -47,8 +49,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_device_name"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/red_f3323b"
             android:textSize="12sp"
             android:visibility="gone"

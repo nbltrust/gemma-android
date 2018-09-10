@@ -452,6 +452,10 @@
     <string name="hint_set_wookong_password">长度8-16， 建议混合大小写字母、数字及符号</string>
 
     <string name="tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
+
+    <string name="status_un_init">未初始化</string>
+    <string name="status_init_no_pair">已经初始化但没有配对信息</string>
+    <string name="status_init_pair">已经初始化但没有配对信息</string>
     <!--蓝牙钱包配置end -->
 
     <!-- 助记词相关-->
