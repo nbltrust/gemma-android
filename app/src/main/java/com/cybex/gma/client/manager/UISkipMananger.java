@@ -14,6 +14,7 @@ import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
+import com.cybex.gma.client.ui.activity.CreateBluetoothWalletActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
@@ -179,6 +180,17 @@ public final class UISkipMananger {
      */
     public static void lauchFingerprintVerifyActivity(Activity context) {
         launchIntent(context, FingerprintVerifyActivity.class);
+    }
+
+
+    /**
+     * 跳转到创建蓝牙钱包
+     *
+     * @param context
+     */
+    public static void skipCreateBluetoothWalletActivity(Activity context) {
+        launchIntent(context, CreateBluetoothWalletActivity.class);
+
     }
 
 

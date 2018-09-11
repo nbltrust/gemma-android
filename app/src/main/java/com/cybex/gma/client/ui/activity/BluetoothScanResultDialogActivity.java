@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
@@ -43,7 +44,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     private BluetoothScanDeviceListAdapter mAdapter;
     private List<BluetoothDeviceVO> deviceNameList = new ArrayList<>();
 
-    private BlueToothWrapper m_scanThread;
+    private BlueToothWrapper mScanThread;
     private ScanDeviceHandler mHandler;
     private BlueToothWrapper connectThread;
     private BlueToothWrapper getDeviceInfoThread;
@@ -71,10 +72,10 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
 
     private void startScan() {
-        if ((m_scanThread == null) || (m_scanThread.getState() == Thread.State.TERMINATED)) {
-            m_scanThread = new BlueToothWrapper(mHandler);
-            m_scanThread.setGetDevListWrapper(this, null);
-            m_scanThread.start();
+        if ((mScanThread == null) || (mScanThread.getState() == Thread.State.TERMINATED)) {
+            mScanThread = new BlueToothWrapper(mHandler);
+            mScanThread.setGetDevListWrapper(this, null);
+            mScanThread.start();
 
         }
     }
@@ -100,16 +101,16 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (EmptyUtils.isNotEmpty(deviceNameList)) {
                     String deviceName = deviceNameList.get(position).deviceName;
+                    updatePosition = position;
 
                     int status = deviceNameList.get(position).status;
                     if (status == -1) {
-                        if ((m_scanThread == null) || (m_scanThread.getState() == Thread.State.TERMINATED)) {
+                        if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
                             connectThread = new BlueToothWrapper(mHandler);
                             connectThread.setInitContextWithDevNameWrapper(BluetoothScanResultDialogActivity.this,
                                     deviceName);
                             connectThread.start();
 
-                            updatePosition = position;
                             deviceNameList.get(position).isShowProgress = true;
                             mAdapter.notifyDataSetChanged();
                         }
@@ -154,6 +155,8 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         break;
                     case R.id.btn_create_wallet:
                         dialog.cancel();
+                        UISkipMananger.skipCreateBluetoothWalletActivity(BluetoothScanResultDialogActivity.this);
+                        finish();
                         break;
                     case R.id.btn_import_mne:
                         dialog.cancel();
@@ -202,6 +205,13 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 case BlueToothWrapper.MSG_INIT_FINISH:
                     break;
                 case BlueToothWrapper.MSG_ENUM_FINISH:
+                    if (EmptyUtils.isNotEmpty(deviceNameList) && deviceNameList.size() > 0) {
+                        deviceNameList.get(updatePosition).isShowProgress = false;
+                    } else {
+                        statusView.showEmpty();
+                        mScanThread.interrupt();
+                    }
+
                     break;
                 case BlueToothWrapper.MSG_INIT_CONTEXT_START:
                     break;
@@ -219,8 +229,9 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                                     , updatePosition);
                             getDeviceInfoThread.start();
                         }
-
                     }
+
+                    connectThread.interrupt();
                     break;
                 case BlueToothWrapper.MSG_GET_DEV_INFO_FINISH:
                     //获得设备信息
