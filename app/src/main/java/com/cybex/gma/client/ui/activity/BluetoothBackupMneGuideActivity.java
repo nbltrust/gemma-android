@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.fragment.BackUpPriKeyGuideFragment;
 import com.cybex.gma.client.ui.fragment.BackupMneGuideFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
@@ -16,7 +15,7 @@ import me.framework.fragmentation.anim.FragmentAnimator;
  * 备份助记词引导页
  */
 
-public class BackupMneGuideActivity extends XActivity {
+public class BluetoothBackupMneGuideActivity extends XActivity {
 
     @Override
     public void bindUI(View view) {
@@ -34,7 +33,7 @@ public class BackupMneGuideActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_backup_mne_guide;
+        return R.layout.activity_bluetooth_backup_mne_guide;
     }
 
     @Override

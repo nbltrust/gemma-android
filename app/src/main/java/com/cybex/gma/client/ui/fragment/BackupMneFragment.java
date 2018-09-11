@@ -38,7 +38,7 @@ public class BackupMneFragment extends XFragment {
 
     @OnClick(R.id.bt_copied_mne)
     public void goVerifyMne(){
-        start(VerifyMneFragment.newInstance());
+        start(BluetoothVerifyMneFragment.newInstance());
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.view.View;
 import com.cybex.gma.client.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
-public class ConfigBluetoothWalletActivity extends XActivity {
+public class BluetoothConfigWalletActivity extends XActivity {
 
     @Override
     public void bindUI(View rootView) {
@@ -20,7 +20,7 @@ public class ConfigBluetoothWalletActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_import_bluetooth_wallet;
+        return R.layout.activity_bluetooth_import_wallet;
     }
 
     @Override

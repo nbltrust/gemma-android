@@ -5,18 +5,18 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.fragment.ImportBluetoothWalletGuideFragment;
+import com.cybex.gma.client.ui.fragment.BluetoothImportWalletGuideFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
-public class ImportBluetoothWalletActivity extends XActivity {
+public class BluetoothImportWalletActivity extends XActivity {
 
     @Override
     public void bindUI(View view){
-        if (findFragment(ImportBluetoothWalletGuideFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_import_bluetooth_wallet_guide, ImportBluetoothWalletGuideFragment.newInstance());
+        if (findFragment(BluetoothImportWalletGuideFragment.class) == null) {
+            loadRootFragment(R.id.fl_container_import_bluetooth_wallet_guide, BluetoothImportWalletGuideFragment.newInstance());
         }
 
         //让布局向上移来显示软键盘
@@ -29,7 +29,7 @@ public class ImportBluetoothWalletActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_import_bluetooth_wallet;
+        return R.layout.activity_bluetooth_import_wallet;
     }
 
     @Override
