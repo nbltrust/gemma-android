@@ -232,7 +232,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.ImportBluetoothWalletActivity">
+        <activity android:name=".ui.activity.ImportBluetoothWalletActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:theme="@style/Theme.ActivityDialogStyle">
 
         </activity>
 
