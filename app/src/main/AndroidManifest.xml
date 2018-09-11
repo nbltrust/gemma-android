@@ -228,6 +228,8 @@
                   android:theme="@style/Theme.ActivityDialogStyle">
         </activity>
 
+        <activity android:name=".ui.activity.CreateBluetoothWalletActivity"/>
+
         <!--蓝牙end -->
 
 
