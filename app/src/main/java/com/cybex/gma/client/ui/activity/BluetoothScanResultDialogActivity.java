@@ -52,7 +52,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
     private static final String DEVICE_PREFIX = "WOOKONG";
 
-    private int updatePosition = -1;
+    private int updatePosition = 0;
     private static final int DEVICE_LIFE_CYCLE_PRODUCE = 2;//produce
     private static final int DEVICE_LIFE_CYCLE_USER = 4;//user
 

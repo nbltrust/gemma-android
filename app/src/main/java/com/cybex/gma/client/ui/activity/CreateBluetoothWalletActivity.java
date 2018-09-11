@@ -3,6 +3,7 @@ package com.cybex.gma.client.ui.activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -28,6 +29,7 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.SoftHideKeyBoardUtil;
+import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
@@ -101,6 +103,8 @@ public class CreateBluetoothWalletActivity extends XActivity implements Validato
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
 
     private boolean isMask;//true为密文显示密码
+    private BlueToothWrapper blueToothThread;
+    private BluetoothHandler mHandler;
 
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -229,16 +233,16 @@ public class CreateBluetoothWalletActivity extends XActivity implements Validato
     }
 
     @OnClick({R.id.iv_set_pass_mask, R.id.iv_repeat_pass_mask})
-    public  void onMaskClicked(View v){
-        switch (v.getId()){
+    public void onMaskClicked(View v) {
+        switch (v.getId()) {
             case R.id.iv_set_pass_mask:
-                if (isMask){
+                if (isMask) {
                     //如果当前为密文
                     isMask = false;
                     edtSetPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     ivSetPassMask.setImageResource(R.drawable.ic_invisible);
                     edtSetPass.setSelection(getPassword().length());
-                }else {
+                } else {
                     isMask = true;
                     edtSetPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     ivSetPassMask.setImageResource(R.drawable.ic_visible);
@@ -246,13 +250,13 @@ public class CreateBluetoothWalletActivity extends XActivity implements Validato
                 }
                 break;
             case R.id.iv_repeat_pass_mask:
-                if (isMask){
+                if (isMask) {
                     //如果当前为密文
                     isMask = false;
                     edtRepeatPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     ivRepeatPassMask.setImageResource(R.drawable.ic_invisible);
                     edtRepeatPass.setSelection(getRepeatPassword().length());
-                }else {
+                } else {
                     //如果当前为明文
                     isMask = true;
                     edtRepeatPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -358,7 +362,7 @@ public class CreateBluetoothWalletActivity extends XActivity implements Validato
                 if (hasFocus) {
                     setDividerFocusStyle(viewDividerEosName);
                     edtEosName.setTypeface(Typeface.DEFAULT_BOLD);
-                    if (EmptyUtils.isNotEmpty(getEOSUserName())){
+                    if (EmptyUtils.isNotEmpty(getEOSUserName())) {
                         ivEosNameClear.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -382,7 +386,7 @@ public class CreateBluetoothWalletActivity extends XActivity implements Validato
                     setDividerFocusStyle(viewDividerSetPass);
                     tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                     edtSetPass.setTypeface(Typeface.DEFAULT_BOLD);
-                    if (EmptyUtils.isNotEmpty(getPassword())){
+                    if (EmptyUtils.isNotEmpty(getPassword())) {
                         ivSetPassClear.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -474,6 +478,7 @@ public class CreateBluetoothWalletActivity extends XActivity implements Validato
         validator.setValidationListener(this);
         isMask = true;
         initView();
+
     }
 
     @Override
@@ -764,7 +769,7 @@ public class CreateBluetoothWalletActivity extends XActivity implements Validato
         dialog.show();
     }
 
-    private void scheduleDismiss(){
+    private void scheduleDismiss() {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -789,8 +794,8 @@ public class CreateBluetoothWalletActivity extends XActivity implements Validato
         return res;
     }
 
-    public boolean isPasswordMatch(){
-        if (getPassword().equals(getRepeatPassword()))return true;
+    public boolean isPasswordMatch() {
+        if (getPassword().equals(getRepeatPassword())) { return true; }
         return false;
     }
 
@@ -801,9 +806,36 @@ public class CreateBluetoothWalletActivity extends XActivity implements Validato
     @Override
     public void onValidationSucceeded() {
         if (isUserNameValid()) {
+            //设置初始化PIN
+            String password = String.valueOf(edtSetPass.getText());
 
+            mHandler = new BluetoothHandler();
+            blueToothThread = new BlueToothWrapper(mHandler);
+            blueToothThread.setInitPINWrapper(0, 0, password);
+            blueToothThread.start();
         }
     }
+
+
+    class BluetoothHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case BlueToothWrapper.MSG_INIT_PIN_START:
+                    showProgressDialog(getString(R.string.progress_set_pin));
+                    break;
+                case BlueToothWrapper.MSG_INIT_PIN_FINISH:
+                    dissmisProgressDialog();
+                    //跳转到备份助记词
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
 
     /**
      * 验证失败回调

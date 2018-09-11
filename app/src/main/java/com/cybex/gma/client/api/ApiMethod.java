@@ -32,6 +32,11 @@ public interface ApiMethod {
      */
     String API_FETCH_BP_DETAILS = "/api/v1/producer/fetch";
 
+    /**
+     * 蓝牙用户注册接口
+     */
+    String API_BLUETOOTH_REGISTER_ACCOUNT = "/api/v1/account/new";
+
 
     /*----------------链上服务器API Mehtod-----------------------*/
 
@@ -68,7 +73,7 @@ public interface ApiMethod {
     String API_GET_KEY_ACCOUNTS = "/v1/history/get_key_accounts";
 
     /**
-     *根据txId哈希值查询当前transaction信息
+     * 根据txId哈希值查询当前transaction信息
      * 创建钱包使用
      */
     String API_GET_TRANSACTION = "/v1/history/get_transaction";
@@ -83,8 +88,6 @@ public interface ApiMethod {
      * 估算EOS与RAM间换算价格使用
      */
     String API_GET_RAM_MARKET = "/v1/chain/get_table_rows";
-
-
 
 
 }
