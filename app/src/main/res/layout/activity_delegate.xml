@@ -1,8 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/fl_container_delegate"
+<LinearLayout
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
 
-</FrameLayout>
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <ScrollView
+        android:id="@+id/scroll_delegate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/brief_info"
+                    android:textColor="@color/steel"
+                    android:textSize="@dimen/font_3.5"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:background="@drawable/shape_corner"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_10"
+                    android:translationZ="@dimen/dimen_3"
+                    >
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/superTextView_cpu_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        title:sLeftTextColor="@color/steel"
+                        title:sLeftTextSize="@dimen/font_3.5"
+                        title:sLeftTextString="@string/CPU"
+                        title:sRightTextColor="@color/darkSlateBlueTwo"
+                        title:sRightTextSize="@dimen/font_3"
+                        title:sRightTextString="-- EOS"
+                        title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                        title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                        title:sUseShape="true"
+                        >
+
+                    </com.allen.library.SuperTextView>
+
+                    <com.cybex.base.view.progress.RoundCornerProgressBar
+                        android:id="@+id/progressbar_cpu"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_4"
+                        android:layout_margin="@dimen/dimen_10"
+                        title:rcBackgroundColor="@color/cloudyBlue"
+                        title:rcBackgroundPadding="0dp"
+                        title:rcMax="100"
+                        title:rcProgress="30"
+                        title:rcProgressColor="@color/dark_sky_blue"
+                        title:rcRadius="10dp"
+                        >
+
+
+                    </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/superTextView_cpu_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        title:sLeftIconHeight="@dimen/dimen_8"
+                        title:sLeftIconRes="@drawable/ic_dot_blue"
+                        title:sLeftIconWidth="@dimen/dimen_8"
+                        title:sLeftTextColor="@color/cloudyBlue"
+                        title:sLeftTextSize="@dimen/font_3"
+                        title:sLeftTextString="已用 -- ms"
+                        title:sRightTextColor="@color/cloudyBlue"
+                        title:sRightTextSize="@dimen/font_3"
+                        title:sRightTextString="总量 -- ms"
+                        title:sUseShape="true"
+                        >
+
+                    </com.allen.library.SuperTextView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="@dimen/dimen_10"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:background="@color/paleGrey"
+                        android:layerType="software">
+                    </View>
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/superTextView_net_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        title:sLeftTextColor="@color/steel"
+                        title:sLeftTextSize="@dimen/font_3.5"
+                        title:sLeftTextString="@string/NET"
+                        title:sRightTextColor="@color/darkSlateBlueTwo"
+                        title:sRightTextSize="@dimen/font_3"
+                        title:sRightTextString="-- EOS"
+                        title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                        title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                        title:sUseShape="true"
+                        >
+
+                    </com.allen.library.SuperTextView>
+
+                    <com.cybex.base.view.progress.RoundCornerProgressBar
+                        android:id="@+id/progressbar_net"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_4"
+                        android:layout_margin="@dimen/dimen_10"
+                        title:rcBackgroundColor="@color/cloudyBlue"
+                        title:rcBackgroundPadding="0dp"
+                        title:rcMax="100"
+                        title:rcProgress="10"
+                        title:rcProgressColor="@color/dark_sky_blue"
+                        title:rcRadius="10dp"
+                        >
+
+
+                    </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/superTextView_net_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        title:sLeftIconHeight="@dimen/dimen_8"
+                        title:sLeftIconRes="@drawable/ic_dot_blue"
+                        title:sLeftIconWidth="@dimen/dimen_8"
+                        title:sLeftTextColor="@color/cloudyBlue"
+                        title:sLeftTextSize="@dimen/font_3"
+                        title:sLeftTextString="已用 -- KB"
+                        title:sRightTextColor="@color/cloudyBlue"
+                        title:sRightTextSize="@dimen/font_3"
+                        title:sRightTextString="总量 -- KB"
+                        title:sUseShape="true"
+                        >
+
+                    </com.allen.library.SuperTextView>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:layout_weight="1"
+                        android:text="@string/delegate"
+                        android:textColor="@color/steel"
+                        android:textSize="@dimen/font_3.5"/>
+
+                    <TextView
+                        android:id="@+id/tv_remain_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:text="@string/remain_balance"
+                        android:textColor="@color/dusk"
+                        android:textSize="@dimen/font_3"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:background="@drawable/shape_corner"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_12"
+                    android:translationZ="@dimen/dimen_3">
+
+                    <com.cybex.base.view.tablayout.CommonTabLayout
+                        android:id="@+id/STL_delegate"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_48"
+                        title:tl_indicator_color="@color/colorTabIndicator"
+                        title:tl_indicator_gravity="BOTTOM"
+                        title:tl_indicator_height="1dp"
+                        title:tl_indicator_style="NORMAL"
+                        title:tl_indicator_width="120dp"
+                        title:tl_indicator_width_equal_title="false"
+                        title:tl_tab_padding="6dp"
+                        title:tl_tab_space_equal="true"
+                        title:tl_textBold="SELECT"
+                        title:tl_textSelectColor="@color/colorTabTextSelect"
+                        title:tl_textUnselectColor="@color/colorTabTextUnSelect"
+                        title:tl_textsize="16dp"
+                        title:tl_underline_color="#E7E9F8"
+                        >
+
+                    </com.cybex.base.view.tablayout.CommonTabLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/di_notify_bg"/>
+
+                    <include
+                        android:id="@+id/layout_tab_delegate"
+                        layout="@layout/ui_tab_delegte">
+                    </include>
+
+                    <include
+                        android:id="@+id/layout_tab_undelegate"
+                        layout="@layout/ui_tab_undelegate"
+                        android:visibility="gone">
+                    </include>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2">
+                </View>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_delegate_cpu_net"
+                style="@style/bt_long_in_linearLayout"
+                android:layout_margin="@dimen/dimen_30"
+                android:text="@string/delegate_cpu_net"
+                />
+
+            <Button
+                android:id="@+id/bt_undelegate_cpu_net"
+                style="@style/bt_long_in_linearLayout"
+                android:layout_margin="@dimen/dimen_30"
+                android:text="@string/undelegate"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+

@@ -208,11 +208,16 @@
         </activity>
 
         <!--选择激活方式-->
-        <activity android:name=".ui.activity.ActivateAccountMethodActivity">
+        <activity android:name=".ui.activity.ActivateAccountMethodActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
+
 
         </activity>
 
-        <activity android:name=".ui.activity.VerifyPriKeyActivity">
+        <activity android:name=".ui.activity.VerifyPriKeyActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
 
         </activity>
 

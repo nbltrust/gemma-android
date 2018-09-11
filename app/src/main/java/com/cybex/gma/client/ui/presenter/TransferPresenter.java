@@ -73,15 +73,17 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             getV().dissmisProgressDialog();
 
                             try {
-                                String err_info_string = response.getRawResponse().body().string();
-                                try {
-                                    JSONObject obj = new JSONObject(err_info_string);
-                                    JSONObject error = obj.optJSONObject("error");
-                                    String err_code = error.optString("code");
-                                    handleEosErrorCode(err_code);
+                                if (response.body() != null && response.getRawResponse().body() != null){
+                                    String err_info_string = response.getRawResponse().body().string();
+                                    try {
+                                        JSONObject obj = new JSONObject(err_info_string);
+                                        JSONObject error = obj.optJSONObject("error");
+                                        String err_code = error.optString("code");
+                                        handleEosErrorCode(err_code);
 
-                                }catch (JSONException ee){
-                                    ee.printStackTrace();
+                                    }catch (JSONException ee){
+                                        ee.printStackTrace();
+                                    }
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();

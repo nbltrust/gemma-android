@@ -320,9 +320,6 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
     }
 
-    public void updateUI(){
-
-    }
     /**
      * 显示确认抵押dialog
      */
