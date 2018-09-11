@@ -26,7 +26,6 @@ import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
-import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.SoftHideKeyBoardUtil;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -57,7 +56,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import static com.cybex.gma.client.config.ParamConstants.CN;
 import static com.cybex.gma.client.config.ParamConstants.EN;
 
-public class CreateBluetoothWalletActivity extends XActivity<CreateWalletPresenter> implements Validator.ValidationListener {
+public class CreateBluetoothWalletActivity extends XActivity implements Validator.ValidationListener {
 
     @BindView(R.id.iv_set_pass_mask) ImageView ivSetPassMask;
     @BindView(R.id.iv_repeat_pass_mask) ImageView ivRepeatPassMask;
@@ -488,8 +487,8 @@ public class CreateBluetoothWalletActivity extends XActivity<CreateWalletPresent
     }
 
     @Override
-    public CreateWalletPresenter newP() {
-        return new CreateWalletPresenter();
+    public Object newP() {
+        return null;
     }
 
     public void setEOSNameValidStyle() {
