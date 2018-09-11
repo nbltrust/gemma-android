@@ -56,7 +56,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import static com.cybex.gma.client.config.ParamConstants.CN;
 import static com.cybex.gma.client.config.ParamConstants.EN;
 
-public class CreateBluetoothWalletActivity extends XActivity implements Validator.ValidationListener {
+public class BluetoothCreateWalletActivity extends XActivity implements Validator.ValidationListener {
 
     @BindView(R.id.iv_set_pass_mask) ImageView ivSetPassMask;
     @BindView(R.id.iv_repeat_pass_mask) ImageView ivRepeatPassMask;
@@ -483,7 +483,7 @@ public class CreateBluetoothWalletActivity extends XActivity implements Validato
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_create_bluetooth_wallet;
+        return R.layout.activity_bluetooth_create_wallet;
     }
 
     @Override

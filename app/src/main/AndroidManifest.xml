@@ -125,7 +125,7 @@
 
         <!-- 创建蓝牙钱包界面 -->
         <activity
-            android:name=".ui.activity.CreateBluetoothWalletActivity"
+            android:name=".ui.activity.BluetoothCreateWalletActivity"
             android:configChanges="layoutDirection|locale"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
@@ -139,7 +139,7 @@
 
         </activity>
         <!-- 配置蓝牙钱包界面 -->
-        <activity android:name=".ui.activity.ConfigBluetoothWalletActivity"
+        <activity android:name=".ui.activity.BluetoothConfigWalletActivity"
                   android:configChanges="layoutDirection|locale"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan">
@@ -208,7 +208,7 @@
         </activity>
 
         <!-- 备份助记词引导页-->
-        <activity android:name=".ui.activity.BackupMneGuideActivity">
+        <activity android:name=".ui.activity.BluetoothBackupMneGuideActivity">
 
         </activity>
 
@@ -235,7 +235,7 @@
 
         </activity>
 
-        <activity android:name=".ui.activity.ImportBluetoothWalletActivity"
+        <activity android:name=".ui.activity.BluetoothImportWalletActivity"
                   android:configChanges="layoutDirection|locale"
                   android:theme="@style/Theme.ActivityDialogStyle">
 
@@ -247,7 +247,7 @@
                   android:theme="@style/Theme.ActivityDialogStyle">
         </activity>
 
-        <activity android:name=".ui.activity.CreateBluetoothWalletActivity"/>
+        <activity android:name=".ui.activity.BluetoothCreateWalletActivity"/>
 
         <!--蓝牙end -->
 

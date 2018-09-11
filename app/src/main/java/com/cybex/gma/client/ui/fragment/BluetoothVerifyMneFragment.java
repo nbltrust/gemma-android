@@ -20,7 +20,7 @@ import butterknife.Unbinder;
  * 验证助记词页面
  */
 
-public class VerifyMneFragment extends XFragment {
+public class BluetoothVerifyMneFragment extends XFragment {
 
     Unbinder unbinder;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
@@ -32,16 +32,16 @@ public class VerifyMneFragment extends XFragment {
     List<String> selectedLabels = new ArrayList<>();//被点选的Label
     List<String> unSelectedLabels = new ArrayList<>();
 
-    public static VerifyMneFragment newInstance() {
+    public static BluetoothVerifyMneFragment newInstance() {
         Bundle args = new Bundle();
-        VerifyMneFragment fragment = new VerifyMneFragment();
+        BluetoothVerifyMneFragment fragment = new BluetoothVerifyMneFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void bindUI(View rootView) {
-        unbinder = ButterKnife.bind(VerifyMneFragment.this, rootView);
+        unbinder = ButterKnife.bind(BluetoothVerifyMneFragment.this, rootView);
         setNavibarTitle(getResources().getString(R.string.title_verify_mne), true, false);
     }
 
@@ -158,7 +158,7 @@ public class VerifyMneFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_verify_mne;
+        return R.layout.fragment_bluetooth_verify_mne;
     }
 
     @Override

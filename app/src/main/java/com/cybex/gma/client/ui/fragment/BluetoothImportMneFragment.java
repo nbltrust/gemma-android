@@ -9,15 +9,12 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * 导入蓝牙钱包引导页
- */
-public class ImportBluetoothWalletGuideFragment extends XFragment {
+public class BluetoothImportMneFragment extends XFragment {
 
     Unbinder unbinder;
-    public static ImportBluetoothWalletGuideFragment newInstance() {
+    public static BluetoothImportMneFragment newInstance() {
         Bundle args = new Bundle();
-        ImportBluetoothWalletGuideFragment fragment = new ImportBluetoothWalletGuideFragment();
+        BluetoothImportMneFragment fragment = new BluetoothImportMneFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -29,12 +26,12 @@ public class ImportBluetoothWalletGuideFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.import_wallet), true, true);
+        setNavibarTitle(getResources().getString(R.string.import_wallet), true, false);
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_import_bluetooth_wallet_guide;
+        return R.layout.fragment_bluetooth_import_mne;
     }
 
     @Override
@@ -52,6 +49,4 @@ public class ImportBluetoothWalletGuideFragment extends XFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
 }
