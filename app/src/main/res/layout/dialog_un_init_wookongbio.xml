@@ -45,6 +45,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/bg_shape_radius_white_with_border"
         android:text="@string/btn_import_mne"
