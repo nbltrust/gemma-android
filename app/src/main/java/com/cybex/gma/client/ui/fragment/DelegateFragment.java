@@ -44,7 +44,7 @@ import butterknife.Unbinder;
  * 资源抵押界面
  */
 
-public class DelegateFragment extends XFragment<DelegatePresenter> {
+public class DelegateFragment extends XFragment {
 
     private final int OPERATION_DELEGATE = 1;
     private final int OPERATION_UNDELEGATE = 2;
@@ -194,8 +194,8 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
     }
 
     @Override
-    public DelegatePresenter newP() {
-        return new DelegatePresenter();
+    public Object newP() {
+        return null;
     }
 
     @Override
@@ -445,8 +445,8 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
                                             String stake_cpu_quantity = AmountUtil.add(getDelegateCpu(), "0", 4) + " EOS";
-                                            getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
-                                                    stake_cpu_quantity, key);
+                                            //getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
+                                             //       stake_cpu_quantity, key);
                                             dialog.cancel();
                                         }
                                     }else{
@@ -483,8 +483,9 @@ public class DelegateFragment extends XFragment<DelegatePresenter> {
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
                                             String unstake_cpu_quantity = AmountUtil.add(getUndelegateCpu(), "0", 4) + " EOS";
-                                            getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
-                                                    unstake_cpu_quantity, key);
+                                            //getP().executeUndelegateLogic(curEOSName, curEOSName,
+                                            // unstake_net_quantity,
+                                             //       unstake_cpu_quantity, key);
                                             dialog.cancel();
                                         }
                                     }else{

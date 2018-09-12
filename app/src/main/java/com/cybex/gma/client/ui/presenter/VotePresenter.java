@@ -8,7 +8,6 @@ import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.VoteFragment;
-import com.cybex.gma.client.ui.model.request.FetchBPDetailReqParams;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.request.VoteAbiJsonToBinReqParams;
@@ -47,11 +46,13 @@ public class VotePresenter extends XPresenter<VoteFragment> {
     private static final String VALUE_PROXY = "";
     private static final String VALUE_COMPRESSION = "none";
     private static final String VALUE_ACTION = "voteproducer";
+
     /**
      * 获取可投票的节点信息
+     *
      * @param show_num
      */
-    public void fetchBPDetail(int show_num){
+    public void fetchBPDetail(int show_num) {
         List<VoteNodeVO> list = new ArrayList<>();
         //FetchBPDetailReqParams params = new FetchBPDetailReqParams();
         //params.setNumber(show_num);
@@ -70,11 +71,11 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     public void onSuccess(Response<FetchBPDetailsResult> response) {
                         LoggerManager.d(response);
                         if (response.body() != null && response.body().getResult() != null && response.body()
-                                .getResult().getProducers() != null){
+                                .getResult().getProducers() != null) {
                             List<FetchBPDetailsResult.ResultBean.ProducersBean> producers = response.body().getResult
                                     ().getProducers();
-                            if (EmptyUtils.isNotEmpty(producers)){
-                                for (FetchBPDetailsResult.ResultBean.ProducersBean producer : producers){
+                            if (EmptyUtils.isNotEmpty(producers)) {
+                                for (FetchBPDetailsResult.ResultBean.ProducersBean producer : producers) {
                                     VoteNodeVO curNodeVO = new VoteNodeVO();
                                     curNodeVO.setAccount(producer.getAccount());
                                     curNodeVO.setAlias(producer.getAlias());
@@ -84,13 +85,13 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                                     curNodeVO.setPercentage(percentage);
                                     list.add(curNodeVO);
                                 }
-                                if (EmptyUtils.isNotEmpty(getV())){
+                                if (EmptyUtils.isNotEmpty(getV())) {
                                     getV().initAdapterData(list);
                                     getTotalDelegatedRes();
                                 }
                             }
-                        }else {
-                            if (EmptyUtils.isNotEmpty(getV())){
+                        } else {
+                            if (EmptyUtils.isNotEmpty(getV())) {
                                 getV().showEmptyOrFinish();
                             }
                         }
@@ -99,30 +100,35 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     @Override
                     public void onError(Response<FetchBPDetailsResult> response) {
                         super.onError(response);
-                        if (EmptyUtils.isNotEmpty(getV())){
-                            GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.load_node_info_fail));
+                        if (EmptyUtils.isNotEmpty(getV())) {
+                            GemmaToastUtils.showLongToast(
+                                    getV().getResources().getString(R.string.load_node_info_fail));
                             getV().showError();
-
-                            try {
-                                String err_info_string = response.getRawResponse().body().string();
+                            if (response.body() != null && response.getRawResponse().body() != null) {
                                 try {
-                                    JSONObject obj = new JSONObject(err_info_string);
-                                    JSONObject error = obj.optJSONObject("error");
-                                    String err_code = error.optString("code");
-                                    handleEosErrorCode(err_code);
 
-                                }catch (JSONException ee){
-                                    ee.printStackTrace();
+                                    String err_info_string = response.getRawResponse().body().string();
+                                    try {
+                                        JSONObject obj = new JSONObject(err_info_string);
+                                        JSONObject error = obj.optJSONObject("error");
+                                        String err_code = error.optString("code");
+                                        handleEosErrorCode(err_code);
+
+                                    } catch (JSONException ee) {
+                                        ee.printStackTrace();
+                                    }
+
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (IOException e) {
-                                e.printStackTrace();
                             }
                         }
                     }
                 });
     }
 
-    public void executeVoteLogic(String from, List<String> producers, String privateKey ) {
+    public void executeVoteLogic(String from, List<String> producers, String privateKey) {
         //组装abi_json_to_bin请求参数
         VoteAbiJsonToBinReqParams params = new VoteAbiJsonToBinReqParams();
         params.setCode(VALUE_CODE);
@@ -142,7 +148,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                 .getAbiJsonToBean(new JsonCallback<AbiJsonToBeanResult>() {
                     @Override
                     public void onSuccess(Response<AbiJsonToBeanResult> response) {
-                        if (response.body() != null){
+                        if (response.body() != null) {
                             String abistr = response.body().binargs;
                             LoggerManager.d("binargs", abistr);
 
@@ -153,20 +159,21 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-
-                        try {
-                            String err_info_string = response.getRawResponse().body().string();
+                        if (response.body() != null && response.getRawResponse().body() != null){
                             try {
-                                JSONObject obj = new JSONObject(err_info_string);
-                                JSONObject error = obj.optJSONObject("error");
-                                String err_code = error.optString("code");
-                                handleEosErrorCode(err_code);
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
 
-                            }catch (JSONException ee){
-                                ee.printStackTrace();
+                                } catch (JSONException ee) {
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
                     }
                 });
@@ -183,7 +190,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                             LoggerManager.d("config info:" + infostr);
                             //C++库获取Transaction交易体
                             String transactionStr = JNIUtil.signTransaction_voteproducer(privateKey, VALUE_CONTRACT,
-                                    from, infostr, abiStr, 0,0,120);
+                                    from, infostr, abiStr, 0, 0, 120);
                             LoggerManager.d("transactionJson:" + transactionStr);
 
                             TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
@@ -205,7 +212,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
 
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                            if (EmptyUtils.isNotEmpty(getV())){
+                            if (EmptyUtils.isNotEmpty(getV())) {
                                 getV().dissmisProgressDialog();
                             }
                         }
@@ -215,22 +222,23 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     public void onError(Response<String> response) {
                         super.onError(response);
                         GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                        if (EmptyUtils.isNotEmpty(getV())){
+                        if (EmptyUtils.isNotEmpty(getV())) {
                             getV().dissmisProgressDialog();
-
-                            try {
-                                String err_info_string = response.getRawResponse().body().string();
+                            if (response.body() != null && response.getRawResponse().body() != null){
                                 try {
-                                    JSONObject obj = new JSONObject(err_info_string);
-                                    JSONObject error = obj.optJSONObject("error");
-                                    String err_code = error.optString("code");
-                                    handleEosErrorCode(err_code);
+                                    String err_info_string = response.getRawResponse().body().string();
+                                    try {
+                                        JSONObject obj = new JSONObject(err_info_string);
+                                        JSONObject error = obj.optJSONObject("error");
+                                        String err_code = error.optString("code");
+                                        handleEosErrorCode(err_code);
 
-                                }catch (JSONException ee){
-                                    ee.printStackTrace();
+                                    } catch (JSONException ee) {
+                                        ee.printStackTrace();
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (IOException e) {
-                                e.printStackTrace();
                             }
                         }
                     }
@@ -248,29 +256,30 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     public void onError(Response<String> response) {
                         super.onError(response);
 
-                        if (EmptyUtils.isNotEmpty(getV())){
+                        if (EmptyUtils.isNotEmpty(getV())) {
                             getV().dissmisProgressDialog();
-
-                            try {
-                                String err_info_string = response.getRawResponse().body().string();
+                            if (response.body() != null && response.getRawResponse().body() != null){
                                 try {
-                                    JSONObject obj = new JSONObject(err_info_string);
-                                    JSONObject error = obj.optJSONObject("error");
-                                    String err_code = error.optString("code");
-                                    handleEosErrorCode(err_code);
+                                    String err_info_string = response.getRawResponse().body().string();
+                                    try {
+                                        JSONObject obj = new JSONObject(err_info_string);
+                                        JSONObject error = obj.optJSONObject("error");
+                                        String err_code = error.optString("code");
+                                        handleEosErrorCode(err_code);
 
-                                }catch (JSONException ee){
-                                    ee.printStackTrace();
+                                    } catch (JSONException ee) {
+                                        ee.printStackTrace();
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (IOException e) {
-                                e.printStackTrace();
                             }
                         }
                     }
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        if (EmptyUtils.isNotEmpty(getV())){
+                        if (EmptyUtils.isNotEmpty(getV())) {
                             getV().dissmisProgressDialog();
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                                 String jsonStr = response.body();
@@ -289,9 +298,9 @@ public class VotePresenter extends XPresenter<VoteFragment> {
     /**
      * 获取已抵押的资源数
      */
-    public void getTotalDelegatedRes(){
+    public void getTotalDelegatedRes() {
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if(EmptyUtils.isNotEmpty(curWallet)){
+        if (EmptyUtils.isNotEmpty(curWallet)) {
             final String eosName = curWallet.getCurrentEosName();
             GetAccountInfoReqParams params = new GetAccountInfoReqParams();
             params.setAccount_name(eosName);
@@ -303,42 +312,43 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     .getAccountInfo(new JsonCallback<AccountInfo>() {
                         @Override
                         public void onStart(Request<AccountInfo, ? extends Request> request) {
-                           super.onStart(request);
+                            super.onStart(request);
                         }
 
                         @Override
                         public void onSuccess(Response<AccountInfo> response) {
-                            if(response != null && response.body() != null){
+                            if (response != null && response.body() != null) {
                                 AccountInfo info = response.body();
-                                if (EmptyUtils.isNotEmpty(info)){
+                                if (EmptyUtils.isNotEmpty(info)) {
                                     AccountInfo.SelfDelegatedBandwidthBean resource = info
                                             .getSelf_delegated_bandwidth();
-                                   if (EmptyUtils.isNotEmpty(resource)){
-                                       //有抵押资源
-                                       String delegated_cpu = resource.getCpu_weightX();
-                                       String delegated_net = resource.getNet_weightX();
+                                    if (EmptyUtils.isNotEmpty(resource)) {
+                                        //有抵押资源
+                                        String delegated_cpu = resource.getCpu_weightX();
+                                        String delegated_net = resource.getNet_weightX();
 
-                                       String[] cpu_amount_arr = delegated_cpu.split(" ");
-                                       String[] net_amount_arr = delegated_net.split(" ");
+                                        String[] cpu_amount_arr = delegated_cpu.split(" ");
+                                        String[] net_amount_arr = delegated_net.split(" ");
 
-                                       String cpu_amount = cpu_amount_arr[0];
-                                       String net_amount = net_amount_arr[0];
+                                        String cpu_amount = cpu_amount_arr[0];
+                                        String net_amount = net_amount_arr[0];
 
-                                       String total_resource = AmountUtil.add(cpu_amount, net_amount, 4) + " EOS";
-                                       if (EmptyUtils.isNotEmpty(getV())){
-                                           getV().hasDelegatedRes(true);
-                                           getV().getTotalDelegatedResource(total_resource);
-                                           getV().showContent();
-                                       }
+                                        String total_resource = AmountUtil.add(cpu_amount, net_amount, 4) + " EOS";
+                                        if (EmptyUtils.isNotEmpty(getV())) {
+                                            getV().hasDelegatedRes(true);
+                                            getV().getTotalDelegatedResource(total_resource);
+                                            getV().showContent();
+                                        }
 
-                                   }else{
-                                       //该账号没有给自己抵押资源
-                                       if (EmptyUtils.isNotEmpty(getV())){
-                                           getV().hasDelegatedRes(false);
-                                           getV().showEmptyOrFinish();
-                                           GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.not_enough_delegated_res));
-                                       }
-                                   }
+                                    } else {
+                                        //该账号没有给自己抵押资源
+                                        if (EmptyUtils.isNotEmpty(getV())) {
+                                            getV().hasDelegatedRes(false);
+                                            getV().showEmptyOrFinish();
+                                            GemmaToastUtils.showLongToast(
+                                                    getV().getResources().getString(R.string.not_enough_delegated_res));
+                                        }
+                                    }
                                 }
                             }
                             getV().dissmisProgressDialog();
@@ -346,23 +356,25 @@ public class VotePresenter extends XPresenter<VoteFragment> {
 
                         @Override
                         public void onError(Response<AccountInfo> response) {
-                            if (EmptyUtils.isNotEmpty(getV())){
+                            if (EmptyUtils.isNotEmpty(getV())) {
                                 getV().showError();
-                                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.load_avail_res_fail));
-
-                                try {
-                                    String err_info_string = response.getRawResponse().body().string();
+                                GemmaToastUtils.showLongToast(
+                                        getV().getResources().getString(R.string.load_avail_res_fail));
+                                if (response.body() != null && response.getRawResponse().body() != null){
                                     try {
-                                        JSONObject obj = new JSONObject(err_info_string);
-                                        JSONObject error = obj.optJSONObject("error");
-                                        String err_code = error.optString("code");
-                                        handleEosErrorCode(err_code);
+                                        String err_info_string = response.getRawResponse().body().string();
+                                        try {
+                                            JSONObject obj = new JSONObject(err_info_string);
+                                            JSONObject error = obj.optJSONObject("error");
+                                            String err_code = error.optString("code");
+                                            handleEosErrorCode(err_code);
 
-                                    }catch (JSONException ee){
-                                        ee.printStackTrace();
+                                        } catch (JSONException ee) {
+                                            ee.printStackTrace();
+                                        }
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
                                 }
                             }
                         }
@@ -371,12 +383,12 @@ public class VotePresenter extends XPresenter<VoteFragment> {
     }
 
 
-    private void handleEosErrorCode(String err_code){
+    private void handleEosErrorCode(String err_code) {
         String code = ParamConstants.EOS_ERR_CODE_PREFIX + err_code;
-        if (EmptyUtils.isNotEmpty(getV()) && EmptyUtils.isNotEmpty(getV().getActivity())){
+        if (EmptyUtils.isNotEmpty(getV()) && EmptyUtils.isNotEmpty(getV().getActivity())) {
             String package_name = getV().getActivity().getPackageName();
             int resId = getV().getResources().getIdentifier(code, "string", package_name);
-            String err_info =  getV().getResources().getString(resId);
+            String err_info = getV().getResources().getString(resId);
 
             Alerter.create(getV().getActivity())
                     .setText(err_info)

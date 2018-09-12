@@ -22,6 +22,7 @@ import com.cybex.gma.client.utils.AmountUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -289,6 +290,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             LoggerManager.d("pushTransaction json:" + jsonStr);
                             GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
                             //跳转到收支记录
+                            AppManager.getAppManager().finishActivity();
                             UISkipMananger.launchTransferRecord(getV().getActivity());
                         }
                     }

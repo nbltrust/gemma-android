@@ -6,6 +6,7 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.activity.DelegateActivity;
 import com.cybex.gma.client.ui.fragment.DelegateFragment;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
@@ -16,6 +17,7 @@ import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -28,7 +30,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class DelegatePresenter extends XPresenter<DelegateFragment> {
+public class DelegatePresenter extends XPresenter<DelegateActivity> {
 
     private static final int OPERATION_DELEGATE = 3;
     private static final int OPERATION_UNDELEGATE = 4;
@@ -61,7 +63,7 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
+                        getV().showProgressDialog(getV().getResources().getString(R.string.operate_deal_ing));
                     }
 
                     @Override
@@ -292,7 +294,8 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
                             //页面跳转至收支记录
-                            UISkipMananger.launchTransferRecord(getV().getActivity());
+                            AppManager.getAppManager().finishActivity();
+                            UISkipMananger.launchTransferRecord(getV());
 
                         }
 
@@ -303,13 +306,13 @@ public class DelegatePresenter extends XPresenter<DelegateFragment> {
 
     private void handleEosErrorCode(String err_code){
         String code = ParamConstants.EOS_ERR_CODE_PREFIX + err_code;
-        if (EmptyUtils.isNotEmpty(getV()) && EmptyUtils.isNotEmpty(getV().getActivity())){
-            String package_name = getV().getActivity().getPackageName();
+        if (EmptyUtils.isNotEmpty(getV()) && EmptyUtils.isNotEmpty(getV())){
+            String package_name = getV().getPackageName();
             int resId = getV().getResources().getIdentifier(code, "string", package_name);
             String err_info =  getV().getResources().getString(resId);
 
-            Alerter.create(getV().getActivity())
-                    .setText(err_info)
+            Alerter.create(getV())
+                    .setText(err_code + err_info)
                     .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
                     .showIcon(false)
                     .setDuration(3000)

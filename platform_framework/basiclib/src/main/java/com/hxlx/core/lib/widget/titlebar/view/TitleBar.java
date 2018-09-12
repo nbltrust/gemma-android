@@ -777,4 +777,8 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
     public TextView getLeftText() {
         return mLeftText;
     }
+
+    public TextView getmCenterText() {
+        return mCenterText;
+    }
 }

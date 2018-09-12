@@ -19,6 +19,7 @@ import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.WalletManageListAdapter;
 import com.cybex.gma.client.ui.model.vo.WalletVO;
+import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -174,45 +175,51 @@ public class WalletManageFragment extends XFragment {
         recyclerViewWalletManage.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                WalletEntity thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
-                        (position+1);//当前卡片对应的wallet
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("curWallet", thisWallet);
-                //startForResult(WalletDetailFragment.newInstance(bundle), requestCode);
-                start(WalletDetailFragment.newInstance(bundle));
+                if (!NoDoubleClick.isDoubleClick()){
+                    WalletEntity thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
+                            (position+1);//当前卡片对应的wallet
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("curWallet", thisWallet);
+                    //startForResult(WalletDetailFragment.newInstance(bundle), requestCode);
+                    //UISkipMananger.launchWalletDetail(getActivity(), bundle);
+                    start(WalletDetailFragment.newInstance(bundle), SINGLETASK);
+                }
             }
 
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                //position与数据库表中的id对应，可直接根据position值来确定ID
-                WalletEntity thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
-                        (position+1);//当前卡片对应的wallet
-                walletVOList.get(position).isSelected = true;
-                //把其他的WalletVO对象设置为未被选取
+                if (!NoDoubleClick.isDoubleClick()){
+                    //position与数据库表中的id对应，可直接根据position值来确定ID
+                    WalletEntity thisWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
+                            (position+1);//当前卡片对应的wallet
 
-                for (int i = 0; i < walletVOList.size(); i++){
-                    if (i != position){
-                        walletVOList.get(i).isSelected = false;
+                    if (thisWallet != null && thisWallet.getIsCurrentWallet().equals(CacheConstants.IS_CURRENT_WALLET)){
+                        //如果这个钱包已经是当前钱包，不做处理
+                    } else {
+                        walletVOList.get(position).isSelected = true;
+                        //把其他的WalletVO对象设置为未被选取
+
+                        for (int i = 0; i < walletVOList.size(); i++){
+                            if (i != position){
+                                walletVOList.get(i).isSelected = false;
+                            }
+                        }
+                        //把thisWallet设置为当前Wallet
+
+                        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                        curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+                        thisWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+                        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
+                        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(thisWallet);
+                        adapter.notifyDataSetChanged();
+                        TabSelectedEvent event = new TabSelectedEvent();
+                        event.setPosition(0);
+                        event.setRefresh(true);
+                        EventBusProvider.postSticky(event);
+                        UISkipMananger.launchHome(getActivity());
                     }
                 }
-                //把thisWallet设置为当前Wallet
-
-                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-                thisWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
-                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(thisWallet);
-                adapter.notifyDataSetChanged();
-                TabSelectedEvent event = new TabSelectedEvent();
-                event.setPosition(0);
-                event.setRefresh(true);
-                EventBusProvider.postSticky(event);
-                UISkipMananger.launchHome(getActivity());
             }
         });
-
-
     }
-
-
 }

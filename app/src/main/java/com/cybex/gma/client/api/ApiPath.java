@@ -29,6 +29,8 @@ public class ApiPath {
     public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3001";
     //链上服务器host
     public static String HOST_ON_CHAIN = "http://52.77.177.200:8888";
+    //http://47.75.154.248:50003 北京团队测试链
+    //http://52.77.177.200:8888 cybex eos 主链节点
 
 
     //主链上的一个节点
@@ -84,6 +86,7 @@ public class ApiPath {
     public static final String EOS_HK_EOS = "https://api.hkeos.com";
     public static final String EOS_42 = "https://nodes.eos42.io";
     public static final String EOS_CYPHER_GLASS = "https://api.cypherglass.com";
+    public static final String EOS_TEST_BEIJING = "http://47.75.154.248:50003";
 
     /**------------节点 地址配置---------------*/
 

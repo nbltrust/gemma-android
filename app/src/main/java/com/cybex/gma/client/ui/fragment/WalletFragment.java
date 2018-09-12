@@ -1,20 +1,31 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
@@ -28,7 +39,6 @@ import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.adapter.ChangeAccountAdapter;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
 import com.cybex.gma.client.ui.model.response.AccountRefoundRequest;
-import com.cybex.gma.client.ui.model.response.AccountTotalResources;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
@@ -42,13 +52,17 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.SPUtils;
+import com.hxlx.core.lib.utils.android.logger.Log;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.common.utils.DateUtil;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.tapadoo.alerter.Alerter;
 
+import org.greenrobot.eventbus.Logger;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -60,6 +74,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.hypertrack.smart_scheduler.SmartScheduler;
 import jdenticon.AvatarHelper;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 钱包Fragment
@@ -72,6 +87,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.superTextView_card_buy_ram) SuperTextView superTextViewCardBuyRam;
     private WalletEntity curWallet;
     private int walletID;
+    private String curEosUsername;
     @BindView(R.id.tv_backup_wallet) TextView textViewBackupWallet;
     @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
     @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
@@ -86,13 +102,14 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.layout_info) ConstraintLayout layoutInfo;
     @BindView(R.id.superTextView_card_record) SuperTextView superTextViewCardRecord;
     @BindView(R.id.superTextView_card_delegate) SuperTextView superTextViewCardDelegate;
-    @BindView(R.id.scroll_wallet_tab) MyScrollView scrollViewWalletTab;
+    @BindView(R.id.scroll_wallet_tab) NestedScrollView mScrollView;
     @BindView(R.id.progressbar_cpu_small) RoundCornerProgressBar progressBarCPU;
     @BindView(R.id.progressbar_net_small) RoundCornerProgressBar progressBarNET;
     @BindView(R.id.progressbar_ram_small) RoundCornerProgressBar progressBarRAM;
     @BindView(R.id.view_cpu) View viewCPU;
     @BindView(R.id.view_net) View viewNET;
     @BindView(R.id.view_ram) View viewRAM;
+    //@BindView(R.id.view_refresh_wallet) CommonRefreshLayout refreshLayout;
 
     Unbinder unbinder;
 
@@ -211,8 +228,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             public void run() {
                 if (vo != null) {
 
-                    String jsonVO = GsonUtils.objectToJson(vo);
-                    SPUtils.getInstance().put("HomeCombineData", jsonVO);
+                    //String jsonVO = GsonUtils.objectToJson(vo);
+                    //SPUtils.getInstance().put("HomeCombineData", jsonVO);
 
                     String banlance = vo.getBanlance();
                     String unitPriceEOS = vo.getUnitPrice();
@@ -363,10 +380,10 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
         if (info != null) {
             AccountInfo.SelfDelegatedBandwidthBean selfDelegatedBandwidth = info.getSelf_delegated_bandwidth();
-            if (selfDelegatedBandwidth == null){
+            if (selfDelegatedBandwidth == null) {
                 //没有自己给自己抵押的资源,总资产为可用余额
-                 totalPrice = banlanceNumber;
-            }else {
+                totalPrice = banlanceNumber;
+            } else {
                 //有抵押资源，总资产为可用余额加上抵押资源
                 String[] cpuNumber_arr = selfDelegatedBandwidth.getCpu_weightX().split(" ");
                 String[] netNumber_arr = selfDelegatedBandwidth.getNet_weightX().split(" ");
@@ -462,17 +479,40 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void bindUI(View rootView) {
+        setNavibarTitle("GEMMA", false);//设置标题
         unbinder = ButterKnife.bind(this, rootView);
+        //OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        //初始化当前节点
+        if (SPUtils.getInstance().getString("curNode") != null) {
+            String curHost = SPUtils.getInstance().getString("curNode");
+            LoggerManager.d("curNode", curHost);
+            ApiPath.setHOST_ON_CHAIN(curHost);
+        }
+        LoggerManager.d("host", ApiPath.HOST_ON_CHAIN);
+        //getP().requestHomeCombineDataVO();
         AppManager.getAppManager().finishActivity(CreateManageActivity.class);
         textViewBackupWallet.setVisibility(View.VISIBLE);
-        setNavibarTitle("GEMMA", false);
-        //OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
+        //下拉刷新
+
+        /*
+        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh();
+                getP().requestHomeCombineDataVO();
+            }
+        });
+        */
+
+
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)) {
+            curEosUsername = curWallet.getCurrentEosName();
             textViewUsername.setText(curWallet.getCurrentEosName());
             generatePortrait(curWallet.getCurrentEosName());
             if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
@@ -514,6 +554,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             textViewBackupWallet.setVisibility(View.GONE);
         }
 
+        //初始化总资产法币估值显示
         switch (SPUtils.getInstance().getInt("currency_unit")) {
             case CacheConstants.CURRENCY_CNY:
                 totalCNYAmount.setCenterString("≈" + " -- " + " CNY");
@@ -521,7 +562,31 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             case CacheConstants.CURRENCY_USD:
                 totalCNYAmount.setCenterString("≈" + " -- " + " USD");
                 break;
+            default:
+                totalCNYAmount.setCenterString("≈" + " -- " + " CNY");
         }
+
+        //滑动监听,设置上滑文字渐显效果
+        mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (getContext() != null){
+                    float dpY = px2dp(getContext(), scrollY);
+                    if (dpY> 14){
+                        curEosUsername = curWallet.getCurrentEosName();
+                        mTitleBar.setTitle(curEosUsername);
+                        TextView title = mTitleBar.getmCenterText();
+                        float alpha =  (dpY * (float) 1.29 + (float) 1.94) / 100;
+                        title.setAlpha(alpha);
+                    }else {
+                        TextView title = mTitleBar.getmCenterText();
+                        title.setAlpha(1);
+                        mTitleBar.setTitle(getString(R.string.app_name));
+                    }
+                }
+            }
+        });
+
     }
 
     @Override
@@ -587,6 +652,11 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             LoggerManager.d("Job repeat Removed");
         }
 
+    }
+
+    public static int px2dp(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
     }
 
     /**

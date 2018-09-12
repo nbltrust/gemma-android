@@ -153,6 +153,20 @@
                 android:text="@string/node_cypherglass"
                 style="@style/mRadioButton"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:background="@color/paleGrey"
+                android:layerType="software">
+            </View>
+
+            <RadioButton
+                android:id="@+id/radioButton_node_beijing_test"
+                android:text="@string/node_test_beijing"
+                style="@style/mRadioButton"/>
+
         </RadioGroup>
 
     </LinearLayout>

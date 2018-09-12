@@ -3,7 +3,7 @@
     <string name="please_confirm_alert">Pending...The account is still in the air until 100% confirmed.</string>
 
     <!-- Common -->
-    <string name="app_name">Gemma</string>
+    <string name="app_name">GEMMA</string>
     <string name="title">我是标题</string>
     <string name="eos">EOS</string>
 
@@ -191,6 +191,7 @@
 
     <!-- create methods -->
     <string name="title_invite_friend">Request from a friend</string>
+    <!--
     <string name="method_one">Recommend</string>
     <string name="method_two">Alternatively</string>
     <string name="method_one_hint">Requst an EOS account from a friend: ask the friend to send a transaction to the
@@ -198,6 +199,7 @@
         content below. Your account will be valid once the transaction confirmed by EOS blockchain.</string>
     <string name="method_one_hint_2">It\'s highly recommended to send 2 EOS at least thus your account being created
         successfully. For example, 0.1 EOS will be staked as CPU, and 0.1 EOS will be staked as NET, 1.8 EOS will used to buy ram for the account.</string>
+    -->
     <string name="method_two_hint">If some friend is an EOS master, you can give him / her private key to help you creating the account.</string>
     <string name="show_priKey">View private key</string>
     <string name="priKey_encrypted">Enter wallet password to decrypt private key and view it</string>
@@ -270,7 +272,20 @@
     <string name="node_hkeos">https://api.hkeos.com</string>
     <string name="node_eos42">https://nodes.eos42.io</string>
     <string name="node_cypherglass">https://api.cypherglass.com</string>
+    <string name="node_test_beijing">http://47.75.154.248:50003(北京测试链)</string>
     <string name="node_select">Node</string>
+
+    <string name="eos_cybex">EOS CYBEX</string>
+    <string name="start_eos">START EOS</string>
+    <string name="eos_newyork">EOS NEW YORK</string>
+    <string name="eos_greymass">EOS GREYMASS</string>
+    <string name="eos_asia">EOS ASIA</string>
+    <string name="eos_gravity">EOS GRAVITY</string>
+    <string name="hello_eos">HELLO EOS</string>
+    <string name="hk_eos">HK EOS</string>
+    <string name="eos_42">EOS 42</string>
+    <string name="eos_cypher_glass">CYPHER GLASS</string>
+    <string name="eos_test_beijing">北京测试链</string>
 
     <!-- Change Wallet Name fragment-->
     <string name="wallet_name_short">Wallet name</string>

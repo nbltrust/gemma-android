@@ -31,13 +31,14 @@ public class ChangeNodeFragment extends XFragment {
     @BindView(R.id.radioButton_node_eos42) RadioButton radioButtonNodeEos42;
     @BindView(R.id.radioButton_node_cypherglass) RadioButton radioButtonNodeCypherglass;
     Unbinder unbinder;
+    @BindView(R.id.radioButton_node_beijing_test) RadioButton radioButtonNodeBeijingTest;
 
     @OnClick({R.id.radioButton_node_cybex, R.id.radioButton_node_cypherglass, R.id.radioButton_node_eos42,
             R.id.radioButton_node_eosasia, R.id.radioButton_node_eosgravity, R.id.radioButton_node_eosnewyork,
             R.id.radioButton_node_greymass, R.id.radioButton_node_helloeos, R.id.radioButton_node_hkeos, R.id
-            .radioButton_node_starteos})
-    public void onChangeNodeListener(View v){
-        switch (v.getId()){
+            .radioButton_node_starteos, R.id.radioButton_node_beijing_test})
+    public void onChangeNodeListener(View v) {
+        switch (v.getId()) {
             case R.id.radioButton_node_cybex:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_CYBEX);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_CYBEX);
@@ -98,6 +99,12 @@ public class ChangeNodeFragment extends XFragment {
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());
                 break;
+            case R.id.radioButton_node_beijing_test:
+                ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_TEST_BEIJING);
+                SPUtils.getInstance().put("curNode", ApiPath.EOS_TEST_BEIJING);
+                AppManager.getAppManager().finishAllActivity();
+                UISkipMananger.launchHomeSingle(getActivity());
+                break;
             default:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_CYBEX);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_CYBEX);
@@ -145,9 +152,9 @@ public class ChangeNodeFragment extends XFragment {
         unbinder.unbind();
     }
 
-    public void showLogic(){
+    public void showLogic() {
         String selectedNode = SPUtils.getInstance().getString("curNode");
-        switch (selectedNode){
+        switch (selectedNode) {
             case ApiPath.EOS_CYBEX:
                 radioButtonNodeCybex.setChecked(true);
                 break;
@@ -177,6 +184,9 @@ public class ChangeNodeFragment extends XFragment {
                 break;
             case ApiPath.EOS_42:
                 radioButtonNodeEos42.setChecked(true);
+                break;
+            case ApiPath.EOS_TEST_BEIJING:
+                radioButtonNodeBeijingTest.setChecked(true);
                 break;
             default:
                 radioButtonNodeCybex.setChecked(true);

@@ -124,16 +124,16 @@
                 android:id="@+id/tv_undelegate_memo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="16dp"
-                android:layout_marginStart="@dimen/dimen_20"
-                android:textSize="@dimen/font_4"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="16dp"
+                android:layout_toEndOf="@id/tv_note_title"
+                android:layout_alignParentEnd="true"
                 android:textAlignment="viewEnd"
-                android:maxLines="3"
                 android:ellipsize="end"
+                android:maxLines="3"
                 android:textColor="@color/darkSlateBlue"
-                tools:text="\ufeff@gemma12345"/>
+                tools:text="\ufeff@gemma12345资金用途描述不超过50个字，资金用途资金用途描述不超过50个字，资金用途"/>
 
         </RelativeLayout>
 

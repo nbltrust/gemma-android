@@ -20,6 +20,7 @@ import com.cybex.gma.client.ui.JNIUtil;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
@@ -81,8 +82,31 @@ public class WalletDetailFragment extends XFragment {
     }
 
     @Override
+    protected void setNavibarTitle(String title, boolean isShowBack, boolean isOnBackFinishActivity) {
+        mTitleBar = btnNavibar;
+        mTitleBar.setTitle(title);
+        mTitleBar.setTitleColor(com.hxlx.core.lib.R.color.ffffff_white_1000);
+        mTitleBar.setTitleSize(20);
+        mTitleBar.setImmersive(true);
+        if (isShowBack) {
+            mTitleBar.setLeftImageResource(com.hxlx.core.lib.R.drawable.ic_btn_back);
+            mTitleBar.setLeftClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isOnBackFinishActivity) {
+                        getActivity().finish();
+                    } else {
+                        popChild();
+                        pop();
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.manage_wallet), true);
+        setNavibarTitle(getResources().getString(R.string.manage_wallet), true, false);
         inputCount = 0;
         if (getArguments() != null){
             curWallet = getArguments().getParcelable("curWallet");

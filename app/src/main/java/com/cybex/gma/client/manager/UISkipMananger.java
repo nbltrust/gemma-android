@@ -29,6 +29,7 @@ import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.cybex.gma.client.ui.activity.VerifyPriKeyActivity;
 import com.cybex.gma.client.ui.activity.VoteActivity;
+import com.cybex.gma.client.ui.activity.WalletDetailActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
 /**
@@ -79,6 +80,16 @@ public final class UISkipMananger {
 
     public static void launchVote(Activity context) {
         launchIntent(context, VoteActivity.class);
+    }
+
+
+    /**
+     * 跳转到钱包详情页面
+     *
+     * @param context
+     */
+    public static void launchWalletDetail(Activity context, Bundle bundle) {
+        launchIntent(context, WalletDetailActivity.class, bundle);
     }
 
     /**

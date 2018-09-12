@@ -5,7 +5,7 @@
     <string name="please_confirm_alert">请勿在EOS区块100%确认之前往账户转账</string>
 
     <!-- Common -->
-    <string name="app_name">Gemma</string>
+    <string name="app_name">GEMMA</string>
     <string name="title">我是标题</string>
     <string name="eos">EOS</string>
 
@@ -191,11 +191,13 @@
 
     <!-- create methods -->
     <string name="title_invite_friend">邀请好友帮忙创建</string>
+    <!--
     <string name="method_one">方法一</string>
     <string name="method_two">方法二</string>
     <string name="method_one_hint">请持有EOS的好友向智能合约 signupeoseos 转账并须将以下文字作为备注(memo)
         ，即可完成创建。创建成功后请重新打开App，即可使用该账户。</string>
     <string name="method_one_hint_2">为保证顺利创建账户，建议至少转 2EOS ：账户将抵押 0.01EOS 作为CPU，0.01EOS 作为NET，剩余1.8EOS将按现价购买RAM。</string>
+    -->
     <string name="method_two_hint">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
     <string name="show_priKey">查看私钥</string>
     <string name="priKey_encrypted">私钥已加密存储，请输入之前设置的密码解锁查看</string>
@@ -268,7 +270,20 @@
     <string name="node_hkeos">https://api.hkeos.com</string>
     <string name="node_eos42">https://nodes.eos42.io</string>
     <string name="node_cypherglass">https://api.cypherglass.com</string>
+    <string name="node_test_beijing">http://47.75.154.248:50003(北京测试链)</string>
     <string name="node_select">节点设置</string>
+
+    <string name="eos_cybex">EOS CYBEX</string>
+    <string name="start_eos">START EOS</string>
+    <string name="eos_newyork">EOS NEW YORK</string>
+    <string name="eos_greymass">EOS GREYMASS</string>
+    <string name="eos_asia">EOS ASIA</string>
+    <string name="eos_gravity">EOS GRAVITY</string>
+    <string name="hello_eos">HELLO EOS</string>
+    <string name="hk_eos">HK EOS</string>
+    <string name="eos_42">EOS 42</string>
+    <string name="eos_cypher_glass">CYPHER GLASS</string>
+    <string name="eos_test_beijing">北京测试链</string>
 
     <!-- Change Wallet Name fragment-->
     <string name="wallet_name_short">钱包名</string>
@@ -396,7 +411,7 @@
     <string name="operate_deal_success">操作成功</string>
 
     <string name="config_wallet_ing">正在配置钱包...</string>
-    <string name="import_wallet_failed">导入钱包失败,请检查输入后重试</string>
+    <string name="import_wallet_failed">导入钱包失败,请检查输入或切换节点后重试</string>
 
     <string name="transfer_trade_ing">转账处理中...</string>
     <string name="transfer_oprate_failed">转账失败</string>

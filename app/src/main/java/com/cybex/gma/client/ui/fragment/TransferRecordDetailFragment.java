@@ -19,6 +19,7 @@ import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.utils.ClipboardUtils;
+import com.cybex.gma.client.widget.MyScrollView;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -83,7 +84,7 @@ public class TransferRecordDetailFragment extends XFragment {
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle(getResources().getString(R.string.title_transfer_detail), true, false);
-        OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
+        //OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
     }
 
     @Override
