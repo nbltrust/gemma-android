@@ -442,14 +442,13 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             }
                                         } else {
                                             final String curEOSName = curWallet.getCurrentEosName();
-                                            //long ramAmount = Long.parseLong(getRamAmount());
-                                            //long bytes = ramAmount * 1024;
-                                            String bytesInString = AmountUtil.mul(getRamAmount(), "1024", 8);
-                                            long bytes = Math.round(Double.parseDouble(bytesInString));
-                                            System.out.println(bytesInString);
-                                            System.out.println(bytes);
+                                            String ramAmountInStr = AmountUtil.mul(String.valueOf(getRamAmount()),
+                                                    "1024", 0);
+                                            String bytesInStr = AmountUtil.round(ramAmountInStr, 0);
+                                            long bytes = Long.parseLong(bytesInStr);
+                                            LoggerManager.d("bytes", bytes);
 
-                                            //getP().executeSellRamLogic(curEOSName, bytes, key);
+                                            getP().executeSellRamLogic(curEOSName, bytes, key);
                                             dialog.cancel();
                                         }
                                     } else {

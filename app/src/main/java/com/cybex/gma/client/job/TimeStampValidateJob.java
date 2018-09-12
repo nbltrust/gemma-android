@@ -20,13 +20,16 @@ import com.cybex.gma.client.ui.request.GetBlockRequest;
 import com.cybex.gma.client.ui.request.GetKeyAccountsRequest;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.DateUtil;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import io.hypertrack.smart_scheduler.Job;
 import io.hypertrack.smart_scheduler.SmartScheduler;
@@ -442,6 +445,38 @@ public class TimeStampValidateJob {
 
     }
 
+
+    /**
+     * SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+     Date start = sdf.parse("2015-10-22 05:12:10");
+     Date end = sdf.parse("2013-10-23 08:10:10");
+     int c = end.getTime() - start.getTime();
+     if(c>0)
+     System.out.println("start大")；
+     if(c<0)
+     System.out.println("end大")；
+     if(c=0)
+     System.out.println("同一个时间")；
+     */
+    /*
+    public static String[] formatDate(String timestamp){
+        String[] timestamp_arr = timestamp.split("T");
+        String[]  formatedDate = new String[2];
+        SimpleDateFormat formatter_date = new SimpleDateFormat(DateUtil.Format.EOS_TIMESTAMP_FORMAT_DATE, Locale
+                .getDefault());
+        SimpleDateFormat formatter_time = new SimpleDateFormat(DateUtil.Format.EOS_TIMESTAMP_FORMAT_TIME, Locale
+                .getDefault());
+
+        formatedDate[0] = formatter_date.format(timestamp_arr[0]);
+        formatedDate[1] = formatter_time.format(timestamp_arr[1]);
+
+        return formatedDate;
+    }
+
+    public String getLaterTime(String[] formatedTime_one, String[] formatedTime_two){
+
+    }
+    */
 
     private static void removePollingJob() {
         SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());

@@ -688,6 +688,8 @@ public class DateUtil {
         public static final String HOUR_MINUTE = "HH:mm";
         public static final String YEAR_MOUTH_DAY_FORMAT = "yyyyMMdd";
         public static final String EOS_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+        public static final String EOS_TIMESTAMP_FORMAT_DATE = "yyyy-MM-dd";
+        public static final String EOS_TIMESTAMP_FORMAT_TIME = "HH:mm:ss.SSS";
     }
 
 
