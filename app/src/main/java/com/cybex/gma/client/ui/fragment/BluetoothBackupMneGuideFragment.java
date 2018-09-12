@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class BackupMneGuideFragment extends XFragment {
+public class BluetoothBackupMneGuideFragment extends XFragment {
 
     Unbinder unbinder;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
@@ -26,28 +26,31 @@ public class BackupMneGuideFragment extends XFragment {
     @BindView(R.id.bt_show_mne) Button btShowMne;
     @BindView(R.id.testTV) TextView testTV;
 
+    private Bundle bd = null;
+
 
     @OnClick(R.id.bt_show_mne)
-    public void showMne(){
-        start(BackupMneFragment.newInstance());
+    public void showMne() {
+        start(BluetoothBackupMneFragment.newInstance(bd));
     }
 
-    public static BackupMneGuideFragment newInstance() {
-        Bundle args = new Bundle();
-        BackupMneGuideFragment fragment = new BackupMneGuideFragment();
-        fragment.setArguments(args);
+    public static BluetoothBackupMneGuideFragment newInstance(Bundle bd) {
+        BluetoothBackupMneGuideFragment fragment = new BluetoothBackupMneGuideFragment();
+        fragment.setArguments(bd);
         return fragment;
     }
 
     @Override
     public void bindUI(View rootView) {
-        unbinder = ButterKnife.bind(BackupMneGuideFragment.this, rootView);
+        unbinder = ButterKnife.bind(BluetoothBackupMneGuideFragment.this, rootView);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getResources().getString(R.string.backup_mne), true,
                 true);
+
+        bd = getArguments();
     }
 
     @Override

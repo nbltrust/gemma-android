@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.fragment.BackupMneGuideFragment;
+import com.cybex.gma.client.ui.fragment.BluetoothBackupMneGuideFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -19,8 +19,10 @@ public class BluetoothBackupMneGuideActivity extends XActivity {
 
     @Override
     public void bindUI(View view) {
-        if (findFragment(BackupMneGuideFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_backup_mne_guide, BackupMneGuideFragment.newInstance());
+        Bundle  bd = getIntent().getExtras();
+
+        if (findFragment(BluetoothBackupMneGuideFragment.class) == null) {
+            loadRootFragment(R.id.fl_container_backup_mne_guide, BluetoothBackupMneGuideFragment.newInstance(bd));
         }
 
         //让布局向上移来显示软键盘

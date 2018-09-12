@@ -3,11 +3,14 @@ package com.cybex.gma.client.utils.bluetooth;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 
+import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -48,6 +51,14 @@ public class BlueToothWrapper extends Thread {
     public static final int FREE_CONTEXT_AND_SHUT_DOWN_WRAPPER = 28;
     public static final int CLEAR_SCREEN_WRAPPER = 29;
     public static final int CYB_SIGN_WRAPPER = 30;
+
+    public static final int GENERATE_SEED_MNES_WRAPPER = 0x101;
+    public static final int CHECK_SEED_MNES_WRAPPER = 0x102;
+
+    public static final int MSG_GENERATE_SEED_MNES_START = 0x201;
+    public static final int MSG_GENERATE_SEED_MNES_FINISH = 0x202;
+    public static final int MSG_CHECK_SEED_MNES_START = 0x301;
+    public static final int MSG_CHECK_SEED_MNES_FINISH = 0x302;
 
     //messages
     public static final int MSG_INIT_START = 0;
@@ -316,6 +327,65 @@ public class BlueToothWrapper extends Thread {
         public byte getCoinType() {
             return m_coinType;
         }
+    }
+
+
+    public static class GenSeedMnesReturnValue implements Parcelable {
+
+        private String[] strMneWord;
+        private int[] checkIndex;
+        private int[] checkIndexCount;
+
+        public String[] getStrMneWord() {
+            return strMneWord;
+        }
+
+        public void setStrMneWord(String[] strMneWord) {
+            this.strMneWord = strMneWord;
+        }
+
+        public int[] getCheckIndex() {
+            return checkIndex;
+        }
+
+        public void setCheckIndex(int[] checkIndex) {
+            this.checkIndex = checkIndex;
+        }
+
+        public int[] getCheckIndexCount() {
+            return checkIndexCount;
+        }
+
+        public void setCheckIndexCount(int[] checkIndexCount) {
+            this.checkIndexCount = checkIndexCount;
+        }
+
+
+        @Override
+        public int describeContents() { return 0; }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeStringArray(this.strMneWord);
+            dest.writeIntArray(this.checkIndex);
+            dest.writeIntArray(this.checkIndexCount);
+        }
+
+        public GenSeedMnesReturnValue() {}
+
+        protected GenSeedMnesReturnValue(Parcel in) {
+            this.strMneWord = in.createStringArray();
+            this.checkIndex = in.createIntArray();
+            this.checkIndexCount = in.createIntArray();
+        }
+
+        public static final Parcelable.Creator<GenSeedMnesReturnValue> CREATOR = new Parcelable.Creator<GenSeedMnesReturnValue>() {
+            @Override
+            public GenSeedMnesReturnValue createFromParcel(Parcel source) {return new GenSeedMnesReturnValue(source);}
+
+            @Override
+            public GenSeedMnesReturnValue[] newArray(int size) {return new GenSeedMnesReturnValue[size];}
+        };
     }
 
     private CommonUtility.enumCallback m_enumCallback = new CommonUtility.enumCallback() {
@@ -969,6 +1039,26 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
+
+    /**
+     * 生成助记词
+     *
+     * @param contextHandle
+     * @param devIndex
+     * @param seedLen
+     * @return
+     */
+    public boolean setGenerateSeedGetMnesWrapper(long contextHandle, int devIndex, int seedLen) {
+        m_wrapperType = GENERATE_SEED_MNES_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+        m_seedLen = seedLen;
+
+        return true;
+    }
+
+
     public boolean setETHSignWrapper(
             long contextHandle,
             int devIndex,
@@ -1570,6 +1660,52 @@ public class BlueToothWrapper extends Thread {
                 msg.what = MSG_VERIFY_PIN_FINISH;
                 msg.arg1 = iRtn;
                 msg.sendToTarget();
+                break;
+            case GENERATE_SEED_MNES_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_GENERATE_SEED_MNES_START;
+                msg.sendToTarget();
+
+                devInfo = new MiddlewareInterface.PAEW_DevInfo[1];
+                strMnes = new String[1];
+                checkIndex = new int[MiddlewareInterface.PAEW_MNE_INDEX_MAX_COUNT];
+                checkIndexCount = new int[1];
+                checkIndexCount[0] = MiddlewareInterface.PAEW_MNE_INDEX_MAX_COUNT;
+                m_commonLock.lock();
+
+                GenSeedMnesReturnValue returnValue = new GenSeedMnesReturnValue();
+
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.getDevInfo(m_contextHandle, m_devIndex,
+                            MiddlewareInterface.PAEW_DEV_INFOTYPE_COS_TYPE, devInfo);
+                    if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        if (devInfo[0].ucCOSType == MiddlewareInterface.PAEW_DEV_INFO_COS_TYPE_BIO) {
+                            iRtn = MiddlewareInterface.generateSeed_GetMnes(m_contextHandle, m_devIndex, m_seedLen,
+                                    strMnes, checkIndex, checkIndexCount);
+                            if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                                String[] strMneArray = strMnes[0].split(" ");
+                                returnValue.strMneWord = strMneArray;
+                                returnValue.checkIndex = checkIndex;
+                                returnValue.checkIndexCount = checkIndexCount;
+
+                            }
+                        } else {
+                            iRtn = MiddlewareInterface.generateSeed(m_contextHandle, m_devIndex, m_seedLen, (byte) 0,
+                                    (byte) 0);
+                        }
+                    }
+                }
+
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_GENERATE_SEED_MNES_FINISH;
+                msg.obj = returnValue;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+
                 break;
             case GEN_SEED_WRAPPER:
                 msg = m_mainHandler.obtainMessage();

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
@@ -55,6 +56,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     private int updatePosition = 0;
     private static final int DEVICE_LIFE_CYCLE_PRODUCE = 2;//produce
     private static final int DEVICE_LIFE_CYCLE_USER = 4;//user
+    private long contextHandle = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,8 +64,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_bluetooth_scan_result);
         ButterKnife.bind(this);
-
-
         mHandler = new ScanDeviceHandler();
         this.startScan();
 
@@ -155,7 +155,11 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         break;
                     case R.id.btn_create_wallet:
                         dialog.cancel();
-                        UISkipMananger.skipCreateBluetoothWalletActivity(BluetoothScanResultDialogActivity.this);
+
+                        Bundle bd = new Bundle();
+                        bd.putLong(ParamConstants.CONTEXT_HANDLE, contextHandle);
+
+                        UISkipMananger.skipCreateBluetoothWalletActivity(BluetoothScanResultDialogActivity.this, bd);
                         finish();
                         break;
                     case R.id.btn_import_mne:
@@ -196,9 +200,13 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     }
 
                     if (EmptyUtils.isEmpty(deviceNameList)) {
-                        statusView.showEmpty();
+                        if (statusView != null) {
+                            statusView.showEmpty();
+                        }
                     } else {
-                        statusView.showContent();
+                        if (statusView != null) {
+                            statusView.showContent();
+                        }
                     }
 
                     break;
@@ -221,6 +229,8 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                             == MiddlewareInterface.PAEW_RET_SUCCESS)) {
                         deviceNameList.get(updatePosition).isShowProgress = false;
                         mAdapter.notifyDataSetChanged();
+
+                        contextHandle = returnValue.getContextHandle();
 
                         if ((getDeviceInfoThread == null) || (getDeviceInfoThread.getState()
                                 == Thread.State.TERMINATED)) {

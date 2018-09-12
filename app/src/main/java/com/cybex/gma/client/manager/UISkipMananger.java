@@ -13,6 +13,7 @@ import com.cybex.gma.client.ui.activity.AboutActivity;
 import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
+import com.cybex.gma.client.ui.activity.BluetoothBackupMneGuideActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
 import com.cybex.gma.client.ui.activity.BluetoothCreateWalletActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
@@ -188,9 +189,19 @@ public final class UISkipMananger {
      *
      * @param context
      */
-    public static void skipCreateBluetoothWalletActivity(Activity context) {
-        launchIntent(context, BluetoothCreateWalletActivity.class);
+    public static void skipCreateBluetoothWalletActivity(Activity context, Bundle bd) {
+        launchIntent(context, BluetoothCreateWalletActivity.class, bd);
 
+    }
+
+
+    /**
+     * 跳转到助记词
+     *
+     * @param context
+     */
+    public static void skipBackupMneGuideActivity(Activity context, Bundle bd) {
+        launchIntent(context, BluetoothBackupMneGuideActivity.class, bd);
     }
 
 

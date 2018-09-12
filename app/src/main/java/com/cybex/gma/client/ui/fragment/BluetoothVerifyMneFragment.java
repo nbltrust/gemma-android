@@ -32,10 +32,9 @@ public class BluetoothVerifyMneFragment extends XFragment {
     List<String> selectedLabels = new ArrayList<>();//被点选的Label
     List<String> unSelectedLabels = new ArrayList<>();
 
-    public static BluetoothVerifyMneFragment newInstance() {
-        Bundle args = new Bundle();
+    public static BluetoothVerifyMneFragment newInstance(Bundle bd) {
         BluetoothVerifyMneFragment fragment = new BluetoothVerifyMneFragment();
-        fragment.setArguments(args);
+        fragment.setArguments(bd);
         return fragment;
     }
 
@@ -43,7 +42,7 @@ public class BluetoothVerifyMneFragment extends XFragment {
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BluetoothVerifyMneFragment.this, rootView);
         setNavibarTitle(getResources().getString(R.string.title_verify_mne), true, false);
-    }
+        }
 
 
     @Override

@@ -18,11 +18,12 @@
         android:textSize="16sp"/>
 
     <ImageView
-        android:layout_width="260dp"
-        android:layout_height="140dp"
+        android:layout_width="280dp"
+        android:layout_height="160dp"
+        android:scaleType="centerInside"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:background="@drawable/bg_shape_radius_blue_selcted"/>
+        android:background="@drawable/icon_wookong_bio"/>
 
     <com.cybex.gma.client.widget.underline.UnderlineTextView
         android:layout_width="wrap_content"

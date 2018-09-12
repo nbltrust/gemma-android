@@ -26,6 +26,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.SoftHideKeyBoardUtil;
@@ -105,6 +106,8 @@ public class BluetoothCreateWalletActivity extends XActivity implements Validato
     private boolean isMask;//true为密文显示密码
     private BlueToothWrapper blueToothThread;
     private BluetoothHandler mHandler;
+    private long contextHandle = 0;
+    private Bundle bd;
 
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -477,6 +480,13 @@ public class BluetoothCreateWalletActivity extends XActivity implements Validato
         validator = new Validator(this);
         validator.setValidationListener(this);
         isMask = true;
+
+        bd = getIntent().getExtras();
+        if (bd != null) {
+            contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE, 0);
+        }
+
+
         initView();
 
     }
@@ -828,6 +838,8 @@ public class BluetoothCreateWalletActivity extends XActivity implements Validato
                 case BlueToothWrapper.MSG_INIT_PIN_FINISH:
                     dissmisProgressDialog();
                     //跳转到备份助记词
+                    UISkipMananger.skipBackupMneGuideActivity(BluetoothCreateWalletActivity.this,bd);
+
                     break;
 
                 default:
