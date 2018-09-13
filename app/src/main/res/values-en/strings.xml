@@ -461,6 +461,7 @@
 
     <string name="account_name_err">EOS Username Invalid</string>
     <string name="transfer_detail">Transfer Detail</string>
+    <string name="tip_eos_amount_format_invalid">Please enter four decimal at most</string>
 
 
     <!-- EOS Err Code-->

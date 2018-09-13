@@ -26,6 +26,7 @@ import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleBuyRamVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleSellRamVO;
 import com.cybex.gma.client.ui.presenter.BuySellRamPresenter;
+import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -34,6 +35,8 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+import com.tapadoo.alerter.Alert;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,11 +106,22 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             tvApproximatelyAmount.setVisibility(View.GONE);
             setUnclickable(btBuyRam);
         }
+
+        String str = s.toString();
+        int posDot = str.indexOf(".");
+        if (str.length() - posDot - 1 > 4)
+        {
+            s.delete(posDot + 5, posDot + 6);
+            if (!Alerter.isShowing()){
+                AlertUtil.showShortCommonAlert(getActivity(), getString(R.string.tip_eos_amount_format_invalid));
+            }
+        }
+
     }
 
     @OnTextChanged(value = R.id.edt_sell_ram, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onSellChanged(Editable s) {
-        if (EmptyUtils.isNotEmpty(getRamAmount()) && EmptyUtils.isNotEmpty(eosPerKb) && !getEOSAmount().equals(".")) {
+        if (EmptyUtils.isNotEmpty(getRamAmount()) && EmptyUtils.isNotEmpty(eosPerKb) && !getRamAmount().equals(".")) {
             setClickable(btSellRam);
             if (EmptyUtils.isNotEmpty(eosPerKb)) {
                 String amount =
@@ -326,7 +340,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         });
         dialog.show();
         TextView amount = dialog.findViewById(R.id.tv_ram_amount);
-        String showAmount = getEOSAmount() + " EOS";
+        String showAmount = AmountUtil.round(getEOSAmount(), 4) + " EOS";
         amount.setText(showAmount);
         TextView memo = dialog.findViewById(R.id.tv_explanation);
         memo.setText(getResources().getString(R.string.buy_ram));
@@ -358,7 +372,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         dialog.show();
 
         TextView amount = dialog.findViewById(R.id.tv_ram_amount);
-        String showRamAmount = getRamAmount() + " KB";
+        String showRamAmount = AmountUtil.round(getRamAmount(), 4) + " KB";
         amount.setText(showRamAmount);
         TextView memo = dialog.findViewById(R.id.tv_explanation);
         memo.setText(getResources().getString(R.string.sell_ram));

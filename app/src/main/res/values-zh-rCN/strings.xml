@@ -472,6 +472,7 @@
     <string name="tip_activate_by_exchange">请从支持memo功能的交易所向智能合约signupeoseos转账并须将以下文字作为备注(memo)，即可完成账户创建。</string>
 
     <string name="click_to_copy_priKey">复制私钥</string>
+    <string name="tip_eos_amount_format_invalid">请最多输入四位小数点位数</string>
 
 
 

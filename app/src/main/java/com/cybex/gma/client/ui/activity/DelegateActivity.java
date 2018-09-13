@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +26,7 @@ import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
 import com.cybex.gma.client.ui.presenter.DelegatePresenter;
+import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.cybex.gma.client.utils.SoftHideKeyBoardUtil;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -33,6 +35,7 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 
@@ -86,42 +89,82 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     }
 
     @OnTextChanged(value = R.id.edt_delegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterDelegateCpuChanged(){
+    public void afterDelegateCpuChanged(Editable s){
         if ((EmptyUtils.isNotEmpty(getDelegateCpu()) || EmptyUtils.isNotEmpty(getDelegateNet()))
                 && (!getDelegateCpu().equals(".") && !getDelegateNet().equals("."))){
             setClickable(btDelegateCpuNet);
         }else{
             setUnclickable(btDelegateCpuNet);
         }
+
+        String str = s.toString();
+        int posDot = str.indexOf(".");
+        if (str.length() - posDot - 1 > 4)
+        {
+            s.delete(posDot + 5, posDot + 6);
+            if (!Alerter.isShowing()){
+                AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+            }
+        }
     }
 
     @OnTextChanged(value = R.id.edt_delegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterDelegateNetChanged(){
+    public void afterDelegateNetChanged(Editable s){
         if ((EmptyUtils.isNotEmpty(getDelegateCpu()) || EmptyUtils.isNotEmpty(getDelegateNet()))
                 && (!getDelegateNet().equals(".") && !getDelegateCpu().equals("."))) {
             setClickable(btDelegateCpuNet);
         }else{
             setUnclickable(btDelegateCpuNet);
         }
+
+        String str = s.toString();
+        int posDot = str.indexOf(".");
+        if (str.length() - posDot - 1 > 4)
+        {
+            s.delete(posDot + 5, posDot + 6);
+            if (!Alerter.isShowing()){
+                AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+            }
+        }
     }
 
     @OnTextChanged(value = R.id.edt_undelegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterUndelegateCpuChanged(){
+    public void afterUndelegateCpuChanged(Editable s){
         if ((EmptyUtils.isNotEmpty(getUndelegateCpu()) || EmptyUtils.isNotEmpty(getunDelegateNet()))
                 && !getUndelegateCpu().equals(".") && !getunDelegateNet().equals(".")){
             setClickable(btUndelegateCpuNet);
         }else{
             setUnclickable(btUndelegateCpuNet);
         }
+
+        String str = s.toString();
+        int posDot = str.indexOf(".");
+        if (str.length() - posDot - 1 > 4)
+        {
+            s.delete(posDot + 5, posDot + 6);
+            if (!Alerter.isShowing()){
+                AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+            }
+        }
     }
 
     @OnTextChanged(value = R.id.edt_undelegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterundelegateNetChanged(){
+    public void afterundelegateNetChanged(Editable s){
         if ((EmptyUtils.isNotEmpty(getunDelegateNet()) || EmptyUtils.isNotEmpty(getUndelegateCpu()))
                 && !getunDelegateNet().equals(".") && !getUndelegateCpu().equals(".")){
             setClickable(btUndelegateCpuNet);
         }else{
             setUnclickable(btUndelegateCpuNet);
+        }
+
+        String str = s.toString();
+        int posDot = str.indexOf(".");
+        if (str.length() - posDot - 1 > 4)
+        {
+            s.delete(posDot + 5, posDot + 6);
+            if (!Alerter.isShowing()){
+                AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+            }
         }
     }
 
@@ -356,10 +399,29 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             TextView tv_note = dialog.findViewById(R.id.tv_note);
             tv_payee.setText(curWallet.getCurrentEosName());
             try{
-                String totalAmount = AmountUtil.add(getDelegateCpu(), getDelegateNet(), 4);
+                String totalAmount;
+                if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+                    //抵押的CPU和NET输入都不为空
+                    totalAmount = AmountUtil.add(getDelegateCpu(), getDelegateNet(), 4);
+                    tv_note.setText(String.format(getResources().getString(R.string.delegate_memo),
+                            AmountUtil.round(getDelegateCpu(), 4),
+                            AmountUtil.round(getDelegateNet() , 4)));
+                }else if (EmptyUtils.isEmpty(getDelegateCpu())){
+                    //抵押的CPU输入为空
+                    totalAmount = AmountUtil.round(getDelegateNet(), 4);
+                    tv_note.setText(String.format(getResources().getString(R.string.delegate_memo),
+                            "0.0000",
+                            AmountUtil.round(getDelegateNet() , 4)));
+                }else{
+                    //抵押的NET输入为空
+                    totalAmount = AmountUtil.round(getDelegateCpu(), 4);
+                    tv_note.setText(String.format(getResources().getString(R.string.delegate_memo),
+                            AmountUtil.round(getDelegateCpu(), 4),
+                            "0.0000"));
+                }
                 String showAmount = totalAmount + " EOS";
                 tv_amount.setText(showAmount);
-                tv_note.setText(String.format(getResources().getString(R.string.delegate_memo), getDelegateCpu(), getDelegateNet()));
+
             }catch (NumberFormatException e){
                 e.printStackTrace();
             }
@@ -401,10 +463,30 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
             tv_receiver.setText(curWallet.getCurrentEosName());
             try {
-                String total_amount = AmountUtil.add(getunDelegateNet(), getUndelegateCpu(), 4) + " EOS";
-                tv_fund_amount.setText(total_amount);
-                tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo), getUndelegateCpu(), getunDelegateNet
-                        ()));
+                String totalAmount;
+                if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
+                    //解除抵押CPU和NET输入都不为空
+                    totalAmount = AmountUtil.add(getunDelegateNet(), getUndelegateCpu(), 4);
+                    tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo),
+                            AmountUtil.round(getUndelegateCpu(), 4),
+                            AmountUtil.round(getunDelegateNet(), 4)));
+                }else if (EmptyUtils.isEmpty(getUndelegateCpu())){
+                    //解除抵押CPU输入为空
+                    totalAmount = AmountUtil.round(getunDelegateNet(), 4);
+                    tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo),
+                            "0.0000",
+                            AmountUtil.round(getunDelegateNet(), 4)));
+                }else {
+                    //解除抵押NET输入为空
+                    totalAmount = AmountUtil.round(getUndelegateCpu(), 4);
+                    tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo),
+                            AmountUtil.round(getUndelegateCpu(), 4),
+                            "0.0000"));
+                }
+
+                String showAmount = totalAmount + " EOS";
+                tv_fund_amount.setText(showAmount);
+
             }catch (NumberFormatException e){
                 e.printStackTrace();
             }
@@ -463,8 +545,25 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             try{
-                                                String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
-                                                String stake_cpu_quantity = AmountUtil.add(getDelegateCpu(), "0", 4) + " EOS";
+                                                String cpu_quantity;
+                                                String net_quantity;
+                                                if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty
+                                                        (getDelegateNet())){
+                                                    //抵押CPU和NET输入都不为空
+                                                    cpu_quantity = AmountUtil.round(getDelegateCpu(), 4);
+                                                    net_quantity = AmountUtil.round(getDelegateNet(), 4);
+                                                }else if (EmptyUtils.isEmpty(getDelegateCpu())){
+                                                    //抵押CPU输入为空
+                                                    cpu_quantity = "0.0000";
+                                                    net_quantity = AmountUtil.round(getDelegateNet(), 4);
+                                                }else {
+                                                    //抵押NET输入为空
+                                                    cpu_quantity = AmountUtil.round(getDelegateCpu(), 4);
+                                                    net_quantity = "0.0000";
+                                                }
+
+                                                String stake_net_quantity = cpu_quantity + " EOS";
+                                                String stake_cpu_quantity = net_quantity + " EOS";
                                                 getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
                                                         stake_cpu_quantity, key);
 
@@ -506,8 +605,26 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             try {
-                                                String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
-                                                String unstake_cpu_quantity = AmountUtil.add(getUndelegateCpu(), "0", 4) + " EOS";
+                                                String cpu_quantity;
+                                                String net_quantity;
+                                                if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty
+                                                        (getunDelegateNet())){
+                                                    //解除抵押CPU和NET输入都不为空
+                                                    cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
+                                                    net_quantity = AmountUtil.round(getunDelegateNet(), 4);
+                                                }else if (EmptyUtils.isEmpty(getUndelegateCpu())){
+                                                    //解除抵押CPU输入为空
+                                                    cpu_quantity = "0.0000";
+                                                    net_quantity = AmountUtil.round(getunDelegateNet(), 4);
+                                                }else {
+                                                    //解除抵押NET输入为空
+                                                    cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
+                                                    net_quantity = "0.0000";
+                                                }
+
+                                                String unstake_net_quantity = cpu_quantity + " EOS";
+                                                String unstake_cpu_quantity = net_quantity + " EOS";
+
                                                 getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
                                                         unstake_cpu_quantity, key);
                                             }catch (NumberFormatException e){
