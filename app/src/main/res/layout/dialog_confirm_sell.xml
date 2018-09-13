@@ -33,7 +33,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="@string/fund"
+                android:text="@string/amount"
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 

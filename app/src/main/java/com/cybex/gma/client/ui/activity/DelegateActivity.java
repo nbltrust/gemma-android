@@ -87,7 +87,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
     @OnTextChanged(value = R.id.edt_delegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterDelegateCpuChanged(){
-        if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+        if ((EmptyUtils.isNotEmpty(getDelegateCpu()) || EmptyUtils.isNotEmpty(getDelegateNet()))
+                && (!getDelegateCpu().equals(".") && !getDelegateNet().equals("."))){
             setClickable(btDelegateCpuNet);
         }else{
             setUnclickable(btDelegateCpuNet);
@@ -96,7 +97,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
     @OnTextChanged(value = R.id.edt_delegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterDelegateNetChanged(){
-        if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+        if ((EmptyUtils.isNotEmpty(getDelegateCpu()) || EmptyUtils.isNotEmpty(getDelegateNet()))
+                && (!getDelegateNet().equals(".") && !getDelegateCpu().equals("."))) {
             setClickable(btDelegateCpuNet);
         }else{
             setUnclickable(btDelegateCpuNet);
@@ -105,7 +107,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
     @OnTextChanged(value = R.id.edt_undelegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterUndelegateCpuChanged(){
-        if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
+        if ((EmptyUtils.isNotEmpty(getUndelegateCpu()) || EmptyUtils.isNotEmpty(getunDelegateNet()))
+                && !getUndelegateCpu().equals(".") && !getunDelegateNet().equals(".")){
             setClickable(btUndelegateCpuNet);
         }else{
             setUnclickable(btUndelegateCpuNet);
@@ -114,7 +117,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
     @OnTextChanged(value = R.id.edt_undelegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterundelegateNetChanged(){
-        if (EmptyUtils.isNotEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())){
+        if ((EmptyUtils.isNotEmpty(getunDelegateNet()) || EmptyUtils.isNotEmpty(getUndelegateCpu()))
+                && !getunDelegateNet().equals(".") && !getUndelegateCpu().equals(".")){
             setClickable(btUndelegateCpuNet);
         }else{
             setUnclickable(btUndelegateCpuNet);
@@ -351,10 +355,14 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             TextView tv_amount = dialog.findViewById(R.id.tv_amount);
             TextView tv_note = dialog.findViewById(R.id.tv_note);
             tv_payee.setText(curWallet.getCurrentEosName());
-            String totalAmount = AmountUtil.add(getDelegateCpu(), getDelegateNet(), 4);
-            String showAmount = totalAmount + " EOS";
-            tv_amount.setText(showAmount);
-            tv_note.setText(String.format(getResources().getString(R.string.delegate_memo), getDelegateCpu(), getDelegateNet()));
+            try{
+                String totalAmount = AmountUtil.add(getDelegateCpu(), getDelegateNet(), 4);
+                String showAmount = totalAmount + " EOS";
+                tv_amount.setText(showAmount);
+                tv_note.setText(String.format(getResources().getString(R.string.delegate_memo), getDelegateCpu(), getDelegateNet()));
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
         }
 
     }
@@ -392,10 +400,14 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             TextView tv_memo = dialog.findViewById(R.id.tv_undelegate_memo);
 
             tv_receiver.setText(curWallet.getCurrentEosName());
-            String total_amount = AmountUtil.add(getunDelegateNet(), getUndelegateCpu(), 4) + " EOS";
-            tv_fund_amount.setText(total_amount);
-            tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo), getUndelegateCpu(), getunDelegateNet
-                    ()));
+            try {
+                String total_amount = AmountUtil.add(getunDelegateNet(), getUndelegateCpu(), 4) + " EOS";
+                tv_fund_amount.setText(total_amount);
+                tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo), getUndelegateCpu(), getunDelegateNet
+                        ()));
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -412,6 +424,14 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 switch (view.getId()) {
                     case R.id.imc_cancel:
                         dialog.cancel();
+                        switch (operation_type){
+                            case OPERATION_DELEGATE:
+                                showConfirmDelegateiDialog();
+                                break;
+                            case OPERATION_UNDELEGATE:
+                                showConfirmUndelegateiDialog();
+                                break;
+                        }
                         break;
                     case R.id.btn_confirm_authorization:
                         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
@@ -442,10 +462,15 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                             }
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
-                                            String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
-                                            String stake_cpu_quantity = AmountUtil.add(getDelegateCpu(), "0", 4) + " EOS";
-                                            getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
-                                                    stake_cpu_quantity, key);
+                                            try{
+                                                String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
+                                                String stake_cpu_quantity = AmountUtil.add(getDelegateCpu(), "0", 4) + " EOS";
+                                                getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
+                                                        stake_cpu_quantity, key);
+
+                                            }catch (NumberFormatException e){
+                                                e.printStackTrace();
+                                            }
                                             dialog.cancel();
                                         }
                                     }else{
@@ -480,10 +505,14 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
-                                            String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
-                                            String unstake_cpu_quantity = AmountUtil.add(getUndelegateCpu(), "0", 4) + " EOS";
-                                            getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
-                                                    unstake_cpu_quantity, key);
+                                            try {
+                                                String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
+                                                String unstake_cpu_quantity = AmountUtil.add(getUndelegateCpu(), "0", 4) + " EOS";
+                                                getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
+                                                        unstake_cpu_quantity, key);
+                                            }catch (NumberFormatException e){
+                                                e.printStackTrace();
+                                            }
                                             dialog.cancel();
                                         }
                                     }else{
@@ -499,6 +528,11 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             }
         });
         dialog.show();
+        EditText inputPass = dialog.findViewById(R.id.et_password);
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            inputPass.setHint(String.format(getResources().getString(R.string.input_pass_hint), curWallet.getCurrentEosName()));
+        }
     }
 
     /**

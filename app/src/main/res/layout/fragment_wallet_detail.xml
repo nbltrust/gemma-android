@@ -38,7 +38,7 @@
                 <TextView
                     android:id="@+id/tv_walletName_in_detailPage"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
                     android:layout_marginTop="@dimen/dimen_20"
                     android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
@@ -57,6 +57,7 @@
                     android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
                     android:ellipsize="middle"
                     android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
+                    android:paddingTop="@dimen/dimen_10"
                     android:singleLine="true"
                     android:text="EOS5jvZ4TxzZhLh6cU3VNxcr4qRxRa5fYsxoxFmKZw2VXy49AaYpQ"
                     android:textColor="@color/darkSlateBlue"

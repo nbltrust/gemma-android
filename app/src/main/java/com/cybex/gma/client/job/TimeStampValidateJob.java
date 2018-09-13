@@ -27,7 +27,9 @@ import com.lzy.okgo.model.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,6 +42,9 @@ import io.hypertrack.smart_scheduler.SmartScheduler;
  *
  */
 public class TimeStampValidateJob {
+
+    private static final int TIMESTAMP = 1;
+    private static final int CREATED = 2;
 
     private static final int OPERATION_CREATE = 0;
     private static final int OPERATION_IMPORT = 1;
@@ -301,8 +306,6 @@ public class TimeStampValidateJob {
                 });
     }
 
-
-
     /**
      * 判断公钥是否在结构体中
      * @param permissionsBean
@@ -333,6 +336,61 @@ public class TimeStampValidateJob {
         return false;
     }
 
+
+    /*
+    public static String getLaterTimeStamp(String timestamp, String created){
+        int flag = 0;
+
+        String[] timestamp_arr = timestamp.split("T");
+        String[] created_arr = created.split("T");
+
+        String timestamp_date_str = timestamp_arr[0];
+        String timestamp_time_str = timestamp_arr[1];
+
+        String created_date_str = created_arr[0];
+        String created_time_str = created_arr[1];
+
+        SimpleDateFormat formatter_date = new SimpleDateFormat(DateUtil.Format.EOS_TIMESTAMP_FORMAT_DATE, Locale
+                .getDefault());
+        SimpleDateFormat formatter_time = new SimpleDateFormat(DateUtil.Format.EOS_TIMESTAMP_FORMAT_TIME, Locale
+                .getDefault());
+
+
+        try {
+
+            Date timestamp_date = formatter_date.parse(timestamp_date_str);
+            Date created_date = formatter_date.parse(created_date_str);
+            long date_diff = timestamp_date.getTime() - created_date.getTime();
+
+            Date timestamp_time = formatter_time.parse(timestamp_time_str);
+            Date created_time = formatter_time.parse(created_time_str);
+            long time_diff = timestamp_time.getTime() - created_time.getTime();
+
+            //比较日期,时间大小
+            if (date_diff > 0){
+                flag = TIMESTAMP;
+            }else if (date_diff < 0){
+                flag = CREATED;
+            }else if (time_diff >= 0){
+                flag = TIMESTAMP;
+            }else {
+                flag = CREATED;
+            }
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        switch (flag){
+            case TIMESTAMP:
+                return timestamp;
+            case CREATED:
+                return created;
+            default:
+                return "err";
+        }
+    }
+    */
+
     /**
      * 比较时间戳大小， 返回时间靠后的一个
      * "timestamp": "2018-06-08T08:08:08.500"
@@ -342,141 +400,34 @@ public class TimeStampValidateJob {
      * @return
      */
     public static String getLaterTimeStamp(String timestamp, String created){
-        String[] timestamp_arr = timestamp.split("-");
-        String[] created_arr = created.split("-");
+        int flag = 0;
 
-        String year_timestamp = timestamp_arr[0];
-        String year_created = created_arr[0];
+        SimpleDateFormat formatter = new SimpleDateFormat(DateUtil.Format.EOS_DATE_FORMAT_WITH_MILLI, Locale.getDefault());
 
-        String month_timestamp = timestamp_arr[1];
-        String month_created = created_arr[1];
+        try {
 
-        String date_timestamp = timestamp_arr[2];
-        String date_created = created_arr[2];
+            Date timestamp_date = formatter.parse(timestamp);
+            Date created_date = formatter.parse(created);
+            long date_diff = timestamp_date.getTime() - created_date.getTime();
 
-        //先比较年份
-        if (Integer.parseInt(year_created) < Integer.parseInt(year_timestamp)){
-            return timestamp;
-        }else if (Integer.parseInt(year_created) > Integer.parseInt(year_timestamp)){
-            return created;
-        }else {
-            //年份相等，比较月份
-            if (Integer.parseInt(month_created) < Integer.parseInt(month_timestamp)){
+            if (date_diff >= 0){
+                flag = TIMESTAMP;
+            }else {
+                flag = CREATED;
+            }
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        switch (flag){
+            case TIMESTAMP:
                 return timestamp;
-            }else if(Integer.parseInt(month_created) > Integer.parseInt(month_timestamp)){
+            case CREATED:
                 return created;
-            }else {
-                //月份相等，比较具体时间
-                String res =  compareDate(date_timestamp, date_created);
-                if (res.equals(date_timestamp)){
-                    return timestamp;
-                }else {
-                    return created;
-                }
-            }
+            default:
+                return "err";
         }
-
     }
-
-    /**
-     * 比较具体时间，返回时间靠后的一个
-     * 08T08:08:08.500
-     * 21T03:34:17.500
-     * @param date_timestamp
-     * @param date_created
-     * @return
-     */
-
-    public static String compareDate(String date_timestamp, String date_created){
-        String[] date_timestamp_arr = date_timestamp.split(":");
-        String[] date_created_arr = date_created.split(":");
-
-        String day_timestamp = date_timestamp_arr[0].substring(0,2);
-        String day_created = date_created_arr[0].substring(0,2);
-
-        String hour_timestamp = date_timestamp_arr[0].substring(3);
-        String hour_created = date_created_arr[0].substring(3);
-
-        String min_timestamp = date_timestamp_arr[1];
-        String min_created = date_created_arr[1];
-
-        String sec_timestamp = date_timestamp_arr[2].substring(0,2);
-        String sec_created = date_created_arr[2].substring(0,2);
-
-        String millisec_timestamp = date_timestamp_arr[2].substring(3);
-        String millisec_created = date_created_arr[2].substring(3);
-
-        if (Integer.parseInt(day_created) < Integer.parseInt(day_timestamp)){
-            //先比较日期
-            return date_timestamp;
-        }else if (Integer.parseInt(day_created) > Integer.parseInt(day_timestamp)){
-            return date_created;
-        }else {
-            //日期一样，比较小时
-            if (Integer.parseInt(hour_created) < Integer.parseInt(hour_timestamp)){
-                return date_timestamp;
-            }else if(Integer.parseInt(hour_created) > Integer.parseInt(hour_timestamp)){
-                return date_created;
-            }else {
-                //小时一样，比较分钟
-                if (Integer.parseInt(min_created) < Integer.parseInt(min_timestamp)){
-                    return date_timestamp;
-                }else if (Integer.parseInt(min_created) > Integer.parseInt(min_timestamp)){
-                    return date_created;
-                }else {
-                    //分钟一样，比较秒数
-                    if (Integer.parseInt(sec_created) < Integer.parseInt(sec_timestamp)){
-                        return date_timestamp;
-                    }else if (Integer.parseInt(sec_created) > Integer.parseInt(sec_timestamp)){
-                        return date_created;
-                    }else {
-                        //秒数一样，比较毫秒
-                        if (Integer.parseInt(millisec_created) < Integer.parseInt(millisec_timestamp)){
-                            return date_timestamp;
-                        }else if (Integer.parseInt(sec_created) > Integer.parseInt(sec_timestamp)){
-                            return date_created;
-                        }else {
-                            return date_created;
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-
-
-    /**
-     * SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-     Date start = sdf.parse("2015-10-22 05:12:10");
-     Date end = sdf.parse("2013-10-23 08:10:10");
-     int c = end.getTime() - start.getTime();
-     if(c>0)
-     System.out.println("start大")；
-     if(c<0)
-     System.out.println("end大")；
-     if(c=0)
-     System.out.println("同一个时间")；
-     */
-    /*
-    public static String[] formatDate(String timestamp){
-        String[] timestamp_arr = timestamp.split("T");
-        String[]  formatedDate = new String[2];
-        SimpleDateFormat formatter_date = new SimpleDateFormat(DateUtil.Format.EOS_TIMESTAMP_FORMAT_DATE, Locale
-                .getDefault());
-        SimpleDateFormat formatter_time = new SimpleDateFormat(DateUtil.Format.EOS_TIMESTAMP_FORMAT_TIME, Locale
-                .getDefault());
-
-        formatedDate[0] = formatter_date.format(timestamp_arr[0]);
-        formatedDate[1] = formatter_time.format(timestamp_arr[1]);
-
-        return formatedDate;
-    }
-
-    public String getLaterTime(String[] formatedTime_one, String[] formatedTime_two){
-
-    }
-    */
 
     private static void removePollingJob() {
         SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());

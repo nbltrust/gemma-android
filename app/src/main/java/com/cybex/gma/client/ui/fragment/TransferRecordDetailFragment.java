@@ -84,7 +84,7 @@ public class TransferRecordDetailFragment extends XFragment {
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle(getResources().getString(R.string.title_transfer_detail), true, false);
-        //OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
+        OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
     }
 
     @Override
@@ -117,7 +117,10 @@ public class TransferRecordDetailFragment extends XFragment {
 
                 }
                 //设置固定的值
-                superTextViewBlockTime.setRightString(curTransfer.time);
+                String time_arr[] = curTransfer.time.split("T");
+                String transferTime = time_arr[0] + " " + time_arr[1].substring(0,8);
+                superTextViewBlockTime.setRightString(transferTime);
+
                 tvShowMemo.setText(curTransfer.memo);
                 tvShowMemo.getViewTreeObserver().addOnGlobalLayoutListener(
                         new ViewTreeObserver.OnGlobalLayoutListener() {

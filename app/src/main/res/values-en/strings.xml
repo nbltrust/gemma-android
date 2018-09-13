@@ -66,6 +66,7 @@
     <string name="used">used </string>
     <string name="total_amount">total </string>
     <string name="delegate">Delegate</string>
+    <string name="operation">Operation</string>
     <string name="delegate_cpu">CPU</string>
     <string name="delegate_hint">Enter amount to delegate</string>
     <string name="refund_hint">Enter amount to undelegate</string>
@@ -244,7 +245,7 @@
     <string name="unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
     <string name="switch_account">Switch Account</string>
     <string name="confirm_delegate">Confirm stake</string>
-    <string name="input_pass_hint">Enter @\'s password</string>
+    <string name="input_pass_hint">Enter @%1$s\'s password</string>
     <string name="gemma_password_hint">Enter account password to authorize operation</string>
     <string name="confirm_author">Authorize</string>
     <string name="confirm_buy">Confirm buy</string>
@@ -252,6 +253,7 @@
     <string name="explanation">Description</string>
     <string name="buy_ram">Buy RAM</string>
     <string name="sell_ram">Sell RAM</string>
+    <string name="amount">Amount</string>
     <string name="input_original_pass">Enter original password</string>
     <string name="verify_password">Verify</string>
     <string name="input_password">Enter @\'s password</string>

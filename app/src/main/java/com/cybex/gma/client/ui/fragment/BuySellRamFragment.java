@@ -27,6 +27,7 @@ import com.cybex.gma.client.ui.model.vo.TabTitleBuyRamVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleSellRamVO;
 import com.cybex.gma.client.ui.presenter.BuySellRamPresenter;
 import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -75,17 +76,21 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     @OnClick(R.id.bt_buy_ram)
     public void showBuyDialog() {
-        showConfirmBuyRamDialog();
+        if (!NoDoubleClick.isDoubleClick()){
+            showConfirmBuyRamDialog();
+        }
     }
 
     @OnClick(R.id.bt_sell_ram)
     public void showSellDialog() {
-        showConfirmSellRamDialog();
+        if (!NoDoubleClick.isDoubleClick()){
+            showConfirmSellRamDialog();
+        }
     }
 
     @OnTextChanged(value = R.id.edt_buy_ram, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onChanged(Editable s) {
-        if (EmptyUtils.isNotEmpty(getEOSAmount())) {
+        if (EmptyUtils.isNotEmpty(getEOSAmount()) && !getEOSAmount().equals(".")) {
             setClickable(btBuyRam);
             if (EmptyUtils.isNotEmpty(kbPerEOS)) {
                 String amount =
@@ -102,7 +107,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     @OnTextChanged(value = R.id.edt_sell_ram, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onSellChanged(Editable s) {
-        if (EmptyUtils.isNotEmpty(getRamAmount()) && EmptyUtils.isNotEmpty(eosPerKb)) {
+        if (EmptyUtils.isNotEmpty(getRamAmount()) && EmptyUtils.isNotEmpty(eosPerKb) && !getEOSAmount().equals(".")) {
             setClickable(btSellRam);
             if (EmptyUtils.isNotEmpty(eosPerKb)) {
                 String amount =
@@ -372,6 +377,14 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.imc_cancel:
+                        switch (operation_type){
+                            case OPERATION_BUY_RAM:
+                                showConfirmBuyRamDialog();
+                                break;
+                            case OPERATION_SELL_RAM:
+                                showConfirmSellRamDialog();
+                                break;
+                        }
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_authorization:
@@ -467,6 +480,13 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             }
         });
         dialog.show();
+        EditText inputPass = dialog.findViewById(R.id.et_password);
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            inputPass.setHint(String.format(getResources().getString(R.string.input_pass_hint), curWallet.getCurrentEosName()));
+        }
+
+
     }
 
     /**

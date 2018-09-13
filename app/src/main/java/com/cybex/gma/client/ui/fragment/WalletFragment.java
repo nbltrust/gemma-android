@@ -112,6 +112,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.view_ram) View viewRAM;
     //@BindView(R.id.view_refresh_wallet) CommonRefreshLayout refreshLayout;
 
+    private String test1 = "2018-06-08T08:08:08.500";
+    private String test2 = "2018-07-08T08:08:08.500";
+
     Unbinder unbinder;
 
     private ResourceInfoVO resourceInfoVO;
@@ -369,7 +372,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
-
     private void showTotalPriceInfo(String banlance, String unitPrice, AccountInfo info) {
         String banlanceNumber = "0";
         String netNumber = "0";
@@ -461,7 +463,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     }
 
-
     /**
      * 账户余额
      *
@@ -476,7 +477,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         });
 
     }
-
 
     @Override
     public void bindUI(View rootView) {
@@ -587,6 +587,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 }
             }
         });
+
+        System.out.println(TimeStampValidateJob.getLaterTimeStamp(test1, test2));
 
     }
 

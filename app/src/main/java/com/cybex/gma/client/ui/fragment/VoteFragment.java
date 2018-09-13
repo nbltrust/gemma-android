@@ -203,9 +203,13 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     selectedNodes.remove(curVoteNodeVO);
                 } else {
                     //点选
-                    curVoteNodeVO.ischecked = true;
-                    //向已选列表中添加
-                    selectedNodes.add(curVoteNodeVO);
+                    if (selectedNodes.size() < SELECTED_NODES_LIMIT){
+                        //向已选列表中添加
+                        curVoteNodeVO.ischecked = true;
+                        selectedNodes.add(curVoteNodeVO);
+                    }else {
+                        GemmaToastUtils.showLongToast(getResources().getString(R.string.selected_nodes_limit));
+                    }
                 }
                 //此事件用于更新本页面UI
                 NodeSelectedEvent event_this = new NodeSelectedEvent();

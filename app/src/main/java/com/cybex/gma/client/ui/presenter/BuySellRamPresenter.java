@@ -102,7 +102,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
-                        getV().dissmisProgressDialog();
+                        //getV().dissmisProgressDialog();
                     }
                 });
 
@@ -165,7 +165,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
-                        getV().dissmisProgressDialog();
+                        //getV().dissmisProgressDialog();
                     }
                 });
 

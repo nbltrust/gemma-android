@@ -25,6 +25,7 @@ import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
 import com.cybex.gma.client.ui.presenter.DelegatePresenter;
 import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -74,12 +75,12 @@ public class DelegateFragment extends XFragment {
 
     @OnClick(R.id.bt_delegate_cpu_net)
     public void showDialog() {
-        showConfirmDelegateiDialog();
+        if (!NoDoubleClick.isDoubleClick())showConfirmDelegateiDialog();
     }
 
     @OnClick(R.id.bt_undelegate_cpu_net)
     public void showUnDialog(){
-        showConfirmUndelegateiDialog();
+        if (!NoDoubleClick.isDoubleClick())showConfirmUndelegateiDialog();
     }
 
     public static DelegateFragment newInstance(Bundle args) {
@@ -90,7 +91,8 @@ public class DelegateFragment extends XFragment {
 
     @OnTextChanged(value = R.id.edt_delegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterDelegateCpuChanged(){
-        if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+        if ((EmptyUtils.isNotEmpty(getDelegateCpu()) || EmptyUtils.isNotEmpty(getDelegateNet()))
+                && (!getDelegateCpu().equals(".") && !getDelegateNet().equals("."))){
             setClickable(btDelegateCpuNet);
         }else{
             setUnclickable(btDelegateCpuNet);
@@ -99,7 +101,8 @@ public class DelegateFragment extends XFragment {
 
     @OnTextChanged(value = R.id.edt_delegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterDelegateNetChanged(){
-        if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+        if ((EmptyUtils.isNotEmpty(getDelegateCpu()) || EmptyUtils.isNotEmpty(getDelegateNet()))
+                && (!getDelegateNet().equals(".") && !getDelegateCpu().equals("."))) {
             setClickable(btDelegateCpuNet);
         }else{
             setUnclickable(btDelegateCpuNet);
@@ -108,7 +111,8 @@ public class DelegateFragment extends XFragment {
 
     @OnTextChanged(value = R.id.edt_undelegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterUndelegateCpuChanged(){
-        if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
+        if ((EmptyUtils.isNotEmpty(getUndelegateCpu()) || EmptyUtils.isNotEmpty(getunDelegateNet()))
+                && !getUndelegateCpu().equals(".") && !getunDelegateNet().equals(".")){
             setClickable(btundelegateCpuNet);
         }else{
             setUnclickable(btundelegateCpuNet);
@@ -117,7 +121,8 @@ public class DelegateFragment extends XFragment {
 
     @OnTextChanged(value = R.id.edt_undelegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterundelegateNetChanged(){
-        if (EmptyUtils.isNotEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())){
+        if ((EmptyUtils.isNotEmpty(getunDelegateNet()) || EmptyUtils.isNotEmpty(getUndelegateCpu()))
+                && !getunDelegateNet().equals(".") && !getUndelegateCpu().equals(".")){
             setClickable(btundelegateCpuNet);
         }else{
             setUnclickable(btundelegateCpuNet);
@@ -443,8 +448,12 @@ public class DelegateFragment extends XFragment {
                                             }
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
-                                            String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
-                                            String stake_cpu_quantity = AmountUtil.add(getDelegateCpu(), "0", 4) + " EOS";
+                                            try {
+                                                String stake_net_quantity = AmountUtil.add(getDelegateNet(), "0", 4) + " EOS";
+                                                String stake_cpu_quantity = AmountUtil.add(getDelegateCpu(), "0", 4) + " EOS";
+                                            }catch (NumberFormatException e){
+                                                e.printStackTrace();
+                                            }
                                             //getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
                                              //       stake_cpu_quantity, key);
                                             dialog.cancel();
@@ -481,8 +490,13 @@ public class DelegateFragment extends XFragment {
 
                                         }else{
                                             final String curEOSName = curWallet.getCurrentEosName();
-                                            String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
-                                            String unstake_cpu_quantity = AmountUtil.add(getUndelegateCpu(), "0", 4) + " EOS";
+                                            try {
+                                                String unstake_net_quantity = AmountUtil.add(getunDelegateNet(), "0", 4) + " EOS";
+                                                String unstake_cpu_quantity = AmountUtil.add(getUndelegateCpu(), "0", 4) + " EOS";
+                                            }catch (NumberFormatException e){
+                                                e.printStackTrace();
+                                            }
+
                                             //getP().executeUndelegateLogic(curEOSName, curEOSName,
                                             // unstake_net_quantity,
                                              //       unstake_cpu_quantity, key);

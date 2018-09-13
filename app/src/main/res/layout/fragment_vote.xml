@@ -24,7 +24,7 @@
             android:layout_above="@+id/view_vote_bot"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="0dp"
             android:layout_marginBottom="4dp"
             app:contentView="@layout/content_recycler_view"
             app:emptyView="@layout/empty_view_nodes"

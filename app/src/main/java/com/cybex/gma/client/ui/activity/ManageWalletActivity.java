@@ -1,12 +1,15 @@
 package com.cybex.gma.client.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.fragment.WalletManageFragment;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
