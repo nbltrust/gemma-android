@@ -228,6 +228,7 @@
     <string name="input_transfer_hint">输入转账备注</string>
     <string name="show_remain_balance">余额： </string>
     <string name="cant_transfer_to_yourself">不能给自己的账户转账</string>
+    <string name="tip_balance_not_enough">可用余额不足</string>
 
     <!-- Transfer Record -->
     <string name="title_transfer_record">收支记录</string>

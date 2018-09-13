@@ -230,6 +230,7 @@
     <string name="input_transfer_hint">(Optional)</string>
     <string name="show_remain_balance">Balance: </string>
     <string name="cant_transfer_to_yourself">Recipient\'s name can not be same as sender\'s name</string>
+    <string name="tip_balance_not_enough">Insufficient balance</string>
 
     <!-- Transfer Record -->
     <string name="title_transfer_record">Transactions</string>

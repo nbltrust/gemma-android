@@ -28,6 +28,7 @@ import com.cybex.gma.client.ui.model.vo.TabTitleSellRamVO;
 import com.cybex.gma.client.ui.presenter.BuySellRamPresenter;
 import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -76,6 +77,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     @BindView(R.id.tv_eos_ram_amount) TextView tvEosRamAmount;
     @BindView(R.id.tv_available_eos_ram) TextView tvAvaEosRam;
     @BindView(R.id.tv_ram_unitPrice) SuperTextView tvRamUnitPrice;
+    Unbinder unbinder;
+    private String maxValue;
+    private String maxRamValue;
 
     @OnClick(R.id.bt_buy_ram)
     public void showBuyDialog() {
@@ -91,52 +95,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         }
     }
 
-    @OnTextChanged(value = R.id.edt_buy_ram, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onChanged(Editable s) {
-        if (EmptyUtils.isNotEmpty(getEOSAmount()) && !getEOSAmount().equals(".")) {
-            setClickable(btBuyRam);
-            if (EmptyUtils.isNotEmpty(kbPerEOS)) {
-                String amount =
-                        getResources().getString(R.string.approxy_amount) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4)
-                                + " KB";
-                tvApproximatelyAmount.setText(amount);
-                tvApproximatelyAmount.setVisibility(View.VISIBLE);
-            }
-        } else {
-            tvApproximatelyAmount.setVisibility(View.GONE);
-            setUnclickable(btBuyRam);
-        }
-
-        String str = s.toString();
-        int posDot = str.indexOf(".");
-        if (str.length() - posDot - 1 > 4)
-        {
-            s.delete(posDot + 5, posDot + 6);
-            if (!Alerter.isShowing()){
-                AlertUtil.showShortCommonAlert(getActivity(), getString(R.string.tip_eos_amount_format_invalid));
-            }
-        }
-
-    }
-
-    @OnTextChanged(value = R.id.edt_sell_ram, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onSellChanged(Editable s) {
-        if (EmptyUtils.isNotEmpty(getRamAmount()) && EmptyUtils.isNotEmpty(eosPerKb) && !getRamAmount().equals(".")) {
-            setClickable(btSellRam);
-            if (EmptyUtils.isNotEmpty(eosPerKb)) {
-                String amount =
-                        getResources().getString(R.string.approxy_amount) + AmountUtil.mul(eosPerKb, getRamAmount(),
-                                4) + " EOS";
-                tvApproximatelyAmount.setVisibility(View.VISIBLE);
-                tvApproximatelyAmount.setText(amount);
-            }
-        } else {
-            setUnclickable(btSellRam);
-            tvApproximatelyAmount.setVisibility(View.GONE);
-        }
-
-    }
-
     public static BuySellRamFragment newInstance(Bundle args) {
         BuySellRamFragment fragment = new BuySellRamFragment();
         fragment.setArguments(args);
@@ -146,13 +104,14 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BuySellRamFragment.this, rootView);
+        setNavibarTitle(getResources().getString(R.string.buy_sell_ram), true, true);
     }
 
-    Unbinder unbinder;
+
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.buy_sell_ram), true, true);
+
         inputCount = 0;
         tvApproximatelyAmount.setVisibility(View.GONE);
         setUnclickable(btSellRam);
@@ -181,6 +140,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                     }
                     //切换TAB时隐藏软键盘
                     if (EmptyUtils.isNotEmpty(getActivity()))hideSoftKeyboard(getActivity());
+                    //切换TAB时给maxValue更新值
 
                 } else if (position == 1) {
                     btBuyRam.setVisibility(View.GONE);
@@ -197,6 +157,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                     }
 
                     if (EmptyUtils.isNotEmpty(getActivity()))hideSoftKeyboard(getActivity());
+
                 }
             }
 
@@ -217,11 +178,67 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                 superTextViewRamStatus.setRightString(
                         getResources().getString(R.string.total_amount) + ramTotalKB + " KB");
                 tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_eos),
-                        String.valueOf(resourceInfoVO.getBanlance())));
+                        resourceInfoVO.getBanlance()));
+                maxValue = resourceInfoVO.getBanlance().split(" ")[0];
+                maxRamValue = calAvailableRam(resourceInfoVO);
                 initProgressBar(resourceInfoVO.getRamProgress());
             }
         }
         getP().getRamMarketInfo();
+
+        edtBuyRam.addTextChangedListener(new DecimalInputTextWatcher(edtBuyRam, DecimalInputTextWatcher
+                .Type.decimal, 4, maxValue){
+            @Override
+            public void afterTextChanged(Editable s) {
+                super.afterTextChanged(s);
+                if (EmptyUtils.isNotEmpty(getEOSAmount()) && !getEOSAmount().equals(".")) {
+                    setClickable(btBuyRam);
+                    if (EmptyUtils.isNotEmpty(kbPerEOS)) {
+                        String amount =
+                                getResources().getString(R.string.approxy_amount) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4)
+                                        + " KB";
+                        tvApproximatelyAmount.setText(amount);
+                        tvApproximatelyAmount.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    tvApproximatelyAmount.setVisibility(View.GONE);
+                    setUnclickable(btBuyRam);
+                }
+
+                /*
+                String str = s.toString();
+                int posDot = str.indexOf(".");
+                if (str.length() - posDot - 1 > 4)
+                {
+                    s.delete(posDot + 5, posDot + 6);
+                    if (!Alerter.isShowing()){
+                        AlertUtil.showShortCommonAlert(getActivity(), getString(R.string.tip_eos_amount_format_invalid));
+                    }
+                }
+                */
+            }
+        });
+
+        edtSellRam.addTextChangedListener(new DecimalInputTextWatcher(edtSellRam, DecimalInputTextWatcher
+                .Type.decimal, 4, maxRamValue){
+            @Override
+            public void afterTextChanged(Editable s) {
+                super.afterTextChanged(s);
+                if (EmptyUtils.isNotEmpty(getEOSAmount()) && !getEOSAmount().equals(".")) {
+                    setClickable(btBuyRam);
+                    if (EmptyUtils.isNotEmpty(kbPerEOS)) {
+                        String amount =
+                                getResources().getString(R.string.approxy_amount) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4)
+                                        + " KB";
+                        tvApproximatelyAmount.setText(amount);
+                        tvApproximatelyAmount.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    tvApproximatelyAmount.setVisibility(View.GONE);
+                    setUnclickable(btBuyRam);
+                }
+            }
+        });
     }
 
     @Override
@@ -372,7 +389,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         dialog.show();
 
         TextView amount = dialog.findViewById(R.id.tv_ram_amount);
-        String showRamAmount = AmountUtil.round(getRamAmount(), 4) + " KB";
+        String showRamAmount = getRamAmount() + " KB";
         amount.setText(showRamAmount);
         TextView memo = dialog.findViewById(R.id.tv_explanation);
         memo.setText(getResources().getString(R.string.sell_ram));
