@@ -15,7 +15,7 @@ import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.BluetoothBackupMneGuideActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
-import com.cybex.gma.client.ui.activity.BluetoothCreateWalletActivity;
+import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
@@ -190,7 +190,7 @@ public final class UISkipMananger {
      * @param context
      */
     public static void skipCreateBluetoothWalletActivity(Activity context, Bundle bd) {
-        launchIntent(context, BluetoothCreateWalletActivity.class, bd);
+        launchIntent(context, BluetoothCreatEosAccountActivity.class, bd);
 
     }
 

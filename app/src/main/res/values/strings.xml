@@ -434,6 +434,7 @@
     <item name="tag_key_position" type="id"/>
 
     <!--蓝牙钱包配置start -->
+    <string name="title_wookong_bio">WOOKONG Bio</string>
     <string name="match_wookong_bio">配对 WOOKONG Bio</string>
 
     <string name="tip_card">第一款支持EOS的蓝牙硬件钱包</string>
