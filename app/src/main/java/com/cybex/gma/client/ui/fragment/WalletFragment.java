@@ -110,7 +110,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.view_cpu) View viewCPU;
     @BindView(R.id.view_net) View viewNET;
     @BindView(R.id.view_ram) View viewRAM;
-    //@BindView(R.id.view_refresh_wallet) CommonRefreshLayout refreshLayout;
+    @BindView(R.id.view_refresh_wallet) CommonRefreshLayout refreshLayout;
 
     private String test1 = "2018-06-08T08:08:08.500";
     private String test2 = "2018-07-08T08:08:08.500";
@@ -267,7 +267,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 if (EmptyUtils.isNotEmpty(requestTime)) {
                     long requestOldMills = DateUtil.getMills(requestTime, DateUtil.Format.EOS_DATE_FORMAT);
                     requestOldMills = requestOldMills + 72 * 60 * 60 * 1000;
-                    String refoundTime = getP().dateDistance2now(requestOldMills, DateUtil.Format.EOS_DATE_FORMAT);
+                    LoggerManager.d("newRequestOldMills", requestOldMills);
+                    String refoundTime = getP().dateDistance2now(requestOldMills, DateUtil.Format.EOS_DATE_FORMAT_WITH_MILLI);
 
                     String netAmount = request.net_amount;
                     String netNum = "0";
@@ -498,17 +499,15 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         AppManager.getAppManager().finishActivity(CreateManageActivity.class);
         textViewBackupWallet.setVisibility(View.VISIBLE);
         //下拉刷新
-
-        /*
         refreshLayout.setEnableLoadmore(false);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh();
+                refreshlayout.finishRefresh(200);
                 getP().requestHomeCombineDataVO();
             }
         });
-        */
+
 
 
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();

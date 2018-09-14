@@ -19,6 +19,7 @@ import com.cybex.gma.client.ui.request.UnitPriceRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.android.logger.Log;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -124,6 +126,7 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                         if (EmptyUtils.isNotEmpty(getV())){
                             getV().showMainInfo(vo);
                             getV().dissmisProgressDialog();
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.loading_success));
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -382,13 +385,13 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
      * @return
      */
     public String dateDistance2now(long oldms, String format) {
-        SimpleDateFormat DateF = new SimpleDateFormat(format);
+        SimpleDateFormat DateF = new SimpleDateFormat(format, Locale.getDefault());
         try {
             Long time = new Long(oldms);
             String oldTime = DateF.format(time);
             Date oldDate = DateF.parse(oldTime);
             Date nowDate = Calendar.getInstance().getTime();
-            return dateDistance(oldDate, nowDate);
+            return dateDistance(nowDate, oldDate);
         } catch (Exception e) {
         }
         return null;

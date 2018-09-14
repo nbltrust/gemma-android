@@ -211,22 +211,21 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 Locale systemLanguageType = LanguageManager.getInstance(this).getSysLocale();
                 switch (systemLanguageType.getDisplayLanguage()) {
                     case CN:
-                        CommonWebViewActivity.startWebView(this, ApiPath.VERSION_NOTE_CN, getResources()
-                                .getString(R.string.version_info));
+                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
+                                .getString(R.string.service_agreement));
                         break;
                     case EN:
-                        CommonWebViewActivity.startWebView(this, ApiPath.VERSION_NOTE_EN, getResources()
-                                .getString(R.string.version_info));
+                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources()
+                                .getString(R.string.service_agreement));
                         break;
                     default:
-                        CommonWebViewActivity.startWebView(this, ApiPath.VERSION_NOTE_CN, getResources()
-                                .getString(R.string.version_info));
+                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
+                                .getString(R.string.service_agreement));
                 }
                 break;
             default:
                 CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
                         .string.service_agreement));
-
         }
     }
 

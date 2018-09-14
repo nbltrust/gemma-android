@@ -336,61 +336,6 @@ public class TimeStampValidateJob {
         return false;
     }
 
-
-    /*
-    public static String getLaterTimeStamp(String timestamp, String created){
-        int flag = 0;
-
-        String[] timestamp_arr = timestamp.split("T");
-        String[] created_arr = created.split("T");
-
-        String timestamp_date_str = timestamp_arr[0];
-        String timestamp_time_str = timestamp_arr[1];
-
-        String created_date_str = created_arr[0];
-        String created_time_str = created_arr[1];
-
-        SimpleDateFormat formatter_date = new SimpleDateFormat(DateUtil.Format.EOS_TIMESTAMP_FORMAT_DATE, Locale
-                .getDefault());
-        SimpleDateFormat formatter_time = new SimpleDateFormat(DateUtil.Format.EOS_TIMESTAMP_FORMAT_TIME, Locale
-                .getDefault());
-
-
-        try {
-
-            Date timestamp_date = formatter_date.parse(timestamp_date_str);
-            Date created_date = formatter_date.parse(created_date_str);
-            long date_diff = timestamp_date.getTime() - created_date.getTime();
-
-            Date timestamp_time = formatter_time.parse(timestamp_time_str);
-            Date created_time = formatter_time.parse(created_time_str);
-            long time_diff = timestamp_time.getTime() - created_time.getTime();
-
-            //比较日期,时间大小
-            if (date_diff > 0){
-                flag = TIMESTAMP;
-            }else if (date_diff < 0){
-                flag = CREATED;
-            }else if (time_diff >= 0){
-                flag = TIMESTAMP;
-            }else {
-                flag = CREATED;
-            }
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
-
-        switch (flag){
-            case TIMESTAMP:
-                return timestamp;
-            case CREATED:
-                return created;
-            default:
-                return "err";
-        }
-    }
-    */
-
     /**
      * 比较时间戳大小， 返回时间靠后的一个
      * "timestamp": "2018-06-08T08:08:08.500"

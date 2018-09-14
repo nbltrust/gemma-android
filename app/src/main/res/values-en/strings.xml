@@ -354,6 +354,7 @@
     <string name="pubKey_invalid">Invalid public key</string>
     <string name="no_balance">Balance not enough</string>
     <string name="default_create_fail_info">Request failed</string>
+    <string name="loading_success">Loading success</string>
 
     <!-- Annotation -->
     <string name="eos_name_not_empty">Invalid EOS account name</string>

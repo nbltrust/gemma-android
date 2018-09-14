@@ -153,16 +153,16 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                 Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
                 switch (systemLanguageType.getDisplayLanguage()) {
                     case CN:
-                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_CN, getResources()
-                                .getString(R.string.version_info));
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources()
+                                .getString(R.string.service_agreement));
                         break;
                     case EN:
-                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_EN, getResources()
-                                .getString(R.string.version_info));
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_EN, getResources()
+                                .getString(R.string.service_agreement));
                         break;
                     default:
-                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_CN, getResources()
-                                .getString(R.string.version_info));
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources()
+                                .getString(R.string.service_agreement));
                 }
                 break;
             default:

@@ -77,10 +77,18 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     @BindView(R.id.layout_tab_delegate) View tab_delegate;
     @BindView(R.id.layout_tab_undelegate) View tab_undelegate;
 
+    private ResourceInfoVO resourceInfoVO;
 
     @OnClick(R.id.bt_delegate_cpu_net)
     public void showDialog() {
-        showConfirmDelegateiDialog();
+        if (EmptyUtils.isNotEmpty(resourceInfoVO)){
+            Double balance = Double.parseDouble(resourceInfoVO.getBanlance().split(" ")[0]);
+            if (validateAmount(getDelegateCpu(), getunDelegateNet(), balance)){
+                showConfirmDelegateiDialog();
+            }else {
+                AlertUtil.showShortUrgeAlert(this, getString(R.string.tip_balance_not_enough));
+            }
+        }
     }
 
     @OnClick(R.id.bt_undelegate_cpu_net)
@@ -202,7 +210,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             }
         });
 
-        ResourceInfoVO resourceInfoVO = getIntent().getParcelableExtra("resourceInfo");
+        resourceInfoVO = getIntent().getParcelableExtra("resourceInfo");
 
         if (resourceInfoVO != null) {
             String balance = getResources().getString(R.string.remain_balance_pure) + resourceInfoVO.getBanlance();
@@ -682,5 +690,27 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             String showInfo = getString(R.string.password_hint_info) + " : " + passHint;
             tv_pass_hint.setText(showInfo);
         }
+    }
+
+    public boolean validateAmount(String cpuInput, String netInput, Double maxValue){
+        String totalAmount;
+        if (EmptyUtils.isNotEmpty(cpuInput) && EmptyUtils.isNotEmpty(netInput)){
+            //CPU和NET输入都不为空
+            totalAmount = AmountUtil.add(cpuInput, netInput,4);
+        }else if (EmptyUtils.isEmpty(cpuInput)){
+            //CPU输入空
+            totalAmount = AmountUtil.round(netInput, 4);
+        }else {
+            //NET输入空
+            totalAmount = AmountUtil.round(cpuInput, 4);
+        }
+
+        try{
+            Double sum = Double.parseDouble(totalAmount);
+            if (sum <= maxValue)return true;
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

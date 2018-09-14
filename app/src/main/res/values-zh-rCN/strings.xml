@@ -352,6 +352,7 @@
     <string name="pubKey_invalid">创建失败，无效的公钥！</string>
     <string name="no_balance">创建失败，账户余额不足！</string>
     <string name="default_create_fail_info">创建失败，请重新尝试</string>
+    <string name="loading_success">加载成功</string>
 
     <!-- Annotation -->
     <string name="eos_name_not_empty">EOS账户名不能为空</string>

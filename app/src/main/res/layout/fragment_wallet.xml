@@ -22,14 +22,14 @@
             >
         </com.hxlx.core.lib.widget.titlebar.view.TitleBar>
 
-        <!--
+
         <com.cybex.base.view.refresh.CommonRefreshLayout
             android:id="@+id/view_refresh_wallet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             title:srlEnableLoadmore="false"
             title:srlEnableRefresh="true">
-            -->
+
 
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/scroll_wallet_tab"
@@ -87,9 +87,8 @@
 
             </android.support.v4.widget.NestedScrollView>
 
-        <!--
+
         </com.cybex.base.view.refresh.CommonRefreshLayout>
-        -->
 
 
     </LinearLayout>
