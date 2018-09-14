@@ -50,6 +50,8 @@ public class BluetoothBackupMneFragment extends XFragment {
                     BlueToothWrapper.GenSeedMnesReturnValue value = (BlueToothWrapper.GenSeedMnesReturnValue) msg.obj;
                     if (EmptyUtils.isNotEmpty(value)) {
                         String[] mnes = value.getStrMneWord();
+                        bd.putParcelable(ParamConstants.KEY_GEEN_SEED, value);
+
                         List<String> labels = new ArrayList<>();
                         if (EmptyUtils.isNotEmpty(mnes)) {
                             for (int i = 0; i < mnes.length; i++) {
@@ -61,10 +63,10 @@ public class BluetoothBackupMneFragment extends XFragment {
                         viewShowMne.setLabels(labels);
 //                        viewShowMne.setLabelBackgroundDrawable(
 //                                getResources().getDrawable(R.drawable.selector_label_bg));
-                        viewShowMne.setWordMargin(40);
+                        viewShowMne.setWordMargin(60);
                         viewShowMne.setLineMargin(20);
                         viewShowMne.setSelectType(LabelsView.SelectType.NONE);
-                        viewShowMne.setLabelTextSize(42);
+                        viewShowMne.setLabelTextSize(48);
                         viewShowMne.setLabelTextColor(Color.parseColor("#4169d1"));
                         //viewShowMne.setLabelTextPadding(40, 20, 40, 20);
                     }

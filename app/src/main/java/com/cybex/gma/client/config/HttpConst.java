@@ -25,4 +25,5 @@ public interface HttpConst {
     int ACTION_REFRESH = -1;//列表刷新操作
 
 
+
 }

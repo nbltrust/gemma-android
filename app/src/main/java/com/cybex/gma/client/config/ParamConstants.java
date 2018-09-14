@@ -63,4 +63,7 @@ public interface ParamConstants {
 
     String EOS_ERR_CODE_PREFIX = "eos_err_code_";
     String CONTEXT_HANDLE = "contextHandle";
+
+
+    String KEY_GEEN_SEED = "key_geen_seed";
 }
