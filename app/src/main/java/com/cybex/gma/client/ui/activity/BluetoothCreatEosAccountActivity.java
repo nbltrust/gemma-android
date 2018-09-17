@@ -182,6 +182,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
     @Override
     public void onValidationSucceeded() {
         if (isUserNameValid()){
+            //所有验证通过，在这里跳转和调用网络请求
             setClickableStyle(btCreateWallet);
         }else {
             GemmaToastUtils.showLongToast(getString(R.string.eos_name_invalid));
