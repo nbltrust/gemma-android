@@ -15,9 +15,15 @@ import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.LanguageManager;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.xujiaji.happybubble.BubbleLayout;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,20 +38,26 @@ import static com.cybex.gma.client.config.ParamConstants.EN;
 /**
  * 创建EOS账户页面
  */
-public class BluetoothCreatEosAccountActivity extends XActivity {
+public class BluetoothCreatEosAccountActivity extends XActivity implements
+        Validator.ValidationListener {
 
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
     @BindView(R.id.bubble) BubbleLayout bubble;
     @BindView(R.id.tv_eos_name) TextView tvEosName;
+    @NotEmpty(messageResId = R.string.eos_name_not_empty, sequence = 1)
     @BindView(R.id.edt_eos_name) EditText edtEosName;
     @BindView(R.id.iv_eos_name_clear) ImageView ivEosNameClear;
+
+    @Checked(messageResId = R.string.check_agreement,sequence = 0)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.tv_service_agreement_create_eos_account) TextView tvServiceAgreement;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
     @BindView(R.id.scroll_create_wallet) ScrollView scrollCreateWallet;
+
+    private Validator validator;
 
 
     @OnClick(R.id.tv_service_agreement_create_eos_account)
@@ -82,15 +94,24 @@ public class BluetoothCreatEosAccountActivity extends XActivity {
 
         }
     }
+
+    @OnClick(R.id.bt_create_wallet)
+    public void createWallet(){
+        validator.validate();
+    }
+
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
+        setNavibarTitle(getString(R.string.title_create_eos_account),true);
+        validator = new Validator(this);
+        validator.setValidationListener(this);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-       setNavibarTitle(getString(R.string.title_create_eos_account),true);
-
+        btCreateWallet.setClickable(true);
+        setUnClickableStyle(btCreateWallet);
     }
 
     @Override
@@ -114,5 +135,35 @@ public class BluetoothCreatEosAccountActivity extends XActivity {
 
     public String getEOSUserName(){
         return edtEosName.getText().toString().trim();
+    }
+
+    public void setClickableStyle(Button button){
+        //button.setClickable(true);
+        button.setBackground(getDrawable(R.drawable.shape_corner_button));
+    }
+
+    public void setUnClickableStyle(Button button){
+        //button.setClickable(false);
+        button.setBackground(getDrawable(R.drawable.shape_corner_button_unclickable));
+    }
+
+
+
+    @Override
+    public void onValidationSucceeded() {
+        if (isUserNameValid()){
+            setClickableStyle(btCreateWallet);
+        }else {
+            GemmaToastUtils.showLongToast(getString(R.string.eos_name_invalid));
+        }
+
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors){
+            String message = error.getCollatedErrorMessage(this);
+            GemmaToastUtils.showLongToast(message);
+        }
     }
 }
