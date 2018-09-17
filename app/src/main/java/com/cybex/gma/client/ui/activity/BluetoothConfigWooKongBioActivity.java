@@ -87,7 +87,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
             ivSetPassClear.setVisibility(View.GONE);
         }
 
-        if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword()) && isPasswordMatch()){
+        if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword()) && isPasswordMatch()
+                && isPasswordLengthValid()){
             setClickable(btCreateWallet);
         }else {
             setUnclickable(btCreateWallet);
@@ -103,7 +104,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
             ivRepeatPassClear.setVisibility(View.VISIBLE);
         }
 
-        if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword() ) && isPasswordMatch()){
+        if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword() ) && isPasswordMatch()
+                && isPasswordLengthValid()){
             setClickable(btCreateWallet);
         }else {
             setUnclickable(btCreateWallet);
@@ -429,6 +431,13 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     public boolean isPasswordMatch() {
         if (getPassword().equals(getRepeatPassword())) { return true; }
+        return false;
+    }
+
+    public boolean isPasswordLengthValid(){
+        if (getPassword().length() >= 8 && getRepeatPassword().length() >= 8){
+            return true;
+        }
         return false;
     }
 
