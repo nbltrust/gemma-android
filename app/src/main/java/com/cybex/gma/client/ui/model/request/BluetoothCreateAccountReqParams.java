@@ -5,7 +5,7 @@ package com.cybex.gma.client.ui.model.request;
  *
  * Created by wanglin on 2018/9/11.
  */
-public class CreateBluetoothAccountReqParams {
+public class BluetoothCreateAccountReqParams {
 
     /**
      * 访问方ID，1:Gemma 2:Wookong solo 3: Wookong

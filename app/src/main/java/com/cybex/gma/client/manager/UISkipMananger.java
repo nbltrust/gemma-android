@@ -14,6 +14,7 @@ import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.BluetoothBackupMneGuideActivity;
+import com.cybex.gma.client.ui.activity.BluetoothConfigWooKongBioActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
 import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
@@ -191,6 +192,18 @@ public final class UISkipMananger {
      */
     public static void skipCreateBluetoothWalletActivity(Activity context, Bundle bd) {
         launchIntent(context, BluetoothCreatEosAccountActivity.class, bd);
+
+    }
+
+
+    /**
+     * 跳转到蓝牙账户密码配置界面
+     *
+     * @param context
+     * @param bd
+     */
+    public static void skipBluetoothConfigWookongBioActivity(Activity context, Bundle bd) {
+        launchIntent(context, BluetoothConfigWooKongBioActivity.class, bd);
 
     }
 
