@@ -159,7 +159,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         Bundle bd = new Bundle();
                         bd.putLong(ParamConstants.CONTEXT_HANDLE, contextHandle);
 
-                        UISkipMananger.skipCreateBluetoothWalletActivity(BluetoothScanResultDialogActivity.this, bd);
+                        UISkipMananger.skipBluetoothConfigWookongBioActivity(BluetoothScanResultDialogActivity.this, bd);
                         finish();
                         break;
                     case R.id.btn_import_mne:
