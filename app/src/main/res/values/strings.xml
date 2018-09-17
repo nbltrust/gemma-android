@@ -462,6 +462,8 @@
     
     <string name="progress_set_pin">正在设置PIN...</string>
 
+    <string name="title_create_eos_account">创建EOS账户</string>
+
 
     <!--蓝牙钱包配置end -->
 

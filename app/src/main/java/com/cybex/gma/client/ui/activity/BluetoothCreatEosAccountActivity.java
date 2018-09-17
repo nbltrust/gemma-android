@@ -89,6 +89,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+       setNavibarTitle(getString(R.string.title_create_eos_account),true);
 
     }
 
