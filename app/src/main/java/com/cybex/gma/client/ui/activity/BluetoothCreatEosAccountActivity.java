@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.ApiPath;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -62,6 +63,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
     @BindView(R.id.scroll_create_wallet) ScrollView scrollCreateWallet;
 
     private Validator validator;
+    private Bundle bd;
 
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -124,6 +126,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        bd = getIntent().getExtras();
         btCreateWallet.setClickable(true);
         setUnClickableStyle(btCreateWallet);
 
@@ -184,6 +187,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
         if (isUserNameValid()){
             //所有验证通过，在这里跳转和调用网络请求
             setClickableStyle(btCreateWallet);
+            UISkipMananger.skipBackupMneGuideActivity(this,bd);
         }else {
             GemmaToastUtils.showLongToast(getString(R.string.eos_name_invalid));
         }

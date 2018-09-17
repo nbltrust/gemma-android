@@ -3,18 +3,22 @@ package com.cybex.gma.client.ui.fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.utils.CollectionUtils;
+import com.cybex.gma.client.utils.TSnackbarUtil;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.gma.client.widget.LabelsView;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.trycatch.mysnackbar.Prompt;
+import com.trycatch.mysnackbar.TSnackbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +38,7 @@ public class BluetoothVerifyMneFragment extends XFragment {
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.view_click_to_show_mne) LabelsView viewClickToShowMne;
     @BindView(R.id.view_show_mne) LabelsView viewShowMne;
+    @BindView(R.id.view_root) LinearLayout viewRoot;
 
     private boolean isInit;//是否为初始状态，用来调整上方显示区域大小
 
@@ -45,6 +50,9 @@ public class BluetoothVerifyMneFragment extends XFragment {
     BlueToothWrapper.GenSeedMnesReturnValue values = null;
 
     long contextHandle = 0;
+
+    private TSnackbar snackBar;
+
 
     public static BluetoothVerifyMneFragment newInstance(Bundle bd) {
         BluetoothVerifyMneFragment fragment = new BluetoothVerifyMneFragment();
@@ -138,7 +146,7 @@ public class BluetoothVerifyMneFragment extends XFragment {
                             for (int m = 0; m < checkIndexCount[0]; m++) {
                                 String label = answerLabels.get(checkedIndex[m]);
                                 sb.append(label);
-                                if (m != checkedIndex.length - 1) {
+                                if (m != (checkIndexCount[0] - 1)) {
                                     sb.append(" ");
                                 }
                             }
@@ -148,10 +156,28 @@ public class BluetoothVerifyMneFragment extends XFragment {
                                     strDestMnes);
 
                             if (status == MiddlewareInterface.PAEW_RET_SUCCESS) {
-                                GemmaToastUtils.showShortToast("验证通过");
+                                LoggerManager.d("mne validate success...");
+
+
+                                TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_success),
+                                        Prompt.SUCCESS);
+
+                            } else if (status == -2147483642) {
+                                LoggerManager.d("device disconnected...");
+
+                                TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_warn),
+                                        Prompt.SUCCESS);
+
+                            } else {
+                                LoggerManager.d("mne validate error...");
+                                TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_failed),
+                                        Prompt.SUCCESS);
                             }
                         }
                     }
+                } else {
+                    TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_failed),
+                            Prompt.SUCCESS);
                 }
             }
         }

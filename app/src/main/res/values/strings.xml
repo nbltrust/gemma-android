@@ -464,6 +464,11 @@
 
     <string name="title_create_eos_account">创建EOS账户</string>
 
+    <string name="mne_validate_success">验证成功</string>
+    <string name="mne_validate_failed">验证失败</string>
+    <string name="mne_validate_warn">蓝牙连接已断开，请重新连接</string>
+
+
 
     <!--蓝牙钱包配置end -->
 

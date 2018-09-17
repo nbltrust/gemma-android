@@ -1,24 +1,23 @@
 package com.cybex.gma.client.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
-import com.cybex.gma.client.widget.LabelsView;
+import com.cybex.gma.client.widget.flowlayout.FlowLayout;
+import com.cybex.gma.client.widget.flowlayout.TagAdapter;
+import com.cybex.gma.client.widget.flowlayout.TagFlowLayout;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,13 +31,16 @@ public class BluetoothBackupMneFragment extends XFragment {
 
     Unbinder unbinder;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.view_labels) LabelsView viewShowMne;
+    @BindView(R.id.id_flowlayout) TagFlowLayout mFlowLayout;
     @BindView(R.id.bt_copied_mne) Button btCopiedMne;
 
     BlueToothWrapper generateSeedThread;
     BluetoothHandler handler;
     Bundle bd = null;
     long contextHandle = 0;
+
+    private TagAdapter<String> mAdapter;
+
 
     class BluetoothHandler extends Handler {
 
@@ -52,23 +54,17 @@ public class BluetoothBackupMneFragment extends XFragment {
                         String[] mnes = value.getStrMneWord();
                         bd.putParcelable(ParamConstants.KEY_GEEN_SEED, value);
 
-                        List<String> labels = new ArrayList<>();
-                        if (EmptyUtils.isNotEmpty(mnes)) {
-                            for (int i = 0; i < mnes.length; i++) {
-                                String word = mnes[i];
-                                labels.add(word);
-                            }
-                        }
+                        mFlowLayout.setAdapter(mAdapter = new TagAdapter<String>(mnes) {
 
-                        viewShowMne.setLabels(labels);
-//                        viewShowMne.setLabelBackgroundDrawable(
-//                                getResources().getDrawable(R.drawable.selector_label_bg));
-                        viewShowMne.setWordMargin(60);
-                        viewShowMne.setLineMargin(20);
-                        viewShowMne.setSelectType(LabelsView.SelectType.NONE);
-                        viewShowMne.setLabelTextSize(48);
-                        viewShowMne.setLabelTextColor(Color.parseColor("#4169d1"));
-                        //viewShowMne.setLabelTextPadding(40, 20, 40, 20);
+                            @Override
+                            public View getView(FlowLayout parent, int position, String s) {
+                                TextView tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.item_tag,
+                                        mFlowLayout, false);
+                                tv.setText(s);
+                                return tv;
+                            }
+                        });
+
                     }
 
                     break;

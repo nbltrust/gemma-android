@@ -10,7 +10,6 @@ import android.util.Log;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 
-import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -1770,7 +1769,7 @@ public class BlueToothWrapper extends Thread {
                             MiddlewareInterface.PAEW_COIN_TYPE_ETH, m_derivePath);
                     if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex,
-                                MiddlewareInterface.PAEW_COIN_TYPE_ETH, strAddress);
+                                MiddlewareInterface.PAEW_COIN_TYPE_ETH,true, strAddress);
                         if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                             showGetAuthDialog();
 
@@ -1805,7 +1804,7 @@ public class BlueToothWrapper extends Thread {
                             MiddlewareInterface.PAEW_COIN_TYPE_EOS, m_derivePath);
                     if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex,
-                                MiddlewareInterface.PAEW_COIN_TYPE_EOS, strAddress);
+                                MiddlewareInterface.PAEW_COIN_TYPE_EOS, true,strAddress);
                         if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                             showGetAuthDialog();
 
@@ -1840,7 +1839,7 @@ public class BlueToothWrapper extends Thread {
                             MiddlewareInterface.PAEW_COIN_TYPE_CYB, m_derivePath);
                     if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex,
-                                MiddlewareInterface.PAEW_COIN_TYPE_CYB, strAddress);
+                                MiddlewareInterface.PAEW_COIN_TYPE_CYB,true, strAddress);
                         if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                             showGetAuthDialog();
 
@@ -1890,7 +1889,8 @@ public class BlueToothWrapper extends Thread {
                     iRtn = MiddlewareInterface.deriveTradeAddress(m_contextHandle, m_devIndex, m_coinType,
                             m_derivePath);
                     if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
-                        iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex, m_coinType, strAddress);
+                        iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex, m_coinType,
+                                true,strAddress);
                     }
                 }
                 m_commonLock.unlock();

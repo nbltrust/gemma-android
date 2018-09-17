@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
@@ -159,7 +160,10 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         Bundle bd = new Bundle();
                         bd.putLong(ParamConstants.CONTEXT_HANDLE, contextHandle);
 
-                        UISkipMananger.skipBluetoothConfigWookongBioActivity(BluetoothScanResultDialogActivity.this, bd);
+                        UISkipMananger.skipBluetoothConfigWookongBioActivity(BluetoothScanResultDialogActivity.this,
+                                bd);
+                        //开启连接请求轮询
+                        BluetoothConnectKeepJob.startConnectPolling(contextHandle, mHandler, updatePosition);
                         finish();
                         break;
                     case R.id.btn_import_mne:
@@ -238,6 +242,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                             getDeviceInfoThread.setGetInfoWrapper(returnValue.getContextHandle()
                                     , updatePosition);
                             getDeviceInfoThread.start();
+
                         }
                     }
 
@@ -267,6 +272,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                                 getFPListThread.start();
                             }
                         }
+
                     }
 
                     break;

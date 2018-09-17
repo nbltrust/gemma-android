@@ -13,6 +13,7 @@ public interface ParamConstants {
 
     int ALARM_JOB = 1;
     int POLLING_JOB = 2;
+    int BLUETOOTH_CONNECT_JOB = 3;
 
     int VALID_EOSNAME_LENGTH = 12;
 
@@ -38,8 +39,8 @@ public interface ParamConstants {
 
     String GESTURE_SKIP_TYPE = "gesture_skip_type";//手势设置类型
     int GESTURE_SKIP_TYPE_CHANGE = 0x1001;//修改手势密码
-    int GESTURE_SKIP_TYPE_LOGIN_VERIFY = 0X1002;//登录验证手势密码
-    int GESTURE_SKIP_TYPE_CLOSE =0X1003;//关闭手势密码
+    int GESTURE_SKIP_TYPE_LOGIN_VERIFY = 0x1002;//登录验证手势密码
+    int GESTURE_SKIP_TYPE_CLOSE = 0x1003;//关闭手势密码
 
     int REQUEST_CODE_CHANGE_LANGUAGE = 1001;
     int CODE_CHANGE_RESULT = 1002;
@@ -53,7 +54,7 @@ public interface ParamConstants {
     int STATUS_FAIL = 4;
 
     /**
-     *导入钱包：1，创建钱包：0
+     * 导入钱包：1，创建钱包：0
      */
     int OPERATION_CREATE = 0;
     int OPERATION_IMPORT = 1;

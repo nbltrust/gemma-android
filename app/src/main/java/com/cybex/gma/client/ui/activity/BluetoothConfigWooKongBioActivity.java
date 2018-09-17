@@ -467,8 +467,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
                     break;
                 case BlueToothWrapper.MSG_INIT_PIN_FINISH:
                     dissmisProgressDialog();
-                    //跳转到备份助记词
-                    UISkipMananger.skipBackupMneGuideActivity(BluetoothConfigWooKongBioActivity.this, bd);
+                    //跳转到创建账户名界面
+                    UISkipMananger.skipCreateBluetoothWalletActivity(BluetoothConfigWooKongBioActivity.this, bd);
 
                     break;
 

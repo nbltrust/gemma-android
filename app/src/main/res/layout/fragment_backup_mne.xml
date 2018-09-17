@@ -7,47 +7,54 @@
 
     <include layout="@layout/ui_navibar"/>
 
-
-    <LinearLayout
+    <com.cybex.gma.client.widget.OverScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_20"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tip_memory_your_mne"
-            android:textColor="@color/darkSlateBlue"
-            android:textSize="@dimen/font_3.5"/>
+            android:layout_margin="@dimen/dimen_20"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_10"
-            android:layout_marginTop="@dimen/dimen_20"
-            android:text="@string/tip_use_your_mne"
-            android:textColor="@color/steel"
-            android:textSize="@dimen/font_3"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tip_memory_your_mne"
+                android:textColor="@color/darkSlateBlue"
+                android:textSize="@dimen/font_3.5"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:text="@string/tip_use_your_mne"
+                android:textColor="@color/steel"
+                android:textSize="@dimen/font_3"/>
 
-    </LinearLayout>
+            <com.cybex.gma.client.widget.flowlayout.TagFlowLayout
+                android:id="@+id/id_flowlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_corner"
+                android:padding="@dimen/dimen_20"
+                android:layout_marginTop="20dp"
+                app:max_select="1"
+                />
 
-    <com.cybex.gma.client.widget.LabelsView
-        android:id="@+id/view_labels"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_20"
-        android:background="@drawable/shape_corner"
-        android:padding="@dimen/dimen_20"/>
+            <Button
+                android:id="@+id/bt_copied_mne"
+                style="@style/bt_long_in_linearLayout"
+                android:layout_marginEnd="@dimen/dimen_40"
+                android:layout_marginStart="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:text="@string/mne_copied"/>
 
-    <Button
-        android:id="@+id/bt_copied_mne"
-        style="@style/bt_long_in_linearLayout"
-        android:layout_marginEnd="@dimen/dimen_40"
-        android:layout_marginStart="@dimen/dimen_40"
-        android:layout_marginTop="@dimen/dimen_20"
-        android:text="@string/mne_copied"/>
+        </LinearLayout>
+    </com.cybex.gma.client.widget.OverScrollView>
 
 
 </LinearLayout>
