@@ -30,6 +30,9 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.xujiaji.happybubble.BubbleLayout;
 
 import java.util.List;
@@ -50,11 +53,15 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
     @BindView(R.id.bubble) BubbleLayout bubble;
     @BindView(R.id.tv_set_pass) TextView tvSetPass;
+    @NotEmpty(messageResId = R.string.pass_not_empty, sequence = 2)
+    @Password(min = 8, messageResId = R.string.pass_lenth_invalid, sequence = 2)
     @BindView(R.id.edt_set_pass) EditText edtSetPass;
     @BindView(R.id.iv_set_pass_clear) ImageView ivSetPassClear;
     @BindView(R.id.iv_set_pass_mask) ImageView ivSetPassMask;
     @BindView(R.id.view_divider_setPass) View viewDividerSetPass;
     @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
+    @NotEmpty(messageResId = R.string.repeat_input_pass, sequence = 1)
+    @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 1)
     @BindView(R.id.et_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.iv_repeat_pass_clear) ImageView ivRepeatPassClear;
     @BindView(R.id.iv_repeat_pass_mask) ImageView ivRepeatPassMask;
@@ -79,6 +86,12 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         } else {
             ivSetPassClear.setVisibility(View.GONE);
         }
+
+        if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword()) && isPasswordMatch()){
+            setClickable(btCreateWallet);
+        }else {
+            setUnclickable(btCreateWallet);
+        }
     }
 
     @OnTextChanged(value = R.id.et_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -88,6 +101,12 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
             if (edtRepeatPass.hasFocus()) { setRepeatPassFocusStyle(); }
         } else {
             ivRepeatPassClear.setVisibility(View.VISIBLE);
+        }
+
+        if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword() ) && isPasswordMatch()){
+            setClickable(btCreateWallet);
+        }else {
+            setUnclickable(btCreateWallet);
         }
 
     }
@@ -263,6 +282,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        setUnclickable(btCreateWallet);
         SoftHideKeyBoardUtil.assistActivity(this);
         validator = new Validator(this);
         validator.setValidationListener(this);
@@ -332,7 +352,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
     }
 
     public void setClickable(Button button) {
-        button.setClickable(true);
+        //button.setClickable(true);
         button.setBackgroundColor(getResources().getColor(R.color.cornflowerBlueTwo));
     }
 
