@@ -25,6 +25,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.cybex.gma.client.utils.AlertUtil;
@@ -787,11 +788,16 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @Override
     public void onValidationSucceeded() {
         if (getP().isUserNameValid()) {
-            String[] keyPair = getP().getKeypair();
-            final String publicKey = keyPair[0];
-            final String privateKey = keyPair[1];
+            /*
             getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[1], keyPair[0],
                     getPassHint(), getInvCode());
+                    */
+            String[] keyPair = getP().getKeypair();
+            final String publicKey = keyPair[0];
+            Bundle bundle = new Bundle();
+            bundle.putString("account_name", getEOSUserName());
+            bundle.putString("public_key", publicKey);
+            UISkipMananger.launchChooseActivateMethod(this, bundle);
         }
     }
 

@@ -52,6 +52,7 @@ import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.OSUtils;
 import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.android.logger.Log;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
@@ -586,9 +587,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 }
             }
         });
-
-        System.out.println(TimeStampValidateJob.getLaterTimeStamp(test1, test2));
-
+        System.out.println(OSUtils.getRomType());
     }
 
     @Override

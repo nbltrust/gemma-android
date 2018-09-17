@@ -10,11 +10,13 @@ import android.text.TextUtils;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.activity.AboutActivity;
+import com.cybex.gma.client.ui.activity.ActivateAccountMethodActivity;
 import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
+import com.cybex.gma.client.ui.activity.CreateMethodActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
 import com.cybex.gma.client.ui.activity.FingerprintVerifyActivity;
@@ -78,14 +80,25 @@ public final class UISkipMananger {
         startActivity(context, CreateWalletActivity.class);
     }
 
+    /**
+     * 跳转到投票页面
+     * @param context
+     */
     public static void launchVote(Activity context) {
         launchIntent(context, VoteActivity.class);
     }
 
 
     /**
+     * 跳转到选择创建方式页面
+     * @param context
+     */
+    public static void launchChooseActivateMethod(Activity context, Bundle bundle) {
+        launchIntent(context, ActivateAccountMethodActivity.class, bundle);
+    }
+
+    /**
      * 跳转到钱包详情页面
-     *
      * @param context
      */
     public static void launchWalletDetail(Activity context, Bundle bundle) {

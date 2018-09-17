@@ -46,6 +46,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint">
 
             <com.allen.library.SuperTextView
+                android:id="@+id/tv_CPU"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_4"
@@ -54,12 +55,13 @@
                 app:sLeftTextString="CPU:"
                 app:sRightTextColor="@color/darkSlateBlueTwo"
                 app:sRightTextSize="@dimen/font_3.5"
-                app:sRightTextString="0.1000 EOS / 4.99ms"
+                app:sRightTextString="0.1000 EOS"
                 app:sUseShape="true">
 
             </com.allen.library.SuperTextView>
 
             <com.allen.library.SuperTextView
+                android:id="@+id/tv_NET"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_4"
@@ -68,12 +70,13 @@
                 app:sLeftTextString="NET:"
                 app:sRightTextColor="@color/darkSlateBlueTwo"
                 app:sRightTextSize="@dimen/font_3.5"
-                app:sRightTextString="0.1000 EOS / 3.99kb"
+                app:sRightTextString="0.1000 EOS"
                 app:sUseShape="true">
 
             </com.allen.library.SuperTextView>
 
             <com.allen.library.SuperTextView
+                android:id="@+id/tv_RAM"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_4"
@@ -82,7 +85,7 @@
                 app:sLeftTextString="RAM:"
                 app:sRightTextColor="@color/darkSlateBlueTwo"
                 app:sRightTextSize="@dimen/font_3.5"
-                app:sRightTextString="0.5000 EOS / 4.00kb"
+                app:sRightTextString="0.5000 EOS"
                 app:sUseShape="true">
 
             </com.allen.library.SuperTextView>
@@ -107,6 +110,7 @@
            android:layout_gravity="center"/>
 
        <TextView
+           android:id="@+id/tv_rmb_amount"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:textColor="@color/darkSlateBlue"
@@ -119,7 +123,7 @@
    </LinearLayout>
 
     <Button
-        android:id="@+id/show_priKey"
+        android:id="@+id/bt_wechat_pay"
         style="@style/bt_long_in_linearLayout"
         android:layout_marginEnd="@dimen/dimen_22"
         android:layout_marginStart="@dimen/dimen_22"

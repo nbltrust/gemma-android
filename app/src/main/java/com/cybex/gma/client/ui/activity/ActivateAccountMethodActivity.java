@@ -42,6 +42,7 @@ public class ActivateAccountMethodActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         this.setTab();
+
     }
 
     private void setTab() {
@@ -49,7 +50,8 @@ public class ActivateAccountMethodActivity extends XActivity {
         vpContent.removeAllViews();
         listFragment.clear();
 
-        listFragment.add(ActivateByRMBFragment.newInstance());
+        Bundle bundle = getIntent().getExtras();
+        listFragment.add(ActivateByRMBFragment.newInstance(bundle));
         listFragment.add(ActivateByFriendFragment.newInstance());
         listFragment.add(ActivateByExchangeFragment.newInstance());
         listFragment.add(ActivateByInvCodeFragment.newInstance());

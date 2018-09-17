@@ -84,7 +84,23 @@ public interface ApiMethod {
      */
     String API_GET_RAM_MARKET = "/v1/chain/get_table_rows";
 
+    /**
+     * 微信支付初始化订单
+     */
+    String WXPAY_INITIAL_ORDER = "/api/v1/pay/order";
 
+    /**
+     * 微信支付订单查询
+     */
+    String WXPAY_QUERY_ORDER_INFO = "/api/v1/pay/order/";
 
+    /**
+     * 微信支付查询创建账户法币支付账单明细
+     */
+    String WXPAY_PAY_BILL = "/api/v1/pay/bill";
 
+    /**
+     *微信支付支付下单接口
+     */
+    String WXPAY_PLACE_ORDER = "/api/v1/pay/order/";
 }

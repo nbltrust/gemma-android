@@ -107,8 +107,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         setNavibarTitle(getResources().getString(R.string.buy_sell_ram), true, true);
     }
 
-
-
     @Override
     public void initData(Bundle savedInstanceState) {
 
@@ -551,6 +549,5 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             tv_pass_hint.setText(showInfo);
         }
     }
-
 
 }

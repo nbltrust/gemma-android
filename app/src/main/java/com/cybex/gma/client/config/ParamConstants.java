@@ -8,6 +8,10 @@ package com.cybex.gma.client.config;
 
 public interface ParamConstants {
 
+    String WXPAY_APPID = "wxae3306b1fdcca166";
+    String WXPAY_PARTNER_ID = "1512677831";
+    String PLATFORM_ANDROID = "ANDROID";
+
     int TYPE_APP_ID_CYBEX = 1;//cybex
     int TYPE_APP_ID_BEIJIN_TEAM = 2;//北京团队
 
