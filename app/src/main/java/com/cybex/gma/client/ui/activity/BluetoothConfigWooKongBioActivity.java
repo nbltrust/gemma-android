@@ -30,9 +30,6 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
 import com.xujiaji.happybubble.BubbleLayout;
 
 import java.util.List;
@@ -106,12 +103,14 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     /**
      * 点击跳转
+     *
      * @param v
      */
     @OnClick({R.id.bt_create_wallet, R.id.bt_import_mne})
-    public void onButtonClicked(View v){
-        switch (v.getId()){
+    public void onButtonClicked(View v) {
+        switch (v.getId()) {
             case R.id.bt_create_wallet:
+                validator.validate();
                 break;
             case R.id.bt_import_mne:
                 break;
@@ -120,6 +119,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     /**
      * 明文密文切换显示管理
+     *
      * @param v
      */
     @OnClick({R.id.iv_set_pass_mask, R.id.iv_repeat_pass_mask})
