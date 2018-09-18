@@ -467,6 +467,7 @@
     <string name="mne_validate_success">验证成功</string>
     <string name="mne_validate_failed">验证失败</string>
     <string name="mne_validate_warn">蓝牙连接已断开，请重新连接</string>
+    <string name="do_get_init_info">正在获取初始化信息...</string>
 
 
 

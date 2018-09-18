@@ -2,23 +2,30 @@ package com.cybex.gma.client.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
+import com.cybex.gma.client.ui.presenter.BluetoothVerifyPresenter;
 import com.cybex.gma.client.utils.CollectionUtils;
+import com.cybex.gma.client.utils.ConvertUtils;
 import com.cybex.gma.client.utils.TSnackbarUtil;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.gma.client.widget.LabelsView;
+import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
+import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.trycatch.mysnackbar.Prompt;
-import com.trycatch.mysnackbar.TSnackbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +39,7 @@ import butterknife.Unbinder;
  * 验证助记词页面
  */
 
-public class BluetoothVerifyMneFragment extends XFragment {
+public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresenter> {
 
     Unbinder unbinder;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
@@ -51,8 +58,18 @@ public class BluetoothVerifyMneFragment extends XFragment {
 
     long contextHandle = 0;
 
-    private TSnackbar snackBar;
+    BlueToothWrapper getAddressThread;
+    BlueToothWrapper getCheckCodeThread;
+    MainHandler mHandler;
+    final int[] deriveEOSPaths =
+            {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000};
 
+    private String public_key = "";
+    private String public_key_sign = "";
+    private String SN = "";
+    private String SN_sign = "";
+    private Bundle bd;
+    private BluetoothAccountInfoVO infoVo;
 
     public static BluetoothVerifyMneFragment newInstance(Bundle bd) {
         BluetoothVerifyMneFragment fragment = new BluetoothVerifyMneFragment();
@@ -63,7 +80,7 @@ public class BluetoothVerifyMneFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BluetoothVerifyMneFragment.this, rootView);
-        setNavibarTitle(getResources().getString(R.string.title_verify_mne), true, false);
+        setNavibarTitle(getResources().getString(R.string.title_verify_mne), true, true);
     }
 
 
@@ -73,10 +90,11 @@ public class BluetoothVerifyMneFragment extends XFragment {
         initAboveLabelView();
         initBelowLabelView();
 
-        Bundle bd = getArguments();
+        bd = getArguments();
         if (bd != null) {
             values = bd.getParcelable(ParamConstants.KEY_GEEN_SEED);
             contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE);
+            infoVo = bd.getParcelable(ParamConstants.KEY_BLUETOOTH_ACCOUNT_INFO);
 
             if (values != null) {
                 String[] mnes = values.getStrMneWord();
@@ -151,28 +169,37 @@ public class BluetoothVerifyMneFragment extends XFragment {
                                 }
                             }
 
-                            String strDestMnes = sb.toString();
-                            int status = MiddlewareInterface.generateSeed_CheckMnes(contextHandle, 0,
-                                    strDestMnes);
+                            TaskManager.runOnUIThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    String strDestMnes = sb.toString();
+                                    int status = MiddlewareInterface.generateSeed_CheckMnes(contextHandle, 0,
+                                            strDestMnes);
 
-                            if (status == MiddlewareInterface.PAEW_RET_SUCCESS) {
-                                LoggerManager.d("mne validate success...");
+                                    if (status == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                                        LoggerManager.d("mne validate success...");
 
 
-                                TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_success),
-                                        Prompt.SUCCESS);
+                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_success),
+                                                Prompt.SUCCESS);
 
-                            } else if (status == -2147483642) {
-                                LoggerManager.d("device disconnected...");
+                                        doGetAddressLogic();
 
-                                TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_warn),
-                                        Prompt.WARNING);
+                                    } else if (status == -2147483642) {
+                                        LoggerManager.d("device disconnected...");
 
-                            } else {
-                                LoggerManager.d("mne validate error...");
-                                TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_failed),
-                                        Prompt.ERROR);
-                            }
+                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_warn),
+                                                Prompt.WARNING);
+
+                                    } else {
+                                        LoggerManager.d("mne validate error...");
+                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_failed),
+                                                Prompt.ERROR);
+                                    }
+                                }
+                            });
+
+
                         }
                     }
                 } else {
@@ -242,18 +269,14 @@ public class BluetoothVerifyMneFragment extends XFragment {
         viewShowMne.setLabels(data);
     }
 
-    public void updateViewHeight() {
-        //todo 动态计算Label的高度以更新LabelsView的高度
-    }
-
     @Override
     public int getLayoutId() {
         return R.layout.fragment_bluetooth_verify_mne;
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public BluetoothVerifyPresenter newP() {
+        return new BluetoothVerifyPresenter();
     }
 
     @Override
@@ -265,5 +288,96 @@ public class BluetoothVerifyMneFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+
+    /**
+     * 获取秘钥相关逻辑
+     */
+    private void doGetAddressLogic() {
+        showProgressDialog(getString(R.string.do_get_init_info));
+        mHandler = new MainHandler();
+
+        if ((getAddressThread == null) || (getAddressThread.getState() == Thread.State.TERMINATED)) {
+            getAddressThread = new BlueToothWrapper(mHandler);
+            getAddressThread.setGetAddressWrapper(contextHandle, 0, MiddlewareInterface.PAEW_COIN_TYPE_EOS,
+                    deriveEOSPaths);
+            getAddressThread.start();
+        }
+    }
+
+
+    /**
+     * 获取
+     */
+    private void doGetCheckcodeLogic() {
+        if ((getCheckCodeThread == null) || (getCheckCodeThread.getState() == Thread.State.TERMINATED)) {
+            getCheckCodeThread = new BlueToothWrapper(new MainHandler());
+            getCheckCodeThread.setGetCheckCodeWrapper(contextHandle, 0);
+            getCheckCodeThread.start();
+        }
+
+    }
+
+
+    class MainHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case BlueToothWrapper.MSG_GET_ADDRESS_FINISH:
+
+                    BlueToothWrapper.GetAddressReturnValue returnValue = (BlueToothWrapper.GetAddressReturnValue) msg.obj;
+                    if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        if (returnValue.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
+                            String eosAddress = returnValue.getAddress();
+                            if (EmptyUtils.isNotEmpty(eosAddress)) {
+                                String[] addressSpilt = eosAddress.split("####");
+                                if (EmptyUtils.isNotEmpty(addressSpilt)) {
+                                    public_key = addressSpilt[0];
+                                    public_key_sign = addressSpilt[1];
+                                    LoggerManager.d("public_key: " + public_key);
+                                    LoggerManager.d("publick_key_sign: " + public_key_sign);
+
+                                    doGetCheckcodeLogic();
+                                }
+                            }
+
+                        }
+                    } else {
+                        dissmisProgressDialog();
+                    }
+                    break;
+                case BlueToothWrapper.MSG_GET_CHECK_CODE_FINISH:
+                    dissmisProgressDialog();
+                    BlueToothWrapper.GetCheckCodeReturnValue getCheckCodeReturnValue = (BlueToothWrapper.GetCheckCodeReturnValue) msg.obj;
+                    if (getCheckCodeReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        byte[] checkedcode = getCheckCodeReturnValue.getCheckCode();
+                        byte[] snbyte = ConvertUtils.subByte(checkedcode, 0, 16);
+                        SN = CommonUtility.byte2hex(snbyte);
+                        SN_sign = CommonUtility.byte2hex(checkedcode);
+                        LoggerManager.d("SN: " + SN);
+                        LoggerManager.d("SN_sign: " + SN_sign);
+
+                        if (infoVo != null) {
+                            //关闭蓝牙心跳
+                            BluetoothConnectKeepJob.removeJob();
+                            getP().doAccountRegisterRequest(infoVo.getAccountName(),
+                                    SN, SN_sign, public_key, public_key_sign, infoVo.getPassword(),
+                                    infoVo.getPasswordTip());
+                        }
+
+                    }
+                    break;
+                case BlueToothWrapper.MSG_DEVICE_DISCONNECTED:
+                    dissmisProgressDialog();
+                    TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_warn),
+                            Prompt.WARNING);
+                    break;
+                default:
+                    break;
+            }
+
+        }
     }
 }

@@ -8,7 +8,7 @@ package com.cybex.gma.client.ui.model.request;
 public class BluetoothCreateAccountReqParams {
 
     /**
-     * 访问方ID，1:Gemma 2:Wookong solo 3: Wookong
+     * 访问方ID，1:Gemma 2:Wookong solo 3: Wookong 4:蓝牙卡
      */
     private int app_id;
     /**
@@ -25,25 +25,69 @@ public class BluetoothCreateAccountReqParams {
      */
     private String public_key;
 
-    /**
-     * 公钥hex签名
-     */
-    private String public_key_sig;
 
     /**
      * 和wookong的验签
      */
-    private String validation;
+    private WookongValidation validation;
 
-    /**
-     * wookong的SN
-     */
-    private String SN;
 
-    /**
-     * SN签名
-     */
-    private String SN_sig;
+    public static class WookongValidation {
+
+        /**
+         * 公钥
+         */
+        private String public_key;
+
+
+        /**
+         * 公钥hex签名
+         */
+        private String public_key_sig;
+
+
+        /**
+         * wookong的SN
+         */
+        private String SN;
+
+        /**
+         * SN签名
+         */
+        private String SN_sig;
+
+        public String getPublic_key() {
+            return public_key;
+        }
+
+        public void setPublic_key(String public_key) {
+            this.public_key = public_key;
+        }
+
+        public String getPublic_key_sig() {
+            return public_key_sig;
+        }
+
+        public void setPublic_key_sig(String public_key_sig) {
+            this.public_key_sig = public_key_sig;
+        }
+
+        public String getSN() {
+            return SN;
+        }
+
+        public void setSN(String SN) {
+            this.SN = SN;
+        }
+
+        public String getSN_sig() {
+            return SN_sig;
+        }
+
+        public void setSN_sig(String SN_sig) {
+            this.SN_sig = SN_sig;
+        }
+    }
 
 
     public int getApp_id() {
@@ -78,35 +122,11 @@ public class BluetoothCreateAccountReqParams {
         this.public_key = public_key;
     }
 
-    public String getPublic_key_sig() {
-        return public_key_sig;
-    }
-
-    public void setPublic_key_sig(String public_key_sig) {
-        this.public_key_sig = public_key_sig;
-    }
-
-    public String getValidation() {
+    public WookongValidation getValidation() {
         return validation;
     }
 
-    public void setValidation(String validation) {
+    public void setValidation(WookongValidation validation) {
         this.validation = validation;
-    }
-
-    public String getSN() {
-        return SN;
-    }
-
-    public void setSN(String SN) {
-        this.SN = SN;
-    }
-
-    public String getSN_sig() {
-        return SN_sig;
-    }
-
-    public void setSN_sig(String SN_sig) {
-        this.SN_sig = SN_sig;
     }
 }

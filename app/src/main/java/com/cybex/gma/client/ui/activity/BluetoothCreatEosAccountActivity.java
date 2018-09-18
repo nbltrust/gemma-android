@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.ApiPath;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
+import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
@@ -55,7 +57,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
     @BindView(R.id.edt_eos_name) EditText edtEosName;
     @BindView(R.id.iv_eos_name_clear) ImageView ivEosNameClear;
 
-    @Checked(messageResId = R.string.check_agreement,sequence = 0)
+    @Checked(messageResId = R.string.check_agreement, sequence = 0)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.tv_service_agreement_create_eos_account) TextView tvServiceAgreement;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
@@ -67,17 +69,17 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
 
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onChanged(Editable s){
-        if (EmptyUtils.isNotEmpty(s.toString()) && isUserNameValid() && checkboxConfig.isChecked()){
+    public void onChanged(Editable s) {
+        if (EmptyUtils.isNotEmpty(s.toString()) && isUserNameValid() && checkboxConfig.isChecked()) {
             setClickableStyle(btCreateWallet);
-        }else {
+        } else {
             setUnClickableStyle(btCreateWallet);
         }
     }
 
 
     @OnClick(R.id.tv_service_agreement_create_eos_account)
-    public void goToSeeTermsofService(){
+    public void goToSeeTermsofService() {
         int savedLanguageType = LanguageManager.getInstance(this).getLanguageType();
         switch (savedLanguageType) {
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
@@ -112,14 +114,14 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
     }
 
     @OnClick(R.id.bt_create_wallet)
-    public void createWallet(){
+    public void createWallet() {
         validator.validate();
     }
 
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
-        setNavibarTitle(getString(R.string.title_create_eos_account),true);
+        setNavibarTitle(getString(R.string.title_create_eos_account), true);
         validator = new Validator(this);
         validator.setValidationListener(this);
     }
@@ -133,13 +135,13 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (EmptyUtils.isNotEmpty(getEOSUserName()) && isChecked && isUserNameValid()){
+                if (EmptyUtils.isNotEmpty(getEOSUserName()) && isChecked && isUserNameValid()) {
                     setClickableStyle(btCreateWallet);
-                }else {
+                } else {
                     setUnClickableStyle(btCreateWallet);
                 }
 
-                if (!isChecked){
+                if (!isChecked) {
                     setUnClickableStyle(btCreateWallet);
 
                 }
@@ -166,29 +168,35 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
         return res;
     }
 
-    public String getEOSUserName(){
+    public String getEOSUserName() {
         return edtEosName.getText().toString().trim();
     }
 
-    public void setClickableStyle(Button button){
+    public void setClickableStyle(Button button) {
         //button.setClickable(true);
         button.setBackground(getDrawable(R.drawable.shape_corner_button));
     }
 
-    public void setUnClickableStyle(Button button){
+    public void setUnClickableStyle(Button button) {
         //button.setClickable(false);
         button.setBackground(getDrawable(R.drawable.shape_corner_button_unclickable));
     }
 
 
-
     @Override
     public void onValidationSucceeded() {
-        if (isUserNameValid()){
+        if (isUserNameValid()) {
             //所有验证通过，在这里跳转和调用网络请求
             setClickableStyle(btCreateWallet);
-            UISkipMananger.skipBackupMneGuideActivity(this,bd);
-        }else {
+            String eosName = String.valueOf(edtEosName.getText());
+            BluetoothAccountInfoVO vo = bd.getParcelable(ParamConstants.KEY_BLUETOOTH_ACCOUNT_INFO);
+            vo.setAccountName(eosName);
+
+            bd.putParcelable(ParamConstants.KEY_BLUETOOTH_ACCOUNT_INFO, vo);
+
+            UISkipMananger.skipBackupMneGuideActivity(this, bd);
+            finish();
+        } else {
             GemmaToastUtils.showLongToast(getString(R.string.eos_name_invalid));
         }
 
@@ -196,7 +204,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors){
+        for (ValidationError error : errors) {
             String message = error.getCollatedErrorMessage(this);
             GemmaToastUtils.showLongToast(message);
         }

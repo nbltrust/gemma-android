@@ -82,13 +82,13 @@ public class BluetoothBackupMneFragment extends XFragment {
 
     @OnClick(R.id.bt_copied_mne)
     public void goVerifyMne() {
-        start(BluetoothVerifyMneFragment.newInstance(bd));
+        replaceFragment(BluetoothVerifyMneFragment.newInstance(bd),false);
     }
 
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        setNavibarTitle(getResources().getString(R.string.backup_mne), true, false);
+        setNavibarTitle(getResources().getString(R.string.backup_mne), true, true);
     }
 
 
@@ -101,7 +101,7 @@ public class BluetoothBackupMneFragment extends XFragment {
 
         handler = new BluetoothHandler();
         generateSeedThread = new BlueToothWrapper(handler);
-        generateSeedThread.setGenerateSeedGetMnesWrapper(contextHandle, 0, 32);
+        generateSeedThread.setGenerateSeedGetMnesWrapper(contextHandle, 0, 16);
         generateSeedThread.start();
 
         showAlertDialog();

@@ -61,6 +61,8 @@
     <color name="red_f4333c">#F4333C</color>
 
     <color name="color_fingger_anim">#3381e0</color>
+    <color name="color_fingger_anim_default">#9ea3bd</color>
+
     <color name="label_textView"></color>
     <drawable name="label_bg">#ffffff</drawable>
 

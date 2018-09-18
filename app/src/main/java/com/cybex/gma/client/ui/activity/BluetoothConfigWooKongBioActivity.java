@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
 import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
@@ -88,9 +89,9 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         }
 
         if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword()) && isPasswordMatch()
-                && isPasswordLengthValid()){
+                && isPasswordLengthValid()) {
             setClickable(btCreateWallet);
-        }else {
+        } else {
             setUnclickable(btCreateWallet);
         }
     }
@@ -104,10 +105,10 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
             ivRepeatPassClear.setVisibility(View.VISIBLE);
         }
 
-        if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword() ) && isPasswordMatch()
-                && isPasswordLengthValid()){
+        if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword()) && isPasswordMatch()
+                && isPasswordLengthValid()) {
             setClickable(btCreateWallet);
-        }else {
+        } else {
             setUnclickable(btCreateWallet);
         }
 
@@ -434,8 +435,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         return false;
     }
 
-    public boolean isPasswordLengthValid(){
-        if (getPassword().length() >= 8 && getRepeatPassword().length() >= 8){
+    public boolean isPasswordLengthValid() {
+        if (getPassword().length() >= 8 && getRepeatPassword().length() >= 8) {
             return true;
         }
         return false;
@@ -468,7 +469,18 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
                 case BlueToothWrapper.MSG_INIT_PIN_FINISH:
                     dissmisProgressDialog();
                     //跳转到创建账户名界面
+                    String password = String.valueOf(edtSetPass.getText());
+                    String pwdTip = String.valueOf(edtPassHint.getText());
+                    BluetoothAccountInfoVO vo = new BluetoothAccountInfoVO();
+                    vo.setPassword(password);
+                    vo.setPasswordTip(pwdTip);
+
+                    if (bd != null) {
+                        bd.putParcelable(ParamConstants.KEY_BLUETOOTH_ACCOUNT_INFO, vo);
+                    }
+
                     UISkipMananger.skipCreateBluetoothWalletActivity(BluetoothConfigWooKongBioActivity.this, bd);
+                    finish();
 
                     break;
 

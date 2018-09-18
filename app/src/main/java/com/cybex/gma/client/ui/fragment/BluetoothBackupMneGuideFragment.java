@@ -31,7 +31,7 @@ public class BluetoothBackupMneGuideFragment extends XFragment {
 
     @OnClick(R.id.bt_show_mne)
     public void showMne() {
-        start(BluetoothBackupMneFragment.newInstance(bd));
+        replaceFragment(BluetoothBackupMneFragment.newInstance(bd),false);
     }
 
     public static BluetoothBackupMneGuideFragment newInstance(Bundle bd) {

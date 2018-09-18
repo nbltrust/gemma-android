@@ -219,11 +219,7 @@
             android:name=".ui.activity.BluetoothPairActivity"
             android:configChanges="layoutDirection|locale"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <!-- 配置蓝牙钱包界面 -->
@@ -249,6 +245,13 @@
             android:theme="@style/Theme.ActivityDialogStyle">
         </activity>
 
+        <activity android:name=".ui.activity.BluetoothSettingFPActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
         <!--蓝牙end -->
 

@@ -10,6 +10,7 @@ public interface ParamConstants {
 
     int TYPE_APP_ID_CYBEX = 1;//cybex
     int TYPE_APP_ID_BEIJIN_TEAM = 2;//北京团队
+    int TYPE_APP_ID_BLUETOOTH = 4;//蓝牙卡设备
 
     int ALARM_JOB = 1;
     int POLLING_JOB = 2;
@@ -67,4 +68,7 @@ public interface ParamConstants {
 
 
     String KEY_GEEN_SEED = "key_geen_seed";
+
+
+    String KEY_BLUETOOTH_ACCOUNT_INFO = "bluetooth_account_info";
 }
