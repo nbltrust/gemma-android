@@ -55,7 +55,7 @@
                 app:sLeftTextString="CPU:"
                 app:sRightTextColor="@color/darkSlateBlueTwo"
                 app:sRightTextSize="@dimen/font_3.5"
-                app:sRightTextString="0.1000 EOS"
+                app:sRightTextString="-- EOS"
                 app:sUseShape="true">
 
             </com.allen.library.SuperTextView>
@@ -70,7 +70,7 @@
                 app:sLeftTextString="NET:"
                 app:sRightTextColor="@color/darkSlateBlueTwo"
                 app:sRightTextSize="@dimen/font_3.5"
-                app:sRightTextString="0.1000 EOS"
+                app:sRightTextString="-- EOS"
                 app:sUseShape="true">
 
             </com.allen.library.SuperTextView>
@@ -85,7 +85,7 @@
                 app:sLeftTextString="RAM:"
                 app:sRightTextColor="@color/darkSlateBlueTwo"
                 app:sRightTextSize="@dimen/font_3.5"
-                app:sRightTextString="0.5000 EOS"
+                app:sRightTextString="-- EOS"
                 app:sUseShape="true">
 
             </com.allen.library.SuperTextView>
@@ -115,7 +115,7 @@
            android:layout_height="wrap_content"
            android:textColor="@color/darkSlateBlue"
            android:layout_marginTop="@dimen/dimen_4"
-           android:text="50.00 RMB"
+           android:text="-- RMB"
            android:textSize="28sp"
            android:textStyle="bold"
            android:layout_gravity="center"/>

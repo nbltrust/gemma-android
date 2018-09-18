@@ -15,12 +15,7 @@ public class CreateMethodActivity extends XActivity {
 
     @Override
     public void bindUI(View view) {
-        if (findFragment(ActivateByFriendFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_create_method, ActivateByFriendFragment.newInstance());
-        }
 
-        //让布局向上移来显示软键盘
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     @Override

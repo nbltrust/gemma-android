@@ -12,8 +12,7 @@ import butterknife.Unbinder;
 public class ActivateByInvCodeFragment extends XFragment {
 
     Unbinder unbinder;
-    public static ActivateByInvCodeFragment newInstance() {
-        Bundle args = new Bundle();
+    public static ActivateByInvCodeFragment newInstance(Bundle args) {
         ActivateByInvCodeFragment fragment = new ActivateByInvCodeFragment();
         fragment.setArguments(args);
         return fragment;

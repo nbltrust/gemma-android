@@ -40,7 +40,11 @@
             android:name=".ui.activity.SpalashActivity"
             android:configChanges="layoutDirection|locale"
             android:theme="@style/SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
         </activity>
 
@@ -218,11 +222,7 @@
                   android:configChanges="layoutDirection|locale"
                   android:screenOrientation="portrait">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <!-- 验证私钥页面-->
@@ -236,9 +236,15 @@
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:exported="true">
 
      </activity>
+
+        <activity android:name=".wxapi.WXEntryActivity">
+
+        </activity>
 
         <!-- activity end -->
 

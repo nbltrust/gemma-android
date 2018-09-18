@@ -8,6 +8,7 @@ public class WXPayInitialOrderReqParams {
     private String public_key;
     private String platform;
     private String serial_number;
+    private String client_ip;
 
     public String getAccount_name() {
         return account_name;
@@ -39,5 +40,13 @@ public class WXPayInitialOrderReqParams {
 
     public void setSerial_number(String serial_number) {
         this.serial_number = serial_number;
+    }
+
+    public String getClient_ip() {
+        return client_ip;
+    }
+
+    public void setClient_ip(String client_ip) {
+        this.client_ip = client_ip;
     }
 }

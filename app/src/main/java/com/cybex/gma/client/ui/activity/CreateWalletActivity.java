@@ -788,16 +788,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @Override
     public void onValidationSucceeded() {
         if (getP().isUserNameValid()) {
-            /*
-            getP().createAccount(getEOSUserName(), getPassword(), getInvCode(), keyPair[1], keyPair[0],
-                    getPassHint(), getInvCode());
-                    */
-            String[] keyPair = getP().getKeypair();
-            final String publicKey = keyPair[0];
-            Bundle bundle = new Bundle();
-            bundle.putString("account_name", getEOSUserName());
-            bundle.putString("public_key", publicKey);
-            UISkipMananger.launchChooseActivateMethod(this, bundle);
+            getP().verifyAccount(getEOSUserName());
+        }else {
+            AlertUtil.showShortUrgeAlert(this, getString(R.string.eos_name_invalid));
         }
     }
 

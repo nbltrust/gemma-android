@@ -8,9 +8,13 @@ package com.cybex.gma.client.config;
 
 public interface ParamConstants {
 
+    //微信支付常量
     String WXPAY_APPID = "wxae3306b1fdcca166";
     String WXPAY_PARTNER_ID = "1512677831";
     String PLATFORM_ANDROID = "ANDROID";
+    String WXPAY_PACKAGE_VALUE = "Sign=WXPay";
+
+    String SIGNEOS_MEMO_SUFFIX = "-EOS1234bb567aeaf0b681bfb99aa426ef9656e16889012b";
 
     int TYPE_APP_ID_CYBEX = 1;//cybex
     int TYPE_APP_ID_BEIJIN_TEAM = 2;//北京团队
@@ -66,4 +70,20 @@ public interface ParamConstants {
      String EN = "English";
 
      String EOS_ERR_CODE_PREFIX = "eos_err_code_";
+
+    /**
+     * 微信支付状态判断
+     */
+
+    int WX_NOTPAY_WAIT = 10;
+    int WX_NOTPAY_CLOSED = 11;
+    int WX_SUCCESS_DONE = 12;
+    int WX_SUCCESS_TOREFUND = 13;
+    int WX_REFUND = 14;
+    int WX_CLOSED = 15;
+    int WX_USERPAYING = 16;
+    int WX_PAYERROR = 17;
+
+
+
 }

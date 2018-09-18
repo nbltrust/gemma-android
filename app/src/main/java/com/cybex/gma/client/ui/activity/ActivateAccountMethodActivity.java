@@ -52,9 +52,9 @@ public class ActivateAccountMethodActivity extends XActivity {
 
         Bundle bundle = getIntent().getExtras();
         listFragment.add(ActivateByRMBFragment.newInstance(bundle));
-        listFragment.add(ActivateByFriendFragment.newInstance());
-        listFragment.add(ActivateByExchangeFragment.newInstance());
-        listFragment.add(ActivateByInvCodeFragment.newInstance());
+        listFragment.add(ActivateByFriendFragment.newInstance(bundle));
+        listFragment.add(ActivateByExchangeFragment.newInstance(bundle));
+        listFragment.add(ActivateByInvCodeFragment.newInstance(bundle));
 
         TabLayoutManager.getInstance().setSlidingTabData(this, mSlidingTab, vpContent,
                 getTitles(), listFragment);

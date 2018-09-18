@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.ApiPath;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
+import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,8 +38,29 @@ public class ActivateByExchangeFragment extends XFragment {
         CommonWebViewActivity.startWebView(getActivity(), ApiPath.DAPP_SINGUP_EOS, getString(R.string.activate_account));
     }
 
-    public static ActivateByExchangeFragment newInstance() {
-        Bundle args = new Bundle();
+    /**
+     * 复制相关点击事件处理
+     * @param v
+     */
+    @OnClick({R.id.bt_click_to_copy_priKey, R.id.bt_click_to_copy_memo})
+    public void onCopyClicked(View v){
+        switch (v.getId()){
+            case R.id.bt_click_to_copy_priKey:
+                if (getContext() != null){
+                    ClipboardUtils.copyText(getContext(), tvShowPriKeyArea.getText().toString().trim());
+                    GemmaToastUtils.showLongToast(getString(R.string.prikey_copied));
+                }
+                break;
+            case R.id.bt_click_to_copy_memo:
+                if (getContext() != null){
+                    ClipboardUtils.copyText(getContext(), tvShowMemoArea.getText().toString().trim());
+                    GemmaToastUtils.showLongToast(getString(R.string.memo_copied));
+                }
+                break;
+        }
+    }
+
+    public static ActivateByExchangeFragment newInstance(Bundle args) {
         ActivateByExchangeFragment fragment = new ActivateByExchangeFragment();
         fragment.setArguments(args);
         return fragment;
@@ -56,6 +80,15 @@ public class ActivateByExchangeFragment extends XFragment {
         tvTipMidExchangePartTwo.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG);
         tvTipMidExchangePartThree.setText(Html.fromHtml(getString(R.string.tip_activate_by_exchange_part_three)));
 
+        if (getArguments() != null){
+            String private_key = getArguments().getString("private_key");
+            String account_name = getArguments().getString("account_name");
+
+            tvShowPriKeyArea.setText(formatKey(private_key));
+            String memo = account_name + ParamConstants.SIGNEOS_MEMO_SUFFIX;
+            tvShowMemoArea.setText(memo);
+        }
+
     }
 
     @Override
@@ -66,5 +99,18 @@ public class ActivateByExchangeFragment extends XFragment {
     @Override
     public Object newP() {
         return null;
+    }
+
+    public String formatKey(String key){
+        String res = "";
+        for (int i = 0; i < key.length(); i++){
+            if (i+4 < key.length()){
+                res += key.substring(i, i+4) + " ";
+            }else{
+                res += key.substring(i, key.length());
+            }
+            i += 3;
+        }
+        return res;
     }
 }

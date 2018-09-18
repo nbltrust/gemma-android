@@ -465,6 +465,52 @@
     <string name="transfer_detail">Transfer Detail</string>
     <string name="tip_eos_amount_format_invalid">Please enter four decimal at most</string>
 
+    <!-- 账户激活 -->
+    <string name="title_choose_activate_method">Choose a way to activate</string>
+    <string name="tab_title_activate_by_RMB">Activate by RMB</string>
+    <string name="tab_title_activate_by_friend">Activate by friend</string>
+    <string name="tab_title_activate_by_exchanges">Activate by exchange</string>
+    <string name="tab_title_activate_by_invCode">Activate by invite code</string>
+    <string name="tip_activate_by_rmb">You need to pay for resources like CPU, NET and RAM in order to activate your
+        account</string>
+    <string name="tip_need_to_pay">Fee</string>
+    <string name="wechat_pay">Wechat Pay</string>
+    <string name="tip_backup_prikey_friend">请务必备份私钥，待好友转账激活后，须将私钥再次导入钱包以使用EOS账户。私钥若丢失，账户将不可恢复。</string>
+    <string name="tip_backup_prikey_exchange">请务必备份私钥，待交易所提现激活后，须将私钥再次导入钱包以使用EOS账户。私钥若丢失，账户将不可恢复。</string>
+    <string name="tip_activate_by_friend">请持有EOS的好友向智能合约signupeoseos转账并将以下文字作为备注(memo)，即可完成账户创建。</string>
+    <string name="tip_activate_by_exchange_part_one">请从支持memo功能的交易所向智能合约 </string>
+    <string name="tip_activate_by_exchange_part_two">signupeoseos </string>
+    <string name="tip_activate_by_exchange_part_three"><Data><![CDATA[转账<font color = "#426bd4">并将以下文字作为备注(memo)
+    </font>]]></Data>，即可完成账户创建。</string>
+
+    <string name="tip_activate_by_friend_part_one">请持有EOS的好友向智能合约 </string>
+    <string name="tip_activate_by_friend_part_two">signupeoseos </string>
+    <string name="tip_activate_by_friend_part_three"><Data><![CDATA[转账<font color = "#426bd4">并将以下文字作为备注(memo)
+    </font>]]></Data>，即可完成账户创建。</string>
+
+    <string name="click_to_copy_priKey">copy</string>
+    <string name="activate">Activate</string>
+    <string name="activate_account">Activate EOS account</string>
+    <string name="payment_fail">Payment fail</string>
+    <string name="payment_overtime">Payment overtime</string>
+    <string name="tip_payment_overtime">The money will be refunded within 24 hours if you
+        have paid</string>
+    <string name="price_changed">Price changed</string>
+    <string name="payment_price_changed">Due to EOS price change, the fee for creating this
+        account turns into </string>
+    <string name="tip_payment_time">Please finish the payment in 10 minutes</string>
+    <string name="ok">OK</string>
+    <string name="tip_loading_fee">Calculating Fee</string>
+    <string name="rmb_fee">%1$s RMB</string>
+    <string name="cancel_cn">Cancel</string>
+    <string name="confirm_payment">Confirm Pay</string>
+    <string name="verify">Verify</string>
+    <string name="tip_verify_prikey">Please enter your private key to verify</string>
+    <string name="memo_copied">Memo copied</string>
+    <string name="verifying_account">verifying if account name is usable</string>
+    <string name="tip_check_network">Failed，please check network</string>
+
+
 
     <!-- EOS Err Code-->
 

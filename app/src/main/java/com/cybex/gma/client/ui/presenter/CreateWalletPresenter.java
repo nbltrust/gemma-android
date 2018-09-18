@@ -1,8 +1,11 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.CustomRequestCallback;
+import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.api.data.response.CustomData;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
@@ -10,16 +13,24 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.job.LibValidateJob;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
+import com.cybex.gma.client.ui.model.request.GetAccountReqParams;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
+import com.cybex.gma.client.ui.model.response.AccountInfo;
 import com.cybex.gma.client.ui.model.response.UserRegisterResult;
+import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
+import com.cybex.gma.client.utils.AlertUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -259,6 +270,56 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
     public void updateWalletConfirmStatus(WalletEntity walletEntity ,String txId){
         walletEntity.setTxId(txId);
         DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
+    }
+
+    public void verifyAccount(String account_name){
+        GetAccountReqParams params = new GetAccountReqParams();
+        params.setAccount_name(account_name);
+
+        String jsonParams = GsonUtils.objectToJson(params);
+
+        new GetAccountinfoRequest(AccountInfo.class)
+                .setJsonParams(jsonParams)
+                .getAccountInfo(new JsonCallback<AccountInfo>() {
+                    @Override
+                    public void onStart(Request<AccountInfo, ? extends Request> request) {
+                        super.onStart(request);
+                        getV().showProgressDialog(getV().getString(R.string.verifying_account));
+                    }
+
+                    @Override
+                    public void onSuccess(Response<AccountInfo> response) {
+                        getV().dissmisProgressDialog();
+                        if (response != null && response.body() != null){
+                            AccountInfo accountInfo = response.body();
+                            String account_name_onChain = accountInfo.getAccount_name();
+                            if (account_name.equals(account_name_onChain)){
+                                //找到该用户名，该用户名不可以使用
+                                AlertUtil.showLongUrgeAlert(getV(), getV().getString(R.string.eos_name_used));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<AccountInfo> response) {
+                        super.onError(response);
+                        if (response.code() == HttpConst.SERVER_INTERNAL_ERR){
+                            //未找到该用户名，该用户名可以使用
+                            String[] keyPair = getKeypair();
+                            final String publicKey = keyPair[0];
+                            final String priateKey = keyPair[1];
+                            Bundle bundle = new Bundle();
+                            bundle.putString("account_name", getV().getEOSUserName());
+                            bundle.putString("public_key", publicKey);
+                            bundle.putString("private_key", priateKey);
+                            UISkipMananger.launchChooseActivateMethod(getV(), bundle);
+                        }else {
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.tip_check_network));
+                        }
+                        getV().dissmisProgressDialog();
+                    }
+                });
+
     }
 
 
