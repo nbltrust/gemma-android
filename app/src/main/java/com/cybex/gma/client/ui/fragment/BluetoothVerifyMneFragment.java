@@ -166,18 +166,18 @@ public class BluetoothVerifyMneFragment extends XFragment {
                                 LoggerManager.d("device disconnected...");
 
                                 TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_warn),
-                                        Prompt.SUCCESS);
+                                        Prompt.WARNING);
 
                             } else {
                                 LoggerManager.d("mne validate error...");
                                 TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_failed),
-                                        Prompt.SUCCESS);
+                                        Prompt.ERROR);
                             }
                         }
                     }
                 } else {
                     TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_failed),
-                            Prompt.SUCCESS);
+                            Prompt.ERROR);
                 }
             }
         }
