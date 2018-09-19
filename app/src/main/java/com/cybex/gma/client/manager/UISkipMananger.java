@@ -15,6 +15,7 @@ import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.BluetoothBackupMneGuideActivity;
 import com.cybex.gma.client.ui.activity.BluetoothConfigWooKongBioActivity;
+import com.cybex.gma.client.ui.activity.BluetoothSettingFPActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
 import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
@@ -219,6 +220,17 @@ public final class UISkipMananger {
 
 
     /**
+     * 跳转到设置指纹窗口
+     *
+     * @param context
+     * @param bd
+     */
+    public static void skipBluetoothSettingFPActivity(Activity context, Bundle bd) {
+        launchIntent(context, BluetoothSettingFPActivity.class, bd);
+    }
+
+
+    /**
      * 跳转到about界面
      *
      * @param context
@@ -252,6 +264,7 @@ public final class UISkipMananger {
         launchIntent(mContext, BackUpPrivatekeyActivity.class);
         //launchIntent(mContext, BackUpPrivatekeyActivity.class, bundle);
     }
+
 
     /**
      * 跳转到登录界面

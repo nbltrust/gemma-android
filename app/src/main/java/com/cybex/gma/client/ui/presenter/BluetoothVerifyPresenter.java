@@ -59,7 +59,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
                 .WookongValidation();
         validation.setSN(SN.toLowerCase());
         validation.setSN_sig(SN_sig.toLowerCase());
-        validation.setPublic_key(publick_key_hex+"00");
+        validation.setPublic_key(publick_key_hex + "00");
         validation.setPublic_key_sig(public_key_sig);
         params.setValidation(validation);
 
@@ -84,7 +84,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
                                 saveAccount(public_key, public_key_sig, password, account_name, password_tip, txId, SN);
                                 getV().getActivity().finish();
                                 AppManager.getAppManager().finishAllActivity();
-                                UISkipMananger.launchCreateManage(getV().getActivity());
+                                UISkipMananger.skipBluetoothSettingFPActivity(getV().getActivity(), null);
                                 LibValidateJob.startPolling(10000);
                             }
                         } else {
