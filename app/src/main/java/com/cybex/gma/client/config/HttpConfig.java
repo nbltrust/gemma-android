@@ -70,8 +70,6 @@ public class HttpConfig {
         }
 
         // https相关设置，以下几种方案根据需要自己设置
-        // 方法一：信任所有证书,不安全有风险
-        HttpsUtils.SSLParams sslParams1 = HttpsUtils.getSslSocketFactory();
         // 方法二：自定义信任规则，校验服务端证书
         // HttpsUtils.SSLParams sslParams2 = HttpsUtils.getSslSocketFactory(new SafeTrustManager());
         // 方法三：使用预埋证书，校验服务端证书（自签名证书）
@@ -80,6 +78,8 @@ public class HttpConfig {
         // 方法四：使用bks证书和密码管理客户端证书（双向认证），使用预埋证书，校验服务端证书（自签名证书）
         // HttpsUtils.SSLParams sslParams4 = HttpsUtils.getSslSocketFactory(getAssets().open("xxx.bks"),
         // "123456", getAssets().open("yyy.cer"));
+        // 方法一：信任所有证书,不安全有风险
+        HttpsUtils.SSLParams sslParams1 = HttpsUtils.getSslSocketFactory();
         builder.sslSocketFactory(sslParams1.sSLSocketFactory, sslParams1.trustManager);
 
         // 其他统一的配置

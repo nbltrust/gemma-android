@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.AccountRegisterEvent;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
@@ -22,10 +23,14 @@ import com.cybex.gma.client.widget.LabelsView;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.common.async.TaskManager;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.trycatch.mysnackbar.Prompt;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,6 +70,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
             {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000};
 
     private String public_key = "";
+    private String public_key_hex = "";
     private String public_key_sign = "";
     private String SN = "";
     private String SN_sign = "";
@@ -336,7 +342,11 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                                 if (EmptyUtils.isNotEmpty(addressSpilt)) {
                                     public_key = addressSpilt[0];
                                     public_key_sign = addressSpilt[1];
+
+                                    public_key_hex = ConvertUtils.str2HexStr(public_key);
+
                                     LoggerManager.d("public_key: " + public_key);
+                                    LoggerManager.d("public_key_hex: " + public_key_hex);
                                     LoggerManager.d("publick_key_sign: " + public_key_sign);
 
                                     doGetCheckcodeLogic();
@@ -354,17 +364,20 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                     if (getCheckCodeReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         byte[] checkedcode = getCheckCodeReturnValue.getCheckCode();
                         byte[] snbyte = ConvertUtils.subByte(checkedcode, 0, 16);
+//                        byte[] snSignByte = ConvertUtils.subByte(checkedcode,17,64);
+
                         SN = CommonUtility.byte2hex(snbyte);
                         SN_sign = CommonUtility.byte2hex(checkedcode);
+                        SN_sign = SN_sign.substring(33);
                         LoggerManager.d("SN: " + SN);
                         LoggerManager.d("SN_sign: " + SN_sign);
 
                         if (infoVo != null) {
                             //关闭蓝牙心跳
                             BluetoothConnectKeepJob.removeJob();
-                            getP().doAccountRegisterRequest(infoVo.getAccountName(),
-                                    SN, SN_sign, public_key, public_key_sign, infoVo.getPassword(),
-                                    infoVo.getPasswordTip());
+
+                            EventBusProvider.post(new AccountRegisterEvent());
+
                         }
 
                     }
@@ -379,5 +392,21 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
             }
 
         }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceivePollevent(AccountRegisterEvent event) {
+        if (EmptyUtils.isNotEmpty(event)) {
+            getP().doAccountRegisterRequest(infoVo.getAccountName(),
+                    SN, SN_sign, public_key, public_key_hex, public_key_sign, infoVo.getPassword(),
+                    infoVo.getPasswordTip());
+        }
+    }
+
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 }

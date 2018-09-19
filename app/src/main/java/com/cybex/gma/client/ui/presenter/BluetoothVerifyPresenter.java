@@ -45,6 +45,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
             String account_name,
             String SN, String SN_sig,
             String public_key,
+            String publick_key_hex,
             String public_key_sig,
             String password,
             String password_tip) {
@@ -58,7 +59,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
                 .WookongValidation();
         validation.setSN(SN);
         validation.setSN_sig(SN_sig);
-        validation.setPublic_key(public_key);
+        validation.setPublic_key(publick_key_hex);
         validation.setPublic_key_sig(public_key_sig);
         params.setValidation(validation);
 
