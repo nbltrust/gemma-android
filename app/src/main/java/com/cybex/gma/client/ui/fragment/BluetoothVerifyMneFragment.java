@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.AccountRegisterEvent;
-import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
 import com.cybex.gma.client.ui.presenter.BluetoothVerifyPresenter;
 import com.cybex.gma.client.utils.CollectionUtils;
@@ -373,11 +373,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                         LoggerManager.d("SN_sign: " + SN_sign);
 
                         if (infoVo != null) {
-                            //关闭蓝牙心跳
-                            BluetoothConnectKeepJob.removeJob();
-
                             EventBusProvider.post(new AccountRegisterEvent());
-
                         }
 
                     }
@@ -398,9 +394,13 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceivePollevent(AccountRegisterEvent event) {
         if (EmptyUtils.isNotEmpty(event)) {
-            getP().doAccountRegisterRequest(infoVo.getAccountName(),
-                    SN, SN_sign, public_key, public_key_hex, public_key_sign, infoVo.getPassword(),
-                    infoVo.getPasswordTip());
+            //TODO 暂时测试用
+
+            UISkipMananger.skipBluetoothSettingFPActivity(getActivity(), bd);
+            /**
+             getP().doAccountRegisterRequest(infoVo.getAccountName(),
+             SN, SN_sign, public_key, public_key_hex, public_key_sign, infoVo.getPassword(),
+             infoVo.getPasswordTip(), bd);*/
         }
     }
 

@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.cybex.gma.client.R;
@@ -48,7 +49,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
             String publick_key_hex,
             String public_key_sig,
             String password,
-            String password_tip) {
+            String password_tip,Bundle bd) {
         BluetoothCreateAccountReqParams params = new BluetoothCreateAccountReqParams();
 
         params.setApp_id(ParamConstants.TYPE_APP_ID_BLUETOOTH);
@@ -84,7 +85,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
                                 saveAccount(public_key, public_key_sig, password, account_name, password_tip, txId, SN);
                                 getV().getActivity().finish();
                                 AppManager.getAppManager().finishAllActivity();
-                                UISkipMananger.skipBluetoothSettingFPActivity(getV().getActivity(), null);
+                                UISkipMananger.skipBluetoothSettingFPActivity(getV().getActivity(), bd);
                                 LibValidateJob.startPolling(10000);
                             }
                         } else {

@@ -459,7 +459,7 @@
     <string name="status_init_pair">已经初始化但没有配对信息</string>
 
     <string name="tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>
-    
+
     <string name="progress_set_pin">正在设置PIN...</string>
 
     <string name="title_create_eos_account">创建EOS账户</string>
@@ -468,7 +468,9 @@
     <string name="mne_validate_failed">验证失败</string>
     <string name="mne_validate_warn">蓝牙连接已断开，请重新连接</string>
     <string name="do_get_init_info">正在获取初始化信息...</string>
-
+    <string name="title_setting_fp">设置指纹</string>
+    <string name="btn_title_skip">跳过</string>
+    <string name="finger_set_success">指纹录入成功</string>
 
 
     <!--蓝牙钱包配置end -->

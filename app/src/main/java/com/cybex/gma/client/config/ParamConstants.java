@@ -69,6 +69,21 @@ public interface ParamConstants {
 
     String KEY_GEEN_SEED = "key_geen_seed";
 
-
     String KEY_BLUETOOTH_ACCOUNT_INFO = "bluetooth_account_info";
+
+
+    //指纹指令错误
+    int FINGER_PRINT_COMMAND_ERROR = -2147483599;
+    //指纹冗余
+    int FINGER_REDUNDANT = -2147483598;
+    //指纹录入成功
+    int FINGER_GOOD = -2147483597;
+    //指纹录入失败
+    int FINGER_NOT = -2147483596;
+    //指纹采集不全
+    int FINGER_NOT_FULL = -2147483595;
+    //指纹采集错误图片
+    int FINGER_PRINT_BAND_IMAGE = -2147483594;
+    //指纹录入成功
+    int FINGER_SUCCESS = 0;
 }
