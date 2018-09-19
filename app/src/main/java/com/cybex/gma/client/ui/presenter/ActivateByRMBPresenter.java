@@ -4,7 +4,6 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.OrderIdEvent;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.fragment.ActivateByRMBFragment;
 import com.cybex.gma.client.ui.model.request.WXPayInitialOrderReqParams;
 import com.cybex.gma.client.ui.model.response.WXPayBillResult;
@@ -14,13 +13,11 @@ import com.cybex.gma.client.ui.request.WXPayBillRequst;
 import com.cybex.gma.client.ui.request.WXPayInitialOrderRequest;
 import com.cybex.gma.client.ui.request.WXPayPlaceOrderRequest;
 import com.cybex.gma.client.ui.request.WXPayQueryOrderInfoRequest;
-import com.cybex.gma.client.wxapi.WXPayEntryActivity;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.NetworkUtils;
 import com.hxlx.core.lib.utils.android.SysUtils;
-import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
@@ -68,17 +65,18 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                 EventBusProvider.postSticky(orderIdEvent);
 
                                 String curRMBPrice = resultBean.getRmb_price();
+                                getV().setNewPrice(curRMBPrice);
                                 if (!curRMBPrice.equals(rmbPrice)){
                                     //价格已变动，提醒用户
-                                    //AppManager.getAppManager().finishActivity(WXPayEntryActivity.class);
+                                    getV().dissmisProgressDialog();
+                                    getV().setNewPrice(curRMBPrice);
+                                    getV().showPriceChangedDialog();
 
                                 }else {
                                     //价格未变
                                     //调用下一个接口,支付订单
-
+                                    placeOrder(orderId);
                                 }
-
-                                placeOrder(orderId);
                             }
                         }
                     }

@@ -1,6 +1,5 @@
 package com.cybex.gma.client.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
-import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.WXPayStatusEvent;
@@ -17,17 +15,13 @@ import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.model.response.WXPayBillResult;
 import com.cybex.gma.client.ui.model.response.WXPayPlaceOrderResult;
 import com.cybex.gma.client.ui.presenter.ActivateByRMBPresenter;
-import com.hxlx.core.lib.common.async.Task;
+import com.cybex.gma.client.utils.AlertUtil;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.siberiadante.customdialoglib.CustomDialog;
-import com.tencent.mm.opensdk.modelbase.BaseReq;
-import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.tencent.mm.opensdk.utils.ILog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -51,13 +45,19 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     @BindView(R.id.tv_rmb_amount) TextView tvRmbAmount;
     @BindView(R.id.bt_wechat_pay) Button btWechatPay;
 
+    public void setNewPrice(String newPrice) {
+        this.newPrice = newPrice;
+    }
+
+    private String newPrice;
+
     @OnClick(R.id.bt_wechat_pay)
     public void initPayProcess(){
         if (getArguments() != null){
             String account_name = getArguments().getString("account_name");
             String public_key = getArguments().getString("public_key");
-            String rmbFee = tvRmbAmount.getText().toString().trim();
-            getP().getPrepaidInfo(account_name, public_key, rmbFee);
+            //String rmbFee = tvRmbAmount.getText().toString().trim();
+            getP().getPrepaidInfo(account_name, public_key, newPrice);
         }
     }
 
@@ -69,22 +69,38 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void recievePayStatus(WXPayStatusEvent event){
+        LoggerManager.d("Pay status received");
+        dissmisProgressDialog();
         switch (event.getStatus()){
             case ParamConstants.WX_NOTPAY_WAIT:
+                //未支付，等待支付
+                showUnfinishDialog();
                 break;
             case ParamConstants.WX_NOTPAY_CLOSED:
+                //订单超时，已关闭
+                showOvertimeDialog();
                 break;
             case ParamConstants.WX_SUCCESS_DONE:
+                //支付完成
+                AlertUtil.showLongCommonAlert(getActivity(), "支付成功");
+                //todo 调真正创建账户接口
                 break;
             case ParamConstants.WX_SUCCESS_TOREFUND:
+                //支付完成但订单金额和现在的创建账户金额已经不符，需要退款
                 break;
             case ParamConstants.WX_REFUND:
+                //已退款
                 break;
             case ParamConstants.WX_CLOSED:
+                showUnfinishDialog();
+                //订单已关闭
                 break;
             case ParamConstants.WX_USERPAYING:
+                //正在支付
                 break;
             case ParamConstants.WX_PAYERROR:
+                //支付错误
+                showUnfinishDialog();
                 break;
         }
     }
@@ -95,10 +111,14 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        //初始化微信支付
+        getP().getRMBFeeAmount();
+        if (getActivity() != null){
+            AlertUtil.showShortCommonAlert(getActivity(), getActivity().getString(R.string.tip_username_valid));
+        }
+        //注册微信支付
         iwxapi = WXAPIFactory.createWXAPI(getActivity(), null);
         iwxapi.registerApp(ParamConstants.WXPAY_APPID);
-        getP().getRMBFeeAmount();
+
     }
 
     @Override
@@ -115,43 +135,42 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         TaskManager.execute(new Runnable() {
             @Override
             public void run() {
-                final String timestamp = String.valueOf(Calendar.getInstance().getTimeInMillis()/1000);
                 PayReq req = new PayReq();
                 req.appId =ParamConstants.WXPAY_APPID;
                 req.partnerId = ParamConstants.WXPAY_PARTNER_ID;
-                req.prepayId = result.getPrepay_id();
+                req.prepayId = result.getPrepayid();
                 req.packageValue = ParamConstants.WXPAY_PACKAGE_VALUE;
-                req.nonceStr = result.getNonce_str();
-                req.timeStamp = timestamp;
+                req.nonceStr = result.getNonceStr();
+                req.timeStamp = String.valueOf(result.getTimestamp());
                 req.sign = result.getSign();
-                LoggerManager.d("timestamp", timestamp);
-                LoggerManager.d("prepayId",result.getPrepay_id());
-                LoggerManager.d("nonceStr",result.getNonce_str());
-                LoggerManager.d("sign", result.getSign());
-                LoggerManager.d("checkArgs", req.checkArgs());
                 iwxapi.sendReq(req);
-                LoggerManager.d("weChat pay api called");
             }
         });
     }
 
     public void setFee(WXPayBillResult.ResultBean result){
         tvRmbAmount.setText(String.format(getString(R.string.rmb_fee), result.getRmbPrice()));
+        newPrice = result.getRmbPrice();
         tvCPU.setRightString(result.getCpu() + " EOS");
         tvNET.setRightString(result.getNet() + " EOS");
         tvRAM.setRightString(result.getRam() + " EOS");
     }
-
 
     @Override
     public boolean useEventBus() {
         return true;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+    }
+
     /**
      * 显示价格变动Dialog
      */
-    private void showPriceChangedDialog() {
+    public void showPriceChangedDialog() {
         int[] listenedItems = {R.id.tv_cancel, R.id.tv_ok};
         CustomDialog dialog = new CustomDialog(getContext(),
                 R.layout.dialog_payment_price_changed, listenedItems, false, Gravity.CENTER);
@@ -164,6 +183,8 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                         dialog.cancel();
                         break;
                     case R.id.tv_ok:
+                        //确认支付
+                        initPayProcess();
                         dialog.cancel();
                         break;
                     default:
@@ -172,6 +193,8 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
             }
         });
         dialog.show();
+        TextView tv_price_changed = dialog.findViewById(R.id.tv_price_changed);
+        tv_price_changed.setText(String.format(getString(R.string.payment_price_changed), newPrice));
     }
 
     /**
@@ -220,9 +243,5 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         dialog.show();
     }
 
-    /**
-     * 显示支付成功Dialog
-     */
-    
 
 }

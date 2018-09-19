@@ -67,7 +67,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.view_divider_eosName) View viewDividerEosName;
     @BindView(R.id.view_divider_setPass) View viewDividerSetPass;
     @BindView(R.id.view_divider_repeatPass) View viewDividerRepeatPass;
-    @BindView(R.id.view_divider_passHint) View viewDividerPassHint;
+
     @BindView(R.id.scroll_create_wallet) ScrollView scrollViewCreateWallet;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
@@ -77,7 +77,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.iv_set_pass_clear) ImageView ivSetPassClear;
     @BindView(R.id.iv_repeat_pass_clear) ImageView ivRepeatPassClear;
     @BindView(R.id.iv_pass_hint_clear) ImageView ivPassHintClear;
-    @BindView(R.id.iv_invCode_clear) ImageView ivInvCodeClear;
 
     @NotEmpty(messageResId = R.string.eos_name_not_empty, sequence = 3)
     @BindView(R.id.edt_eos_name) EditText edtEosName;
@@ -93,10 +92,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.et_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.tv_pass_hint) TextView tvPassHint;
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
-    @BindView(R.id.tv_invCode) TextView tvInvCode;
-    @BindView(R.id.tv_get_invCode) TextView tvGetInvCode;
 
-    @BindView(R.id.edt_invCode) EditText edtInvCode;
     @Checked(messageResId = R.string.check_agreement, sequence = 0)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.tv_service_agreement_config) TextView tvServiceAgreementConfig;
@@ -170,22 +166,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         } else {
             ivPassHintClear.setVisibility(View.GONE);
         }
-    }
-
-    @OnTextChanged(value = R.id.edt_invCode, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterInvCodeChanged(Editable s) {
-        if (isAllTextFilled() && checkboxConfig.isChecked()) {
-            setClickable(btCreateWallet);
-        } else {
-            setUnclickable(btCreateWallet);
-        }
-
-        if (EmptyUtils.isNotEmpty(getInvCode())) {
-            ivInvCodeClear.setVisibility(View.VISIBLE);
-        } else {
-            ivInvCodeClear.setVisibility(View.GONE);
-        }
-
     }
 
     @OnClick(R.id.bt_create_wallet)
@@ -270,8 +250,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
      *
      * @param v
      */
-    @OnClick({R.id.iv_eos_name_clear, R.id.iv_set_pass_clear, R.id.iv_repeat_pass_clear, R.id.iv_pass_hint_clear, R
-            .id.iv_invCode_clear})
+    @OnClick({R.id.iv_eos_name_clear, R.id.iv_set_pass_clear, R.id.iv_repeat_pass_clear, R.id.iv_pass_hint_clear})
     public void onClearClicked(View v) {
         switch (v.getId()) {
             case R.id.iv_eos_name_clear:
@@ -286,9 +265,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             case R.id.iv_pass_hint_clear:
                 edtPassHint.setText("");
                 break;
-            case R.id.iv_invCode_clear:
-                edtPassHint.setText("");
-                break;
         }
     }
 
@@ -298,7 +274,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         setEditTextHintStyle(edtSetPass, R.string.password_input_hint);
         setEditTextHintStyle(edtRepeatPass, R.string.repeatPassword_hint);
         setEditTextHintStyle(edtPassHint, R.string.password_hint_hint);
-        setEditTextHintStyle(edtInvCode, R.string.input_invCode_hint);
+
         bubble.setVisibility(View.GONE);
         setUnclickable(btCreateWallet);
         edtSetPass.setOnTouchListener(new View.OnTouchListener() {
@@ -434,32 +410,14 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                     if (EmptyUtils.isNotEmpty(getPassHint())) { ivPassHintClear.setVisibility(View.VISIBLE); }
                     tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
                     edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
-                    setDividerFocusStyle(viewDividerPassHint);
                 } else {
-                    setDividerDefaultStyle(viewDividerPassHint);
                     ivPassHintClear.setVisibility(View.GONE);
                     tvPassHint.setTextColor(getResources().getColor(R.color.steel));
                     if (EmptyUtils.isEmpty(getPassHint())) { edtPassHint.setTypeface(Typeface.DEFAULT); }
                 }
             }
         });
-        /**
-         * 邀请码输入区域样式设置
-         */
-        edtInvCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    if (EmptyUtils.isEmpty(getInvCode())) { ivInvCodeClear.setVisibility(View.GONE); }
-                    tvInvCode.setTextColor(getResources().getColor(R.color.darkSlateBlue));
-                    edtInvCode.setTypeface(Typeface.DEFAULT_BOLD);
-                } else {
-                    ivInvCodeClear.setVisibility(View.GONE);
-                    tvInvCode.setTextColor(getResources().getColor(R.color.steel));
-                    if (EmptyUtils.isEmpty(getInvCode())) { edtInvCode.setTypeface(Typeface.DEFAULT); }
-                }
-            }
-        });
+
 
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewCreateWallet);
     }
@@ -580,10 +538,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         return edtRepeatPass.getText().toString().trim();
     }
 
-    public String getInvCode() {
-        return edtInvCode.getText().toString().trim();
-    }
-
     public String getPassHint() {
         return edtPassHint.getText().toString().trim();
     }
@@ -646,8 +600,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     public boolean isAllTextFilled() {
         if (EmptyUtils.isEmpty(getPassword())
                 || EmptyUtils.isEmpty(getRepeatPassword())
-                || EmptyUtils.isEmpty(getEOSUserName())
-                || EmptyUtils.isEmpty(getInvCode())) {
+                || EmptyUtils.isEmpty(getEOSUserName())) {
             return false;
         }
         return true;
@@ -667,7 +620,6 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         edtRepeatPass.setOnFocusChangeListener(null);
         edtSetPass.setOnFocusChangeListener(null);
         edtPassHint.setOnFocusChangeListener(null);
-        edtInvCode.setOnFocusChangeListener(null);
         checkboxConfig.setOnCheckedChangeListener(null);
     }
 

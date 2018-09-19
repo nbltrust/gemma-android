@@ -4,40 +4,65 @@ import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.WXPayStatusEvent;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.model.response.WXPayQueryOrderInfoResult;
 import com.cybex.gma.client.ui.request.WXPayQueryOrderInfoRequest;
 import com.cybex.gma.client.wxapi.WXPayEntryActivity;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 
 public class WXPayEntryPresenter extends XPresenter<WXPayEntryActivity> {
 
+    /**
+     * 微信支付SDK返回成功确认码后发起请求向服务器二次确认
+     * @param orderId
+     */
     public void verifyOrderStatus(String orderId){
         new WXPayQueryOrderInfoRequest(WXPayQueryOrderInfoResult.class, orderId)
                 .getWXPayQueryOrderInfo(new JsonCallback<WXPayQueryOrderInfoResult>() {
 
                     @Override
+                    public void onStart(Request<WXPayQueryOrderInfoResult, ? extends Request> request) {
+                        super.onStart(request);
+                    }
+
+                    @Override
                     public void onSuccess(Response<WXPayQueryOrderInfoResult> response) {
-                        if (response != null && response.body() != null
-                                && response.body().getResult() != null){
-                            WXPayQueryOrderInfoResult.ResultBean result = response.body().getResult();
-                            String pay_state = result.getPay_state();
-                            String order_state = result.getStatus();
-                            int confirm_status = getRealStatus(pay_state, order_state);
-                            WXPayStatusEvent event = new WXPayStatusEvent();
-                            event.setStatus(confirm_status);
-                            EventBusProvider.postSticky(event);
+                        LoggerManager.d("verify status execute");
+                        if (getV() != null){
+                            if (response != null && response.body() != null
+                                    && response.body().getResult() != null){
+                                WXPayQueryOrderInfoResult.ResultBean result = response.body().getResult();
+                                String pay_state = result.getPay_state();
+                                String order_state = result.getStatus();
+                                int confirm_status = getRealStatus(pay_state, order_state);
+                                LoggerManager.d("confirm_status", confirm_status);
+                                WXPayStatusEvent event = new WXPayStatusEvent();
+                                event.setStatus(confirm_status);
+                                EventBusProvider.postSticky(event);
+                                getV().finish();
+                            }
                         }
                     }
 
                     @Override
                     public void onError(Response<WXPayQueryOrderInfoResult> response) {
-                        super.onError(response);
+                        if (getV() != null){
+                            super.onError(response);
+                        }
                     }
                 });
     }
 
+
+    /**
+     * 状态码转换
+     * @param pay_state
+     * @param order_state
+     * @return
+     */
     public int getRealStatus(String pay_state, String order_state){
         if (pay_state.equals(HttpConst.WXPAY_STATE_NOTPAY) && order_state.equals(HttpConst.WXPAY_STATUS_INIT)){
             //未支付，等待支付
@@ -66,4 +91,6 @@ public class WXPayEntryPresenter extends XPresenter<WXPayEntryActivity> {
         }
         return 0;
     }
+
+
 }

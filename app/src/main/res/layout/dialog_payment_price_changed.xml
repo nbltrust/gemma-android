@@ -29,6 +29,7 @@
         android:layout_marginTop="6dp"/>
 
     <TextView
+        android:id="@+id/tv_price_changed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/payment_price_changed"

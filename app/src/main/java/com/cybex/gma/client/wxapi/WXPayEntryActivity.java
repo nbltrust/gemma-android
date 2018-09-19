@@ -7,18 +7,24 @@ import android.view.View;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.config.HttpConst;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.OrderIdEvent;
+import com.cybex.gma.client.event.WXPayStatusEvent;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.model.response.WXPayQueryOrderInfoResult;
 import com.cybex.gma.client.ui.presenter.WXPayEntryPresenter;
 import com.cybex.gma.client.ui.request.WXPayQueryOrderInfoRequest;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.lzy.okgo.model.Response;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -26,8 +32,7 @@ import org.greenrobot.eventbus.ThreadMode;
 public class WXPayEntryActivity extends XActivity<WXPayEntryPresenter> implements IWXAPIEventHandler {
 
     private String orderId;
-
-
+    IWXAPI api;
     @Override
     public boolean useEventBus() {
         return true;
@@ -56,21 +61,34 @@ public class WXPayEntryActivity extends XActivity<WXPayEntryPresenter> implement
         if(baseResp.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){
             switch (baseResp.errCode){
                 case HttpConst.WXPAY_SUCCESS:
+                    //成功，去后台查询
                     LoggerManager.d("payment success");
                     if (EmptyUtils.isNotEmpty(orderId)){
                         LoggerManager.d("orderId", orderId);
-                        //getP().verifyOrderStatus(orderId);
+                        getP().verifyOrderStatus(orderId);
                     }
-                    //成功，去后台查询
                     break;
                 case HttpConst.WXPAY_ERROR:
-                    LoggerManager.d("payment err");
                     //失败
+                    LoggerManager.d("payment err");
+                    WXPayStatusEvent event_err = new WXPayStatusEvent();
+                    event_err.setStatus(ParamConstants.WX_PAYERROR);
+                    EventBusProvider.postSticky(event_err);
+                    finish();
                     break;
                 case HttpConst.WXPAY_CANCEL:
-                    LoggerManager.d("payment canceled");
-                    finish();
                     //被取消
+                    LoggerManager.d("payment canceled");
+                    if (EmptyUtils.isNotEmpty(orderId)){
+                        LoggerManager.d("orderId", orderId);
+                        getP().verifyOrderStatus(orderId);
+                    }
+                    /*
+                    WXPayStatusEvent event_close = new WXPayStatusEvent();
+                    event_close.setStatus(ParamConstants.WX_CLOSED);
+                    EventBusProvider.postSticky(event_close);
+                    finish();
+                    */
                     break;
             }
         }
@@ -84,7 +102,15 @@ public class WXPayEntryActivity extends XActivity<WXPayEntryPresenter> implement
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        api = WXAPIFactory.createWXAPI(this, ParamConstants.WXPAY_APPID);
+        api.handleIntent(getIntent(), this);
+        LoggerManager.d("we are at WXPayEntryActivity");
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dissmisProgressDialog();
     }
 
     @Override

@@ -240,8 +240,9 @@
             android:launchMode="singleTop"
             android:exported="true">
 
-     </activity>
+        </activity>
 
+        <!-- 微信分享-->
         <activity android:name=".wxapi.WXEntryActivity">
 
         </activity>

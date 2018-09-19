@@ -497,7 +497,7 @@
         have paid</string>
     <string name="price_changed">Price changed</string>
     <string name="payment_price_changed">Due to EOS price change, the fee for creating this
-        account turns into </string>
+        account turns into  %1$s RMB</string>
     <string name="tip_payment_time">Please finish the payment in 10 minutes</string>
     <string name="ok">OK</string>
     <string name="tip_loading_fee">Calculating Fee</string>
@@ -509,6 +509,7 @@
     <string name="memo_copied">Memo copied</string>
     <string name="verifying_account">verifying if account name is usable</string>
     <string name="tip_check_network">Failed，please check network</string>
+    <string name="tip_username_valid">Congrats, eos username is usable</string>
 
 
 

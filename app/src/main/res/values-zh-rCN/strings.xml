@@ -482,7 +482,7 @@
     <string name="payment_overtime">支付超时</string>
     <string name="tip_payment_overtime">若你已支付，费用将在24小时内退回到微信。</string>
     <string name="price_changed">价格变动</string>
-    <string name="payment_price_changed">由于EOS价格变动，创建账户的费用已变为</string>
+    <string name="payment_price_changed">由于EOS价格变动，创建账户的费用已变为 %1$s RMB</string>
     <string name="tip_payment_time">请在10分钟内完成支付</string>
     <string name="tip_loading_fee">正在估算价格</string>
     <string name="rmb_fee">%1$s RMB</string>
@@ -496,6 +496,7 @@
     <string name="memo_copied">备注已复制</string>
     <string name="verifying_account">正在验证账户名是否可用</string>
     <string name="tip_check_network">创建失败，请检查网络，已登陆用户请切换节点</string>
+    <string name="tip_username_valid">恭喜，账户名可以使用</string>
 
     <!-- EOS Err Code-->
 

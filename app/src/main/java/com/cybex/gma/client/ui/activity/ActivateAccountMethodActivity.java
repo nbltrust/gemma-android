@@ -12,8 +12,6 @@ import com.cybex.gma.client.ui.fragment.ActivateByExchangeFragment;
 import com.cybex.gma.client.ui.fragment.ActivateByFriendFragment;
 import com.cybex.gma.client.ui.fragment.ActivateByInvCodeFragment;
 import com.cybex.gma.client.ui.fragment.ActivateByRMBFragment;
-import com.cybex.gma.client.ui.fragment.BackUpPriKeyFragment;
-import com.cybex.gma.client.ui.fragment.BackUpPriKeyQRFragment;
 import com.cybex.gma.client.ui.presenter.BackUpPrivateKeyPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -25,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ActivateAccountMethodActivity extends XActivity {
-
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.view_sliding_tab) SlidingTabLayout mSlidingTab;
@@ -42,7 +39,6 @@ public class ActivateAccountMethodActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         this.setTab();
-
     }
 
     private void setTab() {

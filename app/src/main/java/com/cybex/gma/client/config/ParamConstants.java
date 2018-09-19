@@ -83,6 +83,7 @@ public interface ParamConstants {
     int WX_CLOSED = 15;
     int WX_USERPAYING = 16;
     int WX_PAYERROR = 17;
+    int WX_PRICE_CHANGED = 18;
 
 
 

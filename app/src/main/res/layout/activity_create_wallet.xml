@@ -188,6 +188,7 @@
                 </LinearLayout>
 
 
+                <!--
                 <View
                     android:id="@+id/view_divider_passHint"
                     style="@style/view_common_divider">
@@ -239,8 +240,10 @@
                         style="@style/clear_icon_common"/>
 
                 </LinearLayout>
+                -->
 
             </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/layout_checkBox"

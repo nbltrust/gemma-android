@@ -54,10 +54,6 @@ import butterknife.Unbinder;
  */
 public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
-    private static final String RAM_SCOPE = "eosio";
-    private static final String RAM_CODE = "eosio";
-    private static final String RAM_TABLE = "rammarket";
-    private List<String> ramMarketStaus;
     private final int OPERATION_BUY_RAM = 1;
     private final int OPERATION_SELL_RAM = 2;
     private ResourceInfoVO resourceInfoVO;
