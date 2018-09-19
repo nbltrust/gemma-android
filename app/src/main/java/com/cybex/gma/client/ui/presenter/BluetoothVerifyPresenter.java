@@ -57,9 +57,9 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
 
         BluetoothCreateAccountReqParams.WookongValidation validation = new BluetoothCreateAccountReqParams
                 .WookongValidation();
-        validation.setSN(SN);
-        validation.setSN_sig(SN_sig);
-        validation.setPublic_key(publick_key_hex);
+        validation.setSN(SN.toLowerCase());
+        validation.setSN_sig(SN_sig.toLowerCase());
+        validation.setPublic_key(publick_key_hex+"00");
         validation.setPublic_key_sig(public_key_sig);
         params.setValidation(validation);
 

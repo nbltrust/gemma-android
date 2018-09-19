@@ -368,7 +368,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
 
                         SN = CommonUtility.byte2hex(snbyte);
                         SN_sign = CommonUtility.byte2hex(checkedcode);
-                        SN_sign = SN_sign.substring(33);
+                        SN_sign = SN_sign.substring(32);
                         LoggerManager.d("SN: " + SN);
                         LoggerManager.d("SN_sign: " + SN_sign);
 
