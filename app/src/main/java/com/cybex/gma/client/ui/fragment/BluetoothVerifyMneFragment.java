@@ -397,6 +397,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
             //TODO 暂时测试用
 
             UISkipMananger.skipBluetoothSettingFPActivity(getActivity(), bd);
+            //getActivity().finish();
             /**
              getP().doAccountRegisterRequest(infoVo.getAccountName(),
              SN, SN_sign, public_key, public_key_hex, public_key_sign, infoVo.getPassword(),
