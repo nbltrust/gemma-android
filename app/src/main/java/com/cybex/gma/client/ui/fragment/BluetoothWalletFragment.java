@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
@@ -32,7 +33,7 @@ import com.cybex.gma.client.ui.model.response.AccountTotalResources;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
-import com.cybex.gma.client.ui.presenter.WalletPresenter;
+import com.cybex.gma.client.ui.presenter.BluetoothWalletPresenter;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.cybex.gma.client.widget.MyScrollView;
@@ -66,10 +67,8 @@ import jdenticon.AvatarHelper;
  *
  * Created by wanglin on 2018/7/9.
  */
-public class BluetoothWalletFragment extends XFragment<WalletPresenter> {
+public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter> {
 
-    @BindView(R.id.superTextView_card_vote) SuperTextView superTextViewCardVote;
-    @BindView(R.id.superTextView_card_buy_ram) SuperTextView superTextViewCardBuyRam;
     private WalletEntity curWallet;
     private int walletID;
     @BindView(R.id.tv_backup_wallet) TextView textViewBackupWallet;
@@ -84,8 +83,8 @@ public class BluetoothWalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.textView_username) TextView textViewUsername;
     @BindView(R.id.show_cpu) LinearLayout showCpu;
     @BindView(R.id.layout_info) ConstraintLayout layoutInfo;
-    @BindView(R.id.superTextView_card_record) SuperTextView superTextViewCardRecord;
-    @BindView(R.id.superTextView_card_delegate) SuperTextView superTextViewCardDelegate;
+    @BindView(R.id.bluetooth_device_layout) RelativeLayout bluetooth_device_layout;
+    @BindView(R.id.superTextView_card_record_hard) SuperTextView superTextViewCardRecord;
     @BindView(R.id.scroll_wallet_tab) MyScrollView scrollViewWalletTab;
     @BindView(R.id.progressbar_cpu_small) RoundCornerProgressBar progressBarCPU;
     @BindView(R.id.progressbar_net_small) RoundCornerProgressBar progressBarNET;
@@ -138,26 +137,23 @@ public class BluetoothWalletFragment extends XFragment<WalletPresenter> {
         return true;
     }
 
-    @OnClick(R.id.superTextView_card_record)
+    @OnClick(R.id.superTextView_card_record_hard)
     public void goToSeeRecord() {
         UISkipMananger.launchTransferRecord(getActivity());
     }
 
-    @OnClick(R.id.superTextView_card_delegate)
     public void goToDelegate() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("resourceInfo", resourceInfoVO);
         UISkipMananger.launchDelegate(getActivity(), bundle);
     }
 
-    @OnClick(R.id.superTextView_card_buy_ram)
     public void goToBuySellRam() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("ramInfo", resourceInfoVO);
         UISkipMananger.launchRamTransaction(getActivity(), bundle);
     }
 
-    @OnClick(R.id.superTextView_card_vote)
     public void goToVote() {
         UISkipMananger.launchVote(getActivity());
     }
@@ -385,13 +381,16 @@ public class BluetoothWalletFragment extends XFragment<WalletPresenter> {
         String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 4);
         totalEOSAmount.setText(totalPrice + " EOS");
         savedCurrency = SPUtils.getInstance().getInt("currency_unit");
-        if (EmptyUtils.isNotEmpty(savedCurrency)){
-            switch (savedCurrency){
+        if (EmptyUtils.isNotEmpty(savedCurrency)) {
+            switch (savedCurrency) {
                 case CacheConstants.CURRENCY_CNY:
                     totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
                     break;
                 case CacheConstants.CURRENCY_USD:
                     totalCNYAmount.setCenterString("≈" + totalUSD + " USD");
+                    break;
+                default:
+                    totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
                     break;
             }
         }
@@ -469,7 +468,7 @@ public class BluetoothWalletFragment extends XFragment<WalletPresenter> {
             textViewBackupWallet.setVisibility(View.GONE);
         }
 
-        switch (SPUtils.getInstance().getInt("currency_unit")){
+        switch (SPUtils.getInstance().getInt("currency_unit")) {
             case CacheConstants.CURRENCY_CNY:
                 totalCNYAmount.setCenterString("≈" + " -- " + " CNY");
                 break;
@@ -497,8 +496,8 @@ public class BluetoothWalletFragment extends XFragment<WalletPresenter> {
     }
 
     @Override
-    public WalletPresenter newP() {
-        return new WalletPresenter();
+    public BluetoothWalletPresenter newP() {
+        return new BluetoothWalletPresenter();
     }
 
     public void generatePortrait(String eosName) {

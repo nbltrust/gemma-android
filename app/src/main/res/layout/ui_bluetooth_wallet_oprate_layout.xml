@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    android:id="@+id/view_hard_wallet"
+    android:id="@+id/view_bluetooth_wallet_record"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
     android:orientation="vertical"
     title:layout_constraintEnd_toEndOf="parent"
     title:layout_constraintStart_toStartOf="parent"
-    title:layout_constraintTop_toBottomOf="@id/layout_info">
+    title:layout_constraintTop_toBottomOf="@id/bluetooth_device_layout">
 
     <!-- 硬件钱包收支记录-->
     <com.allen.library.SuperTextView

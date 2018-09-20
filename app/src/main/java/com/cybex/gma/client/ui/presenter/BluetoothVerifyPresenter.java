@@ -49,7 +49,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
             String publick_key_hex,
             String public_key_sig,
             String password,
-            String password_tip,Bundle bd) {
+            String password_tip, Bundle bd) {
         BluetoothCreateAccountReqParams params = new BluetoothCreateAccountReqParams();
 
         params.setApp_id(ParamConstants.TYPE_APP_ID_BLUETOOTH);
@@ -83,10 +83,11 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
                             if (registerResult != null) {
                                 String txId = registerResult.txId;
                                 saveAccount(public_key, public_key_sig, password, account_name, password_tip, txId, SN);
-                                getV().getActivity().finish();
                                 AppManager.getAppManager().finishAllActivity();
                                 UISkipMananger.skipBluetoothSettingFPActivity(getV().getActivity(), bd);
                                 LibValidateJob.startPolling(10000);
+
+                                getV().getActivity().finish();
                             }
                         } else {
                             showOnErrorInfo(data.code);
@@ -151,6 +152,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
         //设置被链上确认状态位未被确认
         walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
+        //蓝牙设备类型
         walletEntity.setWalletType(1);
         //设置当前Transaction的Hash值
         walletEntity.setTxId(txId);

@@ -15,6 +15,10 @@
 
 
     <!-- 硬钱包start-->
+    <include layout="@layout/ui_bluetooth_device_layout"
+        />
+
+
     <include layout="@layout/ui_bluetooth_wallet_oprate_layout"
         />
     <!-- 硬钱包end-->

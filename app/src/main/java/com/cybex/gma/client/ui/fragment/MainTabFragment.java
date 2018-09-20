@@ -5,7 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.db.dao.WalletEntityDao;
+import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.TabSelectedEvent;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
 import com.cybex.gma.client.widget.bottombar.BottomBarTab;
@@ -85,9 +88,28 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        FragmentSupport firstFragment = findChildFragment(WalletFragment.class);
+        FragmentSupport firstFragment = null;
+        WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
+        WalletEntity entity = dao.getCurrentWalletEntity();
+        int type = 0;
+        if (entity != null) {
+            type = entity.getWalletType();
+            if (type == 1) {
+                firstFragment = findChildFragment(BluetoothWalletFragment.class);
+            } else {
+                firstFragment = findChildFragment(WalletFragment.class);
+            }
+
+        } else {
+            firstFragment = findChildFragment(WalletFragment.class);
+        }
+
         if (firstFragment == null) {
-            mFragments[TAB_WALLET] = WalletFragment.newInstance();
+            if (type == 1) {
+                mFragments[TAB_WALLET] = BluetoothWalletFragment.newInstance();
+            } else {
+                mFragments[TAB_WALLET] = WalletFragment.newInstance();
+            }
             mFragments[TAB_TRANSFER] = TransferFragment.newInstance();
             mFragments[TAB_MINE] = MineFragment.newInstance();
 

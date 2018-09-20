@@ -28,11 +28,11 @@ public class ApiPath {
     //中心化服务器host
     public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3002";
     //链上服务器host
-    public static final String HOST_ON_CHAIN = "http://52.77.177.200:8888";
+    public static final String HOST_ON_CHAIN = "http://47.75.154.248:50003"; //"http://52.77.177.200:8888";
 
 
     //主链上的一个节点
-    public static final String HOST_ON_CHAIN_MAIN = "http://52.77.177.200:8888";//"http://13.251.120.68:8888";
+    public static final String HOST_ON_CHAIN_MAIN = "http://52.77.177.200:8888";
 
     //eosweb.net,一个外网节点，拥有当前eos链上所有数据
     public static final String HOST_EOS_WEB = "https://eosweb.net";

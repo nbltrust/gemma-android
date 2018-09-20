@@ -220,7 +220,10 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     if (EmptyUtils.isNotEmpty(deviceNameList) && deviceNameList.size() > 0) {
                         deviceNameList.get(updatePosition).isShowProgress = false;
                     } else {
-                        statusView.showEmpty();
+                        if(statusView!=null){
+                            statusView.showEmpty();
+                        }
+
                         mScanThread.interrupt();
                     }
 

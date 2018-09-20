@@ -98,9 +98,23 @@ public class WalletEntity extends BaseModel implements Parcelable {
     @Column(defaultValue = "0")
     private int walletType;
 
+    /**
+     * 是否设置蓝牙指纹 0--无   1--有
+     */
+    @Column(defaultValue = "0")
+    private int isSetBluetoothFP;
+
     @ColumnIgnore
     public boolean isChecked = false;
 
+
+    public int getIsSetBluetoothFP() {
+        return isSetBluetoothFP;
+    }
+
+    public void setIsSetBluetoothFP(int isSetBluetoothFP) {
+        this.isSetBluetoothFP = isSetBluetoothFP;
+    }
 
     public Integer getId() {
         return id;
@@ -234,6 +248,9 @@ public class WalletEntity extends BaseModel implements Parcelable {
         dest.writeValue(this.isConfirmLib);
         dest.writeString(this.txId);
         dest.writeString(this.invCode);
+        dest.writeInt(this.walletType);
+        dest.writeInt(this.isSetBluetoothFP);
+        dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
     }
 
     protected WalletEntity(Parcel in) {
@@ -250,6 +267,9 @@ public class WalletEntity extends BaseModel implements Parcelable {
         this.isConfirmLib = (Integer) in.readValue(Integer.class.getClassLoader());
         this.txId = in.readString();
         this.invCode = in.readString();
+        this.walletType = in.readInt();
+        this.isSetBluetoothFP = in.readInt();
+        this.isChecked = in.readByte() != 0;
     }
 
     public static final Creator<WalletEntity> CREATOR = new Creator<WalletEntity>() {

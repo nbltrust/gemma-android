@@ -87,6 +87,14 @@ public class ManageWalletFragment extends XFragment {
         } else {
             tvMathBluetooth.setVisibility(View.GONE);
         }
+
+        tvMathBluetooth.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                UISkipMananger.skipBluetoothPaireActivity(getActivity(), null);
+            }
+        });
     }
 
 

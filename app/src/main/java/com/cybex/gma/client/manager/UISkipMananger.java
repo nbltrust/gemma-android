@@ -15,6 +15,7 @@ import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.BluetoothBackupMneGuideActivity;
 import com.cybex.gma.client.ui.activity.BluetoothConfigWooKongBioActivity;
+import com.cybex.gma.client.ui.activity.BluetoothPairActivity;
 import com.cybex.gma.client.ui.activity.BluetoothSettingFPActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
 import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
@@ -183,6 +184,13 @@ public final class UISkipMananger {
      */
     public static void lauchFingerprintVerifyActivity(Activity context) {
         launchIntent(context, FingerprintVerifyActivity.class);
+    }
+
+
+
+    public static void skipBluetoothPaireActivity(Activity context, Bundle bd){
+        launchIntent(context, BluetoothPairActivity.class, bd);
+
     }
 
 
