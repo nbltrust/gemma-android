@@ -34,6 +34,9 @@ public class ApiPath {
     //http://47.75.154.248:50003 北京团队测试链
     //http://52.77.177.200:8888 cybex eos 主链节点
 
+    //主链上的一个节点
+    public static final String HOST_ON_CHAIN_MAIN = "http://52.77.177.200:8888";
+
     //eosweb.net,一个外网节点，拥有当前eos链上所有数据
     public static final String HOST_EOS_WEB = "https://eosweb.net";
 
@@ -68,6 +71,7 @@ public class ApiPath {
     //signupeoseos Dapp 地址
     public static final String DAPP_SINGUP_EOS = "https://mp.weixin.qq.com/s/wvrlzbj3EGv78s3gjoCvjw";
 
+
     /**------------URL 地址配置---------------*/
 
 
@@ -95,4 +99,6 @@ public class ApiPath {
     public static void setHOST_ON_CHAIN(String newUrl) {
         HOST_ON_CHAIN = newUrl;
     }
+
+    /**------------节点 地址配置---------------*/
 }

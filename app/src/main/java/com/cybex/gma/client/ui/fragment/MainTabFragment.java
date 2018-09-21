@@ -3,14 +3,15 @@ package com.cybex.gma.client.ui.fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.db.dao.WalletEntityDao;
+import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.TabSelectedEvent;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
@@ -18,7 +19,6 @@ import com.cybex.gma.client.widget.bottombar.BottomBarTab;
 import com.cybex.qrcode.core.QRCodeUtil;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-import com.hxlx.core.lib.utils.KeyboardUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,8 +98,8 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
         event_fresh.setRefresh(true);
         EventBusProvider.postSticky(event_fresh);
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P){
-            if (getActivity() != null && getContext() != null){
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            if (getActivity() != null && getContext() != null) {
                 int height = QRCodeUtil.getStatusBarHeight(getContext());
                 LoggerManager.d("statusBarHeight", height);
                 viewBotTab.setPadding(0, height, 0, 0);
@@ -110,9 +110,28 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        FragmentSupport firstFragment = findChildFragment(WalletFragment.class);
+        FragmentSupport firstFragment = null;
+        WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
+        WalletEntity entity = dao.getCurrentWalletEntity();
+        int type = 0;
+        if (entity != null) {
+            type = entity.getWalletType();
+            if (type == 1) {
+                firstFragment = findChildFragment(BluetoothWalletFragment.class);
+            } else {
+                firstFragment = findChildFragment(WalletFragment.class);
+            }
+
+        } else {
+            firstFragment = findChildFragment(WalletFragment.class);
+        }
+
         if (firstFragment == null) {
-            mFragments[TAB_WALLET] = WalletFragment.newInstance();
+            if (type == 1) {
+                mFragments[TAB_WALLET] = BluetoothWalletFragment.newInstance();
+            } else {
+                mFragments[TAB_WALLET] = WalletFragment.newInstance();
+            }
             mFragments[TAB_TRANSFER] = TransferFragment.newInstance();
             mFragments[TAB_MINE] = MineFragment.newInstance();
 
@@ -125,6 +144,7 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
             mFragments[TAB_TRANSFER] = findChildFragment(TransferFragment.class);
             mFragments[TAB_MINE] = findChildFragment(MineFragment.class);
         }
+
     }
 
     @Override

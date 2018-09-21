@@ -10,7 +10,7 @@
         >
     </corners>
     <stroke android:color="@color/cornflowerBlue"
-        android:width="@dimen/dimen_1">
+        android:width="1px">
 
     </stroke>
 </shape>

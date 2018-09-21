@@ -96,6 +96,28 @@
 
             </com.allen.library.SuperTextView>
 
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tv_match_bluetooth"
+                style="@style/card_style"
+                android:visibility="gone"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:translationZ="@dimen/dimen_1"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@id/superTextView_importWallet"
+                title:sLeftTextColor="@color/darkSlateBlue"
+                title:sLeftIconRes="@drawable/wookong_logo"
+                title:sLeftTextString="@string/match_wookong_bio"
+                title:sRightTvDrawableRight="@drawable/ic_arrow"
+                title:sShapeCornersRadius="@dimen/dimen_3"
+                title:sShapeSelectorPressedColor="@color/item_pressed"
+                title:sUseShape="true">
+
+            </com.allen.library.SuperTextView>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_3"

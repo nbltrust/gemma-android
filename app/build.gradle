@@ -213,6 +213,12 @@ android {
 //        }
     }
 
+    repositories{
+        flatDir{
+            dirs 'libs'
+        }
+    }
+
 
 }
 
@@ -254,6 +260,8 @@ dependencies {
     implementation deps.gma.svgImageViewer
     implementation deps.gma.SuperTextView
 
+    implementation 'com.trycatch.android:mysnackbar:1.2.2'
+
 
     implementation project(':platform_framework:basiclib')
     implementation project(':platform_framework:base-view')
@@ -263,6 +271,7 @@ dependencies {
     implementation project(':platform_framework:qrcodecore')
     implementation project(':platform_framework:smart-scheduler')
 
+    implementation(name:'bluetoothlib-release', ext:'aar')
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 

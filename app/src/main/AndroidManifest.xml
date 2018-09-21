@@ -4,12 +4,15 @@
           xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -26,6 +29,10 @@
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.READ_SMS"/>
 
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
         android:name=".GmaApplication"
         android:allowBackup="true"
@@ -34,13 +41,13 @@
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-
-
         android:usesCleartextTraffic="true"
         >
         <!-- 允许使用明文传输，后期需要作出限制-->
         <!-- 适配华为刘海 -->
-        <meta-data android:name="android.notch_support" android:value="true"/>
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true"/>
 
         <service android:name=".service.InitializeService"/>
 
@@ -54,7 +61,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
 
         <!-- 主TAB界面 -->
@@ -65,7 +71,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"
             >
-
 
 
         </activity>
@@ -115,9 +120,10 @@
             >
         </activity>
         <!-- 钱包详情界面 -->
-        <activity android:name=".ui.activity.WalletDetailActivity"
-                  android:configChanges="layoutDirection|locale"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".ui.activity.WalletDetailActivity"
+            android:configChanges="layoutDirection|locale"
+            android:screenOrientation="portrait">
 
         </activity>
 
@@ -145,6 +151,17 @@
 
             >
         </activity>
+
+        <!-- 创建蓝牙钱包界面 -->
+        <activity
+            android:name=".ui.activity.BluetoothCreatEosAccountActivity"
+            android:configChanges="layoutDirection|locale"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            >
+
+        </activity>
+
 
         <!-- 初始页面 -->
         <activity
@@ -205,9 +222,15 @@
             android:label="@string/fast_loading"
             android:screenOrientation="portrait"/>
         <!-- 备份钱包引导页 -->
-        <activity android:name=".ui.activity.BackUpWalletGuideActivity"
-                  android:configChanges="layoutDirection|locale"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".ui.activity.BackUpWalletGuideActivity"
+            android:configChanges="layoutDirection|locale"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <!-- 备份助记词引导页-->
+        <activity android:name=".ui.activity.BluetoothBackupMneGuideActivity">
 
         </activity>
 
@@ -227,27 +250,29 @@
         </activity>
 
         <!--选择激活方式-->
-        <activity android:name=".ui.activity.ActivateAccountMethodActivity"
-                  android:configChanges="layoutDirection|locale"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".ui.activity.ActivateAccountMethodActivity"
+            android:configChanges="layoutDirection|locale"
+            android:screenOrientation="portrait">
 
 
         </activity>
 
         <!-- 验证私钥页面-->
-        <activity android:name=".ui.activity.VerifyPriKeyActivity"
-                  android:configChanges="layoutDirection|locale"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".ui.activity.VerifyPriKeyActivity"
+            android:configChanges="layoutDirection|locale"
+            android:screenOrientation="portrait">
 
         </activity>
 
         <!-- 微信支付-->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            android:exported="true">
+            android:screenOrientation="portrait">
 
         </activity>
 
@@ -255,6 +280,44 @@
         <activity android:name=".wxapi.WXEntryActivity">
 
         </activity>
+        <!--蓝牙start -->
+        <activity
+            android:name=".ui.activity.BluetoothPairActivity"
+            android:configChanges="layoutDirection|locale"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <!-- 配置蓝牙钱包界面 -->
+        <activity
+            android:name=".ui.activity.BluetoothConfigWooKongBioActivity"
+            android:configChanges="layoutDirection|locale"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+
+        <activity
+            android:name=".ui.activity.BluetoothImportWalletActivity"
+            android:configChanges="layoutDirection|locale"
+            android:theme="@style/Theme.ActivityDialogStyle">
+
+        </activity>
+
+
+        <activity
+            android:name=".ui.activity.BluetoothScanResultDialogActivity"
+            android:configChanges="layoutDirection|locale"
+            android:theme="@style/Theme.ActivityDialogStyle">
+        </activity>
+
+        <activity android:name=".ui.activity.BluetoothSettingFPActivity">
+
+
+        </activity>
+
+        <!--蓝牙end -->
+
 
         <!-- activity end -->
 

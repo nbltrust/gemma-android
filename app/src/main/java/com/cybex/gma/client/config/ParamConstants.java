@@ -18,11 +18,13 @@ public interface ParamConstants {
 
     int TYPE_APP_ID_CYBEX = 1;//cybex
     int TYPE_APP_ID_BEIJIN_TEAM = 2;//北京团队
+    int TYPE_APP_ID_BLUETOOTH = 4;//蓝牙卡设备
 
     int APP_ID_GEMMA = 1;
 
     int ALARM_JOB = 1;
     int POLLING_JOB = 2;
+    int BLUETOOTH_CONNECT_JOB = 3;
 
     int VALID_EOSNAME_LENGTH = 12;
 
@@ -48,8 +50,8 @@ public interface ParamConstants {
 
     String GESTURE_SKIP_TYPE = "gesture_skip_type";//手势设置类型
     int GESTURE_SKIP_TYPE_CHANGE = 0x1001;//修改手势密码
-    int GESTURE_SKIP_TYPE_LOGIN_VERIFY = 0X1002;//登录验证手势密码
-    int GESTURE_SKIP_TYPE_CLOSE =0X1003;//关闭手势密码
+    int GESTURE_SKIP_TYPE_LOGIN_VERIFY = 0x1002;//登录验证手势密码
+    int GESTURE_SKIP_TYPE_CLOSE = 0x1003;//关闭手势密码
 
     int REQUEST_CODE_CHANGE_LANGUAGE = 1001;
     int CODE_CHANGE_RESULT = 1002;
@@ -63,15 +65,15 @@ public interface ParamConstants {
     int STATUS_FAIL = 4;
 
     /**
-     *导入钱包：1，创建钱包：0
+     * 导入钱包：1，创建钱包：0
      */
     int OPERATION_CREATE = 0;
     int OPERATION_IMPORT = 1;
 
-     String CN = "中文";
-     String EN = "English";
+    String CN = "中文";
+    String EN = "English";
 
-     String EOS_ERR_CODE_PREFIX = "eos_err_code_";
+    String EOS_ERR_CODE_PREFIX = "eos_err_code_";
 
     /**
      * 微信支付状态判断
@@ -87,6 +89,25 @@ public interface ParamConstants {
     int WX_CLOSED = 15;
     int WX_PAYERROR = 17;
 
+    String CONTEXT_HANDLE = "contextHandle";
+
+    String KEY_GEEN_SEED = "key_geen_seed";
+
+    String KEY_BLUETOOTH_ACCOUNT_INFO = "bluetooth_account_info";
 
 
+    //指纹指令错误
+    int FINGER_PRINT_COMMAND_ERROR = -2147483599;
+    //指纹冗余
+    int FINGER_REDUNDANT = -2147483598;
+    //指纹录入成功
+    int FINGER_GOOD = -2147483597;
+    //指纹录入失败
+    int FINGER_NOT = -2147483596;
+    //指纹采集不全
+    int FINGER_NOT_FULL = -2147483595;
+    //指纹采集错误图片
+    int FINGER_PRINT_BAND_IMAGE = -2147483594;
+    //指纹录入成功
+    int FINGER_SUCCESS = 0;
 }

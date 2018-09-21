@@ -128,6 +128,7 @@ public class MultipleStatusView extends RelativeLayout {
      * @param layoutParams 布局参数
      */
     public final void showEmpty(View view, ViewGroup.LayoutParams layoutParams) {
+        if(view ==null) return;
         checkNull(view, "Empty view is null!");
         mViewStatus = STATUS_EMPTY;
         if (null == mEmptyView) {
@@ -272,8 +273,9 @@ public class MultipleStatusView extends RelativeLayout {
         }
     }
 
-    private View inflateView(int layoutId) {
-        return mInflater.inflate(layoutId, null);
+    public View inflateView(int layoutId) {
+        if (mInflater != null) { return mInflater.inflate(layoutId, null); }
+        return null;
     }
 
     private void showViewById(int viewId) {
@@ -286,7 +288,8 @@ public class MultipleStatusView extends RelativeLayout {
 
     private void checkNull(Object object, String hint) {
         if (null == object) {
-            throw new NullPointerException(hint);
+           // throw new NullPointerException(hint);
+            return;
         }
     }
 

@@ -229,6 +229,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
         //设置密码提示
         walletEntity.setPasswordTip(passwordTip);
+        walletEntity.setWalletType(0);
         //设置为未备份
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
         //设置被链上确认状态位未被确认

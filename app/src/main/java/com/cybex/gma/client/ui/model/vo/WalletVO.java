@@ -4,6 +4,8 @@ public class WalletVO {
 
     private String walletName;
 
+    private int walletType;
+
     public boolean isSelected = false;
 
     public void setWalletName(String walletName) {
@@ -14,6 +16,11 @@ public class WalletVO {
         return walletName;
     }
 
+    public int getWalletType() {
+        return walletType;
+    }
 
-
+    public void setWalletType(int walletType) {
+        this.walletType = walletType;
+    }
 }

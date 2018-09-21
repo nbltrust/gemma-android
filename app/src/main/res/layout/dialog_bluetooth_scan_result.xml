@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:background="#f9f9f9">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imv_close"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:src="@drawable/ic_close_blue"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="14dp"
+            android:text="@string/title_scan_result"
+            android:textColor="#212c67"
+            android:textSize="14sp"/>
+
+
+        <com.cybex.base.view.statusview.MultipleStatusView
+            android:id="@+id/list_multiple_status_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/btn_navibar"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="12dp"
+            app:contentView="@layout/content_recycler_scan_result"
+            app:emptyView="@layout/empty_scan_result"
+            app:errorView="@layout/error_view"
+            app:loadingView="@layout/loading_view"
+            app:noNetworkView="@layout/no_network_view"
+            />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

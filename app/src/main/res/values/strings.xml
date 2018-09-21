@@ -426,7 +426,6 @@
     <string name="default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://xxxx</string>
 
 
-
     <string name="tab_title_private_key">私钥</string>
     <string name="tab_title_qr_code">二维码</string>
 
@@ -701,6 +700,65 @@
     <string name="eos_err_code_3230001">Crypto_API_Exception</string>
     <string name="eos_err_code_3230002">Database_API_Exception</string>
     <string name="eos_err_code_3230003">Arithmetic_Exception</string>
+=======
+    <item name="tag_key_data" type="id"/>
+    <item name="tag_key_position" type="id"/>
+
+    <!--蓝牙钱包配置start -->
+    <string name="title_wookong_bio">WOOKONG Bio</string>
+    <string name="match_wookong_bio">配对 WOOKONG Bio</string>
+
+    <string name="tip_card">第一款支持EOS的蓝牙硬件钱包</string>
+    <string name="desc_wookong_url">点击查看 更多WOOKONG Bio介绍</string>
+    <string name="bluetooth_scan_step_title">准备使用WOOKONG Bio</string>
+    <string name="bluetooth_scan_step">
+        1.确保打开手机蓝牙\n2.启动WOOKONG Bio
+    </string>
+
+    <string name="btn_start_pair">开始配对</string>
+    <string name="title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>
+    <string name="title_paire_bluetooth">WOOKONG Bio</string>
+    <string name="empty_no_device">请点击图片重新扫描</string>
+
+    <string name="title_set_wookong_password">设置WOOKONG Bio密码</string>
+    <string name="hint_set_wookong_password">长度8-16， 建议混合大小写字母、数字及符号</string>
+
+    <string name="tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
+
+    <string name="status_un_init">未初始化</string>
+    <string name="status_init_no_pair">已经初始化但没有配对信息</string>
+    <string name="status_init_pair">已经初始化但没有配对信息</string>
+
+    <string name="tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>
+
+    <string name="progress_set_pin">正在设置PIN...</string>
+
+    <string name="title_create_eos_account">创建EOS账户</string>
+
+    <string name="mne_validate_success">验证成功</string>
+    <string name="mne_validate_failed">验证失败</string>
+    <string name="mne_validate_warn">蓝牙连接已断开，请重新连接</string>
+    <string name="do_get_init_info">正在获取初始化信息...</string>
+    <string name="title_setting_fp">设置指纹</string>
+    <string name="btn_title_skip">跳过</string>
+    <string name="finger_set_success">指纹录入成功</string>
+
+
+    <!--蓝牙钱包配置end -->
+
+    <!-- 助记词相关-->
+    <string name="backup_mne">备份助记词</string>
+    <string name="show_mne">明白了， 显示助记词</string>
+    <string name="hint_no_screenshot_mne">如果有人获取你的助记词将直接获取你的资产！请抄写下助记词并存放在安全的地方！</string>
+    <string name="mne_copied">已抄写</string>
+    <string name="tip_memory_your_mne">请记下你的钱包私钥助记词并保存在安全的地方</string>
+    <string name="tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
+    <string name="tip_verify_mne">请按顺序点击已抄下的助记词以验证抄写是否正确</string>
+    <string name="tip_import_mne">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
+    <string name="import_mne">输入助记词，用空格分割</string>
+    <string name="title_verify_mne">验证助记词</string>
+    <string name="btn_import_mne">导入助记词</string>
+>>>>>>> remotes/origin/bluetooth_branch
 
 
 </resources>

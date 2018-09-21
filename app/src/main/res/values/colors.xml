@@ -22,7 +22,7 @@
     <color name="scarlet">#d0021b</color>
     <color name="buff">#fff9a6</color>
     <color name="steel">#8e8e93</color>
-    <color name="lightTeal">#94e1e1</color>
+    <color name="lightTeal">#4169d1</color>
     <color name="cloudyBlueTwo">#cacddf</color>
     <color name="cornflowerBlueTwo">#4169d1</color>
     <color name="dusk">#535c8a</color>
@@ -61,5 +61,11 @@
     <color name="grey_a5a5a5">#A5A5A5</color>
     <color name="grey_dde1e7">#DDE1E7</color>
     <color name="red_f4333c">#F4333C</color>
+
+    <color name="color_fingger_anim">#3381e0</color>
+    <color name="color_fingger_anim_default">#9ea3bd</color>
+
+    <color name="label_textView"></color>
+    <drawable name="label_bg">#ffffff</drawable>
 
 </resources>

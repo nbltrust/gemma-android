@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
@@ -60,6 +60,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+
     <!-- Radio Button 样式-->
     <style name="mRadioButton">
         <item name="android:layout_marginStart">@dimen/dimen_10</item>
@@ -97,7 +98,7 @@
         <item name="android:layout_marginEnd">@dimen/dimen_10</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
-    
+
     <!-- 线性布局中长按钮的样式 -->
     <style name="bt_long_in_linearLayout">
         <item name="android:layout_width">match_parent</item>
@@ -109,7 +110,7 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/shape_corner_button</item>
     </style>
-    
+
     <!-- 约束布局中长按钮的样式 -->
     <style name="bt_create_wallet">
         <item name="android:layout_width">0dp</item>
@@ -152,7 +153,7 @@
         <item name="android:textColor">@color/steel</item>
         <item name="android:layout_marginTop">@dimen/dimen_6</item>
     </style>
-    
+
     <style name="editText_config_wallet">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_50</item>
@@ -160,7 +161,7 @@
         <item name="android:textSize">@dimen/font_4</item>
         <item name="android:textColorHint">@color/cloudyBlue</item>
         <item name="android:theme">@style/myEditText</item>
-        <item name="android:background"><!--@drawable/selector_edt_bg-->@null</item>
+        <item name="android:background">@null</item>
         <item name="android:textCursorDrawable">@drawable/cursor_custom</item>
         <item name="android:layout_marginEnd">@dimen/dimen_12</item>
         <item name="android:layout_marginStart">@dimen/dimen_12</item>
@@ -331,7 +332,36 @@
     </style>
 
 
-    
-    
+    <style name="dialogstyle">
+        <!--设置dialog的背景-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--设置Dialog的windowFrame框为无-->
+        <item name="android:windowFrame">@null</item>
+        <!--设置无标题-->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否半透明-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--设置窗口内容不覆盖-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!--设置动画，在这里使用让它继承系统的Animation.Dialog-->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <!--背景是否模糊显示-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="Theme.ActivityDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/bg_ui</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowIsFloating">true</item>
+        //dialog会自适应
+        <item name="android:windowFullscreen">true</item>
+
+    </style>
+
 
 </resources>

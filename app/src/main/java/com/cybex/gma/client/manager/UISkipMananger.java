@@ -14,7 +14,12 @@ import com.cybex.gma.client.ui.activity.ActivateAccountMethodActivity;
 import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
+import com.cybex.gma.client.ui.activity.BluetoothBackupMneGuideActivity;
+import com.cybex.gma.client.ui.activity.BluetoothConfigWooKongBioActivity;
+import com.cybex.gma.client.ui.activity.BluetoothPairActivity;
+import com.cybex.gma.client.ui.activity.BluetoothSettingFPActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
+import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateMethodActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
@@ -207,6 +212,57 @@ public final class UISkipMananger {
     }
 
 
+
+    public static void skipBluetoothPaireActivity(Activity context, Bundle bd){
+        launchIntent(context, BluetoothPairActivity.class, bd);
+
+    }
+
+
+    /**
+     * 跳转到创建蓝牙钱包
+     *
+     * @param context
+     */
+    public static void skipCreateBluetoothWalletActivity(Activity context, Bundle bd) {
+        launchIntent(context, BluetoothCreatEosAccountActivity.class, bd);
+
+    }
+
+
+    /**
+     * 跳转到蓝牙账户密码配置界面
+     *
+     * @param context
+     * @param bd
+     */
+    public static void skipBluetoothConfigWookongBioActivity(Activity context, Bundle bd) {
+        launchIntent(context, BluetoothConfigWooKongBioActivity.class, bd);
+
+    }
+
+
+    /**
+     * 跳转到助记词
+     *
+     * @param context
+     */
+    public static void skipBackupMneGuideActivity(Activity context, Bundle bd) {
+        launchIntent(context, BluetoothBackupMneGuideActivity.class, bd);
+    }
+
+
+    /**
+     * 跳转到设置指纹窗口
+     *
+     * @param context
+     * @param bd
+     */
+    public static void skipBluetoothSettingFPActivity(Activity context, Bundle bd) {
+        launchIntent(context, BluetoothSettingFPActivity.class, bd);
+    }
+
+
     /**
      * 跳转到about界面
      *
@@ -241,6 +297,7 @@ public final class UISkipMananger {
         launchIntent(mContext, BackUpPrivatekeyActivity.class);
         //launchIntent(mContext, BackUpPrivatekeyActivity.class, bundle);
     }
+
 
     /**
      * 跳转到登录界面

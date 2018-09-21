@@ -1,0 +1,105 @@
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/view_soft_wallet"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    title:layout_constraintEnd_toEndOf="parent"
+    title:layout_constraintStart_toStartOf="parent"
+    title:layout_constraintTop_toBottomOf="@id/layout_info">
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/superTextView_card_record"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:elevation="@dimen/dimen_1"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        title:sLeftTextColor="@color/darkSlateBlue"
+        title:sLeftTextSize="@dimen/font_3.5"
+        title:sLeftTextString="@string/transfer_records"
+        title:sRightTvDrawableRight="@drawable/ic_arrow"
+        title:sShapeCornersRadius="6dp"
+        title:sShapeSelectorPressedColor="@color/item_pressed"
+        title:sUseShape="true">
+
+    </com.allen.library.SuperTextView>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/superTextView_card_vote"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:elevation="@dimen/dimen_1"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
+        title:sLeftTextColor="@color/darkSlateBlue"
+        title:sLeftTextSize="@dimen/font_3.5"
+        title:sLeftTextString="@string/vote"
+        title:sRightTvDrawableRight="@drawable/ic_arrow"
+        title:sShapeCornersRadius="6dp"
+        title:sShapeSelectorPressedColor="@color/item_pressed"
+        title:sUseShape="true">
+
+    </com.allen.library.SuperTextView>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/superTextView_card_buy_ram"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:elevation="@dimen/dimen_1"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        title:layout_constraintTop_toBottomOf="@id/superTextView_card_vote"
+        title:sLeftTextColor="@color/darkSlateBlue"
+        title:sLeftTextSize="@dimen/font_3.5"
+        title:sLeftTextString="@string/buy_sell_ram"
+        title:sRightTvDrawableRight="@drawable/ic_arrow"
+        title:sShapeCornersRadius="6dp"
+        title:sShapeSelectorPressedColor="@color/item_pressed"
+        title:sUseShape="true">
+
+    </com.allen.library.SuperTextView>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/superTextView_card_delegate"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:elevation="@dimen/dimen_1"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        title:layout_constraintTop_toBottomOf="@id/superTextView_card_buy_ram"
+        title:sLeftTextColor="@color/darkSlateBlue"
+        title:sLeftTextSize="@dimen/font_3.5"
+        title:sLeftTextString="@string/resource"
+        title:sRightTextColor="@color/cloudyBlue"
+        title:sRightTextSize="@dimen/font_3.5"
+        title:sRightTextString="@string/get_cpu_net"
+        title:sRightTvDrawableRight="@drawable/ic_arrow"
+        title:sShapeCornersRadius="6dp"
+        title:sShapeSelectorPressedColor="@color/item_pressed"
+        title:sUseShape="true">
+
+    </com.allen.library.SuperTextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        title:layout_constraintTop_toBottomOf="@id/superTextView_card_delegate">
+    </View>
+
+
+</android.support.constraint.ConstraintLayout>

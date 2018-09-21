@@ -32,6 +32,11 @@ public interface ApiMethod {
      */
     String API_FETCH_BP_DETAILS = "/api/v1/producer/";
 
+    /**
+     * 蓝牙用户注册接口
+     */
+    String API_BLUETOOTH_REGISTER_ACCOUNT = "/api/v1/account/new";
+
 
     /*----------------链上服务器API Mehtod-----------------------*/
 
@@ -68,7 +73,7 @@ public interface ApiMethod {
     String API_GET_KEY_ACCOUNTS = "/v1/history/get_key_accounts";
 
     /**
-     *根据txId哈希值查询当前transaction信息
+     * 根据txId哈希值查询当前transaction信息
      * 创建钱包使用
      */
     String API_GET_TRANSACTION = "/v1/history/get_transaction";
@@ -100,7 +105,7 @@ public interface ApiMethod {
     String WXPAY_PAY_BILL = "/api/v1/pay/bill";
 
     /**
-     *微信支付支付下单接口
+     * 微信支付支付下单接口
      */
     String WXPAY_PLACE_ORDER = "/api/v1/pay/order/";
 }

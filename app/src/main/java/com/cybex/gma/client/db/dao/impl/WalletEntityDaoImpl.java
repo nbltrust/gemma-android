@@ -60,6 +60,16 @@ public class WalletEntityDaoImpl implements WalletEntityDao {
     }
 
     @Override
+    public List<WalletEntity> getBluetoothWalletList() {
+        List<WalletEntity> list =
+                SQLite.select().from(WalletEntity.class)
+                        .where(WalletEntity_Table.walletType.eq(1))
+                        .queryList();
+
+        return list;
+    }
+
+    @Override
     public void saveOrUpateEntity(WalletEntity entity) {
         DBFlowUtil.execTransactionAsync(GemmaDatabase.class, new ITransaction() {
             @Override

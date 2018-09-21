@@ -79,14 +79,12 @@ dependencies {
 
 
     api deps.third.kprogresshud
-
-    api deps.yanzhenjie.sofia
-    api deps.third.rxErrorHandler
-
     api deps.glide.core
     annotationProcessor deps.glide.compiler
 
     api deps.yanzhenjie.sofia
+    api deps.yanzhenjie.sofia
+    api deps.third.rxErrorHandler
 
 
 }
