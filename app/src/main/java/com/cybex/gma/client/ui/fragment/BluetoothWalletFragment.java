@@ -155,7 +155,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
     }
 
     public void goToVote() {
-        UISkipMananger.launchVote(getActivity());
+        UISkipMananger.launchVote(getActivity(),null);
     }
 
     public static BluetoothWalletFragment newInstance() {
