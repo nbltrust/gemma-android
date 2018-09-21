@@ -700,7 +700,7 @@
     <string name="eos_err_code_3230001">Crypto_API_Exception</string>
     <string name="eos_err_code_3230002">Database_API_Exception</string>
     <string name="eos_err_code_3230003">Arithmetic_Exception</string>
-=======
+    =======
     <item name="tag_key_data" type="id"/>
     <item name="tag_key_position" type="id"/>
 
@@ -742,8 +742,14 @@
     <string name="title_setting_fp">设置指纹</string>
     <string name="btn_title_skip">跳过</string>
     <string name="finger_set_success">指纹录入成功</string>
-
-
+    <string name="wookong_password_hint">请输入WOOKONG Bio的密码以确认授权</string>
+    <string name="transfer_error">当前账户转账出现异常</string>
+    <string name="transfer_eosname_hint">请输入@</string>
+    <string name="transfer_eosname_hint_last">的密码</string>
+    <string name="transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>
+    <string name="transfer_bluetooth_tip">正在连接WOOKONG Bio</string>
+    <string name="connect_sure_tip">请在WOOKONG Bio上按指纹以确认授权</string>
+    <string name="connect_sure_battery_tip">请在WOOKONG Bio上按键以确认转账</string>
     <!--蓝牙钱包配置end -->
 
     <!-- 助记词相关-->
@@ -758,7 +764,6 @@
     <string name="import_mne">输入助记词，用空格分割</string>
     <string name="title_verify_mne">验证助记词</string>
     <string name="btn_import_mne">导入助记词</string>
->>>>>>> remotes/origin/bluetooth_branch
 
 
 </resources>
