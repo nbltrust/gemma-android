@@ -313,6 +313,8 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             bundle.putString("account_name", getV().getEOSUserName());
                             bundle.putString("public_key", publicKey);
                             bundle.putString("private_key", priateKey);
+                            bundle.putString("password", getV().getPassword());
+                            bundle.putString("passwordTip", getV().getPassHint());
                             UISkipMananger.launchChooseActivateMethod(getV(), bundle);
                         }else {
                             GemmaToastUtils.showLongToast(getV().getString(R.string.tip_check_network));

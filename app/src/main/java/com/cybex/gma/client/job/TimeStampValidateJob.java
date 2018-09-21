@@ -4,10 +4,14 @@ import android.content.Context;
 
 import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.api.callback.JsonCallback;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ValidateResultEvent;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.GetBlockReqParams;
@@ -177,6 +181,44 @@ public class TimeStampValidateJob {
                 .getAccountInfo(new JsonCallback<AccountInfo>() {
                     @Override
                     public void onSuccess(Response<AccountInfo> response) {
+                        if (response != null && response.body() != null && response.code() != HttpConst.SERVER_INTERNAL_ERR){
+                            AccountInfo info = response.body();
+                            final String created = info.getCreated();
+
+                            if (!isSuccess){
+                                getInfo(created, account_name, public_key);
+                            }else {
+                                //检查公钥是否在结构体里
+                                List<AccountInfo.PermissionsBean> permissions = info.getPermissions();
+                                for (AccountInfo.PermissionsBean permission : permissions) {
+                                    //检查active key中是否是此公钥
+                                    if (isBeanContainsPublicKey(permission, public_key)) {
+                                        //如果公钥在账户中,创建成功
+                                        LoggerManager.d("create success");
+
+                                        WalletEntity successWallet = DBManager.getInstance().getWalletEntityDao()
+                                                .getCurrentWalletEntity();
+                                        successWallet.setIsConfirmLib(CacheConstants.IS_CONFIRMED);
+                                        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(successWallet);
+
+                                        ValidateResultEvent event_success = new ValidateResultEvent();
+                                        event_success.setSuccess(true);
+                                        EventBusProvider.postSticky(event_success);
+
+                                    } else {
+                                        //公钥不在账户中
+                                        //todo 失败，弹框提示账户名已被使用，查询数据库中是否有其他钱包
+                                        ValidateResultEvent event = new ValidateResultEvent();
+                                        event.setFail_type(FAIL_USERNAME_USED);
+                                        EventBusProvider.postSticky(event);
+                                    }
+                                }
+                            }
+                        }
+
+
+
+                        /*
                         if (response != null && response.body() != null && response.code() != HttpConst
                                 .SERVER_INTERNAL_ERR){
                             //已查询到此账户
@@ -209,13 +251,15 @@ public class TimeStampValidateJob {
                                     event.setFail_type(FAIL_USERNAME_USED);
                                     EventBusProvider.postSticky(event);
                                 }
+
+
                             }
 
                         }else if (response.body() != null && response.code() == HttpConst.SERVER_INTERNAL_ERR){
                             //未查询到此账户,启动查找账户轮询
                             startgetAccountPolling(20000, account_name, public_key);
                         }
-
+                        */
                     }
 
                     @Override
@@ -286,10 +330,12 @@ public class TimeStampValidateJob {
                                     String laterTimestamp = getLaterTimeStamp(timestamp, created);
                                     if (laterTimestamp.equals(timestamp)){
                                         //todo 比较成功
+
                                         getAccount(account_name, public_key, true);
                                         removePollingJob();
                                     }else {
                                         //失败，轮询
+                                        startValidatePolling(10000, created, account_name, public_key );
                                     }
 
                                 }
@@ -406,5 +452,4 @@ public class TimeStampValidateJob {
     public static void executedCreateLogic(String account_name, String public_key){
         getAccount(account_name, public_key, false);
     }
-
 }
