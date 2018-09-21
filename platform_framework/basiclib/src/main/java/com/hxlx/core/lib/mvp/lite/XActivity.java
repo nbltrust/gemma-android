@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -12,13 +14,17 @@ import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.hxlx.core.lib.R;
 import com.hxlx.core.lib.common.eventbus.BaseEvent;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
+import com.hxlx.core.lib.utils.OSUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -26,6 +32,8 @@ import com.yanzhenjie.sofia.Sofia;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.lang.reflect.Field;
 
 import me.framework.fragmentation.ActivitySupport;
 
@@ -77,6 +85,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         mContext = this;
 
         setImmersiveStyle();
+        handleNotch();
     }
 
 
@@ -98,6 +107,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         mTitleBar.setTitleColor(R.color.ffffff_white_1000);
         mTitleBar.setTitleSize(20);
         mTitleBar.setImmersive(true);
+
         if (isShowBack) {
             mTitleBar.setLeftImageResource(R.drawable.ic_btn_back);
             mTitleBar.setLeftClickListener(new View.OnClickListener() {
@@ -109,14 +119,41 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         }
     }
 
+
+    /**
+     * 处理刘海
+     */
+
+    public void handleNotch(){
+        if (Build.VERSION.SDK_INT >= 28){
+            WindowManager.LayoutParams lp = mContext.getWindow().getAttributes();
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT;
+            mContext.getWindow().setAttributes(lp);
+        }
+    }
     /**
      * 设置沉浸状态栏和透明导航栏
      */
     protected void setImmersiveStyle(){
-            Sofia.with(mContext)
-                    .navigationBarBackgroundAlpha(0)
-                    .statusBarBackgroundAlpha(0)
-                    .invasionStatusBar();
+        Sofia.with(mContext)
+                .statusBarBackgroundAlpha(0)
+                .navigationBarBackgroundAlpha(0)
+                .invasionStatusBar();
+
+        //Android P 上的适配
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+            //Android 9.0以上适配
+
+                try {
+                    //statusBar透明
+                    Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
+                    Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
+                    field.setAccessible(true);
+                    field.setInt(getWindow().getDecorView(), Color.TRANSPARENT);  //改为透明
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+        }
     }
 
     /**
@@ -202,7 +239,6 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     protected void onResume() {
         super.onResume();
         getvDelegate().resume();
-
        // if (OSUtils.checkDeviceHasNavigationBar(this)) {
        //     OSUtils.solveNavigationBar(getWindow());
        // }
@@ -327,5 +363,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
             kProgressHUD.dismiss();
         }
     }
+
+
 
 }

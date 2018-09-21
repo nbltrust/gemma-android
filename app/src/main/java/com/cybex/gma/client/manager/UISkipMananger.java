@@ -84,8 +84,8 @@ public final class UISkipMananger {
      * 跳转到投票页面
      * @param context
      */
-    public static void launchVote(Activity context) {
-        launchIntent(context, VoteActivity.class);
+    public static void launchVote(Activity context, Bundle bundle) {
+        launchIntent(context, VoteActivity.class, bundle);
     }
 
 

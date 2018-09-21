@@ -141,7 +141,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         String[] spiltBanlance = banlance.split(" ");
         if (EmptyUtils.isEmpty(spiltBanlance)) {
             return;
-
         }
 
         maxValue = spiltBanlance[0].trim();
@@ -265,7 +264,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         });
 
     }
-
 
     private void validateButton() {
         String collectionAccount = String.valueOf(etCollectionAccount.getText());
@@ -462,7 +460,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         etPasword.setHint("请输入@" + currentEOSName + "的密码");
     }
 
-
     public void clearData() {
         if (dialog != null) {
             dialog.cancel();
@@ -475,7 +472,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         //刷新数据
         getP().requestBanlanceInfo();
     }
-
 
     @Override
     public void onDestroyView() {

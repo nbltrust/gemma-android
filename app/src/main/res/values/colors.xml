@@ -41,6 +41,7 @@
 
     <color name="material_et_base_color">#0056d3</color>
     <color name="greyish_brown">#3f3f3f</color>
+    <color name="transparent">#00ffffff</color>
 
 
     <!--主页tab背景色-->

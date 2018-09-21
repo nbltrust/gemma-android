@@ -3,6 +3,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12"
                 >
 
 
@@ -96,11 +97,5 @@
 
 
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:layout_below="@id/view_content"
-        android:background="#f9f9f9"/>
 
 </RelativeLayout>

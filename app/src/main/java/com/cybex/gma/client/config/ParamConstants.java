@@ -19,6 +19,8 @@ public interface ParamConstants {
     int TYPE_APP_ID_CYBEX = 1;//cybex
     int TYPE_APP_ID_BEIJIN_TEAM = 2;//北京团队
 
+    int APP_ID_GEMMA = 1;
+
     int ALARM_JOB = 1;
     int POLLING_JOB = 2;
 
@@ -75,15 +77,15 @@ public interface ParamConstants {
      * 微信支付状态判断
      */
 
-    int WX_NOTPAY_WAIT = 10;
-    int WX_NOTPAY_CLOSED = 11;
-    int WX_SUCCESS_DONE = 12;
-    int WX_SUCCESS_TOREFUND = 13;
+    int WX_NOTPAY_INIT = 10;//未付款
+    int WX_NOTPAY_CLOSED = 11;//超时未付款订单已关闭
+    int WX_SUCCESS_DONE = 12;//付款成功
+    int WX_SUCCESS_TOREFUND = 13;//支付成功但需要退款
+    int WX_USERPAYING = 16;//用户正在付款
+
     int WX_REFUND = 14;
     int WX_CLOSED = 15;
-    int WX_USERPAYING = 16;
     int WX_PAYERROR = 17;
-    int WX_PRICE_CHANGED = 18;
 
 
 

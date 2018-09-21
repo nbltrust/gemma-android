@@ -184,8 +184,11 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.superTextView_card_vote)
     public void goToVote() {
-        //shareText();
-        UISkipMananger.launchVote(getActivity());
+        if (EmptyUtils.isNotEmpty(curWallet)){
+            Bundle bundle = new Bundle();
+            bundle.putString("cur_eos_name", curWallet.getCurrentEosName());
+            UISkipMananger.launchVote(getActivity(), bundle);
+        }
     }
 
     public static WalletFragment newInstance() {

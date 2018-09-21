@@ -570,8 +570,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                     net_quantity = "0.0000";
                                                 }
 
-                                                String stake_net_quantity = cpu_quantity + " EOS";
-                                                String stake_cpu_quantity = net_quantity + " EOS";
+                                                String stake_net_quantity = net_quantity + " EOS";
+                                                String stake_cpu_quantity = cpu_quantity + " EOS";
                                                 getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
                                                         stake_cpu_quantity, key);
 
@@ -630,8 +630,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                     net_quantity = "0.0000";
                                                 }
 
-                                                String unstake_net_quantity = cpu_quantity + " EOS";
-                                                String unstake_cpu_quantity = net_quantity + " EOS";
+                                                String unstake_net_quantity = net_quantity + " EOS";
+                                                String unstake_cpu_quantity = cpu_quantity + " EOS";
 
                                                 getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
                                                         unstake_cpu_quantity, key);

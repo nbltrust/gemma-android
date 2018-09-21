@@ -8,7 +8,7 @@ package com.cybex.gma.client.ui.model.request;
 public class UserRegisterReqParams {
 
     /**
-     * 访问方ID，1:cybex 2:北京团队
+     * 访问方ID，1:Gemma 2:Wookong solo 3: Wookong 4.蓝牙卡
      */
     private int app_id;
 

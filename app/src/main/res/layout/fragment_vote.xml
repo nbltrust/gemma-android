@@ -95,7 +95,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:background="@drawable/btn_vote_right_light"
-                    android:text="@string/no_avail_votes"
+                    android:text="@string/title_vote"
                     android:textColor="#ffffff"
                     android:textSize="14sp"/>
 

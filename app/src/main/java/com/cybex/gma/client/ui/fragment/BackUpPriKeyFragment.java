@@ -163,6 +163,4 @@ public class BackUpPriKeyFragment extends XFragment {
         });
         dialog.show();
     }
-
-
 }

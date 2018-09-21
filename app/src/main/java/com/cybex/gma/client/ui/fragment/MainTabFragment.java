@@ -1,17 +1,28 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.TabSelectedEvent;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
 import com.cybex.gma.client.widget.bottombar.BottomBarTab;
+import com.cybex.qrcode.core.QRCodeUtil;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.KeyboardUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.framework.fragmentation.FragmentSupport;
 
 /**
@@ -22,6 +33,11 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
     private static final int TAB_WALLET = 0;//钱包
     private static final int TAB_TRANSFER = 1;//转账
     private static final int TAB_MINE = 2;//我的
+
+    @BindView(R.id.fl_tab_container) FrameLayout flTabContainer;
+    @BindView(R.id.bottomBar) BottomBar bottomBar;
+    @BindView(R.id.view_bot_tab) LinearLayout viewBotTab;
+    Unbinder unbinder;
 
     private FragmentSupport[] mFragments = new FragmentSupport[3];
 
@@ -40,6 +56,7 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
 
     @Override
     public void bindUI(View rootView) {
+        unbinder = ButterKnife.bind(this, rootView);
         mBottomBar = (BottomBar) rootView.findViewById(R.id.bottomBar);
 
         mBottomBar
@@ -80,6 +97,14 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
         event_fresh.setPosition(0);
         event_fresh.setRefresh(true);
         EventBusProvider.postSticky(event_fresh);
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P){
+            if (getActivity() != null && getContext() != null){
+                int height = QRCodeUtil.getStatusBarHeight(getContext());
+                LoggerManager.d("statusBarHeight", height);
+                viewBotTab.setPadding(0, height, 0, 0);
+            }
+        }
     }
 
     @Override
@@ -110,5 +135,11 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
     @Override
     public MainTabPresenter newP() {
         return null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

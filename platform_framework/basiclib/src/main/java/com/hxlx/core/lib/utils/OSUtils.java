@@ -1,11 +1,13 @@
 package com.hxlx.core.lib.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Environment;
 import android.view.Display;
+import android.view.DisplayCutout;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -468,6 +470,7 @@ public class OSUtils {
         }
         return size;
     }
+
 
 
 }

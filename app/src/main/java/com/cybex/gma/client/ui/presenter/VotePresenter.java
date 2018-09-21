@@ -21,6 +21,7 @@ import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.FetchBPDetailRequest;
 import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
 import com.cybex.gma.client.ui.request.PushTransactionRequest;
+import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -219,28 +220,32 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     }
 
                     @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                        if (EmptyUtils.isNotEmpty(getV())) {
-                            getV().dissmisProgressDialog();
-                            if (response.body() != null && response.getRawResponse().body() != null){
-                                try {
-                                    String err_info_string = response.getRawResponse().body().string();
+                    public void onError(Response<String> response){
+                        if (getV() != null){
+                            super.onError(response);
+                            AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.operate_deal_failed));
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
+                            if (EmptyUtils.isNotEmpty(getV())) {
+                                getV().dissmisProgressDialog();
+                                if (response.body() != null && response.getRawResponse().body() != null){
                                     try {
-                                        JSONObject obj = new JSONObject(err_info_string);
-                                        JSONObject error = obj.optJSONObject("error");
-                                        String err_code = error.optString("code");
-                                        handleEosErrorCode(err_code);
+                                        String err_info_string = response.getRawResponse().body().string();
+                                        try {
+                                            JSONObject obj = new JSONObject(err_info_string);
+                                            JSONObject error = obj.optJSONObject("error");
+                                            String err_code = error.optString("code");
+                                            handleEosErrorCode(err_code);
 
-                                    } catch (JSONException ee) {
-                                        ee.printStackTrace();
+                                        } catch (JSONException ee) {
+                                            ee.printStackTrace();
+                                        }
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
                                 }
                             }
                         }
+
                     }
                 });
     }
@@ -257,6 +262,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                         super.onError(response);
 
                         if (EmptyUtils.isNotEmpty(getV())) {
+                            AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.operate_deal_failed));
                             getV().dissmisProgressDialog();
                             if (response.body() != null && response.getRawResponse().body() != null){
                                 try {
@@ -280,17 +286,16 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     @Override
                     public void onSuccess(Response<String> response) {
                         if (EmptyUtils.isNotEmpty(getV())) {
+                            AlertUtil.showLongCommonAlert(getV().getActivity(),
+                                    getV().getString(R.string.operate_deal_success));
                             getV().dissmisProgressDialog();
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                                 String jsonStr = response.body();
+                                //停留在投票页面，更新数据
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
-
-                                GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
-                                //todo 停留在投票页面，更新数据
+                                getTotalDelegatedRes();
                             }
                         }
-
-
                     }
                 });
     }
@@ -336,7 +341,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                                         String total_resource = AmountUtil.add(cpu_amount, net_amount, 4) + " EOS";
                                         if (EmptyUtils.isNotEmpty(getV())) {
                                             getV().hasDelegatedRes(true);
-                                            getV().getTotalDelegatedResource(total_resource);
+                                            getV().setTotalDelegatedResource(total_resource);
                                             getV().showContent();
                                         }
 
@@ -381,7 +386,6 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     });
         }
     }
-
 
     private void handleEosErrorCode(String err_code) {
         String code = ParamConstants.EOS_ERR_CODE_PREFIX + err_code;

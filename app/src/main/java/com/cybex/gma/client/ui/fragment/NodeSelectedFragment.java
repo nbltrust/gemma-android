@@ -163,6 +163,10 @@ public class NodeSelectedFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        NodeSelectedEvent event_up = new NodeSelectedEvent();
+        event_up.setVoteNodeVOList(actualSelectedNodes);
+        event_up.setEventType(EVENT_UP);
+        EventBusProvider.postSticky(event_up);
         actualSelectedNodes.clear();
     }
 }

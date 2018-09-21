@@ -239,6 +239,9 @@ public class WalletDetailFragment extends XFragment {
             }
         });
         dialog.show();
+        dialog.show();
+        EditText etPasword = dialog.findViewById(R.id.et_password);
+        etPasword.setHint("请输入@" + curWallet.getCurrentEosName() + "的密码");
     }
 
     /**

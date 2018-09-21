@@ -177,7 +177,8 @@ public class TimeStampValidateJob {
                 .getAccountInfo(new JsonCallback<AccountInfo>() {
                     @Override
                     public void onSuccess(Response<AccountInfo> response) {
-                        if (response.body() != null && response.code() != HttpConst.SERVER_INTERNAL_ERR){
+                        if (response != null && response.body() != null && response.code() != HttpConst
+                                .SERVER_INTERNAL_ERR){
                             //已查询到此账户
                             removeAlarmJob();//移除定时器
                             removePollingJob();//移除轮询
@@ -195,12 +196,11 @@ public class TimeStampValidateJob {
                                         //如果时间戳比较还没有成功，需要启动轮询
                                         startValidatePolling(15000, created, account_name, public_key);
                                     }else {
-                                        //todo 如果已成功，表示创建成功
+                                        //如果已成功，表示创建成功
                                         ValidateResultEvent event = new ValidateResultEvent();
                                         event.setSuccess(true);
                                         EventBusProvider.postSticky(event);
                                         removePollingJob();
-
                                     }
                                 }else {
                                     //公钥不在账户中
@@ -212,7 +212,7 @@ public class TimeStampValidateJob {
                             }
 
                         }else if (response.body() != null && response.code() == HttpConst.SERVER_INTERNAL_ERR){
-                            //未查询到此账户
+                            //未查询到此账户,启动查找账户轮询
                             startgetAccountPolling(20000, account_name, public_key);
                         }
 
@@ -374,6 +374,9 @@ public class TimeStampValidateJob {
         }
     }
 
+    /**
+     * 移除轮询
+     */
     private static void removePollingJob() {
         SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
         if (smartScheduler != null && smartScheduler.contains(ParamConstants.POLLING_JOB)) {
@@ -381,6 +384,9 @@ public class TimeStampValidateJob {
         }
     }
 
+    /**
+     * 移除定时任务
+     */
     private static void removeAlarmJob() {
         SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
         if (smartScheduler != null && smartScheduler.contains(ParamConstants.ALARM_JOB)) {

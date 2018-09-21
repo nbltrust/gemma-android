@@ -28,6 +28,7 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
@@ -83,8 +84,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
         start(NodeSelectedFragment.newInstance());
     }
 
-    public static VoteFragment newInstance() {
-        Bundle args = new Bundle();
+    public static VoteFragment newInstance(Bundle args) {
         VoteFragment fragment = new VoteFragment();
         fragment.setArguments(args);
         return fragment;
@@ -133,6 +133,12 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     selectedNodes.addAll(event.getVoteNodeVOList());
                     tvVoteNumber.setText(String.format(getResources().getString(R.string.vote_num),
                             String.valueOf(selectedNodes.size())));
+                    if (selectedNodes.size() == 0){
+                        //从下级页面回退时把所有节点取消了
+                        tvExecVote.setClickable(false);
+                        tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_light));
+                        tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.btn_vote_left_light));
+                    }
                     break;
             }
             mAdapter.notifyDataSetChanged();
@@ -147,19 +153,20 @@ public class VoteFragment extends XFragment<VotePresenter> {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(VoteFragment.this, rootView);
+        setNavibarTitle(getResources().getString(R.string.vote), true, true);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        //加载节点信息
+        getP().fetchBPDetail(ParamConstants.BP_NODE_NUMBERS);
         tvExecVote.setClickable(false);
         inputCount = 0;
-        setNavibarTitle(getResources().getString(R.string.vote), true, true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager
                 .VERTICAL, false);
 
         mRecyclerView.setLayoutManager(layoutManager);
-        getP().fetchBPDetail(ParamConstants.BP_NODE_NUMBERS);
         mRecyclerView.addOnItemTouchListener(new SimpleClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -223,16 +230,16 @@ public class VoteFragment extends XFragment<VotePresenter> {
 
             }
         });
-
-        viewRefresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-            }
-
+        //下拉刷新，上拉加载监听设置
+        viewRefresh.setEnableLoadmore(false);
+        viewRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 getP().fetchBPDetail(ParamConstants.BP_NODE_NUMBERS);
+                selectedNodes.clear();
+                NodeSelectedEvent event = new NodeSelectedEvent();
+                event.setEventType(EVENT_THIS_PAGE);
+                EventBusProvider.post(event);
                 viewRefresh.finishRefresh();
                 viewRefresh.setLoadmoreFinished(true);
             }
@@ -301,9 +308,14 @@ public class VoteFragment extends XFragment<VotePresenter> {
 
     public void hasDelegatedRes(boolean status){
         hasDelegateRes = status;
+        if (hasDelegateRes) {
+            tvExecVote.setText(getString(R.string.title_vote));
+        }else {
+            tvExecVote.setText(getString(R.string.no_avail_votes));
+        }
     }
 
-    public void getTotalDelegatedResource(String total_amount){
+    public void setTotalDelegatedResource(String total_amount){
         tvResource.setText(total_amount);
         /*
         if (EmptyUtils.isNotEmpty(selectedNodes)){
@@ -317,7 +329,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
     }
 
     /**
-     * 显示确认买入授权dialog
+     * 显示投票授权dialog
      */
     private void showConfirmAuthorDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
@@ -370,6 +382,11 @@ public class VoteFragment extends XFragment<VotePresenter> {
             }
         });
         dialog.show();
+        if (getArguments() != null){
+            String eosname = getArguments().getString("cur_eos_name");
+            EditText etPasword = dialog.findViewById(R.id.et_password);
+            etPasword.setHint("请输入@" + eosname + "的密码");
+        }
     }
 
     /**

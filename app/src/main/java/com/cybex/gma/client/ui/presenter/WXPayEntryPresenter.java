@@ -66,7 +66,7 @@ public class WXPayEntryPresenter extends XPresenter<WXPayEntryActivity> {
     public int getRealStatus(String pay_state, String order_state){
         if (pay_state.equals(HttpConst.WXPAY_STATE_NOTPAY) && order_state.equals(HttpConst.WXPAY_STATUS_INIT)){
             //未支付，等待支付
-            return ParamConstants.WX_NOTPAY_WAIT;
+            return ParamConstants.WX_NOTPAY_INIT;
         }else if (pay_state.equals(HttpConst.WXPAY_STATE_NOTPAY) && order_state.equals(HttpConst.WXPAY_STATUS_CLOSED)){
             //订单超时，已关闭
             return ParamConstants.WX_NOTPAY_CLOSED;

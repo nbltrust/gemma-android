@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_wallet_home3x"
+    android:fitsSystemWindows="true"
+
     android:orientation="vertical">
 
     <LinearLayout
@@ -20,6 +22,7 @@
             android:layout_height="@dimen/dp_48"
             android:background="#00ffffff"
             >
+
         </com.hxlx.core.lib.widget.titlebar.view.TitleBar>
 
 
@@ -93,5 +96,5 @@
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
 

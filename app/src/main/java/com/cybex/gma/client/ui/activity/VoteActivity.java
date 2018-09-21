@@ -15,10 +15,12 @@ public class VoteActivity extends XActivity{
 
         @Override
         public void bindUI(View view){
-            if (findFragment(VoteFragment.class) == null) {
-                loadRootFragment(R.id.fl_container_vote, VoteFragment.newInstance());
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null){
+                if (findFragment(VoteFragment.class) == null) {
+                    loadRootFragment(R.id.fl_container_vote, VoteFragment.newInstance(bundle));
+                }
             }
-
             //让布局向上移来显示软键盘
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         }

@@ -26,8 +26,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.Calendar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -72,7 +70,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         LoggerManager.d("Pay status received");
         dissmisProgressDialog();
         switch (event.getStatus()){
-            case ParamConstants.WX_NOTPAY_WAIT:
+            case ParamConstants.WX_NOTPAY_INIT:
                 //未支付，等待支付
                 showUnfinishDialog();
                 break;
@@ -87,13 +85,14 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                 break;
             case ParamConstants.WX_SUCCESS_TOREFUND:
                 //支付完成但订单金额和现在的创建账户金额已经不符，需要退款
+                showOvertimeDialog();
                 break;
             case ParamConstants.WX_REFUND:
                 //已退款
                 break;
             case ParamConstants.WX_CLOSED:
-                showUnfinishDialog();
                 //订单已关闭
+                showUnfinishDialog();
                 break;
             case ParamConstants.WX_USERPAYING:
                 //正在支付

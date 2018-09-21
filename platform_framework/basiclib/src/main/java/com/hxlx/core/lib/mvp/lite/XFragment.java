@@ -3,7 +3,9 @@ package com.hxlx.core.lib.mvp.lite;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -15,12 +17,17 @@ import android.widget.ImageView;
 import com.hxlx.core.lib.R;
 import com.hxlx.core.lib.common.eventbus.BaseEvent;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
+import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.yanzhenjie.sofia.Sofia;
 
+import org.greenrobot.eventbus.Logger;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.lang.reflect.Field;
+import java.util.logging.LogManager;
 
 import me.framework.fragmentation.FragmentSupport;
 
@@ -67,7 +74,7 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
                 viewGroup.removeView(rootView);
             }
         }
-
+        setImmersiveStyle();
         return rootView;
     }
 
@@ -101,6 +108,7 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         mTitleBar.setTitleColor(R.color.ffffff_white_1000);
         mTitleBar.setTitleSize(20);
         mTitleBar.setImmersive(true);
+
         if (isShowBack) {
             mTitleBar.setLeftImageResource(R.drawable.ic_btn_back);
             mTitleBar.setLeftClickListener(new View.OnClickListener() {
@@ -120,10 +128,16 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
      * 设置沉浸状态栏和透明导航栏
      */
     protected void setImmersiveStyle(){
-        Sofia.with(context)
-                .navigationBarBackgroundAlpha(0)
-                .statusBarBackgroundAlpha(0)
-                .invasionStatusBar();
+        //Android P 上的适配
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+            //Android 9.0以上适配
+
+        }else {
+            Sofia.with(context)
+                    .statusBarBackgroundAlpha(0)
+                    .navigationBarBackgroundAlpha(0)
+                    .invasionStatusBar();
+        }
     }
 
     @Override

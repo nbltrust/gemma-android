@@ -5,10 +5,10 @@ public static def increasedVersionCode() {
 
 ext {
     android = [
-            compileSdkVersion: 27,
+            compileSdkVersion: 28,
             buildToolsVersion: "27.0.3",
             minSdkVersion    : 21,
-            targetSdkVersion : 27,
+            targetSdkVersion : 28,
             versionName      : "1.0.0",
             versionCode      : 1
     ]

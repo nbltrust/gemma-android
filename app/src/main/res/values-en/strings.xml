@@ -150,7 +150,7 @@
     <string name="lookAround_import">Look out\nPlease import under secured condition</string>
     <string name="backUp_wallet">Backup</string>
     <string name="backupSafely">Under secured condition\nAirplane mode preferred</string>
-    <string name="showMnemonic">明白了，显示助记词</string>
+    <string name="showMnemonic">Got it. Show me the mnemonic</string>
     <string name="showPriKey">Got it. Show me the private key</string>
     <string name="start_import">Got it. Ready to import.</string>
     <string name="backupLater">Backup later</string>
@@ -389,9 +389,8 @@
     <string name="curwallets">Wallets</string>
     <string name="walletManege">More</string>
 
-
     <string name="click_to_copy">Copy</string>
-    <string name="key_saved">Private key has been saved in security</string>
+    <string name="key_saved">It has been securely saved</string>
 
     <string name="get_inv_from_friend">Request from a friend</string>
     <string name="use_cybex">Via exchange withdraw</string>

@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.fragment.MainTabFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.OSUtils;
 import com.yanzhenjie.sofia.Sofia;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -31,7 +32,6 @@ public class MainTabActivity extends XActivity {
 
         //让布局向上移来显示软键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
     }
 
     @Override
@@ -57,9 +57,6 @@ public class MainTabActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        Sofia.with(this).invasionStatusBar()
-                .navigationBarBackgroundAlpha(0)
-                .statusBarBackgroundAlpha(0);
 
     }
 

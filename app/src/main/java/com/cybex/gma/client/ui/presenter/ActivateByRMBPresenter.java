@@ -4,6 +4,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.OrderIdEvent;
+import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.ui.fragment.ActivateByRMBFragment;
 import com.cybex.gma.client.ui.model.request.WXPayInitialOrderReqParams;
 import com.cybex.gma.client.ui.model.response.WXPayBillResult;
@@ -146,5 +147,14 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                         getV().dissmisProgressDialog();
                     }
                 });
+    }
+
+    /**
+     * 创建账户
+     */
+    public void createAccount(String eos_username, String public_key){
+
+
+        TimeStampValidateJob.executedCreateLogic(eos_username, public_key);
     }
 }
