@@ -198,13 +198,13 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-       WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
-       WalletEntity entity = dao.getCurrentWalletEntity();
-       if(entity!=null&&entity.getWalletType()==1){
-           imvWookongLogo.setVisibility(View.VISIBLE);
-       }else{
-           imvWookongLogo.setVisibility(View.GONE);
-       }
+        WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
+        WalletEntity entity = dao.getCurrentWalletEntity();
+        if (entity != null && entity.getWalletType() == 1) {
+            imvWookongLogo.setVisibility(View.VISIBLE);
+        } else {
+            imvWookongLogo.setVisibility(View.GONE);
+        }
 
         etCollectionAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -455,7 +455,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                 }
 
                             } else {
-                                GemmaToastUtils.showShortToast("当前账户转账出现异常");
+                                GemmaToastUtils.showShortToast(getString(R.string.transfer_error));
                             }
                         }
                         break;
@@ -466,7 +466,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         });
         dialog.show();
         EditText etPasword = dialog.findViewById(R.id.et_password);
-        etPasword.setHint("请输入@" + currentEOSName + "的密码");
+        etPasword.setHint(getString(R.string.transfer_eosname_hint) + currentEOSName + getString(
+                R.string.transfer_eosname_hint_last));
     }
 
     public void clearData() {
