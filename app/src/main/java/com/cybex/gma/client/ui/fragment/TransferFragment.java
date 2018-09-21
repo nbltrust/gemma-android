@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.db.dao.WalletEntityDao;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
@@ -75,6 +76,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @BindView(R.id.iv_transfer_amount_clear) ImageView ivTransferAmountClear;
     @BindView(R.id.tv_note) TextView tvNote;
     @BindView(R.id.iv_transfer_memo_clear) ImageView ivTransferMemoClear;
+    @BindView(R.id.imv_wookong_logo) ImageView imvWookongLogo;
 
     private String maxValue = "";
     private String currentEOSName = "";
@@ -84,8 +86,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     private String memo = "";
 
     @OnClick({R.id.iv_transfer_account_clear, R.id.iv_transfer_amount_clear, R.id.iv_transfer_memo_clear})
-    public void onClearClicked(View v){
-        switch (v.getId()){
+    public void onClearClicked(View v) {
+        switch (v.getId()) {
             case R.id.iv_transfer_account_clear:
                 etCollectionAccount.setText("");
                 break;
@@ -99,19 +101,19 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
     @OnTextChanged(value = R.id.et_amount, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onAmountChanged(){
-        if (EmptyUtils.isNotEmpty(getAmount())){
+    public void onAmountChanged() {
+        if (EmptyUtils.isNotEmpty(getAmount())) {
             ivTransferAmountClear.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ivTransferAmountClear.setVisibility(View.GONE);
         }
     }
 
     @OnTextChanged(value = R.id.et_note, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onNoteChanged(){
-        if (EmptyUtils.isNotEmpty(getNote())){
+    public void onNoteChanged() {
+        if (EmptyUtils.isNotEmpty(getNote())) {
             ivTransferMemoClear.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ivTransferMemoClear.setVisibility(View.GONE);
         }
     }
@@ -163,8 +165,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     validateAmountValue();
                     validateButton();
                     ivTransferAmountClear.setVisibility(View.GONE);
-                }else {
-                    if (EmptyUtils.isNotEmpty(getAmount())){
+                } else {
+                    if (EmptyUtils.isNotEmpty(getAmount())) {
                         ivTransferAmountClear.setVisibility(View.VISIBLE);
                     }
                 }
@@ -197,6 +199,14 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+       WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
+       WalletEntity entity = dao.getCurrentWalletEntity();
+       if(entity!=null&&entity.getWalletType()==1){
+           imvWookongLogo.setVisibility(View.VISIBLE);
+       }else{
+           imvWookongLogo.setVisibility(View.GONE);
+       }
+
         etCollectionAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -204,7 +214,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     if (EmptyUtils.isEmpty(getCollectionAccount())) {
                         tvCollectionAmount.setText(getString(R.string.receiver));
                         tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
-                    }else {
+                    } else {
                         ivTransferAccountClear.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -241,9 +251,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (EmptyUtils.isNotEmpty(getCollectionAccount())){
+                if (EmptyUtils.isNotEmpty(getCollectionAccount())) {
                     ivTransferAccountClear.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     ivTransferAccountClear.setVisibility(View.GONE);
                 }
                 validateButton();
@@ -253,11 +263,11 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         etNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    if (EmptyUtils.isNotEmpty(getNote())){
+                if (hasFocus) {
+                    if (EmptyUtils.isNotEmpty(getNote())) {
                         ivTransferMemoClear.setVisibility(View.VISIBLE);
                     }
-                }else {
+                } else {
                     ivTransferMemoClear.setVisibility(View.GONE);
                 }
             }
@@ -337,15 +347,15 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         return res;
     }
 
-    public String getCollectionAccount(){
+    public String getCollectionAccount() {
         return etCollectionAccount.getText().toString().trim();
     }
 
-    public String getAmount(){
+    public String getAmount() {
         return etAmount.getText().toString().trim();
     }
 
-    public String getNote(){
+    public String getNote() {
         return etNote.getText().toString().trim();
     }
 

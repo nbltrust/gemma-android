@@ -26,11 +26,13 @@ public class ApiPath {
      */
 
     //中心化服务器host
-    public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3001";
+    public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3002";
+    //"http://139.196.73.117:3001"
     //"http://139.196.73.117:3002"微信支付沙盒测试环境
     //"http://139.196.73.117:3001"真实环境
     //链上服务器host
-    public static String HOST_ON_CHAIN = "https://api.eosnewyork.io";
+    public static String HOST_ON_CHAIN = "http://47.75.154.248:50003";
+    //"https://api.eosnewyork.io";
     //http://47.75.154.248:50003 北京团队测试链
     //http://52.77.177.200:8888 cybex eos 主链节点
 
@@ -49,7 +51,9 @@ public class ApiPath {
     /**------------EOS 项目情况配置---------------*/
 
 
-    /**------------URL 地址配置---------------*/
+    /**
+     * ------------URL 地址配置---------------
+     */
     //服务协议
     public static final String TERMS_OF_SERVICE_CN = "https://nebuladownload.oss-cn-beijing.aliyuncs"
             + ".com/gemma/gemma_policy_cn" + ".html";
@@ -75,8 +79,9 @@ public class ApiPath {
     /**------------URL 地址配置---------------*/
 
 
-
-    /**------------节点 地址配置---------------*/
+    /**
+     * ------------节点 地址配置---------------
+     */
 
     public static final String EOS_CYBEX = "http://52.77.177.200:8888";
     public static final String EOS_START_EOS = "http://api-mainnet.starteos.io";
@@ -90,7 +95,9 @@ public class ApiPath {
     public static final String EOS_CYPHER_GLASS = "https://api.cypherglass.com";
     public static final String EOS_TEST_BEIJING = "http://47.75.154.248:50003";
 
-    /**------------节点 地址配置---------------*/
+    /**
+     * ------------节点 地址配置---------------
+     */
 
     public static String getHOST_ON_CHAIN() {
         return HOST_ON_CHAIN;

@@ -47,6 +47,8 @@ public class WalletManageFragment extends XFragment {
     @BindView(R.id.scroll_wallet_manage) ScrollView scrollViewWalletManage;
     @BindView(R.id.recycler_wallet_manage) RecyclerView recyclerViewWalletManage;
     @BindView(R.id.tv_existed_wallet) TextView tvExistedWallet;
+    @BindView(R.id.tv_match_bluetooth) SuperTextView tvMathBluetooth;
+
     Unbinder unbinder;
     private WalletManageListAdapter adapter;
     private final int requestCode = 0;
@@ -101,6 +103,22 @@ public class WalletManageFragment extends XFragment {
         });
 
         setWalletListViewData();
+
+        List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getBluetoothWalletList();
+        if (EmptyUtils.isNotEmpty(list)) {
+            tvMathBluetooth.setVisibility(View.VISIBLE);
+        } else {
+            tvMathBluetooth.setVisibility(View.GONE);
+        }
+
+        tvMathBluetooth.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                UISkipMananger.skipBluetoothPaireActivity(getActivity(), null);
+            }
+        });
+
     }
 
     @Override

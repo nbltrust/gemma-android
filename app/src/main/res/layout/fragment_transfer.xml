@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_ui">
+    android:background="@color/bg_ui"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
 
     <include layout="@layout/ui_navibar"/>
@@ -16,9 +16,9 @@
         android:id="@+id/root_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
         android:layout_below="@id/btn_navibar"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,9 +52,9 @@
                     android:layout_marginLeft="16dp"
                     android:letterSpacing="-0.03"
                     android:text="\ufeff@"
-                    android:textStyle="bold"
                     android:textColor="@color/font_dark_state_blue"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:id="@+id/view_divider"
@@ -67,8 +67,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:layout_toRightOf="@id/view_divider"
+                    android:orientation="horizontal"
                     android:paddingLeft="18dp"
                     >
 
@@ -76,15 +76,15 @@
                         android:id="@+id/et_collection_account"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@null"
                         android:layout_gravity="center_vertical"
-                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:background="@null"
                         android:hint="@string/account_name"
                         android:textColor="@color/font_dark_state_blue"
                         android:textColorHint="#9ea3bd"
-                        android:textSize="16sp"
                         android:textCursorDrawable="@drawable/cursor_custom"
-                        android:layout_weight="1"/>
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
 
                     <ImageView
                         android:id="@+id/iv_transfer_account_clear"
@@ -120,36 +120,44 @@
                         />
 
                     <RelativeLayout
+                        android:id="@+id/view_change_account"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@id/tv_title_pay_account"
                         android:layout_marginTop="14dp">
 
-                        <TextView
-                            android:id="@+id/tv_pay_account"
+                        <ImageView
+                            android:id="@+id/imv_wookong_logo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_marginLeft="16dp"
-                            android:singleLine="true"
-                            android:textStyle="bold"
-                            tools:text="账户1"
-                            android:textColor="@color/darkSlateBlue"
-                            android:textSize="16sp"
-                            />
+                            android:src="@drawable/wookong_logo"
+                            android:visibility="visible"/>
 
                         <TextView
-                            android:id="@+id/tv_banlance"
+                            android:id="@+id/tv_pay_account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="50dp"
+                            android:layout_toRightOf="@id/imv_logo"
+                            android:singleLine="true"
+                            android:textColor="@color/darkSlateBlue"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="账户1"
+                            />
+
+                        <ImageView
+                            android:id="@+id/imv_arrow_change_account"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="12dp"
-                            android:singleLine="true"
-                            android:text="@string/remain_balance_zero"
-                            android:textColor="#535c8a"
-                            android:textSize="14sp"
-                            />
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="8dp"
+                            android:src="@drawable/ic_tab_drop_light_blue"
+                            android:visibility="gone"/>
+
 
                     </RelativeLayout>
 
@@ -179,29 +187,43 @@
                         android:textSize="16sp"
                         />
 
+                    <TextView
+                        android:id="@+id/tv_banlance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="16dp"
+                        android:singleLine="true"
+                        android:text="@string/remain_balance_zero"
+                        android:textColor="#535c8a"
+                        android:textSize="14sp"
+                        />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_below="@id/tv_amount"
                         android:layout_marginBottom="12dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="14dp"
-                        android:layout_below="@id/tv_amount">
+                        android:orientation="horizontal">
 
                         <EditText
                             android:id="@+id/et_amount"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:background="@null"
                             android:hint="@string/transfer_hint"
-                            android:textColorHint="#c6cade"
                             android:inputType="numberDecimal"
                             android:singleLine="true"
                             android:textColor="@color/darkSlateBlue"
-                            android:textSize="16sp"
+                            android:textColorHint="#c6cade"
                             android:textCursorDrawable="@drawable/cursor_custom"
-                            android:layout_weight="1"/>
+                            android:textSize="16sp"/>
 
                         <ImageView
                             android:id="@+id/iv_transfer_amount_clear"
@@ -238,25 +260,25 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_below="@id/tv_note"
                         android:layout_marginBottom="18dp"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp">
+                        android:layout_marginRight="16dp"
+                        android:orientation="horizontal">
 
                         <com.cybex.gma.client.widget.EditTextWithScrollView
                             android:id="@+id/et_note"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:background="@null"
                             android:hint="@string/input_transfer_hint"
-                            android:textColorHint="#c6cade"
                             android:maxLines="3"
                             android:minHeight="50dp"
                             android:textColor="@color/darkSlateBlue"
-                            android:textSize="16sp"
-                            android:layout_weight="1"
-                            android:textCursorDrawable="@drawable/cursor_custom"/>
+                            android:textColorHint="#c6cade"
+                            android:textCursorDrawable="@drawable/cursor_custom"
+                            android:textSize="16sp"/>
 
                         <ImageView
                             android:id="@+id/iv_transfer_memo_clear"
