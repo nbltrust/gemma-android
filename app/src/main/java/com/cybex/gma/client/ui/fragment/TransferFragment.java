@@ -175,8 +175,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
 
     private void validateAmountValue() {
-        String text = String.valueOf(etAmount.getText());
-        if (EmptyUtils.isNotEmpty(text)) {
+        if (EmptyUtils.isNotEmpty(getAmount())){
+            String text = String.valueOf(etAmount.getText());
             LoggerManager.d("input text:" + text);
             DecimalFormat df = new DecimalFormat("00.0000");
             df.setMaximumFractionDigits(4);
@@ -184,7 +184,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             String data = df.format(Double.parseDouble(text));
             etAmount.setText(data);
         }
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
