@@ -1,23 +1,16 @@
 package com.cybex.gma.client.ui.fragment;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
@@ -33,7 +26,6 @@ import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
-import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -47,15 +39,12 @@ import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.cybex.gma.client.utils.encryptation.EncryptationManager;
-import com.cybex.gma.client.widget.MyScrollView;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
-import com.hxlx.core.lib.utils.OSUtils;
 import com.hxlx.core.lib.utils.SPUtils;
-import com.hxlx.core.lib.utils.android.logger.Log;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.common.utils.DateUtil;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -70,7 +59,6 @@ import com.tencent.mm.opensdk.modelmsg.WXTextObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import org.greenrobot.eventbus.Logger;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -82,7 +70,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.hypertrack.smart_scheduler.SmartScheduler;
 import jdenticon.AvatarHelper;
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 /**
  * 钱包Fragment
@@ -184,7 +171,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.superTextView_card_vote)
     public void goToVote() {
-        if (EmptyUtils.isNotEmpty(curWallet)){
+        if (EmptyUtils.isNotEmpty(curWallet)) {
             Bundle bundle = new Bundle();
             bundle.putString("cur_eos_name", curWallet.getCurrentEosName());
             UISkipMananger.launchVote(getActivity(), bundle);
@@ -276,7 +263,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                     long requestOldMills = DateUtil.getMills(requestTime, DateUtil.Format.EOS_DATE_FORMAT);
                     requestOldMills = requestOldMills + 72 * 60 * 60 * 1000;
                     LoggerManager.d("newRequestOldMills", requestOldMills);
-                    String refoundTime = getP().dateDistance2now(requestOldMills, DateUtil.Format.EOS_DATE_FORMAT_WITH_MILLI);
+                    String refoundTime = getP().dateDistance2now(requestOldMills,
+                            DateUtil.Format.EOS_DATE_FORMAT_WITH_MILLI);
 
                     String netAmount = request.net_amount;
                     String netNum = "0";
@@ -473,7 +461,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         });
 
 
-
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)) {
             curEosUsername = curWallet.getCurrentEosName();
@@ -534,15 +521,19 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (getContext() != null){
+                if (getContext() != null) {
                     float dpY = px2dp(getContext(), scrollY);
-                    if (dpY> 14){
-                        curEosUsername = curWallet.getCurrentEosName();
-                        mTitleBar.setTitle(curEosUsername);
-                        TextView title = mTitleBar.getmCenterText();
-                        float alpha =  (dpY * (float) 1.29 + (float) 1.94) / 100;
-                        title.setAlpha(alpha);
-                    }else {
+                    if (dpY > 14) {
+                        if (curWallet != null) {
+                            curEosUsername = curWallet.getCurrentEosName();
+                            mTitleBar.setTitle(curEosUsername);
+                            TextView title = mTitleBar.getmCenterText();
+                            float alpha = (dpY * (float) 1.29 + (float) 1.94) / 100;
+                            title.setAlpha(alpha);
+                        }
+
+
+                    } else {
                         TextView title = mTitleBar.getmCenterText();
                         title.setAlpha(1);
                         mTitleBar.setTitle(getString(R.string.app_name));
@@ -570,7 +561,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         // msg.title = "Will be ignored";
         msg.description = "微信文本分享测试";   // 构造一个Req
         SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction=String.valueOf(System.currentTimeMillis());
+        req.transaction = String.valueOf(System.currentTimeMillis());
         req.message = msg;   // 分享或收藏的目标场景，通过修改scene场景值实现。
         // 发送到聊天界面 —— WXSceneSession
         // 发送到朋友圈 —— WXSceneTimeline
