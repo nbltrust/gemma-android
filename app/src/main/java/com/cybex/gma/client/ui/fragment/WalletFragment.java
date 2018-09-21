@@ -395,28 +395,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 totalPrice = AmountUtil.add(totalResource, banlanceNumber, 4);
             }
 
-
-            /*
-            AccountTotalResources totalResources = info.getTotal_resources();
-            if (totalResources != null) {
-                String netWeight = totalResources.getNet_weight();
-                String cpuWeight = totalResources.getCpu_weight();
-                if (EmptyUtils.isNotEmpty(netWeight)) {
-                    String[] netWeightArr = netWeight.split(" ");
-                    if (EmptyUtils.isNotEmpty(netWeightArr)) {
-                        netNumber = netWeightArr[0];
-                    }
-                }
-
-                if (EmptyUtils.isNotEmpty(cpuWeight)) {
-                    String[] cpuWieghtArr = cpuWeight.split(" ");
-                    if (EmptyUtils.isNotEmpty(cpuWieghtArr)) {
-                        cpuNumber = cpuWieghtArr[0];
-                    }
-                }
-            }
-            */
-
         }
 
 
@@ -435,28 +413,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
                 break;
         }
-
-
-        /*
-        String tempPrice = AmountUtil.add(banlanceNumber, netNumber, 4);
-
-        String totalPrice = AmountUtil.add(tempPrice, cpuNumber, 4);
-        String totalCNY = AmountUtil.mul(unitPrice, totalPrice, 4);
-        String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 4);
-        totalEOSAmount.setText(totalPrice + " EOS");
-        savedCurrency = SPUtils.getInstance().getInt("currency_unit");
-        switch (savedCurrency) {
-            case CacheConstants.CURRENCY_CNY:
-                totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
-                break;
-            case CacheConstants.CURRENCY_USD:
-                totalCNYAmount.setCenterString("≈" + totalUSD + " USD");
-                break;
-            default:
-                totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
-                break;
-        }
-        */
 
     }
 
@@ -677,6 +633,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         if (reslut) {
             LoggerManager.d("Job repeat Removed");
         }
+
+        dissmisProgressDialog();
 
     }
 
