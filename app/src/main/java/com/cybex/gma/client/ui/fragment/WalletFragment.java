@@ -25,6 +25,7 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
+import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
@@ -212,6 +213,14 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         if (EmptyUtils.isNotEmpty(event)) {
             LoggerManager.d("---changeAccount event---");
             getP().requestHomeCombineDataVO();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void onValidateConfirmed(ValidateResultEvent event){
+        if (event.isSuccess()){
+            LoggerManager.d("Alert hided");
+            Alerter.hide();
         }
     }
 

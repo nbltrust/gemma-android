@@ -15,7 +15,7 @@ public interface ApiMethod {
     /**
      * 注册
      */
-    String API_REGISTER = "/api/v1/faucet/new";
+    String API_REGISTER = "/api/v1/account/new";
 
     /**
      * 交易历史

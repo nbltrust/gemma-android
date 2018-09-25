@@ -10,8 +10,11 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.event.WXPayStatusEvent;
+import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.response.WXPayBillResult;
 import com.cybex.gma.client.ui.model.response.WXPayPlaceOrderResult;
 import com.cybex.gma.client.ui.presenter.ActivateByRMBPresenter;
@@ -48,12 +51,15 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     }
 
     private String newPrice;
+    private String orderId = "";
+    private String account_name;
+    private String public_key;
 
     @OnClick(R.id.bt_wechat_pay)
     public void initPayProcess(){
         if (getArguments() != null){
-            String account_name = getArguments().getString("account_name");
-            String public_key = getArguments().getString("public_key");
+            account_name = getArguments().getString("account_name");
+            public_key = getArguments().getString("public_key");
             //String rmbFee = tvRmbAmount.getText().toString().trim();
             getP().getPrepaidInfo(account_name, public_key, newPrice);
         }
@@ -82,6 +88,14 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                 //支付完成
                 AlertUtil.showLongCommonAlert(getActivity(), "支付成功");
                 //todo 调真正创建账户接口
+                LoggerManager.d("orderId", orderId);
+                if (getArguments() != null){
+                    String private_key = getArguments().getString("private_key");
+                    String password = getArguments().getString("password");
+                    String passwordTip = getArguments().getString("passwordTip");
+                    getP().createAccount(account_name, private_key, public_key,
+                            password, orderId, passwordTip);
+                }
                 break;
             case ParamConstants.WX_SUCCESS_TOREFUND:
                 //支付完成但订单金额和现在的创建账户金额已经不符，需要退款
@@ -103,6 +117,17 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                 break;
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onSuccess(ValidateResultEvent event){
+        if (event != null && event.isSuccess()){
+            UISkipMananger.launchHome(getActivity());
+        }
+        if (event != null){
+            dissmisProgressDialog();
+        }
+    }
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
@@ -243,4 +268,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     }
 
 
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 }
