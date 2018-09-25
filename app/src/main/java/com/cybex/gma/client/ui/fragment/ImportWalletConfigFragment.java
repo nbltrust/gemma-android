@@ -623,6 +623,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
                 }
             }
         }
+        //此钱包为新钱包，允许导入
         getP().saveConfigWallet(priKey, getPassword(), getPassHint());
     }
 

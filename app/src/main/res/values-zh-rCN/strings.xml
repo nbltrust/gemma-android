@@ -19,13 +19,13 @@
     <string name="EOS_username_hint">由小写字母a-z与数字1-5组成，须为12个字符</string>
     <string name="password_input_hint">最少8位，建议混合大小写字母、数字及符号</string>
     <string name="repeatPassword_hint">请再次输入您的密码</string>
-    <string name="password_hint_hint">(可选)请输入密码提示</string>
+    <string name="password_hint_hint">请输入密码提示</string>
     <string name="invitation_code">邀请码</string>
     <string name="input_inv_code">请输入邀请码</string>
     <string name="get_invitation">获取邀请码</string>
     <string name="agreement">我已阅读并同意</string>
     <string name="agreement2"><u>服务协议</u></string>
-    <string name="password_hint">密码提示</string>
+    <string name="password_hint">密码提示(可选)</string>
     <string name="password_hint_info">密码提示信息</string>
     <string name="password_input_hint_2">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不存储密码，无法提供密码找回服务</string>
     <string name="security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不储存密码，无法提供密码找回服务</string>

@@ -126,11 +126,13 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
         String str = s.toString();
         int posDot = str.indexOf(".");
-        if (str.length() - posDot - 1 > 4)
-        {
-            s.delete(posDot + 5, posDot + 6);
-            if (!Alerter.isShowing()){
-                AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+        if (posDot >= 0){
+            if (str.length() - posDot - 1 > 4)
+            {
+                s.delete(posDot + 5, posDot + 6);
+                if (!Alerter.isShowing()){
+                    AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+                }
             }
         }
     }
@@ -146,11 +148,13 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
         String str = s.toString();
         int posDot = str.indexOf(".");
-        if (str.length() - posDot - 1 > 4)
-        {
-            s.delete(posDot + 5, posDot + 6);
-            if (!Alerter.isShowing()){
-                AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+        if (posDot >= 0){
+            if (str.length() - posDot - 1 > 4)
+            {
+                s.delete(posDot + 5, posDot + 6);
+                if (!Alerter.isShowing()){
+                    AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+                }
             }
         }
     }
@@ -166,11 +170,13 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
         String str = s.toString();
         int posDot = str.indexOf(".");
-        if (str.length() - posDot - 1 > 4)
-        {
-            s.delete(posDot + 5, posDot + 6);
-            if (!Alerter.isShowing()){
-                AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+        if (posDot >= 0){
+            if (str.length() - posDot - 1 > 4)
+            {
+                s.delete(posDot + 5, posDot + 6);
+                if (!Alerter.isShowing()){
+                    AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+                }
             }
         }
     }
@@ -186,11 +192,13 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
         String str = s.toString();
         int posDot = str.indexOf(".");
-        if (str.length() - posDot - 1 > 4)
-        {
-            s.delete(posDot + 5, posDot + 6);
-            if (!Alerter.isShowing()){
-                AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+        if (posDot >= 0){
+            if (str.length() - posDot - 1 > 4)
+            {
+                s.delete(posDot + 5, posDot + 6);
+                if (!Alerter.isShowing()){
+                    AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+                }
             }
         }
     }

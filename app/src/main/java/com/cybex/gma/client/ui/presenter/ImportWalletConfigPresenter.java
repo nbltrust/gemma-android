@@ -6,6 +6,7 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.InitialActivity;
@@ -105,6 +106,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                             }
                             //最后执行存入操作，此前包此时为当前钱包
                             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
+                            LoggerManager.d("walletSaved");
                             //存入之后执行判断
                             TimeStampValidateJob.executeValidateLogic(curEosName, publicKey);
 

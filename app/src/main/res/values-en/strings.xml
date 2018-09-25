@@ -19,13 +19,13 @@
     <string name="EOS_username_hint">12 characters long: a-z and 1-5</string>
     <string name="password_input_hint">8 or more characters. Prefer a mix of letters, numbers &amp; symbols</string>
     <string name="repeatPassword_hint">Enter password again</string>
-    <string name="password_hint_hint">(optional)</string>
+    <string name="password_hint_hint">Please input password hint</string>
     <string name="invitation_code">Invite code</string>
     <string name="input_inv_code">Enter invite code</string>
     <string name="get_invitation">Get invite code</string>
     <string name="agreement">Agree on </string>
     <string name="agreement2"><u>Terms of Service and Privacy Policy</u></string>
-    <string name="password_hint">Password hint</string>
+    <string name="password_hint">Password hint(optional)</string>
     <string name="password_hint_info">Password hint</string>
     <string name="password_input_hint_2">Password is very important. It\'s used to encrypt your wallets and other
         private data. You are responsible for saving your password carefully. Password can not be recovered if lost.</string>

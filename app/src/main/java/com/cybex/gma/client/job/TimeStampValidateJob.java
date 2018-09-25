@@ -11,8 +11,6 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
-import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.GetBlockReqParams;
 import com.cybex.gma.client.ui.model.request.GetkeyAccountReqParams;
@@ -50,8 +48,8 @@ public class TimeStampValidateJob {
     private static final int TIMESTAMP = 1;
     private static final int CREATED = 2;
 
-    private static final int OPERATION_CREATE = 0;
-    private static final int OPERATION_IMPORT = 1;
+    private static final int OPERATION_CREATE = 1;
+    private static final int OPERATION_IMPORT = 2;
 
     private static final int FAIL_OVERTIME = 2;
     private static final int FAIL_EMPTY_ACCOUNT = 3;
@@ -59,52 +57,6 @@ public class TimeStampValidateJob {
 
     private static final String ACTIVE_KEY = "active";
     private static final String OWNER_KEY = "owner";
-
-    public static void setStopAlarmForPolling(int waitTime){
-        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
-        if (smartScheduler.contains(ParamConstants.ALARM_JOB)) {
-            smartScheduler.removeJob(ParamConstants.ALARM_JOB);
-        }
-        SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
-            @Override
-            public void onJobScheduled(Context context, Job job) {
-                LoggerManager.d("alarm executed");
-                removePollingJob();
-                //todo 失败，查询数据库中是否有其他钱包
-                ValidateResultEvent event = new ValidateResultEvent();
-                event.setFail_type(FAIL_OVERTIME);
-                EventBusProvider.postSticky(event);
-            }
-
-        };
-
-        Job job = JobUtils.createAlarmJob(ParamConstants.ALARM_JOB, callback, waitTime);
-        smartScheduler.addJob(job);
-    }
-
-    /**
-     * 开启一次获取账户信息轮询
-     * 时间单位毫秒
-     */
-    public static void startgetAccountPolling(int intervalTime, String account_name, String public_key) {
-        //设置一个两分钟的Alarm，定时取消轮询
-
-        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
-        if (!smartScheduler.contains(ParamConstants.POLLING_JOB)) {
-            setStopAlarmForPolling(120000);
-            SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
-                @Override
-                public void onJobScheduled(Context context, Job job) {
-                    LoggerManager.d("get account polling executed");
-                    getAccount(account_name, public_key, false);
-                }
-
-            };
-
-            Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, intervalTime);
-            smartScheduler.addJob(job);
-        }
-    }
 
     /**
      * 开启一次比较时间戳验证轮询
@@ -170,7 +122,7 @@ public class TimeStampValidateJob {
      * @param public_key
      * @param isSuccess 时间戳比较是否已经成功
      */
-    public static void getAccount(String account_name, String public_key, boolean isSuccess){
+    public static void getAccountCreate(String account_name, String public_key, boolean isSuccess){
         GetAccountInfoReqParams params = new GetAccountInfoReqParams();
         params.setAccount_name(account_name);
 
@@ -194,7 +146,7 @@ public class TimeStampValidateJob {
                                     //检查active key中是否是此公钥
                                     if (isBeanContainsPublicKey(permission, public_key)) {
                                         //如果公钥在账户中,创建成功
-                                        LoggerManager.d("create success");
+                                        LoggerManager.d("create or import success");
 
                                         //更改当前钱包状态
                                         WalletEntity successWallet = DBManager.getInstance().getWalletEntityDao()
@@ -202,6 +154,7 @@ public class TimeStampValidateJob {
                                         successWallet.setIsConfirmLib(CacheConstants.IS_CONFIRMED);
                                         DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(successWallet);
 
+                                        //Post成功事件
                                         ValidateResultEvent event_success = new ValidateResultEvent();
                                         event_success.setSuccess(true);
                                         EventBusProvider.postSticky(event_success);
@@ -217,50 +170,6 @@ public class TimeStampValidateJob {
                             }
                         }
 
-
-
-                        /*
-                        if (response != null && response.body() != null && response.code() != HttpConst
-                                .SERVER_INTERNAL_ERR){
-                            //已查询到此账户
-                            removeAlarmJob();//移除定时器
-                            removePollingJob();//移除轮询
-                            AccountInfo info = response.body();
-                            LoggerManager.d("account_info", info);
-                            //获取此账户的创建时间戳
-                            final String created = info.getCreated();
-                            //检查公钥是否在结构体里
-                            List<AccountInfo.PermissionsBean> permissions = info.getPermissions();
-                            for (AccountInfo.PermissionsBean permission : permissions){
-                                //检查active key中是否是此公钥
-                                if (isBeanContainsPublicKey(permission, public_key)){
-                                    //如果公钥在账户中
-                                    if (!isSuccess){
-                                        //如果时间戳比较还没有成功，需要启动轮询
-                                        startValidatePolling(15000, created, account_name, public_key);
-                                    }else {
-                                        //如果已成功，表示创建成功
-                                        ValidateResultEvent event = new ValidateResultEvent();
-                                        event.setSuccess(true);
-                                        EventBusProvider.postSticky(event);
-                                        removePollingJob();
-                                    }
-                                }else {
-                                    //公钥不在账户中
-                                    //todo 失败，弹框提示账户名已被使用，查询数据库中是否有其他钱包
-                                    ValidateResultEvent event = new ValidateResultEvent();
-                                    event.setFail_type(FAIL_USERNAME_USED);
-                                    EventBusProvider.postSticky(event);
-                                }
-
-
-                            }
-
-                        }else if (response.body() != null && response.code() == HttpConst.SERVER_INTERNAL_ERR){
-                            //未查询到此账户,启动查找账户轮询
-                            startgetAccountPolling(20000, account_name, public_key);
-                        }
-                        */
                     }
 
                     @Override
@@ -331,11 +240,11 @@ public class TimeStampValidateJob {
                                     String laterTimestamp = getLaterTimeStamp(timestamp, created);
                                     if (laterTimestamp.equals(timestamp)){
                                         //比较成功
-                                        getAccount(account_name, public_key, true);
+                                        getAccountCreate(account_name, public_key, true);
                                         removePollingJob();
                                     }else {
                                         //失败，轮询
-                                        startValidatePolling(10000, created, account_name, public_key );
+                                        startValidatePolling(10000, created, account_name, public_key);
                                     }
                                 }
                             } catch (JSONException e) {
@@ -430,10 +339,18 @@ public class TimeStampValidateJob {
     }
 
     public static void executeValidateLogic(String account_name, String public_key){
-        getAccount(account_name, public_key, false);
+        getAccountCreate(account_name, public_key, false);
     }
 
     public static void executedCreateLogic(String account_name, String public_key){
-        getAccount(account_name, public_key, false);
+        getAccountCreate(account_name, public_key, false);
     }
+
+    public static void executeImportLogic(String public_key){
+        getKeyAccounts(public_key);
+    }
+
+
+
+
 }
