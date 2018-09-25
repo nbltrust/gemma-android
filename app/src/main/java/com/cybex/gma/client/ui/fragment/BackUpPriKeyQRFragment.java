@@ -54,7 +54,9 @@ public class BackUpPriKeyQRFragment extends XFragment {
             curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
         }
-        UISkipMananger.launchVerifyPriKey(getActivity());
+        Bundle bundle = new Bundle();
+        bundle.putString("private_key", priKey);
+        UISkipMananger.launchVerifyPriKey(getActivity(), bundle);
     }
 
     public static BackUpPriKeyQRFragment newInstance() {

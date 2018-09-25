@@ -41,7 +41,7 @@
         android:layout_marginEnd="@dimen/dimen_66"
         />
 
-
+    <!--
     <View
         android:background="@color/greyish_brown"
         android:layerType="software"
@@ -50,7 +50,7 @@
         android:layout_height="1dp">
 
     </View>
-
+    -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

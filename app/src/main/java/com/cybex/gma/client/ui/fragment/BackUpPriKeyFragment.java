@@ -60,7 +60,9 @@ public class BackUpPriKeyFragment extends XFragment {
             curWallet.setIsBackUp(CacheConstants.ALREADY_BACKUP);
             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
         }
-        UISkipMananger.launchVerifyPriKey(getActivity());
+        Bundle bundle = new Bundle();
+        bundle.putString("private_key", key);
+        UISkipMananger.launchVerifyPriKey(getActivity(), bundle);
     }
 
     public static BackUpPriKeyFragment newInstance() {
@@ -75,11 +77,19 @@ public class BackUpPriKeyFragment extends XFragment {
         return true;
     }
 
+    /**
+     * 获取私钥
+     * @param message
+     */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void getKey(KeySendEvent message) {
         key = message.getKey();
     }
 
+    /**
+     * 获取当前钱包ID
+     * @param message
+     */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void getID(WalletIDEvent message) {
         walletID = message.getWalletID();

@@ -293,7 +293,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                                 String jsonStr = response.body();
                                 //停留在投票页面，更新数据
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
-                                getTotalDelegatedRes();
+                                fetchBPDetail(ParamConstants.BP_NODE_NUMBERS);
                             }
                         }
                     }

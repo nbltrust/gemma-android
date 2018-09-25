@@ -13,17 +13,6 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_mask_close"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="24dp"
-        android:textColor="@color/darkSlateBlue"
-        android:lineSpacingExtra="2sp"
-        android:text="@string/refund_detail"
-        />
-
     <LinearLayout
         android:background="@drawable/bg_shape_radius_white"
         android:layout_width="match_parent"

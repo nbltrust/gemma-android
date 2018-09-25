@@ -12,4 +12,13 @@ public class WXPayStatusEvent {
 
     private int status;
 
+    private boolean isUsed;
+
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
+    }
 }

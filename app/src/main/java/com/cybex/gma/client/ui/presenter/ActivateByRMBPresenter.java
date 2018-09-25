@@ -89,6 +89,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
 
                                 String curRMBPrice = resultBean.getRmb_price();
                                 getV().setNewPrice(curRMBPrice);
+
                                 if (!curRMBPrice.equals(rmbPrice)){
                                     //价格已变动，提醒用户
                                     getV().dissmisProgressDialog();
@@ -235,7 +236,6 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
             final String publicKey, final String privateKey, final String
             password, final String eosUsername, final String passwordTip,
             final String txId, final String invCode) {
-
 
         WalletEntity walletEntity = new WalletEntity();
         List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();

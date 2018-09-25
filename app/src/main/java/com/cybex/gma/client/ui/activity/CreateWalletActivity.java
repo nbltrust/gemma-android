@@ -25,7 +25,6 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
 import com.cybex.gma.client.utils.AlertUtil;

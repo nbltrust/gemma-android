@@ -4,6 +4,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
@@ -84,10 +85,10 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
 
                     @Override
                     public void onSuccess(Response<GetKeyAccountsResult> response) {
-                        getV().dissmisProgressDialog();
+                        //getV().dissmisProgressDialog();
 
                         if (response != null && response.body() != null && EmptyUtils.isNotEmpty(
-                                response.body().account_names)) {
+                                response.body().account_names) && getV() != null) {
                             GetKeyAccountsResult result = response.body();
                             List<String> account_names = result.account_names;
                             final String curEosName = account_names.get(0);
@@ -104,13 +105,19 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                             }
                             //最后执行存入操作，此前包此时为当前钱包
                             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
+                            //存入之后执行判断
+                            TimeStampValidateJob.executeValidateLogic(curEosName, publicKey);
+
+                            /*
                             //销毁当前Activity
                             AppManager.getAppManager().finishActivity();
                             AppManager.getAppManager().finishActivity(InitialActivity.class);
                             AppManager.getAppManager().finishActivity(ManageWalletActivity.class);
                             UISkipMananger.launchHomeSingle(getV().getActivity());
+                            */
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.import_wallet_failed));
+                            getV().dissmisProgressDialog();
                         }
                     }
                 });

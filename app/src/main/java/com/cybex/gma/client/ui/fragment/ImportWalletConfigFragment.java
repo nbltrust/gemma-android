@@ -19,14 +19,19 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.ApiPath;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.ui.presenter.ImportWalletConfigPresenter;
+import com.cybex.gma.client.utils.AlertUtil;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -36,6 +41,10 @@ import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
+import com.tapadoo.alerter.Alerter;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import java.util.Locale;
@@ -409,6 +418,43 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     }
 
     /**
+     * 最终导入结果判定
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onValidateStatusConfirmed(ValidateResultEvent event){
+        if (event != null){
+            dissmisProgressDialog();
+            if (event.isSuccess()){
+                //导入成功
+                AlertUtil.showLongCommonAlert(getActivity(), getString(R.string.import_wallet_success));
+                AppManager.getAppManager().finishAllActivity();
+                UISkipMananger.launchHomeSingle(getActivity());
+            }else {
+                //导入失败
+                AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.import_wallet_failed));
+                //删除已存入钱包
+                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
+                List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
+
+                if (EmptyUtils.isEmpty(list)){
+                    //已经没有钱包了
+                    AppManager.getAppManager().finishAllActivity();
+                    UISkipMananger.launchGuide(getActivity());
+                }else {
+                    //还有钱包，更新当前钱包为最后一个钱包
+                    WalletEntity newCurWallet = list.get(list.size() - 1);
+                    newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+                    DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(newCurWallet);
+                    AppManager.getAppManager().finishAllActivity();
+                    UISkipMananger.launchHomeSingle(getActivity());
+                }
+            }
+        }
+    }
+
+    /**
      * 输入框空判断
      *
      * @return
@@ -555,6 +601,11 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         edtSetPass.setOnFocusChangeListener(null);
         edtRepeatPass.setOnFocusChangeListener(null);
         checkboxConfig.setOnCheckedChangeListener(null);
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 
     @Override
