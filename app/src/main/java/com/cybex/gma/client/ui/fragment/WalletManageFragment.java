@@ -104,12 +104,6 @@ public class WalletManageFragment extends XFragment {
 
         setWalletListViewData();
 
-        List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getBluetoothWalletList();
-        if (EmptyUtils.isNotEmpty(list)) {
-            tvMathBluetooth.setVisibility(View.VISIBLE);
-        } else {
-            tvMathBluetooth.setVisibility(View.GONE);
-        }
 
         tvMathBluetooth.setOnClickListener(new View.OnClickListener() {
 

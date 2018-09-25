@@ -100,7 +100,7 @@
             <com.allen.library.SuperTextView
                 android:id="@+id/tv_match_bluetooth"
                 style="@style/card_style"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="@dimen/dimen_10"
