@@ -54,6 +54,12 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
     private final int OPERATION_DELEGATE = 1;
     private final int OPERATION_UNDELEGATE = 2;
+
+    private final int STATUS_ZERO = 3;
+    private final int STATUS_EXCEED = 4;
+    private final int STATUS_VALID = 5;
+    private final int STATUS_UNKNOW_ERR = 6;
+
     private int inputCount;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_cpu_amount) SuperTextView superTextViewCpuAmount;
@@ -83,10 +89,23 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     public void showDialog() {
         if (EmptyUtils.isNotEmpty(resourceInfoVO)){
             Double balance = Double.parseDouble(resourceInfoVO.getBanlance().split(" ")[0]);
-            if (validateAmount(getDelegateCpu(), getunDelegateNet(), balance)){
-                showConfirmDelegateiDialog();
-            }else {
-                AlertUtil.showShortUrgeAlert(this, getString(R.string.tip_balance_not_enough));
+            int status = validateAmount(getDelegateCpu(), getDelegateNet(), balance);
+            switch (status){
+                case STATUS_VALID:
+                    showConfirmDelegateiDialog();
+                    break;
+                case STATUS_EXCEED:
+                    //超过余额上限
+                    AlertUtil.showShortUrgeAlert(this, getString(R.string.tip_balance_not_enough));
+                    break;
+                case STATUS_ZERO:
+                    //输入为零
+                    AlertUtil.showShortUrgeAlert(this, getString(R.string.tip_cant_input_zero));
+                    break;
+                case STATUS_UNKNOW_ERR:
+                    AlertUtil.showShortUrgeAlert(this, getString(R.string.unknow_err));
+                    break;
+
             }
         }
     }
@@ -414,18 +433,21 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                     tv_note.setText(String.format(getResources().getString(R.string.delegate_memo),
                             AmountUtil.round(getDelegateCpu(), 4),
                             AmountUtil.round(getDelegateNet() , 4)));
-                }else if (EmptyUtils.isEmpty(getDelegateCpu())){
-                    //抵押的CPU输入为空
+                }else if (EmptyUtils.isEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+                    //抵押的CPU输入为空,NET不为空
                     totalAmount = AmountUtil.round(getDelegateNet(), 4);
                     tv_note.setText(String.format(getResources().getString(R.string.delegate_memo),
                             "0.0000",
                             AmountUtil.round(getDelegateNet() , 4)));
-                }else{
+                }else if(EmptyUtils.isEmpty(getDelegateNet()) && EmptyUtils.isNotEmpty(getDelegateCpu())){
                     //抵押的NET输入为空
                     totalAmount = AmountUtil.round(getDelegateCpu(), 4);
                     tv_note.setText(String.format(getResources().getString(R.string.delegate_memo),
                             AmountUtil.round(getDelegateCpu(), 4),
                             "0.0000"));
+                }else {
+                    //两者输入都为空
+                    totalAmount = "0.0000";
                 }
                 String showAmount = totalAmount + " EOS";
                 tv_amount.setText(showAmount);
@@ -478,18 +500,21 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                     tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo),
                             AmountUtil.round(getUndelegateCpu(), 4),
                             AmountUtil.round(getunDelegateNet(), 4)));
-                }else if (EmptyUtils.isEmpty(getUndelegateCpu())){
-                    //解除抵押CPU输入为空
+                }else if (EmptyUtils.isEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
+                    //解除抵押CPU输入为空, NET不为空
                     totalAmount = AmountUtil.round(getunDelegateNet(), 4);
                     tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo),
                             "0.0000",
                             AmountUtil.round(getunDelegateNet(), 4)));
-                }else {
-                    //解除抵押NET输入为空
+                }else if (EmptyUtils.isEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())){
+                    //解除抵押NET输入为空， CPU不为空
                     totalAmount = AmountUtil.round(getUndelegateCpu(), 4);
                     tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo),
                             AmountUtil.round(getUndelegateCpu(), 4),
                             "0.0000"));
+                }else {
+                    //两者都为空
+                    totalAmount = "0.0000";
                 }
 
                 String showAmount = totalAmount + " EOS";
@@ -692,25 +717,42 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         }
     }
 
-    public boolean validateAmount(String cpuInput, String netInput, Double maxValue){
+    /**
+     * cpu和net输入阈值判断
+     * @param cpuInput
+     * @param netInput
+     * @param maxValue
+     * @return
+     */
+    public int validateAmount(String cpuInput, String netInput, Double maxValue){
         String totalAmount;
         if (EmptyUtils.isNotEmpty(cpuInput) && EmptyUtils.isNotEmpty(netInput)){
             //CPU和NET输入都不为空
             totalAmount = AmountUtil.add(cpuInput, netInput,4);
-        }else if (EmptyUtils.isEmpty(cpuInput)){
+        }else if (EmptyUtils.isEmpty(cpuInput) && EmptyUtils.isNotEmpty(netInput)){
             //CPU输入空
             totalAmount = AmountUtil.round(netInput, 4);
-        }else {
+        }else if (EmptyUtils.isEmpty(netInput) && EmptyUtils.isNotEmpty(cpuInput)){
             //NET输入空
             totalAmount = AmountUtil.round(cpuInput, 4);
+        }else {
+            totalAmount = "0.0000";
         }
 
         try{
             Double sum = Double.parseDouble(totalAmount);
-            if (sum <= maxValue)return true;
+            if (sum <= maxValue && sum > 0){
+                return STATUS_VALID;
+            }
+            else if (sum > maxValue){
+                return STATUS_EXCEED;
+            }
+            else {
+                return STATUS_ZERO;
+            }
         }catch (NumberFormatException e){
             e.printStackTrace();
         }
-        return false;
+        return STATUS_UNKNOW_ERR;
     }
 }

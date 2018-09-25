@@ -42,7 +42,7 @@
             android:id="@+id/iv_dot_one"
             android:layout_width="@dimen/dimen_10"
             android:layout_height="@dimen/dimen_10"
-            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_14"
             android:background="@drawable/ic_dot_red"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

@@ -37,6 +37,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -367,6 +369,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                                     for(VoteNodeVO vo : selectedNodes){
                                         producers.add(vo.getAccount());
                                     }
+                                    Collections.sort(producers);
                                     getP().executeVoteLogic(curEOSName, producers, key);
                                     dialog.cancel();
                                 }

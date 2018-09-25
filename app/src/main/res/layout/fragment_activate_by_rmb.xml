@@ -95,7 +95,7 @@
     </android.support.constraint.ConstraintLayout>
 
    <LinearLayout
-       android:layout_width="@dimen/dimen_150"
+       android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_marginTop="@dimen/dimen_60"
        android:layout_gravity="center"
@@ -107,7 +107,8 @@
            android:textColor="@color/darkSlateBlue"
            android:text="@string/tip_need_to_pay"
            android:textSize="@dimen/font_3.5"
-           android:layout_gravity="center"/>
+           android:layout_gravity="center"
+           android:gravity="center"/>
 
        <TextView
            android:id="@+id/tv_rmb_amount"
@@ -118,7 +119,8 @@
            android:text="-- RMB"
            android:textSize="28sp"
            android:textStyle="bold"
-           android:layout_gravity="center"/>
+           android:layout_gravity="center"
+           android:gravity="center"/>
 
    </LinearLayout>
 

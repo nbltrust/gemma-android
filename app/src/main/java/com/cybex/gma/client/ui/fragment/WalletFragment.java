@@ -63,6 +63,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -454,9 +456,11 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             String curHost = SPUtils.getInstance().getString("curNode");
             LoggerManager.d("curNode", curHost);
             ApiPath.setHOST_ON_CHAIN(curHost);
+        }else {
+            SPUtils.getInstance().put("curNode", ApiPath.EOS_CYBEX);
         }
+
         LoggerManager.d("host", ApiPath.HOST_ON_CHAIN);
-        //getP().requestHomeCombineDataVO();
         AppManager.getAppManager().finishActivity(CreateManageActivity.class);
         textViewBackupWallet.setVisibility(View.VISIBLE);
         //下拉刷新
@@ -550,7 +554,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 }
             }
         });
-
     }
 
     /**

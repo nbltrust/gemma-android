@@ -312,8 +312,8 @@ public final class UISkipMananger {
      * 跳转到验证私钥页面
      * @param mContext
      */
-    public static void launchVerifyPriKey(Activity mContext){
-        launchIntent(mContext, VerifyPriKeyActivity.class);
+    public static void launchVerifyPriKey(Activity mContext, Bundle bundle){
+        launchIntent(mContext, VerifyPriKeyActivity.class, bundle);
     }
 
 

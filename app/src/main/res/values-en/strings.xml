@@ -300,18 +300,16 @@
 
     <!-- Creating Wallet fragment -->
     <string name="backupHint">The private key is the identity of your assets. Please backup it as soon as possible. So you can recover your assets even accidents happened like phone lost, password forgotten, etc.</string>
-    <string name="backupYourMne">请记下你的钱包私钥助记词并保存在安全的地方</string>
-    <string name="backupHint2">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
 
     <!-- Base WebView-->
-    <string name="fast_web_alert_title">温馨提示</string>
-    <string name="fast_web_alert_msg">您确定要关闭该页面吗?</string>
-    <string name="fast_web_alert_left">再逛逛</string>
-    <string name="fast_web_alert_right">关闭</string>
-    <string name="fast_loading">加载中...</string>
-    <string name="fast_cancel">取消</string>
-    <string name="fast_load_more_load_end">没有更多数据</string>
-    <string name="fast_load_more_load_failed">加载失败,请点我重试</string>
+    <string name="fast_web_alert_title">Tips</string>
+    <string name="fast_web_alert_msg">Are you sure to leave?</string>
+    <string name="fast_web_alert_left">Stay</string>
+    <string name="fast_web_alert_right">Close</string>
+    <string name="fast_loading">Loading...</string>
+    <string name="fast_cancel">Cancel</string>
+    <string name="fast_load_more_load_end">No more data</string>
+    <string name="fast_load_more_load_failed">Load fail, click to retry</string>
     <string name="fast_load_more_loading">Loading...</string>
 
     <!-- Permission Manage-->
@@ -466,26 +464,38 @@
 
     <!-- 账户激活 -->
     <string name="title_choose_activate_method">Choose a way to activate</string>
-    <string name="tab_title_activate_by_RMB">Activate by RMB</string>
-    <string name="tab_title_activate_by_friend">Activate by friend</string>
-    <string name="tab_title_activate_by_exchanges">Activate by exchange</string>
-    <string name="tab_title_activate_by_invCode">Activate by invite code</string>
+    <string name="tab_title_activate_by_RMB">By RMB</string>
+    <string name="tab_title_activate_by_friend">By friend</string>
+    <string name="tab_title_activate_by_exchanges">By exchange</string>
+    <string name="tab_title_activate_by_invCode">By invite code</string>
     <string name="tip_activate_by_rmb">You need to pay for resources like CPU, NET and RAM in order to activate your
         account</string>
     <string name="tip_need_to_pay">Fee</string>
     <string name="wechat_pay">Wechat Pay</string>
-    <string name="tip_backup_prikey_friend">请务必备份私钥，待好友转账激活后，须将私钥再次导入钱包以使用EOS账户。私钥若丢失，账户将不可恢复。</string>
-    <string name="tip_backup_prikey_exchange">请务必备份私钥，待交易所提现激活后，须将私钥再次导入钱包以使用EOS账户。私钥若丢失，账户将不可恢复。</string>
-    <string name="tip_activate_by_friend">请持有EOS的好友向智能合约signupeoseos转账并将以下文字作为备注(memo)，即可完成账户创建。</string>
-    <string name="tip_activate_by_exchange_part_one">请从支持memo功能的交易所向智能合约 </string>
-    <string name="tip_activate_by_exchange_part_two">signupeoseos </string>
-    <string name="tip_activate_by_exchange_part_three"><Data><![CDATA[转账<font color = "#426bd4">并将以下文字作为备注(memo)
-    </font>]]></Data>，即可完成账户创建。</string>
 
-    <string name="tip_activate_by_friend_part_one">请持有EOS的好友向智能合约 </string>
+
+    <string name="tip_backup_prikey_friend">Please make sure to back up your private key, when your friend finishes the transfer, you will need to import the
+    private key into Gemma once again to use your account. Account can not be restored if the private key was lost.</string>
+    <string name="tip_backup_prikey_exchange">Please make sure to back up your private key, when your finish the transfer at any exchange that support memo, you
+    will need to import the private key into Gemma once again to use your account. Account can not be restored if the private key was lost.</string>
+
+    <string name="tip_activate_by_exchange_part_one">Please transfer in any exchange that support memo into smart contract </string>
+    <string name="tip_activate_by_exchange_part_two">signupeoseos </string>
+    <string name="tip_activate_by_exchange_part_three"><Data><![CDATA[and<font color = "#426bd4">use words followed as memo
+    </font>]]></Data>，to finish creating.</string>
+
+    <string name="tip_activate_by_friend_part_one">Please let your friend transfer into smart contract </string>
     <string name="tip_activate_by_friend_part_two">signupeoseos </string>
-    <string name="tip_activate_by_friend_part_three"><Data><![CDATA[转账<font color = "#426bd4">并将以下文字作为备注(memo)
-    </font>]]></Data>，即可完成账户创建。</string>
+    <string
+        name="tip_activate_by_friend_part_three"><Data><![CDATA[and<font color = "#426bd4">use words followed as memo
+    </font>]]></Data>，to finish creating.</string>
+
+    <string
+        name="tip_use_eos_to_activate"><Data><![CDATA[In order to create your account, please transfer at least<font color="#426bd4"> 2 EOS </font>
+        ：your account will delegate <font color = "#426bd4"> 0.1 EOS</font>
+        for CPU，<font color = "#426bd4"> 0.1 EOS</font> for NET，
+        the remaining<font color="#426bd4"> 1.8 EOS </font>will be used for purchasing RAM at current
+        price。]]></Data></string>
 
     <string name="click_to_copy_priKey">copy</string>
     <string name="activate">Activate</string>
@@ -504,11 +514,16 @@
     <string name="cancel_cn">Cancel</string>
     <string name="confirm_payment">Confirm Pay</string>
     <string name="verify">Verify</string>
+    <string name="verify_priKey">Verify Private Key</string>
     <string name="tip_verify_prikey">Please enter your private key to verify</string>
     <string name="memo_copied">Memo copied</string>
     <string name="verifying_account">verifying if account name is usable</string>
     <string name="tip_check_network">Failed，please check network</string>
     <string name="tip_username_valid">Congrats, eos username is usable</string>
+    <string name="import_wallet_success">Import Wallet Done</string>
+    <string name="create_fail">Create fail, the account name has been taken by another user</string>
+    <string name="tip_cant_input_zero">CPU and NET can not all be zero</string>
+    <string name="unknow_err">Unknown Error</string>
 
 
 

@@ -490,6 +490,7 @@
     <string name="cancel_cn">取消</string>
     <string name="confirm_payment">确认支付</string>
     <string name="verify">验证</string>
+    <string name="verify_priKey">验证私钥</string>
     <string name="tip_verify_prikey">请输入备份的私钥，已验证是否正确</string>
 
     <string name="tip_eos_amount_format_invalid">请最多输入四位小数点位数</string>
@@ -497,6 +498,10 @@
     <string name="verifying_account">正在验证账户名是否可用</string>
     <string name="tip_check_network">创建失败，请检查网络，已登陆用户请切换节点</string>
     <string name="tip_username_valid">恭喜，账户名可以使用</string>
+    <string name="create_fail">创建失败，该eos账户名已被其他用户抢注</string>
+    <string name="import_wallet_success">导入成功</string>
+    <string name="tip_cant_input_zero">CPU和NET不能都为零</string>
+    <string name="unknow_err">未知错误</string>
 
     <!-- EOS Err Code-->
 

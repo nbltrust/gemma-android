@@ -61,6 +61,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
         <!-- 主TAB界面 -->

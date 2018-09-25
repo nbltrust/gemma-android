@@ -184,7 +184,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_10"
                         android:layout_weight="1"
-                        android:text="@string/delegate"
+                        android:text="@string/operation"
                         android:textColor="@color/steel"
                         android:textSize="@dimen/font_3.5"/>
 
