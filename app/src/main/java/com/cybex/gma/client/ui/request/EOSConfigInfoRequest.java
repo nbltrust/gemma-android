@@ -20,7 +20,7 @@ public class EOSConfigInfoRequest extends GMAHttpRequest {
      */
     public EOSConfigInfoRequest(Class clazz) {
         super(clazz);
-        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_INFO);
+        setMethod(ApiPath.getHOST_ON_CHAIN() + ApiMethod.API_GET_INFO);
     }
 
 

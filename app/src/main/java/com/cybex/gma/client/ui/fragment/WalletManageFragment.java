@@ -230,16 +230,18 @@ public class WalletManageFragment extends XFragment {
                         //把thisWallet设置为当前Wallet
 
                         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                        curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-                        thisWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-                        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
-                        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(thisWallet);
-                        adapter.notifyDataSetChanged();
-                        TabSelectedEvent event = new TabSelectedEvent();
-                        event.setPosition(0);
-                        event.setRefresh(true);
-                        EventBusProvider.postSticky(event);
-                        UISkipMananger.launchHome(getActivity());
+                        if (curWallet != null && thisWallet != null){
+                            curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+                            thisWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+                            DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
+                            DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(thisWallet);
+                            adapter.notifyDataSetChanged();
+                            TabSelectedEvent event = new TabSelectedEvent();
+                            event.setPosition(0);
+                            event.setRefresh(true);
+                            EventBusProvider.postSticky(event);
+                            UISkipMananger.launchHome(getActivity());
+                        }
                     }
                 }
             }

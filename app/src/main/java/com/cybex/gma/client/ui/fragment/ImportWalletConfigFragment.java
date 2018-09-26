@@ -427,9 +427,11 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             dissmisProgressDialog();
             if (event.isSuccess()){
                 //导入成功
-                AlertUtil.showLongCommonAlert(getActivity(), getString(R.string.import_wallet_success));
-                AppManager.getAppManager().finishAllActivity();
-                UISkipMananger.launchHomeSingle(getActivity());
+                if (getArguments() != null){
+                    final String private_key = getArguments().getString("priKey");
+                    getP().saveConfigWallet(private_key, getPassword(), getPassHint());
+                    AlertUtil.showLongCommonAlert(getActivity(), getString(R.string.import_wallet_success));
+                }
             }else {
                 //导入失败
                 AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.import_wallet_failed));
@@ -624,7 +626,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             }
         }
         //此钱包为新钱包，允许导入
-        getP().saveConfigWallet(priKey, getPassword(), getPassHint());
+        getP().getKeyAccounts(pubKey);
     }
 
     @Override

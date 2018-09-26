@@ -26,11 +26,11 @@ public class ApiPath {
      */
 
     //中心化服务器host
-    public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3002";
+    public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3001";
     //"http://139.196.73.117:3002"微信支付沙盒测试环境
     //"http://139.196.73.117:3001"真实环境
     //链上服务器host
-    public static String HOST_ON_CHAIN = "http://47.75.154.248:50003";
+    private static String HOST_ON_CHAIN = "http://52.77.177.200:8888";
     //http://47.75.154.248:50003 北京团队测试链
     //http://52.77.177.200:8888 cybex eos 主链节点
 

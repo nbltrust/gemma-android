@@ -15,7 +15,7 @@ public class GetRamMarketRequest extends GMAHttpRequest{
 
     public GetRamMarketRequest(Class clazz) {
         super(clazz);
-        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_RAM_MARKET);
+        setMethod(ApiPath.getHOST_ON_CHAIN() + ApiMethod.API_GET_RAM_MARKET);
     }
 
     public GetRamMarketRequest setJsonParams(String jsonParams) {

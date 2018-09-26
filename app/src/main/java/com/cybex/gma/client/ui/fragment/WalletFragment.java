@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.api.ApiMethod;
 import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
@@ -202,10 +203,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
             if (event.isRefresh()) {
-                LoggerManager.d("wallet tab selected and refreshed");
                 getP().requestHomeCombineDataVO();
-            } else {
-                LoggerManager.d("wallet tab selected");
             }
         }
     }
@@ -221,7 +219,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void onValidateConfirmed(ValidateResultEvent event){
         if (event.isSuccess()){
-            LoggerManager.d("Alert hided");
             Alerter.hide();
         }
     }
@@ -451,6 +448,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        LoggerManager.d("URL", ApiPath.getHOST_ON_CHAIN() + ApiMethod.API_GET_KEY_ACCOUNTS);
+
+
         //初始化当前节点
         if (SPUtils.getInstance().getString("curNode") != null) {
             String curHost = SPUtils.getInstance().getString("curNode");
@@ -460,7 +460,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             SPUtils.getInstance().put("curNode", ApiPath.EOS_CYBEX);
         }
 
-        LoggerManager.d("host", ApiPath.HOST_ON_CHAIN);
+        LoggerManager.d("host", ApiPath.getHOST_ON_CHAIN());
         AppManager.getAppManager().finishActivity(CreateManageActivity.class);
         textViewBackupWallet.setVisibility(View.VISIBLE);
         //下拉刷新
@@ -472,7 +472,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 getP().requestHomeCombineDataVO();
             }
         });
-
 
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)) {
@@ -724,5 +723,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         });
 
     }
+
+
 
 }

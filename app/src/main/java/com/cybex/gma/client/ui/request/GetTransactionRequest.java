@@ -18,7 +18,7 @@ public class GetTransactionRequest extends GMAHttpRequest {
      */
     public GetTransactionRequest(Class clazz) {
         super(clazz);
-        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_TRANSACTION);
+        setMethod(ApiPath.getHOST_ON_CHAIN() + ApiMethod.API_GET_TRANSACTION);
     }
 
 

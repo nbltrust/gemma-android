@@ -20,7 +20,7 @@ public class GetCurrencyBalanceRequest extends GMAHttpRequest {
      */
     public GetCurrencyBalanceRequest(Class clazz) {
         super(clazz);
-        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_CUREENCY_BALANCE);
+        setMethod(ApiPath.getHOST_ON_CHAIN() + ApiMethod.API_GET_CUREENCY_BALANCE);
     }
 
 

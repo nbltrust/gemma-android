@@ -13,7 +13,7 @@ public class GetBlockRequest extends GMAHttpRequest {
      */
     public GetBlockRequest(Class clazz) {
         super(clazz);
-        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_BLOCK);
+        setMethod(ApiPath.getHOST_ON_CHAIN() + ApiMethod.API_GET_BLOCK);
     }
 
 

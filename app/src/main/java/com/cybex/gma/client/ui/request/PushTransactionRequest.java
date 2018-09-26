@@ -18,7 +18,7 @@ public class PushTransactionRequest extends GMAHttpRequest {
      */
     public PushTransactionRequest(Class clazz) {
         super(clazz);
-        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_PUSH_TRANSACTION);
+        setMethod(ApiPath.getHOST_ON_CHAIN() + ApiMethod.API_PUSH_TRANSACTION);
     }
 
 

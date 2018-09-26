@@ -20,7 +20,7 @@ public class GetAccountinfoRequest extends GMAHttpRequest<AccountInfo> {
      */
     public GetAccountinfoRequest(Class clazz) {
         super(clazz);
-        setMethod(ApiPath.HOST_ON_CHAIN + ApiMethod.API_GET_ACCOUNT_INFO);
+        setMethod(ApiPath.getHOST_ON_CHAIN() + ApiMethod.API_GET_ACCOUNT_INFO);
     }
 
 
