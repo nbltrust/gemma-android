@@ -21,8 +21,10 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.ImportResultEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
@@ -421,37 +423,33 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
      * 最终导入结果判定
      * @param event
      */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onValidateStatusConfirmed(ValidateResultEvent event){
-        if (event != null){
-            dissmisProgressDialog();
-            if (event.isSuccess()){
-                //导入成功
-                if (getArguments() != null){
-                    final String private_key = getArguments().getString("priKey");
-                    getP().saveConfigWallet(private_key, getPassword(), getPassHint());
-                    AlertUtil.showLongCommonAlert(getActivity(), getString(R.string.import_wallet_success));
-                }
-            }else {
-                //导入失败
-                AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.import_wallet_failed));
-                //删除已存入钱包
-                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
-                List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onValidateStatusConfirmed(ImportResultEvent event){
+        if (event.isSuccess()){
+            //导入成功
+            LoggerManager.d("ValidateEvent Success");
+            if (getArguments() != null){
+                final String private_key = getArguments().getString("priKey");
+                getP().saveConfigWallet(private_key, getPassword(), getPassHint());
+                AlertUtil.showLongCommonAlert(getActivity(), getString(R.string.import_wallet_success));
+            }
+        }else {
+            LoggerManager.d("ValidateEvent Fail");
+            GemmaToastUtils.showLongToast(getString(R.string.import_wallet_failed));
 
-                if (EmptyUtils.isEmpty(list)){
-                    //已经没有钱包了
-                    AppManager.getAppManager().finishAllActivity();
-                    UISkipMananger.launchGuide(getActivity());
-                }else {
-                    //还有钱包，更新当前钱包为最后一个钱包
-                    WalletEntity newCurWallet = list.get(list.size() - 1);
-                    newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-                    DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(newCurWallet);
-                    AppManager.getAppManager().finishAllActivity();
-                    UISkipMananger.launchHomeSingle(getActivity());
-                }
+            List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
+
+            if (EmptyUtils.isEmpty(list)){
+                //已经没有钱包了
+                AppManager.getAppManager().finishAllActivity();
+                UISkipMananger.launchGuide(getActivity());
+            }else {
+                //还有钱包，更新当前钱包为最后一个钱包
+                WalletEntity newCurWallet = list.get(list.size() - 1);
+                newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(newCurWallet);
+                AppManager.getAppManager().finishAllActivity();
+                UISkipMananger.launchHomeSingle(getActivity());
             }
         }
     }

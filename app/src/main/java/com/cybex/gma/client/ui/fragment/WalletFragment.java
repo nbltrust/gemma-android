@@ -448,14 +448,11 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        LoggerManager.d("URL", ApiPath.getHOST_ON_CHAIN() + ApiMethod.API_GET_KEY_ACCOUNTS);
-
-
         //初始化当前节点
         if (SPUtils.getInstance().getString("curNode") != null) {
             String curHost = SPUtils.getInstance().getString("curNode");
             LoggerManager.d("curNode", curHost);
-            ApiPath.setHOST_ON_CHAIN(curHost);
+            //ApiPath.setHOST_ON_CHAIN(curHost);
         }else {
             SPUtils.getInstance().put("curNode", ApiPath.EOS_CYBEX);
         }

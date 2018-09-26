@@ -9,6 +9,7 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.gma.client.event.ImportResultEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.job.JobUtils;
 import com.cybex.gma.client.job.TimeStampValidateJob;
@@ -176,17 +177,20 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
 
                     @Override
                     public void onSuccess(Response<GetKeyAccountsResult> response) {
-                        LoggerManager.d("getKeyAccounts");
                         if (response != null && response.body() != null){
                             //找到此账号
                             GetKeyAccountsResult result = response.body();
                             List<String> account_names = result.account_names;
-                            String curEosName = account_names.get(0);
-                            getAccount(curEosName, public_key);
+                            if (EmptyUtils.isNotEmpty(account_names) && account_names.size() != 0){
+                                LoggerManager.d("getKeyAccountsRes", account_names.get(0));
+                                String curEosName = account_names.get(0);
+                                getAccount(curEosName, public_key);
+                            }
 
                         }else if (response != null && response.body() != null && response.code() == HttpConst
                                 .SERVER_INTERNAL_ERR ){
                             //未找到此账号
+                            LoggerManager.d("getKeyAccountsErr");
                             ValidateResultEvent event = new ValidateResultEvent();
                             event.setFail_type(FAIL_EMPTY_ACCOUNT);
                             EventBusProvider.postSticky(event);
@@ -218,11 +222,13 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
 
                             //检查公钥是否在结构体里
                             List<AccountInfo.PermissionsBean> permissions = info.getPermissions();
+                            boolean isContain = false;
                             for (AccountInfo.PermissionsBean permission : permissions) {
                                 //检查active key中是否是此公钥
                                 if (isBeanContainsPublicKey(permission, public_key)) {
                                     //如果公钥在账户中,继续调用getInfo接口
-                                    getInfo(created,account_name,public_key);
+                                    isContain = true;
+                                    break;
                                 } else {
                                     //公钥不在账户中
                                     //失败，弹框提示账户名已被使用，查询数据库中是否有其他钱包
@@ -232,12 +238,16 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                                 }
                             }
 
+                            if (isContain){
+                                getInfo(created, account_name, public_key);
+                            }
                         }
 
                     }
 
                     @Override
                     public void onError(Response<AccountInfo> response) {
+                        LoggerManager.d("getAccountsErr");
                         super.onError(response);
                     }
                 });
@@ -301,6 +311,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
 
                     @Override
                     public void onError(Response<String> response) {
+                        LoggerManager.d("getInfoErr");
                         super.onError(response);
                     }
                 });
@@ -350,6 +361,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
 
                     @Override
                     public void onError(Response<String> response) {
+                        LoggerManager.d("getBlockErr");
                         super.onError(response);
                     }
                 });
@@ -371,24 +383,32 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
                         LoggerManager.d("verifyAccount");
                         if (response != null && response.body() != null && response.code() != HttpConst.SERVER_INTERNAL_ERR){
                             AccountInfo info = response.body();
-                            final String created = info.getCreated();
 
                             //检查公钥是否在结构体里
                             List<AccountInfo.PermissionsBean> permissions = info.getPermissions();
+                            boolean isContain = false;
                             for (AccountInfo.PermissionsBean permission : permissions) {
                                 //检查active key中是否是此公钥
-                                if (isBeanContainsPublicKey(permission, public_key)) {
-                                    //导入成功
-                                    ValidateResultEvent event = new ValidateResultEvent();
-                                    event.setSuccess(true);
-                                    EventBusProvider.postSticky(event);
-                                } else {
-                                    //公钥不在账户中
-                                    //失败，弹框提示账户名已被使用，查询数据库中是否有其他钱包
-                                    ValidateResultEvent event = new ValidateResultEvent();
-                                    event.setFail_type(FAIL_USERNAME_USED);
-                                    EventBusProvider.postSticky(event);
+
+                                if(isBeanContainsPublicKey(permission, public_key)) {
+                                    isContain = true;
+                                    break;
                                 }
+                            }
+
+                            if (isContain){
+                                //导入成功
+                                ImportResultEvent event_success = new ImportResultEvent();
+                                event_success.setSuccess(true);
+                                EventBusProvider.post(event_success);
+                                LoggerManager.d("event.success at post", event_success.isSuccess());
+                                LoggerManager.d("importSuccess Event");
+                            }else {
+                                //公钥不在账户中
+                                //失败，弹框提示账户名已被使用，查询数据库中是否有其他钱包
+                                ImportResultEvent event_fail = new ImportResultEvent();
+                                EventBusProvider.post(event_fail);
+                                LoggerManager.d("importFail Event");
                             }
 
                         }
@@ -397,6 +417,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
 
                     @Override
                     public void onError(Response<AccountInfo> response) {
+                        LoggerManager.d("verifyAccountsErr");
                         super.onError(response);
                     }
                 });
