@@ -14,6 +14,7 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/edt_invCode"
             android:layout_width="match_parent"
             android:background="@null"
             android:hint="@string/input_inv_code"
@@ -39,6 +40,7 @@
         android:textSize="@dimen/font_3"/>
 
     <Button
+        android:id="@+id/bt_activate"
         android:text="@string/activate"
         style="@style/bt_long_in_linearLayout"
         android:textSize="@dimen/font_3.5"
