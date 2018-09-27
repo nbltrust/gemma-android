@@ -3,9 +3,9 @@ package com.cybex.gma.client.ui.model.vo;
 import java.util.List;
 
 /**
- * Created by wanglin on 2018/8/1.
+ * Created by yiran on 2018/9/27.
  */
-public class TransferTransactionVO {
+public class BluetoothTransferTransactionVO {
 
 
     /**
@@ -18,8 +18,6 @@ public class TransferTransactionVO {
      * context_free_actions : []
      * actions : [{"account":"eosio.token","name":"transfer","authorization":[{"actor":"test1","permission":"active"}],"data":"000000008090b1ca000000000091b1cad50100000000000004454f530000000021e59388e59388e59388e59388e59388e59388e59388e59388e59388e59388e59388"}]
      * transaction_extensions : []
-     * signatures : ["SIG_K1_KZ8tUrh5LsJEw6BZbgk9M3p3NDETxyT8amVzRMMPsFfYU6zMg5WzvfvmBj6MTZAGWJnbCPJhUwsApANmuip8i1aJ8Wym7x"]
-     * context_free_data : []
      */
 
     private String expiration;
@@ -31,8 +29,6 @@ public class TransferTransactionVO {
     private List<?> context_free_actions;
     private List<ActionsBean> actions;
     private List<?> transaction_extensions;
-    private List<String> signatures;
-    private List<?> context_free_data;
 
     public String getExpiration() { return expiration;}
 
@@ -70,13 +66,6 @@ public class TransferTransactionVO {
 
     public void setTransaction_extensions(List<?> transaction_extensions) { this.transaction_extensions = transaction_extensions;}
 
-    public List<String> getSignatures() { return signatures;}
-
-    public void setSignatures(List<String> signatures) { this.signatures = signatures;}
-
-    public List<?> getContext_free_data() { return context_free_data;}
-
-    public void setContext_free_data(List<?> context_free_data) { this.context_free_data = context_free_data;}
 
     public static class ActionsBean {
 

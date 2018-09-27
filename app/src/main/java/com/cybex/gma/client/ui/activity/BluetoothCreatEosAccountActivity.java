@@ -109,7 +109,6 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
             default:
                 CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
                         .string.service_agreement));
-
         }
     }
 

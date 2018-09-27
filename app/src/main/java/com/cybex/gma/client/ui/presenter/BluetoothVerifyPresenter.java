@@ -11,6 +11,7 @@ import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.job.LibValidateJob;
+import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.fragment.BluetoothVerifyMneFragment;
@@ -86,7 +87,8 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
                                 AppManager.getAppManager().finishAllActivity();
                                 UISkipMananger.skipBluetoothSettingFPActivity(getV().getActivity(), bd);
                                 LibValidateJob.startPolling(10000);
-
+                                //todo 新验证方法需要添加EventBus处理方法
+                                //TimeStampValidateJob.executedCreateLogic(account_name, public_key);
                                 getV().getActivity().finish();
                             }
                         } else {
@@ -132,7 +134,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
         int walletNum = walletEntityList.size();
         int index = walletNum + 1;
         //以默认钱包名称存入
-        walletEntity.setWalletName(CacheConstants.DEFAULT_WALLETNAME_PREFIX + String.valueOf(index));
+        walletEntity.setWalletName(CacheConstants.DEFAULT_BLUETOOTH_WALLET_PREFIX + String.valueOf(index));
         //设置公钥
         walletEntity.setPublicKey(publicKey);
         //设置摘要
@@ -153,7 +155,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
         //设置被链上确认状态位未被确认
         walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
         //蓝牙设备类型
-        walletEntity.setWalletType(1);
+        walletEntity.setWalletType(CacheConstants.WALLET_TYPE_BLUETOOTH);
         //设置当前Transaction的Hash值
         walletEntity.setTxId(txId);
         //设置邀请码

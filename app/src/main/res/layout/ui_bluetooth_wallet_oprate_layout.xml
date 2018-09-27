@@ -32,5 +32,15 @@
 
     </com.allen.library.SuperTextView>
 
+    <View
+        title:layout_constraintTop_toBottomOf="@id/superTextView_card_record_hard"
+        android:layout_marginTop="@dimen/dimen_2"
+        android:background="#00ffffff"
+        android:id="@+id/view_divider_transfer_record"
+        android:layout_width="match_parent"
+        android:layout_height="1dp">
+
+    </View>
+
 </android.support.constraint.ConstraintLayout>
 

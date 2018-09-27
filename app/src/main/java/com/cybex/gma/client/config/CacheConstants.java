@@ -9,6 +9,7 @@ public interface CacheConstants {
     String PubKey_Prefix = "PublicKey_";
     String PriKey_Prefix = "PriKey+Pass_";
     String DEFAULT_WALLETNAME_PREFIX = "EOS-WALLET-";
+    String DEFAULT_BLUETOOTH_WALLET_PREFIX = "WOOKONG-Bio-";
     Integer IS_CURRENT_WALLET = 1;
     Integer NOT_CURRENT_WALLET = 0;
     int ALREADY_BACKUP = 1;
@@ -24,6 +25,9 @@ public interface CacheConstants {
 
     int CURRENCY_CNY = 1;
     int CURRENCY_USD = 2;
+
+    int WALLET_TYPE_SOFT = 0;
+    int WALLET_TYPE_BLUETOOTH = 1;
 
 
 }

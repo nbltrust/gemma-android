@@ -676,6 +676,10 @@ public class BlueToothWrapper extends Thread {
         }
     }
 
+    /**
+     * 构造方法
+     * @param mainHandler
+     */
     public BlueToothWrapper(Handler mainHandler) {
         m_wrapperType = INVALID_WRAPPER;
         m_mainHandler = mainHandler;

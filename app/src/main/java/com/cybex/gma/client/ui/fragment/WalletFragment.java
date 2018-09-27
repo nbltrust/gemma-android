@@ -474,7 +474,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         if (EmptyUtils.isNotEmpty(curWallet)) {
             curEosUsername = curWallet.getCurrentEosName();
             textViewUsername.setText(curWallet.getCurrentEosName());
+            //生成头像
             generatePortrait(curWallet.getCurrentEosName());
+            //设置Alert
             if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
                 if (Alerter.isShowing()) {
                     Alerter.create(getActivity())
@@ -485,7 +487,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                             .show();
                 }
             }
-
+            //多账户切换
             String json = curWallet.getEosNameJson();
             List<String> eosNamelist = GsonUtils.parseString2List(json, String.class);
             if (EmptyUtils.isNotEmpty(eosNamelist) && eosNamelist.size() > 1) {
@@ -550,33 +552,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 }
             }
         });
-    }
-
-    /**
-     * 测试微信文本分享功能
-     */
-    // 文本分享
-    private void shareText() {
-
-        api = WXAPIFactory.createWXAPI(getActivity(), ParamConstants.WXPAY_APPID, true);
-        api.registerApp(ParamConstants.WXPAY_APPID);
-        // 初始化一个WXTextObject对象
-        WXTextObject textObj = new WXTextObject();
-        textObj.text = "微信文本分享测试";
-        // 用WXTextObject对象初始化一个WXMediaMessage对象
-        WXMediaMessage msg = new WXMediaMessage();
-        msg.mediaObject = textObj;   // 发送文本类型的消息时，title字段不起作用
-        // msg.title = "Will be ignored";
-        msg.description = "微信文本分享测试";   // 构造一个Req
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = String.valueOf(System.currentTimeMillis());
-        req.message = msg;   // 分享或收藏的目标场景，通过修改scene场景值实现。
-        // 发送到聊天界面 —— WXSceneSession
-        // 发送到朋友圈 —— WXSceneTimeline
-        // 添加到微信收藏 —— WXSceneFavorite
-        req.scene = SendMessageToWX.Req.WXSceneSession;
-        // 调用api接口发送数据到微信
-        api.sendReq(req);
     }
 
     @Override

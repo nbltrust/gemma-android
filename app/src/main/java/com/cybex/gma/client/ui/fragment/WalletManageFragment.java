@@ -61,6 +61,11 @@ public class WalletManageFragment extends XFragment {
         return fragment;
     }
 
+    /**
+     * 钱包名称更改通知事件
+     * 更改钱包名称时使用
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onWalletNameChanged(WalletNameChangedEvent event) {
         if (EmptyUtils.isNotEmpty(event)) {
@@ -89,13 +94,14 @@ public class WalletManageFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getResources().getString(R.string.title_wallet), true, true);
+        //创建钱包入口
         superTextViewCreateWallet.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
                 UISkipMananger.launchCreateWallet(getActivity());
             }
         });
-
+        //导入钱包入口
         superTextViewImportWallet.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
@@ -105,7 +111,7 @@ public class WalletManageFragment extends XFragment {
 
         setWalletListViewData();
 
-
+        //蓝牙钱包入口
         tvMathBluetooth.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -146,6 +152,13 @@ public class WalletManageFragment extends XFragment {
         unbinder.unbind();
     }
 
+    /**
+     * startFragmentForResult回调处理
+     * 下级fragment pop时调用
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
@@ -203,7 +216,6 @@ public class WalletManageFragment extends XFragment {
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("curWallet", thisWallet);
                     //startForResult(WalletDetailFragment.newInstance(bundle), requestCode);
-                    //UISkipMananger.launchWalletDetail(getActivity(), bundle);
                     start(WalletDetailFragment.newInstance(bundle), SINGLETASK);
                 }
             }

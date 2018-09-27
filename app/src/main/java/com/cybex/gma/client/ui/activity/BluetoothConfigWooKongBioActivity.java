@@ -464,9 +464,11 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BlueToothWrapper.MSG_INIT_PIN_START:
+                    //设置PIN
                     showProgressDialog(getString(R.string.progress_set_pin));
                     break;
                 case BlueToothWrapper.MSG_INIT_PIN_FINISH:
+                    //已完成设置PIN
                     dissmisProgressDialog();
                     //跳转到创建账户名界面
                     String password = String.valueOf(edtSetPass.getText());

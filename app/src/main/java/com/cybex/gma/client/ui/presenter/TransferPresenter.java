@@ -8,10 +8,12 @@ import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.fragment.BluetoothTransferFragment;
 import com.cybex.gma.client.ui.fragment.TransferFragment;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
+import com.cybex.gma.client.ui.model.vo.BluetoothTransferTransactionVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
@@ -32,6 +34,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 转账presenter
@@ -45,6 +49,8 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     private static final String VALUE_CONTRACT = "eosio.token";
     private static final String VALUE_COMPRESSION = "none";
     private static final String VALUE_SYMBOL = "EOS";
+    private static final int WALLET_TYPE_SOFT = 0;
+    private static final int WALLET_TYPE_BLUETOOTH = 1;
 
     public void requestBanlanceInfo() {
         WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
@@ -113,7 +119,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     }
 
     /**
-     * 执行转账逻辑
+     * 执行软件钱包转账逻辑
      *
      * @param from
      * @param to
@@ -178,6 +184,144 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                 });
     }
 
+    /**
+     * 执行硬件钱包转账逻辑
+     *
+     * @param from
+     * @param to
+     * @param quantity
+     * @param memo
+     * @param privateKey
+     */
+    public void executeBluetoothTransferLogic(String from, String to, String quantity, String memo) {
+        //通过c++获取 abi json操作体
+        String abijson = JNIUtil.create_abi_req_transfer(VALUE_CODE, VALUE_ACTION,
+                from, to, quantity, memo);
+
+        //链上接口请求 abi_json_to_bin
+        new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)
+                .setJsonParams(abijson)
+                .getAbiJsonToBean(new JsonCallback<AbiJsonToBeanResult>() {
+                    @Override
+                    public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
+                        super.onStart(request);
+                        getV().showProgressDialog(getV().getString(R.string.transfer_trade_ing));
+                    }
+
+                    @Override
+                    public void onError(Response<AbiJsonToBeanResult> response) {
+                        super.onError(response);
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(Response<AbiJsonToBeanResult> response) {
+                        if (response != null && response.body() != null) {
+                            AbiJsonToBeanResult result = response.body();
+                            String binargs = result.binargs;
+                            LoggerManager.d("abiStr: " + binargs);
+
+                            bluetoothGetInfo(from, binargs);
+
+                        } else {
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                        }
+
+                    }
+                });
+    }
+
+    /**
+     * 获取配置信息成功后，再到C++库获取交易体
+     *
+     * @param from
+     * @param abiStr
+     */
+    public void bluetoothGetInfo(String from, String abiStr) {
+        new EOSConfigInfoRequest(String.class)
+                .getInfo(new StringCallback() {
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        if (getV() != null){
+                            if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                                //蓝牙钱包流程
+                                String infostr = response.body();
+                                LoggerManager.d("config info:" + infostr);
+                                String[] keyPair = JNIUtil.createKey().split(";");
+                                //随机生成一个无用私钥用于签名
+                                String dumpPriKey = keyPair[1];
+                                //C++库获取Transaction交易体
+                                String transactionStr = JNIUtil.signTransaction_tranfer(dumpPriKey,
+                                        VALUE_CONTRACT, from, infostr, abiStr,
+                                        0,
+                                        0,
+                                        120);
+                                LoggerManager.d("transactionJson:" + transactionStr);
+
+                                TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
+                                        TransferTransactionVO.class);
+
+                                if (vo != null){
+                                    BluetoothTransferTransactionVO bluetoothVO = switchTransferVO(vo);
+
+                                    String bluetoothTransactionStr = GsonUtils.objectToJson(bluetoothVO);
+                                    LoggerManager.d("bluetoothTransactionJson:" + bluetoothTransactionStr);
+                                    //todo Transaction转HEX
+                                }
+
+                            } else {
+                                //错误
+                                GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                                getV().dissmisProgressDialog();
+                            }
+                        }
+                    }
+                });
+    }
 
     /**
      * 获取配置信息成功后，再到C++库获取交易体
@@ -217,39 +361,43 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        if (response != null && EmptyUtils.isNotEmpty(response.body())) {
-                            String infostr = response.body();
-                            LoggerManager.d("config info:" + infostr);
-                            //C++库获取Transaction交易体
-                            String transactionStr = JNIUtil.signTransaction_tranfer(privateKey,
-                                    VALUE_CONTRACT, from, infostr, abiStr,
-                                    0,
-                                    0,
-                                    120);
-                            LoggerManager.d("transactionJson:" + transactionStr);
+                        if (getV() != null){
+                            if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                                //软钱包流程
+                                String infostr = response.body();
+                                LoggerManager.d("config info:" + infostr);
+                                //C++库获取Transaction交易体
+                                String transactionStr = JNIUtil.signTransaction_tranfer(privateKey,
+                                        VALUE_CONTRACT, from, infostr, abiStr,
+                                        0,
+                                        0,
+                                        120);
+                                LoggerManager.d("transactionJson:" + transactionStr);
 
-                            TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
-                                    TransferTransactionVO.class);
-                            if (vo != null) {
-                                //构造PushTransaction 请求的json参数
-                                PushTransactionReqParams reqParams = new PushTransactionReqParams();
-                                reqParams.setTransaction(vo);
-                                reqParams.setSignatures(vo.getSignatures());
-                                reqParams.setCompression(VALUE_COMPRESSION);
+                                TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
+                                        TransferTransactionVO.class);
 
-                                String buildTransactionJson = GsonUtils.
-                                        objectToJson(reqParams);
-                                LoggerManager.d("buildTransactionJson:" + buildTransactionJson);
+                                if (vo != null) {
+                                    //构造PushTransaction 请求的json参数
+                                    PushTransactionReqParams reqParams = new PushTransactionReqParams();
+                                    reqParams.setTransaction(vo);
+                                    reqParams.setSignatures(vo.getSignatures());
+                                    reqParams.setCompression(VALUE_COMPRESSION);
 
-                                //执行Push Transaction 最后一步操作
-                                pushTransaction(buildTransactionJson);
+                                    String buildTransactionJson = GsonUtils.
+                                            objectToJson(reqParams);
+                                    LoggerManager.d("buildTransactionJson:" + buildTransactionJson);
+
+                                    //执行Push Transaction 最后一步操作
+                                    pushTransaction(buildTransactionJson);
+                                }
+
+                            } else {
+                                //错误
+                                GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                                getV().dissmisProgressDialog();
                             }
-
-                        } else {
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
-                            getV().dissmisProgressDialog();
                         }
-
                     }
                 });
     }
@@ -316,4 +464,50 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     .show();
         }
     }
+
+    /**
+     * 软钱包VO转换成硬件钱包VO
+     * 实际操作为删除最后两个字段
+     */
+    public BluetoothTransferTransactionVO switchTransferVO(TransferTransactionVO softVO){
+        BluetoothTransferTransactionVO bluetoothVO = new BluetoothTransferTransactionVO();
+
+        //基础类型参数
+        bluetoothVO.setExpiration(softVO.getExpiration());
+        bluetoothVO.setRef_block_num(softVO.getRef_block_num());
+        bluetoothVO.setRef_block_prefix(softVO.getRef_block_prefix());
+        bluetoothVO.setMax_cpu_usage_ms(softVO.getMax_cpu_usage_ms());
+        bluetoothVO.setMax_net_usage_words(softVO.getMax_net_usage_words());
+        bluetoothVO.setDelay_sec(softVO.getDelay_sec());
+        bluetoothVO.setContext_free_actions(softVO.getContext_free_actions());
+        bluetoothVO.setTransaction_extensions(softVO.getTransaction_extensions());
+
+        //ActionBean类型转换
+        List<BluetoothTransferTransactionVO.ActionsBean> bluetoothActions = new ArrayList<>();
+        BluetoothTransferTransactionVO.ActionsBean bluetoothAction = new BluetoothTransferTransactionVO.ActionsBean();
+        List<TransferTransactionVO.ActionsBean> softActions = softVO.getActions();
+        TransferTransactionVO.ActionsBean softAction = softActions.get(0);
+        //todo List循环添加
+
+        bluetoothAction.setName(softAction.getName());
+        bluetoothAction.setAccount(softAction.getAccount());
+        bluetoothAction.setData(softAction.getData());
+
+        //AuthorizationBean类型转换
+        List<BluetoothTransferTransactionVO.ActionsBean.AuthorizationBean> bluetoothAuthorizations = new ArrayList<>();
+        List<TransferTransactionVO.ActionsBean.AuthorizationBean> softAuthorizations = softAction.getAuthorization();
+        BluetoothTransferTransactionVO.ActionsBean.AuthorizationBean bluetoothAuthorization = new
+                BluetoothTransferTransactionVO.ActionsBean.AuthorizationBean();
+        TransferTransactionVO.ActionsBean.AuthorizationBean softAuthorization = softAuthorizations.get(0);
+        //todo List循环添加
+        bluetoothAuthorization.setActor(softAuthorization.getActor());
+        bluetoothAuthorization.setPermission(softAuthorization.getPermission());
+
+        bluetoothAction.setAuthorization(bluetoothAuthorizations);
+        bluetoothActions.add(bluetoothAction);
+        bluetoothVO.setActions(bluetoothActions);
+
+        return bluetoothVO;
+    }
+
 }

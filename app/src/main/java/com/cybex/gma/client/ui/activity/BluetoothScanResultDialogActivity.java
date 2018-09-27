@@ -17,6 +17,7 @@ import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
@@ -66,6 +67,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         setContentView(R.layout.dialog_bluetooth_scan_result);
         ButterKnife.bind(this);
         mHandler = new ScanDeviceHandler();
+        //调起Activity时执行一次扫描
         this.startScan();
 
         this.initView();
@@ -105,6 +107,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     updatePosition = position;
 
                     int status = deviceNameList.get(position).status;
+                    LoggerManager.d(status);
                     if (status == -1) {
                         if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
                             connectThread = new BlueToothWrapper(mHandler);
@@ -116,6 +119,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                             mAdapter.notifyDataSetChanged();
                         }
                     } else if (status == 0) {
+                        //初次连接
                         showInitWookongBioDialog();
 
                     }
@@ -185,11 +189,13 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BlueToothWrapper.MSG_ENUM_START:
+                    //开始一次新的扫描
                     deviceNameList.clear();
                     mAdapter.notifyDataSetChanged();
                     statusView.showLoading();
                     break;
                 case BlueToothWrapper.MSG_ENUM_UPDATE:
+                    //更新蓝牙设备列表
                     String[] devNames = (String[]) msg.obj;
                     if (EmptyUtils.isNotEmpty(devNames)) {
                         for (int i = 0; i < devNames.length; i++) {
@@ -217,6 +223,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 case BlueToothWrapper.MSG_INIT_FINISH:
                     break;
                 case BlueToothWrapper.MSG_ENUM_FINISH:
+                    //完成列表更新
                     if (EmptyUtils.isNotEmpty(deviceNameList) && deviceNameList.size() > 0) {
                         deviceNameList.get(updatePosition).isShowProgress = false;
                     } else {

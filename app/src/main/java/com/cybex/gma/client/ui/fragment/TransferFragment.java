@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.dao.WalletEntityDao;
 import com.cybex.gma.client.db.entity.WalletEntity;
@@ -77,13 +78,19 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @BindView(R.id.tv_note) TextView tvNote;
     @BindView(R.id.iv_transfer_memo_clear) ImageView ivTransferMemoClear;
     @BindView(R.id.imv_wookong_logo) ImageView imvWookongLogo;
-
+    CustomFullDialog dialog = null;
     private String maxValue = "";
     private String currentEOSName = "";
-
     private String collectionAccount = "";
     private String amount = "";
     private String memo = "";
+
+    public static TransferFragment newInstance() {
+        Bundle args = new Bundle();
+        TransferFragment fragment = new TransferFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @OnClick({R.id.iv_transfer_account_clear, R.id.iv_transfer_amount_clear, R.id.iv_transfer_memo_clear})
     public void onClearClicked(View v) {
@@ -118,19 +125,22 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
     }
 
-    public static TransferFragment newInstance() {
-        Bundle args = new Bundle();
-        TransferFragment fragment = new TransferFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
         setNavibarTitle(getString(R.string.title_transfer), false);
     }
 
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     public void showInitData(String banlance, String eosName) {
         currentEOSName = eosName;
@@ -175,7 +185,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     }
 
-
     private void validateAmountValue() {
         if (EmptyUtils.isNotEmpty(getAmount())){
             String text = String.valueOf(etAmount.getText());
@@ -200,7 +209,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     public void initData(Bundle savedInstanceState) {
         WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
         WalletEntity entity = dao.getCurrentWalletEntity();
-        if (entity != null && entity.getWalletType() == 1) {
+        if (entity != null && getWalletType() == CacheConstants.WALLET_TYPE_BLUETOOTH) {
             imvWookongLogo.setVisibility(View.VISIBLE);
         } else {
             imvWookongLogo.setVisibility(View.GONE);
@@ -274,6 +283,16 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_transfer;
+    }
+
+    @Override
+    public TransferPresenter newP() {
+        return new TransferPresenter();
+    }
+
     private void validateButton() {
         String collectionAccount = String.valueOf(etCollectionAccount.getText());
         String amount = String.valueOf(etAmount.getText());
@@ -289,11 +308,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     }
 
-    @Override
-    public boolean useEventBus() {
-        return true;
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (event != null && event.getPosition() == 1) {
@@ -303,16 +317,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             LoggerManager.d("tab transfer selected");
             getP().requestBanlanceInfo();
         }
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_transfer;
-    }
-
-    @Override
-    public TransferPresenter newP() {
-        return new TransferPresenter();
     }
 
     @OnClick({R.id.et_note})
@@ -414,15 +418,13 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
     }
 
-    CustomFullDialog dialog = null;
-
     /**
      * 显示确认授权dialog
      */
     private void showConfirmAuthoriDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
+                R.layout.dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -483,9 +485,21 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         getP().requestBanlanceInfo();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    /**
+     * 返回当前钱包类型
+     */
+    public int getWalletType(){
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (curWallet != null){
+            switch (curWallet.getWalletType()){
+                case CacheConstants.WALLET_TYPE_BLUETOOTH:
+                    //蓝牙钱包
+                    return CacheConstants.WALLET_TYPE_BLUETOOTH;
+                case CacheConstants.WALLET_TYPE_SOFT:
+                    //软件钱包
+                    return CacheConstants.WALLET_TYPE_SOFT;
+            }
+        }
+        return CacheConstants.WALLET_TYPE_SOFT;
     }
 }

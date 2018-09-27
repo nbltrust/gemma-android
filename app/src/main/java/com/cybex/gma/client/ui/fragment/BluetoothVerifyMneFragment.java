@@ -363,7 +363,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                     if (getCheckCodeReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         byte[] checkedcode = getCheckCodeReturnValue.getCheckCode();
                         byte[] snbyte = ConvertUtils.subByte(checkedcode, 0, 16);
-//                        byte[] snSignByte = ConvertUtils.subByte(checkedcode,17,64);
+//                         byte[] snSignByte = ConvertUtils.subByte(checkedcode,17,64);
 
                         SN = CommonUtility.byte2hex(snbyte);
                         SN_sign = CommonUtility.byte2hex(checkedcode);

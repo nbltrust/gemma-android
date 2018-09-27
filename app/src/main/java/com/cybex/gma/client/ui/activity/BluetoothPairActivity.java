@@ -30,6 +30,7 @@ public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        //配对点击事件
         btnStartScan.setOnClickListener(new View.OnClickListener() {
 
             @Override
