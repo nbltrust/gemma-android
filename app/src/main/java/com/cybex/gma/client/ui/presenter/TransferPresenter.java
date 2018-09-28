@@ -13,7 +13,8 @@ import com.cybex.gma.client.ui.fragment.TransferFragment;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
-import com.cybex.gma.client.ui.model.vo.BluetoothTransferTransactionVO;
+
+import com.cybex.gma.client.ui.model.vo.TransferTransactionTmpVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
@@ -191,7 +192,6 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
      * @param to
      * @param quantity
      * @param memo
-     * @param privateKey
      */
     public void executeBluetoothTransferLogic(String from, String to, String quantity, String memo) {
         //通过c++获取 abi json操作体
@@ -304,13 +304,15 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                                 TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
                                         TransferTransactionVO.class);
+                                TransferTransactionTmpVO tmpVO = switchVO(vo);
+                                String tmpJson = GsonUtils.objectToJson(tmpVO);
 
+                                String processedStr = getSignArgStr(tmpJson);
+                                LoggerManager.d("tmpJson with process", processedStr);
+
+                                getV().dissmisProgressDialog();
                                 if (vo != null){
-                                    BluetoothTransferTransactionVO bluetoothVO = switchTransferVO(vo);
-
-                                    String bluetoothTransactionStr = GsonUtils.objectToJson(bluetoothVO);
-                                    LoggerManager.d("bluetoothTransactionJson:" + bluetoothTransactionStr);
-                                    //todo Transaction转HEX
+                                   //todo 转HEX
                                 }
 
                             } else {
@@ -466,48 +468,35 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     }
 
     /**
-     * 软钱包VO转换成硬件钱包VO
-     * 实际操作为删除最后两个字段
+     * 对Json String添加转义字符
+     * @param jsonStr
+     * @return
      */
-    public BluetoothTransferTransactionVO switchTransferVO(TransferTransactionVO softVO){
-        BluetoothTransferTransactionVO bluetoothVO = new BluetoothTransferTransactionVO();
+    private String getSignArgStr(String jsonStr){
+        return jsonStr.replaceAll("\"", "\\\\" + "\"");
+    }
 
-        //基础类型参数
-        bluetoothVO.setExpiration(softVO.getExpiration());
-        bluetoothVO.setRef_block_num(softVO.getRef_block_num());
-        bluetoothVO.setRef_block_prefix(softVO.getRef_block_prefix());
-        bluetoothVO.setMax_cpu_usage_ms(softVO.getMax_cpu_usage_ms());
-        bluetoothVO.setMax_net_usage_words(softVO.getMax_net_usage_words());
-        bluetoothVO.setDelay_sec(softVO.getDelay_sec());
-        bluetoothVO.setContext_free_actions(softVO.getContext_free_actions());
-        bluetoothVO.setTransaction_extensions(softVO.getTransaction_extensions());
+    /**
+     * 转换VO类型
+     * 目的是转换字段的基础数据类型以让硬件SDK可以处理
+     * @param oldVO
+     * @return
+     */
+    private TransferTransactionTmpVO switchVO(TransferTransactionVO oldVO){
+        TransferTransactionTmpVO newVO = new TransferTransactionTmpVO();
+        newVO.setActions(oldVO.getActions());
+        newVO.setContext_free_actions(oldVO.getContext_free_actions());
+        newVO.setContext_free_data(new ArrayList<>());
+        newVO.setDelay_sec(oldVO.getDelay_sec());
+        newVO.setExpiration(oldVO.getExpiration());
+        newVO.setMax_cpu_usage_ms(oldVO.getMax_cpu_usage_ms());
+        newVO.setMax_net_usage_words(oldVO.getMax_net_usage_words());
+        newVO.setRef_block_num(oldVO.getRef_block_num());
+        newVO.setSignatures(new ArrayList<>());
+        newVO.setTransaction_extensions(oldVO.getTransaction_extensions());
+        newVO.setRef_block_prefix(String.valueOf(oldVO.getRef_block_prefix()));
 
-        //ActionBean类型转换
-        List<BluetoothTransferTransactionVO.ActionsBean> bluetoothActions = new ArrayList<>();
-        BluetoothTransferTransactionVO.ActionsBean bluetoothAction = new BluetoothTransferTransactionVO.ActionsBean();
-        List<TransferTransactionVO.ActionsBean> softActions = softVO.getActions();
-        TransferTransactionVO.ActionsBean softAction = softActions.get(0);
-        //todo List循环添加
-
-        bluetoothAction.setName(softAction.getName());
-        bluetoothAction.setAccount(softAction.getAccount());
-        bluetoothAction.setData(softAction.getData());
-
-        //AuthorizationBean类型转换
-        List<BluetoothTransferTransactionVO.ActionsBean.AuthorizationBean> bluetoothAuthorizations = new ArrayList<>();
-        List<TransferTransactionVO.ActionsBean.AuthorizationBean> softAuthorizations = softAction.getAuthorization();
-        BluetoothTransferTransactionVO.ActionsBean.AuthorizationBean bluetoothAuthorization = new
-                BluetoothTransferTransactionVO.ActionsBean.AuthorizationBean();
-        TransferTransactionVO.ActionsBean.AuthorizationBean softAuthorization = softAuthorizations.get(0);
-        //todo List循环添加
-        bluetoothAuthorization.setActor(softAuthorization.getActor());
-        bluetoothAuthorization.setPermission(softAuthorization.getPermission());
-
-        bluetoothAction.setAuthorization(bluetoothAuthorizations);
-        bluetoothActions.add(bluetoothAction);
-        bluetoothVO.setActions(bluetoothActions);
-
-        return bluetoothVO;
+        return newVO;
     }
 
 }

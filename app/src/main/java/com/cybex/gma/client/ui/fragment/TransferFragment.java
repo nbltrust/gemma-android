@@ -186,7 +186,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
     private void validateAmountValue() {
-        if (EmptyUtils.isNotEmpty(getAmount())){
+        if (EmptyUtils.isNotEmpty(getAmount())) {
             String text = String.valueOf(etAmount.getText());
             LoggerManager.d("input text:" + text);
             DecimalFormat df = new DecimalFormat("00.0000");
@@ -374,17 +374,31 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.btn_close:
-                        dialog.cancel();
-                        break;
-                    case R.id.btn_transfer:
-                        dialog.cancel();
-                        showConfirmAuthoriDialog();
-                        break;
-                    default:
-                        break;
+                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                if (curWallet != null){
+                    int walletType = curWallet.getWalletType();
+                    switch (view.getId()) {
+                        case R.id.btn_close:
+                            dialog.cancel();
+                            break;
+                        case R.id.btn_transfer:
+                            switch (walletType){
+                                case CacheConstants.WALLET_TYPE_SOFT:
+                                    showConfirmAuthoriDialog();
+                                    break;
+                                case CacheConstants.WALLET_TYPE_BLUETOOTH:
+                                    //todo 测试用，之后要更改为弹出不同的dialog
+                                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                                            getAmount()+ " EOS", getNote());
+
+                            }
+
+                            break;
+                        default:
+                            break;
+                    }
                 }
+
             }
         });
         dialog.show();
@@ -488,10 +502,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     /**
      * 返回当前钱包类型
      */
-    public int getWalletType(){
+    public int getWalletType() {
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (curWallet != null){
-            switch (curWallet.getWalletType()){
+        if (curWallet != null) {
+            switch (curWallet.getWalletType()) {
                 case CacheConstants.WALLET_TYPE_BLUETOOTH:
                     //蓝牙钱包
                     return CacheConstants.WALLET_TYPE_BLUETOOTH;
