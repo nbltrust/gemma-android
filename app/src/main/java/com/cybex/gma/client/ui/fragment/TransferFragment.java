@@ -1,6 +1,8 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -22,7 +24,10 @@ import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
+import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
+import com.extropies.common.CommonUtility;
+import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -84,6 +89,21 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     private String collectionAccount = "";
     private String amount = "";
     private String memo = "";
+
+    public String getChain_id() {
+        return chain_id;
+    }
+
+    public void setChain_id(String chain_id) {
+        this.chain_id = chain_id;
+    }
+
+    private String chain_id = "";
+
+    private BlueToothWrapper serilizedThread;
+    private BlueToothWrapper signThread;
+    SerializeHandler mSerializeHandler;
+    SignHandler mSignHandler;
 
     public static TransferFragment newInstance() {
         Bundle args = new Bundle();
@@ -515,5 +535,95 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             }
         }
         return CacheConstants.WALLET_TYPE_SOFT;
+    }
+
+    /**
+     * 调用底层库进行序列化
+     * @param jsonTxStr
+     */
+    public void startJsonSerialization(String jsonTxStr){
+        mSerializeHandler = new SerializeHandler();
+        if ((serilizedThread == null) || (serilizedThread.getState() == Thread.State.TERMINATED)) {
+            serilizedThread = new BlueToothWrapper(mSerializeHandler);
+            serilizedThread.setEOSTxSerializeWrapper(jsonTxStr);
+            serilizedThread.start();
+        }
+
+    }
+    /**
+     * 调用硬件进行签名
+     */
+    public void startSign(String transaction){
+        mSignHandler = new SignHandler();
+        if ((signThread == null) || (signThread.getState() == Thread.State.TERMINATED)) {
+            signThread = new BlueToothWrapper(mSignHandler);
+            //signThread.setEOSSignWrapper();
+            signThread.start();
+        }
+
+    }
+
+    /**
+     * 构建硬件能够识别的字符串
+     * 序列化结果前面加32字节chainid，后面加32字节0
+     * @param serailizedStr
+     */
+    public String buildSignStr(String serailizedStr){
+        String prefix = chain_id;
+        String suffix = "00000000000000000000000000000000";
+        return prefix + serailizedStr + suffix;
+    }
+
+    /**
+     * 处理序列化json和签名的handler
+     */
+    class SerializeHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case BlueToothWrapper.MSG_EOS_SERIALIZE_START:
+
+                    break;
+                case BlueToothWrapper.MSG_EOS_SERIALIZE_FINISH:
+
+                    BlueToothWrapper.EOSTxSerializeReturn returnValue = (BlueToothWrapper.EOSTxSerializeReturn)msg.obj;
+                    if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        //序列化成功
+                        //LoggerManager.d("Serialize Result: " + CommonUtility.byte2hex(returnValue.getSerializeData()));
+                        String serilizedStr = CommonUtility.byte2hex(returnValue.getSerializeData());
+                        String builtStr = buildSignStr(serilizedStr);
+
+                        //把builtStr 送给设备签名
+                        startSign(builtStr);
+                    }
+                    //序列化失败
+                    LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValue.getReturnValue()));
+
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
+    class SignHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case BlueToothWrapper.MSG_EOS_SIGN_START:
+
+                    break;
+                case BlueToothWrapper.MSG_EOS_SIGN_FINISH:
+
+
+                    break;
+                default:
+                    break;
+            }
+
+        }
     }
 }

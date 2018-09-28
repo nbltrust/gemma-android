@@ -55,6 +55,13 @@ public class BlueToothWrapper extends Thread {
     public static final int WRITE_SN_WRAPPER = 33;
     public static final int RECOVER_SEED_WRAPPER = 34;
     public static final int RECOVER_ADDRESS_WRAPPER = 35;
+    public static final int SET_IMAGE_DATA_WRAPPER = 36;
+    public static final int SHOW_IMAGE_WRAPPER = 37;
+    public static final int SET_IMAGE_NAME_WRAPPER = 38;
+    public static final int GET_IMAGE_NAME_WRAPPER = 39;
+    public static final int SET_LOGO_IMAGE_WRAPPER = 40;
+    public static final int GET_IMAGE_COUNT_WRAPPER = 41;
+    public static final int EOS_SERIALIZE_WRAPPER = 42;
 
     //messages
     public static final int MSG_INIT_START = 0;
@@ -133,6 +140,20 @@ public class BlueToothWrapper extends Thread {
     public static final int MSG_RECOVER_SEED_FINISH = 68;
     public static final int MSG_RECOVER_ADDRESS_START = 69;
     public static final int MSG_RECOVER_ADDRESS_FINISH = 70;
+    public static final int MSG_SET_IMAGE_DATA_START = 71;
+    public static final int MSG_SET_IMAGE_DATA_FINISH = 72;
+    public static final int MSG_SHOW_IMAGE_START = 73;
+    public static final int MSG_SHOW_IMAGE_FINISH = 74;
+    public static final int MSG_SET_IMAGE_NAME_START = 75;
+    public static final int MSG_SET_IMAGE_NAME_FINISH = 76;
+    public static final int MSG_GET_IMAGE_NAME_START = 77;
+    public static final int MSG_GET_IMAGE_NAME_FINISH = 78;
+    public static final int MSG_SET_LOGO_IMAGE_START = 79;
+    public static final int MSG_SET_LOGO_IMAGE_FINISH = 80;
+    public static final int MSG_GET_IMAGE_COUNT_START = 81;
+    public static final int MSG_GET_IMAGE_COUNT_FINISH = 82;
+    public static final int MSG_EOS_SERIALIZE_START = 83;
+    public static final int MSG_EOS_SERIALIZE_FINISH = 84;
 
     private static Map<String, Object> m_listCommLock;
     private Object m_objCommLock;
@@ -160,6 +181,14 @@ public class BlueToothWrapper extends Thread {
     private String m_strMnes;
     private String m_strSerialNumber;
     private byte[] m_seedData;
+    private byte m_imageIndex;
+    private byte[] m_imageData;
+    private int m_imageWidth;
+    private int m_imageHeight;
+    private byte m_showMode;
+    private String m_strImageName;
+    private String m_strEOSTxString;
+
     private static Lock m_commonLock = null;
     private static boolean m_bAborting;
 
@@ -393,6 +422,17 @@ public class BlueToothWrapper extends Thread {
         public byte[] getPrivateKey() { return m_privateKey; }
 
         public byte[] getTradeAddress() { return m_tradeAddress; }
+    }
+
+    public static class EOSTxSerializeReturn {
+        private int m_returnValue;
+        private byte[] m_serializeData;
+        EOSTxSerializeReturn(int returnValue, byte[] serializeData) {
+            m_returnValue = returnValue;
+            m_serializeData = serializeData;
+        }
+        public int getReturnValue() { return m_returnValue; }
+        public byte[] getSerializeData() { return m_serializeData; }
     }
 
     private CommonUtility.enumCallback m_enumCallback = new CommonUtility.enumCallback() {
@@ -1198,6 +1238,12 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
+    public boolean setEOSTxSerializeWrapper(String strEOSTxString) {
+        m_wrapperType = EOS_SERIALIZE_WRAPPER;
+        m_strEOSTxString = strEOSTxString;
+        return true;
+    }
+
     //////////////////////////////////////////////////////////////////////////////////
     private int sendCmd() {
         Message msg;
@@ -1323,6 +1369,9 @@ public class BlueToothWrapper extends Thread {
         byte[] tradeAddress;
         int[] tradeAddressLen;
 
+        byte[] serializeData;
+        int[] serializeDataLen;
+
         switch (m_wrapperType) {
             case INIT_WRAPPER:
                 msg = m_mainHandler.obtainMessage();
@@ -1333,6 +1382,24 @@ public class BlueToothWrapper extends Thread {
 
                 msg = m_mainHandler.obtainMessage();
                 msg.what = MSG_INIT_FINISH;
+                msg.sendToTarget();
+                break;
+            case EOS_SERIALIZE_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_EOS_SERIALIZE_START;
+                msg.sendToTarget();
+                serializeData = null;
+                serializeDataLen = new int[1];
+                m_commonLock.lock();
+                iRtn = MiddlewareInterface.eos_tx_serialize(m_strEOSTxString, null, serializeDataLen);
+                if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                    serializeData = new byte[serializeDataLen[0]];
+                    iRtn = MiddlewareInterface.eos_tx_serialize(m_strEOSTxString, serializeData, serializeDataLen);
+                }
+                m_commonLock.unlock();
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_EOS_SERIALIZE_FINISH;
+                msg.obj = new EOSTxSerializeReturn(iRtn, serializeData);
                 msg.sendToTarget();
                 break;
             case ENUM_WRAPPER:

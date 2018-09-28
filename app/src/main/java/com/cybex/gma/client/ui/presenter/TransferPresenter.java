@@ -8,7 +8,6 @@ import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
-import com.cybex.gma.client.ui.fragment.BluetoothTransferFragment;
 import com.cybex.gma.client.ui.fragment.TransferFragment;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
@@ -36,7 +35,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 转账presenter
@@ -290,6 +288,14 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                                 //蓝牙钱包流程
                                 String infostr = response.body();
+                                try {
+                                    JSONObject obj = new JSONObject(infostr);
+                                    final String chain_id = obj.optString("chain_id");
+                                    LoggerManager.d("chain_id", chain_id);
+                                    getV().setChain_id(chain_id);
+                                }catch (JSONException e){
+                                    e.printStackTrace();
+                                }
                                 LoggerManager.d("config info:" + infostr);
                                 String[] keyPair = JNIUtil.createKey().split(";");
                                 //随机生成一个无用私钥用于签名
@@ -304,17 +310,15 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                                 TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
                                         TransferTransactionVO.class);
-                                TransferTransactionTmpVO tmpVO = switchVO(vo);
-                                String tmpJson = GsonUtils.objectToJson(tmpVO);
-
-                                String processedStr = getSignArgStr(tmpJson);
-                                LoggerManager.d("tmpJson with process", processedStr);
-
-                                getV().dissmisProgressDialog();
                                 if (vo != null){
-                                   //todo 转HEX
+                                    TransferTransactionTmpVO tmpVO = switchVO(vo);
+                                    String tmpJson = GsonUtils.objectToJson(tmpVO);
+                                    getV().startJsonSerialization(tmpJson);
+
+
                                 }
 
+                                getV().dissmisProgressDialog();
                             } else {
                                 //错误
                                 GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
@@ -484,6 +488,12 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
      */
     private TransferTransactionTmpVO switchVO(TransferTransactionVO oldVO){
         TransferTransactionTmpVO newVO = new TransferTransactionTmpVO();
+        /*
+        for (TransferTransactionVO.ActionsBean action : oldVO.getActions()){
+            action.setAccount("eosio");
+            action.setName("newaccount");
+        }
+        */
         newVO.setActions(oldVO.getActions());
         newVO.setContext_free_actions(oldVO.getContext_free_actions());
         newVO.setContext_free_data(new ArrayList<>());
