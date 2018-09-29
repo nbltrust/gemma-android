@@ -259,7 +259,7 @@ public class AmountUtil {
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
         int bj = b1.compareTo(b2);
-        if (bj > 0) { return true; } else { return false; }
+        return bj > 0;
     }
 
 

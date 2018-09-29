@@ -44,8 +44,8 @@ public class CommonRefreshFooter extends LinearLayout implements RefreshFooter {
     private void initView() {
         //绑定View
         View.inflate(context, R.layout.layout_refresh_footer, this);
-        tvRefresh = (TextView) findViewById(R.id.tvRefreshFooter);
-        progressRefresh = (RefreshProgressWheel) findViewById(R.id.progressRefresh);
+        tvRefresh = findViewById(R.id.tvRefreshFooter);
+        progressRefresh = findViewById(R.id.progressRefresh);
     }
 
     @Override

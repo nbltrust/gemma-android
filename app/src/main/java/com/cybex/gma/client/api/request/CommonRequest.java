@@ -51,7 +51,7 @@ public class CommonRequest<T> {
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
-                    public void accept(@NonNull Disposable disposable) throws Exception {
+                    public void accept(@NonNull Disposable disposable) {
                         //做一些操作 showLoading();
                         if (callback != null) {
                             callback.onBeforeRequest(disposable);

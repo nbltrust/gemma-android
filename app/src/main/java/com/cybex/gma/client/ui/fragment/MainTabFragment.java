@@ -57,7 +57,7 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        mBottomBar = (BottomBar) rootView.findViewById(R.id.bottomBar);
+        mBottomBar = rootView.findViewById(R.id.bottomBar);
 
         mBottomBar
                 .addItem(new BottomBarTab(_mActivity, R.drawable.ic_wallet_normal, getString(R.string.tab_wallet)))

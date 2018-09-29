@@ -316,9 +316,7 @@ class TransactionDelegate {
             }
 
             Fragment parentFragment = ((Fragment) activeFragment).getParentFragment();
-            if (dispatchBackPressedEvent((ISupportFragment) parentFragment)) {
-                return true;
-            }
+            return dispatchBackPressedEvent((ISupportFragment) parentFragment);
         }
         return false;
     }

@@ -68,20 +68,20 @@ public class TimeReceiver extends BroadcastReceiver {
         }
     }
 
-    public static interface TimeListener {
+    public interface TimeListener {
         /**
          * 时区改变
          */
-        public void onTimeZoneChanged();
+        void onTimeZoneChanged();
 
         /**
          * 设置时间
          */
-        public void onTimeChanged();
+        void onTimeChanged();
 
         /**
          * 每分钟调用
          */
-        public void onTimeTick();
+        void onTimeTick();
     }
 }

@@ -45,7 +45,7 @@ public class AsyncExecutor {
     public <T> FutureTask<T> execute(final Worker<T> worker) {
         Callable<T> call = new Callable<T>() {
             @Override
-            public T call() throws Exception {
+            public T call() {
                 return postResult(worker, worker.doInBackground());
             }
         };

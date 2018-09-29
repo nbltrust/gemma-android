@@ -22,7 +22,7 @@ public class SoftHideKeyBoardUtil {
 
     private SoftHideKeyBoardUtil(Activity activity) {
         //1､找到Activity的最外层布局控件，它其实是一个DecorView,它所用的控件就是FrameLayout
-        FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
+        FrameLayout content = activity.findViewById(android.R.id.content);
         //2､获取到setContentView放进去的View
         mChildOfContent = content.getChildAt(0);
         //3､给Activity的xml布局设置View树监听，当布局有变化，如键盘弹出或收起时，都会回调此监听

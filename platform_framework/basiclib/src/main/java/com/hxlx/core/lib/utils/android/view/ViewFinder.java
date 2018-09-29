@@ -23,7 +23,7 @@ public class ViewFinder {
         return (T) activity.findViewById(id);
     }
 
-    public static <T extends View> T getView(View view) throws Exception {
+    public static <T extends View> T getView(View view) {
         return (T) view;
     }
     /**

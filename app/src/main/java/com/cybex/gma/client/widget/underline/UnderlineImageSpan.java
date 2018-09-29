@@ -126,7 +126,7 @@ public class UnderlineImageSpan extends DynamicDrawableSpan {
 
         @Override
         public int getIntrinsicHeight() {
-            return (int) (Math.abs(mTextFontMetricsInt.ascent));
+            return Math.abs(mTextFontMetricsInt.ascent);
         }
 
         @Override

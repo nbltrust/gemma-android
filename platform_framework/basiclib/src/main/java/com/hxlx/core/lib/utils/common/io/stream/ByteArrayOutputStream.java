@@ -218,7 +218,7 @@ public class ByteArrayOutputStream extends OutputStream {
      * but it has to now due to backwards compatability)
      */
     @Override
-    public void close() throws IOException {
+    public void close() {
         //nop
     }
 

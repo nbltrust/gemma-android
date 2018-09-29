@@ -52,9 +52,7 @@ public class EmptyUtils {
       return true;
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-      if (obj instanceof SparseLongArray && ((SparseLongArray) obj).size() == 0) {
-        return true;
-      }
+        return obj instanceof SparseLongArray && ((SparseLongArray) obj).size() == 0;
     }
     return false;
   }

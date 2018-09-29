@@ -38,7 +38,7 @@ public class RxJavaManager {
     public <T> Observable<T> getDelayObservable(T value, long delay, TimeUnit unit) {
         return Observable.just(value)
                 .delay(delay, unit)
-                .compose(TransformerHelper.<T>switchSchedulers());
+                .compose(TransformerHelper.switchSchedulers());
     }
 
     public <T> Observable<T> getDelayObservable(T value, long delay) {

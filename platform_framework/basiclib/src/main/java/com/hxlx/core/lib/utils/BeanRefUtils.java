@@ -46,8 +46,8 @@ public class BeanRefUtils {
         if (!checkGetMet(methods, fieldGetName)) {
           continue;
         }
-        Method fieldGetMet = cls.getMethod(fieldGetName, new Class[] {});
-        Object fieldVal = fieldGetMet.invoke(bean, new Object[] {});
+        Method fieldGetMet = cls.getMethod(fieldGetName);
+        Object fieldVal = fieldGetMet.invoke(bean);
         String result = null;
         if (TYPE_DATE.equals(fieldType)) {
           result =

@@ -349,7 +349,7 @@ public class GestureVerifyActivity extends XActivity {
         //密码输入正确
         CORRECT(R.string.gesture_correct, R.color.grey_a5a5a5);
 
-        private Status(int strId, int colorId) {
+        Status(int strId, int colorId) {
             this.strId = strId;
             this.colorId = colorId;
         }

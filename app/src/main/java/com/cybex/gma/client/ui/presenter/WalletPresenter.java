@@ -73,11 +73,7 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                 for (int i = 0; i < eosNameList.size(); i++) {
                     String eosName = eosNameList.get(i);
                     EOSNameVO vo = new EOSNameVO();
-                    if (eosName.equals(entity.getCurrentEosName())) {
-                        vo.isChecked = true;
-                    } else {
-                        vo.isChecked = false;
-                    }
+                    vo.isChecked = eosName.equals(entity.getCurrentEosName());
 
                     vo.setEosName(eosName);
                     voList.add(vo);
@@ -107,8 +103,7 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
         Observable.combineLatest(getAccountObserver, unitPriceObserver, banlanceObserver,
                 new Function3<AccountInfo, String[], String, HomeCombineDataVO>() {
                     @Override
-                    public HomeCombineDataVO apply(AccountInfo accountInfo, String[] unitPrice, String banlance) throws
-                            Exception {
+                    public HomeCombineDataVO apply(AccountInfo accountInfo, String[] unitPrice, String banlance) {
 
                         HomeCombineDataVO vo = new HomeCombineDataVO();
                         vo.setAccountInfo(accountInfo);
@@ -122,7 +117,7 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                 }).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<HomeCombineDataVO>() {
                     @Override
-                    public void accept(HomeCombineDataVO vo) throws Exception {
+                    public void accept(HomeCombineDataVO vo) {
                         if (EmptyUtils.isNotEmpty(getV())){
                             getV().showMainInfo(vo);
                             getV().dissmisProgressDialog();
@@ -131,7 +126,7 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
                     }
                 }, new Consumer<Throwable>() {
                     @Override
-                    public void accept(Throwable throwable) throws Exception {
+                    public void accept(Throwable throwable) {
                         if (EmptyUtils.isNotEmpty(getV())){
                             getV().dissmisProgressDialog();
                         }

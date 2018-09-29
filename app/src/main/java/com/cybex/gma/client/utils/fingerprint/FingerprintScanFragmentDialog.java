@@ -84,8 +84,8 @@ public class FingerprintScanFragmentDialog extends Dialog
         //noinspection ConstantConditions
         mFingerprintDialogController = new FingerprintDialogController(
                 (FingerprintManager) getContext().getSystemService(Context.FINGERPRINT_SERVICE),
-                (ImageView) findViewById(R.id.fingerprint_icon),
-                (TextView) findViewById(R.id.fingerprint_status), this);
+                findViewById(R.id.fingerprint_icon),
+                findViewById(R.id.fingerprint_status), this);
     }
 
     private void registerListener() {

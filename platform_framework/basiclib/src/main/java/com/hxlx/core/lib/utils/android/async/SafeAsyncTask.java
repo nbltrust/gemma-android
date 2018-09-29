@@ -118,7 +118,7 @@ public abstract class SafeAsyncTask<ResultT> implements
      *             ,
      *             captured on passed to onException() if present.
      */
-    protected void onPreExecute() throws Exception {
+    protected void onPreExecute() {
     }
 
     /**
@@ -129,7 +129,7 @@ public abstract class SafeAsyncTask<ResultT> implements
      *             captured on passed to onException() if present.
      */
     @SuppressWarnings({ "UnusedDeclaration" })
-    protected void onSuccess(ResultT t) throws Exception {
+    protected void onSuccess(ResultT t) {
     }
 
     /**
@@ -251,7 +251,7 @@ public abstract class SafeAsyncTask<ResultT> implements
             }
             postToUiThreadAndWait(new Callable<Object>() {
 
-                public Object call() throws Exception {
+                public Object call() {
                     if (e instanceof InterruptedException || e instanceof InterruptedIOException)
                         parent.onInterrupted(e);
                     else
@@ -269,7 +269,7 @@ public abstract class SafeAsyncTask<ResultT> implements
             }
             postToUiThreadAndWait(new Callable<Object>() {
 
-                public Object call() throws Exception {
+                public Object call() {
                     parent.onThrowable(e);
                     return null;
                 }
@@ -279,7 +279,7 @@ public abstract class SafeAsyncTask<ResultT> implements
         protected void doFinally() throws Exception {
             postToUiThreadAndWait(new Callable<Object>() {
 
-                public Object call() throws Exception {
+                public Object call() {
                     parent.onFinally();
                     return null;
                 }

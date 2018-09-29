@@ -502,6 +502,7 @@
     <string name="import_wallet_success">导入成功</string>
     <string name="unknow_err">未知错误</string>
 
+
     <!-- EOS Err Code-->
 
     <string name="eos_err_code_3000000">EOS链异常：3000000，请稍后再试</string>
@@ -757,6 +758,17 @@
     <string name="connect_sure_battery_tip">请在WOOKONG Bio上按键以确认转账</string>
     <string name="connect_failed_tip">连接失败。请检查手机蓝牙和设备电源。</string>
     <string name="btn_connect_retry">重试连接</string>
+
+
+    <!-- WOOKONG BIO 详情页面-->
+    <string name="name">名称</string>
+    <string name="public_key">公钥</string>
+    <string name="battery_left">电量</string>
+    <string name="click_to_connect">点击连接</string>
+    <string name="click_to_format">格式化</string>
+    <string name="click_to_cancel_pair">取消配对</string>
+
+
     <!--蓝牙钱包配置end -->
 
     <!-- 助记词相关-->

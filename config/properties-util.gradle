@@ -3,7 +3,7 @@ Properties localProperties = new Properties()
 localProperties.load(project.rootProject.file('config/gradle.properties').newDataInputStream())
 
 // root/gradle.properties
-Map rootProperties = project.getProperties();
+Map rootProperties = project.getProperties()
 
 def storeFileStr = localProperties.getProperty('RELEASE_STORE_FILE',
         rootProperties.get('RELEASE_STORE_FILE', null))

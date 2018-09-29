@@ -458,7 +458,7 @@ public class BlueToothWrapper extends Thread {
 
             if (m_bAborting) {
                 m_commonLock.unlock();
-                while (m_bAborting) { ; }
+                while (m_bAborting) { }
                 m_commonLock.lock();
             }
         }
@@ -476,7 +476,7 @@ public class BlueToothWrapper extends Thread {
 
             if (m_bAborting) {
                 m_commonLock.unlock();
-                while (m_bAborting) { ; }
+                while (m_bAborting) { }
                 m_commonLock.lock();
             }
         }
@@ -489,7 +489,7 @@ public class BlueToothWrapper extends Thread {
 
         if (m_uiLock != null) {
             while (!m_uiLock.isLocked()) {
-                ; //wait ui thread to lock
+                //wait ui thread to lock
             }
 
             Message msg;
@@ -506,7 +506,7 @@ public class BlueToothWrapper extends Thread {
 
         if (m_uiLock != null) {
             while (!m_uiLock.isLocked()) {
-                ; //wait ui thread to lock
+                //wait ui thread to lock
             }
 
             Message msg;
@@ -587,7 +587,7 @@ public class BlueToothWrapper extends Thread {
             } else {
                 if (m_uiLock != null) {
                     while (!m_uiLock.isLocked()) {
-                        ; //wait ui thread to lock
+                        //wait ui thread to lock
                     }
 
                     Message msg;
@@ -635,7 +635,7 @@ public class BlueToothWrapper extends Thread {
                     showInputPINDialog();
 
                     while (!m_uiLock.isLocked()) {
-                        ; //wait ui thread to lock
+                        //wait ui thread to lock
                     }
                     m_uiLock.lock();
                 }
@@ -674,7 +674,7 @@ public class BlueToothWrapper extends Thread {
 
             if (m_bAborting) {
                 m_commonLock.unlock();
-                while (m_bAborting) { ; }
+                while (m_bAborting) { }
                 m_commonLock.lock();
             }
         }
@@ -786,9 +786,7 @@ public class BlueToothWrapper extends Thread {
             m_strDevName = strDevName;
         } else {
             m_strDevName = strDevName.substring(iOffset + 4);
-            if (m_strDevName == null) {
-                return false;
-            }
+            return m_strDevName != null;
         }
 
         return true;

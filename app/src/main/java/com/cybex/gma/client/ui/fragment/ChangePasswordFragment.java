@@ -343,11 +343,8 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     }
 
     public boolean isAllFilled() {
-        if (EmptyUtils.isEmpty(getPassword())
-                || EmptyUtils.isEmpty(getRepeatPass())) {
-            return false;
-        }
-        return true;
+        return !EmptyUtils.isEmpty(getPassword())
+                && !EmptyUtils.isEmpty(getRepeatPass());
     }
 
     public String getPassword() {
@@ -446,8 +443,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     }
 
     private boolean isPasswordMatch() {
-        if (getPassword().equals(getRepeatPass())) { return true; }
-        return false;
+        return getPassword().equals(getRepeatPass());
     }
 
     @Override

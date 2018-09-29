@@ -92,6 +92,7 @@ public class TransferRecordDetailFragment extends XFragment {
 
         //判断此交易的类型
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+
         Bundle bd = getArguments();
         if (bd != null) {
             curTransfer = getArguments().getParcelable(ParamConstants.KEY_CUR_TRANSFER);

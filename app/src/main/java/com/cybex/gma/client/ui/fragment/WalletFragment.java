@@ -633,11 +633,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
      * @return
      */
     public boolean isCurWalletBackUp() {
-        if (!EmptyUtils.isEmpty(curWallet)
-                && curWallet.getIsBackUp().equals(CacheConstants.ALREADY_BACKUP)) {
-            return true;
-        }
-        return false;
+        return !EmptyUtils.isEmpty(curWallet)
+                && curWallet.getIsBackUp().equals(CacheConstants.ALREADY_BACKUP);
     }
 
     private void showChangeEOSNameDialog() {
@@ -673,11 +670,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 if (EmptyUtils.isNotEmpty(voList)) {
                     for (int i = 0; i < voList.size(); i++) {
                         EOSNameVO vo = voList.get(i);
-                        if (i == position) {
-                            vo.isChecked = true;
-                        } else {
-                            vo.isChecked = false;
-                        }
+                        vo.isChecked = i == position;
                     }
 
                     adapter.notifyDataSetChanged();

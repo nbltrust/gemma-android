@@ -69,9 +69,7 @@ public class NetworkUtils {
     public static boolean isMobile() {
         NetworkInfo info = getNetworkInfo();
         if (info != null) {
-            if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
-                return true;
-            }
+            return info.getType() == ConnectivityManager.TYPE_MOBILE;
         }
         return false;
     }
@@ -104,9 +102,7 @@ public class NetworkUtils {
     public static boolean isWifi() {
         NetworkInfo info = getNetworkInfo();
         if (info != null) {
-            if (info.getType() == ConnectivityManager.TYPE_WIFI) {
-                return true;
-            }
+            return info.getType() == ConnectivityManager.TYPE_WIFI;
         }
         return false;
     }

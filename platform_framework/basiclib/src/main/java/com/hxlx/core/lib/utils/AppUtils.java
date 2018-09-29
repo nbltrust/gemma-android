@@ -63,9 +63,7 @@ public class AppUtils {
         List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
         if (tasksInfo.size() > 0) {
             // 应用程序位于堆栈的顶层
-            if (tasksInfo.get(0).topActivity.getPackageName().equals(packageName)) {
-                return true;
-            }
+            return tasksInfo.get(0).topActivity.getPackageName().equals(packageName);
         }
         return false;
     }

@@ -48,15 +48,15 @@ public class EnsureDialog {
   public EnsureDialog builder() {
     final View view =
         LayoutInflater.from(context).inflate(R.layout.dialog_ensure_layout, null, false);
-    LinearLayout mLinearDialog = ((LinearLayout) view.findViewById(R.id.linear_dialog));
-    mLinearBottom = ((LinearLayout) view.findViewById(R.id.linear_bottom));
+    LinearLayout mLinearDialog = view.findViewById(R.id.linear_dialog);
+    mLinearBottom = view.findViewById(R.id.linear_bottom);
 
-    mIvIcon = ((ImageView) view.findViewById(R.id.iv_icon));
-    mTvTitle = ((TextView) view.findViewById(R.id.tv_title));
-    mTvSubTitle = ((TextView) view.findViewById(R.id.tv_sub_title));
-    mTvSure = ((TextView) view.findViewById(R.id.tv_sure));
-    mTvOK = ((TextView) view.findViewById(R.id.tv_ok));
-    mTvCancel = ((TextView) view.findViewById(R.id.tv_cancel));
+    mIvIcon = view.findViewById(R.id.iv_icon);
+    mTvTitle = view.findViewById(R.id.tv_title);
+    mTvSubTitle = view.findViewById(R.id.tv_sub_title);
+    mTvSure = view.findViewById(R.id.tv_sure);
+    mTvOK = view.findViewById(R.id.tv_ok);
+    mTvCancel = view.findViewById(R.id.tv_cancel);
     dialog.setContentView(view);
     mLinearDialog.setLayoutParams(new FrameLayout.LayoutParams(((int) (display.getWidth() * 0.80)),
         LinearLayout.LayoutParams.WRAP_CONTENT));

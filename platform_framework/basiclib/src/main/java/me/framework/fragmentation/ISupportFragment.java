@@ -26,7 +26,7 @@ public interface ISupportFragment {
 
     @IntDef({STANDARD, SINGLETOP, SINGLETASK})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface LaunchMode {
+    @interface LaunchMode {
     }
 
     SupportFragmentDelegate getSupportDelegate();

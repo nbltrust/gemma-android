@@ -62,7 +62,7 @@ public class TextRoundCornerProgressBar extends BaseRoundCornerProgressBar imple
 
     @Override
     protected void initView() {
-        tvProgress = (TextView) findViewById(R.id.tv_progress);
+        tvProgress = findViewById(R.id.tv_progress);
         tvProgress.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 

@@ -111,9 +111,7 @@ public class PackageUtil {
         List<ActivityManager.RunningTaskInfo> taskList = am.getRunningTasks(1);
         if (taskList != null && !taskList.isEmpty()) {
             ComponentName topActivity = taskList.get(0).topActivity;
-            if (topActivity != null && !topActivity.getPackageName().equals(context.getPackageName())) {
-                return true;
-            }
+            return topActivity != null && !topActivity.getPackageName().equals(context.getPackageName());
         }
         return false;
     }

@@ -64,7 +64,7 @@ public class ToastPrompt {
     public static void showOkToast(Context context, String text) {
 
         View view = View.inflate(context, R.layout.toast_view_prompt, null);
-        TextView tv = (TextView) view.findViewById(R.id.tv_toast_prompt);
+        TextView tv = view.findViewById(R.id.tv_toast_prompt);
         tv.setText(text);
 
         Toast toast = getToast(context, view);
@@ -78,7 +78,7 @@ public class ToastPrompt {
      */
     public static void showErrorToast(Context context, String text) {
         View view = View.inflate(context, R.layout.toast_view_prompt, null);
-        TextView tv = (TextView) view.findViewById(R.id.tv_toast_prompt);
+        TextView tv = view.findViewById(R.id.tv_toast_prompt);
         tv.setText(text);
         tv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.toast_show_error, 0, 0, 0);
 
@@ -93,7 +93,7 @@ public class ToastPrompt {
      */
     public static void showWarnToast(Context context, String text) {
         View view = View.inflate(context, R.layout.toast_view_prompt, null);
-        TextView tv = (TextView) view.findViewById(R.id.tv_toast_prompt);
+        TextView tv = view.findViewById(R.id.tv_toast_prompt);
         tv.setText(text);
         tv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.toast_show_warn, 0, 0, 0);
 
@@ -109,7 +109,7 @@ public class ToastPrompt {
      */
     public static void showVerboseToast(Context context, String text) {
         View view = View.inflate(context, R.layout.toast_view_prompt, null);
-        TextView tv = (TextView) view.findViewById(R.id.tv_toast_prompt);
+        TextView tv = view.findViewById(R.id.tv_toast_prompt);
         tv.setText(text);
         tv.setCompoundDrawables(null, null, null, null);
 

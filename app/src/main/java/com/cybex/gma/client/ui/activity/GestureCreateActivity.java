@@ -190,7 +190,7 @@ public class GestureCreateActivity extends XActivity {
         //二次确认正确
         CONFIRMCORRECT(R.string.create_gesture_confirm_correct, R.color.dark_slate_blue);
 
-        private Status(int strId, int colorId) {
+        Status(int strId, int colorId) {
             this.strId = strId;
             this.colorId = colorId;
         }

@@ -162,11 +162,7 @@ public class Base64Util {
             }
         }
 
-        if ((var10.length - equalsNum) % 4 != 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return (var10.length - equalsNum) % 4 == 0;
     }
 
     public static ByteBuffer tryAllocate(ByteBuffer buffer, int length) {
@@ -184,7 +180,6 @@ public class Base64Util {
         } else {
             int capacity;
             for (capacity = 16; length < capacity; capacity <<= 1) {
-                ;
             }
 
             return capacity;

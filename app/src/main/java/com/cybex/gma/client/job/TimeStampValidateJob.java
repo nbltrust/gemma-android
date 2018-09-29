@@ -285,7 +285,7 @@ public class TimeStampValidateJob {
             AccountInfo.PermissionsBean.RequiredAuthBean requiredAuthBean = permissionsBean.getRequired_auth();
             List<AccountInfo.PermissionsBean.RequiredAuthBean.KeysBean> keysBeanList = requiredAuthBean.getKeys();
             String public_key = keysBeanList.get(0).getKey();
-            if (pubKey.equals(public_key))return true;
+            return pubKey.equals(public_key);
         }
         return false;
     }

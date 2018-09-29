@@ -42,10 +42,7 @@ public class CPUInfoUtil {
             @Override
             public boolean accept(File pathname) {
                 //Check if filename is "cpu", followed by a single digit number
-                if (Pattern.matches(CPU_FILTER, pathname.getName())) {
-                    return true;
-                }
-                return false;
+                return Pattern.matches(CPU_FILTER, pathname.getName());
             }
         }
         try {

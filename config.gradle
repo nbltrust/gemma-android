@@ -1,5 +1,5 @@
-public static def increasedVersionCode() {
-    return new Date().format("YYMMddHHmm").toInteger();
+static def increasedVersionCode() {
+    return new Date().format("YYMMddHHmm").toInteger()
 }
 
 

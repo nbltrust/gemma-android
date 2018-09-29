@@ -176,7 +176,7 @@ public class TitleCompatibilityUtil {
 
         try {
             Class e = Class.forName("android.os.SystemProperties");
-            Method m = e.getMethod("get", new Class[]{String.class});
+            Method m = e.getMethod("get", String.class);
             String navBarOverride = (String) m.invoke(e, new Object[]{"qemu.hw.mainkeys"});
             hasNavigationBar = "0".equals(navBarOverride);
         } catch (Exception var5) {
@@ -272,22 +272,18 @@ public class TitleCompatibilityUtil {
     public static boolean supportStatusBarLightMode(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = ((Activity) context).getWindow();
-            if ( MIUISetStatusBarLightMode(window, true)
+            return MIUISetStatusBarLightMode(window, true)
                     || FlymeSetStatusBarLightMode(window, true)
-                    || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                return true;
-            }
+                    || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
         }
         return false;
     }
 
     public static boolean supportStatusBarLightMode(Window window) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if ( MIUISetStatusBarLightMode(window, true)
+            return MIUISetStatusBarLightMode(window, true)
                     || FlymeSetStatusBarLightMode(window, true)
-                    || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                return true;
-            }
+                    || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
         }
         return false;
     }

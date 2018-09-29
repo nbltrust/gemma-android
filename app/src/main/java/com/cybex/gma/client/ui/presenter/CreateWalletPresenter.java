@@ -187,8 +187,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
     }
 
     public boolean isPasswordMatch(){
-        if (getV().getPassword().equals(getV().getRepeatPassword()))return true;
-        return false;
+        return getV().getPassword().equals(getV().getRepeatPassword());
     }
 
     /**

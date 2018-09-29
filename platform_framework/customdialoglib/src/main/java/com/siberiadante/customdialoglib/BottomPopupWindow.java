@@ -41,12 +41,12 @@ public class BottomPopupWindow {
     public BottomPopupWindow builder() {
         View view = LayoutInflater.from(context).inflate(R.layout.popup_window_bottom_layout, null);
         view.setMinimumWidth(display.getWidth());
-        sLayout_content = (ScrollView) view.findViewById(R.id.scroll_view_layout_content);
-        lLayout_content = (LinearLayout) view
+        sLayout_content = view.findViewById(R.id.scroll_view_layout_content);
+        lLayout_content = view
                 .findViewById(R.id.layout_popup_window_content);
-        txt_title = (TextView) view.findViewById(R.id.tv_popup_window_title);
+        txt_title = view.findViewById(R.id.tv_popup_window_title);
         view_line = view.findViewById(R.id.view_line);
-        txt_cancel = (TextView) view.findViewById(R.id.tv_popup_window_cancel);
+        txt_cancel = view.findViewById(R.id.tv_popup_window_cancel);
         txt_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +117,7 @@ public class BottomPopupWindow {
             SheetItem sheetItem = sheetItemList.get(i);
             String strItem = sheetItem.name;
             SheetItemColor color = sheetItem.color;
-            final OnSheetItemClickListener listener = (OnSheetItemClickListener) sheetItem.itemClickListener;
+            final OnSheetItemClickListener listener = sheetItem.itemClickListener;
             TextView textView = new TextView(context);
             textView.setText(strItem);
             textView.setTextSize(18);
@@ -202,7 +202,7 @@ public class BottomPopupWindow {
 
         private String name;
 
-        private SheetItemColor(String name) {
+        SheetItemColor(String name) {
             this.name = name;
         }
 

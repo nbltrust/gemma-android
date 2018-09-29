@@ -298,6 +298,7 @@
 
         </activity>
 
+        <!-- 导入蓝牙钱包界面 -->
         <activity
             android:name=".ui.activity.BluetoothImportWalletActivity"
             android:configChanges="layoutDirection|locale"
@@ -305,7 +306,14 @@
 
         </activity>
 
+        <!-- 蓝牙钱包详情界面 -->
+        <activity android:name=".ui.activity.BluetoothWalletDetailActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
 
+        </activity>
+
+        <!-- 扫描蓝牙设备界面 -->
         <activity
             android:name=".ui.activity.BluetoothScanResultDialogActivity"
             android:configChanges="layoutDirection|locale"

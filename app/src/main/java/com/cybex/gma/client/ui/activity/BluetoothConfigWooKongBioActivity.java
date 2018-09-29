@@ -431,15 +431,11 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
     }
 
     public boolean isPasswordMatch() {
-        if (getPassword().equals(getRepeatPassword())) { return true; }
-        return false;
+        return getPassword().equals(getRepeatPassword());
     }
 
     public boolean isPasswordLengthValid() {
-        if (getPassword().length() >= 8 && getRepeatPassword().length() >= 8) {
-            return true;
-        }
-        return false;
+        return getPassword().length() >= 8 && getRepeatPassword().length() >= 8;
     }
 
 

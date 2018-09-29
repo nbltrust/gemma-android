@@ -491,11 +491,7 @@ public class DateUtil {
     public static boolean isSameYear(String dateStr, String oldFormat) {
         Date date = str2date(dateStr, oldFormat);
         Date curDate = new Date();
-        if (curDate.getYear() == date.getYear()) {
-            return true;
-        } else {
-            return false;
-        }
+        return curDate.getYear() == date.getYear();
     }
 
     public static String formatMillisTime(long timeMillis, String pattern) {

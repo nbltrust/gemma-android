@@ -421,7 +421,7 @@ public class LabelsView extends ViewGroup implements View.OnClickListener {
             if (mSelectType != SelectType.NONE) {
                 if (label.isSelected()) {
                     if (mSelectType != SelectType.SINGLE_IRREVOCABLY
-                            && !mCompulsorys.contains((Integer) label.getTag(KEY_POSITION))) {
+                            && !mCompulsorys.contains(label.getTag(KEY_POSITION))) {
                         setLabelSelect(label, false);
                     }
                 } else if (mSelectType == SelectType.SINGLE || mSelectType == SelectType.SINGLE_IRREVOCABLY) {
@@ -445,7 +445,7 @@ public class LabelsView extends ViewGroup implements View.OnClickListener {
             if (isSelect) {
                 mSelectLabels.add((Integer) label.getTag(KEY_POSITION));
             } else {
-                mSelectLabels.remove((Integer) label.getTag(KEY_POSITION));
+                mSelectLabels.remove(label.getTag(KEY_POSITION));
             }
             if (mLabelSelectChangeListener != null) {
                 mLabelSelectChangeListener.onLabelSelectChange(label, label.getTag(KEY_DATA),

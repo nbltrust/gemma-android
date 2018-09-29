@@ -84,7 +84,7 @@ public class IconRoundCornerProgressBar extends BaseRoundCornerProgressBar imple
 
     @Override
     protected void initView() {
-        ivProgressIcon = (ImageView) findViewById(R.id.iv_progress_icon);
+        ivProgressIcon = findViewById(R.id.iv_progress_icon);
         ivProgressIcon.setOnClickListener(this);
     }
 
@@ -342,6 +342,6 @@ public class IconRoundCornerProgressBar extends BaseRoundCornerProgressBar imple
 
     public interface OnIconClickListener {
 
-        public void onIconClick();
+        void onIconClick();
     }
 }

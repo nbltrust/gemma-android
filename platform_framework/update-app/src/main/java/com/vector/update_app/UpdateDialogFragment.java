@@ -135,21 +135,21 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
     private void initView(View view) {
         //提示内容
-        mContentTextView = (TextView) view.findViewById(R.id.tv_update_info);
+        mContentTextView = view.findViewById(R.id.tv_update_info);
         //标题
-        mTitleTextView = (TextView) view.findViewById(R.id.tv_title);
+        mTitleTextView = view.findViewById(R.id.tv_title);
         //更新按钮
-        mUpdateOkButton = (Button) view.findViewById(R.id.btn_ok);
+        mUpdateOkButton = view.findViewById(R.id.btn_ok);
         //进度条
-        mNumberProgressBar = (NumberProgressBar) view.findViewById(R.id.npb);
+        mNumberProgressBar = view.findViewById(R.id.npb);
         //关闭按钮
-        mIvClose = (ImageView) view.findViewById(R.id.iv_close);
+        mIvClose = view.findViewById(R.id.iv_close);
         //关闭按钮+线 的整个布局
-        mLlClose = (LinearLayout) view.findViewById(R.id.ll_close);
+        mLlClose = view.findViewById(R.id.ll_close);
         //顶部图片
-        mTopIv = (ImageView) view.findViewById(R.id.iv_top);
+        mTopIv = view.findViewById(R.id.iv_top);
         //忽略
-        mIgnore = (TextView) view.findViewById(R.id.tv_ignore);
+        mIgnore = view.findViewById(R.id.tv_ignore);
 
     }
 

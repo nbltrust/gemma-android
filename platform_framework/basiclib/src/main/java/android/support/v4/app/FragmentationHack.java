@@ -107,7 +107,7 @@ public class FragmentationHack {
         return fragments;
     }
 
-    private static Object getValue(Object object, String fieldName) throws Exception {
+    private static Object getValue(Object object, String fieldName) {
         Field field;
         Class<?> clazz = object.getClass();
         try {

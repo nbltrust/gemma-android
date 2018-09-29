@@ -597,12 +597,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
      * @return
      */
     public boolean isAllTextFilled() {
-        if (EmptyUtils.isEmpty(getPassword())
-                || EmptyUtils.isEmpty(getRepeatPassword())
-                || EmptyUtils.isEmpty(getEOSUserName())) {
-            return false;
-        }
-        return true;
+        return !EmptyUtils.isEmpty(getPassword())
+                && !EmptyUtils.isEmpty(getRepeatPassword())
+                && !EmptyUtils.isEmpty(getEOSUserName());
     }
 
     public void setEditTextHintStyle(EditText editText, int resId) {

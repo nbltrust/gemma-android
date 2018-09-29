@@ -58,14 +58,10 @@ public class FingerprintScanHelper {
 
 
     public boolean isDeviceSupported() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M
-                || fingerprintManager == null
-                || keyguardManager == null
-                || !fingerprintManager.isHardwareDetected()) {
-            return false;
-        }
-
-        return true;
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && fingerprintManager != null
+                && keyguardManager != null
+                && fingerprintManager.isHardwareDetected();
     }
 
     public void startAuth(OnAuthResultListener listener, boolean cancelAble, boolean canTouchOutsideCancel) {

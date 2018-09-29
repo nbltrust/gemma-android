@@ -18,7 +18,7 @@ class Graphics(renderer: Renderer) {
                                 points[x].x,
                                 points[x].y
                         )
-                );
+                )
             }
         } else {
             for (x in i downTo 0) {
@@ -27,7 +27,7 @@ class Graphics(renderer: Renderer) {
                                 points[x].x,
                                 points[x].y
                         )
-                );
+                )
             }
         }
         this._renderer.addPolygon(transformedPoints)
@@ -58,8 +58,8 @@ class Graphics(renderer: Renderer) {
             Point(x, y)
         ))
         //original splice method did not use point objects, and needed to delete two elements
-        points.removeAt(floor(r).toInt() % 4);
-        this.addPolygon(points, invert);
+        points.removeAt(floor(r).toInt() % 4)
+        this.addPolygon(points, invert)
     }
 
     fun addRhombus(x: Float, y: Float, w: Float, h: Float, invert: Boolean = false) {

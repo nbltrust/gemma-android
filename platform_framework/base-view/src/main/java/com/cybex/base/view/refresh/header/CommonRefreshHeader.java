@@ -44,9 +44,9 @@ public class CommonRefreshHeader extends LinearLayout implements RefreshHeader {
     private void initView() {
         //绑定View
         View.inflate(context, R.layout.layout_refresh_header, this);
-        ivRefresh = (ImageView) findViewById(R.id.ivRefreshArrow);
-        tvRefresh = (TextView) findViewById(R.id.tvRefreshHeader);
-        progressRefresh = (RefreshProgressWheel) findViewById(R.id.progressRefresh);
+        ivRefresh = findViewById(R.id.ivRefreshArrow);
+        tvRefresh = findViewById(R.id.tvRefreshHeader);
+        progressRefresh = findViewById(R.id.progressRefresh);
     }
 
     @Override

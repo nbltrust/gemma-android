@@ -102,7 +102,7 @@ public class LibValidateJob {
 
    static Observable<String[]> observableTransaction = Observable.create(new ObservableOnSubscribe<String[]>() {
         @Override
-        public void subscribe(ObservableEmitter<String[]> emitter) throws Exception {
+        public void subscribe(ObservableEmitter<String[]> emitter) {
             getTransaction(new StringCallback() {
                 @Override
                 public void onSuccess(Response<String> response) {
@@ -149,7 +149,7 @@ public class LibValidateJob {
 
    static Observable<int[]> observableConfigInfo = Observable.create(new ObservableOnSubscribe<int[]>() {
         @Override
-        public void subscribe(ObservableEmitter<int[]> emitter) throws Exception {
+        public void subscribe(ObservableEmitter<int[]> emitter) {
             int[] result = new int[2];
 
             getConfigInfo(new StringCallback() {
@@ -193,7 +193,7 @@ public class LibValidateJob {
                     @Override
                     public Integer apply(
                             String[] getTResult,
-                            int[] getInfoResult) throws Exception {
+                            int[] getInfoResult) {
                         if (EmptyUtils.isEmpty(getInfoResult)) { return STATUS_FAILED; }
                         if (EmptyUtils.isEmpty(getTResult)) { return STATUS_FAILED; }
 
@@ -226,7 +226,7 @@ public class LibValidateJob {
                 .subscribe(new Consumer<Integer>() {
                     // 成功返回数据时调用
                     @Override
-                    public void accept(Integer combine_infro) throws Exception {
+                    public void accept(Integer combine_infro) {
                         // 结合显示2个网络请求的数据结果
                         switch (combine_infro.intValue()) {
                             case STATUS_FAILED:
@@ -263,7 +263,7 @@ public class LibValidateJob {
                     }
                 }, new Consumer<Throwable>() {
                     @Override
-                    public void accept(Throwable throwable) throws Exception {
+                    public void accept(Throwable throwable) {
                         //TODO  网络请求错误时相关处理
                     }
                 });

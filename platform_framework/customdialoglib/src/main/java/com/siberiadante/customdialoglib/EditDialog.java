@@ -37,12 +37,12 @@ public class EditDialog {
 
     public EditDialog builder() {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_alert_edit, null);
-        mLinear_layout = (LinearLayout) view.findViewById(R.id.linear_alert_dialog_bg);
-        mTvTitle = (TextView) view.findViewById(R.id.tv_alert_dialog_title);
-        mEdtContent = (EditText) view.findViewById(R.id.edt_alert_dialog_content);
-        btn_neg = (Button) view.findViewById(R.id.btn_alert_dialog_cancel);
-        btn_pos = (Button) view.findViewById(R.id.btn_alert_dialog_sure);
-        img_line = (ImageView) view.findViewById(R.id.img_alert_dialog_line);
+        mLinear_layout = view.findViewById(R.id.linear_alert_dialog_bg);
+        mTvTitle = view.findViewById(R.id.tv_alert_dialog_title);
+        mEdtContent = view.findViewById(R.id.edt_alert_dialog_content);
+        btn_neg = view.findViewById(R.id.btn_alert_dialog_cancel);
+        btn_pos = view.findViewById(R.id.btn_alert_dialog_sure);
+        img_line = view.findViewById(R.id.img_alert_dialog_line);
         dialog = new Dialog(context, R.style.ActionGeneralDialog);
         dialog.setContentView(view);
         mLinear_layout.setLayoutParams(new FrameLayout.LayoutParams((int) (display.getWidth() * 0.85),

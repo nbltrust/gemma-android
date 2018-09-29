@@ -617,7 +617,7 @@ public class LockPatternView extends View {
         //show selected pattern normal
         NORMAL,
         //show selected pattern error
-        ERROR;
+        ERROR
     }
 
     /**
@@ -720,11 +720,11 @@ public class LockPatternView extends View {
     /**
      * callback interface
      */
-    public static interface OnPatternListener {
+    public interface OnPatternListener {
 
-        public void onPatternStart();
+        void onPatternStart();
 
-        public void onPatternComplete(List<Cell> cells);
+        void onPatternComplete(List<Cell> cells);
     }
 
     public class Cell {

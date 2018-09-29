@@ -4,7 +4,7 @@ class SvgWriter(size: Int) {
     val size = size
     var _s = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"" +
                 size + "\" height=\"" + size + "\" viewBox=\"0 0 " +
-                size + ' ' + size + "\" preserveAspectRatio=\"xMidYMid meet\">";
+                size + ' ' + size + "\" preserveAspectRatio=\"xMidYMid meet\">"
 
     fun setBackground(fillColor: String, opacity: Float?) {
         opacity?.let {

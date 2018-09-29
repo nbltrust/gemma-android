@@ -16,11 +16,7 @@ public class NoDoubleClick {
     public synchronized static boolean isDoubleClick() {
         long currentTime = System.currentTimeMillis();
         boolean isClick2;
-        if (currentTime - lastClickTime > SPACE_TIME) {
-            isClick2 = false;
-        } else {
-            isClick2 = true;
-        }
+        isClick2 = currentTime - lastClickTime <= SPACE_TIME;
         lastClickTime = currentTime;
         return isClick2;
     }

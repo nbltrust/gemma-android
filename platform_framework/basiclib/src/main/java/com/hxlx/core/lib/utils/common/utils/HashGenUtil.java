@@ -59,7 +59,7 @@ public class HashGenUtil {
   }
 
 
-  public static String checksumMD5(File aFile) throws FileNotFoundException, IOException {
+  public static String checksumMD5(File aFile) {
     MessageDigest digest = null;
     String output;
 
@@ -194,7 +194,7 @@ public class HashGenUtil {
    * @throws FileNotFoundException
    * @throws IOException
    */
-  public static long checksumCrc32(File file) throws FileNotFoundException, IOException {
+  public static long checksumCrc32(File file) throws IOException {
     CRC32 checkSummer = new CRC32();
     CheckedInputStream cis = null;
 

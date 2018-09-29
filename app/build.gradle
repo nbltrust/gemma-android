@@ -272,6 +272,7 @@ dependencies {
     implementation project(':platform_framework:smart-scheduler')
 
     implementation(name:'bluetoothlib-release', ext:'aar')
+    //implementation(name:'bluetoothlib-debug3', ext:'aar')
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 

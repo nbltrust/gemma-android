@@ -18,6 +18,7 @@ import com.cybex.gma.client.ui.activity.BluetoothBackupMneGuideActivity;
 import com.cybex.gma.client.ui.activity.BluetoothConfigWooKongBioActivity;
 import com.cybex.gma.client.ui.activity.BluetoothPairActivity;
 import com.cybex.gma.client.ui.activity.BluetoothSettingFPActivity;
+import com.cybex.gma.client.ui.activity.BluetoothWalletDetailActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
 import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
@@ -241,6 +242,16 @@ public final class UISkipMananger {
 
     }
 
+
+    /**
+     * 跳转到蓝牙钱包管理界面
+     *
+     * @param context
+     * @param bd
+     */
+    public static void skipBluetoothWalletDetailActivity(Activity context, Bundle bd) {
+        launchIntent(context, BluetoothWalletDetailActivity.class, bd);
+    }
 
     /**
      * 跳转到助记词

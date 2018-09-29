@@ -132,14 +132,22 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
         }
     }
 
+    @OnClick({R.id.superTextView_card_record_hard, R.id.bluetooth_device_layout})
+    public void goToSeeRecord(View v) {
+        switch (v.getId()){
+            case R.id.superTextView_card_record_hard:
+                UISkipMananger.launchTransferRecord(getActivity());
+                break;
+            case R.id.bluetooth_device_layout:
+                Bundle bundle = new Bundle();
+                UISkipMananger.skipBluetoothWalletDetailActivity(getActivity(), bundle);
+                break;
+        }
+    }
+
     @Override
     public boolean useEventBus() {
         return true;
-    }
-
-    @OnClick(R.id.superTextView_card_record_hard)
-    public void goToSeeRecord() {
-        UISkipMananger.launchTransferRecord(getActivity());
     }
 
     public void goToDelegate() {
@@ -551,11 +559,8 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
      * @return
      */
     public boolean isCurWalletBackUp() {
-        if (!EmptyUtils.isEmpty(curWallet)
-                && curWallet.getIsBackUp().equals(CacheConstants.ALREADY_BACKUP)) {
-            return true;
-        }
-        return false;
+        return !EmptyUtils.isEmpty(curWallet)
+                && curWallet.getIsBackUp().equals(CacheConstants.ALREADY_BACKUP);
     }
 
     private void showChangeEOSNameDialog() {
@@ -591,11 +596,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
                 if (EmptyUtils.isNotEmpty(voList)) {
                     for (int i = 0; i < voList.size(); i++) {
                         EOSNameVO vo = voList.get(i);
-                        if (i == position) {
-                            vo.isChecked = true;
-                        } else {
-                            vo.isChecked = false;
-                        }
+                        vo.isChecked = i == position;
                     }
 
                     adapter.notifyDataSetChanged();

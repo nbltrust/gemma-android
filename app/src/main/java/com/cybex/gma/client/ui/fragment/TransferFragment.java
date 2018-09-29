@@ -38,6 +38,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.DecimalFormat;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -104,6 +105,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     private BlueToothWrapper signThread;
     SerializeHandler mSerializeHandler;
     SignHandler mSignHandler;
+    protected static ReentrantLock m_uiLock;
 
     public static TransferFragment newInstance() {
         Bundle args = new Bundle();
@@ -227,6 +229,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        m_uiLock = new ReentrantLock();
         WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
         WalletEntity entity = dao.getCurrentWalletEntity();
         if (entity != null && getWalletType() == CacheConstants.WALLET_TYPE_BLUETOOTH) {
@@ -556,11 +559,12 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     public void startSign(String transaction){
         mSignHandler = new SignHandler();
         if ((signThread == null) || (signThread.getState() == Thread.State.TERMINATED)) {
+            int[] derivePath = {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000};
             signThread = new BlueToothWrapper(mSignHandler);
-            //signThread.setEOSSignWrapper();
+            byte[] transaction_bytes = transaction.getBytes();
+            signThread.setEOSSignWrapper(0,0, m_uiLock, derivePath, transaction_bytes);
             signThread.start();
         }
-
     }
 
     /**
@@ -591,8 +595,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         //序列化成功
                         //LoggerManager.d("Serialize Result: " + CommonUtility.byte2hex(returnValue.getSerializeData()));
-                        String serilizedStr = CommonUtility.byte2hex(returnValue.getSerializeData());
-                        String builtStr = buildSignStr(serilizedStr);
+                        String serializedStr = CommonUtility.byte2hex(returnValue.getSerializeData());
+                        String builtStr = buildSignStr(serializedStr);
 
                         //把builtStr 送给设备签名
                         startSign(builtStr);
@@ -618,6 +622,11 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     break;
                 case BlueToothWrapper.MSG_EOS_SIGN_FINISH:
 
+                    BlueToothWrapper.SignReturnValue returnValue = (BlueToothWrapper.SignReturnValue)msg.obj;
+                    if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        String strSignature = new String(returnValue.getSignature());
+                        LoggerManager.d("\nSignature Value: " + strSignature);
+                    }
 
                     break;
                 default:

@@ -152,8 +152,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
     }
 
     public boolean isPasswordMatch(){
-        if (getV().getPassword().equals(getV().getRepeatPass()))return true;
-        return false;
+        return getV().getPassword().equals(getV().getRepeatPass());
     }
 
 
@@ -278,7 +277,7 @@ public class ImportWalletConfigPresenter extends XPresenter<ImportWalletConfigFr
             AccountInfo.PermissionsBean.RequiredAuthBean requiredAuthBean = permissionsBean.getRequired_auth();
             List<AccountInfo.PermissionsBean.RequiredAuthBean.KeysBean> keysBeanList = requiredAuthBean.getKeys();
             String public_key = keysBeanList.get(0).getKey();
-            if (pubKey.equals(public_key))return true;
+            return pubKey.equals(public_key);
         }
         return false;
     }

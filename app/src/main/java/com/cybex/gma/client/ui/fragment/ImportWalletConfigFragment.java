@@ -460,11 +460,8 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
      * @return
      */
     public boolean isAllFilled() {
-        if (EmptyUtils.isEmpty(getPassword())
-                || EmptyUtils.isEmpty(getRepeatPass())) {
-            return false;
-        }
-        return true;
+        return !EmptyUtils.isEmpty(getPassword())
+                && !EmptyUtils.isEmpty(getRepeatPass());
     }
 
     /**

@@ -21,7 +21,7 @@ class Jdenticon {
                     size.toFloat(),
                     padding,
                     getCurrentConfig()
-            );
+            )
             return writer.toString()
         }
 
