@@ -115,11 +115,10 @@ public class BluetoothWalletDetailActivity extends XActivity {
                         dissmisProgressDialog();
 
                         contextHandle = returnValue.getContextHandle();
-                        /*
+
                         ContextHandleEvent event = new ContextHandleEvent();
                         event.setContextHanle(contextHandle);
                         EventBusProvider.postSticky(event);
-                        */
 
                         //Intent intent = new Intent(BluetoothWalletDetailActivity.this, MainTabActivity.class);
                         //intent.putExtra("contextHandle", contextHandle);
@@ -127,8 +126,8 @@ public class BluetoothWalletDetailActivity extends XActivity {
                         //intent.putExtra("devIndex", 0);
 
                         Bundle bundle = new Bundle();
-                        bundle.putLong("contextHandle", contextHandle);
-                        LoggerManager.d("contextHandle at Post", contextHandle);
+                        //bundle.putLong("contextHandle", contextHandle);
+                        //LoggerManager.d("contextHandle at Post", contextHandle);
                         UISkipMananger.launchHome(BluetoothWalletDetailActivity.this, bundle);
                         /*
                         if ((getDeviceInfoThread == null) || (getDeviceInfoThread.getState()

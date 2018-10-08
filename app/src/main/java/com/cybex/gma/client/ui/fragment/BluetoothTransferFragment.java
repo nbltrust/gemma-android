@@ -19,6 +19,7 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.dao.WalletEntityDao;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
+import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
@@ -228,17 +229,17 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
         }
     }
 
-    /*
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onContextHandleRecieved(ContextHandleEvent event){
         mContextHandle = event.getContextHanle();
     }
-    */
+
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mContextHandle = getArguments().getLong("contextHandle");
-        LoggerManager.d("contextHandle at BluetoothTransferFragment", mContextHandle);
+        //mContextHandle = getArguments().getLong("contextHandle");
+        //LoggerManager.d("contextHandle at BluetoothTransferFragment", mContextHandle);
         m_uiLock = new ReentrantLock();
         WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
         WalletEntity entity = dao.getCurrentWalletEntity();
