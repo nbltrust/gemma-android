@@ -164,7 +164,7 @@ public class GestureVerifyActivity extends XActivity {
                             @Override
                             public void onSuccess() {
                                 //指纹验证成功，直接跳转到主页
-                                UISkipMananger.launchHome(GestureVerifyActivity.this);
+                                UISkipMananger.launchHome(GestureVerifyActivity.this, new Bundle());
                                 finish();
                             }
 
@@ -307,7 +307,7 @@ public class GestureVerifyActivity extends XActivity {
                 break;
             case ParamConstants.GESTURE_SKIP_TYPE_LOGIN_VERIFY:
                 //登录进入跳转逻辑
-                UISkipMananger.launchHome(this);
+                UISkipMananger.launchHome(this, new Bundle());
                 finish();
                 break;
             case ParamConstants.GESTURE_SKIP_TYPE_CLOSE:

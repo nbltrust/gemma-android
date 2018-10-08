@@ -19,6 +19,7 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.dao.WalletEntityDao;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
+import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
@@ -29,7 +30,9 @@ import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.ContextUtils;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomFullDialog;
@@ -55,6 +58,7 @@ import butterknife.Unbinder;
  */
 public class TransferFragment extends XFragment<TransferPresenter> {
 
+    protected static ReentrantLock m_uiLock;
     @BindView(R.id.icon_receiver)
     TextView iconReceiver;
     @BindView(R.id.view_divider)
@@ -85,11 +89,28 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @BindView(R.id.iv_transfer_memo_clear) ImageView ivTransferMemoClear;
     @BindView(R.id.imv_wookong_logo) ImageView imvWookongLogo;
     CustomFullDialog dialog = null;
+    SerializeHandler mSerializeHandler;
+    SignHandler mSignHandler;
     private String maxValue = "";
     private String currentEOSName = "";
     private String collectionAccount = "";
     private String amount = "";
     private String memo = "";
+    private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
+    private String chain_id = "";
+    private String signArgStr = "";
+    private long mContextHandle = 0;
+    private int mDevIndex = 0;
+    private BlueToothWrapper serializedThread;
+    private BlueToothWrapper signThread;
+    private BlueToothWrapper connectThread;
+
+    public static TransferFragment newInstance() {
+        Bundle args = new Bundle();
+        TransferFragment fragment = new TransferFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public String getChain_id() {
         return chain_id;
@@ -97,21 +118,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     public void setChain_id(String chain_id) {
         this.chain_id = chain_id;
-    }
-
-    private String chain_id = "";
-
-    private BlueToothWrapper serilizedThread;
-    private BlueToothWrapper signThread;
-    SerializeHandler mSerializeHandler;
-    SignHandler mSignHandler;
-    protected static ReentrantLock m_uiLock;
-
-    public static TransferFragment newInstance() {
-        Bundle args = new Bundle();
-        TransferFragment fragment = new TransferFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @OnClick({R.id.iv_transfer_account_clear, R.id.iv_transfer_amount_clear, R.id.iv_transfer_memo_clear})
@@ -227,8 +233,16 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
     }
 
+    /*
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onContextHandleRecieved(ContextHandleEvent event){
+        mContextHandle = event.getContextHanle();
+    }
+    */
+
     @Override
     public void initData(Bundle savedInstanceState) {
+        mContextHandle = getActivity().getIntent().getLongExtra("contextHandle", 0);
         m_uiLock = new ReentrantLock();
         WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
         WalletEntity entity = dao.getCurrentWalletEntity();
@@ -546,10 +560,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
      */
     public void startJsonSerialization(String jsonTxStr){
         mSerializeHandler = new SerializeHandler();
-        if ((serilizedThread == null) || (serilizedThread.getState() == Thread.State.TERMINATED)) {
-            serilizedThread = new BlueToothWrapper(mSerializeHandler);
-            serilizedThread.setEOSTxSerializeWrapper(jsonTxStr);
-            serilizedThread.start();
+        if ((serializedThread == null) || (serializedThread.getState() == Thread.State.TERMINATED)) {
+            serializedThread = new BlueToothWrapper(mSerializeHandler);
+            serializedThread.setEOSTxSerializeWrapper(jsonTxStr);
+            serializedThread.start();
         }
 
     }
@@ -557,12 +571,17 @@ public class TransferFragment extends XFragment<TransferPresenter> {
      * 调用硬件进行签名
      */
     public void startSign(String transaction){
+        LoggerManager.d("startSign executed");
         mSignHandler = new SignHandler();
         if ((signThread == null) || (signThread.getState() == Thread.State.TERMINATED)) {
             int[] derivePath = {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000};
+            byte[] testTransaction = {(byte)0x74, (byte)0x09, (byte)0x70, (byte)0xd9, (byte)0xff, (byte)0x01, (byte)
+                    0xb5, (byte)0x04, (byte)0x63, (byte)0x2f, (byte)0xed, (byte)0xe1, (byte)0xad, (byte)0xc3, (byte)0xdf, (byte)0xe5, (byte)0x59, (byte)0x90, (byte)0x41, (byte)0x5e, (byte)0x4f, (byte)0xde, (byte)0x01, (byte)0xe1, (byte)0xb8, (byte)0xf3, (byte)0x15, (byte)0xf8, (byte)0x13, (byte)0x6f, (byte)0x47, (byte)0x6c, (byte)0x14, (byte)0xc2, (byte)0x67, (byte)0x5b, (byte)0x01, (byte)0x24, (byte)0x5f, (byte)0x70, (byte)0x5d, (byte)0xd7, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x01, (byte)0x00, (byte)0xa6, (byte)0x82, (byte)0x34, (byte)0x03, (byte)0xea, (byte)0x30, (byte)0x55, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x57, (byte)0x2d, (byte)0x3c, (byte)0xcd, (byte)0xcd, (byte)0x01, (byte)0x20, (byte)0x29, (byte)0xc2, (byte)0xca, (byte)0x55, (byte)0x7a, (byte)0x73, (byte)0x57, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0xa8, (byte)0xed, (byte)0x32, (byte)0x32, (byte)0x21, (byte)0x20, (byte)0x29, (byte)0xc2, (byte)0xca, (byte)0x55, (byte)0x7a, (byte)0x73, (byte)0x57, (byte)0x90, (byte)0x55, (byte)0x8c, (byte)0x86, (byte)0x77, (byte)0x95, (byte)0x4c, (byte)0x3c, (byte)0x10, (byte)0x27, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x04, (byte)0x45, (byte)0x4f, (byte)0x53, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00};
             signThread = new BlueToothWrapper(mSignHandler);
             byte[] transaction_bytes = transaction.getBytes();
-            signThread.setEOSSignWrapper(0,0, m_uiLock, derivePath, transaction_bytes);
+            //todo 传入正确的参数
+            signThread.setEOSSignWrapper(mContextHandle, mDevIndex, m_uiLock, derivePath, testTransaction);
+            LoggerManager.d("ContextHandle at Set Wrapper", mContextHandle);
             signThread.start();
         }
     }
@@ -570,12 +589,12 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     /**
      * 构建硬件能够识别的字符串
      * 序列化结果前面加32字节chainid，后面加32字节0
-     * @param serailizedStr
+     * @param serializedStr
      */
-    public String buildSignStr(String serailizedStr){
+    public String buildSignStr(String serializedStr){
         String prefix = chain_id;
         String suffix = "00000000000000000000000000000000";
-        return prefix + serailizedStr + suffix;
+        return prefix + serializedStr + suffix;
     }
 
     /**
@@ -597,11 +616,11 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         //LoggerManager.d("Serialize Result: " + CommonUtility.byte2hex(returnValue.getSerializeData()));
                         String serializedStr = CommonUtility.byte2hex(returnValue.getSerializeData());
                         String builtStr = buildSignStr(serializedStr);
-
+                        signArgStr = builtStr;
                         //把builtStr 送给设备签名
-                        startSign(builtStr);
+                        startSign( builtStr);
                     }
-                    //序列化失败
+
                     LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValue.getReturnValue()));
 
                     break;
@@ -618,15 +637,21 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BlueToothWrapper.MSG_EOS_SIGN_START:
-
+                    LoggerManager.d("MSG_EOS_SIGN_START");
                     break;
                 case BlueToothWrapper.MSG_EOS_SIGN_FINISH:
-
+                    LoggerManager.d("MSG_EOS_SIGN_FINISH");
                     BlueToothWrapper.SignReturnValue returnValue = (BlueToothWrapper.SignReturnValue)msg.obj;
                     if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        LoggerManager.d("Sign Success");
                         String strSignature = new String(returnValue.getSignature());
                         LoggerManager.d("\nSignature Value: " + strSignature);
+                    }else {
+                        LoggerManager.d("Sign Fail");
+                        LoggerManager.d("sign return value " + returnValue.getReturnValue());
                     }
+                    LoggerManager.d("\nReturn Value: " + MiddlewareInterface.getReturnString(returnValue
+                        .getReturnValue()));
 
                     break;
                 default:

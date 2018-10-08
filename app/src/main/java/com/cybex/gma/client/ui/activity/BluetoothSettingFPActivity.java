@@ -75,7 +75,7 @@ public class BluetoothSettingFPActivity extends XActivity {
             imvFingerPrint.setImageResource(R.drawable.bezier_svg);
             GemmaToastUtils.showShortToast(getString(R.string.finger_set_success));
             setCurrentWalletStatus();
-            UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+            UISkipMananger.launchHome(BluetoothSettingFPActivity.this, new Bundle());
             finish();
         }
 
@@ -155,7 +155,7 @@ public class BluetoothSettingFPActivity extends XActivity {
         mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.btn_title_skip)) {
             @Override
             public void performAction(View view) {
-                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+                UISkipMananger.launchHome(BluetoothSettingFPActivity.this, new Bundle());
                 finish();
             }
         });

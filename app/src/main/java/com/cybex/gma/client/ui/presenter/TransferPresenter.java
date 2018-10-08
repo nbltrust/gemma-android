@@ -314,7 +314,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                     TransferTransactionTmpVO tmpVO = switchVO(vo);
                                     String tmpJson = GsonUtils.objectToJson(tmpVO);
                                     getV().startJsonSerialization(tmpJson);
-
+                                    //todo 获取签名
 
                                 }
 

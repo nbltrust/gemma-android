@@ -252,7 +252,7 @@ public class WalletManageFragment extends XFragment {
                             event.setPosition(0);
                             event.setRefresh(true);
                             EventBusProvider.postSticky(event);
-                            UISkipMananger.launchHome(getActivity());
+                            UISkipMananger.launchHome(getActivity(), new Bundle());
                         }
                     }
                 }

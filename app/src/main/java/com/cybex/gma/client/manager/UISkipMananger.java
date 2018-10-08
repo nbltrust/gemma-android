@@ -72,8 +72,8 @@ public final class UISkipMananger {
      *
      * @param context
      */
-    public static void launchHome(Activity context) {
-        launchIntent(context, MainTabActivity.class);
+    public static void launchHome(Activity context, Bundle bundle) {
+        launchIntent(context, MainTabActivity.class, bundle);
     }
 
 

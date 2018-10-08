@@ -39,7 +39,7 @@ public class FingerprintVerifyActivity extends XActivity {
                             @Override
                             public void onSuccess() {
                                 //指纹验证成功
-                                UISkipMananger.launchHome(FingerprintVerifyActivity.this);
+                                UISkipMananger.launchHome(FingerprintVerifyActivity.this, new Bundle());
                                 finish();
 
                             }

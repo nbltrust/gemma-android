@@ -1,15 +1,16 @@
 package com.cybex.gma.client.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.job.BluetoothConnectKeepJob;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.fragment.MainTabFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.hxlx.core.lib.utils.OSUtils;
-import com.yanzhenjie.sofia.Sofia;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -25,9 +26,10 @@ public class MainTabActivity extends XActivity {
 
     @Override
     public void bindUI(View rootView) {
-
+        Bundle bundle = getIntent().getExtras();
+        LoggerManager.d("contextHandle at MainTabActivity", bundle.getLong("contextHandle"));
         if (findFragment(MainTabFragment.class) == null) {
-            loadRootFragment(R.id.fl_container, MainTabFragment.newInstance());
+            loadRootFragment(R.id.fl_container, MainTabFragment.newInstance(bundle));
         }
 
         //让布局向上移来显示软键盘
@@ -70,5 +72,10 @@ public class MainTabActivity extends XActivity {
         return null;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BluetoothConnectKeepJob.removeJob();
+    }
 
 }

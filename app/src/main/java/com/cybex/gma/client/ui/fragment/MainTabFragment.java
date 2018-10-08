@@ -13,6 +13,7 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.ui.presenter.BluetoothTransferPresenter;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
 import com.cybex.gma.client.widget.bottombar.BottomBarTab;
@@ -44,9 +45,7 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
     private BottomBar mBottomBar;
 
 
-    public static MainTabFragment newInstance() {
-
-        Bundle args = new Bundle();
+    public static MainTabFragment newInstance(Bundle args) {
 
         MainTabFragment fragment = new MainTabFragment();
         fragment.setArguments(args);
@@ -129,10 +128,12 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
         if (firstFragment == null) {
             if (type == 1) {
                 mFragments[TAB_WALLET] = BluetoothWalletFragment.newInstance();
+                mFragments[TAB_TRANSFER] = BluetoothTransferFragment.newInstance(getArguments());
             } else {
                 mFragments[TAB_WALLET] = WalletFragment.newInstance();
+                mFragments[TAB_TRANSFER] = TransferFragment.newInstance();
             }
-            mFragments[TAB_TRANSFER] = TransferFragment.newInstance();
+
             mFragments[TAB_MINE] = MineFragment.newInstance();
 
             loadMultipleRootFragment(R.id.fl_tab_container, TAB_WALLET,

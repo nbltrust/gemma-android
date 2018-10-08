@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -23,7 +25,9 @@ import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.MiddlewareInterface;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import java.util.ArrayList;
@@ -113,6 +117,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                             connectThread = new BlueToothWrapper(mHandler);
                             connectThread.setInitContextWithDevNameWrapper(BluetoothScanResultDialogActivity.this,
                                     deviceName);
+                            LoggerManager.d("deviceName", deviceName);
                             connectThread.start();
 
                             deviceNameList.get(position).isShowProgress = true;
@@ -123,7 +128,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         showInitWookongBioDialog();
 
                     }
-
                 }
             }
         });
@@ -179,8 +183,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             }
         });
         dialog.show();
-
-
     }
 
     class ScanDeviceHandler extends Handler {
@@ -245,6 +247,10 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         mAdapter.notifyDataSetChanged();
 
                         contextHandle = returnValue.getContextHandle();
+
+                        ContextHandleEvent event = new ContextHandleEvent();
+                        event.setContextHanle(contextHandle);
+                        EventBusProvider.postSticky(event);
 
                         if ((getDeviceInfoThread == null) || (getDeviceInfoThread.getState()
                                 == Thread.State.TERMINATED)) {
