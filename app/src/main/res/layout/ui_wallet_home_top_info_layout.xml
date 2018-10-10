@@ -65,6 +65,7 @@
         </com.allen.library.SuperTextView>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_backup_wallet"
             android:layout_width="@dimen/dimen_60"
             android:layout_height="wrap_content"

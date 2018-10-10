@@ -3,24 +3,29 @@ package com.cybex.gma.client.ui.fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
+import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
+import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
@@ -47,6 +52,8 @@ import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.common.utils.DateUtil;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.tapadoo.alerter.Alerter;
 
@@ -69,6 +76,9 @@ import jdenticon.AvatarHelper;
  */
 public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter> {
 
+    @BindView(R.id.view_divider_transfer_record) View viewDividerTransferRecord;
+    @BindView(R.id.view_bluetooth_wallet_record) ConstraintLayout viewBluetoothWalletRecord;
+    @BindView(R.id.view_refresh_bluetoothWallet) CommonRefreshLayout refreshLayout;
     private WalletEntity curWallet;
     private int walletID;
     @BindView(R.id.tv_backup_wallet) TextView textViewBackupWallet;
@@ -83,9 +93,9 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
     @BindView(R.id.textView_username) TextView textViewUsername;
     @BindView(R.id.show_cpu) LinearLayout showCpu;
     @BindView(R.id.layout_info) ConstraintLayout layoutInfo;
-    @BindView(R.id.bluetooth_device_layout) RelativeLayout bluetooth_device_layout;
+    @BindView(R.id.bluetooth_device_layout) SuperTextView bluetooth_device_layout;
     @BindView(R.id.superTextView_card_record_hard) SuperTextView superTextViewCardRecord;
-    @BindView(R.id.scroll_wallet_tab) MyScrollView scrollViewWalletTab;
+    @BindView(R.id.scroll_wallet_tab) NestedScrollView scrollViewWalletTab;
     @BindView(R.id.progressbar_cpu_small) RoundCornerProgressBar progressBarCPU;
     @BindView(R.id.progressbar_net_small) RoundCornerProgressBar progressBarNET;
     @BindView(R.id.progressbar_ram_small) RoundCornerProgressBar progressBarRAM;
@@ -102,15 +112,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
     @OnClick({R.id.view_cpu, R.id.view_net, R.id.view_ram})
     public void clickViews(View view) {
         switch (view.getId()) {
-            case R.id.view_cpu:
-                goToDelegate();
-                break;
-            case R.id.view_net:
-                goToDelegate();
-                break;
-            case R.id.view_ram:
-                goToBuySellRam();
-                break;
+
         }
     }
 
@@ -134,7 +136,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
 
     @OnClick({R.id.superTextView_card_record_hard, R.id.bluetooth_device_layout})
     public void goToSeeRecord(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.superTextView_card_record_hard:
                 UISkipMananger.launchTransferRecord(getActivity());
                 break;
@@ -148,22 +150,6 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
     @Override
     public boolean useEventBus() {
         return true;
-    }
-
-    public void goToDelegate() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("resourceInfo", resourceInfoVO);
-        UISkipMananger.launchDelegate(getActivity(), bundle);
-    }
-
-    public void goToBuySellRam() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("ramInfo", resourceInfoVO);
-        UISkipMananger.launchRamTransaction(getActivity(), bundle);
-    }
-
-    public void goToVote() {
-        UISkipMananger.launchVote(getActivity(),null);
     }
 
     public static BluetoothWalletFragment newInstance() {
@@ -200,6 +186,13 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
         if (EmptyUtils.isNotEmpty(event)) {
             LoggerManager.d("---changeAccount event---");
             getP().requestHomeCombineDataVO();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void onValidateConfirmed(ValidateResultEvent event){
+        if (event.isSuccess()){
+            Alerter.hide();
         }
     }
 
@@ -351,7 +344,6 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
         }
     }
 
-
     private void showTotalPriceInfo(String banlance, String unitPrice, AccountInfo info) {
         String banlanceNumber = "0";
         String netNumber = "0";
@@ -420,7 +412,6 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
 
     }
 
-
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
@@ -429,9 +420,17 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
     @Override
     public void initData(Bundle savedInstanceState) {
         AppManager.getAppManager().finishActivity(CreateManageActivity.class);
-        textViewBackupWallet.setVisibility(View.VISIBLE);
         setNavibarTitle("GEMMA", false);
-        //OverScrollDecoratorHelper.setUpOverScroll(scrollViewWalletTab);
+        //下拉刷新
+        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(200);
+                getP().requestHomeCombineDataVO();
+            }
+        });
+
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)) {
             textViewUsername.setText(curWallet.getCurrentEosName());
@@ -470,10 +469,6 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
                     null, null);
 
             textViewUsername.setClickable(false);
-        }
-
-        if (isCurWalletBackUp()) {
-            textViewBackupWallet.setVisibility(View.GONE);
         }
 
         switch (SPUtils.getInstance().getInt("currency_unit")) {
@@ -530,12 +525,6 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
                         .setTextAppearance(R.style.myAlert)
                         .show();
             }
-
-            if (isCurWalletBackUp()) {
-                textViewBackupWallet.setVisibility(View.GONE);
-            } else {
-                textViewBackupWallet.setVisibility(View.VISIBLE);
-            }
         }
     }
 
@@ -550,17 +539,6 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
             LoggerManager.d("Job repeat Removed");
         }
 
-    }
-
-    /**
-     * 判断当前钱包是否已经备份过
-     *
-     * @param
-     * @return
-     */
-    public boolean isCurWalletBackUp() {
-        return !EmptyUtils.isEmpty(curWallet)
-                && curWallet.getIsBackUp().equals(CacheConstants.ALREADY_BACKUP);
     }
 
     private void showChangeEOSNameDialog() {

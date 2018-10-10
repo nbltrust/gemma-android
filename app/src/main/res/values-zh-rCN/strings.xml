@@ -503,6 +503,7 @@
     <string name="tip_cant_input_zero">CPU和NET不能都为零</string>
     <string name="unknow_err">未知错误</string>
     <string name="connect">连接</string>
+    <string name="disconnect">断开连接</string>
 
     <!-- EOS Err Code-->
 

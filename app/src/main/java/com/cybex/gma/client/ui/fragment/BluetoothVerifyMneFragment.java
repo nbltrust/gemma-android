@@ -9,9 +9,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.AccountRegisterEvent;
+import com.cybex.gma.client.event.KeySendEvent;
+import com.cybex.gma.client.event.ValidateResultEvent;
+import com.cybex.gma.client.event.WalletIDEvent;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
 import com.cybex.gma.client.ui.presenter.BluetoothVerifyPresenter;
 import com.cybex.gma.client.utils.CollectionUtils;
@@ -25,6 +32,7 @@ import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.trycatch.mysnackbar.Prompt;
 
@@ -396,6 +404,35 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
             getP().doAccountRegisterRequest(infoVo.getAccountName(),
                     SN, SN_sign, public_key, public_key_hex, public_key_sign, infoVo.getPassword(),
                     infoVo.getPasswordTip(), bd);
+        }
+    }
+
+    /**
+     * 时间戳比较验证状态判断
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onCreateStatusReceieved(ValidateResultEvent event){
+        if (event != null){
+            dissmisProgressDialog();
+            if(event.isSuccess()){
+                //创建成功
+                //跳转到主页面
+                AppManager.getAppManager().finishAllActivity();
+                UISkipMananger.launchHome(getActivity());
+            }else {
+                //创建失败,删除当前钱包
+                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
+                List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao()
+                        .getWalletEntityList();
+                //更新列表中的第一个钱包为当前钱包并跳转
+                WalletEntity newCurWallet = walletEntityList.get(0);
+                newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(newCurWallet);
+                AppManager.getAppManager().finishAllActivity();
+                UISkipMananger.launchHome(getActivity());
+            }
         }
     }
 

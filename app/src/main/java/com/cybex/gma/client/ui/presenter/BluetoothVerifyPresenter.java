@@ -77,23 +77,24 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
 
                     @Override
                     public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
-                        getV().dissmisProgressDialog();
+                        if (getV() != null){
+                            getV().dissmisProgressDialog();
 
-                        if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
-                            UserRegisterResult registerResult = data.result;
-                            if (registerResult != null) {
-                                String txId = registerResult.txId;
-                                saveAccount(public_key, public_key_sig, password, account_name, password_tip, txId, SN);
-                                AppManager.getAppManager().finishAllActivity();
-                                UISkipMananger.skipBluetoothSettingFPActivity(getV().getActivity(), bd);
-                                LibValidateJob.startPolling(10000);
-                                //todo 新验证方法需要添加EventBus处理方法
-                                //TimeStampValidateJob.executedCreateLogic(account_name, public_key);
-                                getV().getActivity().finish();
+                            if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
+                                UserRegisterResult registerResult = data.result;
+                                if (registerResult != null) {
+                                    String txId = registerResult.txId;
+                                    saveAccount(public_key, public_key_sig, password, account_name, password_tip, txId, SN);
+                                    TimeStampValidateJob.executedCreateLogic(account_name, public_key);
+                                    AppManager.getAppManager().finishAllActivity();
+                                    UISkipMananger.skipBluetoothSettingFPActivity(getV().getActivity(), bd);
+                                    //LibValidateJob.startPolling(10000);
+                                }
+                            } else {
+                                showOnErrorInfo(data.code);
                             }
-                        } else {
-                            showOnErrorInfo(data.code);
                         }
+
 
                     }
 

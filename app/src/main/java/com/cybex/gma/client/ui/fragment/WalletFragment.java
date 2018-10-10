@@ -459,7 +459,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
         LoggerManager.d("host", ApiPath.getHOST_ON_CHAIN());
         AppManager.getAppManager().finishActivity(CreateManageActivity.class);
-        textViewBackupWallet.setVisibility(View.VISIBLE);
         //下拉刷新
         refreshLayout.setEnableLoadmore(false);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {

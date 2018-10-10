@@ -713,5 +713,6 @@
     <!-- EOS Err Code End -->
 
     <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
 
 </resources>

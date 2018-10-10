@@ -12,18 +12,21 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.dao.WalletEntityDao;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletNameChangedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.adapter.WalletManageListAdapter;
 import com.cybex.gma.client.ui.model.vo.WalletVO;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -252,6 +255,9 @@ public class WalletManageFragment extends XFragment {
                             event.setPosition(0);
                             event.setRefresh(true);
                             EventBusProvider.postSticky(event);
+
+                            AppManager.getAppManager().finishActivity();
+                            AppManager.getAppManager().finishActivity(MainTabActivity.class);
                             UISkipMananger.launchHome(getActivity());
                         }
                     }

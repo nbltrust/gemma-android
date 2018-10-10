@@ -118,6 +118,7 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
                     public void accept(HomeCombineDataVO vo) {
                         getV().showMainInfo(vo);
                         getV().dissmisProgressDialog();
+                        GemmaToastUtils.showLongToast(getV().getString(R.string.loading_success));
 
                     }
                 }, new Consumer<Throwable>() {
@@ -153,13 +154,18 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
                                     @Override
                                     public void onStart(Request<AccountInfo, ? extends Request> request) {
                                         super.onStart(request);
-                                        getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                                        if (getV() != null){
+                                            getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                                        }
+
                                     }
 
                                     @Override
                                     public void onError(Response<AccountInfo> response) {
-                                        getV().dissmisProgressDialog();
-                                        GemmaToastUtils.showLongToast(getV().getString(R.string.load_account_info_fail));
+                                        if (getV() != null){
+                                            getV().dissmisProgressDialog();
+                                            GemmaToastUtils.showLongToast(getV().getString(R.string.load_account_info_fail));
+                                        }
                                     }
 
                                     @Override
@@ -188,8 +194,10 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
                         .getUnitPriceRequest(new JsonCallback<UnitPrice>() {
                             @Override
                             public void onStart(Request<UnitPrice, ? extends Request> request) {
-                                super.onStart(request);
-                                getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                                if (getV() != null){
+                                    super.onStart(request);
+                                    getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                                }
                             }
 
                             @Override
@@ -254,43 +262,47 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
 
                 @Override
                 public void onStart(Request<String, ? extends Request> request) {
-                    super.onStart(request);
-                    getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                    if (getV() != null){
+                        super.onStart(request);
+                        getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                    }
                 }
 
                 @Override
                 public void onError(Response<String> response) {
-                    super.onError(response);
-                    getV().dissmisProgressDialog();
-                    GemmaToastUtils.showLongToast(getV().getString(R.string.load_account_info_fail));
-                    emitter.onNext(banlance);
-                    emitter.onComplete();
+                    if (getV() != null){
+                        super.onError(response);
+                        getV().dissmisProgressDialog();
+                        GemmaToastUtils.showLongToast(getV().getString(R.string.load_account_info_fail));
+                        emitter.onNext(banlance);
+                        emitter.onComplete();
+                    }
                 }
 
                 @Override
                 public void onSuccess(Response<String> response) {
+                    if (getV() != null){
+                        try {
 
-                    try {
+                            if (response != null) {
+                                String jsonStr = response.body();
+                                LoggerManager.d("response json:" + jsonStr);
 
-                        if (response != null) {
-                            String jsonStr = response.body();
-                            LoggerManager.d("response json:" + jsonStr);
+                                JSONArray array = new JSONArray(jsonStr);
+                                if (array != null && array.length() > 0) {
+                                    banlance = array.optString(0);
+                                    getV().showBanlance(banlance);
+                                }
 
-                            JSONArray array = new JSONArray(jsonStr);
-                            if (array != null && array.length() > 0) {
-                                banlance = array.optString(0);
-                                getV().showBanlance(banlance);
+                                emitter.onNext(banlance);
+                                emitter.onComplete();
                             }
 
-                            emitter.onNext(banlance);
-                            emitter.onComplete();
+
+                        } catch (Throwable t) {
+                            throw Exceptions.propagate(t);
                         }
-
-
-                    } catch (Throwable t) {
-                        throw Exceptions.propagate(t);
                     }
-
                 }
             });
         }
@@ -383,6 +395,5 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
         }
         return null;
     }
-
 
 }

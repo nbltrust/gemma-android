@@ -146,7 +146,7 @@ public class TimeStampValidateJob {
                                     //检查active key中是否是此公钥
                                     if (isBeanContainsPublicKey(permission, public_key)) {
                                         //如果公钥在账户中,创建成功
-                                        LoggerManager.d("create or import success");
+                                        LoggerManager.d("create success");
 
                                         //更改当前钱包状态
                                         WalletEntity successWallet = DBManager.getInstance().getWalletEntityDao()

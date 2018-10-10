@@ -760,6 +760,7 @@
     <string name="btn_connect_retry">重试连接</string>
     <string name="connect">连接</string>
 
+    <string name="disconnect">断开连接</string>
 
     <!-- WOOKONG BIO 详情页面-->
     <string name="name">名称</string>
