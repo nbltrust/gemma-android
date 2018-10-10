@@ -710,4 +710,8 @@
     <string name="eos_err_code_3230002">Blockchain exception: 3220002</string>
     <string name="eos_err_code_3230003">Blockchain exception: 3220003</string>
 
+    <!-- EOS Err Code End -->
+
+    <string name="connect">Connect</string>
+
 </resources>

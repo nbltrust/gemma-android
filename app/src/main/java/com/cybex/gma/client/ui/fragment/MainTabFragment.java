@@ -45,8 +45,8 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
     private BottomBar mBottomBar;
 
 
-    public static MainTabFragment newInstance(Bundle args) {
-
+    public static MainTabFragment newInstance() {
+        Bundle args = new Bundle();
         MainTabFragment fragment = new MainTabFragment();
         fragment.setArguments(args);
         return fragment;
@@ -128,12 +128,10 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
         if (firstFragment == null) {
             if (type == 1) {
                 mFragments[TAB_WALLET] = BluetoothWalletFragment.newInstance();
-                mFragments[TAB_TRANSFER] = BluetoothTransferFragment.newInstance(getArguments());
             } else {
                 mFragments[TAB_WALLET] = WalletFragment.newInstance();
-                mFragments[TAB_TRANSFER] = TransferFragment.newInstance();
             }
-
+            mFragments[TAB_TRANSFER] = TransferFragment.newInstance();
             mFragments[TAB_MINE] = MineFragment.newInstance();
 
             loadMultipleRootFragment(R.id.fl_tab_container, TAB_WALLET,

@@ -48,8 +48,6 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     private static final String VALUE_CONTRACT = "eosio.token";
     private static final String VALUE_COMPRESSION = "none";
     private static final String VALUE_SYMBOL = "EOS";
-    private static final int WALLET_TYPE_SOFT = 0;
-    private static final int WALLET_TYPE_BLUETOOTH = 1;
 
     public void requestBanlanceInfo() {
         WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
@@ -184,6 +182,85 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     }
 
     /**
+     * 获取配置信息成功后，再到C++库获取交易体
+     *
+     * @param from
+     * @param privateKey
+     * @param abiStr
+     */
+    public void getInfo(String from, String privateKey, String abiStr) {
+        new EOSConfigInfoRequest(String.class)
+                .getInfo(new StringCallback() {
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+
+                        if (EmptyUtils.isNotEmpty(getV())){
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                }catch (JSONException ee){
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        if (getV() != null){
+                            if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                                //软钱包流程
+                                String infostr = response.body();
+                                LoggerManager.d("config info:" + infostr);
+                                //C++库获取Transaction交易体
+                                String transactionStr = JNIUtil.signTransaction_tranfer(privateKey,
+                                        VALUE_CONTRACT, from, infostr, abiStr,
+                                        0,
+                                        0,
+                                        120);
+                                LoggerManager.d("transactionJson:" + transactionStr);
+
+                                TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
+                                        TransferTransactionVO.class);
+
+                                if (vo != null) {
+                                    //构造PushTransaction 请求的json参数
+                                    PushTransactionReqParams reqParams = new PushTransactionReqParams();
+                                    reqParams.setTransaction(vo);
+                                    reqParams.setSignatures(vo.getSignatures());
+                                    reqParams.setCompression(VALUE_COMPRESSION);
+
+                                    String buildTransactionJson = GsonUtils.
+                                            objectToJson(reqParams);
+                                    LoggerManager.d("buildTransactionJson:" + buildTransactionJson);
+
+                                    //执行Push Transaction 最后一步操作
+                                    pushTransaction(buildTransactionJson);
+                                }
+
+                            } else {
+                                //错误
+                                GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                                getV().dissmisProgressDialog();
+                            }
+                        }
+                    }
+                });
+    }
+
+    /**
      * 执行硬件钱包转账逻辑
      *
      * @param from
@@ -289,12 +366,16 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                 //蓝牙钱包流程
                                 String infostr = response.body();
                                 try {
+
                                     JSONObject obj = new JSONObject(infostr);
                                     final String chain_id = obj.optString("chain_id");
                                     LoggerManager.d("chain_id", chain_id);
                                     getV().setChain_id(chain_id);
+
                                 }catch (JSONException e){
+
                                     e.printStackTrace();
+
                                 }
                                 LoggerManager.d("config info:" + infostr);
                                 String[] keyPair = JNIUtil.createKey().split(";");
@@ -310,94 +391,15 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                                 TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
                                         TransferTransactionVO.class);
+                                getV().setTransactionVO(vo);
                                 if (vo != null){
+                                    //转换临时VO，让硬件可以签名
                                     TransferTransactionTmpVO tmpVO = switchVO(vo);
                                     String tmpJson = GsonUtils.objectToJson(tmpVO);
                                     getV().startJsonSerialization(tmpJson);
-                                    //todo 获取签名
-
                                 }
 
                                 getV().dissmisProgressDialog();
-                            } else {
-                                //错误
-                                GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
-                                getV().dissmisProgressDialog();
-                            }
-                        }
-                    }
-                });
-    }
-
-    /**
-     * 获取配置信息成功后，再到C++库获取交易体
-     *
-     * @param from
-     * @param privateKey
-     * @param abiStr
-     */
-    public void getInfo(String from, String privateKey, String abiStr) {
-        new EOSConfigInfoRequest(String.class)
-                .getInfo(new StringCallback() {
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-
-                        if (EmptyUtils.isNotEmpty(getV())){
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
-                            getV().dissmisProgressDialog();
-
-                            try {
-                                String err_info_string = response.getRawResponse().body().string();
-                                try {
-                                    JSONObject obj = new JSONObject(err_info_string);
-                                    JSONObject error = obj.optJSONObject("error");
-                                    String err_code = error.optString("code");
-                                    handleEosErrorCode(err_code);
-
-                                }catch (JSONException ee){
-                                    ee.printStackTrace();
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        if (getV() != null){
-                            if (response != null && EmptyUtils.isNotEmpty(response.body())) {
-                                //软钱包流程
-                                String infostr = response.body();
-                                LoggerManager.d("config info:" + infostr);
-                                //C++库获取Transaction交易体
-                                String transactionStr = JNIUtil.signTransaction_tranfer(privateKey,
-                                        VALUE_CONTRACT, from, infostr, abiStr,
-                                        0,
-                                        0,
-                                        120);
-                                LoggerManager.d("transactionJson:" + transactionStr);
-
-                                TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
-                                        TransferTransactionVO.class);
-
-                                if (vo != null) {
-                                    //构造PushTransaction 请求的json参数
-                                    PushTransactionReqParams reqParams = new PushTransactionReqParams();
-                                    reqParams.setTransaction(vo);
-                                    reqParams.setSignatures(vo.getSignatures());
-                                    reqParams.setCompression(VALUE_COMPRESSION);
-
-                                    String buildTransactionJson = GsonUtils.
-                                            objectToJson(reqParams);
-                                    LoggerManager.d("buildTransactionJson:" + buildTransactionJson);
-
-                                    //执行Push Transaction 最后一步操作
-                                    pushTransaction(buildTransactionJson);
-                                }
-
                             } else {
                                 //错误
                                 GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
@@ -454,6 +456,10 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
     }
 
+    /**
+     * 反射机制处理EOS错误码
+     * @param err_code
+     */
     private void handleEosErrorCode(String err_code){
         String code = ParamConstants.EOS_ERR_CODE_PREFIX + err_code;
         if (EmptyUtils.isNotEmpty(getV()) && EmptyUtils.isNotEmpty(getV().getActivity())){
@@ -469,15 +475,6 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     .setBackgroundColorRes(R.color.scarlet)
                     .show();
         }
-    }
-
-    /**
-     * 对Json String添加转义字符
-     * @param jsonStr
-     * @return
-     */
-    private String getSignArgStr(String jsonStr){
-        return jsonStr.replaceAll("\"", "\\\\" + "\"");
     }
 
     /**

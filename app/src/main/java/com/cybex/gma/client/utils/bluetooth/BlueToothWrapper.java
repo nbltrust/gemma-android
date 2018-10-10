@@ -7,6 +7,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.cybex.gma.client.manager.LoggerManager;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 
@@ -488,9 +489,7 @@ public class BlueToothWrapper extends Thread {
         m_bShowGetAuthDlgCalled = true;
 
         if (m_uiLock != null) {
-            while (!m_uiLock.isLocked()) {
-                //wait ui thread to lock
-            }
+            while (!m_uiLock.isLocked()); //wait ui thread to lock
 
             Message msg;
             msg = m_mainHandler.obtainMessage();
@@ -1173,7 +1172,7 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
-   public boolean setGetDevListWrapper(Activity activity, String strFilter) {
+    public boolean setGetDevListWrapper(Activity activity, String strFilter) {
         m_wrapperType = GET_DEV_LIST_WRAPPER;
         if (strFilter == null) {
             m_strFilter = "";
@@ -1869,14 +1868,12 @@ public class BlueToothWrapper extends Thread {
                 if (m_contextHandle == 0) {
                     iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
                 } else {
-                    iRtn = MiddlewareInterface.deriveTradeAddress(m_contextHandle, m_devIndex,
-                            MiddlewareInterface.PAEW_COIN_TYPE_EOS, m_derivePath);
+                    iRtn = MiddlewareInterface.deriveTradeAddress(m_contextHandle, m_devIndex, MiddlewareInterface.PAEW_COIN_TYPE_EOS, m_derivePath);
                     if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex,
                                 MiddlewareInterface.PAEW_COIN_TYPE_EOS, false, strAddress);
                         if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                             showGetAuthDialog();
-
                             signature = new byte[MiddlewareInterface.PAEW_EOS_SIG_MAX_LEN];
                             sigLen[0] = MiddlewareInterface.PAEW_EOS_SIG_MAX_LEN;
                             iRtn = MiddlewareInterface.EOSSign(m_contextHandle, m_devIndex, m_signCallback,

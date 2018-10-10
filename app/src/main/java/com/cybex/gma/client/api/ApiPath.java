@@ -29,6 +29,7 @@ public class ApiPath {
     public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3002";
     //"http://139.196.73.117:3002"微信支付沙盒测试环境
     //"http://139.196.73.117:3001"真实环境
+    //"http://139.196.73.117:3005"灰度staging环境
 
     //链上服务器host
     private static String HOST_ON_CHAIN = "http://47.75.154.248:50003";

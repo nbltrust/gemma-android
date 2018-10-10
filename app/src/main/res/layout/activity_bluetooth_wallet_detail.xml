@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:gravity="center_vertical"
-                android:text="@string/memo"
+                android:text="@string/public_key"
                 android:textColor="@color/darkSlateBlue"
                 android:textSize="@dimen/font_3.5"
                 title:layout_constraintStart_toStartOf="parent"

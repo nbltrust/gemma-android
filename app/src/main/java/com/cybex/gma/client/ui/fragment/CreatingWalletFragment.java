@@ -31,7 +31,7 @@ public class CreatingWalletFragment extends XFragment {
 
     @OnClick(R.id.bt_backup_later)
     public void goToMainTab(){//前往MainTab如果选择稍后备份
-        UISkipMananger.launchHome(getActivity(), new Bundle());
+        UISkipMananger.launchHome(getActivity());
     }
 
     @OnClick(R.id.bt_export_priKey)

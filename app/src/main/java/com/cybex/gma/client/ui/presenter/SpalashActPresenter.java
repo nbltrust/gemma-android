@@ -33,7 +33,7 @@ public class SpalashActPresenter extends XPresenter<SpalashActivity> {
                 UISkipMananger.launchVerifyGestureActivity(getV(), bd);
             } else {
                 //跳转到主界面
-                UISkipMananger.launchHome(getV(), new Bundle());
+                UISkipMananger.launchHome(getV());
             }
         } else {
             UISkipMananger.launchLogin(getV());

@@ -1,5 +1,7 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
@@ -24,6 +27,8 @@ import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
+import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
@@ -32,6 +37,7 @@ import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.ContextUtils;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -41,6 +47,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,25 +99,39 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     CustomFullDialog dialog = null;
     SerializeHandler mSerializeHandler;
     SignHandler mSignHandler;
+    private TransferTransactionVO transactionVO;
     private String maxValue = "";
     private String currentEOSName = "";
     private String collectionAccount = "";
     private String amount = "";
     private String memo = "";
-    private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
     private String chain_id = "";
-    private String signArgStr = "";
     private long mContextHandle = 0;
     private int mDevIndex = 0;
     private BlueToothWrapper serializedThread;
     private BlueToothWrapper signThread;
-    private BlueToothWrapper connectThread;
+
+    public static int m_authTypeResult = 0;
+    public static int m_authTypeChoiceIndex = 0; //-1 means cancel
+    public static byte m_authType;
+    public static int m_getPINResult;
+    public static String m_getPINString;
+    private static final int m_minPINLen = 6;
+    private static final int m_maxPINLen = 16;
+
+    private static final String m_strDefaultPIN = "12345678";
+    private static final String m_strDefaultNewPIN = "88888888";
+    AlertDialog dlg = null;
 
     public static TransferFragment newInstance() {
         Bundle args = new Bundle();
         TransferFragment fragment = new TransferFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setTransactionVO(TransferTransactionVO transactionVO) {
+        this.transactionVO = transactionVO;
     }
 
     public String getChain_id() {
@@ -233,17 +255,15 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
     }
 
-    /*
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onContextHandleRecieved(ContextHandleEvent event){
         mContextHandle = event.getContextHanle();
     }
-    */
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mContextHandle = getActivity().getIntent().getLongExtra("contextHandle", 0);
         m_uiLock = new ReentrantLock();
+        m_uiLock.lock();
         WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
         WalletEntity entity = dao.getCurrentWalletEntity();
         if (entity != null && getWalletType() == CacheConstants.WALLET_TYPE_BLUETOOTH) {
@@ -570,35 +590,84 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     /**
      * 调用硬件进行签名
      */
-    public void startSign(String transaction){
-        LoggerManager.d("startSign executed");
+    public void startSign( byte[] transaction){
         mSignHandler = new SignHandler();
         if ((signThread == null) || (signThread.getState() == Thread.State.TERMINATED)) {
-            int[] derivePath = {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000};
+            int[] derivePath = {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000};//EOS币种的衍生路径
             byte[] testTransaction = {(byte)0x74, (byte)0x09, (byte)0x70, (byte)0xd9, (byte)0xff, (byte)0x01, (byte)
                     0xb5, (byte)0x04, (byte)0x63, (byte)0x2f, (byte)0xed, (byte)0xe1, (byte)0xad, (byte)0xc3, (byte)0xdf, (byte)0xe5, (byte)0x59, (byte)0x90, (byte)0x41, (byte)0x5e, (byte)0x4f, (byte)0xde, (byte)0x01, (byte)0xe1, (byte)0xb8, (byte)0xf3, (byte)0x15, (byte)0xf8, (byte)0x13, (byte)0x6f, (byte)0x47, (byte)0x6c, (byte)0x14, (byte)0xc2, (byte)0x67, (byte)0x5b, (byte)0x01, (byte)0x24, (byte)0x5f, (byte)0x70, (byte)0x5d, (byte)0xd7, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x01, (byte)0x00, (byte)0xa6, (byte)0x82, (byte)0x34, (byte)0x03, (byte)0xea, (byte)0x30, (byte)0x55, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x57, (byte)0x2d, (byte)0x3c, (byte)0xcd, (byte)0xcd, (byte)0x01, (byte)0x20, (byte)0x29, (byte)0xc2, (byte)0xca, (byte)0x55, (byte)0x7a, (byte)0x73, (byte)0x57, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0xa8, (byte)0xed, (byte)0x32, (byte)0x32, (byte)0x21, (byte)0x20, (byte)0x29, (byte)0xc2, (byte)0xca, (byte)0x55, (byte)0x7a, (byte)0x73, (byte)0x57, (byte)0x90, (byte)0x55, (byte)0x8c, (byte)0x86, (byte)0x77, (byte)0x95, (byte)0x4c, (byte)0x3c, (byte)0x10, (byte)0x27, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x04, (byte)0x45, (byte)0x4f, (byte)0x53, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00};
             signThread = new BlueToothWrapper(mSignHandler);
-            byte[] transaction_bytes = transaction.getBytes();
-            //todo 传入正确的参数
-            signThread.setEOSSignWrapper(mContextHandle, mDevIndex, m_uiLock, derivePath, testTransaction);
-            LoggerManager.d("ContextHandle at Set Wrapper", mContextHandle);
+            signThread.setEOSSignWrapper(mContextHandle, mDevIndex, m_uiLock, derivePath, transaction);
             signThread.start();
         }
     }
 
     /**
-     * 构建硬件能够识别的字符串
-     * 序列化结果前面加32字节chainid，后面加32字节0
+     * 构建硬件能够识别的HEX字符串
+     * 序列化结果前面加32字节chain_id，后面加32字节0
      * @param serializedStr
      */
-    public String buildSignStr(String serializedStr){
-        String prefix = chain_id;
-        String suffix = "00000000000000000000000000000000";
-        return prefix + serializedStr + suffix;
+    public byte[] buildSignStr(String serializedStr){
+        //把数据转成HEX数组
+        String prefix = chain_id.toUpperCase();//chain_id已经是HEX
+        LoggerManager.d("prefix_hex", prefix);
+
+        LoggerManager.d("serializedStr_hex", serializedStr);
+
+        byte[] suffix_bytes = {
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00};//32字节的0
+
+        LoggerManager.d("suffix_hex", suffix_bytes);
+
+        String hexString = prefix + serializedStr;
+
+        byte[] hexBytes = hexToByte(hexString);
+        LoggerManager.d("hexBytes", hexBytes);
+
+
+        return byteMerger(hexBytes, suffix_bytes);
     }
 
     /**
-     * 处理序列化json和签名的handler
+     * 合并两字节数组
+     * @param bt1
+     * @param bt2
+     * @return
+     */
+    public static byte[] byteMerger(byte[] bt1, byte[] bt2){
+        byte[] bt3 = new byte[bt1.length+bt2.length];
+        System.arraycopy(bt1, 0, bt3, 0, bt1.length);
+        System.arraycopy(bt2, 0, bt3, bt1.length, bt2.length);
+        return bt3;
+    }
+
+    /**
+     * hex String转byte数组
+     * @param hex
+     * @return
+     */
+    public static byte[] hexToByte(String hex){
+        int m = 0, n = 0;
+        int byteLen = hex.length() / 2; // 每两个字符描述一个字节
+        byte[] ret = new byte[byteLen];
+        for (int i = 0; i < byteLen; i++) {
+            m = i * 2 + 1;
+            n = m + 1;
+            int intVal = Integer.decode("0x" + hex.substring(i * 2, m) + hex.substring(m, n));
+            ret[i] = Byte.valueOf((byte)intVal);
+        }
+        return ret;
+    }
+
+    /**
+     * 处理序列化json的handler
      */
     class SerializeHandler extends Handler {
 
@@ -613,12 +682,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     BlueToothWrapper.EOSTxSerializeReturn returnValue = (BlueToothWrapper.EOSTxSerializeReturn)msg.obj;
                     if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         //序列化成功
-                        //LoggerManager.d("Serialize Result: " + CommonUtility.byte2hex(returnValue.getSerializeData()));
                         String serializedStr = CommonUtility.byte2hex(returnValue.getSerializeData());
-                        String builtStr = buildSignStr(serializedStr);
-                        signArgStr = builtStr;
+                        byte[] builtStr = buildSignStr(serializedStr);
                         //把builtStr 送给设备签名
-                        startSign( builtStr);
+                        startSign(builtStr);
                     }
 
                     LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValue.getReturnValue()));
@@ -631,28 +698,132 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
     }
 
+    /**
+     * 处理签名的
+     */
     class SignHandler extends Handler {
 
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BlueToothWrapper.MSG_EOS_SIGN_START:
-                    LoggerManager.d("MSG_EOS_SIGN_START");
+                    //LoggerManager.d("MSG_EOS_SIGN_START");
                     break;
                 case BlueToothWrapper.MSG_EOS_SIGN_FINISH:
                     LoggerManager.d("MSG_EOS_SIGN_FINISH");
                     BlueToothWrapper.SignReturnValue returnValue = (BlueToothWrapper.SignReturnValue)msg.obj;
+                    LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValue
+                            .getReturnValue()));
+
                     if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         LoggerManager.d("Sign Success");
+
                         String strSignature = new String(returnValue.getSignature());
                         LoggerManager.d("\nSignature Value: " + strSignature);
+                        List<String> signatures = new ArrayList<>();
+                        strSignature = strSignature.substring(0,strSignature.length() - 1);
+                        signatures.add(strSignature);
+                        transactionVO.setSignatures(signatures);
+
+
+                        if (transactionVO != null) {
+                            //构造PushTransaction 请求的json参数
+                            PushTransactionReqParams reqParams = new PushTransactionReqParams();
+                            reqParams.setTransaction(transactionVO);
+                            reqParams.setSignatures(transactionVO.getSignatures());
+                            final String VALUE_COMPRESSION = "none";
+                            reqParams.setCompression(VALUE_COMPRESSION);
+
+                            String buildTransactionJson = GsonUtils.
+                                    objectToJson(reqParams);
+                            LoggerManager.d("buildTransactionJson:" + buildTransactionJson);
+
+                            //执行Push Transaction 最后一步操作
+                            getP().pushTransaction(buildTransactionJson);
+                        }
+
                     }else {
                         LoggerManager.d("Sign Fail");
-                        LoggerManager.d("sign return value " + returnValue.getReturnValue());
                     }
-                    LoggerManager.d("\nReturn Value: " + MiddlewareInterface.getReturnString(returnValue
-                        .getReturnValue()));
 
+                    break;
+
+                case BlueToothWrapper.MSG_GET_AUTH_TYPE:
+                    //显示选择验证方式dialog
+                    final String[] authTypeString = {"Sign by Finger Print", "Sign by PIN"};
+                    final byte[] authTypes = {MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP, MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_PIN};
+                    m_authTypeChoiceIndex = 0;
+
+                    dlg = new AlertDialog.Builder(getActivity())
+                            .setIcon(R.mipmap.app_icon)
+                            .setTitle("Please Select Sign Type:")
+                            .setSingleChoiceItems(authTypeString, m_authTypeChoiceIndex, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    m_authTypeChoiceIndex = which;
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    m_authTypeResult = MiddlewareInterface.PAEW_RET_DEV_OP_CANCEL;
+                                    m_uiLock.unlock();
+                                }
+                            })
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    m_authType = authTypes[m_authTypeChoiceIndex];
+                                    m_authTypeResult = MiddlewareInterface.PAEW_RET_SUCCESS;
+
+                                    if (m_authType == MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_PIN) {
+                                        Message msg = mSignHandler.obtainMessage();
+                                        msg.what = BlueToothWrapper.MSG_GET_USER_PIN;
+                                        msg.sendToTarget();
+                                    } else {
+                                        m_uiLock.unlock();
+                                    }
+                                }
+                            })
+                            .setCancelable(false)
+                            .create();
+                    dlg.show();
+                    break;
+                case BlueToothWrapper.MSG_GET_USER_PIN:
+                    View dlgView = getLayoutInflater().inflate(R.layout.ui_dlg_verify_pin, null);
+                    final EditText editPIN = dlgView.findViewById(R.id.edit_pin);
+                    editPIN.setText(m_strDefaultPIN);
+                    editPIN.selectAll();
+                    dlg = new AlertDialog.Builder(getActivity())
+                            .setIcon(R.mipmap.app_icon)
+                            .setTitle("Please Input PIN:")
+                            .setView(dlgView).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    m_getPINResult = MiddlewareInterface.PAEW_RET_DEV_OP_CANCEL;
+                                    m_uiLock.unlock();
+                                }
+                            })
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    int PINLength = editPIN.getText().toString().length();
+                                    if ((PINLength < m_minPINLen) || (PINLength > m_maxPINLen)) {
+                                        Toast toast = Toast.makeText(getContext(), "Please input PIN between " + m_minPINLen +
+                                                " and " + m_maxPINLen, Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.CENTER, 0, 0);
+                                        toast.show();
+                                        return;
+                                    }
+
+                                    m_getPINResult = MiddlewareInterface.PAEW_RET_SUCCESS;
+                                    m_getPINString = editPIN.getText().toString();
+                                    m_uiLock.unlock();
+                                }
+                            })
+                            .setCancelable(false)
+                            .create();
+                    dlg.show();
                     break;
                 default:
                     break;

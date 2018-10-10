@@ -140,7 +140,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
                 break;
             case R.id.bluetooth_device_layout:
                 Bundle bundle = new Bundle();
-                UISkipMananger.skipBluetoothWalletDetailActivity(getActivity(), bundle);
+                UISkipMananger.skipBluetoothWalletManageActivity(getActivity(), bundle);
                 break;
         }
     }

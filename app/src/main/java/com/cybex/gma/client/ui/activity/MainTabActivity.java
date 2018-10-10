@@ -26,10 +26,9 @@ public class MainTabActivity extends XActivity {
 
     @Override
     public void bindUI(View rootView) {
-        Bundle bundle = getIntent().getExtras();
-        LoggerManager.d("contextHandle at MainTabActivity", bundle.getLong("contextHandle"));
+
         if (findFragment(MainTabFragment.class) == null) {
-            loadRootFragment(R.id.fl_container, MainTabFragment.newInstance(bundle));
+            loadRootFragment(R.id.fl_container, MainTabFragment.newInstance());
         }
 
         //让布局向上移来显示软键盘

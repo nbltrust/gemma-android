@@ -133,14 +133,15 @@
                             android:layout_alignParentLeft="true"
                             android:layout_marginLeft="16dp"
                             android:src="@drawable/wookong_logo"
-                            android:visibility="visible"/>
+                            android:visibility="gone"/>
+
 
                         <TextView
                             android:id="@+id/tv_pay_account"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="50dp"
-                            android:layout_toRightOf="@id/imv_logo"
+                            android:layout_marginStart="@dimen/dimen_15"
+                            android:layout_alignParentLeft="true"
                             android:singleLine="true"
                             android:textColor="@color/darkSlateBlue"
                             android:textSize="16sp"

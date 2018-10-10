@@ -42,7 +42,6 @@ public class BluetoothTransferPresenter extends XPresenter<BluetoothTransferFrag
     private static final String VALUE_CODE = "eosio.token";
     private static final String VALUE_ACTION = "transfer";
     private static final String VALUE_CONTRACT = "eosio.token";
-    private static final String VALUE_COMPRESSION = "none";
     private static final String VALUE_SYMBOL = "EOS";
 
     public void requestBanlanceInfo() {
@@ -238,6 +237,7 @@ public class BluetoothTransferPresenter extends XPresenter<BluetoothTransferFrag
 
                                 TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
                                         TransferTransactionVO.class);
+                                getV().setVo(vo);
                                 if (vo != null){
                                     TransferTransactionTmpVO tmpVO = switchVO(vo);
                                     String tmpJson = GsonUtils.objectToJson(tmpVO);
@@ -323,17 +323,13 @@ public class BluetoothTransferPresenter extends XPresenter<BluetoothTransferFrag
     /**
      * 转换VO类型
      * 目的是转换字段的基础数据类型以让硬件SDK可以处理
+     * 具体处理为删除signatures字段，改变Ref_block_prefix的基础类型为字符串
      * @param oldVO
      * @return
      */
     private TransferTransactionTmpVO switchVO(TransferTransactionVO oldVO){
         TransferTransactionTmpVO newVO = new TransferTransactionTmpVO();
-        /*
-        for (TransferTransactionVO.ActionsBean action : oldVO.getActions()){
-            action.setAccount("eosio");
-            action.setName("newaccount");
-        }
-        */
+
         newVO.setActions(oldVO.getActions());
         newVO.setContext_free_actions(oldVO.getContext_free_actions());
         newVO.setContext_free_data(new ArrayList<>());

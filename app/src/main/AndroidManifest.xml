@@ -306,13 +306,6 @@
 
         </activity>
 
-        <!-- 蓝牙钱包详情界面 -->
-        <activity android:name=".ui.activity.BluetoothWalletDetailActivity"
-                  android:configChanges="layoutDirection|locale"
-                  android:screenOrientation="portrait">
-
-        </activity>
-
         <!-- 扫描蓝牙设备界面 -->
         <activity
             android:name=".ui.activity.BluetoothScanResultDialogActivity"
@@ -320,13 +313,28 @@
             android:theme="@style/Theme.ActivityDialogStyle">
         </activity>
 
-        <activity android:name=".ui.activity.BluetoothSettingFPActivity">
+        <!-- 设置指纹界面 -->
+        <activity android:name=".ui.activity.BluetoothSettingFPActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
 
+        </activity>
+
+        <!-- 蓝牙钱包管理界面 -->
+        <activity android:name=".ui.activity.BluetoothWalletManageActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
+
+        </activity>
+
+        <!-- 蓝牙钱包详情界面 -->
+        <activity android:name=".ui.activity.BluetoothWalletDetailActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
 
         </activity>
 
         <!--蓝牙end -->
-
 
         <!-- activity end -->
 
