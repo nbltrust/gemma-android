@@ -379,8 +379,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     private void showTotalPriceInfo(String banlance, String unitPrice, AccountInfo info) {
         String banlanceNumber = "0";
-        String netNumber = "0";
-        String cpuNumber = "0";
+        String netNumber;
+        String cpuNumber;
         String totalPrice = "0";
         String[] banlanceNumberArr = banlance.split(" ");
         if (EmptyUtils.isNotEmpty(banlanceNumberArr)) {

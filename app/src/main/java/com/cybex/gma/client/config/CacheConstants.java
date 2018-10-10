@@ -29,8 +29,8 @@ public interface CacheConstants {
     int WALLET_TYPE_SOFT = 0;
     int WALLET_TYPE_BLUETOOTH = 1;
 
-    int STATUS_BLUETOOTH_CONNCETED = 0;
-    int STATUS_BLUETOOTH_DISCONNCETED = 1;
+    int STATUS_BLUETOOTH_DISCONNCETED = 0;
+    int STATUS_BLUETOOTH_CONNCETED = 1;
 
 
 }

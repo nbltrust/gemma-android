@@ -31,45 +31,79 @@ public class BluetoothCreateAccountReqParams {
      */
     private WookongValidation validation;
 
+    public int getApp_id() {
+        return app_id;
+    }
+
+    public void setApp_id(int app_id) {
+        this.app_id = app_id;
+    }
+
+    public String getAccount_name() {
+        return account_name;
+    }
+
+    public void setAccount_name(String account_name) {
+        this.account_name = account_name;
+    }
+
+    public String getPublic_key() {
+        return public_key;
+    }
+
+    public void setPublic_key(String public_key) {
+        this.public_key = public_key;
+    }
+
+    public String getInvitation_code() {
+        return invitation_code;
+    }
+
+    public void setInvitation_code(String invitation_code) {
+        this.invitation_code = invitation_code;
+    }
+
+    public WookongValidation getValidation() {
+        return validation;
+    }
+
+    public void setValidation(WookongValidation validation) {
+        this.validation = validation;
+    }
 
     public static class WookongValidation {
 
         /**
          * 公钥
          */
-        private String public_key;
-
-
+        private String key_hex;
         /**
          * 公钥hex签名
          */
-        private String public_key_sig;
-
-
+        private String key_hex_sig;
         /**
          * wookong的SN
          */
         private String SN;
-
         /**
          * SN签名
          */
         private String SN_sig;
 
-        public String getPublic_key() {
-            return public_key;
+        public String getKey_hex() {
+            return key_hex;
         }
 
-        public void setPublic_key(String public_key) {
-            this.public_key = public_key;
+        public void setKey_hex(String key_hex) {
+            this.key_hex = key_hex;
         }
 
-        public String getPublic_key_sig() {
-            return public_key_sig;
+        public String getKey_hex_sig() {
+            return key_hex_sig;
         }
 
-        public void setPublic_key_sig(String public_key_sig) {
-            this.public_key_sig = public_key_sig;
+        public void setKey_hex_sig(String key_hex_sig) {
+            this.key_hex_sig = key_hex_sig;
         }
 
         public String getSN() {
@@ -87,46 +121,5 @@ public class BluetoothCreateAccountReqParams {
         public void setSN_sig(String SN_sig) {
             this.SN_sig = SN_sig;
         }
-    }
-
-
-    public int getApp_id() {
-        return app_id;
-    }
-
-    public void setApp_id(int app_id) {
-        this.app_id = app_id;
-    }
-
-    public String getAccount_name() {
-        return account_name;
-    }
-
-    public void setAccount_name(String account_name) {
-        this.account_name = account_name;
-    }
-
-    public String getInvitation_code() {
-        return invitation_code;
-    }
-
-    public void setInvitation_code(String invitation_code) {
-        this.invitation_code = invitation_code;
-    }
-
-    public String getPublic_key() {
-        return public_key;
-    }
-
-    public void setPublic_key(String public_key) {
-        this.public_key = public_key;
-    }
-
-    public WookongValidation getValidation() {
-        return validation;
-    }
-
-    public void setValidation(WookongValidation validation) {
-        this.validation = validation;
     }
 }

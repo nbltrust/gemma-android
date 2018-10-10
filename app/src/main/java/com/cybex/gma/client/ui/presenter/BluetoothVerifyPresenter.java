@@ -13,6 +13,7 @@ import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.job.LibValidateJob;
 import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.DBManager;
+import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.fragment.BluetoothVerifyMneFragment;
 import com.cybex.gma.client.ui.model.request.BluetoothCreateAccountReqParams;
@@ -61,11 +62,12 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
                 .WookongValidation();
         validation.setSN(SN.toLowerCase());
         validation.setSN_sig(SN_sig.toLowerCase());
-        validation.setPublic_key(publick_key_hex + "00");
-        validation.setPublic_key_sig(public_key_sig);
+        validation.setKey_hex(publick_key_hex + "00");
+        validation.setKey_hex_sig(public_key_sig);
         params.setValidation(validation);
 
         String json = GsonUtils.objectToJson(params);
+        LoggerManager.d("Bluetooth Create Params", json);
 
         new BluetoothAccountRegisterRequest(UserRegisterResult.class)
                 .setJsonParams(json)

@@ -332,6 +332,48 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceivePollevent(AccountRegisterEvent event) {
+        if (EmptyUtils.isNotEmpty(event)) {
+            getP().doAccountRegisterRequest(infoVo.getAccountName(),
+                    SN, SN_sign, public_key, public_key_hex, public_key_sign, infoVo.getPassword(),
+                    infoVo.getPasswordTip(), bd);
+        }
+    }
+
+    /**
+     * 时间戳比较验证状态判断
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onCreateStatusReceieved(ValidateResultEvent event){
+        if (event != null){
+            dissmisProgressDialog();
+            if(event.isSuccess()){
+                //创建成功
+                //跳转到主页面
+                AppManager.getAppManager().finishAllActivity();
+                UISkipMananger.launchHome(getActivity());
+            }else {
+                //创建失败,删除当前钱包
+                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
+                List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao()
+                        .getWalletEntityList();
+                //更新列表中的第一个钱包为当前钱包并跳转
+                WalletEntity newCurWallet = walletEntityList.get(0);
+                newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(newCurWallet);
+                AppManager.getAppManager().finishAllActivity();
+                UISkipMananger.launchHome(getActivity());
+            }
+        }
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
 
     class MainHandler extends Handler {
 
@@ -395,50 +437,5 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
             }
 
         }
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onReceivePollevent(AccountRegisterEvent event) {
-        if (EmptyUtils.isNotEmpty(event)) {
-            getP().doAccountRegisterRequest(infoVo.getAccountName(),
-                    SN, SN_sign, public_key, public_key_hex, public_key_sign, infoVo.getPassword(),
-                    infoVo.getPasswordTip(), bd);
-        }
-    }
-
-    /**
-     * 时间戳比较验证状态判断
-     * @param event
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onCreateStatusReceieved(ValidateResultEvent event){
-        if (event != null){
-            dissmisProgressDialog();
-            if(event.isSuccess()){
-                //创建成功
-                //跳转到主页面
-                AppManager.getAppManager().finishAllActivity();
-                UISkipMananger.launchHome(getActivity());
-            }else {
-                //创建失败,删除当前钱包
-                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
-                List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao()
-                        .getWalletEntityList();
-                //更新列表中的第一个钱包为当前钱包并跳转
-                WalletEntity newCurWallet = walletEntityList.get(0);
-                newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-                DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(newCurWallet);
-                AppManager.getAppManager().finishAllActivity();
-                UISkipMananger.launchHome(getActivity());
-            }
-        }
-    }
-
-
-    @Override
-    public boolean useEventBus() {
-        return true;
     }
 }

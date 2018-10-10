@@ -218,8 +218,12 @@ public class WalletManageFragment extends XFragment {
                             (position + 1);//当前卡片对应的wallet
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("curWallet", thisWallet);
-                    //startForResult(WalletDetailFragment.newInstance(bundle), requestCode);
-                    start(WalletDetailFragment.newInstance(bundle), SINGLETASK);
+                    if (thisWallet.getWalletType() == CacheConstants.WALLET_TYPE_BLUETOOTH){
+                        UISkipMananger.skipBluetoothWalletManageActivity(getActivity(), bundle);
+                    }else {
+                        start(WalletDetailFragment.newInstance(bundle), SINGLETASK);
+                    }
+
                 }
             }
 

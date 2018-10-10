@@ -124,9 +124,9 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                             mAdapter.notifyDataSetChanged();
                         }
                     } else if (status == 0) {
-                        //初次连接
+                        //status == 0 未初始化
+                        //status == 1 已初始化但没有配对信息
                         showInitWookongBioDialog();
-
                     }
                 }
             }
