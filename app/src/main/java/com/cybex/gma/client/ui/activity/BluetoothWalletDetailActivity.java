@@ -10,16 +10,19 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
+import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.android.logger.Log;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.readystatesoftware.chuck.internal.ui.MainActivity;
@@ -39,10 +42,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
     @BindView(R.id.bt_format) Button btFormat;
 
     private long contextHandle;
-    private BlueToothWrapper mScanThread;
     private BlueToothWrapper connectThread;
-    private BlueToothWrapper getDeviceInfoThread;
-    private ScanDeviceHandler mScanHandler;
     private ConnectHandler mConnectHandler;
     private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
@@ -58,15 +58,6 @@ public class BluetoothWalletDetailActivity extends XActivity {
         }
     }
 
-    private void startScan() {
-        if ((mScanThread == null) || (mScanThread.getState() == Thread.State.TERMINATED)) {
-            mScanThread = new BlueToothWrapper(mScanHandler);
-            mScanThread.setGetDevListWrapper(this, null);
-            mScanThread.start();
-
-        }
-    }
-
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
@@ -75,7 +66,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
+        checkConnection();
     }
 
     @Override
@@ -88,15 +79,34 @@ public class BluetoothWalletDetailActivity extends XActivity {
         return null;
     }
 
-
-    class ScanDeviceHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-
-            }
+    /**
+     * 每次进入页面检查是否连接
+     */
+    public void checkConnection(){
+        int status = SPUtils.getInstance().getInt("isBioConnected");
+        switch (status){
+            case CacheConstants.STATUS_BLUETOOTH_CONNCETED:
+                showConnectedLayout();
+                break;
+            case CacheConstants.STATUS_BLUETOOTH_DISCONNCETED:
+                showDisconnectedLayout();
+                break;
+            default:
+                showDisconnectedLayout();
         }
+    }
+
+    public void showConnectedLayout(){
+        btCancelPair.setVisibility(View.VISIBLE);
+        btToConnect.setVisibility(View.GONE);
+        btFormat.setVisibility(View.VISIBLE);
+    }
+
+    public void showDisconnectedLayout(){
+        btCancelPair.setVisibility(View.GONE);
+        btToConnect.setVisibility(View.VISIBLE);
+        btFormat.setVisibility(View.GONE);
+
     }
 
     class ConnectHandler extends Handler {
@@ -112,6 +122,9 @@ public class BluetoothWalletDetailActivity extends XActivity {
                     BlueToothWrapper.InitContextReturnValue returnValue = (BlueToothWrapper.InitContextReturnValue) msg.obj;
                     if ((returnValue != null) && (returnValue.getReturnValue()
                             == MiddlewareInterface.PAEW_RET_SUCCESS)) {
+                        //连接成功
+                        showConnectedLayout();
+                        AlertUtil.showShortCommonAlert(BluetoothWalletDetailActivity.this, "Bio Connected");
                         dissmisProgressDialog();
 
                         contextHandle = returnValue.getContextHandle();
@@ -119,21 +132,11 @@ public class BluetoothWalletDetailActivity extends XActivity {
                         ContextHandleEvent event = new ContextHandleEvent();
                         event.setContextHanle(contextHandle);
                         EventBusProvider.postSticky(event);
-                        LoggerManager.d("contextHandle at Post", contextHandle);
 
-                        Bundle bundle = new Bundle();
-                        finish();
-                        UISkipMananger.launchHome(BluetoothWalletDetailActivity.this);
-
-                        /*
-                        if ((getDeviceInfoThread == null) || (getDeviceInfoThread.getState()
-                                == Thread.State.TERMINATED)) {
-                            getDeviceInfoThread = new BlueToothWrapper(mConnectHandler);
-                            getDeviceInfoThread.setGetInfoWrapper(returnValue.getContextHandle()
-                                    , 0);
-                            getDeviceInfoThread.start();
-                        }
-                        */
+                    }else {
+                        //连接失败
+                        AlertUtil.showShortUrgeAlert(BluetoothWalletDetailActivity.this, "Bio Connect Fail");
+                        showDisconnectedLayout();
                     }
 
                     connectThread.interrupt();
@@ -147,6 +150,15 @@ public class BluetoothWalletDetailActivity extends XActivity {
                         LoggerManager.d("devInfo " + devInfo.ucLifeCycle);
                     }
 
+                    break;
+
+                case BlueToothWrapper.MSG_FREE_CONTEXT_START:
+                    break;
+                case BlueToothWrapper.MSG_FREE_CONTEXT_FINISH:
+                    LoggerManager.d("MSG_FREE_CONTEXT_FINISH");
+                    SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+                    AlertUtil.showShortUrgeAlert(BluetoothWalletDetailActivity.this, "Bio Disconnected");
+                    showDisconnectedLayout();
                     break;
                 default:
                     break;

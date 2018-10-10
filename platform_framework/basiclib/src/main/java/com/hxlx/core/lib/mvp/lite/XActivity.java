@@ -25,6 +25,7 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.utils.OSUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -34,6 +35,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
+import java.util.Calendar;
 
 import me.framework.fragmentation.ActivitySupport;
 
@@ -79,13 +81,13 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
             bindEvent();
         }
 
-        initData(savedInstanceState);
-
         AppManager.getAppManager().addActivity(this);
         mContext = this;
 
         setImmersiveStyle();
         handleNotch();
+
+        initData(savedInstanceState);
     }
 
 

@@ -7,10 +7,12 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.fragment.MainTabFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.SPUtils;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -75,6 +77,7 @@ public class MainTabActivity extends XActivity {
     protected void onDestroy() {
         super.onDestroy();
         BluetoothConnectKeepJob.removeJob();
+        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
     }
 
 }
