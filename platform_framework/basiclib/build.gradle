@@ -86,5 +86,7 @@ dependencies {
     api deps.yanzhenjie.sofia
     api deps.third.rxErrorHandler
 
+    api deps.jimu.componentLib
+
 
 }

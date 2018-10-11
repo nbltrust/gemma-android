@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.dd.comgradle'
 apply from: '../config/properties-util.gradle'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -277,4 +277,9 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
 
+}
+
+combuild {
+    applicationName = 'com.cybex.gma.client.GmaApplication'
+    isRegisterCompoAuto = true
 }
