@@ -43,18 +43,40 @@ public class BluetoothWalletDetailActivity extends XActivity {
 
     private long contextHandle;
     private BlueToothWrapper connectThread;
+    private BlueToothWrapper formatThread;
     private ConnectHandler mConnectHandler;
     private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
-    @OnClick(R.id.bt_to_connect)
-    public void startConnect(){
-        showProgressDialog("connecting");
-        mConnectHandler = new ConnectHandler();
-        if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
-            connectThread = new BlueToothWrapper(mConnectHandler);
-            connectThread.setInitContextWithDevNameWrapper(this,
-                    deviceName);
-            connectThread.start();
+    /**
+     * 按钮点击事件
+     * @param v
+     */
+    @OnClick({R.id.bt_to_connect, R.id.bt_cancel_pair, R.id.bt_format})
+    public void startConnect(View v){
+        switch (v.getId()){
+            case R.id.bt_to_connect:
+                //点击连接
+                showProgressDialog("connecting");
+                mConnectHandler = new ConnectHandler();
+                if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
+                    connectThread = new BlueToothWrapper(mConnectHandler);
+                    connectThread.setInitContextWithDevNameWrapper(this,
+                            deviceName);
+                    connectThread.start();
+                }
+                break;
+            case R.id.bt_cancel_pair:
+                //取消配对
+                break;
+            case R.id.bt_format:
+                //格式化
+                if ((formatThread == null) || (formatThread.getState() == Thread.State.TERMINATED))
+                {
+                    formatThread = new BlueToothWrapper(mConnectHandler);
+                    formatThread.setFormatDeviceWrapper(contextHandle, 0);
+                    formatThread.start();
+                }
+                break;
         }
     }
 
@@ -115,9 +137,11 @@ public class BluetoothWalletDetailActivity extends XActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BlueToothWrapper.MSG_INIT_CONTEXT_START:
+                    //连接开始
                     LoggerManager.d("MSG_INIT_CONTEXT_START");
                     break;
                 case BlueToothWrapper.MSG_INIT_CONTEXT_FINISH:
+                    //连接结束
                     LoggerManager.d("MSG_INIT_CONTEXT_FINISH");
                     BlueToothWrapper.InitContextReturnValue returnValue = (BlueToothWrapper.InitContextReturnValue) msg.obj;
                     if ((returnValue != null) && (returnValue.getReturnValue()
@@ -153,12 +177,20 @@ public class BluetoothWalletDetailActivity extends XActivity {
                     break;
 
                 case BlueToothWrapper.MSG_FREE_CONTEXT_START:
+                    //断开连接开始
                     break;
                 case BlueToothWrapper.MSG_FREE_CONTEXT_FINISH:
+                    //断开连接结束
                     LoggerManager.d("MSG_FREE_CONTEXT_FINISH");
                     SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     AlertUtil.showShortUrgeAlert(BluetoothWalletDetailActivity.this, "Bio Disconnected");
                     showDisconnectedLayout();
+                    break;
+                case BlueToothWrapper.MSG_FORMAT_DEVICE_START:
+                    //格式化开始
+                    break;
+                case BlueToothWrapper.MSG_FORMAT_DEVICE_FINISH:
+                    //格式化完成
                     break;
                 default:
                     break;

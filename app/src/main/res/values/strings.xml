@@ -769,7 +769,12 @@
     <string name="click_to_connect">点击连接</string>
     <string name="click_to_format">格式化</string>
     <string name="click_to_cancel_pair">取消配对</string>
-
+    <string name="confirm_format">确认格式化</string>
+    <string name="tip_format">一旦格式化，WOOKONG Bio将清除私钥，请在格式化前备份助记词或转移资产。</string>
+    <string name="confirm">确认</string>
+    <string name="format_success">格式化成功</string>
+    <string name="initialize">初始化</string>
+    <string name="tip_to_init">是否重新初始化WOOKONG Bio？</string>
 
     <!--蓝牙钱包配置end -->
 

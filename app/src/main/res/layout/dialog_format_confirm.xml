@@ -9,7 +9,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:src="@drawable/ic_payment_price_changed"
+        android:src="@drawable/ic_format"
         android:id="@+id/iv_password_hint"
         android:layout_width="56dp"
         android:layout_height="56dp"
@@ -19,20 +19,20 @@
         android:layout_marginTop="28dp"/>
 
     <TextView
-        android:id="@+id/tv_password_hint"
+        android:id="@+id/tv_format_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/price_changed"
+        android:text="@string/confirm_format"
         android:textColor="@color/black"
         android:layout_gravity="center"
         android:textSize="@dimen/font_4"
         android:layout_marginTop="6dp"/>
 
     <TextView
-        android:id="@+id/tv_price_changed"
+        android:id="@+id/tv_tip_format"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/payment_price_changed"
+        android:text="@string/tip_format"
         android:layout_gravity="center"
         android:textSize="@dimen/font_4"
         android:textColor="@color/blueyGrey"
@@ -52,6 +52,7 @@
     </View>
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -72,7 +73,7 @@
             android:id="@+id/tv_ok"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="@string/confirm_payment"
+            android:text="@string/confirm"
             android:gravity="center"
             android:layout_weight="1"
             android:textSize="17sp"

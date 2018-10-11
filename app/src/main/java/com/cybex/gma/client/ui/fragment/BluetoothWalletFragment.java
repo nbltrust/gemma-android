@@ -533,6 +533,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
         if (reslut) {
             LoggerManager.d("Job repeat Removed");
         }
+        dissmisProgressDialog();
 
     }
 

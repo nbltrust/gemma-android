@@ -70,7 +70,7 @@ public class BluetoothWalletManageActivity extends XActivity {
         if ((disconnectThread == null) || (disconnectThread.getState() == Thread.State.TERMINATED))
         {
             disconnectThread = new BlueToothWrapper(mConnectHandler);
-            disconnectThread.setFreeContextWrapper(mContextHandle);
+            disconnectThread.setFreeContextAndShutDownWrapper(mContextHandle);
             disconnectThread.start();
             mContextHandle = 0;
             mDevIndex = MiddlewareInterface.INVALID_DEV_INDEX;
