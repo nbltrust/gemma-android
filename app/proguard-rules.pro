@@ -29,3 +29,12 @@
 # A resource is loaded with a relative path so the package of this class must be preserved.
 
 # for DexGuard only
+
+#JIMU
+-keep interface * {
+  <methods>;
+}
+-keep class com.luojilab.component.componentlib.** {*;}
+-keep class com.luojilab.gen.router.** {*;}
+-keep class * implements com.luojilab.component.componentlib.router.ISyringe {*;}
+-keep class * implements com.luojilab.component.componentlib.applicationlike.IApplicationLike {*;}
