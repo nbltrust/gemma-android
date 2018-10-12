@@ -244,6 +244,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     BlueToothWrapper.InitContextReturnValue returnValue = (BlueToothWrapper.InitContextReturnValue) msg.obj;
                     if ((returnValue != null) && (returnValue.getReturnValue()
                             == MiddlewareInterface.PAEW_RET_SUCCESS)) {
+                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
                         deviceNameList.get(updatePosition).isShowProgress = false;
                         mAdapter.notifyDataSetChanged();
 

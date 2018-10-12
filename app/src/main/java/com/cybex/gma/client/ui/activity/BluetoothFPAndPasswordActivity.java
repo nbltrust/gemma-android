@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.fragment.AboutFragment;
+import com.cybex.gma.client.ui.fragment.BluetoothFPAndPasswordFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -15,8 +15,8 @@ public class BluetoothFPAndPasswordActivity extends XActivity {
 
     @Override
     public void bindUI(View view) {
-        if (findFragment(AboutFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_bluetooth_fp_and_password, AboutFragment.newInstance());
+        if (findFragment(BluetoothFPAndPasswordFragment.class) == null) {
+            loadRootFragment(R.id.fl_container_bluetooth_fp_and_password, BluetoothFPAndPasswordFragment.newInstance());
         }
 
         //让布局向上移来显示软键盘

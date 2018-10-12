@@ -77,7 +77,7 @@ public class MainTabActivity extends XActivity {
     protected void onDestroy() {
         super.onDestroy();
         BluetoothConnectKeepJob.removeJob();
-        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
     }
 
 }

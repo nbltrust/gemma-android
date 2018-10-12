@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cybex.gma.client.R;
@@ -20,8 +21,7 @@ public class BluetoothFPManageAdapter extends BaseQuickAdapter<BluetoothFPVO, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, BluetoothFPVO item) {
-
-
-
+        SuperTextView fpCrad = helper.getView(R.id.superTextView_bluetooth_FPCard);
+        fpCrad.setLeftString(item.getFingerprintName());
     }
 }

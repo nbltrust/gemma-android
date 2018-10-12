@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.constraint.ConstraintLayout;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -13,18 +16,26 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.DeviceInfoEvent;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
+import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.fragment.ChangePasswordFragment;
 import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.SPUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomDialog;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -55,6 +66,7 @@ public class BluetoothWalletManageActivity extends XActivity {
     private int mDevIndex;
     private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
+
     @OnClick(R.id.bt_click_to_connect)
     public void startConnect() {
         showProgressDialog("connecting");
@@ -82,6 +94,11 @@ public class BluetoothWalletManageActivity extends XActivity {
     public void seeWalletDetail() {
         Bundle bundle = new Bundle();
         UISkipMananger.skipBluetoothWalletDetailActivity(BluetoothWalletManageActivity.this, bundle);
+    }
+
+    @OnClick(R.id.superTextView_changePass)
+    public void goManageFPandPassword(){
+        UISkipMananger.skipBluetoothFPAndPasswordActivity(BluetoothWalletManageActivity.this);
     }
 
     @Override
@@ -158,7 +175,7 @@ public class BluetoothWalletManageActivity extends XActivity {
      * 每次进入页面检查是否连接
      */
     public void checkConnection(){
-        int status = SPUtils.getInstance().getInt("isBioConnected");
+        int status = SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS);
         switch (status){
             case CacheConstants.STATUS_BLUETOOTH_CONNCETED:
                 showConnectedLayout();
@@ -185,7 +202,7 @@ public class BluetoothWalletManageActivity extends XActivity {
                     if ((returnValue != null) && (returnValue.getReturnValue()
                             == MiddlewareInterface.PAEW_RET_SUCCESS)) {
                         //连接成功
-                        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_CONNCETED);
+                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
 
                         mContextHandle = returnValue.getContextHandle();
 
@@ -198,7 +215,7 @@ public class BluetoothWalletManageActivity extends XActivity {
 
                     } else {
                         //连接超时或失败
-                        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                         dissmisProgressDialog();
                         AlertUtil.showShortUrgeAlert(BluetoothWalletManageActivity.this, "Connect Fail");
                     }
@@ -211,7 +228,7 @@ public class BluetoothWalletManageActivity extends XActivity {
                 case BlueToothWrapper.MSG_FREE_CONTEXT_FINISH:
                     BluetoothConnectKeepJob.removeJob();
                     LoggerManager.d("MSG_FREE_CONTEXT_FINISH");
-                    SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+                    SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     AlertUtil.showShortUrgeAlert(BluetoothWalletManageActivity.this, "Bio Disconnected");
                     showDisconnectedLayout();
                     break;

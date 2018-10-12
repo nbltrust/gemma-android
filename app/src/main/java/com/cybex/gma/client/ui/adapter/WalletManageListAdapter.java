@@ -21,14 +21,12 @@ public class WalletManageListAdapter extends BaseQuickAdapter<WalletVO, BaseView
     protected void convert(BaseViewHolder helper, WalletVO item) {
         helper.addOnClickListener(R.id.layout_more);
 
-
         ImageView imvType = helper.getView(R.id.imv_wookong_logo);
         if (item.getWalletType() == 1) {
             imvType.setVisibility(View.VISIBLE);
         } else {
             imvType.setVisibility(View.GONE );
         }
-
 
         if (item.isSelected) {
             //默认被选中的选项卡

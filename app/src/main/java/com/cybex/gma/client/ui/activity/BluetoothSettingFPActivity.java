@@ -135,7 +135,9 @@ public class BluetoothSettingFPActivity extends XActivity {
 
         mHandler = new FPHandler();
         bd = getIntent().getExtras();
-        contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE);
+        if (bd != null){
+            contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE);
+        }
         //初始化指纹动画
         initVectorDrawable();
 
@@ -144,7 +146,6 @@ public class BluetoothSettingFPActivity extends XActivity {
             enrollFPThread.setEnrollFPWrapper(contextHandle, 0);
             enrollFPThread.start();
         }
-
     }
 
     @Override

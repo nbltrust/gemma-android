@@ -446,7 +446,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                     break;
                                 case CacheConstants.WALLET_TYPE_BLUETOOTH:
                                     //蓝牙钱包转账
-                                    int status = SPUtils.getInstance().getInt("isBioConnected");
+                                    int status = SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS);
                                     if (status == CacheConstants.STATUS_BLUETOOTH_DISCONNCETED){
                                         //蓝牙卡未连接
                                         startConnect();
@@ -889,7 +889,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         if (dialog != null && dialog.isShowing()){
                             dialog.cancel();
                         }
-                        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_CONNCETED);
+                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
 
                         mContextHandle = returnValueConnect.getContextHandle();
 
@@ -905,7 +905,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                             dialog.cancel();
                         }
                         showConnectBioFailDialog();
-                        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     }
 
                     connectThread.interrupt();

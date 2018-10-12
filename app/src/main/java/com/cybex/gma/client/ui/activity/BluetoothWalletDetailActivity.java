@@ -125,7 +125,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
      * 每次进入页面检查是否连接
      */
     public void checkConnection(){
-        int status = SPUtils.getInstance().getInt("isBioConnected");
+        int status = SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS);
         switch (status){
             case CacheConstants.STATUS_BLUETOOTH_CONNCETED:
                 showConnectedLayout();
@@ -292,7 +292,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
                             == MiddlewareInterface.PAEW_RET_SUCCESS)) {
                         //连接成功
 
-                        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_CONNCETED);
+                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
 
                         contextHandle = returnValue.getContextHandle();
 
@@ -304,7 +304,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
                         
                     }else {
                         //连接失败
-                        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                         AlertUtil.showShortUrgeAlert(BluetoothWalletDetailActivity.this, "Bio Connect Fail");
                         showDisconnectedLayout();
                     }
@@ -328,7 +328,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
                 case BlueToothWrapper.MSG_FREE_CONTEXT_FINISH:
                     //断开连接结束
                     //LoggerManager.d("MSG_FREE_CONTEXT_FINISH");
-                    SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+                    SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     AlertUtil.showShortUrgeAlert(BluetoothWalletDetailActivity.this, "Bio Disconnected");
                     showDisconnectedLayout();
                     break;

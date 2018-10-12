@@ -23,7 +23,7 @@ public class BluetoothChangeFPNameFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BluetoothChangeFPNameFragment.this, rootView);
-        setNavibarTitle(getResources().getString(R.string.about), true, true);
+        setNavibarTitle(getResources().getString(R.string.about), true, false);
     }
 
     @Override
