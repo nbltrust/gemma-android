@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
@@ -268,6 +269,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     //获得设备信息
                     BlueToothWrapper.GetDevInfoReturnValue reValue = (BlueToothWrapper.GetDevInfoReturnValue) msg.obj;
                     if (reValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
                         MiddlewareInterface.PAEW_DevInfo devInfo = reValue.getDeviceInfo();
                         if (devInfo.ucLifeCycle == DEVICE_LIFE_CYCLE_PRODUCE) {
                             //在全新（或已Format）的设备上

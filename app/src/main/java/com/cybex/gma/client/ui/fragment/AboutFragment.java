@@ -39,8 +39,6 @@ public class AboutFragment extends XFragment {
         setNavibarTitle(getResources().getString(R.string.about), true, true);
     }
 
-
-
     @Override
     public void initData(Bundle savedInstanceState) {
         //版本说明

@@ -51,6 +51,7 @@
                     title:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
+                    android:id="@+id/tv_connection_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dimen_20"
@@ -59,7 +60,7 @@
                     android:textSize="@dimen/font_3"
                     title:layout_constraintEnd_toEndOf="parent"
                     title:layout_constraintTop_toTopOf="parent"
-                    tools:text="未连接"
+                    android:text="未连接"
                     />
 
                 <TextView
@@ -71,7 +72,7 @@
                     android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
                     android:paddingTop="@dimen/dimen_10"
                     android:singleLine="true"
-                    android:text="EOS5jvZ4TxzZhLh6cU3VNxcr4qRxRa5fYsxoxFmKZw2VXy49AaYpQ"
+                    tools:text="EOS5jvZ4TxzZhLh6cU3VNxcr4qRxRa5fYsxoxFmKZw2VXy49AaYpQ"
                     android:textColor="@color/darkSlateBlue"
                     android:textSize="@dimen/font_4"
                     title:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +82,7 @@
             </android.support.constraint.ConstraintLayout>
 
             <LinearLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/view_bio_management"
                 android:background="@drawable/shape_corner"
                 android:translationZ="@dimen/dimen_3"
@@ -98,11 +99,11 @@
                     title:sLeftTextColor="@color/darkSlateBlue"
                     title:sShapeSelectorPressedColor="@color/item_pressed"
                     title:sLeftTextSize="@dimen/font_3.5"
-                    title:sLeftTextString="@string/changePass"
+                    android:paddingStart="@dimen/dimen_10"
+                    title:sLeftTextString="@string/fp_and_password"
                     title:sRightTvDrawableRight="@drawable/ic_arrow"
                     title:sUseShape="true"
-                    title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
-                    title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
+                    title:sShapeCornersRadius="@dimen/dimen_6"
                     >
 
                 </com.allen.library.SuperTextView>
@@ -116,21 +117,6 @@
                     android:background="@color/paleGrey">
 
                 </View>
-
-                <com.allen.library.SuperTextView
-                    android:id="@+id/superTextView_change_FP"
-                    style="@style/card_style"
-                    title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-                    title:sShapeCornersTopRightRadius="@dimen/dimen_6"
-                    title:sDividerLineType="none"
-                    title:sLeftTextColor="@color/darkSlateBlue"
-                    title:sLeftTextSize="@dimen/font_3.5"
-                    title:sLeftTextString="@string/export_privateKey"
-                    title:sRightTvDrawableRight="@drawable/ic_arrow"
-                    title:sUseShape="true"
-                    title:sShapeSelectorPressedColor="@color/item_pressed">
-
-                </com.allen.library.SuperTextView>
 
             </LinearLayout>
 

@@ -57,11 +57,7 @@
             android:name=".ui.activity.SpalashActivity"
             android:configChanges="layoutDirection|locale"
             android:theme="@style/SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
 
         </activity>
 
@@ -332,6 +328,17 @@
                   android:configChanges="layoutDirection|locale"
                   android:screenOrientation="portrait">
 
+        </activity>
+
+        <!-- 蓝牙钱包指纹密码管理界面 -->
+        <activity android:name=".ui.activity.BluetoothFPAndPasswordActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <!--蓝牙end -->

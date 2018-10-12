@@ -1,13 +1,11 @@
 package com.cybex.gma.client.ui.activity;
 
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -16,6 +14,8 @@ import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.event.ContextHandleEvent;
+import com.cybex.gma.client.event.DeviceInfoEvent;
+import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.AlertUtil;
@@ -24,10 +24,10 @@ import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.SPUtils;
-import com.hxlx.core.lib.utils.common.utils.AppManager;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
-import com.kaopiz.kprogresshud.KProgressHUD;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,21 +42,22 @@ public class BluetoothWalletManageActivity extends XActivity {
     @BindView(R.id.bt_click_to_connect) Button btClickToConnect;
     @BindView(R.id.scroll_wallet_detail) ScrollView scrollWalletDetail;
     @BindView(R.id.superTextView_changePass) SuperTextView superTextViewChangePass;
-    @BindView(R.id.superTextView_change_FP) SuperTextView superTextViewChangeFP;
     @BindView(R.id.view_bio_management) LinearLayout viewBioManagement;
     @BindView(R.id.bt_disconnect) Button btDisconnect;
+    @BindView(R.id.tv_connection_status) TextView tvConnectionStatus;
 
     private BlueToothWrapper connectThread;
+    private BlueToothWrapper getAddressThread;
     private BlueToothWrapper disconnectThread;
     private long mContextHandle;
     private ConnectHandler mConnectHandler;
+    private String publicKey;
     private int mDevIndex;
     private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
     @OnClick(R.id.bt_click_to_connect)
     public void startConnect() {
         showProgressDialog("connecting");
-        mConnectHandler = new ConnectHandler();
         if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
             connectThread = new BlueToothWrapper(mConnectHandler);
             connectThread.setInitContextWithDevNameWrapper(BluetoothWalletManageActivity.this,
@@ -93,6 +94,8 @@ public class BluetoothWalletManageActivity extends XActivity {
     public void initData(Bundle savedInstanceState) {
         mDevIndex = 0;
         checkConnection();
+        mConnectHandler = new ConnectHandler();
+        eosAddressInDetailPage.setText(publicKey);
     }
 
     @Override
@@ -105,6 +108,18 @@ public class BluetoothWalletManageActivity extends XActivity {
         return null;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkConnection();
+        eosAddressInDetailPage.setText(publicKey);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onEosAddressRecieved(DeviceInfoEvent event){
+        publicKey = event.getEosPublicKey();
+    }
+
     /**
      * 显示蓝牙卡连接时UI
      */
@@ -112,6 +127,7 @@ public class BluetoothWalletManageActivity extends XActivity {
         viewBioManagement.setVisibility(View.VISIBLE);
         btDisconnect.setVisibility(View.VISIBLE);
         btClickToConnect.setVisibility(View.GONE);
+        tvConnectionStatus.setVisibility(View.GONE);
     }
 
     /**
@@ -121,6 +137,21 @@ public class BluetoothWalletManageActivity extends XActivity {
         viewBioManagement.setVisibility(View.GONE);
         btDisconnect.setVisibility(View.GONE);
         btClickToConnect.setVisibility(View.VISIBLE);
+        tvConnectionStatus.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 获取EOS地址（公钥）
+     */
+    public void getEosAddress(){
+        //showProgressDialog("Getting Device Information");
+        if ((getAddressThread == null) || (getAddressThread.getState() == Thread.State.TERMINATED))
+        {
+            getAddressThread = new BlueToothWrapper(mConnectHandler);
+            getAddressThread.setGetAddressWrapper(mContextHandle, 0, MiddlewareInterface.PAEW_COIN_TYPE_EOS,
+                    CacheConstants.EOS_DERIVE_PATH);
+            getAddressThread.start();
+        }
     }
 
     /**
@@ -155,19 +186,19 @@ public class BluetoothWalletManageActivity extends XActivity {
                             == MiddlewareInterface.PAEW_RET_SUCCESS)) {
                         //连接成功
                         SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_CONNCETED);
-                        dissmisProgressDialog();
 
                         mContextHandle = returnValue.getContextHandle();
-                        AlertUtil.showShortCommonAlert(BluetoothWalletManageActivity.this, "Bio Connected");
-                        showConnectedLayout();
+
 
                         ContextHandleEvent event = new ContextHandleEvent();
                         event.setContextHanle(mContextHandle);
                         EventBusProvider.postSticky(event);
 
+                        getEosAddress();
 
                     } else {
                         //连接超时或失败
+                        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                         dissmisProgressDialog();
                         AlertUtil.showShortUrgeAlert(BluetoothWalletManageActivity.this, "Connect Fail");
                     }
@@ -178,12 +209,50 @@ public class BluetoothWalletManageActivity extends XActivity {
                     LoggerManager.d("MSG_FREE_CONTEXT_START");
                     break;
                 case BlueToothWrapper.MSG_FREE_CONTEXT_FINISH:
+                    BluetoothConnectKeepJob.removeJob();
                     LoggerManager.d("MSG_FREE_CONTEXT_FINISH");
                     SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     AlertUtil.showShortUrgeAlert(BluetoothWalletManageActivity.this, "Bio Disconnected");
                     showDisconnectedLayout();
                     break;
+                case BlueToothWrapper.MSG_GET_ADDRESS_START:
+                    //获取EOS地址（公钥）开始
+                    break;
+                case BlueToothWrapper.MSG_GET_ADDRESS_FINISH:
+                    //获取EOS地址（公钥）结束
+                    BlueToothWrapper.GetAddressReturnValue returnValueAddress = (BlueToothWrapper
+                            .GetAddressReturnValue) msg.obj;
+                    if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
+                            LoggerManager.d("EOS Address: " + returnValueAddress.getAddress());
 
+                            String[] strArr = returnValueAddress.getAddress().split("####");
+                            String publicKey = strArr[0];
+                            eosAddressInDetailPage.setText(publicKey);
+
+                            DeviceInfoEvent event = new DeviceInfoEvent();
+                            event.setEosPublicKey(publicKey);
+                            EventBusProvider.postSticky(event);
+                            AlertUtil.showShortCommonAlert(BluetoothWalletManageActivity.this, "Bio Connected");
+                            showConnectedLayout();
+                            //BluetoothConnectKeepJob.startConnectPolling(mContextHandle, mConnectHandler, 0);
+                        }
+                    }else {
+                        showDisconnectedLayout();
+                        AlertUtil.showShortUrgeAlert(BluetoothWalletManageActivity.this, "Connect Fail");
+                    }
+                    dissmisProgressDialog();
+                    break;
+                case BlueToothWrapper.MSG_HEART_BEAT_DATA_UPDATE:
+                    LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE");
+                    if (msg.obj != null) {
+                        byte[] heartBeatData = (byte[])msg.obj;
+                        if (heartBeatData.length >= 3 ) {
+                            LoggerManager.d("power level : ", heartBeatData[2]);
+                        }
+                    }
+
+                    break;
                 default:
                     break;
             }

@@ -23,6 +23,7 @@ import com.cybex.gma.client.db.dao.WalletEntityDao;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.ContextHandleEvent;
+import com.cybex.gma.client.event.DeviceInfoEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
@@ -30,12 +31,13 @@ import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
+import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-import com.hxlx.core.lib.utils.ContextUtils;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.SPUtils;
@@ -66,6 +68,15 @@ import butterknife.Unbinder;
  */
 public class TransferFragment extends XFragment<TransferPresenter> {
 
+    private static final int m_minPINLen = 6;
+    private static final int m_maxPINLen = 16;
+    private static final String m_strDefaultPIN = "12345678";
+    private static final String m_strDefaultNewPIN = "88888888";
+    public static int m_authTypeResult = 0;
+    public static int m_authTypeChoiceIndex = 0; //-1 means cancel
+    public static byte m_authType;
+    public static int m_getPINResult;
+    public static String m_getPINString;
     protected static ReentrantLock m_uiLock;
     @BindView(R.id.icon_receiver)
     TextView iconReceiver;
@@ -98,7 +109,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @BindView(R.id.imv_wookong_logo) ImageView imvWookongLogo;
     CustomFullDialog dialog = null;
     SerializeHandler mSerializeHandler;
+    ConnectHandler mConnectHandler;
     SignHandler mSignHandler;
+    AlertDialog dlg = null;
     private TransferTransactionVO transactionVO;
     private String maxValue = "";
     private String currentEOSName = "";
@@ -106,40 +119,19 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     private String amount = "";
     private String memo = "";
     private String chain_id = "";
+    private String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
     private long mContextHandle = 0;
     private int mDevIndex = 0;
     private BlueToothWrapper serializedThread;
     private BlueToothWrapper signThread;
-
-    public static int m_authTypeResult = 0;
-    public static int m_authTypeChoiceIndex = 0; //-1 means cancel
-    public static byte m_authType;
-    public static int m_getPINResult;
-    public static String m_getPINString;
-    private static final int m_minPINLen = 6;
-    private static final int m_maxPINLen = 16;
-
-    private static final String m_strDefaultPIN = "12345678";
-    private static final String m_strDefaultNewPIN = "88888888";
-    AlertDialog dlg = null;
+    private BlueToothWrapper connectThread;
+    private BlueToothWrapper getAddressThread;
 
     public static TransferFragment newInstance() {
         Bundle args = new Bundle();
         TransferFragment fragment = new TransferFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public void setTransactionVO(TransferTransactionVO transactionVO) {
-        this.transactionVO = transactionVO;
-    }
-
-    public String getChain_id() {
-        return chain_id;
-    }
-
-    public void setChain_id(String chain_id) {
-        this.chain_id = chain_id;
     }
 
     @OnClick({R.id.iv_transfer_account_clear, R.id.iv_transfer_amount_clear, R.id.iv_transfer_memo_clear})
@@ -266,7 +258,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         m_uiLock.lock();
         WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
         WalletEntity entity = dao.getCurrentWalletEntity();
-        if (entity != null && getWalletType() == CacheConstants.WALLET_TYPE_BLUETOOTH) {
+        if (entity != null && getP().getWalletType() == CacheConstants.WALLET_TYPE_BLUETOOTH) {
             imvWookongLogo.setVisibility(View.VISIBLE);
         } else {
             imvWookongLogo.setVisibility(View.GONE);
@@ -398,6 +390,14 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         showConfirmTransferDialog();
     }
 
+    public void setTransactionVO(TransferTransactionVO transactionVO) {
+        this.transactionVO = transactionVO;
+    }
+
+    public void setChain_id(String chain_id) {
+        this.chain_id = chain_id;
+    }
+
     public boolean isAccountNameValid() {
         String eosUsername = etCollectionAccount.getText().toString().trim();
         String regEx = "^[a-z1-5]{12}$";
@@ -441,13 +441,20 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         case R.id.btn_transfer:
                             switch (walletType){
                                 case CacheConstants.WALLET_TYPE_SOFT:
+                                    //软钱包转账
                                     showConfirmAuthoriDialog();
                                     break;
                                 case CacheConstants.WALLET_TYPE_BLUETOOTH:
-                                    //todo 测试用，之后要更改为弹出不同的dialog
-                                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-                                            getAmount()+ " EOS", getNote());
-
+                                    //蓝牙钱包转账
+                                    int status = SPUtils.getInstance().getInt("isBioConnected");
+                                    if (status == CacheConstants.STATUS_BLUETOOTH_DISCONNCETED){
+                                        //蓝牙卡未连接
+                                        startConnect();
+                                    }else {
+                                        //蓝牙卡已连接
+                                        getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                                                getAmount()+ " EOS", getNote());
+                                    }
                             }
 
                             break;
@@ -543,6 +550,77 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                 R.string.transfer_eosname_hint_last));
     }
 
+    /**
+     * 显示连接蓝牙dialog
+     */
+    private void showConnectBioDialog() {
+        int[] listenedItems = {R.id.imc_cancel};
+        dialog = new CustomFullDialog(getContext(),
+                R.layout.dialog_transfer_bluetooth_connect_ing, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imc_cancel:
+                        dialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    /**
+     * 显示通过蓝牙卡验证指纹dialog
+     */
+    private void showVerifyFPDialog() {
+        int[] listenedItems = {R.id.imv_back};
+        dialog = new CustomFullDialog(getContext(),
+                R.layout.dialog_transfer_bluetooth_finger_sure, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imv_back:
+                        dialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    /**
+     * 显示连接蓝牙卡失败dialog
+     */
+    private void showConnectBioFailDialog() {
+        int[] listenedItems = {R.id.imc_cancel, R.id.btn_reconnect};
+        dialog = new CustomFullDialog(getContext(),
+                R.layout.dialog_transfer_bluetooth_connect_failed, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imc_cancel:
+                        dialog.cancel();
+                        break;
+                    case R.id.btn_reconnect:
+                        //重新连接
+                        dialog.cancel();
+                        startConnect();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+    }
+
     public void clearData() {
         if (dialog != null) {
             dialog.cancel();
@@ -557,21 +635,16 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
     /**
-     * 返回当前钱包类型
+     * 连接蓝牙卡
      */
-    public int getWalletType() {
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (curWallet != null) {
-            switch (curWallet.getWalletType()) {
-                case CacheConstants.WALLET_TYPE_BLUETOOTH:
-                    //蓝牙钱包
-                    return CacheConstants.WALLET_TYPE_BLUETOOTH;
-                case CacheConstants.WALLET_TYPE_SOFT:
-                    //软件钱包
-                    return CacheConstants.WALLET_TYPE_SOFT;
-            }
+    public void startConnect(){
+        if (mConnectHandler == null)mConnectHandler = new ConnectHandler();
+        if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
+            connectThread = new BlueToothWrapper(mConnectHandler);
+            connectThread.setInitContextWithDevNameWrapper(getActivity(),
+                    deviceName);
+            connectThread.start();
         }
-        return CacheConstants.WALLET_TYPE_SOFT;
     }
 
     /**
@@ -587,6 +660,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
 
     }
+
     /**
      * 调用硬件进行签名
      */
@@ -603,67 +677,17 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
     /**
-     * 构建硬件能够识别的HEX字符串
-     * 序列化结果前面加32字节chain_id，后面加32字节0
-     * @param serializedStr
+     * 获取EOS地址（公钥）
      */
-    public byte[] buildSignStr(String serializedStr){
-        //把数据转成HEX数组
-        String prefix = chain_id.toUpperCase();//chain_id已经是HEX
-        LoggerManager.d("prefix_hex", prefix);
-
-        LoggerManager.d("serializedStr_hex", serializedStr);
-
-        byte[] suffix_bytes = {
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00};//32字节的0
-
-        LoggerManager.d("suffix_hex", suffix_bytes);
-
-        String hexString = prefix + serializedStr;
-
-        byte[] hexBytes = hexToByte(hexString);
-        LoggerManager.d("hexBytes", hexBytes);
-
-
-        return byteMerger(hexBytes, suffix_bytes);
-    }
-
-    /**
-     * 合并两字节数组
-     * @param bt1
-     * @param bt2
-     * @return
-     */
-    public static byte[] byteMerger(byte[] bt1, byte[] bt2){
-        byte[] bt3 = new byte[bt1.length+bt2.length];
-        System.arraycopy(bt1, 0, bt3, 0, bt1.length);
-        System.arraycopy(bt2, 0, bt3, bt1.length, bt2.length);
-        return bt3;
-    }
-
-    /**
-     * hex String转byte数组
-     * @param hex
-     * @return
-     */
-    public static byte[] hexToByte(String hex){
-        int m = 0, n = 0;
-        int byteLen = hex.length() / 2; // 每两个字符描述一个字节
-        byte[] ret = new byte[byteLen];
-        for (int i = 0; i < byteLen; i++) {
-            m = i * 2 + 1;
-            n = m + 1;
-            int intVal = Integer.decode("0x" + hex.substring(i * 2, m) + hex.substring(m, n));
-            ret[i] = Byte.valueOf((byte)intVal);
+    public void getEosAddress(){
+        //showProgressDialog("Getting Device Information");
+        if ((getAddressThread == null) || (getAddressThread.getState() == Thread.State.TERMINATED))
+        {
+            getAddressThread = new BlueToothWrapper(mConnectHandler);
+            getAddressThread.setGetAddressWrapper(mContextHandle, 0, MiddlewareInterface.PAEW_COIN_TYPE_EOS,
+                    CacheConstants.EOS_DERIVE_PATH);
+            getAddressThread.start();
         }
-        return ret;
     }
 
     /**
@@ -675,7 +699,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BlueToothWrapper.MSG_EOS_SERIALIZE_START:
-
+                    showProgressDialog("Serializing...");
                     break;
                 case BlueToothWrapper.MSG_EOS_SERIALIZE_FINISH:
 
@@ -683,13 +707,13 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         //序列化成功
                         String serializedStr = CommonUtility.byte2hex(returnValue.getSerializeData());
-                        byte[] builtStr = buildSignStr(serializedStr);
+                        //把序列化之后的数据做处理
+                        byte[] builtStr = getP().buildSignStr(serializedStr, chain_id);
                         //把builtStr 送给设备签名
                         startSign(builtStr);
                     }
-
                     LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValue.getReturnValue()));
-
+                    dissmisProgressDialog();
                     break;
                 default:
                     break;
@@ -707,18 +731,20 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BlueToothWrapper.MSG_EOS_SIGN_START:
-                    //LoggerManager.d("MSG_EOS_SIGN_START");
+                    LoggerManager.d("MSG_EOS_SIGN_START");
                     break;
                 case BlueToothWrapper.MSG_EOS_SIGN_FINISH:
+                    if (dialog != null && dialog.isShowing())dialog.cancel();
                     LoggerManager.d("MSG_EOS_SIGN_FINISH");
-                    BlueToothWrapper.SignReturnValue returnValue = (BlueToothWrapper.SignReturnValue)msg.obj;
-                    LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValue
+                    BlueToothWrapper.SignReturnValue returnValueSign = (BlueToothWrapper.SignReturnValue)msg.obj;
+                    LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValueSign
                             .getReturnValue()));
 
-                    if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                    if (returnValueSign.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        //签名成功
                         LoggerManager.d("Sign Success");
 
-                        String strSignature = new String(returnValue.getSignature());
+                        String strSignature = new String(returnValueSign.getSignature());
                         LoggerManager.d("\nSignature Value: " + strSignature);
                         List<String> signatures = new ArrayList<>();
                         strSignature = strSignature.substring(0,strSignature.length() - 1);
@@ -743,12 +769,17 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         }
 
                     }else {
+                        //签名失败
+                        AlertUtil.showLongUrgeAlert(getActivity(), getString(R.string.bio_sign_fail));
                         LoggerManager.d("Sign Fail");
                     }
 
                     break;
 
                 case BlueToothWrapper.MSG_GET_AUTH_TYPE:
+                    //dialog.cancel();
+                    //showVerifyFPDialog();
+
                     //显示选择验证方式dialog
                     final String[] authTypeString = {"Sign by Finger Print", "Sign by PIN"};
                     final byte[] authTypes = {MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP, MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_PIN};
@@ -783,13 +814,17 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                     } else {
                                         m_uiLock.unlock();
                                     }
+                                    dlg.dismiss();
+                                    showVerifyFPDialog();
                                 }
                             })
                             .setCancelable(false)
                             .create();
                     dlg.show();
+
                     break;
                 case BlueToothWrapper.MSG_GET_USER_PIN:
+
                     View dlgView = getLayoutInflater().inflate(R.layout.ui_dlg_verify_pin, null);
                     final EditText editPIN = dlgView.findViewById(R.id.edit_pin);
                     editPIN.setText(m_strDefaultPIN);
@@ -825,10 +860,86 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                             .create();
                     dlg.show();
                     break;
+
                 default:
                     break;
             }
+        }
+    }
 
+    class ConnectHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case BlueToothWrapper.MSG_INIT_CONTEXT_START:
+                    LoggerManager.d("MSG_INIT_CONTEXT_START");
+                    if (dialog != null && dialog.isShowing()){
+                        dialog.cancel();
+                    }
+                    showConnectBioDialog();
+                    break;
+                case BlueToothWrapper.MSG_INIT_CONTEXT_FINISH:
+                    //连接完成
+                    LoggerManager.d("MSG_INIT_CONTEXT_FINISH");
+                    BlueToothWrapper.InitContextReturnValue returnValueConnect = (BlueToothWrapper
+                            .InitContextReturnValue) msg.obj;
+                    if ((returnValueConnect != null) && (returnValueConnect.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS)) {
+                        //连接成功
+                        if (dialog != null && dialog.isShowing()){
+                            dialog.cancel();
+                        }
+                        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_CONNCETED);
+
+                        mContextHandle = returnValueConnect.getContextHandle();
+
+                        ContextHandleEvent event = new ContextHandleEvent();
+                        event.setContextHanle(mContextHandle);
+                        EventBusProvider.postSticky(event);
+
+                        getEosAddress();
+
+                    } else {
+                        //连接超时或失败
+                        if (dialog != null && dialog.isShowing()){
+                            dialog.cancel();
+                        }
+                        showConnectBioFailDialog();
+                        SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+                    }
+
+                    connectThread.interrupt();
+                    break;
+                case BlueToothWrapper.MSG_VERIFYFP_START:
+                    break;
+                case BlueToothWrapper.MSG_GET_ADDRESS_START:
+                    break;
+                case BlueToothWrapper.MSG_GET_ADDRESS_FINISH:
+                    //获取EOS地址（公钥）结束
+                    BlueToothWrapper.GetAddressReturnValue returnValueAddress = (BlueToothWrapper
+                            .GetAddressReturnValue) msg.obj;
+                    if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
+                            //LoggerManager.d("EOS Address: " + returnValueAddress.getAddress());
+                            String[] strArr = returnValueAddress.getAddress().split("####");
+                            String publicKey = strArr[0];
+
+                            DeviceInfoEvent event = new DeviceInfoEvent();
+                            event.setEosPublicKey(publicKey);
+                            EventBusProvider.postSticky(event);
+
+                            getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                                    getAmount()+ " EOS", getNote());
+                        }
+                    }else {
+
+                    }
+                    dissmisProgressDialog();
+
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

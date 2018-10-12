@@ -764,6 +764,10 @@
     <string name="btn_connect_retry">重试连接</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
+    <string name="bio_sign_fail">签名失败，请重新尝试</string>
+    <string name="fingerprint">指纹</string>
+    <string name="add_fingerprint">添加指纹</string>
+
 
     <!-- WOOKONG BIO 详情页面-->
     <string name="name">名称</string>
@@ -778,6 +782,9 @@
     <string name="format_success">格式化成功</string>
     <string name="initialize">初始化</string>
     <string name="tip_to_init">是否重新初始化WOOKONG Bio？</string>
+    <string name="fp_and_password">指纹与密码</string>
+    <string name="tip_bluetooth_transfer">若未找到，请检查手机蓝牙和设备电源。</string>
+    <string name="connecting_bio">正在连接WOOKONG Bio</string>
 
 
     <!--蓝牙钱包配置end -->

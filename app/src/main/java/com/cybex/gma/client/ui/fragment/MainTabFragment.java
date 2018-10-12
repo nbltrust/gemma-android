@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.db.dao.WalletEntityDao;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.TabSelectedEvent;
@@ -20,6 +21,7 @@ import com.cybex.gma.client.widget.bottombar.BottomBarTab;
 import com.cybex.qrcode.core.QRCodeUtil;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.utils.SPUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +54,11 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+    }
 
     @Override
     public void bindUI(View rootView) {

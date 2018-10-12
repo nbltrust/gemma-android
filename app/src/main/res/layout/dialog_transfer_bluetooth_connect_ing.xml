@@ -13,6 +13,7 @@
         android:layout_marginTop="20dp">
 
         <ImageView
+            android:id="@+id/imc_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_back"
@@ -53,7 +54,8 @@
         android:textColor="@color/dark_slate_blue"
         android:lineSpacingExtra="0sp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="@dimen/dimen_50"
+        android:layout_marginBottom="@dimen/dimen_50"
         android:text="@string/transfer_bluetooth_tip"
         />
 

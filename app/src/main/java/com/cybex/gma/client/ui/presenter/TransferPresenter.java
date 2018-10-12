@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.api.callback.JsonCallback;
+import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
@@ -373,10 +374,9 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                     getV().setChain_id(chain_id);
 
                                 }catch (JSONException e){
-
                                     e.printStackTrace();
-
                                 }
+
                                 LoggerManager.d("config info:" + infostr);
                                 String[] keyPair = JNIUtil.createKey().split(";");
                                 //随机生成一个无用私钥用于签名
@@ -418,6 +418,14 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                 .setJsonParams(jsonParams)
                 .pushTransaction(new StringCallback() {
                     @Override
+                    public void onStart(Request<String, ? extends Request> request) {
+                        super.onStart(request);
+                        if (getV() != null){
+                            getV().showProgressDialog(getV().getString(R.string.transfer_trade_ing));
+                        }
+                    }
+
+                    @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
                         if (EmptyUtils.isNotEmpty(getV())){
@@ -447,6 +455,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                                 String jsonStr = response.body();
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
+                                if (getV().getActivity() != null)getV().getActivity().finish();
                                 UISkipMananger.launchTransferRecord(getV().getActivity());
                                 getV().clearData();
                             }
@@ -504,6 +513,87 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
         newVO.setRef_block_prefix(String.valueOf(oldVO.getRef_block_prefix()));
 
         return newVO;
+    }
+
+    /**
+     * 合并两字节数组
+     * @param bt1
+     * @param bt2
+     * @return
+     */
+    public byte[] byteMerger(byte[] bt1, byte[] bt2){
+        byte[] bt3 = new byte[bt1.length+bt2.length];
+        System.arraycopy(bt1, 0, bt3, 0, bt1.length);
+        System.arraycopy(bt2, 0, bt3, bt1.length, bt2.length);
+        return bt3;
+    }
+
+    /**
+     * hex String转byte数组
+     * @param hex
+     * @return
+     */
+    public byte[] hexToByte(String hex){
+        int m = 0, n = 0;
+        int byteLen = hex.length() / 2; // 每两个字符描述一个字节
+        byte[] ret = new byte[byteLen];
+        for (int i = 0; i < byteLen; i++) {
+            m = i * 2 + 1;
+            n = m + 1;
+            int intVal = Integer.decode("0x" + hex.substring(i * 2, m) + hex.substring(m, n));
+            ret[i] = Byte.valueOf((byte)intVal);
+        }
+        return ret;
+    }
+
+    /**
+     * 返回当前钱包类型
+     */
+    public int getWalletType() {
+        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        if (curWallet != null) {
+            switch (curWallet.getWalletType()) {
+                case CacheConstants.WALLET_TYPE_BLUETOOTH:
+                    //蓝牙钱包
+                    return CacheConstants.WALLET_TYPE_BLUETOOTH;
+                case CacheConstants.WALLET_TYPE_SOFT:
+                    //软件钱包
+                    return CacheConstants.WALLET_TYPE_SOFT;
+            }
+        }
+        return CacheConstants.WALLET_TYPE_SOFT;
+    }
+
+    /**
+     * 构建硬件能够识别的HEX字符串
+     * 序列化结果前面加32字节chain_id，后面加32字节0
+     * @param serializedStr
+     */
+    public byte[] buildSignStr(String serializedStr, String chain_id){
+        //把数据转成HEX数组
+        String prefix = chain_id.toUpperCase();//chain_id已经是HEX
+        LoggerManager.d("prefix_hex", prefix);
+
+        LoggerManager.d("serializedStr_hex", serializedStr);
+
+        byte[] suffix_bytes = {
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00};//32字节的0
+
+        LoggerManager.d("suffix_hex", suffix_bytes);
+
+        String hexString = prefix + serializedStr;
+
+        byte[] hexBytes = hexToByte(hexString);
+        LoggerManager.d("hexBytes", hexBytes);
+
+        return byteMerger(hexBytes, suffix_bytes);
     }
 
 }

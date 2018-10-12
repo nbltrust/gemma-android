@@ -32,5 +32,8 @@ public interface CacheConstants {
     int STATUS_BLUETOOTH_DISCONNCETED = 0;
     int STATUS_BLUETOOTH_CONNCETED = 1;
 
+    int[] EOS_DERIVE_PATH = {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000};
+
+    String BIO_CONNECT_STATUS = "isBioConnected";
 
 }
