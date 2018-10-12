@@ -270,7 +270,6 @@ dependencies {
 
 
     implementation project(':componentservice')
-    annotationProcessor deps.jimu.router_anno_compiler
 
     implementation(name:'bluetoothlib-release', ext:'aar')
     //implementation(name:'bluetoothlib-debug3', ext:'aar')

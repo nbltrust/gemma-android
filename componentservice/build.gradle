@@ -41,4 +41,6 @@ dependencies {
     api project(':platform_framework:jdenticon')
     api project(':platform_framework:qrcodecore')
     api project(':platform_framework:smart-scheduler')
+    api project(':componentlib')
+
 }

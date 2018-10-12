@@ -21,8 +21,21 @@ android {
         }
     }
 
+    // 移除lint检查的error
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+        lintConfig file("$rootProject.projectDir/config/lint/lint.xml")
+        disable 'MissingTranslation'
+    }
+
     buildTypes {
         release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug{
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -47,7 +60,6 @@ dependencies {
 
     api project(':componentservice')
 
-    annotationProcessor deps.jimu.router_anno_compiler
 
 
 }
