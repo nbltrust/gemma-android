@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.hxlx.core.lib.R;
 import com.hxlx.core.lib.common.eventbus.BaseEvent;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
@@ -68,7 +69,9 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         if (useEventBus()) {
             EventBusProvider.register(this);
         }
-
+        if (useArouter()) {
+            ARouter.getInstance().inject(this);
+        }
 
         if (getLayoutId() > 0) {
             setContentView(getLayoutId());
@@ -257,6 +260,10 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
 
     @Override
     public boolean useEventBus() {
+        return false;
+    }
+
+    public boolean useArouter() {
         return false;
     }
 

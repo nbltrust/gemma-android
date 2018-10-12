@@ -52,7 +52,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath true
-                arguments = [host: "app"]
+                arguments = [AROUTER_MODULE_NAME: "app", AROUTER_GENERATE_DOC: "enable"]
             }
         }
     }
@@ -270,6 +270,7 @@ dependencies {
 
 
     implementation project(':componentservice')
+    annotationProcessor deps.arouter.compiler
 
     implementation(name:'bluetoothlib-release', ext:'aar')
     //implementation(name:'bluetoothlib-debug3', ext:'aar')

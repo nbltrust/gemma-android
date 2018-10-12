@@ -30,9 +30,3 @@
 
 # for DexGuard only
 
-#JIMU
--keep interface * {
-  <methods>;
-}
--keep class com.mrzhang.component.componentlib.** {*;}
--keep class * implements com.mrzhang.component.componentlib.applicationlike.IApplicationLike {*;}

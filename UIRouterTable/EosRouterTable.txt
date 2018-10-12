@@ -1,8 +1,0 @@
-auto generated, do not change !!!! 
-
-HOST : eos
-
-testrouter
-/eos/testRouter/aa
-name:String
-

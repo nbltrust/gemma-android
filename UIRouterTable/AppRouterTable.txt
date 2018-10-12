@@ -1,7 +1,0 @@
-auto generated, do not change !!!! 
-
-HOST : app
-
-testrouter
-/app/SpalashActivity
-

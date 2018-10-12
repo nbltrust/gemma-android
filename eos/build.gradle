@@ -16,7 +16,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath true
-                arguments = [host: "eos"]
+                arguments = [AROUTER_MODULE_NAME: "eos", AROUTER_GENERATE_DOC: "enable"]
             }
         }
     }
@@ -59,6 +59,7 @@ dependencies {
     api deps.support.appcompatV7
 
     api project(':componentservice')
+    annotationProcessor deps.arouter.compiler
 
 
 
