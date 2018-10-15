@@ -151,6 +151,11 @@ ext {
                     'debugdb': "com.amitshekhar.android:debug-db:1.0.2",
 
             ],
+            arouter     : [
+                    'api'        : 'com.alibaba:arouter-api:1.4.0',
+                    'compiler'         : 'com.alibaba:arouter-compiler:1.2.1',
+                    'register'         : 'com.alibaba:arouter-register:1.0.2',
+            ],
     ]
 }
 

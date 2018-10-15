@@ -43,6 +43,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        tools:replace="android:label"
         >
         <!-- 允许使用明文传输，后期需要作出限制-->
         <!-- 适配华为刘海 -->

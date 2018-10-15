@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.dd.comgradle'
 apply from: '../config/properties-util.gradle'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -52,6 +52,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath true
+                arguments = [AROUTER_MODULE_NAME: "app", AROUTER_GENERATE_DOC: "enable"]
             }
         }
     }
@@ -223,6 +224,11 @@ android {
 }
 
 dependencies {
+    configurations.all {
+        resolutionStrategy.force deps.support.design
+    }
+
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.support.appcompatV7
     implementation deps.support.constraint
@@ -263,13 +269,8 @@ dependencies {
     implementation 'com.trycatch.android:mysnackbar:1.2.2'
 
 
-    implementation project(':platform_framework:basiclib')
-    implementation project(':platform_framework:base-view')
-    implementation project(':platform_framework:update-app')
-    implementation project(':platform_framework:customdialoglib')
-    implementation project(':platform_framework:jdenticon')
-    implementation project(':platform_framework:qrcodecore')
-    implementation project(':platform_framework:smart-scheduler')
+    implementation project(':componentservice')
+    annotationProcessor deps.arouter.compiler
 
     //implementation(name:'bluetoothlib-release', ext:'aar')
     implementation(name:'bluetoothlib-debug3', ext:'aar')
@@ -277,4 +278,10 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
 
+}
+
+//JIMU
+combuild {
+    applicationName = 'com.cybex.gma.client.GmaApplication'
+    isRegisterCompoAuto = true
 }

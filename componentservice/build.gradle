@@ -1,0 +1,46 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+    }
+
+    // 解决.common.process.ProcessException: org.gradle.process.internal.ExecException: Process 'command... java.exe'' finished with non-zero exit value 1问题
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api deps.support.appcompatV7
+
+    api project(':platform_framework:base-res')
+    api project(':platform_framework:basiclib')
+    api project(':platform_framework:base-view')
+    api project(':platform_framework:update-app')
+    api project(':platform_framework:customdialoglib')
+    api project(':platform_framework:jdenticon')
+    api project(':platform_framework:qrcodecore')
+    api project(':platform_framework:smart-scheduler')
+    api project(':componentlib')
+
+}

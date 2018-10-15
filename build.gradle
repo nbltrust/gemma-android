@@ -7,12 +7,16 @@ buildscript {
     ext.kotlin_version = '1.2.30'
 
     repositories {
-        jcenter()
+//        jcenter()
+        google()
+        maven { url 'http://jcenter.bintray.com'}
         maven {
             url 'https://maven.google.com/'
             name 'Google'
         }
-        google()
+        maven {
+            url uri('./repo')
+        }
     }
 
     dependencies {
@@ -20,6 +24,8 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.2.0-alpha12'
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.mrzhang.andcomponent:build-gradle:0.0.2'
+//        classpath deps.arouter.register
 
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -29,11 +35,19 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenCentral()
         google()
-        jcenter()
+        mavenCentral()
+//        jcenter()
+        maven { url 'http://jcenter.bintray.com'}
         maven { url 'https://jitpack.io' }
         maven { url 'https://maven.google.com' }
+
+        flatDir {
+            dirs '../componentrelease' //this way we can find the .aar file in  folder
+        }
+        maven {
+            url uri('./repo')
+        }
     }
 }
 

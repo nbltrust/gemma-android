@@ -29,3 +29,4 @@
 # A resource is loaded with a relative path so the package of this class must be preserved.
 
 # for DexGuard only
+

@@ -86,5 +86,8 @@ dependencies {
     api deps.yanzhenjie.sofia
     api deps.third.rxErrorHandler
 
+    api deps.arouter.api
+    api 'com.alibaba:fastjson:1.1.63.android'
+
 
 }
