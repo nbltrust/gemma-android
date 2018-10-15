@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.allen.library.SuperTextView;
+import com.cybex.componentservice.api.ApiPath;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.api.ApiPath;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.utils.OnChangeLanguageEvent;

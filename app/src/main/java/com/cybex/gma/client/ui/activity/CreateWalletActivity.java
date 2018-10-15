@@ -21,8 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.api.ApiPath;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;

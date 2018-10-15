@@ -1,6 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
-import com.cybex.gma.client.api.callback.JsonCallback;
+import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.ui.fragment.TransferRecordListFragment;
 import com.cybex.gma.client.ui.model.request.TransferRecordReqParams;

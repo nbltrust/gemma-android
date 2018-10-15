@@ -1,9 +1,9 @@
 package com.cybex.gma.client.ui.request;
 
-import com.cybex.gma.client.api.ApiMethod;
-import com.cybex.gma.client.api.ApiPath;
-import com.cybex.gma.client.api.callback.JsonCallback;
-import com.cybex.gma.client.api.request.GMAHttpRequest;
+import com.cybex.componentservice.api.ApiMethod;
+import com.cybex.componentservice.api.ApiPath;
+import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.api.request.GMAHttpRequest;
 import com.cybex.gma.client.ui.model.response.WXPayQueryOrderInfoResult;
 
 /**

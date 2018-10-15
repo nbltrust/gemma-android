@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.api.ApiPath;
+import com.cybex.componentservice.api.ApiPath;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;

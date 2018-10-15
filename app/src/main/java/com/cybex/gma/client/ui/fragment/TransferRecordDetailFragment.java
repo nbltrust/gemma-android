@@ -11,8 +11,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.cybex.componentservice.api.ApiPath;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.api.ApiPath;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;

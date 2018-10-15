@@ -1,8 +1,8 @@
 package com.cybex.gma.client.ui.request;
 
-import com.cybex.gma.client.api.ApiMethod;
-import com.cybex.gma.client.api.ApiPath;
-import com.cybex.gma.client.api.request.GMAHttpRequest;
+import com.cybex.componentservice.api.ApiMethod;
+import com.cybex.componentservice.api.ApiPath;
+import com.cybex.componentservice.api.request.GMAHttpRequest;
 import com.lzy.okgo.callback.StringCallback;
 
 public class GetRamMarketRequest extends GMAHttpRequest{

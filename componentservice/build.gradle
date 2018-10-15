@@ -19,9 +19,21 @@ android {
     }
 
     buildTypes {
+        debug {
+            // 接口地址配置
+            buildConfigField('int', 'API_PATH', "0")
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
+            buildConfigField "boolean", "DEVELOPER_MODE", "true"
+            resValue("string", "PORT_NUMBER", "8081")
+        }
         release {
+            // 接口地址配置
+            buildConfigField('int', 'API_PATH', "2")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "DEVELOPER_MODE", "false"
         }
     }
 

@@ -1,6 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
-import com.cybex.gma.client.api.callback.JsonCallback;
+import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.WXPayStatusEvent;

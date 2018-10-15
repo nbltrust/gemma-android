@@ -2,10 +2,10 @@ package com.cybex.gma.client.ui.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.cybex.componentservice.api.callback.CustomRequestCallback;
+import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.api.data.response.CustomData;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.api.callback.CustomRequestCallback;
-import com.cybex.gma.client.api.callback.JsonCallback;
-import com.cybex.gma.client.api.data.response.CustomData;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;

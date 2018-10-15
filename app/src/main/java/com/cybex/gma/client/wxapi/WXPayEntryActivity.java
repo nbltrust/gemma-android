@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.api.callback.JsonCallback;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.OrderIdEvent;
