@@ -252,7 +252,6 @@ dependencies {
 //    api deps.dbflow.sqlciperDatabase
 //    api deps.dbflow.sqlcipher
 
-    implementation deps.yanzhenjie.permission
     implementation deps.third.recyclerviewadapterhelper
     implementation deps.third.overscroll
     implementation deps.gma.alerter

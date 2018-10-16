@@ -18,6 +18,8 @@ android {
         javaMaxHeapSize "4g"
     }
 
+    resourcePrefix "baseservice_"
+
     buildTypes {
         debug {
             // 接口地址配置
@@ -61,6 +63,7 @@ dependencies {
     api deps.dbflow.sqlciperDatabase
     api deps.dbflow.sqlcipher
     //日志打印
-    implementation deps.gma.logger
+    api deps.gma.logger
+    api deps.yanzhenjie.permission
 
 }

@@ -8,11 +8,10 @@ import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.BarcodeScanEvent;
-import com.cybex.gma.client.manager.PermissionManager;
+import com.cybex.componentservice.manager.PermissionManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
-import com.cybex.gma.client.ui.fragment.ImportWalletConfigFragment;
-import com.cybex.gma.client.utils.listener.PermissionResultListener;
+import com.cybex.componentservice.utils.listener.PermissionResultListener;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;

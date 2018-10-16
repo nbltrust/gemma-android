@@ -1,4 +1,4 @@
-package com.cybex.gma.client.manager;
+package com.cybex.componentservice.manager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.cybex.gma.client.R;
-import com.cybex.gma.client.utils.listener.PermissionResultListener;
+import com.cybex.componentservice.R;
+import com.cybex.componentservice.utils.listener.PermissionResultListener;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -49,7 +49,7 @@ public class PermissionManager {
     /**
      * Request permissions.
      */
-    public void requestPermission(PermissionResultListener resultListener, String... permissions) {
+    public void requestPermission(final PermissionResultListener resultListener, String... permissions) {
         AndPermission.with(mContext)
                 .runtime()
                 .permission(permissions)
@@ -92,7 +92,7 @@ public class PermissionManager {
                 .onDenied(new Action<List<String>>() {
                     @Override
                     public void onAction(@NonNull List<String> permissions) {
-                        GemmaToastUtils.showShortToast(mContext.getString(R.string.failure));
+                        GemmaToastUtils.showShortToast(mContext.getString(R.string.baseservice_failure));
                         if (AndPermission.hasAlwaysDeniedPermission(mContext, permissions)) {
                             showSettingDialog(mContext, permissions);
                         }
@@ -107,20 +107,20 @@ public class PermissionManager {
      */
     public void showSettingDialog(Context context, final List<String> permissions) {
         List<String> permissionNames = Permission.transformText(context, permissions);
-        String message = context.getString(R.string.message_permission_always_failed,
+        String message = context.getString(R.string.baseservice_message_permission_always_failed,
                 TextUtils.join("\n", permissionNames));
 
         new AlertDialog.Builder(context)
                 .setCancelable(false)
-                .setTitle(R.string.title_dialog)
+                .setTitle(R.string.baseservice_title_dialog)
                 .setMessage(message)
-                .setPositiveButton(R.string.setting, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.baseservice_setting, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         setPermission();
                     }
                 })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.baseservice_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
@@ -138,7 +138,7 @@ public class PermissionManager {
                 .onComeback(new Setting.Action() {
                     @Override
                     public void onAction() {
-                        Toast.makeText(mContext, R.string.message_setting_comeback, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, R.string.baseservice_message_setting_comeback, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .start();
@@ -150,20 +150,20 @@ public class PermissionManager {
         @Override
         public void showRationale(Context context, List<String> permissions, final RequestExecutor executor) {
             List<String> permissionNames = Permission.transformText(context, permissions);
-            String message = context.getString(R.string.message_permission_rationale,
+            String message = context.getString(R.string.baseservice_message_permission_rationale,
                     TextUtils.join("\n", permissionNames));
 
             new android.app.AlertDialog.Builder(context)
                     .setCancelable(false)
-                    .setTitle(R.string.title_dialog)
+                    .setTitle(R.string.baseservice_title_dialog)
                     .setMessage(message)
-                    .setPositiveButton(R.string.resume, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.baseservice_resume, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             executor.execute();
                         }
                     })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.baseservice_cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             executor.cancel();

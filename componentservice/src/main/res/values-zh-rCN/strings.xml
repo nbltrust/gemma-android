@@ -1,13 +1,4 @@
 <resources>
-    <!-- Common -->
-    <string name="baseservice_app_name">GEMMA</string>
-    <string name="baseservice_title">我是标题</string>
-    <string name="baseservice_eos">EOS</string>
-
-
-
-
-
 
 
     <!-- Permission Manage-->

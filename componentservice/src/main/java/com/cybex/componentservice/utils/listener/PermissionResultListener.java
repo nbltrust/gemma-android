@@ -1,4 +1,4 @@
-package com.cybex.gma.client.utils.listener;
+package com.cybex.componentservice.utils.listener;
 
 import java.util.List;
 
