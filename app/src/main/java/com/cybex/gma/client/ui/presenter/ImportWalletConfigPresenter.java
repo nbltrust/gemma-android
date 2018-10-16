@@ -13,7 +13,7 @@ import com.cybex.gma.client.event.ImportResultEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.job.JobUtils;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.ImportWalletConfigFragment;

@@ -17,7 +17,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.NodeSelectedEvent;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.adapter.VoteNodeListAdapter;
 import com.cybex.gma.client.ui.model.vo.VoteNodeVO;

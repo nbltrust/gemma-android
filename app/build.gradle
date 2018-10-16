@@ -260,8 +260,7 @@ dependencies {
     implementation deps.gma.spinkit
     implementation deps.gma.wechatpay
 
-    //日志打印
-    implementation deps.gma.logger
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation deps.gma.svgImageViewer
     implementation deps.gma.SuperTextView

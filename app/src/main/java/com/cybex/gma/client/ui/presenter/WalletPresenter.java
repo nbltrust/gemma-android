@@ -5,7 +5,7 @@ import com.cybex.componentservice.db.dao.WalletEntityDao;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.fragment.WalletFragment;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;

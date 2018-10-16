@@ -1,6 +1,5 @@
 package com.cybex.gma.client.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -9,7 +8,6 @@ import android.widget.Toast;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.fragment.MainTabFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.SPUtils;

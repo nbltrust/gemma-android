@@ -37,7 +37,7 @@ public class PermissionManager {
 
     public static PermissionManager getInstance(Activity mContext) {
         if (instance == null) {
-            synchronized (RxJavaManager.class) {
+            synchronized (PermissionManager.class) {
                 if (instance == null) {
                     instance = new PermissionManager(mContext);
                 }

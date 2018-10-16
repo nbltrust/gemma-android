@@ -17,7 +17,7 @@ import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.event.WXPayStatusEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.response.WXPayBillResult;
 import com.cybex.gma.client.ui.model.response.WXPayPlaceOrderResult;

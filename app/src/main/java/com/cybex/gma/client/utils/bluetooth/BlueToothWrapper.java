@@ -7,7 +7,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.cybex.gma.client.manager.LoggerManager;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 

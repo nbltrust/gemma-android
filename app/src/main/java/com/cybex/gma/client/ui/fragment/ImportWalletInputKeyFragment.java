@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.BarcodeScanEvent;
-import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.PermissionManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;

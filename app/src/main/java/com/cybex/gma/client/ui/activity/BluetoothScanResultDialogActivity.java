@@ -1,7 +1,6 @@
 package com.cybex.gma.client.ui.activity;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,7 +19,7 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;

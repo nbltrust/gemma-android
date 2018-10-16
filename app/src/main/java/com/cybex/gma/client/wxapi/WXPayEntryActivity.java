@@ -1,6 +1,5 @@
 package com.cybex.gma.client.wxapi;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,15 +8,11 @@ import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.OrderIdEvent;
 import com.cybex.gma.client.event.WXPayStatusEvent;
-import com.cybex.gma.client.manager.LoggerManager;
-import com.cybex.gma.client.ui.model.response.WXPayQueryOrderInfoResult;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.presenter.WXPayEntryPresenter;
-import com.cybex.gma.client.ui.request.WXPayQueryOrderInfoRequest;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.common.utils.AppManager;
-import com.lzy.okgo.model.Response;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;

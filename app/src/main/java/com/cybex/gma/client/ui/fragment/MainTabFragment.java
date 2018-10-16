@@ -12,7 +12,7 @@ import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.presenter.MainTabPresenter;
 import com.cybex.gma.client.widget.bottombar.BottomBar;
 import com.cybex.gma.client.widget.bottombar.BottomBarTab;

@@ -15,7 +15,7 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.AccountRegisterEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
 import com.cybex.gma.client.ui.presenter.BluetoothVerifyPresenter;

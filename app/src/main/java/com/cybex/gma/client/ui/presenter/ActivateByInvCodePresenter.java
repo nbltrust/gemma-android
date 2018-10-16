@@ -10,7 +10,7 @@ import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.ActivateByInvCodeFragment;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;

@@ -4,7 +4,7 @@ import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.WXPayStatusEvent;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.model.response.WXPayQueryOrderInfoResult;
 import com.cybex.gma.client.ui.request.WXPayQueryOrderInfoRequest;
 import com.cybex.gma.client.wxapi.WXPayEntryActivity;

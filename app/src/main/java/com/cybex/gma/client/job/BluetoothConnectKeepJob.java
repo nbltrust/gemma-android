@@ -5,7 +5,7 @@ import android.os.Handler;
 
 import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 
 

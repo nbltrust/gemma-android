@@ -2,7 +2,7 @@ package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.BuySellRamFragment;
 import com.cybex.gma.client.ui.model.request.GetRamMarketReqParams;

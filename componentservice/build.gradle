@@ -60,5 +60,7 @@ dependencies {
     api deps.dbflow.runtime
     api deps.dbflow.sqlciperDatabase
     api deps.dbflow.sqlcipher
+    //日志打印
+    implementation deps.gma.logger
 
 }

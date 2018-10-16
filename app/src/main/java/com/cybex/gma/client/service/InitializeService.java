@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import com.cybex.gma.client.BuildConfig;
-import com.cybex.gma.client.manager.LoggerManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.hxlx.core.lib.common.cache.CacheUtil;
 import com.hxlx.core.lib.common.cache.CacheUtilConfig;
 
