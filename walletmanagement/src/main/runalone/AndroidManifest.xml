@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.cybex.eos">
+    package="com.cybex.walletmanagement">
 
     <application
-        android:name=".runalone.EosApplication"
+        android:name="com.cybex.walletmanagement.runalone.WalletManagementApplication"
         android:allowBackup="true"
-        android:label="@string/eos_app_name"
+        android:label="@string/walletmanage_app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name="com.cybex.walletmanagement.runalone.ui.EosMainActivity">
+        <activity android:name="com.cybex.walletmanagement.runalone.ui.WalletManagementMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,9 +18,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".event.TestActivity">
-
-        </activity>
     </application>
 
 </manifest>

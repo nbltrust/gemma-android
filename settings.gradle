@@ -1,4 +1,4 @@
-include ':app', ':componentservice', ':eos', ':build-gradle',':componentlib'
+include ':app', ':componentservice', ':eos', ':build-gradle',':componentlib', ':walletmanagement'
 include ':platform_framework:basiclib'
 include ':platform_framework:base-view'
 include ':platform_framework:base-res'

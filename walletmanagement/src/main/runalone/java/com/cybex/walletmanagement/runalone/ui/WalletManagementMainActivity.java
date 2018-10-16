@@ -1,9 +1,7 @@
-package com.cybex.eos.runalone.ui;
+package com.cybex.walletmanagement.runalone.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
@@ -11,16 +9,16 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.bean.TransferTestBean;
 import com.cybex.componentservice.service.EosWalletService;
-import com.cybex.eos.R;
+import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.mrzhang.component.componentlib.router.Router;
 
-public class EosMainActivity extends XActivity {
+public class WalletManagementMainActivity extends XActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_eos_main);
+        setContentView(R.layout.walletmanage_activity_wallet_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

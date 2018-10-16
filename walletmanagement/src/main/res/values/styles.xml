@@ -1,0 +1,6 @@
+<resources>
+
+    <style name="walletmanage_AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="walletmanage_AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

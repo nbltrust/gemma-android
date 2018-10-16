@@ -1,0 +1,72 @@
+apply plugin: 'com.dd.comgradle'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+                arguments = [AROUTER_MODULE_NAME: "walletmanage", AROUTER_GENERATE_DOC: "enable"]
+            }
+        }
+    }
+
+    // 移除lint检查的error
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+        lintConfig file("$rootProject.projectDir/config/lint/lint.xml")
+        disable 'MissingTranslation'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // 解决.common.process.ProcessException: org.gradle.process.internal.ExecException: Process 'command... java.exe'' finished with non-zero exit value 1问题
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    resourcePrefix "walletmanage_"
+}
+
+dependencies {
+    implementation deps.support.constraint
+    configurations.all {
+        resolutionStrategy.force deps.support.design
+    }
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api deps.support.appcompatV7
+
+    api project(':componentservice')
+    annotationProcessor deps.arouter.compiler
+
+
+
+}
+
+//JIMU
+combuild {
+    applicationName = 'com.cybex.walletmanagement.runalone.WalletManagementApplication'
+    isRegisterCompoAuto = true
+}
