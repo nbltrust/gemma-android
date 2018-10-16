@@ -20,6 +20,11 @@ android {
 
     resourcePrefix "baseservice_"
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         debug {
             // 接口地址配置

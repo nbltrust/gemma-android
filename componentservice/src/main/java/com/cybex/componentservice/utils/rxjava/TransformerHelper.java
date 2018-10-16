@@ -1,4 +1,4 @@
-package com.cybex.gma.client.utils.rxjava;
+package com.cybex.componentservice.utils.rxjava;
 
 import android.support.annotation.NonNull;
 

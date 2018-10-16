@@ -1,6 +1,6 @@
-package com.cybex.gma.client.manager;
+package com.cybex.componentservice.manager;
 
-import com.cybex.gma.client.utils.rxjava.TransformerHelper;
+import com.cybex.componentservice.utils.rxjava.TransformerHelper;
 
 import java.util.concurrent.TimeUnit;
 

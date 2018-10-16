@@ -1,4 +1,4 @@
-package com.cybex.gma.client.manager;
+package com.cybex.componentservice.manager;
 
 import android.content.Context;
 import android.content.res.Resources;
