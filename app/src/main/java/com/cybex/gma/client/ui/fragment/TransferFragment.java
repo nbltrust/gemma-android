@@ -25,7 +25,7 @@ import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.DeviceInfoEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
-import com.cybex.gma.client.manager.DBManager;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;

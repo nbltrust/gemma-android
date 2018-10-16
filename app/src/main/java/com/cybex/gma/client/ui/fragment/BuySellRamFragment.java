@@ -19,14 +19,13 @@ import com.cybex.base.view.tablayout.listener.OnTabSelectListener;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.manager.DBManager;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleBuyRamVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleSellRamVO;
 import com.cybex.gma.client.ui.presenter.BuySellRamPresenter;
-import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
@@ -36,16 +35,12 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
-import com.tapadoo.alerter.Alert;
-import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
 

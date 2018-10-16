@@ -10,7 +10,7 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
-import com.cybex.gma.client.manager.DBManager;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.qrcode.zxing.QRCodeEncoder;
 import com.hxlx.core.lib.common.async.TaskManager;

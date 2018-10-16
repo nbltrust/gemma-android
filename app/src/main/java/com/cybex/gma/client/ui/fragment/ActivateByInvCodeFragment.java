@@ -1,7 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +12,7 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
-import com.cybex.gma.client.manager.DBManager;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.ActivateByInvCodePresenter;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;

@@ -24,10 +24,9 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
-import com.cybex.gma.client.manager.DBManager;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
-import com.cybex.gma.client.ui.activity.BluetoothWalletManageActivity;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.BluetoothTransferPresenter;
@@ -38,13 +37,10 @@ import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
-import com.hxlx.core.lib.utils.android.logger.Log;
-import com.hxlx.core.lib.utils.common.utils.HexUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
-import org.apache.commons.codec.binary.Hex;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

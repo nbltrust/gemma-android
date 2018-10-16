@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.db.entity.WalletEntity;
-import com.cybex.gma.client.manager.DBManager;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;

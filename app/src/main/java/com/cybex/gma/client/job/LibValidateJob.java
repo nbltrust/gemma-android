@@ -7,7 +7,7 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.event.PollEvent;
-import com.cybex.gma.client.manager.DBManager;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.model.request.GetTransactionReqParams;
 import com.cybex.gma.client.ui.presenter.CreateWalletPresenter;
