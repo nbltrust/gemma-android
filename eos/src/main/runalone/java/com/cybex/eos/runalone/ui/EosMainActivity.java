@@ -1,4 +1,4 @@
-package com.cybex.walletmanagement.runalone.ui;
+package com.cybex.eos.runalone.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

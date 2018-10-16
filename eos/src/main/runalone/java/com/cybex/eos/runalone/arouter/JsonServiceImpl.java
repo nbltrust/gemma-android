@@ -1,4 +1,4 @@
-package com.cybex.walletmanagement.runalone.arouter;//package com.cybex.componentservice.arouter;
+package com.cybex.eos.runalone.arouter;//package com.cybex.componentservice.arouter;
 
 import android.content.Context;
 

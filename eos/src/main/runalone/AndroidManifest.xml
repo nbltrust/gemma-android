@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name="com.cybex.walletmanagement.runalone.ui.EosMainActivity">
+        <activity android:name=".runalone.ui.EosMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
