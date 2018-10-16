@@ -19,6 +19,10 @@ import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
+import com.cybex.gma.client.ui.activity.BluetoothPairActivity;
+import com.cybex.gma.client.ui.activity.BluetoothScanResultDialogActivity;
+import com.cybex.gma.client.ui.activity.BluetoothSettingFPActivity;
 import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
 import com.cybex.gma.client.ui.presenter.BluetoothVerifyPresenter;
 import com.cybex.gma.client.utils.CollectionUtils;
@@ -329,7 +333,6 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
             getCheckCodeThread.setGetCheckCodeWrapper(contextHandle, 0);
             getCheckCodeThread.start();
         }
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -364,7 +367,11 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                 WalletEntity newCurWallet = walletEntityList.get(0);
                 newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
                 DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(newCurWallet);
-                AppManager.getAppManager().finishAllActivity();
+                AppManager.getAppManager().finishActivity(BluetoothPairActivity.class);
+                AppManager.getAppManager().finishActivity(BluetoothSettingFPActivity.class);
+                AppManager.getAppManager().finishActivity(BluetoothScanResultDialogActivity.class);
+                AppManager.getAppManager().finishActivity(BluetoothCreatEosAccountActivity.class);
+
                 UISkipMananger.launchHome(getActivity());
             }
         }

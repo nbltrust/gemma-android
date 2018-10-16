@@ -32,7 +32,7 @@
             >
 
             <EditText
-                android:id="@+id/editText_setWalletName"
+                android:id="@+id/editText_setFPName"
                 tools:hint="@string/change_wallet_name_hint"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -45,7 +45,7 @@
                 android:textColorHint="@color/color_et_hint"/>
 
             <ImageView
-                android:id="@+id/clear_wallet_name"
+                android:id="@+id/clear_fp_name"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"

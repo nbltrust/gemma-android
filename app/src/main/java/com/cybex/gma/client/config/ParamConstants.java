@@ -95,6 +95,8 @@ public interface ParamConstants {
 
     String KEY_BLUETOOTH_ACCOUNT_INFO = "bluetooth_account_info";
 
+    String DEVICE_NAME = "deviceName";
+
 
     //指纹指令错误
     int FINGER_PRINT_COMMAND_ERROR = -2147483599;

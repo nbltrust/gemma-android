@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.DeviceInfoEvent;
@@ -64,18 +65,22 @@ public class BluetoothWalletManageActivity extends XActivity {
     private ConnectHandler mConnectHandler;
     private String publicKey;
     private int mDevIndex;
-    private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
+    private String deviceName = "WOOKONG BIO####ED:C1:FF:D5:9C:FA";
+    //private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
 
     @OnClick(R.id.bt_click_to_connect)
     public void startConnect() {
         showProgressDialog("connecting");
+
         if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
             connectThread = new BlueToothWrapper(mConnectHandler);
             connectThread.setInitContextWithDevNameWrapper(BluetoothWalletManageActivity.this,
                     deviceName);
             connectThread.start();
         }
+
+        //BluetoothConnectKeepJob.connect(mConnectHandler, this, deviceName);
     }
 
     @OnClick(R.id.bt_disconnect)
@@ -83,10 +88,11 @@ public class BluetoothWalletManageActivity extends XActivity {
         if ((disconnectThread == null) || (disconnectThread.getState() == Thread.State.TERMINATED))
         {
             disconnectThread = new BlueToothWrapper(mConnectHandler);
-            disconnectThread.setFreeContextAndShutDownWrapper(mContextHandle);
+            LoggerManager.d("mContextHandle", mContextHandle);
+            disconnectThread.setFreeContextWrapper(mContextHandle);
             disconnectThread.start();
-            mContextHandle = 0;
-            mDevIndex = MiddlewareInterface.INVALID_DEV_INDEX;
+            //mContextHandle = 0;
+            //mDevIndex = MiddlewareInterface.INVALID_DEV_INDEX;
         }
     }
 
@@ -109,6 +115,7 @@ public class BluetoothWalletManageActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+       // deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
         mDevIndex = 0;
         checkConnection();
         mConnectHandler = new ConnectHandler();
@@ -135,6 +142,11 @@ public class BluetoothWalletManageActivity extends XActivity {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEosAddressRecieved(DeviceInfoEvent event){
         publicKey = event.getEosPublicKey();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onContextHandleRecieved(ContextHandleEvent event){
+        mContextHandle = event.getContextHanle();
     }
 
     /**
@@ -176,6 +188,7 @@ public class BluetoothWalletManageActivity extends XActivity {
      */
     public void checkConnection(){
         int status = SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS);
+        LoggerManager.d("status", status);
         switch (status){
             case CacheConstants.STATUS_BLUETOOTH_CONNCETED:
                 showConnectedLayout();
@@ -206,7 +219,6 @@ public class BluetoothWalletManageActivity extends XActivity {
 
                         mContextHandle = returnValue.getContextHandle();
 
-
                         ContextHandleEvent event = new ContextHandleEvent();
                         event.setContextHanle(mContextHandle);
                         EventBusProvider.postSticky(event);
@@ -220,7 +232,8 @@ public class BluetoothWalletManageActivity extends XActivity {
                         AlertUtil.showShortUrgeAlert(BluetoothWalletManageActivity.this, "Connect Fail");
                     }
 
-                    connectThread.interrupt();
+                    if (connectThread!= null)connectThread.interrupt();
+
                     break;
                 case BlueToothWrapper.MSG_FREE_CONTEXT_START:
                     LoggerManager.d("MSG_FREE_CONTEXT_START");
@@ -252,7 +265,7 @@ public class BluetoothWalletManageActivity extends XActivity {
                             EventBusProvider.postSticky(event);
                             AlertUtil.showShortCommonAlert(BluetoothWalletManageActivity.this, "Bio Connected");
                             showConnectedLayout();
-                            //BluetoothConnectKeepJob.startConnectPolling(mContextHandle, mConnectHandler, 0);
+                            BluetoothConnectKeepJob.startConnectPolling(mContextHandle, mConnectHandler, 0);
                         }
                     }else {
                         showDisconnectedLayout();
@@ -260,6 +273,7 @@ public class BluetoothWalletManageActivity extends XActivity {
                     }
                     dissmisProgressDialog();
                     break;
+
                 case BlueToothWrapper.MSG_HEART_BEAT_DATA_UPDATE:
                     LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE");
                     if (msg.obj != null) {

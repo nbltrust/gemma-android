@@ -41,6 +41,7 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.SPUtils;
+import com.hxlx.core.lib.utils.common.utils.HexUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomFullDialog;
@@ -119,7 +120,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     private String amount = "";
     private String memo = "";
     private String chain_id = "";
-    private String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
+    private String deviceName = "WOOKONG BIO####ED:C1:FF:D5:9C:FA";
+    //private String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
     private long mContextHandle = 0;
     private int mDevIndex = 0;
     private BlueToothWrapper serializedThread;
@@ -665,6 +667,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
      * 调用硬件进行签名
      */
     public void startSign( byte[] transaction){
+
         mSignHandler = new SignHandler();
         if ((signThread == null) || (signThread.getState() == Thread.State.TERMINATED)) {
             int[] derivePath = {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000};//EOS币种的衍生路径
@@ -777,13 +780,21 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     break;
 
                 case BlueToothWrapper.MSG_GET_AUTH_TYPE:
-                    //dialog.cancel();
-                    //showVerifyFPDialog();
 
+                    final byte[] authTypes = {MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP, MiddlewareInterface
+                        .PAEW_SIGN_AUTH_TYPE_PIN};
+                    m_authType = authTypes[0];
+
+                    m_authTypeResult = MiddlewareInterface.PAEW_RET_SUCCESS;
+                    m_uiLock.unlock();
+                    showVerifyFPDialog();
+
+                    /*
                     //显示选择验证方式dialog
                     final String[] authTypeString = {"Sign by Finger Print", "Sign by PIN"};
                     final byte[] authTypes = {MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP, MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_PIN};
                     m_authTypeChoiceIndex = 0;
+
 
                     dlg = new AlertDialog.Builder(getActivity())
                             .setIcon(R.mipmap.app_icon)
@@ -821,7 +832,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                             .setCancelable(false)
                             .create();
                     dlg.show();
-
+                    */
                     break;
                 case BlueToothWrapper.MSG_GET_USER_PIN:
 

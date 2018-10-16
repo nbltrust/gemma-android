@@ -76,11 +76,11 @@ public class BluetoothCreateAccountReqParams {
         /**
          * 公钥
          */
-        private String key_hex;
+        private String public_key;
         /**
          * 公钥hex签名
          */
-        private String key_hex_sig;
+        private String public_key_sig;
         /**
          * wookong的SN
          */
@@ -90,20 +90,20 @@ public class BluetoothCreateAccountReqParams {
          */
         private String SN_sig;
 
-        public String getKey_hex() {
-            return key_hex;
+        public String getPublic_key() {
+            return public_key;
         }
 
-        public void setKey_hex(String key_hex) {
-            this.key_hex = key_hex;
+        public void setPublic_key(String public_key) {
+            this.public_key = public_key;
         }
 
-        public String getKey_hex_sig() {
-            return key_hex_sig;
+        public String getPublic_key_sig() {
+            return public_key_sig;
         }
 
-        public void setKey_hex_sig(String key_hex_sig) {
-            this.key_hex_sig = key_hex_sig;
+        public void setPublic_key_sig(String public_key_sig) {
+            this.public_key_sig = public_key_sig;
         }
 
         public String getSN() {

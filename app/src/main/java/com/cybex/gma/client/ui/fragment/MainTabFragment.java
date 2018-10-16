@@ -57,7 +57,6 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //SPUtils.getInstance().put("isBioConnected", CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
     }
 
     @Override

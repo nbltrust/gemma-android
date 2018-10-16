@@ -10,7 +10,6 @@ import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.db.entity.WalletEntity;
-import com.cybex.gma.client.job.LibValidateJob;
 import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
@@ -62,8 +61,8 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
                 .WookongValidation();
         validation.setSN(SN.toLowerCase());
         validation.setSN_sig(SN_sig.toLowerCase());
-        validation.setKey_hex(publick_key_hex + "00");
-        validation.setKey_hex_sig(public_key_sig);
+        validation.setPublic_key(publick_key_hex + "00");
+        validation.setPublic_key_sig(public_key_sig);
         params.setValidation(validation);
 
         String json = GsonUtils.objectToJson(params);

@@ -109,6 +109,8 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (EmptyUtils.isNotEmpty(deviceNameList)) {
                     String deviceName = deviceNameList.get(position).deviceName;
+                    SPUtils.getInstance().put(ParamConstants.DEVICE_NAME ,deviceName);
+
                     updatePosition = position;
 
                     int status = deviceNameList.get(position).status;
@@ -270,7 +272,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     //获得设备信息
                     BlueToothWrapper.GetDevInfoReturnValue reValue = (BlueToothWrapper.GetDevInfoReturnValue) msg.obj;
                     if (reValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
-                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
                         MiddlewareInterface.PAEW_DevInfo devInfo = reValue.getDeviceInfo();
                         if (devInfo.ucLifeCycle == DEVICE_LIFE_CYCLE_PRODUCE) {
                             //在全新（或已Format）的设备上
