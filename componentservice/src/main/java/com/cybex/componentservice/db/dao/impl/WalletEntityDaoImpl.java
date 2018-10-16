@@ -1,12 +1,13 @@
-package com.cybex.gma.client.db.dao.impl;
+package com.cybex.componentservice.db.dao.impl;
 
-import com.cybex.gma.client.db.GemmaDatabase;
-import com.cybex.gma.client.db.dao.WalletEntityDao;
-import com.cybex.gma.client.db.entity.WalletEntity;
-import com.cybex.gma.client.db.entity.WalletEntity_Table;
-import com.cybex.gma.client.db.util.DBCallback;
-import com.cybex.gma.client.db.util.DBFlowUtil;
-import com.cybex.gma.client.db.util.OperationType;
+
+import com.cybex.componentservice.db.GemmaDatabase;
+import com.cybex.componentservice.db.dao.WalletEntityDao;
+import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.db.entity.WalletEntity_Table;
+import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.db.util.DBFlowUtil;
+import com.cybex.componentservice.db.util.OperationType;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
@@ -70,7 +71,7 @@ public class WalletEntityDaoImpl implements WalletEntityDao {
     }
 
     @Override
-    public void saveOrUpateEntity(WalletEntity entity) {
+    public void saveOrUpateEntity(final WalletEntity entity) {
         DBFlowUtil.execTransactionAsync(GemmaDatabase.class, new ITransaction() {
             @Override
             public void execute(DatabaseWrapper databaseWrapper) {

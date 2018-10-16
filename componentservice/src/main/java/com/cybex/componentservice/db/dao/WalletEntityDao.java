@@ -1,7 +1,8 @@
-package com.cybex.gma.client.db.dao;
+package com.cybex.componentservice.db.dao;
 
-import com.cybex.gma.client.db.entity.WalletEntity;
-import com.cybex.gma.client.db.util.DBCallback;
+
+import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
 
 import java.util.List;
 

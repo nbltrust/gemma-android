@@ -18,8 +18,7 @@ public class ApiPath {
     //线上环境
     public static final String HOST_ONLINE = "https://api.xxx.com";
     public final static String[] HOST = {HOST_TEST, HOST_DEV, HOST_ONLINE};
-//    public static String REST_URI_HOST = HOST[BuildConfig.API_PATH];
-    public static String REST_URI_HOST = HOST[0];
+    public static String REST_URI_HOST = HOST[BuildConfig.API_PATH];
 
 
     /**

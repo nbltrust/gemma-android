@@ -3,12 +3,12 @@ package com.cybex.gma.client.ui.presenter;
 import android.content.Context;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ImportResultEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.job.JobUtils;

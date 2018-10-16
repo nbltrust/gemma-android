@@ -4,10 +4,10 @@ import android.support.annotation.NonNull;
 
 import com.cybex.componentservice.api.callback.CustomRequestCallback;
 import com.cybex.componentservice.api.data.response.CustomData;
+import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;

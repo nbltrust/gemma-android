@@ -1,4 +1,4 @@
-package com.cybex.gma.client.db.sqlcipher;
+package com.cybex.componentservice.db.sqlcipher;
 
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.sqlcipher.SQLCipherOpenHelper;

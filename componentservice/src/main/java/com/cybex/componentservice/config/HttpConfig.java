@@ -1,9 +1,9 @@
-package com.cybex.gma.client.config;
+package com.cybex.componentservice.config;
 
 import android.app.Application;
 import android.content.Context;
 
-import com.cybex.gma.client.BuildConfig;
+import com.cybex.componentservice.BuildConfig;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;

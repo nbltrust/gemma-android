@@ -8,8 +8,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.gma.client.manager.DBManager;

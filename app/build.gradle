@@ -247,10 +247,10 @@ dependencies {
     implementation deps.gma.agentweb
 
     annotationProcessor deps.dbflow.processor
-    api deps.dbflow.core
-    api deps.dbflow.runtime
-    api deps.dbflow.sqlciperDatabase
-    api deps.dbflow.sqlcipher
+//    api deps.dbflow.core
+//    api deps.dbflow.runtime
+//    api deps.dbflow.sqlciperDatabase
+//    api deps.dbflow.sqlcipher
 
     implementation deps.yanzhenjie.permission
     implementation deps.third.recyclerviewadapterhelper

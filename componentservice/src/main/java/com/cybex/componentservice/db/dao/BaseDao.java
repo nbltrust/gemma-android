@@ -1,4 +1,4 @@
-package com.cybex.gma.client.db.dao;
+package com.cybex.componentservice.db.dao;
 
 import com.raizlabs.android.dbflow.list.FlowCursorList;
 import com.raizlabs.android.dbflow.structure.BaseModel;

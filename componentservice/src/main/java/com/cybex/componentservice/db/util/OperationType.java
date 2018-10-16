@@ -1,4 +1,4 @@
-package com.cybex.gma.client.db.util;
+package com.cybex.componentservice.db.util;
 
 import android.support.annotation.IntDef;
 

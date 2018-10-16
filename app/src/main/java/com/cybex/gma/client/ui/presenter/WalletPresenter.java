@@ -1,9 +1,9 @@
 package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.db.dao.WalletEntityDao;
+import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.db.dao.WalletEntityDao;
-import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.manager.DBManager;
 import com.cybex.gma.client.manager.LoggerManager;
 import com.cybex.gma.client.ui.fragment.WalletFragment;

@@ -1,4 +1,4 @@
-package com.cybex.gma.client.db.util;
+package com.cybex.componentservice.db.util;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -13,10 +13,10 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 
-import static com.cybex.gma.client.db.util.OperationType.TYPE_DELETE;
-import static com.cybex.gma.client.db.util.OperationType.TYPE_INSERT;
-import static com.cybex.gma.client.db.util.OperationType.TYPE_SAVE;
-import static com.cybex.gma.client.db.util.OperationType.TYPE_UPDATE;
+import static com.cybex.componentservice.db.util.OperationType.TYPE_DELETE;
+import static com.cybex.componentservice.db.util.OperationType.TYPE_INSERT;
+import static com.cybex.componentservice.db.util.OperationType.TYPE_SAVE;
+import static com.cybex.componentservice.db.util.OperationType.TYPE_UPDATE;
 
 
 /**

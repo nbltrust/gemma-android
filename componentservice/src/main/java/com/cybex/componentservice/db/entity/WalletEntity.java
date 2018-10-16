@@ -1,9 +1,9 @@
-package com.cybex.gma.client.db.entity;
+package com.cybex.componentservice.db.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.cybex.gma.client.db.GemmaDatabase;
+import com.cybex.componentservice.db.GemmaDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ColumnIgnore;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;

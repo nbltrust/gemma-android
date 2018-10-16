@@ -1,7 +1,8 @@
 package com.cybex.gma.client.manager;
 
-import com.cybex.gma.client.db.dao.WalletEntityDao;
-import com.cybex.gma.client.db.dao.impl.WalletEntityDaoImpl;
+
+import com.cybex.componentservice.db.dao.WalletEntityDao;
+import com.cybex.componentservice.db.dao.impl.WalletEntityDaoImpl;
 
 /**
  * Created by wanglin on 2018/1/23.

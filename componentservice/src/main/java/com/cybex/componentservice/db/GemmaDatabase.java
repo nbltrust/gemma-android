@@ -1,4 +1,4 @@
-package com.cybex.gma.client.db;
+package com.cybex.componentservice.db;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 
@@ -8,7 +8,7 @@ import com.raizlabs.android.dbflow.annotation.Database;
 @Database(name = GemmaDatabase.DB_NAME, version = GemmaDatabase.DB_VERSION, foreignKeyConstraintsEnforced = true)
 public class GemmaDatabase {
 
-    public static final String DB_NAME = "gemma_database";
+    public static final String DB_NAME = "gemma_multiwallet_database";
 
     public static final int DB_VERSION = 1;
 

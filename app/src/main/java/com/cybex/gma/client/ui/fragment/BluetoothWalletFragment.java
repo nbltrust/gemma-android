@@ -20,7 +20,7 @@ import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.db.entity.WalletEntity;
+import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.PollEvent;

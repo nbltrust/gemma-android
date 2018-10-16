@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
-import com.cybex.gma.client.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.DeviceInfoEvent;
 import com.cybex.gma.client.manager.DBManager;

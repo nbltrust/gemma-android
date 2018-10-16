@@ -55,4 +55,10 @@ dependencies {
     api project(':platform_framework:smart-scheduler')
     api project(':componentlib')
 
+    annotationProcessor deps.dbflow.processor
+    api deps.dbflow.core
+    api deps.dbflow.runtime
+    api deps.dbflow.sqlciperDatabase
+    api deps.dbflow.sqlcipher
+
 }

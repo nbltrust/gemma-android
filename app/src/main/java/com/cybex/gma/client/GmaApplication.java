@@ -1,8 +1,8 @@
 package com.cybex.gma.client;
 
 import com.cybex.base.view.refresh.CommonRefreshLayout;
-import com.cybex.gma.client.config.HttpConfig;
-import com.cybex.gma.client.db.GemmaDatabase;
+import com.cybex.componentservice.config.HttpConfig;
+import com.cybex.componentservice.db.GemmaDatabase;
 import com.hxlx.core.lib.base.BaseApplication;
 import com.raizlabs.android.dbflow.config.DatabaseConfig;
 import com.raizlabs.android.dbflow.config.FlowConfig;
