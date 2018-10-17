@@ -196,7 +196,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
         TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
         if (EmptyUtils.isNotEmpty(curWallet)){
             String passHint = curWallet.getPasswordTip();
-            String showInfo = getString(R.string.password_hint_info) + " : " + passHint;
+            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);
         }
     }

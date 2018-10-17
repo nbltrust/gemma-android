@@ -1,4 +1,4 @@
 <resources>
 
-    <string name="title_activity_eos_main">EosMainActivity</string>
+    <string name="eos_title_activity_eos_main">EosMainActivity</string>
 </resources>

@@ -34,7 +34,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="@string/receiver"
+                android:text="@string/eos_title_receiver"
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 
@@ -70,7 +70,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="@string/fund"
+                android:text="@string/eos_title_fund"
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 
@@ -105,7 +105,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="@string/memo"
+                android:text="@string/eos_title_memo"
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 
@@ -142,7 +142,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:text="@string/payingAccount"
+            android:text="@string/eos_title_payer_account"
             android:textColor="@color/font_title"
             android:textSize="14sp"/>
 
@@ -169,7 +169,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/selector_btn_transfer"
-        android:text="@string/confirmTransfer"
+        android:text="@string/eos_btn_confirm_transfer"
         android:textColor="@color/white"
         android:textSize="16sp"/>
 

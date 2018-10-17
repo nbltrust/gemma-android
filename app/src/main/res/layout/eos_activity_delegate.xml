@@ -38,7 +38,7 @@
                     android:layout_marginStart="@dimen/dimen_20"
                     android:layout_marginEnd="@dimen/dimen_20"
                     android:layout_marginTop="@dimen/dimen_16"
-                    android:text="@string/brief_info"
+                    android:text="@string/eos_title_brief_info"
                     android:textColor="@color/steel"
                     android:textSize="@dimen/font_3.5"
                     />
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         title:sLeftTextColor="@color/steel"
                         title:sLeftTextSize="@dimen/font_3.5"
-                        title:sLeftTextString="@string/CPU"
+                        title:sLeftTextString="@string/eos_CPU"
                         title:sRightTextColor="@color/darkSlateBlueTwo"
                         title:sRightTextSize="@dimen/font_3"
                         title:sRightTextString="-- EOS"
@@ -123,7 +123,7 @@
                         android:layout_height="wrap_content"
                         title:sLeftTextColor="@color/steel"
                         title:sLeftTextSize="@dimen/font_3.5"
-                        title:sLeftTextString="@string/NET"
+                        title:sLeftTextString="@string/eos_NET"
                         title:sRightTextColor="@color/darkSlateBlueTwo"
                         title:sRightTextSize="@dimen/font_3"
                         title:sRightTextString="-- EOS"
@@ -184,7 +184,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_10"
                         android:layout_weight="1"
-                        android:text="@string/operation"
+                        android:text="@string/eos_tip_operation"
                         android:textColor="@color/steel"
                         android:textSize="@dimen/font_3.5"/>
 
@@ -193,7 +193,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/dimen_10"
-                        android:text="@string/remain_balance"
+                        android:text="@string/eos_tip_balance_default"
                         android:textColor="@color/dusk"
                         android:textSize="@dimen/font_3"
                         />
@@ -261,14 +261,14 @@
                 android:id="@+id/bt_delegate_cpu_net"
                 style="@style/bt_long_in_linearLayout"
                 android:layout_margin="@dimen/dimen_30"
-                android:text="@string/delegate_cpu_net"
+                android:text="@string/eos_delegate"
                 />
 
             <Button
                 android:id="@+id/bt_undelegate_cpu_net"
                 style="@style/bt_long_in_linearLayout"
                 android:layout_margin="@dimen/dimen_30"
-                android:text="@string/undelegate"
+                android:text="@string/eos_undelegate"
                 android:visibility="gone"/>
 
         </LinearLayout>

@@ -128,7 +128,7 @@ public class ChangeNodeFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.node_select), true, false);
+        setNavibarTitle(getResources().getString(R.string.eos_node_select), true, false);
         mTitleBar.setActionTextColor(getResources().getColor(R.color.whiteTwo));
         mTitleBar.setActionTextSize(18);
 

@@ -29,7 +29,7 @@ public class BluetoothImportWalletGuideFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.import_wallet), true, true);
+        setNavibarTitle(getResources().getString(R.string.eos_import_wallet), true, true);
     }
 
     @Override

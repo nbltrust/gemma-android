@@ -65,7 +65,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     @BindView(R.id.edt_set_new_pass) EditText edtSetNewPass;
     @BindView(R.id.tv_repeat_new_pass) TextView tvRepeatNewPass;
 
-    @NotEmpty(messageResId = R.string.repeatPassword_hint, sequence = 1)
+    @NotEmpty(messageResId = R.string.eos_tip_repeat_password, sequence = 1)
     @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 1)
     @BindView(R.id.edt_repeat_new_pass) EditText edtRepeatNewPass;
     @BindView(R.id.tv_new_pass_hint) TextView tvNewPassHint;
@@ -213,7 +213,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
 
         isMask = true;
 
-        setNavibarTitle(getResources().getString(R.string.title_change_pass), true, false);
+        setNavibarTitle(getResources().getString(R.string.eos_title_change_pass), true, false);
         if (getArguments() != null) {
             final int currentId = getArguments().getInt("walletID");
             curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentId);
@@ -283,9 +283,9 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
             });
         }
 
-        setEditTextHintStyle(edtSetNewPass, R.string.password_input_hint);
-        setEditTextHintStyle(edtRepeatNewPass, R.string.repeatPassword_hint);
-        setEditTextHintStyle(edtNewPassHint, R.string.password_hint_hint);
+        setEditTextHintStyle(edtSetNewPass, R.string.eos_tip_input_password);
+        setEditTextHintStyle(edtRepeatNewPass, R.string.eos_tip_repeat_password);
+        setEditTextHintStyle(edtNewPassHint, R.string.eos_tip_input_password_hint);
         /*
         edtSetNewPass.setOnTouchListener(new View.OnTouchListener() {
             //按住和松开的标识
@@ -360,7 +360,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     }
 
     public void setRepeatPassValidStyle() {
-        tvRepeatNewPass.setText(getResources().getString(R.string.repeat_pass));
+        tvRepeatNewPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.steel));
         setDividerDefaultStyle(viewRepeatNewPass);
         if (EmptyUtils.isNotEmpty(getRepeatPass())) {
@@ -372,7 +372,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     }
 
     public void setRepeatPassFocusStyle() {
-        tvRepeatNewPass.setText(getResources().getString(R.string.repeat_pass));
+        tvRepeatNewPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         setDividerFocusStyle(viewRepeatNewPass);
         if (EmptyUtils.isNotEmpty(getRepeatPass())) {
@@ -384,7 +384,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     }
 
     public void setRepeatPassInvalidStyle() {
-        tvRepeatNewPass.setText(getResources().getString(R.string.pass_no_match));
+        tvRepeatNewPass.setText(getResources().getString(R.string.eos_tip_pass_no_match));
         tvRepeatNewPass.setTextColor(getResources().getColor(R.color.scarlet));
         setDividerAlertStyle(viewRepeatNewPass);
         if (EmptyUtils.isNotEmpty(getRepeatPass())) {

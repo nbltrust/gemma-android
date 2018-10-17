@@ -205,7 +205,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     @Override
     public void bindUI(View view) {
         ButterKnife.bind(this);
-        setNavibarTitle(getString(R.string.title_delegate), true);
+        setNavibarTitle(getString(R.string.eos_title_resource_management), true);
     }
 
     @Override
@@ -239,16 +239,16 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         resourceInfoVO = getIntent().getParcelableExtra("resourceInfo");
 
         if (resourceInfoVO != null) {
-            String balance = getResources().getString(R.string.remain_balance_pure) + resourceInfoVO.getBanlance();
+            String balance = getResources().getString(R.string.eos_balance) + resourceInfoVO.getBanlance();
             tvRemainBalance.setText(balance);
             //cpu总量及已用显示
             String cpuUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuUsed()), "1000", 2);
             String cpuTotal = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuTotal()), "1000", 2);
             String cpuWeight = AmountUtil.round(String.valueOf(resourceInfoVO.getCpuWeight()), 4);
             String cpuAmount = AmountUtil.div(cpuWeight, "10000", 4);
-            superTextViewCpuStatus.setLeftString(String.format(getResources().getString(R.string.cpu_available),
+            superTextViewCpuStatus.setLeftString(String.format(getResources().getString(R.string.eos_amount_cpu_used),
                     cpuUsed));
-            superTextViewCpuStatus.setRightString(String.format(getResources().getString(R.string.cpu_total), cpuTotal));
+            superTextViewCpuStatus.setRightString(String.format(getResources().getString(R.string.eos_amount_cpu_total), cpuTotal));
             superTextViewCpuAmount.setRightString(cpuAmount + " EOS");
             //CPU Progress
             initCPUProgressBar(resourceInfoVO.getCpuProgress());
@@ -257,9 +257,9 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             String netTotal = AmountUtil.div(String.valueOf(resourceInfoVO.getNetTotal()), "1024", 2);
             String netWeight = AmountUtil.round(String.valueOf(resourceInfoVO.getNetWeight()), 4);
             String netAmount = AmountUtil.div(netWeight, "10000", 4);
-            superTextViewNetStatus.setLeftString(String.format(getResources().getString(R.string.net_available),
+            superTextViewNetStatus.setLeftString(String.format(getResources().getString(R.string.eos_amount_net_used),
                     netUsed));
-            superTextViewNetStatus.setRightString(String.format(getResources().getString(R.string.net_total),
+            superTextViewNetStatus.setRightString(String.format(getResources().getString(R.string.eos_amount_net_total),
                     netTotal));
             superTextViewNetAmount.setRightString(netAmount + " EOS");
             //Net Progress
@@ -719,7 +719,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)){
             String passHint = curWallet.getPasswordTip();
-            String showInfo = getString(R.string.password_hint_info) + " : " + passHint;
+            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);
         }
     }

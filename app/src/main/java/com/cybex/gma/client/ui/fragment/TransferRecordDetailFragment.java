@@ -102,17 +102,17 @@ public class TransferRecordDetailFragment extends XFragment {
                     //转出操作
                     arrow.setImageResource(R.drawable.ic_tab_pay_white);
                     tvAmount.setText(
-                            String.format(getResources().getString(R.string.payment_amount), curTransfer.value));
-                    tvIncomeOrOut.setText(getResources().getString(R.string.payment));
-                    superTextViewReceiver.setLeftString(getResources().getString(R.string.receiver));
+                            String.format(getResources().getString(R.string.eos_amount_outcome), curTransfer.value));
+                    tvIncomeOrOut.setText(getResources().getString(R.string.eos_tip_payment));
+                    superTextViewReceiver.setLeftString(getResources().getString(R.string.eos_title_receiver));
                     superTextViewReceiver.setRightString(curTransfer.to);
                 } else {
                     //收入操作
                     tvAmount.setText(
-                            String.format(getResources().getString(R.string.income_amount), curTransfer.value));
-                    tvIncomeOrOut.setText(getResources().getString(R.string.income));
+                            String.format(getResources().getString(R.string.eos_amount_income), curTransfer.value));
+                    tvIncomeOrOut.setText(getResources().getString(R.string.eos_tip_income));
                     arrow.setImageResource(R.drawable.ic_income_white);
-                    superTextViewReceiver.setLeftString(getResources().getString(R.string.payer));
+                    superTextViewReceiver.setLeftString(getResources().getString(R.string.eos_title_payer));
                     superTextViewReceiver.setRightString(curTransfer.from);
 
                 }

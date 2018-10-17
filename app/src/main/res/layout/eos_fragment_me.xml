@@ -116,7 +116,7 @@
                     android:layout_height="@dimen/dimen_44"
                     title:sLeftTextColor="@color/darkSlateBlue"
                     title:sLeftTextSize="@dimen/font_3.5"
-                    title:sLeftTextString="@string/service_agreement"
+                    title:sLeftTextString="@string/terms_of_service"
                     title:sLeftIconRes="@drawable/ic_service_agreement"
                     title:sLeftIconHeight="@dimen/dimen_24"
                     title:sLeftIconWidth="@dimen/dimen_24"

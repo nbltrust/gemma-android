@@ -19,27 +19,27 @@
 
         <TextView
             style="@style/text_title"
-            android:text="@string/safety_first"/>
+            android:text="@string/eos_safety_first"/>
 
         <TextView
             style="@style/text_body"
-            android:text="@string/safety_first_hint"/>
+            android:text="@string/eos_tip_safety_first"/>
 
         <TextView
             style="@style/text_title"
-            android:text="@string/save_offline"/>
+            android:text="@string/eos_save_offline"/>
 
         <TextView
             style="@style/text_body"
-            android:text="@string/save_offline_hint"/>
+            android:text="@string/eos_tip_save_offline"/>
 
         <TextView
             style="@style/text_title"
-            android:text="@string/encrypto_save"/>
+            android:text="@string/eos_tip_encrypto_save"/>
 
         <TextView
             style="@style/text_body"
-            android:text="@string/encrypto_save_hint"/>
+            android:text="@string/eos_tip_encrypto_save_hint"/>
 
     </LinearLayout>
 

@@ -62,11 +62,11 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
         mBottomBar = rootView.findViewById(R.id.bottomBar);
 
         mBottomBar
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_wallet_normal, getString(R.string.tab_wallet)))
+                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_wallet_normal, getString(R.string.eos_tab_wallet)))
 
                 .addItem(new BottomBarTab(_mActivity, R.drawable.ic_send_normal,
-                        getString(R.string.tab_transfer)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_me_normal, getString(R.string.tab_mine)));
+                        getString(R.string.eos_tab_transfer)))
+                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_me_normal, getString(R.string.eos_tab_mine)));
 
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {

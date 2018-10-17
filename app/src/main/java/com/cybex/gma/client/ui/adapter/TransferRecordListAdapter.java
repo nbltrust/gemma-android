@@ -86,7 +86,7 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
 
                 helper.setText(R.id.tv_transfer_account,
                         mContext.getResources()
-                                .getString(R.string.at_char) + account);
+                                .getString(R.string.eos_at_char) + account);
             }
 
 

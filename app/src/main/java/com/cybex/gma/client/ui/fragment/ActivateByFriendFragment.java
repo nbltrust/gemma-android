@@ -44,7 +44,7 @@ public class ActivateByFriendFragment extends XFragment {
             case R.id.bt_click_to_copy_priKey:
                 if (getContext() != null){
                     ClipboardUtils.copyText(getContext(), tvShowPriKeyArea.getText().toString().trim());
-                    GemmaToastUtils.showLongToast(getString(R.string.prikey_copied));
+                    GemmaToastUtils.showLongToast(getString(R.string.eos_tip_prikey_copied));
                 }
                 break;
             case R.id.bt_click_to_copy_memo:
@@ -70,7 +70,7 @@ public class ActivateByFriendFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         //初始化各个textView
-        tvHintActivateByFriendBot.setText(Html.fromHtml(getResources().getString(R.string.tip_use_eos_to_activate)));
+        tvHintActivateByFriendBot.setText(Html.fromHtml(getResources().getString(R.string.eos_tip_use_eos_to_activate)));
         tvTipMidFriendPartOne.setText(getString(R.string.tip_activate_by_exchange_part_one));
         tvTipMidFriendPartTwo.setText(getString(R.string.tip_activate_by_exchange_part_two));
         tvTipMidFriendPartTwo.setTextColor(getResources().getColor(R.color.cornflowerBlue));

@@ -17,7 +17,7 @@
             android:id="@+id/edt_invCode"
             android:layout_width="match_parent"
             android:background="@null"
-            android:hint="@string/input_inv_code"
+            android:hint="@string/eos_tip_input_inv_code"
             android:textColorHint="@color/cloudy_blue"
             android:textColor="@color/darkSlateBlue"
             android:paddingStart="@dimen/dimen_20"

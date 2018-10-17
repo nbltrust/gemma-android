@@ -130,7 +130,7 @@ fb99aa426ef9656e16889012b"
         android:layout_marginEnd="@dimen/dimen_40"
         android:layout_marginStart="@dimen/dimen_40"
         android:layout_marginTop="@dimen/dimen_10"
-        android:text="@string/tip_use_eos_to_activate"
+        android:text="@string/eos_tip_use_eos_to_activate"
         android:textSize="@dimen/font_3"/>
 
 </LinearLayout>

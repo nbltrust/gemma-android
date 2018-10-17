@@ -74,7 +74,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     @BindView(R.id.edt_set_pass) EditText edtSetPass;
     @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
 
-    @NotEmpty(messageResId = R.string.repeatPassword_hint, sequence = 2)
+    @NotEmpty(messageResId = R.string.eos_tip_repeat_password, sequence = 2)
     @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 2)
     @BindView(R.id.et_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.tv_pass_hint_f) TextView tvPassHint;
@@ -151,33 +151,33 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
                 CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN,
                         getResources().getString(R
-                                .string.service_agreement));
+                                .string.terms_of_service));
                 break;
             case LanguageManager.LanguageType.LANGUAGE_EN:
                 CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_EN,
                         getResources().getString(R
-                                .string.service_agreement));
+                                .string.terms_of_service));
                 break;
             case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
                 Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
                 switch (systemLanguageType.getDisplayLanguage()) {
                     case CN:
                         CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources()
-                                .getString(R.string.service_agreement));
+                                .getString(R.string.terms_of_service));
                         break;
                     case EN:
                         CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_EN, getResources()
-                                .getString(R.string.service_agreement));
+                                .getString(R.string.terms_of_service));
                         break;
                     default:
                         CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources()
-                                .getString(R.string.service_agreement));
+                                .getString(R.string.terms_of_service));
                 }
                 break;
             default:
                 CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN,
                         getResources().getString(R
-                                .string.service_agreement));
+                                .string.terms_of_service));
 
         }
     }
@@ -357,9 +357,9 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             }
         });
 
-        setEditTextHintStyle(edtSetPass, R.string.password_input_hint);
-        setEditTextHintStyle(edtPassHint, R.string.password_hint_hint);
-        setEditTextHintStyle(edtRepeatPass, R.string.repeatPassword_hint);
+        setEditTextHintStyle(edtSetPass, R.string.eos_tip_input_password);
+        setEditTextHintStyle(edtPassHint, R.string.eos_tip_input_password_hint);
+        setEditTextHintStyle(edtRepeatPass, R.string.eos_tip_repeat_password);
 
         /*
         edtSetPass.setOnTouchListener(new View.OnTouchListener() {
@@ -482,7 +482,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
      * 重置密码区域默认样式
      */
     public void setRepeatPassValidStyle() {
-        tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
+        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
         setDividerDefaultStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPass())) {
@@ -494,7 +494,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     }
 
     public void setRepeatPassFocusStyle() {
-        tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
+        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         setDividerFocusStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPass())) {
@@ -509,7 +509,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
      * 重置密码区域不匹配时的样式
      */
     public void setRepeatPassInvalidStyle() {
-        tvRepeatPass.setText(getResources().getString(R.string.pass_no_match));
+        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_pass_no_match));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
         setDividerAlertStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPass())) {

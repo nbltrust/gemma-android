@@ -48,7 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/dimen_10"
-                        android:text="@string/security_hint"
+                        android:text="@string/eos_tip_security_hint"
                         android:textSize="@dimen/font_3"/>
 
                 </com.xujiaji.happybubble.BubbleLayout>
@@ -56,7 +56,7 @@
                 <TextView
                     android:id="@+id/tv_eos_name"
                     style="@style/text_title_config_wallet"
-                    android:text="@string/EOS_username"/>
+                    android:text="@string/eos_title_eos_username"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                         style="@style/editText_config_wallet"
                         android:layout_weight="1"
                         android:inputType="text"
-                        android:hint="@string/EOS_username_hint"/>
+                        android:hint="@string/eos_tip_eos_username"/>
 
                     <ImageView
                         android:id="@+id/iv_eos_name_clear"
@@ -86,7 +86,7 @@
                 <TextView
                     android:id="@+id/tv_set_pass"
                     style="@style/text_title_config_wallet"
-                    android:text="@string/set_password"/>
+                    android:text="@string/eos_tip_set_password"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                         android:id="@+id/edt_set_pass"
                         style="@style/editText_config_wallet"
                         android:layout_weight="1"
-                        android:hint="@string/password_input_hint"
+                        android:hint="@string/eos_tip_input_password"
                         android:inputType="textPassword"/>
 
                     <LinearLayout
@@ -126,7 +126,7 @@
                     android:id="@+id/tv_repeat_pass"
                     style="@style/text_title_config_wallet"
                     android:layout_marginTop="@dimen/dimen_10"
-                    android:text="@string/repeat_pass"/>
+                    android:text="@string/eos_tip_repeat_pass"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -137,7 +137,7 @@
                         android:id="@+id/et_repeat_pass"
                         style="@style/editText_config_wallet"
                         android:layout_weight="1"
-                        android:hint="@string/repeatPassword_hint"
+                        android:hint="@string/eos_tip_repeat_password"
                         android:inputType="textPassword"/>
 
                     <LinearLayout
@@ -168,7 +168,7 @@
                     android:id="@+id/tv_pass_hint"
                     style="@style/text_title_config_wallet"
                     android:layout_marginTop="@dimen/dimen_10"
-                    android:text="@string/password_hint"/>
+                    android:text="@string/eos_title_password_hint"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -179,7 +179,7 @@
                         android:id="@+id/edt_pass_hint"
                         style="@style/editText_config_wallet"
                         android:layout_weight="1"
-                        android:hint="@string/password_hint_hint"/>
+                        android:hint="@string/eos_tip_input_password_hint"/>
 
                     <ImageView
                         android:id="@+id/iv_pass_hint_clear"
@@ -257,7 +257,7 @@
                     android:id="@+id/checkbox_config"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/checkBox_length"
-                    android:text="@string/agreement"
+                    android:text="@string/eos_tip_agree"
                     android:textColor="@color/blueyGrey"
                     android:textSize="@dimen/font_3"
                     android:theme="@style/myCheckBox"/>
@@ -266,7 +266,7 @@
                     android:id="@+id/tv_service_agreement_config"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/agreement2"
+                    android:text="@string/eos_tip_terms_of_service"
                     android:textColor="@color/darkSlateBlue"
                     android:textSize="@dimen/font_3"
                     />
@@ -280,7 +280,7 @@
                 android:layout_marginStart="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
                 android:background="@drawable/shape_corner_button_unclickable"
-                android:text="@string/create_wallet"
+                android:text="@string/eos_tip_create_wallet"
                 android:textColor="@color/whiteTwo"/>
 
         </LinearLayout>

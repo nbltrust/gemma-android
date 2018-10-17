@@ -95,7 +95,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BuySellRamFragment.this, rootView);
-        setNavibarTitle(getResources().getString(R.string.buy_sell_ram), true, true);
+        setNavibarTitle(getResources().getString(R.string.eos_buy_sell_ram), true, true);
     }
 
     @Override
@@ -121,11 +121,11 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                     edtSellRam.setVisibility(View.GONE);
                     tvApproximatelyAmount.setVisibility(View.GONE);
                     edtBuyRam.setText("");
-                    tvEosRamAmount.setText(getResources().getString(R.string.transfer_eos_amount));
+                    tvEosRamAmount.setText(getResources().getString(R.string.eos_title_eos_quantity));
                     if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
                         String available_eos = resourceInfoVO.getBanlance();
                         tvAvaEosRam.setText(
-                                String.format(getResources().getString(R.string.available_eos), available_eos));
+                                String.format(getResources().getString(R.string.eos_amount_available_eos), available_eos));
                     }
                     //切换TAB时隐藏软键盘
                     if (EmptyUtils.isNotEmpty(getActivity()))hideSoftKeyboard(getActivity());
@@ -138,10 +138,10 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                     edtSellRam.setVisibility(View.VISIBLE);
                     edtSellRam.setText("");
                     tvApproximatelyAmount.setVisibility(View.GONE);
-                    tvEosRamAmount.setText(getResources().getString(R.string.transfer_ram_amount));
+                    tvEosRamAmount.setText(getResources().getString(R.string.eos_ram_quantity));
                     if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
                         String ramAvailable = calAvailableRam(resourceInfoVO);
-                        tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_ram),
+                        tvAvaEosRam.setText(String.format(getResources().getString(R.string.eos_amount_available_ram),
                                 ramAvailable));
                     }
 
@@ -161,12 +161,12 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
                 String ramUsed = AmountUtil.round(String.valueOf(resourceInfoVO.getRamUsed()), 4);
                 String ramUsedKB = AmountUtil.div(ramUsed, "1024", 2);
-                superTextViewRamStatus.setLeftString(getResources().getString(R.string.used) + ramUsedKB + " KB");
+                superTextViewRamStatus.setLeftString(getResources().getString(R.string.eos_title_used) + ramUsedKB + " KB");
                 String ramTotal = AmountUtil.round(String.valueOf(resourceInfoVO.getRamTotal()), 4);
                 String ramTotalKB = AmountUtil.div(ramTotal, "1024", 2);
                 superTextViewRamStatus.setRightString(
-                        getResources().getString(R.string.total_amount) + ramTotalKB + " KB");
-                tvAvaEosRam.setText(String.format(getResources().getString(R.string.available_eos),
+                        getResources().getString(R.string.eos_title_total_amount) + ramTotalKB + " KB");
+                tvAvaEosRam.setText(String.format(getResources().getString(R.string.eos_amount_available_eos),
                         resourceInfoVO.getBanlance()));
                 maxValue = resourceInfoVO.getBanlance().split(" ")[0];
                 maxRamValue = calAvailableRam(resourceInfoVO);
@@ -184,7 +184,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                     setClickable(btBuyRam);
                     if (EmptyUtils.isNotEmpty(kbPerEOS)) {
                         String amount =
-                                getResources().getString(R.string.approxy_amount) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4)
+                                getResources().getString(R.string.eos_tip_quantity_approxi) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4)
                                         + " KB";
                         tvApproximatelyAmount.setText(amount);
                         tvApproximatelyAmount.setVisibility(View.VISIBLE);
@@ -217,7 +217,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                     setClickable(btBuyRam);
                     if (EmptyUtils.isNotEmpty(kbPerEOS)) {
                         String amount =
-                                getResources().getString(R.string.approxy_amount) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4)
+                                getResources().getString(R.string.eos_tip_quantity_approxi) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4)
                                         + " KB";
                         tvApproximatelyAmount.setText(amount);
                         tvApproximatelyAmount.setVisibility(View.VISIBLE);
@@ -276,11 +276,11 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     public void setRamUnitPrice(String ramUnitPriceKB) {
         eosPerKb = ramUnitPriceKB;
-        tvRamUnitPrice.setRightString(String.format(getResources().getString(R.string.ram_unit_price), ramUnitPriceKB));
+        tvRamUnitPrice.setRightString(String.format(getResources().getString(R.string.eos_amount_ram_unit_price), ramUnitPriceKB));
         String ramTotalKB = AmountUtil.div(String.valueOf(resourceInfoVO.getRamTotal()), "1024", 2);
         String ramPrice = AmountUtil.mul(ramUnitPriceKB, ramTotalKB, 4);
         superTextViewRamAmount.setRightString(
-                String.format(getResources().getString(R.string.eos_ram_amount), ramPrice));
+                String.format(getResources().getString(R.string.eos_amount_ram), ramPrice));
         kbPerEOS = AmountUtil.div("1", ramUnitPriceKB, 8);
     }
 
@@ -536,7 +536,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)){
             String passHint = curWallet.getPasswordTip();
-            String showInfo = getString(R.string.password_hint_info) + " : " + passHint;
+            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);
         }
     }

@@ -11,19 +11,19 @@
         >
         <TextView
             style="@style/text_title"
-            android:text="@string/look_around"/>
+            android:text="@string/eos_look_around"/>
 
         <TextView
             style="@style/text_body"
-            android:text="@string/look_around_hint"/>
+            android:text="@string/eos_tip_look_around_hint"/>
 
         <TextView
             style="@style/text_title"
-            android:text="@string/no_screenshot"/>
+            android:text="@string/eos_tip_no_screenshot"/>
 
         <TextView
             style="@style/text_body"
-            android:text="@string/no_screenshot_hint2"/>
+            android:text="@string/eos_tip_no_screenshot_part2"/>
 
         <ImageView
             android:id="@+id/iv_fake_QR"
@@ -45,7 +45,7 @@
         <Button
             android:id="@+id/bt_show_QR"
             style="@style/bt_long_in_linearLayout"
-            android:text="@string/show_QR"
+            android:text="@string/eos_tip_show_QR"
             android:layout_marginTop="20dp"/>
 
         <Button

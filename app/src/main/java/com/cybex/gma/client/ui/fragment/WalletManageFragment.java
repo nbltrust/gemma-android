@@ -95,7 +95,7 @@ public class WalletManageFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.title_wallet), true, true);
+        setNavibarTitle(getResources().getString(R.string.eos_title_wallet), true, true);
         //创建钱包入口
         superTextViewCreateWallet.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override

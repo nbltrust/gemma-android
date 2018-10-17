@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_30"
-        android:text="@string/input_key_hint2"
+        android:text="@string/eos_tip_input_key_part2"
         android:textColor="@color/blueyGrey"
         android:textSize="@dimen/font_3"
         android:layout_marginStart="@dimen/dimen_46"
@@ -36,7 +36,7 @@
             android:id="@+id/edt_show_priKey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/input_key_hint"
+            android:hint="@string/eos_tip_input_key"
             android:textSize="@dimen/font_3.5"
             android:textColor="@color/darkSlateBlue"
             android:textColorHint="@color/blueyGrey"
@@ -49,7 +49,7 @@
     <Button
         android:id="@+id/bt_start_input"
         style="@style/bt_long_in_linearLayout"
-        android:text="@string/start_input"
+        android:text="@string/eos_btn_start_input"
         android:layout_marginStart="@dimen/dimen_46"
         android:layout_marginEnd="@dimen/dimen_46"
         android:layout_marginTop="@dimen/dimen_30"/>

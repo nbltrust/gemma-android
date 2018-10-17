@@ -37,7 +37,7 @@
             android:id="@+id/edt_input_priKey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:hint="@string/input_key_hint"
+            tools:hint="@string/eos_tip_input_key"
             android:textSize="@dimen/font_3.5"
             android:textColor="@color/darkSlateBlue"
             android:textColorHint="@color/blueyGrey"

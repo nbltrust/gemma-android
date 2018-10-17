@@ -23,7 +23,6 @@ import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
-import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -138,14 +137,14 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog(getV().getString(R.string.transfer_trade_ing));
+                        getV().showProgressDialog(getV().getString(R.string.eos_tip_transfer_trade_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
                         if (EmptyUtils.isNotEmpty(getV())){
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                             getV().dissmisProgressDialog();
 
                             try {
@@ -176,7 +175,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
 
                         } else {
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                         }
 
                     }
@@ -199,7 +198,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                         super.onError(response);
 
                         if (EmptyUtils.isNotEmpty(getV())){
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                             getV().dissmisProgressDialog();
 
                             try {
@@ -254,7 +253,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                             } else {
                                 //错误
-                                GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                                GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                                 getV().dissmisProgressDialog();
                             }
                         }
@@ -282,14 +281,14 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog(getV().getString(R.string.transfer_trade_ing));
+                        getV().showProgressDialog(getV().getString(R.string.eos_tip_transfer_trade_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
                         if (EmptyUtils.isNotEmpty(getV())){
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                             getV().dissmisProgressDialog();
 
                             try {
@@ -319,7 +318,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             bluetoothGetInfo(from, binargs);
 
                         } else {
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                         }
 
                     }
@@ -341,7 +340,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                         super.onError(response);
 
                         if (EmptyUtils.isNotEmpty(getV())){
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                             getV().dissmisProgressDialog();
 
                             try {
@@ -403,7 +402,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                 getV().dissmisProgressDialog();
                             } else {
                                 //错误
-                                GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                                GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                                 getV().dissmisProgressDialog();
                             }
                         }
@@ -422,7 +421,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     public void onStart(Request<String, ? extends Request> request) {
                         super.onStart(request);
                         if (getV() != null){
-                            getV().showProgressDialog(getV().getString(R.string.transfer_trade_ing));
+                            getV().showProgressDialog(getV().getString(R.string.eos_tip_transfer_trade_ing));
                         }
                     }
 

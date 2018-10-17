@@ -129,14 +129,14 @@ public class BluetoothTransferPresenter extends XPresenter<BluetoothTransferFrag
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog(getV().getString(R.string.transfer_trade_ing));
+                        getV().showProgressDialog(getV().getString(R.string.eos_tip_transfer_trade_ing));
                     }
 
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
                         if (EmptyUtils.isNotEmpty(getV())){
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                             getV().dissmisProgressDialog();
 
                             try {
@@ -166,7 +166,7 @@ public class BluetoothTransferPresenter extends XPresenter<BluetoothTransferFrag
                             bluetoothGetInfo(from, binargs);
 
                         } else {
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                         }
 
                     }
@@ -188,7 +188,7 @@ public class BluetoothTransferPresenter extends XPresenter<BluetoothTransferFrag
                         super.onError(response);
 
                         if (EmptyUtils.isNotEmpty(getV())){
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                             getV().dissmisProgressDialog();
 
                             try {
@@ -248,7 +248,7 @@ public class BluetoothTransferPresenter extends XPresenter<BluetoothTransferFrag
                                 getV().dissmisProgressDialog();
                             } else {
                                 //错误
-                                GemmaToastUtils.showShortToast(getV().getString(R.string.transfer_oprate_failed));
+                                GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                                 getV().dissmisProgressDialog();
                             }
                         }

@@ -1,206 +1,172 @@
 <resources>
     <!-- Alert -->
-    <string name="please_confirm_alert">请勿在EOS区块100%确认之前往账户转账</string>
+    <string name="eos_please_confirm_alert">请勿在EOS区块100%确认之前往账户转账</string>
 
     <!-- Common -->
-    <string name="app_name">GEMMA</string>
-    <string name="title">我是标题</string>
-    <string name="eos">EOS</string>
+    <string name="eos_app_name">GEMMA</string>
+    <string name="eos_eos">EOS</string>
 
     <!-- Initial Activity -->
-    <string name="createNewWallet">创建新钱包</string>
-    <string name="restoreWallet">从备份恢复已有钱包</string>
+    <string name="eos_btn_create_new_wallet">创建新钱包</string>
+    <string name="eos_btn_restore_wallet">从备份恢复已有钱包</string>
 
     <!-- Create Wallet Activity-->
-    <string name="set_password">设置密码</string>
-    <string name="create_wallet">创建钱包</string>
-    <string name="repeat_pass">重复密码</string>
-    <string name="EOS_username">EOS账户名</string>
-    <string name="EOS_username_hint">由小写字母a-z与数字1-5组成，须为12个字符</string>
-    <string name="password_input_hint">最少8位，建议混合大小写字母、数字及符号</string>
-    <string name="repeatPassword_hint">请再次输入您的密码</string>
-    <string name="password_hint_hint">请输入密码提示</string>
-    <string name="invitation_code">邀请码</string>
-    <string name="input_inv_code">请输入邀请码</string>
-    <string name="get_invitation">获取邀请码</string>
-    <string name="agreement">我已阅读并同意</string>
-    <string name="agreement2"><u>服务协议</u></string>
-    <string name="password_hint">密码提示(可选)</string>
-    <string name="password_hint_info">密码提示信息</string>
-    <string name="password_input_hint_2">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不存储密码，无法提供密码找回服务</string>
-    <string name="security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不储存密码，无法提供密码找回服务</string>
-    <string name="eos_username">EOS账户名</string>
+    <string name="eos_tip_set_password">设置密码</string>
+    <string name="eos_tip_create_wallet">创建钱包</string>
+    <string name="eos_tip_repeat_pass">重复密码</string>
+    <string name="eos_title_eos_username">EOS账户名</string>
+    <string name="eos_tip_eos_username">由小写字母a-z与数字1-5组成，须为12个字符</string>
+    <string name="eos_tip_input_password">最少8位，建议混合大小写字母、数字及符号</string>
+    <string name="eos_tip_repeat_password">请再次输入您的密码</string>
+    <string name="eos_tip_input_password_hint">请输入密码提示</string>
+    <string name="eos_title_invitation_code">邀请码</string>
+    <string name="eos_tip_input_inv_code">请输入邀请码</string>
+    <string name="eos_btn_get_invitation">获取邀请码</string>
+    <string name="eos_tip_agree">我已阅读并同意</string>
+    <string name="eos_tip_terms_of_service"><u>服务协议</u></string>
+    <string name="eos_title_password_hint">密码提示（可选）</string>
+    <string name="eos_tip_password_hint">密码提示信息</string>
+    <string name="eos_tip_password_input_part2">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不存储密码，无法提供密码找回服务</string>
+    <string name="eos_tip_security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不储存密码，无法提供密码找回服务</string>
 
 
     <!-- Main Tab Activity-->
-    <string name="tab_wallet">钱包</string>
-    <string name="tab_transfer">转账</string>
-    <string name="tab_mine">我的</string>
+    <string name="eos_tab_wallet">钱包</string>
+    <string name="eos_tab_transfer">转账</string>
+    <string name="eos_tab_mine">我的</string>
 
     <!-- Transfer Record Detail Fragment-->
-    <string name="income">收入</string>
-    <string name="payment">支出</string>
-    <string name="income_amount">+ %1$s</string>
-    <string name="payment_amount">- %1$s</string>
-    <string name="transfer_status">交易状态</string>
-    <string name="transfer_id">交易号</string>
-    <string name="block_num">区块</string>
-    <string name="block_time">交易时间</string>
-    <string name="see_in_explorer"><u>在区块链浏览器上查看</u></string>
+    <string name="eos_tip_income">收入</string>
+    <string name="eos_tip_payment">支出</string>
+    <string name="eos_amount_income">+ %1$s</string>
+    <string name="eos_amount_outcome">- %1$s</string>
+    <string name="eos_title_transfer_status">交易状态</string>
+    <string name="eos_title_transfer_id">交易号</string>
+    <string name="eos_title_block_num">区块</string>
+    <string name="eos_title_block_time">交易时间</string>
+    <string name="eos_btn_see_in_explorer"><u>在区块链浏览器上查看</u></string>
 
     <!-- Transfer Fragment-->
-    <string name="receiver">收款人</string>
-    <string name="payer">转账人</string>
-    <string name="payingAccount">付款账户</string>
-    <string name="fund">金额</string>
-    <string name="memo">备注</string>
-    <string name="memo_optional">备注（可选）</string>
-    <string name="confirmTransfer">确认转账</string>
-    <string name="at_char">\ufeff@</string>
-    <string name="title_transfer">转账</string>
+    <string name="eos_title_receiver">收款人</string>
+    <string name="eos_title_payer">转账人</string>
+    <string name="eos_title_payer_account">付款账户</string>
+    <string name="eos_title_fund">金额</string>
+    <string name="eos_title_memo">备注</string>
+    <string name="eos_title_memo_optional">备注（可选）</string>
+    <string name="eos_btn_confirm_transfer">确认转账</string>
+    <string name="eos_at_char">\ufeff@</string>
+    <string name="eos_title_transfer">转账</string>
+    <string name="eos_tip_transfer_trade_ing">转账处理中...</string>
+    <string name="eos_tip_transfer_oprate_failed">转账失败</string>
+    <string name="eos_tip_transfer_oprate_success">转账成功</string>
 
     <!-- Delegate -->
-    <string name="brief_info">概况</string>
-    <string name="used">已用 </string>
-    <string name="total_amount">总量 </string>
-    <string name="delegate">抵押</string>
-    <string name="operation">操作</string>
-    <string name="delegate_cpu">抵押CPU</string>
-    <string name="delegate_hint">输入需要抵押的EOS数量</string>
-    <string name="refund_hint">输入解除抵押的EOS数量</string>
-    <string name="delegate_net">抵押NET</string>
-    <string name="delegate_cpu_net">抵押</string>
-    <string name="title_delegate">资源管理</string>
-    <string name="remain_balance_pure">余额</string>
-    <string name="amount">数量</string>
+    <string name="eos_title_brief_info">概况</string>
+    <string name="eos_title_used">已用 </string>
+    <string name="eos_title_total_amount">总量 </string>
+    <string name="eos_tip_operation">操作</string>
+    <string name="eos_title_delegate_cpu">抵押CPU</string>
+    <string name="eos_amount_delegate">输入需要抵押的EOS数量</string>
+    <string name="eos_amount_undelegate">输入解除抵押的EOS数量</string>
+    <string name="eos_title_delegate_net">抵押NET</string>
+    <string name="eos_delegate">抵押</string>
+    <string name="eos_title_resource_management">资源管理</string>
+    <string name="eos_balance">余额</string>
+    <string name="eos_quantity">数量</string>
 
-    <string name="cpu_available">已用 %1$s ms</string>
-    <string name="cpu_total">总量 %1$s ms</string>
-    <string name="net_available">已用 %1$s KB</string>
-    <string name="net_total">总量 %1$s KB</string>
+    <string name="eos_amount_cpu_used">已用 %1$s ms</string>
+    <string name="eos_amount_cpu_total">总量 %1$s ms</string>
+    <string name="eos_amount_net_used">已用 %1$s KB</string>
+    <string name="eos_amount_net_total">总量 %1$s KB</string>
+
+    <string name="eos_tip_balance_default">余额： -- EOS</string>
+    <string name="eos_refund_detail">赎回详情</string>
+    <string name="eos_btn_confirm_refund">确认解除抵押</string>
+    <string name="eos_undelegate">解除抵押</string>
 
     <!-- Buy Sell Ram-->
-    <string name="buy_sell_ram">买卖RAM</string>
-    <string name="buy">买入</string>
-    <string name="sell">卖出</string>
-    <string name="transaction">交易</string>
-    <string name="transfer_eos_amount">交易数量(EOS)</string>
-    <string name="transfer_ram_amount">交易数量(KB)</string>
-    <string name="available">可用</string>
-    <string name="price">价格</string>
-    <string name="input_ram_amount">输入RAM数量</string>
-    <string name="input_eos_amount">输入EOS数量</string>
-    <string name="ram_amount_about">预估可兑换 %1$s KB</string>
-    <string name="eos_amount_about">预估可兑换 %1$s EOS</string>
-    <string name="available_eos">可用 %1$s</string>
-    <string name="available_ram">可用 %1$s KB</string>
-    <string name="eos_ram_amount">≈ %1$s EOS</string>
-    <string name="ram_unit_price">≈ %1$s EOS/KB</string>
-    <string name="approxy_amount">预估可兑换</string>
-
-    <!-- Me/General/About -->
-    <string name="general">通用</string>
-    <string name="security">安全设置</string>
-    <string name="help">帮助与反馈</string>
-    <string name="service_agreement">服务协议</string>
-    <string name="about_gemma">关于Gemma</string>
-    <string name="about">关于</string>
-
-    <string name="face">面容解锁</string>
-    <string name="fingerprints">指纹解锁</string>
-    <string name="pattern">手势解锁</string>
-    <string name="changePattern">修改手势密码</string>
-
-    <string name="title_currency_unit">货币单位</string>
-
-
-    <string name="version_info">版本说明</string>
-    <string name="version_update">版本更新</string>
-    <string name="copyright">Copyright @2018 Tuolian. All Rights Reserved</string>
-
-    <!-- Gesture login activity -->
-    <string name="gesture_forget_gesture">忘记手势密码</string>
-    <string name="gesture_default">请输入手势密码</string>
-    <string name="gesture_error">手势密码输入错误</string>
-    <string name="gesture_error_max_retry">手势密码输入错误次数太多，%1$d秒后重试</string>
-    <string name="gesture_correct">输入正确</string>
-    <string name="gesture_error_tip_total">次机会</string>
-    <string name="gesture_tip_password_error_retry">密码错误，还剩</string>
-
-    <!-- Create gesture activity -->
-    <string name="create_gesture_activity">CreateGestureActivity</string>
-    <string name="create_gesture_default">绘制解锁图案</string>
-    <string name="create_gesture_correct">再次绘制解锁图案</string>
-    <string name="create_gesture_less_error">至少连接4个点，请重新输入</string>
-    <string name="create_gesture_confirm_error">与上一次绘制不一致，请重新绘制</string>
-    <string name="create_gesture_confirm_correct">设置成功</string>
-    <string name="create_gesture_reset">重新设置</string>
+    <string name="eos_buy_sell_ram">买卖RAM</string>
+    <string name="eos_buy_ram">买入</string>
+    <string name="eos_sell_ram">卖出</string>
+    <string name="eos_transaction">交易</string>
+    <string name="eos_title_eos_quantity">交易数量(EOS)</string>
+    <string name="eos_ram_quantity">交易数量(KB)</string>
+    <string name="eos_available">可用</string>
+    <string name="eos_price">价格</string>
+    <string name="eos_input_ram_amount">输入RAM数量</string>
+    <string name="eos_input_eos_amount">输入EOS数量</string>
+    <string name="eos_amount_ram_approxi">预估可兑换 %1$s KB</string>
+    <string name="eos_amount_eos_approxi">预估可兑换 %1$s EOS</string>
+    <string name="eos_amount_available_eos">可用 %1$s</string>
+    <string name="eos_amount_available_ram">可用 %1$s KB</string>
+    <string name="eos_amount_ram">≈ %1$s EOS</string>
+    <string name="eos_amount_ram_unit_price">≈ %1$s EOS/KB</string>
+    <string name="eos_tip_quantity_approxi">预估可兑换</string>
 
     <!-- Import Wallet-->
-    <string name="import_wallet">导入钱包</string>
-    <string name="input_key_hint">请完整输入备份的私钥</string>
-    <string name="input_key_hint2">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>
-    <string name="prikey_copied">私钥已复制，请在使用后及时清空系统剪贴板！</string>
-    <string name="start_input">开始导入</string>
-    <string name="complete_input">完成导入</string>
+    <string name="eos_import_wallet">导入钱包</string>
+    <string name="eos_tip_input_key">请完整输入备份的私钥</string>
+    <string name="eos_tip_input_key_part2">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>
+    <string name="eos_tip_prikey_copied">私钥已复制，请在使用后及时清空系统剪贴板！</string>
+    <string name="eos_btn_start_input">开始导入</string>
+    <string name="eos_btn_complete_input">完成导入</string>
 
     <!-- Export(BackUp) Wallet-->
-    <string name="lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
-    <string name="lookAround_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
-    <string name="backUp_wallet">备份钱包</string>
-    <string name="backupSafely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
-    <string name="showMnemonic">明白了，显示助记词</string>
-    <string name="showPriKey">明白了，显示私钥</string>
-    <string name="start_import">明白了，开始导入</string>
-    <string name="backupLater">稍后备份</string>
+    <string name="eos_tip_look_around">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
+    <string name="eos_look_around_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
+    <string name="eos_back_up_wallet">备份钱包</string>
+    <string name="eos_tip_back_safely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
+    <string name="eos_btn_show_mnemonic">明白了，显示助记词</string>
+    <string name="eos_btn_show_PriKey">明白了，显示私钥</string>
+    <string name="eos_btn_start_import">明白了，开始导入</string>
+    <string name="eos_btn_backup_later">稍后备份</string>
 
-    <string name="no_screenshot">请勿截图</string>
-    <string name="no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
-    <string name="i_understand">我知道了</string>
-    <string name="safety_first">安全第一</string>
-    <string name="safety_first_hint">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
-    <string name="save_offline">离线储存</string>
-    <string name="save_offline_hint">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
-    <string name="encrypto_save">加密储存</string>
-    <string name="encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
+    <string name="eos_tip_no_screenshot">请勿截图</string>
+    <string name="eos_tip_no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
+    <string name="eos_tip_i_understand">我知道了</string>
+    <string name="eos_safety_first">安全第一</string>
+    <string name="eos_tip_safety_first">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
+    <string name="eos_save_offline">离线储存</string>
+    <string name="eos_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
+    <string name="eos_tip_encrypto_save">加密储存</string>
+    <string name="eos_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
 
-    <string name="look_around">注意周围</string>
-    <string name="look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
-    <string name="no_screenshot_hint2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
-    <string name="show_QR">显示二维码</string>
+    <string name="eos_look_around">注意周围</string>
+    <string name="eos_tip_look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
+    <string name="eos_tip_no_screenshot_part2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
+    <string name="eos_tip_show_QR">显示二维码</string>
 
     <!-- Change Password Fragment-->
-    <string name="new_password">新密码</string>
-    <string name="confirm_change">确认修改</string>
-    <string name="title_change_pass">修改密码</string>
-    <string name="pass_no_match">密码不一致</string>
+    <string name="eos_new_password">新密码</string>
+    <string name="eos_btn_confirm_change">确认修改</string>
+    <string name="eos_title_change_pass">修改密码</string>
+    <string name="eos_tip_pass_no_match">密码不一致</string>
 
     <!-- Wallet Fragment-->
-    <string name="total_assets">账户总资产</string>
-    <string name="balance">可用余额</string>
-    <string name="redeem">正在赎回</string>
-    <string name="transfer_records">收支记录</string>
-    <string name="resource">资源管理</string>
-    <string name="get_cpu_net">获取CPU、NET</string>
-    <string name="CPU">CPU</string>
-    <string name="NET">NET</string>
-    <string name="RAM">RAM</string>
+    <string name="eos_total_assets">账户总资产</string>
+    <string name="eos_available_balance">可用余额</string>
+    <string name="eos_tip_redeem_ing">正在赎回</string>
+    <string name="eos_transfer_records">收支记录</string>
+    <string name="eos_get_cpu_net">获取CPU、NET</string>
+    <string name="eos_CPU">CPU</string>
+    <string name="eos_NET">NET</string>
+    <string name="eos_RAM">RAM</string>
 
     <!-- Manage Wallet fragment-->
-    <string name="title_wallet">钱包</string>
+    <string name="eos_title_wallet">钱包</string>
 
     <!-- create methods -->
     <string
-        name="tip_use_eos_to_activate"><Data><![CDATA[为保证顺利创建账户，建议至少转<font color="#426bd4"> 2 EOS </font>
+        name="eos_tip_use_eos_to_activate"><Data><![CDATA[为保证顺利创建账户，建议至少转<font color="#426bd4"> 2 EOS </font>
         ：账户将抵押 <font color = "#426bd4"> 0.1 EOS</font>
         作为CPU，<font color = "#426bd4"> 0.1 EOS</font> 作为NET，
         剩余<font color="#426bd4"> 1.8 EOS </font>将按现价购买RAM。]]></Data></string>
 
-    <string name="method_two_hint">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
-    <string name="show_priKey">查看私钥</string>
-    <string name="priKey_encrypted">私钥已加密存储，请输入之前设置的密码解锁查看</string>
-    <string name="copy">复制</string>
-    <string name="priKey_en">私钥 Private Key</string>
+    <string name="eos_tip_give_out_pubkey">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
+    <string name="eos_show_priKey">查看私钥</string>
+    <string name="eos_tip_priKey_encrypted">私钥已加密存储，请输入之前设置的密码解锁查看</string>
+    <string name="eos_copy">复制</string>
+    <string name="eos_priKey_en">私钥 Private Key</string>
 
     <string name="backup_prikey">备份私钥</string>
     <string name="please_input_pass">请输入密码</string>
@@ -218,7 +184,7 @@
     <string name="zero_balance">0.0000 EOS</string>
     <string name="no_avail_votes">票数不足</string>
 
-    <!-- Transfer activity-->
+    <!-- Transfer-->
     <string name="account_name">账户名</string>
     <string name="remain_balance_zero">余额： 0.0000 EOS</string>
     <string name="transfer_hint">输入转账金额，最多四位小数</string>
@@ -226,15 +192,9 @@
     <string name="show_remain_balance">余额： </string>
     <string name="cant_transfer_to_yourself">不能给自己的账户转账</string>
     <string name="tip_balance_not_enough">可用余额不足</string>
-
-    <!-- Transfer Record -->
+    <string name="tip_cant_input_zero">CPU和NET不能都为零</string>
     <string name="title_transfer_record">收支记录</string>
-
-    <!-- Transfer Detail -->
     <string name="title_transfer_detail">收支详情</string>
-
-    <!-- Delegate activity-->
-    <string name="remain_balance">余额： -- EOS</string>
 
     <!-- Dialogs -->
     <string name="delegate_memo">Delegate %1$s EOS for CPU, %2$s EOS for NET</string>
@@ -259,18 +219,18 @@
     <string name="scan_qr_code">扫描二维码</string>
 
     <!-- Change Node Setting -->
-    <string name="node_cybex">http://52.77.177.200:8888(eoscybex)</string>
-    <string name="node_starteos">http://api-mainnet.starteos.io</string>
-    <string name="node_eosnewyork">https://api.eosnewyork.io</string>
-    <string name="node_greymass">https://eos.greymass.com</string>
-    <string name="node_eosasia">https://api-direct.eosasia.one</string>
-    <string name="node_eosgravity">https://api-mainnet.eosgravity.com</string>
-    <string name="node_helloeos">https://api.helloeos.com.cn</string>
-    <string name="node_hkeos">https://api.hkeos.com</string>
-    <string name="node_eos42">https://nodes.eos42.io</string>
-    <string name="node_cypherglass">https://api.cypherglass.com</string>
-    <string name="node_test_beijing">http://47.75.154.248:50003(北京测试链)</string>
-    <string name="node_select">节点设置</string>
+    <string name="eos_node_cybex">http://52.77.177.200:8888(eoscybex)</string>
+    <string name="eos_node_starteos">http://api-mainnet.starteos.io</string>
+    <string name="eos_node_eosnewyork">https://api.eosnewyork.io</string>
+    <string name="eos_node_greymass">https://eos.greymass.com</string>
+    <string name="eos_node_eosasia">https://api-direct.eosasia.one</string>
+    <string name="eos_node_eosgravity">https://api-mainnet.eosgravity.com</string>
+    <string name="eos_node_helloeos">https://api.helloeos.com.cn</string>
+    <string name="eos_node_hkeos">https://api.hkeos.com</string>
+    <string name="eos_node_eos42">https://nodes.eos42.io</string>
+    <string name="eos_node_cypherglass">https://api.cypherglass.com</string>
+    <string name="eos_node_test_beijing">http://47.75.154.248:50003(北京测试链)</string>
+    <string name="eos_node_select">节点设置</string>
 
     <!-- Change Wallet Name fragment-->
     <string name="wallet_name_short">钱包名</string>
@@ -346,29 +306,7 @@
     <string name="repeat_input_pass">请再次输入您的密码</string>
     <string name="check_agreement">请同意我们的服务协议</string>
 
-    <!--others-->
-    <string name="lock_pattern_1">请设置新的解锁密码</string>
-    <string name="lock_pattern_2">再次输入解锁密码，以确认</string>
-    <string name="lock_pattern_3">请输入原手势密码</string>
-    <string name="change_pattern">修改手势密码</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="title_me">我的</string>
-    <string name="press_again_exit">再按一次退出</string>
-
-    <string name="creating">账户创建中</string>
-    <string name="please_confirm">请勿在EOS区块100%确认之前往账户转账</string>
-
-    <string name="refund_detail">赎回详情</string>
-    <string name="confirm_refund">确认解除抵押</string>
-    <string name="undelegate">解除抵押</string>
-    <string name="refund_username">收款人</string>
-
-    <string name="curwallets">已有钱包</string>
-    <string name="walletManege">钱包管理</string>
-
-
+    <!-- activate account -->
     <string name="click_to_copy">点击复制</string>
     <string name="key_saved">我已安全储存私钥</string>
 
@@ -380,11 +318,18 @@
     <string name="how_to_get_invCode">如何获取邀请码</string>
     <string name="input_invCode_hint">请输入邀请码</string>
 
-    <string name="finger_tip_device_no_support">该设备不支持</string>
-    <string name="finger_tip_verify_failed">指纹验证失败，请重试</string>
+    <!--others-->
 
-    <string name="setting_password_success">成功设置手势密码</string>
-    <string name="setting_new_gesture_pwd">设置新手势密码</string>
+    <string name="press_again_exit">再按一次退出</string>
+
+    <string name="creating">账户创建中</string>
+    <string name="please_confirm">请勿在EOS区块100%确认之前往账户转账</string>
+
+    <string name="refund_username">收款人</string>
+
+    <string name="curwallets">已有钱包</string>
+    <string name="walletManege">钱包管理</string>
+
 
     <string name="status_un_confirmed">未确认</string>
     <string name="status_confirmed_ing">正在确认</string>
@@ -399,9 +344,7 @@
     <string name="config_wallet_ing">正在配置钱包...</string>
     <string name="import_wallet_failed">导入钱包失败,请检查输入或切换节点后重试</string>
 
-    <string name="transfer_trade_ing">转账处理中...</string>
-    <string name="transfer_oprate_failed">转账失败</string>
-    <string name="transfer_oprate_success">转账成功</string>
+
 
     <string name="loading_in">正在加载...</string>
     <string name="tip_remaining_zero_zero_day_zero">剩余00天0</string>
@@ -424,7 +367,6 @@
     <string name="loading_pretransfer_info">加载账户信息</string>
     <string name="dont_import_same_wallet">Gemma中已有此钱包</string>
     <string name="default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://xxxx</string>
-
 
 
     <string name="tab_title_private_key">私钥</string>
@@ -485,13 +427,13 @@
     <string name="payment_price_changed">由于EOS价格变动，创建账户的费用已变为 %1$s RMB</string>
     <string name="tip_payment_time">请在10分钟内完成支付</string>
     <string name="tip_loading_fee">正在估算价格</string>
-    <string name="rmb_fee">%1$s RMB</string>
     <string name="ok">确定</string>
     <string name="cancel_cn">取消</string>
     <string name="confirm_payment">确认支付</string>
     <string name="verify">验证</string>
     <string name="verify_priKey">验证私钥</string>
     <string name="tip_verify_prikey">请输入备份的私钥，已验证是否正确</string>
+    <string name="rmb_fee">%1$s RMB</string>
 
     <string name="tip_eos_amount_format_invalid">请最多输入四位小数点位数</string>
     <string name="memo_copied">备注已复制</string>
@@ -500,8 +442,101 @@
     <string name="tip_username_valid">恭喜，账户名可以使用</string>
     <string name="create_fail">创建失败，该eos账户名已被其他用户抢注</string>
     <string name="import_wallet_success">导入成功</string>
-    <string name="tip_cant_input_zero">CPU和NET不能都为零</string>
     <string name="unknow_err">未知错误</string>
+
+
+    <!--蓝牙钱包配置start -->
+    <string name="title_wookong_bio">WOOKONG Bio</string>
+    <string name="match_wookong_bio">配对 WOOKONG Bio</string>
+
+    <string name="tip_card">第一款支持EOS的蓝牙硬件钱包</string>
+    <string name="desc_wookong_url">点击查看 更多WOOKONG Bio介绍</string>
+    <string name="bluetooth_scan_step_title">准备使用WOOKONG Bio</string>
+    <string name="bluetooth_scan_step">
+        1.确保打开手机蓝牙\n2.启动WOOKONG Bio
+    </string>
+
+    <string name="btn_start_pair">开始配对</string>
+    <string name="title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>
+    <string name="title_paire_bluetooth">WOOKONG Bio</string>
+    <string name="empty_no_device">请点击图片重新扫描</string>
+
+    <string name="title_set_wookong_password">设置WOOKONG Bio密码</string>
+    <string name="hint_set_wookong_password">长度8-16， 建议混合大小写字母、数字及符号</string>
+
+    <string name="tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
+
+    <string name="status_un_init">未初始化</string>
+    <string name="status_init_no_pair">已经初始化但没有配对信息</string>
+    <string name="status_init_pair">已经初始化但没有配对信息</string>
+
+    <string name="tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>
+
+    <string name="progress_set_pin">正在设置PIN...</string>
+
+    <string name="title_create_eos_account">创建EOS账户</string>
+
+    <string name="mne_validate_success">验证成功</string>
+    <string name="mne_validate_failed">验证失败</string>
+    <string name="mne_validate_warn">蓝牙连接已断开，请重新连接</string>
+    <string name="do_get_init_info">正在获取初始化信息...</string>
+    <string name="title_setting_fp">设置指纹</string>
+    <string name="btn_title_skip">跳过</string>
+    <string name="finger_set_success">指纹录入成功</string>
+    <string name="wookong_password_hint">请输入WOOKONG Bio的密码以确认授权</string>
+    <string name="transfer_error">当前账户转账出现异常</string>
+    <string name="transfer_eosname_hint">请输入@</string>
+    <string name="transfer_eosname_hint_last">的密码</string>
+    <string name="transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>
+    <string name="transfer_bluetooth_tip">正在连接WOOKONG Bio</string>
+    <string name="connect_sure_tip">请在WOOKONG Bio上按指纹以确认授权</string>
+    <string name="connect_sure_battery_tip">请在WOOKONG Bio上按键以确认转账</string>
+    <string name="connect_failed_tip">连接失败。请检查手机蓝牙和设备电源。</string>
+    <string name="btn_connect_retry">重试连接</string>
+    <string name="connect">连接</string>
+    <string name="disconnect">断开连接</string>
+
+    <string name="bio_sign_fail">签名失败，请重新尝试</string>
+
+
+    <!-- WOOKONG BIO 详情页面-->
+    <string name="name">名称</string>
+    <string name="public_key">公钥</string>
+    <string name="battery_left">电量</string>
+    <string name="click_to_connect">点击连接</string>
+    <string name="click_to_format">格式化</string>
+    <string name="click_to_cancel_pair">取消配对</string>
+    <string name="confirm_format">确认格式化</string>
+    <string name="tip_format">一旦格式化，WOOKONG Bio将清除私钥，请在格式化前备份助记词或转移资产。</string>
+    <string name="confirm">确认</string>
+    <string name="format_success">格式化成功</string>
+    <string name="initialize">初始化</string>
+    <string name="tip_to_init">是否重新初始化WOOKONG Bio？</string>
+    <string name="fp_and_password">指纹与密码</string>
+    <string name="tip_bluetooth_transfer">若未找到，请检查手机蓝牙和设备电源。</string>
+    <string name="connecting_bio">正在连接WOOKONG Bio</string>
+
+
+    <!--蓝牙钱包配置end -->
+
+    <!-- 助记词相关-->
+    <string name="backup_mne">备份助记词</string>
+    <string name="show_mne">明白了， 显示助记词</string>
+    <string name="hint_no_screenshot_mne">如果有人获取你的助记词将直接获取你的资产！请抄写下助记词并存放在安全的地方！</string>
+    <string name="mne_copied">已抄写</string>
+    <string name="tip_memory_your_mne">请记下你的钱包私钥助记词并保存在安全的地方</string>
+    <string name="tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
+    <string name="tip_verify_mne">请按顺序点击已抄下的助记词以验证抄写是否正确</string>
+    <string name="tip_import_mne">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
+    <string name="import_mne">输入助记词，用空格分割</string>
+    <string name="title_verify_mne">验证助记词</string>
+    <string name="btn_import_mne">导入助记词</string>
+
+    <!-- 指纹管理 -->
+    <string name="delete_fingerprint">删除指纹</string>
+    <string name="change_fp_name">修改名称</string>
+    <string name="fingerprint">指纹</string>
+    <string name="add_fingerprint">添加指纹</string>
 
     <!-- EOS Err Code-->
 
@@ -706,96 +741,54 @@
     <string name="eos_err_code_3230001">EOS链异常：3230001</string>
     <string name="eos_err_code_3230002">EOS链异常：3230002</string>
     <string name="eos_err_code_3230003">EOS链异常：3230003</string>
+    =======
+    <item name="tag_key_data" type="id"/>
+    <item name="tag_key_position" type="id"/>
 
-    <!--蓝牙钱包配置start -->
-    <string name="title_wookong_bio">WOOKONG Bio</string>
-    <string name="match_wookong_bio">配对 WOOKONG Bio</string>
+    <!-- ============================我是 EOS模块和非EOS模块不严谨的分割线============================ -->
+    <!-- Me/General/About -->
+    <string name="title_me">我的</string>
+    <string name="general">通用</string>
+    <string name="security">安全设置</string>
+    <string name="help">帮助与反馈</string>
+    <string name="terms_of_service">服务协议</string>
+    <string name="about_gemma">关于Gemma</string>
+    <string name="about">关于</string>
+    <string name="face">面容解锁</string>
+    <string name="fingerprints">指纹解锁</string>
+    <string name="pattern">手势解锁</string>
+    <string name="changePattern">修改手势密码</string>
+    <string name="title_currency_unit">货币单位</string>
+    <string name="version_info">版本说明</string>
+    <string name="version_update">版本更新</string>
+    <string name="copyright">Copyright @2018 Tuolian. All Rights Reserved</string>
 
-    <string name="tip_card">第一款支持EOS的蓝牙硬件钱包</string>
-    <string name="desc_wookong_url">点击查看 更多WOOKONG Bio介绍</string>
-    <string name="bluetooth_scan_step_title">准备使用WOOKONG Bio</string>
-    <string name="bluetooth_scan_step">
-        1.确保打开手机蓝牙\n2.启动WOOKONG Bio
-    </string>
+    <!-- Gesture/Fingerprints -->
+    <string name="gesture_forget_gesture">忘记手势密码</string>
+    <string name="gesture_default">请输入手势密码</string>
+    <string name="gesture_error">手势密码输入错误</string>
+    <string name="gesture_error_max_retry">手势密码输入错误次数太多，%1$d秒后重试</string>
+    <string name="gesture_correct">输入正确</string>
+    <string name="gesture_error_tip_total">次机会</string>
+    <string name="gesture_tip_password_error_retry">密码错误，还剩</string>
 
-    <string name="btn_start_pair">开始配对</string>
-    <string name="title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>
-    <string name="title_paire_bluetooth">WOOKONG Bio</string>
-    <string name="empty_no_device">请点击图片重新扫描</string>
+    <string name="eos_tip_lock_pattern_1">请设置新的解锁密码</string>
+    <string name="eos_tip_lock_pattern_2">再次输入解锁密码，以确认</string>
+    <string name="eos_tip_lock_pattern_3">请输入原手势密码</string>
+    <string name="eos_change_pattern">修改手势密码</string>
 
-    <string name="title_set_wookong_password">设置WOOKONG Bio密码</string>
-    <string name="hint_set_wookong_password">长度8-16， 建议混合大小写字母、数字及符号</string>
+    <string name="finger_tip_device_no_support">该设备不支持</string>
+    <string name="finger_tip_verify_failed">指纹验证失败，请重试</string>
+    <string name="setting_password_success">成功设置手势密码</string>
+    <string name="setting_new_gesture_pwd">设置新手势密码</string>
 
-    <string name="tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
-
-    <string name="status_un_init">未初始化</string>
-    <string name="status_init_no_pair">已经初始化但没有配对信息</string>
-    <string name="status_init_pair">已经初始化但没有配对信息</string>
-
-    <string name="tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>
-
-    <string name="progress_set_pin">正在设置PIN...</string>
-
-    <string name="title_create_eos_account">创建EOS账户</string>
-
-    <string name="mne_validate_success">验证成功</string>
-    <string name="mne_validate_failed">验证失败</string>
-    <string name="mne_validate_warn">蓝牙连接已断开，请重新连接</string>
-    <string name="do_get_init_info">正在获取初始化信息...</string>
-    <string name="title_setting_fp">设置指纹</string>
-    <string name="btn_title_skip">跳过</string>
-    <string name="finger_set_success">指纹录入成功</string>
-    <string name="wookong_password_hint">请输入WOOKONG Bio的密码以确认授权</string>
-    <string name="transfer_error">当前账户转账出现异常</string>
-    <string name="transfer_eosname_hint">请输入@</string>
-    <string name="transfer_eosname_hint_last">的密码</string>
-    <string name="transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>
-    <string name="transfer_bluetooth_tip">正在连接WOOKONG Bio</string>
-    <string name="connect_sure_tip">请在WOOKONG Bio上按指纹以确认授权</string>
-    <string name="connect_sure_battery_tip">请在WOOKONG Bio上按键以确认转账</string>
-    <string name="connect_failed_tip">连接失败。请检查手机蓝牙和设备电源。</string>
-    <string name="btn_connect_retry">重试连接</string>
-    <string name="connect">连接</string>
-    <string name="disconnect">断开连接</string>
-    <string name="bio_sign_fail">签名失败，请重新尝试</string>
-    <string name="fingerprint">指纹</string>
-    <string name="add_fingerprint">添加指纹</string>
-
-
-    <!-- WOOKONG BIO 详情页面-->
-    <string name="name">名称</string>
-    <string name="public_key">公钥</string>
-    <string name="battery_left">电量</string>
-    <string name="click_to_connect">点击连接</string>
-    <string name="click_to_format">格式化</string>
-    <string name="click_to_cancel_pair">取消配对</string>
-    <string name="confirm_format">确认格式化</string>
-    <string name="tip_format">一旦格式化，WOOKONG Bio将清除私钥，请在格式化前备份助记词或转移资产。</string>
-    <string name="confirm">确认</string>
-    <string name="format_success">格式化成功</string>
-    <string name="initialize">初始化</string>
-    <string name="tip_to_init">是否重新初始化WOOKONG Bio？</string>
-    <string name="fp_and_password">指纹与密码</string>
-    <string name="tip_bluetooth_transfer">若未找到，请检查手机蓝牙和设备电源。</string>
-    <string name="connecting_bio">正在连接WOOKONG Bio</string>
-
-    <!--蓝牙钱包配置end -->
-
-    <!-- 助记词相关-->
-    <string name="backup_mne">备份助记词</string>
-    <string name="show_mne">明白了， 显示助记词</string>
-    <string name="hint_no_screenshot_mne">如果有人获取你的助记词将直接获取你的资产！请抄写下助记词并存放在安全的地方！</string>
-    <string name="mne_copied">已抄写</string>
-    <string name="tip_memory_your_mne">请记下你的钱包私钥助记词并保存在安全的地方</string>
-    <string name="tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
-    <string name="tip_verify_mne">请按顺序点击已抄下的助记词以验证抄写是否正确</string>
-    <string name="tip_import_mne">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
-    <string name="import_mne">输入助记词，用空格分割</string>
-    <string name="title_verify_mne">验证助记词</string>
-    <string name="btn_import_mne">导入助记词</string>
-
-    <!-- 指纹管理 -->
-    <string name="delete_fingerprint">删除指纹</string>
-    <string name="change_fp_name">修改名称</string>
+    <!-- Create gesture activity -->
+    <string name="create_gesture_activity">CreateGestureActivity</string>
+    <string name="create_gesture_default">绘制解锁图案</string>
+    <string name="create_gesture_correct">再次绘制解锁图案</string>
+    <string name="create_gesture_less_error">至少连接4个点，请重新输入</string>
+    <string name="create_gesture_confirm_error">与上一次绘制不一致，请重新绘制</string>
+    <string name="create_gesture_confirm_correct">设置成功</string>
+    <string name="create_gesture_reset">重新设置</string>
 
 </resources>

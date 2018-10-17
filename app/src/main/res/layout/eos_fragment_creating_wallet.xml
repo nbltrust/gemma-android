@@ -76,7 +76,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/cornflowerBlue"
                     android:layout_height="@dimen/bt_inInitPage_height"
-                    android:text="@string/backupLater"/>
+                    android:text="@string/eos_btn_backup_later"/>
 
                 <Button
                     android:id="@+id/bt_export_priKey"

@@ -1,109 +1,109 @@
 <resources>
     <!-- Alert -->
-    <string name="please_confirm_alert">Pending...The account is still in the air until 100% confirmed.</string>
+    <string name="eos_please_confirm_alert">Pending...The account is still in the air until 100% confirmed.</string>
 
     <!-- Common -->
-    <string name="app_name">GEMMA</string>
+    <string name="eos_app_name">GEMMA</string>
     <string name="title">我是标题</string>
-    <string name="eos">EOS</string>
+    <string name="eos_eos">EOS</string>
 
     <!-- Initial Activity -->
-    <string name="createNewWallet">Create Wallet</string>
-    <string name="restoreWallet">Import Wallet</string>
+    <string name="eos_btn_create_new_wallet">Create Wallet</string>
+    <string name="eos_btn_restore_wallet">Import Wallet</string>
 
     <!-- Create Wallet Activity-->
-    <string name="set_password">Password</string>
-    <string name="create_wallet">Create Wallet</string>
-    <string name="repeat_pass">Confirm password</string>
-    <string name="EOS_username">EOS account name</string>
-    <string name="EOS_username_hint">12 characters long: a-z and 1-5</string>
-    <string name="password_input_hint">8 or more characters. Prefer a mix of letters, numbers &amp; symbols</string>
-    <string name="repeatPassword_hint">Enter password again</string>
-    <string name="password_hint_hint">Please input password hint</string>
-    <string name="invitation_code">Invite code</string>
-    <string name="input_inv_code">Enter invite code</string>
-    <string name="get_invitation">Get invite code</string>
-    <string name="agreement">Agree on </string>
-    <string name="agreement2"><u>Terms of Service and Privacy Policy</u></string>
-    <string name="password_hint">Password hint(optional)</string>
-    <string name="password_hint_info">Password hint</string>
-    <string name="password_input_hint_2">Password is very important. It\'s used to encrypt your wallets and other
+    <string name="eos_tip_set_password">Password</string>
+    <string name="eos_tip_create_wallet">Create Wallet</string>
+    <string name="eos_tip_repeat_pass">Confirm password</string>
+    <string name="eos_title_eos_username">EOS account name</string>
+    <string name="eos_tip_eos_username">12 characters long: a-z and 1-5</string>
+    <string name="eos_tip_input_password">8 or more characters. Prefer a mix of letters, numbers &amp; symbols</string>
+    <string name="eos_tip_repeat_password">Enter password again</string>
+    <string name="eos_tip_input_password_hint">Please input password hint</string>
+    <string name="eos_title_invitation_code">Invite code</string>
+    <string name="eos_tip_input_inv_code">Enter invite code</string>
+    <string name="eos_btn_get_invitation">Get invite code</string>
+    <string name="eos_tip_agree">Agree on </string>
+    <string name="eos_tip_terms_of_service"><u>Terms of Service and Privacy Policy</u></string>
+    <string name="eos_title_password_hint">Password hint(optional)</string>
+    <string name="eos_tip_password_hint">Password hint</string>
+    <string name="eos_tip_password_input_part2">Password is very important. It\'s used to encrypt your wallets and other
         private data. You are responsible for saving your password carefully. Password can not be recovered if lost.</string>
-    <string name="security_hint">Password is very important. It\'s used to encrypt your wallets and other private
+    <string name="eos_tip_security_hint">Password is very important. It\'s used to encrypt your wallets and other private
         data. You are responsible for saving your password carefully. Password can not be recovered if lost.</string>
     <string name="eos_username">EOS account name</string>
 
 
     <!-- Main Tab Activity-->
-    <string name="tab_wallet">Wallet</string>
-    <string name="tab_transfer">Send</string>
-    <string name="tab_mine">Me</string>
+    <string name="eos_tab_wallet">Wallet</string>
+    <string name="eos_tab_transfer">Send</string>
+    <string name="eos_tab_mine">Me</string>
 
     <!-- Transfer Record Detail Fragment-->
-    <string name="income">Received</string>
-    <string name="payment">Sent</string>
-    <string name="income_amount">+ %1$s</string>
-    <string name="payment_amount">- %1$s</string>
-    <string name="transfer_status">State</string>
-    <string name="transfer_id">TxID</string>
-    <string name="block_num">Block Number</string>
-    <string name="block_time">Block Time</string>
-    <string name="see_in_explorer">View on blockchain</string>
+    <string name="eos_tip_income">Received</string>
+    <string name="eos_tip_payment">Sent</string>
+    <string name="eos_amount_income">+ %1$s</string>
+    <string name="eos_amount_outcome">- %1$s</string>
+    <string name="eos_title_transfer_status">State</string>
+    <string name="eos_title_transfer_id">TxID</string>
+    <string name="eos_title_block_num">Block Number</string>
+    <string name="eos_title_block_time">Block Time</string>
+    <string name="eos_btn_see_in_explorer">View on blockchain</string>
 
     <!-- Transfer Fragment-->
-    <string name="receiver">From</string>
-    <string name="payer">To</string>
-    <string name="payingAccount">From</string>
-    <string name="fund">Amount</string>
-    <string name="memo">Memo</string>
-    <string name="memo_optional">(Optional)</string>
-    <string name="confirmTransfer">Confirm send</string>
-    <string name="at_char">\ufeff@</string>
-    <string name="title_transfer">Send</string>
+    <string name="eos_title_receiver">From</string>
+    <string name="eos_title_payer">To</string>
+    <string name="eos_title_payer_account">From</string>
+    <string name="eos_title_fund">Amount</string>
+    <string name="eos_title_memo">Memo</string>
+    <string name="eos_title_memo_optional">(Optional)</string>
+    <string name="eos_btn_confirm_transfer">Confirm send</string>
+    <string name="eos_at_char">\ufeff@</string>
+    <string name="eos_title_transfer">Send</string>
 
     <!-- Delegate -->
-    <string name="brief_info">Overview</string>
-    <string name="used">used </string>
-    <string name="total_amount">total </string>
-    <string name="delegate">Delegate</string>
-    <string name="operation">Operation</string>
-    <string name="delegate_cpu">CPU</string>
-    <string name="delegate_hint">Enter amount to delegate</string>
-    <string name="refund_hint">Enter amount to undelegate</string>
-    <string name="delegate_net">NET</string>
-    <string name="delegate_cpu_net">Delegate</string>
-    <string name="title_delegate">Manage Resources</string>
-    <string name="remain_balance_pure">Balance</string>
+    <string name="eos_title_brief_info">Overview</string>
+    <string name="eos_title_used">used </string>
+    <string name="eos_title_total_amount">total </string>
+    <string name="eos_title_delegate">Delegate</string>
+    <string name="eos_tip_operation">Operation</string>
+    <string name="eos_title_delegate_cpu">CPU</string>
+    <string name="eos_amount_delegate">Enter amount to delegate</string>
+    <string name="eos_amount_undelegate">Enter amount to undelegate</string>
+    <string name="eos_title_delegate_net">NET</string>
+    <string name="eos_delegate">Delegate</string>
+    <string name="eos_title_resource_management">Manage Resources</string>
+    <string name="eos_balance">Balance</string>
 
-    <string name="cpu_available">used %1$s ms</string>
-    <string name="cpu_total">total %1$s ms</string>
-    <string name="net_available">used %1$s KB</string>
-    <string name="net_total">total %1$s KB</string>
+    <string name="eos_amount_cpu_used">used %1$s ms</string>
+    <string name="eos_amount_cpu_total">total %1$s ms</string>
+    <string name="eos_amount_net_used">used %1$s KB</string>
+    <string name="eos_amount_net_total">total %1$s KB</string>
 
     <!-- Buy Sell Ram-->
-    <string name="buy_sell_ram">RAM Trading</string>
-    <string name="buy">Buy RAM</string>
-    <string name="sell">Sell RAM</string>
-    <string name="transaction">Buy / Sell</string>
-    <string name="transfer_eos_amount">Enter EOS amount</string>
-    <string name="transfer_ram_amount">Enter RAM amount</string>
-    <string name="available">Available</string>
-    <string name="price">Price</string>
-    <string name="input_ram_amount">Enter RAM amount</string>
-    <string name="input_eos_amount">Enter EOS amount</string>
-    <string name="ram_amount_about">Estimated %1$s KB</string>
-    <string name="eos_amount_about">Estimated %1$s EOS</string>
-    <string name="available_eos">available %1$s</string>
-    <string name="available_ram">available %1$s KB</string>
-    <string name="eos_ram_amount">≈ %1$s EOS</string>
-    <string name="ram_unit_price">≈ %1$s EOS/KB</string>
-    <string name="approxy_amount">Estimated</string>
+    <string name="eos_buy_sell_ram">RAM Trading</string>
+    <string name="eos_buy_ram">Buy RAM</string>
+    <string name="eos_sell_ram">Sell RAM</string>
+    <string name="eos_transaction">Buy / Sell</string>
+    <string name="eos_title_eos_quantity">Enter EOS amount</string>
+    <string name="eos_ram_quantity">Enter RAM amount</string>
+    <string name="eos_available">Available</string>
+    <string name="eos_price">Price</string>
+    <string name="eos_input_ram_amount">Enter RAM amount</string>
+    <string name="eos_input_eos_amount">Enter EOS amount</string>
+    <string name="eos_amount_ram_approxi">Estimated %1$s KB</string>
+    <string name="eos_amount_eos_approxi">Estimated %1$s EOS</string>
+    <string name="eos_amount_available_eos">available %1$s</string>
+    <string name="eos_amount_available_ram">available %1$s KB</string>
+    <string name="eos_amount_ram">≈ %1$s EOS</string>
+    <string name="eos_amount_ram_unit_price">≈ %1$s EOS/KB</string>
+    <string name="eos_tip_quantity_approxi">Estimated</string>
 
     <!-- Me/General/About -->
     <string name="general">General</string>
     <string name="security">Security Settings</string>
     <string name="help">Help &amp; Feedback</string>
-    <string name="service_agreement">Terms of Service</string>
+    <string name="terms_of_service">Terms of Service</string>
     <string name="about_gemma">About</string>
     <string name="about">About</string>
 
@@ -138,57 +138,57 @@
     <string name="create_gesture_reset">Reset</string>
 
     <!-- Import Wallet-->
-    <string name="import_wallet">Import Wallet</string>
-    <string name="input_key_hint">Enter private key</string>
-    <string name="input_key_hint2">You can copy and paste the private key here, or scan a QR Code generated with private key.</string>
-    <string name="prikey_copied">Private key copied, Remember to clear the clipboard after use.</string>
-    <string name="start_input">Ready to import</string>
-    <string name="complete_input">Done</string>
+    <string name="eos_import_wallet">Import Wallet</string>
+    <string name="eos_tip_input_key">Enter private key</string>
+    <string name="eos_tip_input_key_part2">You can copy and paste the private key here, or scan a QR Code generated with private key.</string>
+    <string name="eos_tip_prikey_copied">Private key copied, Remember to clear the clipboard after use.</string>
+    <string name="eos_btn_start_input">Ready to import</string>
+    <string name="eos_btn_complete_input">Done</string>
 
     <!-- Export(BackUp) Wallet-->
-    <string name="lookAround">Are you being watched?\nPlease make sure backup under secured condition</string>
-    <string name="lookAround_import">Look out\nPlease import under secured condition</string>
-    <string name="backUp_wallet">Backup</string>
-    <string name="backupSafely">Under secured condition\nAirplane mode preferred</string>
-    <string name="showMnemonic">Got it. Show me the mnemonic</string>
-    <string name="showPriKey">Got it. Show me the private key</string>
-    <string name="start_import">Got it. Ready to import.</string>
-    <string name="backupLater">Backup later</string>
+    <string name="eos_tip_look_around">Are you being watched?\nPlease make sure backup under secured condition</string>
+    <string name="eos_look_around_import">Look out\nPlease import under secured condition</string>
+    <string name="eos_back_up_wallet">Backup</string>
+    <string name="eos_tip_back_safely">Under secured condition\nAirplane mode preferred</string>
+    <string name="eos_btn_show_mnemonic">Got it. Show me the mnemonic</string>
+    <string name="eos_btn_show_PriKey">Got it. Show me the private key</string>
+    <string name="eos_btn_start_import">Got it. Ready to import.</string>
+    <string name="eos_btn_backup_later">Backup later</string>
 
-    <string name="no_screenshot">Screenshots are not secure</string>
-    <string name="no_screenshot_hint">Screenshots may be leak via photo album. You can backup under airplane mode.</string>
-    <string name="i_understand">Got it</string>
-    <string name="safety_first">Safety First</string>
-    <string name="safety_first_hint">Airplane mode preferred. Avoid transfer through internet to leak private key.</string>
-    <string name="save_offline">Save offline</string>
-    <string name="save_offline_hint">You can make a old mobile phone offline as a cold storage to scan QR Code then save the private key.</string>
-    <string name="encrypto_save">Secure Storage</string>
-    <string name="encrypto_save_hint">Otherwise, use a password manage software to save the private key with encryption. Remember to clear the clipboard once saved.</string>
+    <string name="eos_tip_no_screenshot">Screenshots are not secure</string>
+    <string name="eos_tip_no_screenshot_hint">Screenshots may be leak via photo album. You can backup under airplane mode.</string>
+    <string name="eos_tip_i_understand">Got it</string>
+    <string name="eos_safety_first">Safety First</string>
+    <string name="eos_tip_safety_first">Airplane mode preferred. Avoid transfer through internet to leak private key.</string>
+    <string name="eos_save_offline">Save offline</string>
+    <string name="eos_tip_save_offline">You can make a old mobile phone offline as a cold storage to scan QR Code then save the private key.</string>
+    <string name="eos_tip_encrypto_save">Secure Storage</string>
+    <string name="eos_tip_encrypto_save_hint">Otherwise, use a password manage software to save the private key with encryption. Remember to clear the clipboard once saved.</string>
 
-    <string name="look_around">Look out</string>
-    <string name="look_around_hint">Please make sure to scan QR code under secured condition</string>
-    <string name="no_screenshot_hint2">It recommanded to use a device with camera to scan the QR Code to read private key offline</string>
-    <string name="show_QR">Show QR Code</string>
+    <string name="eos_look_around">Look out</string>
+    <string name="eos_tip_look_around_hint">Please make sure to scan QR code under secured condition</string>
+    <string name="eos_tip_no_screenshot_part2">It recommanded to use a device with camera to scan the QR Code to read private key offline</string>
+    <string name="eos_tip_show_QR">Show QR Code</string>
 
     <!-- Change Password Fragment-->
-    <string name="new_password">Enter new password</string>
-    <string name="confirm_change">Save</string>
-    <string name="title_change_pass">Change Password</string>
-    <string name="pass_no_match">Not match</string>
+    <string name="eos_new_password">Enter new password</string>
+    <string name="eos_btn_confirm_change">Save</string>
+    <string name="eos_title_change_pass">Change Password</string>
+    <string name="eos_tip_pass_no_match">Not match</string>
 
     <!-- Wallet Fragment-->
-    <string name="total_assets">Total assets</string>
-    <string name="balance">Balance</string>
-    <string name="redeem">Refunding</string>
-    <string name="transfer_records">Transactions</string>
+    <string name="eos_total_assets">Total assets</string>
+    <string name="eos_available_balance">Balance</string>
+    <string name="eos_tip_redeem_ing">Refunding</string>
+    <string name="eos_transfer_records">Transactions</string>
     <string name="resource">Manage Resources</string>
-    <string name="get_cpu_net">Get CPU / NET</string>
-    <string name="CPU">CPU</string>
-    <string name="NET">NET</string>
-    <string name="RAM">RAM</string>
+    <string name="eos_get_cpu_net">Get CPU / NET</string>
+    <string name="eos_CPU">CPU</string>
+    <string name="eos_NET">NET</string>
+    <string name="eos_RAM">RAM</string>
 
     <!-- Manage Wallet fragment-->
-    <string name="title_wallet">Wallet</string>
+    <string name="eos_title_wallet">Wallet</string>
 
     <!-- create methods -->
     <string name="title_invite_friend">Request from a friend</string>
@@ -201,11 +201,11 @@
     <string name="method_one_hint_2">It\'s highly recommended to send 2 EOS at least thus your account being created
         successfully. For example, 0.1 EOS will be staked as CPU, and 0.1 EOS will be staked as NET, 1.8 EOS will used to buy ram for the account.</string>
     -->
-    <string name="method_two_hint">If some friend is an EOS master, you can give him / her private key to help you creating the account.</string>
-    <string name="show_priKey">View private key</string>
-    <string name="priKey_encrypted">Enter wallet password to decrypt private key and view it</string>
-    <string name="copy">Copy</string>
-    <string name="priKey_en">Private Key</string>
+    <string name="eos_tip_give_out_pubkey">If some friend is an EOS master, you can give him / her private key to help you creating the account.</string>
+    <string name="eos_show_priKey">View private key</string>
+    <string name="eos_tip_priKey_encrypted">Enter wallet password to decrypt private key and view it</string>
+    <string name="eos_copy">Copy</string>
+    <string name="eos_priKey_en">Private Key</string>
 
     <string name="backup_prikey">Backup</string>
     <string name="please_input_pass">Enter password</string>
@@ -239,7 +239,7 @@
     <string name="title_transfer_detail">Details</string>
 
     <!-- Delegate activity-->
-    <string name="remain_balance">Balance: -- EOS</string>
+    <string name="eos_tip_balance_default">Balance: -- EOS</string>
 
     <!-- Dialogs -->
     <string name="delegate_memo">Delegate %1$s EOS for CPU, %2$s EOS for NET</string>
@@ -254,7 +254,7 @@
     <string name="explanation">Description</string>
     <string name="buy_ram">Buy RAM</string>
     <string name="sell_ram">Sell RAM</string>
-    <string name="amount">Amount</string>
+    <string name="eos_quantity">Amount</string>
     <string name="input_original_pass">Enter original password</string>
     <string name="verify_password">Verify</string>
     <string name="input_password">Enter @\'s password</string>
@@ -265,18 +265,18 @@
     <string name="scan_qr_code">Scan</string>
 
     <!-- Change Node Setting -->
-    <string name="node_cybex">http://52.77.177.200:8888(eoscybex)</string>
-    <string name="node_starteos">http://api-mainnet.starteos.io</string>
-    <string name="node_eosnewyork">https://api.eosnewyork.io</string>
-    <string name="node_greymass">https://eos.greymass.com</string>
-    <string name="node_eosasia">https://api-direct.eosasia.one</string>
-    <string name="node_eosgravity">https://api-mainnet.eosgravity.com</string>
-    <string name="node_helloeos">https://api.helloeos.com.cn</string>
-    <string name="node_hkeos">https://api.hkeos.com</string>
-    <string name="node_eos42">https://nodes.eos42.io</string>
-    <string name="node_cypherglass">https://api.cypherglass.com</string>
-    <string name="node_test_beijing">http://47.75.154.248:50003(北京测试链)</string>
-    <string name="node_select">Node</string>
+    <string name="eos_node_cybex">http://52.77.177.200:8888(eoscybex)</string>
+    <string name="eos_node_starteos">http://api-mainnet.starteos.io</string>
+    <string name="eos_node_eosnewyork">https://api.eosnewyork.io</string>
+    <string name="eos_node_greymass">https://eos.greymass.com</string>
+    <string name="eos_node_eosasia">https://api-direct.eosasia.one</string>
+    <string name="eos_node_eosgravity">https://api-mainnet.eosgravity.com</string>
+    <string name="eos_node_helloeos">https://api.helloeos.com.cn</string>
+    <string name="eos_node_hkeos">https://api.hkeos.com</string>
+    <string name="eos_node_eos42">https://nodes.eos42.io</string>
+    <string name="eos_node_cypherglass">https://api.cypherglass.com</string>
+    <string name="eos_node_test_beijing">http://47.75.154.248:50003(北京测试链)</string>
+    <string name="eos_node_select">Node</string>
 
     <string name="eos_cybex">EOS CYBEX</string>
     <string name="start_eos">START EOS</string>
@@ -366,10 +366,10 @@
 
 
     <!--others-->
-    <string name="lock_pattern_1">Draw new pattern</string>
-    <string name="lock_pattern_2">Draw again to confirm</string>
-    <string name="lock_pattern_3">Draw original pattern</string>
-    <string name="change_pattern">Change Pattern</string>
+    <string name="eos_tip_lock_pattern_1">Draw new pattern</string>
+    <string name="eos_tip_lock_pattern_2">Draw again to confirm</string>
+    <string name="eos_tip_lock_pattern_3">Draw original pattern</string>
+    <string name="eos_change_pattern">Change Pattern</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -379,9 +379,9 @@
     <string name="creating">Pending...</string>
     <string name="please_confirm">The account is still in the air until 100% confirmed.</string>
 
-    <string name="refund_detail"></string>
-    <string name="confirm_refund">Confirm unstake</string>
-    <string name="undelegate">Undelegate</string>
+    <string name="eos_refund_detail"></string>
+    <string name="eos_btn_confirm_refund">Confirm unstake</string>
+    <string name="eos_undelegate">Undelegate</string>
     <string name="refund_username">To</string>
 
     <string name="curwallets">Wallets</string>
@@ -417,9 +417,9 @@
     <string name="config_wallet_ing">Configuring...</string>
     <string name="import_wallet_failed">Failed to import wallet</string>
 
-    <string name="transfer_trade_ing">Sending...</string>
-    <string name="transfer_oprate_failed">Failed to transfer</string>
-    <string name="transfer_oprate_success">Transaction sent</string>
+    <string name="eos_tip_transfer_trade_ing">Sending...</string>
+    <string name="eos_tip_transfer_oprate_failed">Failed to transfer</string>
+    <string name="eos_tip_transfer_oprate_success">Transaction sent</string>
 
     <string name="loading_in">Loading...</string>
     <string name="tip_remaining_zero_zero_day_zero">Remaining </string>
@@ -491,7 +491,7 @@
     </font>]]></Data>，to finish creating.</string>
 
     <string
-        name="tip_use_eos_to_activate"><Data><![CDATA[In order to create your account, please transfer at least<font color="#426bd4"> 2 EOS </font>
+        name="eos_tip_use_eos_to_activate"><Data><![CDATA[In order to create your account, please transfer at least<font color="#426bd4"> 2 EOS </font>
         ：your account will delegate <font color = "#426bd4"> 0.1 EOS</font>
         for CPU，<font color = "#426bd4"> 0.1 EOS</font> for NET，
         the remaining<font color="#426bd4"> 1.8 EOS </font>will be used for purchasing RAM at current

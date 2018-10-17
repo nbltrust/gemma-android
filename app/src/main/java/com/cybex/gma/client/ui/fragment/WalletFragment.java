@@ -471,7 +471,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
                 if (Alerter.isShowing()) {
                     Alerter.create(getActivity())
-                            .setText(getResources().getString(R.string.please_confirm_alert))
+                            .setText(getResources().getString(R.string.eos_please_confirm_alert))
                             .setBackgroundColorRes(R.color.scarlet)
                             .enableInfiniteDuration(true)
                             .setTextAppearance(R.style.myAlert)
@@ -538,7 +538,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                     } else {
                         TextView title = mTitleBar.getmCenterText();
                         title.setAlpha(1);
-                        mTitleBar.setTitle(getString(R.string.app_name));
+                        mTitleBar.setTitle(getString(R.string.eos_app_name));
                     }
                 }
             }
@@ -581,7 +581,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             generatePortrait(curWallet.getCurrentEosName());
             if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
                 Alerter.create(getActivity())
-                        .setText(getResources().getString(R.string.please_confirm_alert))
+                        .setText(getResources().getString(R.string.eos_please_confirm_alert))
                         .setBackgroundColorRes(R.color.scarlet)
                         .enableSwipeToDismiss()
                         .enableInfiniteDuration(true)

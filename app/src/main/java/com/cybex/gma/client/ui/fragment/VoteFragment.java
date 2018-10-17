@@ -417,7 +417,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)){
             String passHint = curWallet.getPasswordTip();
-            String showInfo = getString(R.string.password_hint_info) + " : " + passHint;
+            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);
         }
     }

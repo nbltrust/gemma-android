@@ -11,7 +11,7 @@
         android:id="@+id/tv_title_priKey"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/priKey_en"
+        android:text="@string/eos_priKey_en"
         android:textAlignment="center"
         android:textSize="@dimen/font_4"
         android:textColor="@color/black"
@@ -69,7 +69,7 @@
             android:background="@drawable/shape_corner_right_bot"
             android:layout_marginTop="@dimen/dimen_16"
             android:gravity="center"
-            android:text="@string/copy"
+            android:text="@string/eos_copy"
             android:textAlignment="center"
             android:textColor="@color/whiteTwo"
             android:textSize="@dimen/font_4.2"/>

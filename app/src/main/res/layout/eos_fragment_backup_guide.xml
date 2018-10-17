@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40"
-        android:text="@string/backUp_wallet"
+        android:text="@string/eos_back_up_wallet"
         android:textSize="@dimen/font_4.5"
         android:textColor="@color/darkSlateBlue"
         android:layout_marginTop="@dimen/dimen_10"
@@ -54,7 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_40"
             android:layout_marginStart="@dimen/dimen_10"
-            android:text="@string/lookAround"
+            android:text="@string/eos_tip_look_around"
             app:layout_constraintStart_toEndOf="@id/iv_dot_one"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -73,7 +73,7 @@
             android:layout_height="@dimen/dimen_40"
             android:layout_marginTop="@dimen/dimen_10"
             android:layout_marginStart="@dimen/dimen_10"
-            android:text="@string/backupSafely"
+            android:text="@string/eos_tip_back_safely"
             app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_dot_two"
@@ -84,7 +84,7 @@
             style="@style/bt_long_in_linearLayout"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:text="@string/showPriKey"
+            android:text="@string/eos_btn_show_PriKey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

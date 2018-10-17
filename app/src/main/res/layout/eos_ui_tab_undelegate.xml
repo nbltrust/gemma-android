@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_10"
-        android:text="@string/CPU"
+        android:text="@string/eos_CPU"
         android:textColor="@color/steel"
         android:textSize="@dimen/font_3.5"
         android:layout_marginStart="@dimen/dimen_12"
@@ -20,7 +20,7 @@
         style="@style/editText_config_wallet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
-        android:hint="@string/refund_hint"
+        android:hint="@string/eos_amount_undelegate"
         android:inputType="numberDecimal"
         android:paddingStart="0dp"
         android:textColorHint="@color/cloudyBlue"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginStart="@dimen/dimen_12"
-        android:text="@string/NET"
+        android:text="@string/eos_NET"
         android:textColor="@color/steel"
         android:textSize="@dimen/font_3.5"/>
 
@@ -44,7 +44,7 @@
         android:layout_height="@dimen/dimen_50"
         android:background="@null"
         android:inputType="numberDecimal"
-        android:hint="@string/refund_hint"
+        android:hint="@string/eos_amount_undelegate"
         android:textColorHint="@color/cloudyBlue"
         android:textCursorDrawable="@drawable/cursor_custom"
         android:textSize="@dimen/font_4"/>

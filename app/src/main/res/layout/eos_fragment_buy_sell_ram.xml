@@ -28,7 +28,7 @@
             android:layout_marginEnd="@dimen/dimen_20"
             android:layout_marginStart="@dimen/dimen_20"
             android:layout_marginTop="@dimen/dimen_16"
-            android:text="@string/brief_info"
+            android:text="@string/eos_title_brief_info"
             android:textColor="@color/steel"
             android:textSize="@dimen/font_3.5"
             />
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 title:sLeftTextColor="@color/steel"
                 title:sLeftTextSize="@dimen/font_3.5"
-                title:sLeftTextString="@string/RAM"
+                title:sLeftTextString="@string/eos_RAM"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightTextSize="@dimen/font_3"
                 title:sRightTextString="--- EOS"
@@ -114,7 +114,7 @@
                 android:layout_height="@dimen/bt_inInitPage_height"
                 title:sLeftTextColor="@color/steel"
                 title:sLeftTextSize="@dimen/font_3.5"
-                title:sLeftTextString="@string/price"
+                title:sLeftTextString="@string/eos_price"
                 title:sRightTextColor="@color/darkSlateBlueTwo"
                 title:sRightTextSize="@dimen/font_3"
                 title:sRightTextString="≈ -- EOS/KB"
@@ -140,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:layout_weight="1"
-                android:text="@string/transaction"
+                android:text="@string/eos_transaction"
                 android:textColor="@color/steel"
                 android:textSize="@dimen/font_3.5"/>
 
@@ -196,7 +196,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/transfer_eos_amount"
+                    android:text="@string/eos_title_eos_quantity"
                     android:textColor="@color/steel"
                     android:textSize="@dimen/font_3.5"/>
 
@@ -217,7 +217,7 @@
                 android:layout_height="@dimen/dimen_50"
                 android:layout_marginStart="@dimen/dimen_12"
                 android:background="@null"
-                android:hint="@string/input_eos_amount"
+                android:hint="@string/eos_input_eos_amount"
                 android:inputType="numberDecimal"
                 android:textColorHint="@color/cloudyBlue"
                 android:textCursorDrawable="@drawable/cursor_custom"
@@ -230,7 +230,7 @@
                 android:layout_height="@dimen/dimen_50"
                 android:layout_marginStart="@dimen/dimen_12"
                 android:background="@null"
-                android:hint="@string/input_ram_amount"
+                android:hint="@string/eos_input_ram_amount"
                 android:inputType="numberDecimal"
                 android:textColorHint="@color/cloudyBlue"
                 android:textCursorDrawable="@drawable/cursor_custom"
@@ -261,14 +261,14 @@
         android:id="@+id/bt_buy_ram"
         style="@style/bt_long_in_linearLayout"
         android:layout_margin="@dimen/dimen_30"
-        android:text="@string/buy"
+        android:text="@string/eos_buy_ram"
         />
 
     <Button
         android:id="@+id/bt_sell_ram"
         style="@style/bt_long_in_linearLayout"
         android:layout_margin="@dimen/dimen_30"
-        android:text="@string/sell"
+        android:text="@string/eos_sell_ram"
         android:visibility="gone"/>
 
 </LinearLayout>

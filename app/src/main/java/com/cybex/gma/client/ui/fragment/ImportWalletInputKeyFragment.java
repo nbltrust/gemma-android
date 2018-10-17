@@ -90,7 +90,7 @@ public class ImportWalletInputKeyFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         setButtonUnclickable(btStartInput);
-        setNavibarTitle(getResources().getString(R.string.import_wallet), true, false);
+        setNavibarTitle(getResources().getString(R.string.eos_import_wallet), true, false);
     }
 
     @Override

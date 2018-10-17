@@ -181,31 +181,31 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         switch (savedLanguageType) {
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
                 CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                        .string.service_agreement));
+                        .string.terms_of_service));
                 break;
             case LanguageManager.LanguageType.LANGUAGE_EN:
                 CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
-                        .string.service_agreement));
+                        .string.terms_of_service));
                 break;
             case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
                 Locale systemLanguageType = LanguageManager.getInstance(this).getSysLocale();
                 switch (systemLanguageType.getDisplayLanguage()) {
                     case CN:
                         CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
-                                .getString(R.string.service_agreement));
+                                .getString(R.string.terms_of_service));
                         break;
                     case EN:
                         CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources()
-                                .getString(R.string.service_agreement));
+                                .getString(R.string.terms_of_service));
                         break;
                     default:
                         CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
-                                .getString(R.string.service_agreement));
+                                .getString(R.string.terms_of_service));
                 }
                 break;
             default:
                 CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                        .string.service_agreement));
+                        .string.terms_of_service));
         }
     }
 
@@ -269,10 +269,10 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     public void initView() {
         //动态设置hint样式
-        setEditTextHintStyle(edtEosName, R.string.EOS_username_hint);
-        setEditTextHintStyle(edtSetPass, R.string.password_input_hint);
-        setEditTextHintStyle(edtRepeatPass, R.string.repeatPassword_hint);
-        setEditTextHintStyle(edtPassHint, R.string.password_hint_hint);
+        setEditTextHintStyle(edtEosName, R.string.eos_tip_eos_username);
+        setEditTextHintStyle(edtSetPass, R.string.eos_tip_input_password);
+        setEditTextHintStyle(edtRepeatPass, R.string.eos_tip_repeat_password);
+        setEditTextHintStyle(edtPassHint, R.string.eos_tip_input_password_hint);
 
         bubble.setVisibility(View.GONE);
         setUnclickable(btCreateWallet);
@@ -311,7 +311,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 }
             }
         });
-        setNavibarTitle(getResources().getString(R.string.create_wallet), true);
+        setNavibarTitle(getResources().getString(R.string.eos_tip_create_wallet), true);
         /**
          * eos用户名输入区域样式设置
          */
@@ -461,25 +461,25 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         }
         //当eos用户名为12位时，恢复初始样式
         tvEosName.setTextColor(getResources().getColor(R.color.steel));
-        tvEosName.setText(getResources().getString(R.string.eos_username));
+        tvEosName.setText(getResources().getString(R.string.eos_title_eos_username));
 
     }
 
     public void setEOSNameInvalidStyle() {
         //不为12位时，更改样式示意
-        tvEosName.setText(getResources().getString(R.string.EOS_username_hint));
+        tvEosName.setText(getResources().getString(R.string.eos_tip_eos_username));
         tvEosName.setTextColor(getResources().getColor(R.color.scarlet));
 
     }
 
     public void setEOSNameFocusedStyle() {
         tvEosName.setTextColor(getResources().getColor(R.color.darkSlateBlue));
-        tvEosName.setText(getResources().getString(R.string.eos_username));
+        tvEosName.setText(getResources().getString(R.string.eos_title_eos_username));
     }
 
     public void setRepeatPassValidStyle() {
         //两次输入密码匹配
-        tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
+        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
         setDividerDefaultStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
@@ -491,7 +491,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     }
 
     public void setRepeatPassFocusStyle() {
-        tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
+        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         setDividerFocusStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
@@ -504,7 +504,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     public void setRepeatPassInvalidStyle() {
         //两次输入密码不匹配
-        tvRepeatPass.setText(getResources().getString(R.string.pass_no_match));
+        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_pass_no_match));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
         setDividerAlertStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPassword())) {

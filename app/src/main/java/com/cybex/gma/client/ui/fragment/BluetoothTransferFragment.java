@@ -185,7 +185,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        setNavibarTitle(getString(R.string.title_transfer), false);
+        setNavibarTitle(getString(R.string.eos_title_transfer), false);
     }
 
     @Override
@@ -289,7 +289,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     if (EmptyUtils.isEmpty(getCollectionAccount())) {
-                        tvCollectionAmount.setText(getString(R.string.receiver));
+                        tvCollectionAmount.setText(getString(R.string.eos_title_receiver));
                         tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
                     } else {
                         ivTransferAccountClear.setVisibility(View.VISIBLE);
@@ -298,7 +298,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
                     ivTransferAccountClear.setVisibility(View.GONE);
                     validateButton();
                     if (EmptyUtils.isEmpty(getCollectionAccount())) {
-                        tvCollectionAmount.setText(getString(R.string.receiver));
+                        tvCollectionAmount.setText(getString(R.string.eos_title_receiver));
                         tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
                     }
                     if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
@@ -308,7 +308,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
                         tvCollectionAmount.setTextColor(getResources().getColor(R.color.scarlet));
                     } else {
                         //显示默认样式
-                        tvCollectionAmount.setText(getString(R.string.receiver));
+                        tvCollectionAmount.setText(getString(R.string.eos_title_receiver));
                         tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
                     }
                 }

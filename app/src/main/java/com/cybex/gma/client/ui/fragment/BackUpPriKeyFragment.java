@@ -48,7 +48,7 @@ public class BackUpPriKeyFragment extends XFragment {
         if (getActivity() != null) {
             ClipboardUtils.copyText(getActivity(), curPriKey);
         }
-        GemmaToastUtils.showLongToast(getResources().getString(R.string.prikey_copied));
+        GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_prikey_copied));
     }
 
     @OnClick(R.id.bt_copied_priKey)

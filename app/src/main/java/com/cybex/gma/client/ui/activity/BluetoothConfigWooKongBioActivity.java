@@ -201,9 +201,9 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     public void initView() {
         //动态设置hint样式
-        setEditTextHintStyle(edtSetPass, R.string.password_input_hint);
-        setEditTextHintStyle(edtRepeatPass, R.string.repeatPassword_hint);
-        setEditTextHintStyle(edtPassHint, R.string.password_hint_hint);
+        setEditTextHintStyle(edtSetPass, R.string.eos_tip_input_password);
+        setEditTextHintStyle(edtRepeatPass, R.string.eos_tip_repeat_password);
+        setEditTextHintStyle(edtPassHint, R.string.eos_tip_input_password_hint);
         bubble.setVisibility(View.GONE);
 
         setNavibarTitle(getResources().getString(R.string.title_wookong_bio), true);
@@ -318,7 +318,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     public void setRepeatPassValidStyle() {
         //两次输入密码匹配
-        tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
+        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
         setDividerDefaultStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
@@ -330,7 +330,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
     }
 
     public void setRepeatPassFocusStyle() {
-        tvRepeatPass.setText(getResources().getString(R.string.repeat_pass));
+        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         setDividerFocusStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
@@ -343,7 +343,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     public void setRepeatPassInvalidStyle() {
         //两次输入密码不匹配
-        tvRepeatPass.setText(getResources().getString(R.string.pass_no_match));
+        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_pass_no_match));
         tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
         setDividerAlertStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPassword())) {

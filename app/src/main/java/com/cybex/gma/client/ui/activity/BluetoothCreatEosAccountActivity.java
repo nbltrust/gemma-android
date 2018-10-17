@@ -84,31 +84,31 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
         switch (savedLanguageType) {
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
                 CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                        .string.service_agreement));
+                        .string.terms_of_service));
                 break;
             case LanguageManager.LanguageType.LANGUAGE_EN:
                 CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
-                        .string.service_agreement));
+                        .string.terms_of_service));
                 break;
             case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
                 Locale systemLanguageType = LanguageManager.getInstance(this).getSysLocale();
                 switch (systemLanguageType.getDisplayLanguage()) {
                     case CN:
                         CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
-                                .getString(R.string.service_agreement));
+                                .getString(R.string.terms_of_service));
                         break;
                     case EN:
                         CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources()
-                                .getString(R.string.service_agreement));
+                                .getString(R.string.terms_of_service));
                         break;
                     default:
                         CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
-                                .getString(R.string.service_agreement));
+                                .getString(R.string.terms_of_service));
                 }
                 break;
             default:
                 CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                        .string.service_agreement));
+                        .string.terms_of_service));
         }
     }
 

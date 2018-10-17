@@ -64,7 +64,7 @@ public class CreatingWalletFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.create_wallet), true, true);
+        setNavibarTitle(getResources().getString(R.string.eos_tip_create_wallet), true, true);
     }
 
 

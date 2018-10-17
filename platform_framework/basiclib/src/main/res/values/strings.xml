@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DevLib</string>
+    <string name="eos_app_name">DevLib</string>
 
     <string name="setting_language_auto">跟随系统</string>
     <string name="setting_language_english">English</string>

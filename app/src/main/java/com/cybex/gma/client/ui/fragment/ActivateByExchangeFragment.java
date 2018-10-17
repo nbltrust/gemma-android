@@ -48,7 +48,7 @@ public class ActivateByExchangeFragment extends XFragment {
             case R.id.bt_click_to_copy_priKey:
                 if (getContext() != null){
                     ClipboardUtils.copyText(getContext(), tvShowPriKeyArea.getText().toString().trim());
-                    GemmaToastUtils.showLongToast(getString(R.string.prikey_copied));
+                    GemmaToastUtils.showLongToast(getString(R.string.eos_tip_prikey_copied));
                 }
                 break;
             case R.id.bt_click_to_copy_memo:
@@ -73,7 +73,7 @@ public class ActivateByExchangeFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        tvHintActivateByExchangeBot.setText(Html.fromHtml(getString(R.string.tip_use_eos_to_activate)));
+        tvHintActivateByExchangeBot.setText(Html.fromHtml(getString(R.string.eos_tip_use_eos_to_activate)));
         tvTipMidExchangePartOne.setText(getString(R.string.tip_activate_by_exchange_part_one));
         tvTipMidExchangePartTwo.setText(getString(R.string.tip_activate_by_exchange_part_two));
         tvTipMidExchangePartTwo.setTextColor(getResources().getColor(R.color.cornflowerBlue));

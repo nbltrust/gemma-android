@@ -426,7 +426,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
             if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
                 if (Alerter.isShowing()) {
                     Alerter.create(getActivity())
-                            .setText(getResources().getString(R.string.please_confirm_alert))
+                            .setText(getResources().getString(R.string.eos_please_confirm_alert))
                             .setBackgroundColorRes(R.color.scarlet)
                             .enableSwipeToDismiss()
                             .enableInfiniteDuration(true)
@@ -505,7 +505,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
             generatePortrait(curWallet.getCurrentEosName());
             if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
                 Alerter.create(getActivity())
-                        .setText(getResources().getString(R.string.please_confirm_alert))
+                        .setText(getResources().getString(R.string.eos_please_confirm_alert))
                         .setBackgroundColorRes(R.color.scarlet)
                         .enableSwipeToDismiss()
                         .enableInfiniteDuration(true)

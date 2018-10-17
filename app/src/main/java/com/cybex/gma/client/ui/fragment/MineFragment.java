@@ -98,7 +98,7 @@ public class MineFragment extends XFragment<MinePresenter> {
                         break;
                     default:
                         CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                                .string.service_agreement));
+                                .string.terms_of_service));
                         break;
                 }
             }
@@ -112,28 +112,28 @@ public class MineFragment extends XFragment<MinePresenter> {
                         switch (savedLanguageType){
                             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
                                 CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                                        .string.service_agreement));
+                                        .string.terms_of_service));
                                 break;
                             case LanguageManager.LanguageType.LANGUAGE_EN:
                                 CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
-                                        .string.service_agreement));
+                                        .string.terms_of_service));
                                 break;
                             case  LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
                                 Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
                                 switch (systemLanguageType.getDisplayLanguage()){
                                     case CN:
                                         CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                                                .string.service_agreement));
+                                                .string.terms_of_service));
                                         break;
                                     case EN:
                                         CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
-                                                .string.service_agreement));
+                                                .string.terms_of_service));
                                         break;
                                 }
                                 break;
                             default:
                                 CommonWebViewActivity.startWebView(getActivity(), ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                                        .string.service_agreement));
+                                        .string.terms_of_service));
                                 break;
                         }
                     }

@@ -24,7 +24,7 @@
         title:layout_constraintStart_toStartOf="parent"
         title:sLeftTextColor="@color/darkSlateBlue"
         title:sLeftTextSize="@dimen/font_3.5"
-        title:sLeftTextString="@string/transfer_records"
+        title:sLeftTextString="@string/eos_transfer_records"
         title:sRightTvDrawableRight="@drawable/ic_arrow"
         title:sShapeCornersRadius="6dp"
         title:sShapeSelectorPressedColor="@color/item_pressed"

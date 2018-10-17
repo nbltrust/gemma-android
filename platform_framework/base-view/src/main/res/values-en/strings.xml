@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">base-view</string>
+    <string name="eos_app_name">base-view</string>
     <string name="empty_view_hint">No transactions found</string>
     <string name="empty_view_nodes_hint">No BP information</string>
     <string name="error_view_hint">Failed to load</string>

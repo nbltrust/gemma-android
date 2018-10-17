@@ -29,7 +29,7 @@
             title:sCenterTextColor="@color/darkSlateBlueTwo"
             title:sCenterTextGravity="center"
             title:sCenterTextSize="@dimen/font_3.5"
-            title:sCenterTextString="@string/total_assets"
+            title:sCenterTextString="@string/eos_total_assets"
             title:sCenterTvDrawableLeft="@drawable/ic_asset"
             title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
             title:sShapeCornersTopRightRadius="@dimen/dimen_6"
@@ -73,7 +73,7 @@
             android:layout_marginTop="@dimen/dimen_5"
             android:background="@drawable/shape_corner_grey"
             android:gravity="center"
-            android:text="@string/backUp_wallet"
+            android:text="@string/eos_back_up_wallet"
             android:textAlignment="center"
             android:textColor="@color/cornflowerBlue"
             android:textSize="@dimen/font_3"
@@ -98,7 +98,7 @@
             title:sDividerLineType="none"
             title:sLeftTextColor="@color/darkSlateBlueTwo"
             title:sLeftTextSize="@dimen/font_3"
-            title:sLeftTextString="@string/balance"
+            title:sLeftTextString="@string/eos_available_balance"
             title:sRightTextColor="@color/darkSlateBlueTwo"
             title:sRightTextSize="@dimen/font_4"
             title:sRightTextString="0.0000 EOS"
@@ -127,7 +127,7 @@
             title:sDividerLineType="none"
             title:sLeftTextColor="@color/darkSlateBlueTwo"
             title:sLeftTextSize="@dimen/font_3"
-            title:sLeftTextString="@string/redeem"
+            title:sLeftTextString="@string/eos_tip_redeem_ing"
             title:sRightBottomTextColor="#3381e0"
             title:sRightBottomTextSize="12sp"
             title:sRightTextGravity="right"
@@ -150,7 +150,7 @@
 
                 <TextView
                     style="@style/textView_cpu_net_ram"
-                    android:text="@string/CPU"/>
+                    android:text="@string/eos_CPU"/>
 
                 <com.cybex.base.view.progress.RoundCornerProgressBar
                     android:id="@+id/progressbar_cpu_small"
@@ -184,7 +184,7 @@
 
                 <TextView
                     style="@style/textView_cpu_net_ram"
-                    android:text="@string/NET"/>
+                    android:text="@string/eos_NET"/>
 
                 <com.cybex.base.view.progress.RoundCornerProgressBar
                     android:id="@+id/progressbar_net_small"
@@ -218,7 +218,7 @@
 
                 <TextView
                     style="@style/textView_cpu_net_ram"
-                    android:text="@string/RAM"/>
+                    android:text="@string/eos_RAM"/>
 
                 <com.cybex.base.view.progress.RoundCornerProgressBar
                     android:id="@+id/progressbar_ram_small"
