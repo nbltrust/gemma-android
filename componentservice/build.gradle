@@ -71,4 +71,7 @@ dependencies {
     api deps.gma.logger
     api deps.yanzhenjie.permission
 
+    //头条屏幕适配方案
+    api 'me.jessyan:autosize:1.0.0'
+
 }
