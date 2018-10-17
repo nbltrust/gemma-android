@@ -9,6 +9,8 @@
     app:sLeftTextSize="@dimen/font_3.5"
     app:sLeftTextColor="@color/darkSlateBlue"
     app:sRightTvDrawableRight="@drawable/ic_arrow"
-    android:paddingStart="@dimen/dimen_10"
-    android:paddingEnd="@dimen/dimen_10"
+    app:sUseShape="true"
+    app:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+    app:sShapeCornersTopRightRadius="@dimen/dimen_6"
+    app:sShapeSelectorPressedColor="@color/item_pressed"
     />

@@ -61,8 +61,8 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
                 .WookongValidation();
         validation.setSN(SN.toLowerCase());
         validation.setSN_sig(SN_sig.toLowerCase());
-        validation.setKey_hex(publick_key_hex + "00");
-        validation.setKey_hex_sig(public_key_sig);
+        validation.setPublic_key(publick_key_hex + "00");
+        validation.setPublic_key_sig(public_key_sig);
         params.setValidation(validation);
 
         String json = GsonUtils.objectToJson(params);

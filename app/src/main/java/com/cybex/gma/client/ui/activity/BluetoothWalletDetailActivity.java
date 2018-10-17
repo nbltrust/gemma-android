@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,29 +11,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
-import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
+
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.DeviceInfoEvent;
-import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.gma.client.ui.JNIUtil;
+
+import com.cybex.gma.client.manager.UISkipMananger;
+
 import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.SPUtils;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +52,9 @@ public class BluetoothWalletDetailActivity extends XActivity {
     private BlueToothWrapper connectThread;
     private BlueToothWrapper formatThread;
     private BlueToothWrapper getAddressThread;
+    private BlueToothWrapper verifyFPThread;
     private ConnectHandler mConnectHandler;
+    private FreeContextHandler freeContextHandler;
     private String publicKey;
     private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
@@ -93,6 +95,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
     public void initData(Bundle savedInstanceState) {
         checkConnection();
         mConnectHandler = new ConnectHandler();
+        freeContextHandler = new FreeContextHandler();
         tvPublicKey.setText(publicKey);
     }
 
@@ -119,6 +122,40 @@ public class BluetoothWalletDetailActivity extends XActivity {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEosAddressRecieved(DeviceInfoEvent event){
         publicKey = event.getEosPublicKey();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void getContextHandle(ContextHandleEvent event){
+        contextHandle = event.getContextHanle();
+    }
+
+    /**
+     * 开始格式化
+     */
+    public void startFormat(){
+        if ((formatThread == null) || (formatThread.getState() == Thread.State.TERMINATED))
+        {
+            formatThread = new BlueToothWrapper(mConnectHandler);
+            formatThread.setFormatDeviceWrapper(contextHandle, 0);
+            formatThread.start();
+        }
+    }
+
+    public void startVerifyFP(){
+        if ((verifyFPThread == null) || (verifyFPThread.getState() == Thread.State.TERMINATED))
+        {
+            verifyFPThread = new BlueToothWrapper(mConnectHandler);
+            verifyFPThread.setVerifyFPWrapper(contextHandle, 0);
+            verifyFPThread.start();
+        }
+    }
+
+    public void freeContext(){
+        if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
+            connectThread = new BlueToothWrapper(freeContextHandler);
+            connectThread.setFreeContextWrapper(contextHandle);
+            connectThread.start();
+        }
     }
 
     /**
@@ -183,7 +220,8 @@ public class BluetoothWalletDetailActivity extends XActivity {
                         dialog.cancel();
                         break;
                     case R.id.tv_ok:
-                        showConfirmAuthorDialog();
+                        //todo 确认格式化，调用指纹验证或Pin验证确认
+                        startVerifyFP();
                         break;
                     default:
                         break;
@@ -212,6 +250,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
                     case R.id.tv_init:
                         //todo 初始化Bio 创建or导入
                         dialog.cancel();
+                        UISkipMananger.skipBluetoothPaireActivity(BluetoothWalletDetailActivity.this, new Bundle());
                         break;
                     default:
                         break;
@@ -221,58 +260,20 @@ public class BluetoothWalletDetailActivity extends XActivity {
         dialog.show();
     }
 
-    /**
-     * 显示确认授权Dialog
-     */
-    private void showConfirmAuthorDialog() {
-        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-        CustomDialog dialog = new CustomDialog(this,
-                R.layout.dialog_input_bluetooth_transfer_password, listenedItems, false, Gravity.BOTTOM);
-        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
-            @Override
-            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.imc_cancel:
-                        dialog.cancel();
-                        break;
-                    case R.id.btn_confirm_authorization:
-                        EditText etPasword = dialog.findViewById(R.id.et_password);
-                        String pwd = String.valueOf(etPasword.getText());
-                        if (EmptyUtils.isEmpty(pwd)) {
-                            GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
-                            return;
-                        } else {
-                            //获取并验证当前蓝牙钱包账户的私钥
-                            List<WalletEntity> bluetoothWalletList = DBManager.getInstance().getWalletEntityDao()
-                                    .getBluetoothWalletList();
-                            WalletEntity entity = bluetoothWalletList.get(0);
-                            if (entity != null) {
-                                String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
+    class FreeContextHandler extends Handler{
 
-                                if ("wrong password".equals(privateKey)) {
-                                    GemmaToastUtils.showShortToast(getResources().getString(R.string.wrong_password));
-                                } else {
-                                    //密码正确，格式化
-                                    if ((formatThread == null) || (formatThread.getState() == Thread.State.TERMINATED))
-                                    {
-                                        formatThread = new BlueToothWrapper(mConnectHandler);
-                                        formatThread.setFormatDeviceWrapper(contextHandle, 0);
-                                        formatThread.start();
-                                    }
-                                    dialog.cancel();
-                                    showFormatDoneDialog();
-                                }
-                            }
-                        }
-                        break;
-                    default:
-
-                        break;
-                }
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case BlueToothWrapper.MSG_FREE_CONTEXT_START:
+                    break;
+                case BlueToothWrapper.MSG_FREE_CONTEXT_FINISH:
+                    SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+                    showFormatDoneDialog();
+                    break;
             }
-        });
-        dialog.show();
+        }
     }
 
     class ConnectHandler extends Handler {
@@ -331,12 +332,24 @@ public class BluetoothWalletDetailActivity extends XActivity {
                     SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     AlertUtil.showShortUrgeAlert(BluetoothWalletDetailActivity.this, "Bio Disconnected");
                     showDisconnectedLayout();
+
+                    break;
+                case BlueToothWrapper.MSG_VERIFYFP_START:
+                    LoggerManager.d("MSG_VERIFYFP_START");
+                    showVerifyFPDialog();
+                    //验证指纹开始
+                    break;
+                case BlueToothWrapper.MSG_VERIFYFP_FINISH:
+                    dialog.cancel();
+                    startFormat();
+                    //验证指纹完成
                     break;
                 case BlueToothWrapper.MSG_FORMAT_DEVICE_START:
                     //格式化开始
                     break;
                 case BlueToothWrapper.MSG_FORMAT_DEVICE_FINISH:
                     //格式化完成
+                    freeContext();
                     break;
                 case BlueToothWrapper.MSG_GET_ADDRESS_START:
                     //获取EOS地址（公钥）开始
@@ -374,6 +387,29 @@ public class BluetoothWalletDetailActivity extends XActivity {
                     break;
             }
         }
+    }
+
+    CustomFullDialog dialog = null;
+    /**
+     * 显示通过蓝牙卡验证指纹dialog
+     */
+    private void showVerifyFPDialog() {
+        int[] listenedItems = {R.id.imv_back};
+        dialog = new CustomFullDialog(this,
+                R.layout.dialog_transfer_bluetooth_finger_sure, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imv_back:
+                        dialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
     }
 
 

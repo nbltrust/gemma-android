@@ -409,7 +409,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        AppManager.getAppManager().finishActivity(CreateManageActivity.class);
+        LoggerManager.d("isBioConnected", SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS));
         setNavibarTitle("GEMMA", false);
         //下拉刷新
         refreshLayout.setEnableLoadmore(false);
@@ -451,7 +451,6 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
                 textViewUsername.setCompoundDrawables(null, null,
                         null, null);
                 textViewUsername.setClickable(false);
-
             }
 
         } else {

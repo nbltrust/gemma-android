@@ -23,6 +23,7 @@ import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -455,7 +456,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                                 String jsonStr = response.body();
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
-                                if (getV().getActivity() != null)getV().getActivity().finish();
+                                //if (getV().getActivity() != null)getV().getActivity().finish();
                                 UISkipMananger.launchTransferRecord(getV().getActivity());
                                 getV().clearData();
                             }

@@ -794,5 +794,8 @@
     <string name="title_verify_mne">验证助记词</string>
     <string name="btn_import_mne">导入助记词</string>
 
+    <!-- 指纹管理 -->
+    <string name="delete_fingerprint">删除指纹</string>
+    <string name="change_fp_name">修改名称</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.cybex.gma.client.job;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 
@@ -21,6 +22,7 @@ public class BluetoothConnectKeepJob {
 
 
     private static BlueToothWrapper getDeviceInfoThread;
+    private static BlueToothWrapper connectThread;
     public static final int intervalTime = 15*1000;
 
 
@@ -64,6 +66,15 @@ public class BluetoothConnectKeepJob {
         SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
         if (smartScheduler != null && smartScheduler.contains(ParamConstants.BLUETOOTH_CONNECT_JOB)) {
             smartScheduler.removeJob(ParamConstants.BLUETOOTH_CONNECT_JOB);
+        }
+    }
+
+    public static void connect(Handler mainHandler, Activity context, String deviceName){
+        if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
+            connectThread = new BlueToothWrapper(mainHandler);
+            connectThread.setInitContextWithDevNameWrapper(context,
+                    deviceName);
+            connectThread.start();
         }
     }
 
