@@ -1,4 +1,4 @@
-package com.cybex.gma.client.widget.flowlayout;
+package com.cybex.base.view.flowlayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,7 +8,8 @@ import android.util.LayoutDirection;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cybex.gma.client.R;
+
+import com.cybex.gma.framework.view.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

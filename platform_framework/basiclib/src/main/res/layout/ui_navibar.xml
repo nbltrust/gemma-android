@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/bg_ui_navibar"/>
+        android:background="@color/white"/>
 
 
 

@@ -1,4 +1,4 @@
-package com.cybex.gma.client.widget.flowlayout;
+package com.cybex.base.view.flowlayout;
 
 import android.content.Context;
 import android.view.View;

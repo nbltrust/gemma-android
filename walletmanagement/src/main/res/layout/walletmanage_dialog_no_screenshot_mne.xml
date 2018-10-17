@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/walletmanage_shape_corner_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:background="@drawable/walletmanage_ic_no_screenshots"
+        android:id="@+id/iv_no_screenshot"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_no_screenshot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/walletmanage_no_screenshot"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:textSize="@dimen/font_4"
+        android:layout_marginTop="6dp"/>
+
+    <TextView
+        android:id="@+id/tv_no_screenshot_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_3.5"
+        android:textColor="@color/blueyGrey"
+        android:text="@string/walletmanage_hint_no_screenshot_mne"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"/>
+
+    <TextView
+        android:id="@+id/tv_understand"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/walletmanage_i_understand"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:textColor="@color/whiteTwo"
+        android:background="@drawable/walletmanage_shape_corner_bot_dialog"
+        />
+
+</LinearLayout>

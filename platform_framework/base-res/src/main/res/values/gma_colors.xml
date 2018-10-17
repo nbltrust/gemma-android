@@ -49,4 +49,30 @@
     <color name="color_ff_e6e6e6">#ffe6e6e6</color>
     <color name="color_44_000000">#44000000</color>
 
+    <color name="black">#000000</color>
+
+    <color name="darkSlateBlue80">#212c67</color>
+    <color name="darkSkyBlue">#5596dc</color>
+    <color name="appleGreen">#7ed321</color>
+    <color name="cornflowerBlue">#426bd4</color>
+    <color name="cornflowerBlue20">#33426bd4</color>
+    <color name="whiteTwo">#ffffff</color>
+    <color name="white">#f9f9f9</color>
+    <color name="cloudyBlue">#c6cade</color>
+    <color name="darkSlateBlue">#212c67</color>
+    <color name="darkSlateBlueTwo">#212c68</color>
+    <color name="blueyGrey">#9ea3bd</color>
+    <color name="scarlet">#d0021b</color>
+    <color name="buff">#fff9a6</color>
+    <color name="steel">#8e8e93</color>
+    <color name="lightTeal">#4169d1</color>
+    <color name="cloudyBlueTwo">#cacddf</color>
+    <color name="cornflowerBlueTwo">#4169d1</color>
+    <color name="dusk">#535c8a</color>
+
+    <color name="color_757b9f">#757b9f</color>
+    <color name="color_212c68">#212c68</color>
+    <color name="cornflower_blue">#426bd4</color>
+
+
 </resources>

@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- 公用 -->
-    <dimen name="baseservice_bt_radius">3dp</dimen>
-    <dimen name="baseservice_card_height">44dp</dimen>
-    <dimen name="baseservice_bt_common_height">44dp</dimen>
 
-
-    <!-- 字体大小 -->
-    <dimen name="baseservice_font_3.5">14sp</dimen>
-    <dimen name="baseservice_font_3">12sp</dimen>
-    <dimen name="baseservice_font_6">24sp</dimen>
-    <dimen name="baseservice_font_4">16sp</dimen>
-    <dimen name="baseservice_font_4.2">17sp</dimen>
-    <dimen name="baseservice_font_4.5">18sp</dimen>
-    <dimen name="baseservice_font_4.7">19sp</dimen>
-    <dimen name="baseservice_font_7">28sp</dimen>
-
-    <dimen name="baseservice_bottombar_height">48dp</dimen>
-    <dimen name="baseservice_bottombar_gemma_height">52dp</dimen>
 </resources>
