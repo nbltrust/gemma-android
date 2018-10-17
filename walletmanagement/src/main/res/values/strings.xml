@@ -1,2 +1,40 @@
 <resources>
+
+    <!-- 助记词相关-->
+    <string name="walletmanage_backup_mne">备份助记词</string>
+    <string name="walletmanage_show_mne">明白了， 显示助记词</string>
+    <string name="walletmanage_hint_no_screenshot_mne">如果有人获取你的助记词将直接获取你的资产！请抄写下助记词并存放在安全的地方！</string>
+    <string name="walletmanage_mne_copied">已抄写</string>
+    <string name="walletmanage_tip_memory_your_mne">请记下你的钱包私钥助记词并保存在安全的地方</string>
+    <string name="walletmanage_tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
+    <string name="walletmanage_tip_verify_mne">请按顺序点击已抄下的助记词以验证抄写是否正确</string>
+    <string name="walletmanage_tip_import_mne">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
+    <string name="walletmanage_import_mne">输入助记词，用空格分割</string>
+    <string name="walletmanage_title_verify_mne">验证助记词</string>
+    <string name="walletmanage_btn_import_mne">导入助记词</string>
+
+    <string name="walletmanage_lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
+    <string name="walletmanage_lookAround_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
+    <string name="walletmanage_backUp_wallet">备份钱包</string>
+    <string name="walletmanage_backupSafely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
+    <string name="walletmanage_showMnemonic">明白了，显示助记词</string>
+    <string name="walletmanage_showPriKey">明白了，显示私钥</string>
+    <string name="walletmanage_start_import">明白了，开始导入</string>
+    <string name="walletmanage_backupLater">稍后备份</string>
+
+    <string name="walletmanage_no_screenshot">请勿截图</string>
+    <string name="walletmanage_no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
+    <string name="walletmanage_i_understand">我知道了</string>
+    <string name="walletmanage_safety_first">安全第一</string>
+    <string name="walletmanage_safety_first_hint">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
+    <string name="walletmanage_save_offline">离线储存</string>
+    <string name="walletmanage_save_offline_hint">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
+    <string name="walletmanage_encrypto_save">加密储存</string>
+    <string name="walletmanage_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
+
+    <string name="walletmanage_look_around">注意周围</string>
+    <string name="walletmanage_look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
+    <string name="walletmanage_no_screenshot_hint2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
+    <string name="walletmanage_show_QR">显示二维码</string>
+
 </resources>

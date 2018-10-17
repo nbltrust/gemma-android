@@ -35,7 +35,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        debug{
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -60,7 +60,6 @@ dependencies {
 
     api project(':componentservice')
     annotationProcessor deps.arouter.compiler
-
 
 
 }

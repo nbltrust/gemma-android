@@ -4,20 +4,20 @@
     package="com.cybex.walletmanagement">
 
     <application
-        android:name="com.cybex.walletmanagement.runalone.WalletManagementApplication"
+        android:name=".runalone.WalletManagementApplication"
         android:allowBackup="true"
         android:label="@string/walletmanage_app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name="com.cybex.walletmanagement.runalone.ui.WalletManagementMainActivity">
+        <activity android:name=".runalone.ui.WalletManagementMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".ui.activity.MnemonicBackupGuideActivity"></activity>
     </application>
 
 </manifest>

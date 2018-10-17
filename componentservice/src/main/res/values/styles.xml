@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 线性布局中长按钮的样式 -->
+    <style name="baseservice_bt_long_in_linearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/baseservice_bt_common_height</item>
+        <item name="android:textSize">@dimen/baseservice_font_3.5</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/baseservice_shape_corner_button</item>
+    </style>
+
+</resources>
