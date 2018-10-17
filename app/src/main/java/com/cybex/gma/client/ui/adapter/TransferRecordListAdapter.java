@@ -60,7 +60,7 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
 
 
     public TransferRecordListAdapter(@Nullable List<TransferHistory> data, String currentEosName) {
-        super(R.layout.item_transfer_record_list, data);
+        super(R.layout.eos_item_transfer_record_list, data);
         this.currentEosName = currentEosName;
     }
 

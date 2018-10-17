@@ -109,7 +109,7 @@ public class WXPayEntryActivity extends XActivity<WXPayEntryPresenter> implement
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_about;
+        return R.layout.eos_activity_about;
     }
 
     @Override

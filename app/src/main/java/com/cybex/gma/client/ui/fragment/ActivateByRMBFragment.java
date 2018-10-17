@@ -186,7 +186,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_activate_by_rmb;
+        return R.layout.eos_fragment_activate_by_rmb;
     }
 
     @Override
@@ -235,7 +235,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     public void showPriceChangedDialog() {
         int[] listenedItems = {R.id.tv_cancel, R.id.tv_ok};
         CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.dialog_payment_price_changed, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_payment_price_changed, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override
@@ -265,7 +265,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     private void showOvertimeDialog() {
         int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.dialog_payment_overtime, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_payment_overtime, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override
@@ -288,7 +288,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     private void showUnfinishDialog() {
         int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.dialog_payment_fail, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_payment_fail, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override
@@ -311,7 +311,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     private void showFailDialog(boolean isWalletListEmpty) {
         int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.dialog_create_fail, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_create_fail, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override

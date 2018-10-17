@@ -30,7 +30,7 @@ public class BackUpWalletGuideActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_backup_guide;
+        return R.layout.eos_activity_backup_guide;
     }
 
     @Override

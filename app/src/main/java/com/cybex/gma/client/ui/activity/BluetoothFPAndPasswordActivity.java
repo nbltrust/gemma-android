@@ -29,7 +29,7 @@ public class BluetoothFPAndPasswordActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_bluetooth_fp_and_password;
+        return R.layout.eos_activity_bluetooth_fp_and_password;
     }
 
     @Override

@@ -84,7 +84,7 @@ public class ChangeWalletNameFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_change_walletname;
+        return R.layout.eos_fragment_change_walletname;
     }
 
     @Override

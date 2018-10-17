@@ -285,7 +285,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_bluetooth_verify_mne;
+        return R.layout.eos_fragment_bluetooth_verify_mne;
     }
 
     @Override

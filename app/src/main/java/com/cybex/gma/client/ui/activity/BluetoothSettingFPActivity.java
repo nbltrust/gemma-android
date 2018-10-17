@@ -165,7 +165,7 @@ public class BluetoothSettingFPActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_bluetooth_setting_fp;
+        return R.layout.eos_activity_bluetooth_setting_fp;
     }
 
     @Override

@@ -127,7 +127,7 @@ public class ImportWalletInputKeyFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_import_wallet_input_key;
+        return R.layout.eos_fragment_import_wallet_input_key;
     }
 
     @Override

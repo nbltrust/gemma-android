@@ -19,7 +19,7 @@ public class ChangeAccountAdapter extends BaseQuickAdapter<EOSNameVO, BaseViewHo
 
     public ChangeAccountAdapter(
             @Nullable List<EOSNameVO> data) {
-        super(R.layout.item_change_account, data);
+        super(R.layout.eos_item_change_account, data);
     }
 
     @Override

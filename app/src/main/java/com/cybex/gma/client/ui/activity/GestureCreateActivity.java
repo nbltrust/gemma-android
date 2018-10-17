@@ -69,7 +69,7 @@ public class GestureCreateActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_create_gesture;
+        return R.layout.eos_activity_create_gesture;
     }
 
     @Override

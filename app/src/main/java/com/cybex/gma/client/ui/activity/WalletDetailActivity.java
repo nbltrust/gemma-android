@@ -32,7 +32,7 @@ public class WalletDetailActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_wallet_detail;
+        return R.layout.eos_activity_wallet_detail;
     }
 
     @Override

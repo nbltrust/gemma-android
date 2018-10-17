@@ -329,7 +329,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_change_password;
+        return R.layout.eos_fragment_change_password;
     }
 
     @Override

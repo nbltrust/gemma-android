@@ -173,7 +173,7 @@ public class GeneralSettingFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_general_setting;
+        return R.layout.eos_fragment_general_setting;
     }
 
     @Override

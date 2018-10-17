@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkSlateBlue"
+    tools:context=".ui.activity.InitialActivity">
+
+    <ImageView
+        android:id="@+id/logo_gma"
+        android:layout_width="@dimen/dimen_160"
+        android:layout_height="@dimen/dimen_160"
+        android:layout_marginTop="@dimen/logo_marginTop"
+        android:background="@drawable/ic_login_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/bt_create_new"
+        style="@style/bt_create_wallet"
+        android:text="@string/createNewWallet"
+        android:background="@drawable/shape_corner_button"
+        android:textColor="@color/whiteTwo"
+        android:textSize="@dimen/font_3.5"
+        android:layout_marginBottom="@dimen/bt_marginTop"
+        app:layout_constraintBottom_toTopOf="@+id/bt_import"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/bt_import"
+        style="@style/bt_create_wallet"
+        android:layout_marginBottom="@dimen/bt_marginBot"
+        android:text="@string/restoreWallet"
+        android:textSize="@dimen/font_3.5"
+        android:background="@drawable/shape_corner_button_white"
+        android:textColor="@color/cornflowerBlue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

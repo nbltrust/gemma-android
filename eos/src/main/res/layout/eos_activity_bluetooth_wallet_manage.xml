@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+    <ScrollView
+        android:id="@+id/scroll_wallet_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layout_wallet_briefInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
+                android:layout_marginTop="@dimen/standard_margin_in_walletDetailPage"
+                android:background="@drawable/selector_shape_corner_pressed"
+                android:translationZ="@dimen/dimen_3"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@+id/btn_navibar"
+                >
+
+                <TextView
+                    android:id="@+id/tv_walletName_in_detailPage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
+                    android:text="@string/title_wookong_bio"
+                    android:textColor="@color/darkSlateBlue"
+                    android:textSize="@dimen/font_6"
+                    android:textStyle="bold"
+                    title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
+                    title:layout_constraintStart_toStartOf="parent"
+                    title:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_connection_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_26"
+                    android:textColor="@color/cloudyBlue"
+                    android:textSize="@dimen/font_3"
+                    title:layout_constraintEnd_toEndOf="parent"
+                    title:layout_constraintTop_toTopOf="parent"
+                    android:text="未连接"
+                    />
+
+                <TextView
+                    android:id="@+id/eosAddress_in_detailPage"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
+                    android:ellipsize="middle"
+                    android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
+                    android:paddingTop="@dimen/dimen_10"
+                    android:singleLine="true"
+                    tools:text="EOS5jvZ4TxzZhLh6cU3VNxcr4qRxRa5fYsxoxFmKZw2VXy49AaYpQ"
+                    android:textColor="@color/darkSlateBlue"
+                    android:textSize="@dimen/font_4"
+                    title:layout_constraintEnd_toEndOf="parent"
+                    title:layout_constraintStart_toStartOf="parent"
+                    title:layout_constraintTop_toBottomOf="@id/tv_walletName_in_detailPage"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/view_bio_management"
+                android:background="@drawable/shape_corner"
+                android:translationZ="@dimen/dimen_3"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10">
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/superTextView_changePass"
+                    style="@style/card_style"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sShapeSelectorPressedColor="@color/item_pressed"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    android:paddingStart="@dimen/dimen_10"
+                    title:sLeftTextString="@string/fp_and_password"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sUseShape="true"
+                    title:sShapeCornersRadius="@dimen/dimen_6"
+                    >
+
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layerType="software"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:background="@color/paleGrey">
+
+                </View>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_click_to_connect"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_44"
+                android:layout_marginTop="@dimen/dimen_40"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:background="@drawable/shape_corner_button_white"
+                android:text="@string/connect"
+                android:textColor="@color/cornflowerBlue"/>
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/bt_disconnect"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_44"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_40"
+                android:background="@drawable/shape_corner_button_white"
+                android:text="@string/disconnect"
+                android:textColor="@color/cornflowerBlue"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layerType="software">
+            </View>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

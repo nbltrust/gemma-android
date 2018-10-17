@@ -138,7 +138,7 @@ public class ChangeNodeFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_change_node;
+        return R.layout.eos_fragment_change_node;
     }
 
     @Override

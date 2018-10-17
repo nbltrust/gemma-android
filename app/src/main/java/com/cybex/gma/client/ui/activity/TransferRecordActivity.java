@@ -31,7 +31,7 @@ public class TransferRecordActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_transfer_record;
+        return R.layout.eos_activity_transfer_record;
     }
 
     @Override

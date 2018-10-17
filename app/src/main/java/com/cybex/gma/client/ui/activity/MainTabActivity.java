@@ -63,7 +63,7 @@ public class MainTabActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_main_tab;
+        return R.layout.eos_activity_main_tab;
     }
 
     @Override

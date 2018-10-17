@@ -192,7 +192,7 @@ public abstract class BaseWebviewActivity<P extends BasePresenter> extends XActi
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_common_webview;
+        return R.layout.eos_activity_common_webview;
     }
 
 }

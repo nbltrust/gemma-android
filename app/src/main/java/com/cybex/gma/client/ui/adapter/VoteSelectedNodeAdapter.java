@@ -13,7 +13,7 @@ import java.util.List;
 public class VoteSelectedNodeAdapter extends BaseQuickAdapter<VoteNodeVO,BaseViewHolder> {
 
     public VoteSelectedNodeAdapter(@Nullable List<VoteNodeVO> data) {
-        super(R.layout.item_selected_node, data);
+        super(R.layout.eos_item_selected_node, data);
     }
 
     @Override

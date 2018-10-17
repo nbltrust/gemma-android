@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="8dp"
+    title:layout_constraintEnd_toEndOf="parent"
+    title:layout_constraintStart_toStartOf="parent">
+
+   <!-- 顶部信息布局-->
+    <include layout="@layout/eos_ui_wallet_home_top_info_layout" />
+
+    <!-- 软钱包操作布局开始-->
+   <include layout="@layout/eos_ui_soft_wallet_oprate_layout" />
+    <!-- 软钱包操作布局结束-->
+
+</android.support.constraint.ConstraintLayout>
+
+
+

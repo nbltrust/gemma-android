@@ -194,7 +194,7 @@ public class DelegateFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_delegate;
+        return R.layout.eos_fragment_delegate;
     }
 
     @Override
@@ -330,7 +330,7 @@ public class DelegateFragment extends XFragment {
     private void showConfirmDelegateiDialog() {
         int[] listenedItems = {R.id.btn_delegate, R.id.btn_close};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_delegate_confirm, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_delegate_confirm, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -370,7 +370,7 @@ public class DelegateFragment extends XFragment {
     private void showConfirmUndelegateiDialog() {
         int[] listenedItems = {R.id.btn_confirm_refund, R.id.btn_close};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_undelegate_confirm, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_undelegate_confirm, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -410,7 +410,7 @@ public class DelegateFragment extends XFragment {
     private void showConfirmAuthoriDialog(int operation_type) {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -522,7 +522,7 @@ public class DelegateFragment extends XFragment {
     private void showPasswordHintDialog(int operation_type) {
         int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.dialog_password_hint, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override

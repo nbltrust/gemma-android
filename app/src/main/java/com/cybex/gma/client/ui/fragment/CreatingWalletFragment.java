@@ -70,7 +70,7 @@ public class CreatingWalletFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_creating_wallet;
+        return R.layout.eos_fragment_creating_wallet;
     }
 
     @Override

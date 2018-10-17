@@ -150,7 +150,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_bluetooth_create_eos_account;
+        return R.layout.eos_activity_bluetooth_create_eos_account;
     }
 
     @Override

@@ -404,7 +404,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_import_wallet_config;
+        return R.layout.eos_fragment_import_wallet_config;
     }
 
     @Override

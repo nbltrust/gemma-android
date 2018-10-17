@@ -93,7 +93,7 @@ public class ActivateByExchangeFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_activate_by_exchange;
+        return R.layout.eos_fragment_activate_by_exchange;
     }
 
     @Override

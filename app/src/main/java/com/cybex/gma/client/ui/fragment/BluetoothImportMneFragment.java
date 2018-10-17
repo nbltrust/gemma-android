@@ -31,7 +31,7 @@ public class BluetoothImportMneFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_bluetooth_import_mne;
+        return R.layout.eos_fragment_bluetooth_import_mne;
     }
 
     @Override

@@ -207,7 +207,7 @@ public class SecuritySettingFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_security_setting;
+        return R.layout.eos_fragment_security_setting;
     }
 
     @Override

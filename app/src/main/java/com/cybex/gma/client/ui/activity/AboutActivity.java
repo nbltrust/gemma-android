@@ -29,7 +29,7 @@ public class AboutActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_about;
+        return R.layout.eos_activity_about;
     }
 
     @Override

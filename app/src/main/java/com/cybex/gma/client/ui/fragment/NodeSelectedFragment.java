@@ -151,7 +151,7 @@ public class NodeSelectedFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_node_selected;
+        return R.layout.eos_fragment_node_selected;
     }
 
     @Override

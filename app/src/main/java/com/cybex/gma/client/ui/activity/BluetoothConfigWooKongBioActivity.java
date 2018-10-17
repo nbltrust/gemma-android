@@ -308,7 +308,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_bluetooth_config_wookong_bio;
+        return R.layout.eos_activity_bluetooth_config_wookong_bio;
     }
 
     @Override

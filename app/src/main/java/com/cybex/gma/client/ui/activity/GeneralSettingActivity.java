@@ -33,7 +33,7 @@ public class GeneralSettingActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_general_setting;
+        return R.layout.eos_activity_general_setting;
     }
 
     @Override

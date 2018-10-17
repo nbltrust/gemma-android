@@ -87,7 +87,7 @@ public class AboutFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_about;
+        return R.layout.eos_fragment_about;
     }
 
     @Override

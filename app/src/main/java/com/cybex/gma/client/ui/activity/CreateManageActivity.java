@@ -33,7 +33,7 @@ public class CreateManageActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_create_manage;
+        return R.layout.eos_activity_create_manage;
     }
 
     @Override

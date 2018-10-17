@@ -58,7 +58,7 @@ public class BluetoothBackupMneFragment extends XFragment {
 
                             @Override
                             public View getView(FlowLayout parent, int position, String s) {
-                                TextView tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.item_tag,
+                                TextView tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.eos_item_tag,
                                         mFlowLayout, false);
                                 tv.setText(s);
                                 return tv;
@@ -109,7 +109,7 @@ public class BluetoothBackupMneFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_backup_mne;
+        return R.layout.eos_fragment_backup_mne;
     }
 
     @Override
@@ -134,7 +134,7 @@ public class BluetoothBackupMneFragment extends XFragment {
     private void showAlertDialog() {
         int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override

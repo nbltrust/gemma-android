@@ -150,7 +150,7 @@ public class MineFragment extends XFragment<MinePresenter> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_me;
+        return R.layout.eos_fragment_me;
     }
 
     @Override

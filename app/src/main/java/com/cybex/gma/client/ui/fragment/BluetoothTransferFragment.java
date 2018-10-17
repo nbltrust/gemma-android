@@ -354,7 +354,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_transfer;
+        return R.layout.eos_fragment_transfer;
     }
 
     @Override
@@ -438,7 +438,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
         int[] listenedItems = {R.id.btn_close, R.id.btn_transfer};
 
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_transfer_confirm, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_transfer_confirm, listenedItems, false, Gravity.BOTTOM);
 
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
@@ -507,7 +507,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
     private void showConfirmAuthoriDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -796,7 +796,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
                     dlg.show();
                     break;
                 case BlueToothWrapper.MSG_GET_USER_PIN:
-                    View dlgView = getLayoutInflater().inflate(R.layout.ui_dlg_verify_pin, null);
+                    View dlgView = getLayoutInflater().inflate(R.layout.eos_ui_dlg_verify_pin, null);
                     final EditText editPIN = dlgView.findViewById(R.id.edit_pin);
                     editPIN.setText(m_strDefaultPIN);
                     editPIN.selectAll();

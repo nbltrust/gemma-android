@@ -21,7 +21,7 @@ public class BluetoothScanDeviceListAdapter extends BaseQuickAdapter<BluetoothDe
 
 
     public BluetoothScanDeviceListAdapter(@Nullable List<BluetoothDeviceVO> data) {
-        super(R.layout.item_bluetooth_scan_device_name, data);
+        super(R.layout.eos_item_bluetooth_scan_device_name, data);
     }
 
     @Override

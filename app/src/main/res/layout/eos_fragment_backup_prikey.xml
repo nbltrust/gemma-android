@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="26dp"
+        >
+
+        <TextView
+            style="@style/text_title"
+            android:text="@string/safety_first"/>
+
+        <TextView
+            style="@style/text_body"
+            android:text="@string/safety_first_hint"/>
+
+        <TextView
+            style="@style/text_title"
+            android:text="@string/save_offline"/>
+
+        <TextView
+            style="@style/text_body"
+            android:text="@string/save_offline_hint"/>
+
+        <TextView
+            style="@style/text_title"
+            android:text="@string/encrypto_save"/>
+
+        <TextView
+            style="@style/text_body"
+            android:text="@string/encrypto_save_hint"/>
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/eos_ui_card_show_and_copy_key">
+
+    </include>
+
+    <Button
+        android:id="@+id/bt_copied_priKey"
+        style="@style/bt_long_in_linearLayout"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="@string/key_saved"
+        />
+
+</LinearLayout>

@@ -104,7 +104,7 @@ public class BackUpPriKeyQRFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_backup_prikey_qr;
+        return R.layout.eos_fragment_backup_prikey_qr;
     }
 
     @Override

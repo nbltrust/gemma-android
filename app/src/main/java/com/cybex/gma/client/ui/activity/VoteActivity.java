@@ -31,7 +31,7 @@ public class VoteActivity extends XActivity{
 
         @Override
         public int getLayoutId() {
-            return R.layout.activity_vote;
+            return R.layout.eos_activity_vote;
         }
 
         @Override

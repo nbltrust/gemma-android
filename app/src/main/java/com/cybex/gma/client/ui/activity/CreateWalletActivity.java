@@ -442,7 +442,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_create_wallet;
+        return R.layout.eos_activity_create_wallet;
     }
 
     @Override
@@ -669,7 +669,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     private void showChooseMethodDialog() {
         int[] listenedItems = {R.id.btn_close, R.id.btn_use_invCode, R.id.btn_use_cybex, R.id.btn_invite_friend};
         CustomFullDialog dialog = new CustomFullDialog(this,
-                R.layout.dialog_choose_create_method, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_choose_create_method, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -695,7 +695,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     private void showGetInvCodeDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_create, R.id.tv_get_invCode};
         CustomFullDialog dialog = new CustomFullDialog(this,
-                R.layout.dialog_get_invcode, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_get_invcode, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {

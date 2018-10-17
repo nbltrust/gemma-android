@@ -151,7 +151,7 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_main_tab;
+        return R.layout.eos_fragment_main_tab;
     }
 
     @Override

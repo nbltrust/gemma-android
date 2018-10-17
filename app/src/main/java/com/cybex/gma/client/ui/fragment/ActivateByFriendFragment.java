@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.api.ApiPath;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.base.CommonWebViewActivity;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -91,7 +90,7 @@ public class ActivateByFriendFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_activate_by_friend;
+        return R.layout.eos_fragment_activate_by_friend;
     }
 
     @Override

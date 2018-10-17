@@ -57,7 +57,7 @@ public class ImportWalletGuideFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_import_wallet_guide;
+        return R.layout.eos_fragment_import_wallet_guide;
     }
 
     @Override

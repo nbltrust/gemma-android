@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/view_root"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <com.cybex.gma.client.widget.OverScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:text="@string/tip_verify_mne"
+                android:textAlignment="center"
+                android:textColor="@color/darkSlateBlue"
+                android:textSize="@dimen/font_3.5"/>
+
+
+            <com.cybex.gma.client.widget.LabelsView
+                android:id="@+id/view_click_to_show_mne"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_20"
+                android:background="@drawable/shape_corner"
+                android:padding="@dimen/dimen_20">
+
+            </com.cybex.gma.client.widget.LabelsView>
+
+
+            <com.cybex.gma.client.widget.LabelsView
+                android:id="@+id/view_show_mne"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:padding="@dimen/dimen_20">
+
+            </com.cybex.gma.client.widget.LabelsView>
+
+
+        </LinearLayout>
+
+
+    </com.cybex.gma.client.widget.OverScrollView>
+
+
+</LinearLayout>

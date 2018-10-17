@@ -58,7 +58,7 @@ public class BarcodeScanActivity extends XActivity implements QRCodeView.Delegat
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_barcode_scan;
+        return R.layout.eos_activity_barcode_scan;
     }
 
     @Override

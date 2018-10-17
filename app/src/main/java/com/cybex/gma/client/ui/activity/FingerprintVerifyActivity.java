@@ -69,7 +69,7 @@ public class FingerprintVerifyActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_finger_print_verify;
+        return R.layout.eos_activity_finger_print_verify;
     }
 
     @Override

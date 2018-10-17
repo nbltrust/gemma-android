@@ -34,7 +34,7 @@ public class ImportWalletActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_import_wallet;
+        return R.layout.eos_activity_import_wallet;
     }
 
     @Override

@@ -125,7 +125,7 @@ public class VerifyPriKeyActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_verify_prikey;
+        return R.layout.eos_activity_verify_prikey;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class BluetoothBackupMneGuideActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_bluetooth_backup_mne_guide;
+        return R.layout.eos_activity_bluetooth_backup_mne_guide;
     }
 
     @Override

@@ -232,7 +232,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_buy_sell_ram;
+        return R.layout.eos_fragment_buy_sell_ram;
     }
 
     @Override
@@ -326,7 +326,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     private void showConfirmBuyRamDialog() {
         int[] listenedItems = {R.id.btn_confirm_buy_ram, R.id.btn_close};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_confirm_buy, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_confirm_buy, listenedItems, false, Gravity.BOTTOM);
 
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
@@ -358,7 +358,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     private void showConfirmSellRamDialog() {
         int[] listenedItems = {R.id.btn_confirm_sell_ram, R.id.btn_close};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_confirm_sell, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_confirm_sell, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -390,7 +390,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     private void showConfirmAuthorDialog(int operation_type) {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
 
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
@@ -515,7 +515,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     private void showPasswordHintDialog(int operation_type) {
         int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.dialog_password_hint, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override

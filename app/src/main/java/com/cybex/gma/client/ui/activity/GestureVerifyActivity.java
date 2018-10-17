@@ -207,7 +207,7 @@ public class GestureVerifyActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_gesture_login;
+        return R.layout.eos_activity_gesture_login;
     }
 
     @Override

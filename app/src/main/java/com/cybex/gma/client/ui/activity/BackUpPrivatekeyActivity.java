@@ -67,7 +67,7 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_backup_private_key;
+        return R.layout.eos_activity_backup_private_key;
     }
 
     @Override

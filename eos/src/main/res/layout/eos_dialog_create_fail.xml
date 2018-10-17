@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/shape_corner_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:src="@drawable/ic_payment_fail"
+        android:id="@+id/iv_password_hint"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_password_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_fail"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:textSize="@dimen/font_4"
+        android:layout_marginTop="6dp"/>
+
+    <TextView
+        android:id="@+id/tv_i_understand"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/ok"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:textColor="@color/whiteTwo"
+        android:background="@drawable/shape_corner_bot_dialog"
+        />
+
+</LinearLayout>

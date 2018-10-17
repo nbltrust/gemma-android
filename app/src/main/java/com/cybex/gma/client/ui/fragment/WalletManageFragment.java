@@ -135,7 +135,7 @@ public class WalletManageFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_manage_wallet;
+        return R.layout.eos_fragment_manage_wallet;
     }
 
     @Override

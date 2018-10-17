@@ -106,7 +106,7 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_activate_by_invcode;
+        return R.layout.eos_fragment_activate_by_invcode;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
     private void showFailDialog(boolean isWalletListEmpty) {
         int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.dialog_create_fail, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_create_fail, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override

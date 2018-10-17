@@ -31,7 +31,7 @@ public class BuySellRamActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_buy_sell_ram;
+        return R.layout.eos_activity_buy_sell_ram;
     }
 
     @Override

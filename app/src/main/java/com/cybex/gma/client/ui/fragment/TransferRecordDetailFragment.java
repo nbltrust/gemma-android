@@ -157,7 +157,7 @@ public class TransferRecordDetailFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_transfer_record_detail;
+        return R.layout.eos_fragment_transfer_record_detail;
     }
 
     @Override

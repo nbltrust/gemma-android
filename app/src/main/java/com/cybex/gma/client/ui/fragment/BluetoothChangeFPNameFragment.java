@@ -43,7 +43,7 @@ public class BluetoothChangeFPNameFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_bluetooth_change_fp_name;
+        return R.layout.eos_fragment_bluetooth_change_fp_name;
     }
 
     @Override

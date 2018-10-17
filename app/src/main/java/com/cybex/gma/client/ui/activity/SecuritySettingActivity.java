@@ -33,7 +33,7 @@ public class SecuritySettingActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_security_setting;
+        return R.layout.eos_activity_security_setting;
     }
 
     @Override

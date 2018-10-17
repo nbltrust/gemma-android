@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@drawable/shape_corner"
+        android:elevation="@dimen/dimen_3"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radioButton_follow_system"
+                style="@style/mRadioButton"
+                android:text="@string/follow_system"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:background="@color/paleGrey"
+                android:layerType="software">
+            </View>
+
+            <RadioButton
+                android:id="@+id/radioButton_simC"
+                style="@style/mRadioButton"
+                android:text="@string/simplified_C"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:background="@color/paleGrey"
+                android:layerType="software">
+            </View>
+
+            <RadioButton
+                android:id="@+id/radioButton_EN"
+                style="@style/mRadioButton"
+                android:text="@string/english"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</LinearLayout>

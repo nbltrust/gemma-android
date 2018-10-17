@@ -2,10 +2,8 @@ package com.cybex.gma.client.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.fragment.ActivateByFriendFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -24,7 +22,7 @@ public class CreateMethodActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_create_method;
+        return R.layout.eos_activity_create_method;
     }
 
     @Override

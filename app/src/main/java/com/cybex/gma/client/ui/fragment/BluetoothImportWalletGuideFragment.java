@@ -34,7 +34,7 @@ public class BluetoothImportWalletGuideFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_bluetooth_import_wallet_guide;
+        return R.layout.eos_fragment_bluetooth_import_wallet_guide;
     }
 
     @Override

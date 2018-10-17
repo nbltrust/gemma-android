@@ -194,7 +194,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_transfer_record_list;
+        return R.layout.eos_fragment_transfer_record_list;
     }
 
     @Override

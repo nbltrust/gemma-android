@@ -27,7 +27,6 @@ import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.adapter.ChangeAccountAdapter;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
 import com.cybex.gma.client.ui.model.response.AccountRefoundRequest;
@@ -43,7 +42,6 @@ import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.SPUtils;
-import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.common.utils.DateUtil;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.pixplicity.sharp.Sharp;
@@ -484,7 +482,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_bluetooth_wallet;
+        return R.layout.eos_fragment_bluetooth_wallet;
     }
 
     @Override
@@ -535,7 +533,7 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
         int[] listenedItems = {R.id.imv_close};
 
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_change_account, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_change_account, listenedItems, false, Gravity.BOTTOM);
 
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override

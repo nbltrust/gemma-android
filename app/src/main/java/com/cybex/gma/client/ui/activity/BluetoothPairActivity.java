@@ -44,7 +44,7 @@ public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_bluetooth_pair;
+        return R.layout.eos_activity_bluetooth_pair;
     }
 
     @Override

@@ -6,7 +6,6 @@ import android.widget.Button;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.model.vo.BluetoothFPVO;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 
 import butterknife.BindView;
@@ -52,7 +51,7 @@ public class BluetoothManageFPFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_bluetooth_manage_fp;
+        return R.layout.eos_fragment_bluetooth_manage_fp;
     }
 
     @Override

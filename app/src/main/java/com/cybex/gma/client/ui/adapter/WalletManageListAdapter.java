@@ -14,7 +14,7 @@ import java.util.List;
 public class WalletManageListAdapter extends BaseQuickAdapter<WalletVO, BaseViewHolder> {
 
     public WalletManageListAdapter(@Nullable List<WalletVO> data) {
-        super(R.layout.item_wallet_name, data);
+        super(R.layout.eos_item_wallet_name, data);
     }
 
     @Override

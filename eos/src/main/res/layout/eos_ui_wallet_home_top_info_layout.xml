@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/layout_info"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="2dp"
+    android:layout_marginStart="2dp"
+    android:paddingTop="12dp"
+    title:layout_constraintEnd_toEndOf="parent"
+    title:layout_constraintStart_toStartOf="parent">
+
+    <LinearLayout
+        android:id="@+id/layout_top_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:layout_marginStart="18dp"
+        android:background="@drawable/shape_corner"
+        android:orientation="vertical"
+        android:translationZ="@dimen/dimen_6">
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_total_assets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_15"
+            title:sCenterTextColor="@color/darkSlateBlueTwo"
+            title:sCenterTextGravity="center"
+            title:sCenterTextSize="@dimen/font_3.5"
+            title:sCenterTextString="@string/total_assets"
+            title:sCenterTvDrawableLeft="@drawable/ic_asset"
+            title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+            title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+            title:sUseShape="true"
+            >
+
+        </com.allen.library.SuperTextView>
+
+        <TextView
+            android:id="@+id/total_EOS_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:gravity="center"
+            android:text=" 0.0000 EOS"
+            android:textAlignment="center"
+            android:textColor="@color/darkSlateBlueTwo"
+            android:textSize="@dimen/font_6"
+            android:textStyle="bold"/>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/total_CNY_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_5"
+            title:sCenterTextColor="@color/darkSlateBlueTwo"
+            title:sCenterTextSize="@dimen/font_3.5"
+            title:sCenterTextString="≈0.0000 CNY"
+            title:sDividerLineType="none"
+            title:sUseShape="true"
+            >
+
+        </com.allen.library.SuperTextView>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_backup_wallet"
+            android:layout_width="@dimen/dimen_60"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:background="@drawable/shape_corner_grey"
+            android:gravity="center"
+            android:text="@string/backUp_wallet"
+            android:textAlignment="center"
+            android:textColor="@color/cornflowerBlue"
+            android:textSize="@dimen/font_3"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginEnd="@dimen/cpu_show_area_margin"
+            android:layout_marginStart="@dimen/cpu_show_area_margin"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:background="@drawable/dash_line"
+            android:elevation="3dp"
+            android:layerType="software">
+
+        </View>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/balance"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            title:sDividerLineType="none"
+            title:sLeftTextColor="@color/darkSlateBlueTwo"
+            title:sLeftTextSize="@dimen/font_3"
+            title:sLeftTextString="@string/balance"
+            title:sRightTextColor="@color/darkSlateBlueTwo"
+            title:sRightTextSize="@dimen/font_4"
+            title:sRightTextString="0.0000 EOS"
+            title:sUseShape="true">
+
+        </com.allen.library.SuperTextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginEnd="@dimen/cpu_show_area_margin"
+            android:layout_marginStart="@dimen/cpu_show_area_margin"
+            android:background="@drawable/dash_line"
+            android:elevation="3dp"
+            android:layerType="software">
+
+        </View>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/redeem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="42dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            title:sDividerLineType="none"
+            title:sLeftTextColor="@color/darkSlateBlueTwo"
+            title:sLeftTextSize="@dimen/font_3"
+            title:sLeftTextString="@string/redeem"
+            title:sRightBottomTextColor="#3381e0"
+            title:sRightBottomTextSize="12sp"
+            title:sRightTextGravity="right"
+            title:sRightTextColor="@color/darkSlateBlueTwo"
+            title:sRightTextSize="@dimen/font_4"
+            title:sRightTextString="0.0000 EOS"
+            title:sUseShape="true">
+
+        </com.allen.library.SuperTextView>
+
+        <LinearLayout
+            android:id="@+id/show_cpu"
+            style="@style/show_cpu_status_area">
+
+            <LinearLayout
+                android:id="@+id/view_cpu"
+                style="@style/cpu_net_ram"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textView_cpu_net_ram"
+                    android:text="@string/CPU"/>
+
+                <com.cybex.base.view.progress.RoundCornerProgressBar
+                    android:id="@+id/progressbar_cpu_small"
+                    style="@style/progressBar_cpu_net_ram"
+                    title:rcBackgroundColor="@color/cloudyBlue"
+                    title:rcBackgroundPadding="0dp"
+                    title:rcMax="100"
+                    title:rcProgress="0"
+                    title:rcProgressColor="@color/dark_sky_blue"
+                    title:rcRadius="10dp"
+                    >
+
+                </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/cloudyBlue"
+                android:layerType="software"
+                >
+            </View>
+
+            <LinearLayout
+                android:id="@+id/view_net"
+                style="@style/cpu_net_ram"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textView_cpu_net_ram"
+                    android:text="@string/NET"/>
+
+                <com.cybex.base.view.progress.RoundCornerProgressBar
+                    android:id="@+id/progressbar_net_small"
+                    style="@style/progressBar_cpu_net_ram"
+                    title:rcBackgroundColor="@color/cloudyBlue"
+                    title:rcBackgroundPadding="0dp"
+                    title:rcMax="100"
+                    title:rcProgress="0"
+                    title:rcProgressColor="@color/dark_sky_blue"
+                    title:rcRadius="10dp"
+                    >
+
+                </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/cloudyBlue"
+                android:layerType="software">
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/view_ram"
+                style="@style/cpu_net_ram"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textView_cpu_net_ram"
+                    android:text="@string/RAM"/>
+
+                <com.cybex.base.view.progress.RoundCornerProgressBar
+                    android:id="@+id/progressbar_ram_small"
+                    style="@style/progressBar_cpu_net_ram"
+                    title:rcBackgroundColor="@color/cloudyBlue"
+                    title:rcBackgroundPadding="0dp"
+                    title:rcMax="100"
+                    title:rcProgress="0"
+                    title:rcProgressColor="@color/dark_sky_blue"
+                    title:rcRadius="10dp"
+                    >
+
+                </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        title:layout_constraintTop_toBottomOf="@id/layout_top_info"
+        >
+
+    </View>
+
+</android.support.constraint.ConstraintLayout>

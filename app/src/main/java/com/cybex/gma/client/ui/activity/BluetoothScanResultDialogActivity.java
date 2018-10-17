@@ -68,7 +68,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_bluetooth_scan_result);
+        setContentView(R.layout.eos_dialog_bluetooth_scan_result);
         ButterKnife.bind(this);
         mHandler = new ScanDeviceHandler();
         //调起Activity时执行一次扫描
@@ -154,7 +154,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         int[] listenedItems = {R.id.btn_close, R.id.btn_create_wallet, R.id.btn_import_mne};
 
         CustomFullDialog dialog = new CustomFullDialog(this,
-                R.layout.dialog_un_init_wookongbio, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_un_init_wookongbio, listenedItems, false, Gravity.BOTTOM);
 
 
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {

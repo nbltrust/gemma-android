@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_22"
+        android:layout_marginStart="@dimen/dimen_22"
+        android:layout_marginTop="@dimen/dimen_32"
+        android:background="@drawable/shape_corner"
+        android:padding="@dimen/dimen_20">
+
+        <ImageView
+            android:id="@+id/iv_dot_one"
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_4"
+            android:background="@drawable/ic_dot_red"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_look_around_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:text="@string/tip_activate_by_rmb"
+            android:textColor="@color/blueyGrey"
+            android:textSize="@dimen/font_3.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_dot_one"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint">
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tv_CPU"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_4"
+                app:sLeftTextColor="@color/steel"
+                app:sLeftTextSize="@dimen/font_3.5"
+                app:sLeftTextString="CPU:"
+                app:sRightTextColor="@color/darkSlateBlueTwo"
+                app:sRightTextSize="@dimen/font_3.5"
+                app:sRightTextString="-- EOS"
+                app:sUseShape="true">
+
+            </com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tv_NET"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_4"
+                app:sLeftTextColor="@color/steel"
+                app:sLeftTextSize="@dimen/font_3.5"
+                app:sLeftTextString="NET:"
+                app:sRightTextColor="@color/darkSlateBlueTwo"
+                app:sRightTextSize="@dimen/font_3.5"
+                app:sRightTextString="-- EOS"
+                app:sUseShape="true">
+
+            </com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tv_RAM"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_4"
+                app:sLeftTextColor="@color/steel"
+                app:sLeftTextSize="@dimen/font_3.5"
+                app:sLeftTextString="RAM:"
+                app:sRightTextColor="@color/darkSlateBlueTwo"
+                app:sRightTextSize="@dimen/font_3.5"
+                app:sRightTextString="-- EOS"
+                app:sUseShape="true">
+
+            </com.allen.library.SuperTextView>
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="@dimen/dimen_60"
+       android:layout_gravity="center"
+       android:orientation="vertical">
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textColor="@color/darkSlateBlue"
+           android:text="@string/tip_need_to_pay"
+           android:textSize="@dimen/font_3.5"
+           android:layout_gravity="center"
+           android:gravity="center"/>
+
+       <TextView
+           android:id="@+id/tv_rmb_amount"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textColor="@color/darkSlateBlue"
+           android:layout_marginTop="@dimen/dimen_4"
+           android:text="-- RMB"
+           android:textSize="28sp"
+           android:textStyle="bold"
+           android:layout_gravity="center"
+           android:gravity="center"/>
+
+   </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_wechat_pay"
+        style="@style/bt_long_in_linearLayout"
+        android:layout_marginEnd="@dimen/dimen_22"
+        android:layout_marginStart="@dimen/dimen_22"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:text="@string/wechat_pay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</LinearLayout>

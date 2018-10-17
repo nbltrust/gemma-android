@@ -120,7 +120,7 @@ public class LanguageSettingFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_language_setting;
+        return R.layout.eos_fragment_language_setting;
     }
 
     @Override

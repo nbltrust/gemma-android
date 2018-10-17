@@ -112,7 +112,7 @@ public class BluetoothWalletManageActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_bluetooth_wallet_manage;
+        return R.layout.eos_activity_bluetooth_wallet_manage;
     }
 
     @Override

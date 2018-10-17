@@ -69,7 +69,7 @@ public class ActivateAccountMethodActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_activate_account_method;
+        return R.layout.eos_activity_activate_account_method;
     }
 
     @Override

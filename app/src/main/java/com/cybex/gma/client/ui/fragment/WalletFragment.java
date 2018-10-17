@@ -558,7 +558,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_wallet;
+        return R.layout.eos_fragment_wallet;
     }
 
     @Override
@@ -632,7 +632,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         int[] listenedItems = {R.id.imv_close};
 
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_change_account, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_change_account, listenedItems, false, Gravity.BOTTOM);
 
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override

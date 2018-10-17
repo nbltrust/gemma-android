@@ -5,14 +5,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -24,20 +19,15 @@ import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.adapter.BluetoothFPManageAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothFPVO;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.SPUtils;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
-import com.siberiadante.customdialoglib.CustomDialog;
-import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -116,7 +106,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_bluetooth_fp_and_password;
+        return R.layout.eos_fragment_bluetooth_fp_and_password;
     }
 
     @Override

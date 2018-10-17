@@ -10,7 +10,6 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.yanzhenjie.sofia.Sofia;
 
 import java.lang.reflect.Field;
 
@@ -56,7 +55,7 @@ public class InitialActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_initial;
+        return R.layout.eos_activity_initial;
     }
 
     @Override

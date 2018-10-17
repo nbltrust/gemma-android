@@ -1,13 +1,11 @@
 package com.cybex.gma.client.ui.activity;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
@@ -101,7 +99,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_bluetooth_wallet_detail;
+        return R.layout.eos_activity_bluetooth_wallet_detail;
     }
 
     @Override
@@ -210,7 +208,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
     private void showConfirmFormatDialog() {
         int[] listenedItems = {R.id.tv_ok, R.id.tv_cancel};
         CustomDialog dialog = new CustomDialog(this,
-                R.layout.dialog_format_confirm, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_format_confirm, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override
@@ -237,7 +235,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
     private void showFormatDoneDialog() {
         int[] listenedItems = {R.id.tv_cancel, R.id.tv_init};
         CustomDialog dialog = new CustomDialog(this,
-                R.layout.dialog_format_done, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_format_done, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override
@@ -396,7 +394,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
     private void showVerifyFPDialog() {
         int[] listenedItems = {R.id.imv_back};
         dialog = new CustomFullDialog(this,
-                R.layout.dialog_transfer_bluetooth_finger_sure, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_transfer_bluetooth_finger_sure, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {

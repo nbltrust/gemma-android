@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10">
+
+        <LinearLayout
+            android:background="@drawable/shape_corner"
+            android:translationZ="@dimen/dimen_2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_height"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"
+            >
+
+            <TextView
+                android:text="@string/face"
+                android:layout_width="0dp"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/font_3.5"
+                android:textColor="@color/darkSlateBlue"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_height="match_parent"
+                android:layout_weight="6"/>
+            
+            <com.cybex.base.view.switchbutton.SwitchButton
+                android:id="@+id/switch_face"
+                style="@style/mySwitchButton"
+                title:sb_background="#D5D5D5"
+                title:sb_show_indicator="false"
+                title:sb_checked_color="@color/cornflowerBlueTwo"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/shape_corner"
+            android:translationZ="@dimen/dimen_2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_height"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_10"
+            >
+
+            <TextView
+                android:text="@string/fingerprints"
+                android:layout_width="0dp"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/font_3.5"
+                android:textColor="@color/darkSlateBlue"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_height="match_parent"
+                android:layout_weight="6"/>
+
+            <com.cybex.base.view.switchbutton.SwitchButton
+                android:id="@+id/switch_fingerprint"
+                style="@style/mySwitchButton"
+                title:sb_background="#D5D5D5"
+                title:sb_show_indicator="false"
+                title:sb_checked_color="@color/cornflowerBlueTwo"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/shape_corner"
+        android:translationZ="@dimen/dimen_2"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_height"
+            >
+
+            <TextView
+                android:text="@string/pattern"
+                android:layout_width="0dp"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/font_3.5"
+                android:textColor="@color/darkSlateBlue"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_height="match_parent"
+                android:layout_weight="6"/>
+
+            <com.cybex.base.view.switchbutton.SwitchButton
+                android:id="@+id/switch_pattern"
+                style="@style/mySwitchButton"
+                title:sb_background="#D5D5D5"
+                title:sb_show_indicator="false"
+                title:sb_checked_color="@color/cornflowerBlueTwo"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:background="@color/paleGrey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layerType="software"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10">
+        </View>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_change_pattern"
+            title:sUseShape="true"
+            title:sShapeSelectorPressedColor="@color/item_pressed"
+            title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
+            title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
+            title:sRightTvDrawableRight="@drawable/ic_arrow"
+            title:sLeftTextString="@string/changePattern"
+            title:sLeftTextColor="@color/darkSlateBlue"
+            title:sLeftTextSize="@dimen/font_3.5"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/card_height"
+            >
+
+        </com.allen.library.SuperTextView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

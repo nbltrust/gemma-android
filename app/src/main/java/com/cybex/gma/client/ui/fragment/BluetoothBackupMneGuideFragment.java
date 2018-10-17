@@ -55,7 +55,7 @@ public class BluetoothBackupMneGuideFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_backup_mne_guide;
+        return R.layout.eos_fragment_backup_mne_guide;
     }
 
     @Override

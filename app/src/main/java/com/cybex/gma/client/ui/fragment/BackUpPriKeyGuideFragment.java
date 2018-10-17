@@ -84,7 +84,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_backup_guide;
+        return R.layout.eos_fragment_backup_guide;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
 
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
+                R.layout.eos_dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
 
             @Override
@@ -176,7 +176,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
     private void showPasswordHintDialog() {
         int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.dialog_password_hint, listenedItems, false, Gravity.CENTER);
+                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override

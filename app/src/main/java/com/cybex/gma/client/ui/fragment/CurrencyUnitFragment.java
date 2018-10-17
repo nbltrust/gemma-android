@@ -71,7 +71,7 @@ public class CurrencyUnitFragment extends XFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_currency_unit;
+        return R.layout.eos_fragment_currency_unit;
     }
 
     @Override
