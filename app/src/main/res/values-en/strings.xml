@@ -4,7 +4,6 @@
 
     <!-- Common -->
     <string name="eos_app_name">GEMMA</string>
-    <string name="title">我是标题</string>
     <string name="eos_eos">EOS</string>
 
     <!-- Initial Activity -->
@@ -99,43 +98,7 @@
     <string name="eos_amount_ram_unit_price">≈ %1$s EOS/KB</string>
     <string name="eos_tip_quantity_approxi">Estimated</string>
 
-    <!-- Me/General/About -->
-    <string name="general">General</string>
-    <string name="security">Security Settings</string>
-    <string name="help">Help &amp; Feedback</string>
-    <string name="terms_of_service">Terms of Service</string>
-    <string name="about_gemma">About</string>
-    <string name="about">About</string>
 
-    <string name="face">Face Unlock</string>
-    <string name="fingerprints">Touch Unlock</string>
-    <string name="pattern">Pattern Unlock</string>
-    <string name="changePattern">Pattern Settings</string>
-
-    <string name="title_currency_unit">Currency</string>
-
-
-    <string name="version_info">What\'s Fresh</string>
-    <string name="version_update">Version Update</string>
-    <string name="copyright">Copyright @2018 Tuolian. All Rights Reserved</string>
-
-    <!-- Gesture login activity -->
-    <string name="gesture_forget_gesture">Forgotten Pattern</string>
-    <string name="gesture_default">Draw your pattern</string>
-    <string name="gesture_error">Not match. Please draw again.</string>
-    <string name="gesture_error_max_retry">Too many attempts, try again %1$d seconds later</string>
-    <string name="gesture_correct">Match</string>
-    <string name="gesture_error_tip_total">attempts</string>
-    <string name="gesture_tip_password_error_retry">Not match,</string>
-
-    <!-- Create gesture activity -->
-    <string name="create_gesture_activity">CreateGestureActivity</string>
-    <string name="create_gesture_default">Draw pattern</string>
-    <string name="create_gesture_correct">Draw again to confirm</string>
-    <string name="create_gesture_less_error">The length of pattern is at least 4</string>
-    <string name="create_gesture_confirm_error">Not match. Please draw again.</string>
-    <string name="create_gesture_confirm_correct">Done</string>
-    <string name="create_gesture_reset">Reset</string>
 
     <!-- Import Wallet-->
     <string name="eos_import_wallet">Import Wallet</string>
@@ -207,57 +170,57 @@
     <string name="eos_copy">Copy</string>
     <string name="eos_priKey_en">Private Key</string>
 
-    <string name="backup_prikey">Backup</string>
-    <string name="please_input_pass">Enter password</string>
-    <string name="wrong_password">Wrong password</string>
-    <string name="manage_wallet">Manage Wallets</string>
-    <string name="save">Save</string>
+    <string name="eos_btn_backup_prikey">Backup</string>
+    <string name="eos_tip_please_input_pass">Enter password</string>
+    <string name="eos_tip_wrong_password">Wrong password</string>
+    <string name="eos_title_manage_wallet">Manage Wallets</string>
+    <string name="eos_btn_save">Save</string>
 
     <!-- Vote activity-->
-    <string name="title_vote">Vote</string>
-    <string name="vote">Vote</string>
-    <string name="vote_num">%1$s/30</string>
-    <string name="vote_num_init">0/30</string>
-    <string name="nodes_selected_num">Selected(%1$s/30)</string>
-    <string name="delegate_res">Staked</string>
-    <string name="zero_balance">0.0000 EOS</string>
-    <string name="no_avail_votes">No Stake</string>
+    <string name="eos_title_vote">Vote</string>
+    <string name="eos_tip_vote">Vote</string>
+    <string name="eos_amount_vote_num">%1$s/30</string>
+    <string name="eos_vote_num_init">0/30</string>
+    <string name="eos_nodes_selected_num">Selected(%1$s/30)</string>
+    <string name="eos_delegate_res">Staked</string>
+    <string name="eos_zero_balance">0.0000 EOS</string>
+    <string name="eos_tip_no_avail_votes">No Stake</string>
 
     <!-- Transfer activity-->
-    <string name="account_name">Account name</string>
-    <string name="remain_balance_zero">Balance: 0.0000 EOS</string>
-    <string name="transfer_hint">Enter amount</string>
-    <string name="input_transfer_hint">(Optional)</string>
-    <string name="show_remain_balance">Balance: </string>
-    <string name="cant_transfer_to_yourself">Recipient\'s name can not be same as sender\'s name</string>
-    <string name="tip_balance_not_enough">Insufficient balance</string>
+    <string name="eos_account_name">Account name</string>
+    <string name="eos_remain_balance_zero">Balance: 0.0000 EOS</string>
+    <string name="eos_tip_transfer">Enter amount</string>
+    <string name="eos_input_transfer_hint">(Optional)</string>
+    <string name="eos_show_remain_balance">Balance: </string>
+    <string name="eos_tip_cant_transfer_to_yourself">Recipient\'s name can not be same as sender\'s name</string>
+    <string name="eos_tip_balance_not_enough">Insufficient balance</string>
 
     <!-- Transfer Record -->
-    <string name="title_transfer_record">Transactions</string>
+    <string name="eos_title_transfer_record">Transactions</string>
 
     <!-- Transfer Detail -->
-    <string name="title_transfer_detail">Details</string>
+    <string name="eos_title_transfer_detail">Details</string>
 
     <!-- Delegate activity-->
     <string name="eos_tip_balance_default">Balance: -- EOS</string>
 
     <!-- Dialogs -->
-    <string name="delegate_memo">Delegate %1$s EOS for CPU, %2$s EOS for NET</string>
-    <string name="unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
-    <string name="switch_account">Switch Account</string>
-    <string name="confirm_delegate">Confirm stake</string>
-    <string name="input_pass_hint">Enter @%1$s\'s password</string>
-    <string name="gemma_password_hint">Enter account password to authorize operation</string>
-    <string name="confirm_author">Authorize</string>
-    <string name="confirm_buy">Confirm buy</string>
-    <string name="confirm_sell">Confirm sell</string>
-    <string name="explanation">Description</string>
-    <string name="buy_ram">Buy RAM</string>
-    <string name="sell_ram">Sell RAM</string>
+    <string name="eos_delegate_memo">Delegate %1$s EOS for CPU, %2$s EOS for NET</string>
+    <string name="eos_unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
+    <string name="eos_switch_account">Switch Account</string>
+    <string name="eos_confirm_delegate">Confirm stake</string>
+    <string name="eos_input_pass_hint">Enter @%1$s\'s password</string>
+    <string name="eos_gemma_password_hint">Enter account password to authorize operation</string>
+    <string name="eos_confirm_author">Authorize</string>
+    <string name="eos_confirm_buy">Confirm buy</string>
+    <string name="eos_confirm_sell">Confirm sell</string>
+    <string name="eos_explanation">Description</string>
+    <string name="eos_tip_buy_ram">Buy RAM</string>
+    <string name="eos_tip_sell_ram">Sell RAM</string>
     <string name="eos_quantity">Amount</string>
-    <string name="input_original_pass">Enter original password</string>
-    <string name="verify_password">Verify</string>
-    <string name="input_password">Enter @\'s password</string>
+    <string name="eos_input_original_pass">Enter original password</string>
+    <string name="eos_verify_password">Verify</string>
+    <string name="eos_input_password">Enter @\'s password</string>
 
     <!-- Barcode scan activity -->
     <string name="barcode_scan_hint">Align Bar Code within frame to scan</string>
@@ -278,89 +241,55 @@
     <string name="eos_node_test_beijing">http://47.75.154.248:50003(北京测试链)</string>
     <string name="eos_node_select">Node</string>
 
-    <string name="eos_cybex">EOS CYBEX</string>
-    <string name="start_eos">START EOS</string>
-    <string name="eos_newyork">EOS NEW YORK</string>
-    <string name="eos_greymass">EOS GREYMASS</string>
-    <string name="eos_asia">EOS ASIA</string>
-    <string name="eos_gravity">EOS GRAVITY</string>
-    <string name="hello_eos">HELLO EOS</string>
-    <string name="hk_eos">HK EOS</string>
-    <string name="eos_42">EOS 42</string>
-    <string name="eos_cypher_glass">CYPHER GLASS</string>
-    <string name="eos_test_beijing">北京测试链</string>
+    <string name="eos_alias_eos_cybex">EOS CYBEX</string>
+    <string name="eos_alias_start_eos">START EOS</string>
+    <string name="eos_alias_eos_newyork">EOS NEW YORK</string>
+    <string name="eos_alias_eos_greymass">EOS GREYMASS</string>
+    <string name="eos_alias_eos_asia">EOS ASIA</string>
+    <string name="eos_alias_eos_gravity">EOS GRAVITY</string>
+    <string name="eos_alias_hello_eos">HELLO EOS</string>
+    <string name="eos_alias_hk_eos">HK EOS</string>
+    <string name="eos_alias_eos_42">EOS 42</string>
+    <string name="eos_alias_eos_cypher_glass">CYPHER GLASS</string>
+    <string name="eos_alias_eos_test_beijing">北京测试链</string>
 
     <!-- Change Wallet Name fragment-->
-    <string name="wallet_name_short">Wallet name</string>
-    <string name="change_wallet_name_hint">Enter a new wallet name</string>
+    <string name="eos_wallet_name_short">Wallet name</string>
+    <string name="eos_change_wallet_name_hint">Enter a new wallet name</string>
 
     <!-- Wallet Detail fragment -->
-    <string name="changePass">Change Password</string>
-    <string name="export_privateKey">Export Private Key</string>
+    <string name="eos_changePass">Change Password</string>
+    <string name="eos_export_privateKey">Export Private Key</string>
 
     <!-- Creating Wallet fragment -->
-    <string name="backupHint">The private key is the identity of your assets. Please backup it as soon as possible. So you can recover your assets even accidents happened like phone lost, password forgotten, etc.</string>
+    <string name="eos_backup_hint">The private key is the identity of your assets. Please backup it as soon as possible. So you can recover your assets even accidents happened like phone lost, password forgotten, etc.</string>
 
-    <!-- Base WebView-->
-    <string name="fast_web_alert_title">Tips</string>
-    <string name="fast_web_alert_msg">Are you sure to leave?</string>
-    <string name="fast_web_alert_left">Stay</string>
-    <string name="fast_web_alert_right">Close</string>
-    <string name="fast_loading">Loading...</string>
-    <string name="fast_cancel">Cancel</string>
-    <string name="fast_load_more_load_end">No more data</string>
-    <string name="fast_load_more_load_failed">Load fail, click to retry</string>
-    <string name="fast_load_more_loading">Loading...</string>
-
-    <!-- Permission Manage-->
-    <string name="title_dialog">Tips</string>
-    <string name="message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
-    <string name="message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
-    <string name="message_setting_comeback">The user comes back from the settings page.</string>
-    <string name="message_install_failed">Your phone is not allowed us to install apps.</string>
-    <string name="message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>
-    <string name="message_error_storage">Please check the external storage device.</string>
-    <string name="successfully">Successful</string>
-    <string name="failure">Failure</string>
-
-    <string name="setting">Setting</string>
-    <string name="resume">Resume</string>
-    <string name="cancel">Cancel</string>
-
-    <!-- Language Setting -->
-    <string name="language">Language</string>
-    <string name="current_unit">Currency</string>
-    <string name="simplified_C">简体中文</string>
-    <string name="USD">USD</string>
-    <string name="CNY">CNY</string>
-    <string name="english">English</string>
-    <string name="follow_system">System</string>
 
     <!-- Toast -->
-    <string name="copy_success">Copied</string>
-    <string name="change_pass_success">Password changed successfully</string>
-    <string name="set_camera_permission">Please allow Gemma to access camera</string>
-    <string name="agree_service_agreement">Agree on Terms of Service and Privacy Policy</string>
-    <string name="invalid_eos_username">Invalid account name</string>
+    <string name="eos_copy_success">Copied</string>
+    <string name="eos_change_pass_success">Password changed successfully</string>
+    <string name="eos_set_camera_permission">Please allow Gemma to access camera</string>
+    <string name="eos_agree_terms_of_service">Agree on Terms of Service and Privacy Policy</string>
+    <string name="eos_invalid_eos_username">Invalid account name</string>
 
-    <string name="invCode_used">Invalid invite code: used</string>
-    <string name="invCode_not_exist">Invalid invite code</string>
+    <string name="eos_invCode_used">Invalid invite code: used</string>
+    <string name="eos_invCode_not_exist">Invalid invite code</string>
     <string name="eos_name_used">Account registered</string>
     <string name="eos_name_invalid">Illegal character(s) found in account name</string>
     <string name="eos_name_len_invalid">The length of account name should be 12</string>
-    <string name="params_invalid">Request params error</string>
-    <string name="pubKey_invalid">Invalid public key</string>
-    <string name="no_balance">Balance not enough</string>
-    <string name="default_create_fail_info">Request failed</string>
-    <string name="loading_success">Loading success</string>
+    <string name="eos_params_invalid">Request params error</string>
+    <string name="eos_pubKey_invalid">Invalid public key</string>
+    <string name="eos_no_balance">Balance not enough</string>
+    <string name="eos_default_create_fail_info">Request failed</string>
+    <string name="eos_loading_success">Loading success</string>
 
     <!-- Annotation -->
     <string name="eos_name_not_empty">Invalid EOS account name</string>
-    <string name="pass_not_empty">Invalid password</string>
-    <string name="pass_lenth_invalid">8 or more characters. Prefer a mix of letters, numbers &amp; symbols</string>
-    <string name="password_no_match">Password not match</string>
-    <string name="repeat_input_pass">Enter password again</string>
-    <string name="check_agreement">Please agree on Terms of Service and Privacy Policy</string>
+    <string name="eos_pass_not_empty">Invalid password</string>
+    <string name="eos_pass_lenth_invalid">8 or more characters. Prefer a mix of letters, numbers &amp; symbols</string>
+    <string name="eos_password_no_match">Password not match</string>
+    <string name="eos_repeat_input_pass">Enter password again</string>
+    <string name="eos_check_agreement">Please agree on Terms of Service and Privacy Policy</string>
 
 
 
@@ -376,118 +305,102 @@
     <string name="title_me">Me</string>
     <string name="press_again_exit">Back again to exit</string>
 
-    <string name="creating">Pending...</string>
-    <string name="please_confirm">The account is still in the air until 100% confirmed.</string>
+    <string name="eos_creating">Pending...</string>
+    <string name="eos_please_confirm">The account is still in the air until 100% confirmed.</string>
 
     <string name="eos_refund_detail"></string>
     <string name="eos_btn_confirm_refund">Confirm unstake</string>
     <string name="eos_undelegate">Undelegate</string>
-    <string name="refund_username">To</string>
+    <string name="eos_refund_username">To</string>
 
-    <string name="curwallets">Wallets</string>
-    <string name="walletManege">More</string>
+    <string name="eos_curwallets">Wallets</string>
+    <string name="eos_wallet_manege">More</string>
 
-    <string name="click_to_copy">Copy</string>
-    <string name="key_saved">It has been securely saved</string>
+    <string name="eos_click_to_copy">Copy</string>
+    <string name="eos_key_saved">It has been securely saved</string>
 
-    <string name="get_inv_from_friend">Request from a friend</string>
-    <string name="use_cybex">Via exchange withdraw</string>
-    <string name="use_invCode">Via VIP invite code</string>
-    <string name="choose_create_method">Choose a way to create</string>
-    <string name="create_use_invCode">Via VIP invite code</string>
-    <string name="how_to_get_invCode">Get an invite code</string>
-    <string name="input_invCode_hint">Enter invite code</string>
+    <string name="eos_get_inv_from_friend">Request from a friend</string>
+    <string name="eos_use_cybex">Via exchange withdraw</string>
+    <string name="eos_use_invCode">Via VIP invite code</string>
+    <string name="eos_choose_create_method">Choose a way to create</string>
+    <string name="eos_create_use_invCode">Via VIP invite code</string>
+    <string name="eos_how_to_get_invCode">Get an invite code</string>
+    <string name="eos_input_invCode_hint">Enter invite code</string>
 
-    <string name="finger_tip_device_no_support">Not supported by this device</string>
-    <string name="finger_tip_verify_failed">Not Recognized. Try again.</string>
 
-    <string name="setting_password_success">Pattern set successfully</string>
-    <string name="setting_new_gesture_pwd">Pattern Settings</string>
-    
-    <string name="status_un_confirmed">Pending</string>
-    <string name="status_confirmed_ing">Pending</string>
-    <string name="status_confirmed_ok">Confirmed</string>
-    <string name="status_trade_failed">Failed</string>
-
-    <string name="title_security_settings">Security Settings</string>
-    <string name="operate_deal_ing">Processing...</string>
-    <string name="operate_deal_failed">Failed</string>
-    <string name="operate_deal_success">Success</string>
-
-    <string name="config_wallet_ing">Configuring...</string>
-    <string name="import_wallet_failed">Failed to import wallet</string>
+    <string name="eos_import_wallet_failed">Failed to import wallet</string>
 
     <string name="eos_tip_transfer_trade_ing">Sending...</string>
     <string name="eos_tip_transfer_oprate_failed">Failed to transfer</string>
     <string name="eos_tip_transfer_oprate_success">Transaction sent</string>
 
-    <string name="loading_in">Loading...</string>
-    <string name="tip_remaining_zero_zero_day_zero">Remaining </string>
-    <string name="tip_remaining_zero_zero_day">Remaining </string>
-    <string name="unit_hours">hour(s)</string>
-    <string name="tip_remain">Remaining </string>
-    <string name="tip_day_zero"></string>
-    <string name="tip_day">days(s)</string>
+    <string name="eos_tip_loading_in">Loading...</string>
+    <string name="eos_tip_remaining_zero_zero_day_zero">Remaining </string>
+    <string name="eos_tip_remaining_zero_zero_day">Remaining </string>
+    <string name="eos_unit_hours">hour(s)</string>
+    <string name="eos_tip_remain">Remaining </string>
+    <string name="eos_tip_day_zero"></string>
+    <string name="eos_tip_day">days(s)</string>
 
-    <string name="loading_avail_resource">Loading available resources</string>
-    <string name="load_node_info_fail">Load nodes information fail，please check your network or switch
+    <string name="eos_loading_avail_resource">Loading available resources</string>
+    <string name="eos_load_node_info_fail">Load nodes information fail，please check your network or switch
         nodes</string>
-    <string name="load_avail_res_fail">Load available resource fail，please check your network or switch
+    <string name="eos_load_avail_res_fail">Load available resource fail，please check your network or switch
         nodes</string>
-    <string name="loading_account_info">Loading account information</string>
-    <string name="load_account_info_fail">Load account information fail，please check your network or switch
+    <string name="eos_loading_account_info">Loading account information</string>
+    <string name="eos_load_account_info_fail">Load account information fail，please check your network or switch
         nodes</string>
-    <string name="not_enough_delegated_res">No resource available for vote，please delegate eos first</string>
-    <string name="loading_cur_ram_price">Acquiring current estimate RAM price</string>
-    <string name="load_cur_ram_price_fail">Acquiring RAM price fail，please check your network or switch
+    <string name="eos_not_enough_delegated_res">No resource available for vote，please delegate eos first</string>
+    <string name="eos_loading_cur_ram_price">Acquiring current estimate RAM price</string>
+    <string name="eos_load_cur_ram_price_fail">Acquiring RAM price fail，please check your network or switch
         nodes</string>
-    <string name="title_config_wallet">Wallet Configuration</string>
-    <string name="prikey_format_invalid">Private Key format invalid，please check it</string>
-    <string name="loading_pretransfer_info">Loading account information</string>
-    <string name="dont_import_same_wallet">This wallet is already existed in Gemma</string>
-    <string name="default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://xxxx</string>
+    <string name="eos_title_config_wallet">Wallet Configuration</string>
+    <string name="eos_prikey_format_invalid">Private Key format invalid，please check it</string>
+    <string name="eos_loading_pretransfer_info">Loading account information</string>
+    <string name="eos_dont_import_same_wallet">This wallet is already existed in Gemma</string>
+    <string name="eos_default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://xxxx</string>
 
-    <string name="tab_title_private_key">Private key</string>
-    <string name="tab_title_qr_code">Qr code</string>
+    <string name="eos_tab_title_private_key">Private key</string>
+    <string name="eos_tab_title_qr_code">Qr code</string>
 
-    <string name="tab_title_delegate">Delegate</string>
-    <string name="tab_title_un_delegate">Undelegate</string>
+    <string name="eos_tab_title_delegate">Delegate</string>
+    <string name="eos_tab_title_un_delegate">Undelegate</string>
 
-    <string name="tab_title_buy">Buy</string>
-    <string name="tab_title_sell">Sell</string>
+    <string name="eos_tab_title_buy">Buy</string>
+    <string name="eos_tab_title_sell">Sell</string>
 
-    <string name="selected_nodes_limit">Please choose less than 30 nodes</string>
+    <string name="eos_tip_selected_nodes_limit">Please choose less than 30 nodes</string>
 
-    <string name="account_name_err">EOS Username Invalid</string>
-    <string name="transfer_detail">Transfer Detail</string>
-    <string name="tip_eos_amount_format_invalid">Please enter four decimal at most</string>
+    <string name="eos_tip_account_name_err">EOS Username Invalid</string>
+    <string name="eos_tip_transfer_detail">Transfer Detail</string>
+    <string name="eos_tip_eos_amount_format_invalid">Please enter four decimal at most</string>
 
     <!-- 账户激活 -->
-    <string name="title_choose_activate_method">Choose a way to activate</string>
-    <string name="tab_title_activate_by_RMB">By RMB</string>
-    <string name="tab_title_activate_by_friend">By friend</string>
-    <string name="tab_title_activate_by_exchanges">By exchange</string>
-    <string name="tab_title_activate_by_invCode">By invite code</string>
-    <string name="tip_activate_by_rmb">You need to pay for resources like CPU, NET and RAM in order to activate your
+    <string name="eos_title_choose_activate_method">Choose a way to activate</string>
+    <string name="eos_tab_title_activate_by_RMB">By RMB</string>
+    <string name="eos_tab_title_activate_by_friend">By friend</string>
+    <string name="eos_tab_title_activate_by_exchanges">By exchange</string>
+    <string name="eos_tab_title_activate_by_invCode">By invite code</string>
+    <string name="eos_tip_activate_by_rmb">You need to pay for resources like CPU, NET and RAM in order to activate your
         account</string>
-    <string name="tip_need_to_pay">Fee</string>
-    <string name="wechat_pay">Wechat Pay</string>
+    <string name="eos_tip_need_to_pay">Fee</string>
+    <string name="eos_wechat_pay">Wechat Pay</string>
 
 
-    <string name="tip_backup_prikey_friend">Please make sure to back up your private key, when your friend finishes the transfer, you will need to import the
+    <string name="eos_tip_backup_prikey_friend">Please make sure to back up your private key, when your friend finishes the transfer, you will need to import the
     private key into Gemma once again to use your account. Account can not be restored if the private key was lost.</string>
-    <string name="tip_backup_prikey_exchange">Please make sure to back up your private key, when your finish the transfer at any exchange that support memo, you
+    <string name="eos_tip_backup_prikey_exchange">Please make sure to back up your private key, when your finish the transfer at any exchange that support memo, you
     will need to import the private key into Gemma once again to use your account. Account can not be restored if the private key was lost.</string>
 
-    <string name="tip_activate_by_exchange_part_one">Please transfer in any exchange that support memo into smart contract </string>
-    <string name="tip_activate_by_exchange_part_two">signupeoseos </string>
-    <string name="tip_activate_by_exchange_part_three"><Data><![CDATA[and<font color = "#426bd4">use words followed as memo
+    <string name="eos_tip_activate_by_exchange_part_one">Please transfer in any exchange that support memo into smart contract </string>
+    <string name="eos_tip_activate_by_exchange_part_two">signupeoseos </string>
+    <string name="eos_tip_activate_by_exchange_part_three"><Data><![CDATA[and<font color = "#426bd4">use words followed as memo
     </font>]]></Data>，to finish creating.</string>
 
-    <string name="tip_activate_by_friend_part_one">Please let your friend transfer into smart contract </string>
-    <string name="tip_activate_by_friend_part_two">signupeoseos </string>
+    <string name="eos_tip_activate_by_friend_part_one">Please let your friend transfer into smart contract </string>
+    <string name="eos_tip_activate_by_friend_part_two">signupeoseos </string>
     <string
-        name="tip_activate_by_friend_part_three"><Data><![CDATA[and<font color = "#426bd4">use words followed as memo
+        name="eos_tip_activate_by_friend_part_three"><Data><![CDATA[and<font color = "#426bd4">use words followed as memo
     </font>]]></Data>，to finish creating.</string>
 
     <string
@@ -497,33 +410,33 @@
         the remaining<font color="#426bd4"> 1.8 EOS </font>will be used for purchasing RAM at current
         price。]]></Data></string>
 
-    <string name="click_to_copy_priKey">copy</string>
-    <string name="activate">Activate</string>
-    <string name="activate_account">Activate EOS account</string>
-    <string name="payment_fail">Payment fail</string>
-    <string name="payment_overtime">Payment overtime</string>
-    <string name="tip_payment_overtime">The money will be refunded within 24 hours if you
+    <string name="eos_click_to_copy_priKey">copy</string>
+    <string name="eos_activate">Activate</string>
+    <string name="eos_activate_account">Activate EOS account</string>
+    <string name="eos_payment_fail">Payment fail</string>
+    <string name="eos_payment_overtime">Payment overtime</string>
+    <string name="eos_tip_payment_overtime">The money will be refunded within 24 hours if you
         have paid</string>
-    <string name="price_changed">Price changed</string>
-    <string name="payment_price_changed">Due to EOS price change, the fee for creating this
+    <string name="eos_price_changed">Price changed</string>
+    <string name="eos_payment_price_changed">Due to EOS price change, the fee for creating this
         account turns into  %1$s RMB</string>
-    <string name="tip_payment_time">Please finish the payment in 10 minutes</string>
-    <string name="ok">OK</string>
-    <string name="tip_loading_fee">Calculating Fee</string>
-    <string name="rmb_fee">%1$s RMB</string>
-    <string name="cancel_cn">Cancel</string>
-    <string name="confirm_payment">Confirm Pay</string>
-    <string name="verify">Verify</string>
-    <string name="verify_priKey">Verify Private Key</string>
-    <string name="tip_verify_prikey">Please enter your private key to verify</string>
-    <string name="memo_copied">Memo copied</string>
-    <string name="verifying_account">verifying if account name is usable</string>
-    <string name="tip_check_network">Failed，please check network</string>
-    <string name="tip_username_valid">Congrats, eos username is usable</string>
-    <string name="import_wallet_success">Import Wallet Done</string>
-    <string name="create_fail">Create fail, the account name has been taken by another user</string>
-    <string name="tip_cant_input_zero">CPU and NET can not all be zero</string>
-    <string name="unknow_err">Unknown Error</string>
+    <string name="eos_tip_payment_time">Please finish the payment in 10 minutes</string>
+    <string name="eos_ok">OK</string>
+    <string name="eos_tip_loading_fee">Calculating Fee</string>
+    <string name="eos_rmb_fee">%1$s RMB</string>
+    <string name="eos_cancel_cn">Cancel</string>
+    <string name="eos_confirm_payment">Confirm Pay</string>
+    <string name="eos_verify">Verify</string>
+    <string name="eos_verify_priKey">Verify Private Key</string>
+    <string name="eos_tip_verify_prikey">Please enter your private key to verify</string>
+    <string name="eos_memo_copied">Memo copied</string>
+    <string name="eos_verifying_account">verifying if account name is usable</string>
+    <string name="eos_tip_check_network">Failed，please check network</string>
+    <string name="eos_tip_username_valid">Congrats, eos username is usable</string>
+    <string name="eos_import_wallet_success">Import Wallet Done</string>
+    <string name="eos_create_fail">Create fail, the account name has been taken by another user</string>
+    <string name="eos_tip_cant_input_zero">CPU and NET can not all be zero</string>
+    <string name="eos_unknow_err">Unknown Error</string>
 
 
 
@@ -715,95 +628,194 @@
 
 
     <!--蓝牙钱包配置start -->
-    <string name="title_wookong_bio">WOOKONG Bio</string>
-    <string name="match_wookong_bio">配对 WOOKONG Bio</string>
+    <string name="eos_title_wookong_bio">WOOKONG Bio</string>
+    <string name="eos_match_wookong_bio">Pairing WOOKONG Bio</string>
 
-    <string name="tip_card">第一款支持EOS的蓝牙硬件钱包</string>
-    <string name="desc_wookong_url">点击查看 更多WOOKONG Bio介绍</string>
-    <string name="bluetooth_scan_step_title">准备使用WOOKONG Bio</string>
-    <string name="bluetooth_scan_step">
-        1.确保打开手机蓝牙\n2.启动WOOKONG Bio
+    <string name="eos_tip_card">The first wallet supports bluetooth hardware</string>
+    <string name="eos_desc_wookong_url">See more about WOOKONG Bio</string>
+    <string name="eos_bluetooth_scan_step_title">Ready WOOKONG Bio</string>
+    <string name="eos_bluetooth_scan_step">
+        1.Make sure bluetooth is ready \n2.WOOKONG Bio is power on
     </string>
 
-    <string name="btn_start_pair">开始配对</string>
-    <string name="title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>
-    <string name="title_paire_bluetooth">WOOKONG Bio</string>
-    <string name="empty_no_device">请点击图片重新扫描</string>
+    <string name="eos_btn_start_pair">Start pair</string>
+    <string name="eos_title_scan_result">Choose the WOOKONG Bio you want to connect.Please check your bluetooth and
+        Bio\'s power if the device is not seen</string>
+    <string name="eos_title_paire_bluetooth">WOOKONG Bio</string>
+    <string name="eos_empty_no_device">click picture to rescan</string>
 
-    <string name="title_set_wookong_password">设置WOOKONG Bio密码</string>
-    <string name="hint_set_wookong_password">长度8-16， 建议混合大小写字母、数字及符号</string>
+    <string name="eos_title_set_wookong_password">set WOOKONG Bio\'s password</string>
+    <string name="eos_hint_set_wookong_password">8 or more characters. Prefer a mix of letters, numbers &amp; symbols</string>
 
-    <string name="tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
+    <string name="eos_tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
 
-    <string name="status_un_init">未初始化</string>
-    <string name="status_init_no_pair">已经初始化但没有配对信息</string>
-    <string name="status_init_pair">已经初始化但没有配对信息</string>
+    <string name="eos_status_un_init">Uninitialized</string>
+    <string name="eos_status_init_no_pair">Initialized, not paired</string>
+    <string name="eos_status_init_pair">Initialized, paired</string>
 
-    <string name="tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>
+    <string name="eos_tip_status_un_init">This WOOKONG Bio has not been initialized,
+        please initialize it first</string>
 
-    <string name="progress_set_pin">正在设置PIN...</string>
+    <string name="eos_progress_set_pin">Setting PIN...</string>
 
-    <string name="title_create_eos_account">创建EOS账户</string>
+    <string name="eos_title_create_eos_account">Create EOS account</string>
 
-    <string name="mne_validate_success">验证成功</string>
-    <string name="mne_validate_failed">验证失败</string>
-    <string name="mne_validate_warn">蓝牙连接已断开，请重新连接</string>
-    <string name="do_get_init_info">正在获取初始化信息...</string>
-    <string name="title_setting_fp">设置指纹</string>
-    <string name="btn_title_skip">跳过</string>
-    <string name="finger_set_success">指纹录入成功</string>
-    <string name="wookong_password_hint">请输入WOOKONG Bio的密码以确认授权</string>
-    <string name="transfer_error">当前账户转账出现异常</string>
-    <string name="transfer_eosname_hint">请输入@</string>
-    <string name="transfer_eosname_hint_last">的密码</string>
-    <string name="transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>
-    <string name="transfer_bluetooth_tip">正在连接WOOKONG Bio</string>
-    <string name="connect_sure_tip">请在WOOKONG Bio上按指纹以确认授权</string>
-    <string name="connect_sure_battery_tip">请在WOOKONG Bio上按键以确认转账</string>
-    <string name="connect_failed_tip">连接失败。请检查手机蓝牙和设备电源。</string>
-    <string name="btn_connect_retry">重试连接</string>
-    <string name="connect">Connect</string>
-    <string name="disconnect">Disconnect</string>
-    <string name="bio_sign_fail">签名失败，请重新尝试</string>
-    <string name="fingerprint">指纹</string>
-    <string name="add_fingerprint">添加指纹</string>
+    <string name="eos_mne_validate_success">Validation success</string>
+    <string name="eos_mne_validate_failed">Validation fail</string>
+    <string name="eos_mne_validate_warn">The Bluetooth is disconnected, please reconnect</string>
+    <string name="eos_do_get_init_info">Initializing...</string>
+    <string name="eos_title_setting_fp">Setting fingerprint</string>
+    <string name="eos_btn_title_skip">Jump</string>
+    <string name="eos_finger_set_success">Gather fingerprint information done</string>
+    <string name="eos_wookong_password_hint">Please input WOOKONG Bio password to authorize</string>
+    <string name="eos_transfer_error">Transfer Error</string>
+    <string name="eos_transfer_eosname_hint">Please input@</string>
+    <string name="eos_transfer_eosname_hint_last">\'s password</string>
+    <string name="eos_transefer_bluetooth_connect_tip">Please check your bluetooth and Bio\'s power if the device is
+        not seen</string>
+    <string name="eos_transfer_bluetooth_tip">Connecting WOOKONG Bio</string>
+    <string name="eos_connect_sure_tip">Please verify your fingerprint on WOOKONG Bio to authorize</string>
+    <string name="eos_connect_sure_battery_tip">Please press button on WOOKONG Bio to confirm transfer</string>
+    <string name="eos_connect_failed_tip">Connect Fail. Please check your bluetooth and Bio\'s power.</string>
+    <string name="eos_btn_connect_retry">Reconnect</string>
+    <string name="eos_btn_connect">Connect</string>
+    <string name="eos_btn_disconnect">Disconnect</string>
+    <string name="eos_tip_bio_sign_fail">Sign Fail，Please try again</string>
+    <string name="eos_fingerprint">Fingerprint</string>
+    <string name="eos_add_fingerprint">Add Fingerprint</string>
 
 
     <!-- WOOKONG BIO 详情页面-->
-    <string name="name">名称</string>
-    <string name="public_key">公钥</string>
-    <string name="battery_left">电量</string>
-    <string name="click_to_connect">点击连接</string>
-    <string name="click_to_format">格式化</string>
-    <string name="click_to_cancel_pair">取消配对</string>
-    <string name="confirm_format">确认格式化</string>
-    <string name="tip_format">一旦格式化，WOOKONG Bio将清除私钥，请在格式化前备份助记词或转移资产。</string>
-    <string name="confirm">确认</string>
-    <string name="format_success">格式化成功</string>
-    <string name="initialize">初始化</string>
-    <string name="tip_to_init">是否重新初始化WOOKONG Bio？</string>
-    <string name="fp_and_password">指纹与密码</string>
-    <string name="tip_bluetooth_transfer">若未找到，请检查手机蓝牙和设备电源。</string>
-    <string name="connecting_bio">正在连接WOOKONG Bio</string>
-
+    <string name="eos_name">Name</string>
+    <string name="eos_public_key">Public key</string>
+    <string name="eos_battery_left">Power Level</string>
+    <string name="eos_btn_to_connect">Connect</string>
+    <string name="eos_btn_to_format">Format</string>
+    <string name="eos_to_cancel_pair">Cancel Pair</string>
+    <string name="eos_confirm_format">Confirm format</string>
+    <string name="eos_tip_format">Once format，WOOKONG Bio will clear the private key, please
+        backup your mnemonic or transfer your asset before format</string>
+    <string name="eos_confirm">Confirm</string>
+    <string name="eos_format_success">Format Done</string>
+    <string name="eos_initialize">Initialize</string>
+    <string name="eos_tip_to_init">Go initialize WOOKONG Bio again？</string>
+    <string name="eos_fp_and_password">Fingerprint and Password</string>
+    <string name="eos_tip_bluetooth_transfer">Please check your bluetooth and Bio\'s power is the device is not
+    seen</string>
+    <string name="eos_connecting_bio">Connecting WOOKONG Bio</string>
 
     <!--蓝牙钱包配置end -->
 
     <!-- 助记词相关-->
-    <string name="backup_mne">备份助记词</string>
-    <string name="show_mne">明白了， 显示助记词</string>
-    <string name="hint_no_screenshot_mne">如果有人获取你的助记词将直接获取你的资产！请抄写下助记词并存放在安全的地方！</string>
-    <string name="mne_copied">已抄写</string>
-    <string name="tip_memory_your_mne">请记下你的钱包私钥助记词并保存在安全的地方</string>
-    <string name="tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
-    <string name="tip_verify_mne">请按顺序点击已抄下的助记词以验证抄写是否正确</string>
-    <string name="tip_import_mne">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
-    <string name="import_mne">输入助记词，用空格分割</string>
-    <string name="title_verify_mne">验证助记词</string>
-    <string name="btn_import_mne">导入助记词</string>
+    <string name="eos_backup_mne">Backup mnemonic</string>
+    <string name="eos_btn_show_mne">Understood, show mnemonic</string>
+    <string name="eos_hint_no_screenshot_mne">The one who knows your mnemonic will have no limits to get access to your asset.Please write it down and
+        save it in secure</string>
+    <string name="eos_mne_copied">copied</string>
+    <string name="eos_tip_memory_your_mne">Please write your mnemonic down and save it in secure</string>
+    <string name="eos_tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
+    <string name="eos_tip_verify_mne">Please click the mnemonic in the right order to verify it</string>
+    <string name="eos_tip_import_mne">Copy and paste mnemonic to input area, or use a QR code</string>
+    <string name="eos_import_mne">Input Mnemonic，use space to spilt</string>
+    <string name="eos_title_verify_mne">Verify Mnemonic</string>
+    <string name="eos_btn_import_mne">Import Mnemonic</string>
 
     <!-- 指纹管理 -->
-    <string name="delete_fingerprint">删除指纹</string>
-    <string name="change_fp_name">修改名称</string>
+    <string name="eos_delete_fingerprint">Delete Fingerprint</string>
+    <string name="eos_change_fp_name">Change Name</string>
+
+<!-- ==================================================================== -->
+
+    <!-- Me/General/About -->
+    <string name="general">General</string>
+    <string name="security">Security Settings</string>
+    <string name="help">Help &amp; Feedback</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="about_gemma">About</string>
+    <string name="about">About</string>
+
+    <string name="face">Face Unlock</string>
+    <string name="fingerprints">Touch Unlock</string>
+    <string name="pattern">Pattern Unlock</string>
+    <string name="changePattern">Pattern Settings</string>
+
+    <string name="title_currency_unit">Currency</string>
+
+
+    <string name="version_info">What\'s Fresh</string>
+    <string name="version_update">Version Update</string>
+    <string name="copyright">Copyright @2018 Tuolian. All Rights Reserved</string>
+
+    <!-- Gesture login activity -->
+    <string name="gesture_forget_gesture">Forgotten Pattern</string>
+    <string name="gesture_default">Draw your pattern</string>
+    <string name="gesture_error">Not match. Please draw again.</string>
+    <string name="gesture_error_max_retry">Too many attempts, try again %1$d seconds later</string>
+    <string name="gesture_correct">Match</string>
+    <string name="gesture_error_tip_total">attempts</string>
+    <string name="gesture_tip_password_error_retry">Not match,</string>
+
+    <!-- Create gesture activity -->
+    <string name="create_gesture_activity">CreateGestureActivity</string>
+    <string name="create_gesture_default">Draw pattern</string>
+    <string name="create_gesture_correct">Draw again to confirm</string>
+    <string name="create_gesture_less_error">The length of pattern is at least 4</string>
+    <string name="create_gesture_confirm_error">Not match. Please draw again.</string>
+    <string name="create_gesture_confirm_correct">Done</string>
+    <string name="create_gesture_reset">Reset</string>
+
+    <!-- Base WebView-->
+    <string name="fast_web_alert_title">Tips</string>
+    <string name="fast_web_alert_msg">Are you sure to leave?</string>
+    <string name="fast_web_alert_left">Stay</string>
+    <string name="fast_web_alert_right">Close</string>
+    <string name="fast_loading">Loading...</string>
+    <string name="fast_cancel">Cancel</string>
+    <string name="fast_load_more_load_end">No more data</string>
+    <string name="fast_load_more_load_failed">Load fail, click to retry</string>
+    <string name="fast_load_more_loading">Loading...</string>
+
+    <!-- Permission Manage-->
+    <string name="title_dialog">Tips</string>
+    <string name="message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
+    <string name="message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
+    <string name="message_setting_comeback">The user comes back from the settings page.</string>
+    <string name="message_install_failed">Your phone is not allowed us to install apps.</string>
+    <string name="message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>
+    <string name="message_error_storage">Please check the external storage device.</string>
+    <string name="successfully">Successful</string>
+    <string name="failure">Failure</string>
+
+    <string name="setting">Setting</string>
+    <string name="resume">Resume</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Language Setting -->
+    <string name="language">Language</string>
+    <string name="current_unit">Currency</string>
+    <string name="simplified_C">简体中文</string>
+    <string name="USD">USD</string>
+    <string name="CNY">CNY</string>
+    <string name="english">English</string>
+    <string name="follow_system">System</string>
+
+    <!-- others -->
+    <string name="finger_tip_device_no_support">Not supported by this device</string>
+    <string name="finger_tip_verify_failed">Not Recognized. Try again.</string>
+
+    <string name="setting_password_success">Pattern set successfully</string>
+    <string name="setting_new_gesture_pwd">Pattern Settings</string>
+
+    <string name="status_un_confirmed">Pending</string>
+    <string name="status_confirmed_ing">Pending</string>
+    <string name="status_confirmed_ok">Confirmed</string>
+    <string name="status_trade_failed">Failed</string>
+
+    <string name="title_security_settings">Security Settings</string>
+    <string name="operate_deal_ing">Processing...</string>
+    <string name="operate_deal_failed">Failed</string>
+    <string name="operate_deal_success">Success</string>
+
+    <string name="config_wallet_ing">Configuring...</string>
 
 </resources>

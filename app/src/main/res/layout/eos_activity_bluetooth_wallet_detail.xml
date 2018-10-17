@@ -26,7 +26,7 @@
             android:layout_height="50dp"
             title:sLeftTextColor="@color/darkSlateBlue"
             title:sLeftTextSize="@dimen/total_assets_text_size"
-            title:sLeftTextString="@string/name"
+            title:sLeftTextString="@string/eos_name"
             title:sRightTextColor="@color/cloudyBlue"
             title:sRightTextString="WOOKONG Bio"
             title:sRightTextSize="@dimen/total_assets_text_size"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:gravity="center_vertical"
-                android:text="@string/public_key"
+                android:text="@string/eos_public_key"
                 android:textColor="@color/darkSlateBlue"
                 android:textSize="@dimen/font_3.5"
                 title:layout_constraintStart_toStartOf="parent"
@@ -91,7 +91,7 @@
             android:layout_height="50dp"
             title:sLeftTextColor="@color/darkSlateBlue"
             title:sLeftTextSize="@dimen/total_assets_text_size"
-            title:sLeftTextString="@string/battery_left"
+            title:sLeftTextString="@string/eos_battery_left"
             title:sRightTextColor="@color/cloudyBlue"
             title:sRightTextSize="@dimen/total_assets_text_size"
             title:sShapeSolidColor="@color/whiteTwo"
@@ -115,7 +115,7 @@
         android:id="@+id/bt_to_connect"
         android:layout_margin="@dimen/dimen_20"
         android:layout_width="match_parent"
-        android:text="@string/click_to_connect"
+        android:text="@string/eos_btn_to_connect"
         android:background="@drawable/shape_corner"
         android:layout_height="@dimen/dimen_44"/>
 
@@ -125,14 +125,14 @@
         android:id="@+id/bt_cancel_pair"
         android:layout_margin="@dimen/dimen_20"
         android:layout_width="match_parent"
-        android:text="@string/click_to_cancel_pair"
+        android:text="@string/eos_to_cancel_pair"
         android:background="@drawable/shape_corner"
         android:layout_height="@dimen/dimen_44"/>
 
     <Button
         android:visibility="gone"
         android:id="@+id/bt_format"
-        android:text="@string/click_to_format"
+        android:text="@string/eos_btn_to_format"
         android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginEnd="@dimen/dimen_20"
         android:background="@drawable/shape_corner"

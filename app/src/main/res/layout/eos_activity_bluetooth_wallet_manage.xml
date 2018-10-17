@@ -42,7 +42,7 @@
                     android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
                     android:layout_marginTop="@dimen/dimen_20"
                     android:paddingStart="@dimen/standard_margin_in_walletDetailPage"
-                    android:text="@string/title_wookong_bio"
+                    android:text="@string/eos_title_wookong_bio"
                     android:textColor="@color/darkSlateBlue"
                     android:textSize="@dimen/font_6"
                     android:textStyle="bold"
@@ -100,7 +100,7 @@
                     title:sShapeSelectorPressedColor="@color/item_pressed"
                     title:sLeftTextSize="@dimen/font_3.5"
                     android:paddingStart="@dimen/dimen_10"
-                    title:sLeftTextString="@string/fp_and_password"
+                    title:sLeftTextString="@string/eos_fp_and_password"
                     title:sRightTvDrawableRight="@drawable/ic_arrow"
                     title:sUseShape="true"
                     title:sShapeCornersRadius="@dimen/dimen_6"
@@ -128,7 +128,7 @@
                 android:layout_marginStart="@dimen/dimen_20"
                 android:layout_marginEnd="@dimen/dimen_20"
                 android:background="@drawable/shape_corner_button_white"
-                android:text="@string/connect"
+                android:text="@string/eos_btn_connect"
                 android:textColor="@color/cornflowerBlue"/>
 
             <Button
@@ -140,7 +140,7 @@
                 android:layout_marginEnd="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_40"
                 android:background="@drawable/shape_corner_button_white"
-                android:text="@string/disconnect"
+                android:text="@string/eos_btn_disconnect"
                 android:textColor="@color/cornflowerBlue"/>
 
             <View

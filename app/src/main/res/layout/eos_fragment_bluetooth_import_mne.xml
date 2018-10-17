@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tip_import_mne"
+        android:text="@string/eos_tip_import_mne"
         android:textSize="@dimen/font_3"
         android:textAlignment="center"
         android:textColor="@color/steel"
@@ -34,7 +34,7 @@
             android:id="@+id/edt_show_priKey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/import_mne"
+            android:hint="@string/eos_import_mne"
             android:textSize="@dimen/font_3.5"
             android:textColor="@color/darkSlateBlue"
             android:textColorHint="@color/blueyGrey"

@@ -23,7 +23,7 @@
             android:layout_gravity="center"/>
 
         <TextView
-            android:text="@string/creating"
+            android:text="@string/eos_creating"
             android:gravity="center"
             android:textColor="@color/darkSlateBlue"
             android:textStyle="bold"
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_70"
             android:layout_margin="@dimen/dimen_20"
-            title:sCenterTextString="@string/please_confirm"
+            title:sCenterTextString="@string/eos_please_confirm"
             title:sCenterTextColor="@color/whiteTwo"
             title:sLeftIconShowCircle="true"
             title:sDividerLineType="none"
@@ -60,7 +60,7 @@
                 android:layout_margin="24dp"
                 android:textSize="@dimen/font_3.5"
                 android:textColor="@color/blueyGrey"
-                android:text="@string/backupHint"/>
+                android:text="@string/eos_backup_hint"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -87,7 +87,7 @@
                     android:textSize="@dimen/font_3.5"
                     android:textColor="@color/whiteTwo"
                     android:layout_height="@dimen/bt_inInitPage_height"
-                    android:text="@string/export_privateKey"/>
+                    android:text="@string/eos_export_privateKey"/>
 
             </LinearLayout>
 

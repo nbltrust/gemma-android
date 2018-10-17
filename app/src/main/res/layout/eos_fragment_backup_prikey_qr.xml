@@ -52,7 +52,7 @@
             android:visibility="gone"
             android:id="@+id/bt_key_saved"
             style="@style/bt_long_in_linearLayout"
-            android:text="@string/key_saved"
+            android:text="@string/eos_key_saved"
             android:layout_marginTop="20dp"/>
 
 

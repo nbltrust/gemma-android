@@ -23,5 +23,5 @@
         android:layout_marginTop="15dp"
         android:layout_below="@id/empty_retry_view"
         android:layout_centerHorizontal="true"
-        android:text="@string/empty_no_device"/>
+        android:text="@string/eos_empty_no_device"/>
 </RelativeLayout>

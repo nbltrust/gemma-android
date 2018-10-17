@@ -22,7 +22,7 @@
         android:layout_marginTop="16dp"
         android:textColor="@color/darkSlateBlue"
         android:lineSpacingExtra="2sp"
-        android:text="@string/tip_confirm_wookong_init"
+        android:text="@string/eos_tip_confirm_wookong_init"
         />
 
     <ImageView

@@ -69,17 +69,17 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_set_pass) TextView tvSetPass;
 
-    @NotEmpty(messageResId = R.string.pass_not_empty, sequence = 3)
-    @Password(min = 8, messageResId = R.string.pass_lenth_invalid, sequence = 3)
+    @NotEmpty(messageResId = R.string.eos_pass_not_empty, sequence = 3)
+    @Password(min = 8, messageResId = R.string.eos_pass_lenth_invalid, sequence = 3)
     @BindView(R.id.edt_set_pass) EditText edtSetPass;
     @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
 
     @NotEmpty(messageResId = R.string.eos_tip_repeat_password, sequence = 2)
-    @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 2)
+    @ConfirmPassword(messageResId = R.string.eos_password_no_match, sequence = 2)
     @BindView(R.id.et_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.tv_pass_hint_f) TextView tvPassHint;
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
-    @Checked(messageResId = R.string.check_agreement, sequence = 1)
+    @Checked(messageResId = R.string.eos_check_agreement, sequence = 1)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.tv_service_agreement_config) TextView serviceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
@@ -275,7 +275,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         validator = new Validator(this);
         validator.setValidationListener(this);
         isMask = true;
-        setNavibarTitle(getResources().getString(R.string.title_config_wallet), true, false);
+        setNavibarTitle(getResources().getString(R.string.eos_title_config_wallet), true, false);
 
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -429,11 +429,11 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             if (getArguments() != null){
                 final String private_key = getArguments().getString("priKey");
                 getP().saveConfigWallet(private_key, getPassword(), getPassHint());
-                AlertUtil.showLongCommonAlert(getActivity(), getString(R.string.import_wallet_success));
+                AlertUtil.showLongCommonAlert(getActivity(), getString(R.string.eos_import_wallet_success));
             }
         }else {
             LoggerManager.d("ValidateEvent Fail");
-            GemmaToastUtils.showLongToast(getString(R.string.import_wallet_failed));
+            GemmaToastUtils.showLongToast(getString(R.string.eos_import_wallet_failed));
 
             List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
 
@@ -613,7 +613,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
             for (WalletEntity entity : walletEntityList) {
                 if (pubKey.equals(entity.getPublicKey())) {
                     //已有相同的钱包
-                    GemmaToastUtils.showLongToast(getResources().getString(R.string.dont_import_same_wallet));
+                    GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_dont_import_same_wallet));
                     return;
                 }
             }

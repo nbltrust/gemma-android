@@ -182,10 +182,10 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
 
         switch (errorCode) {
             case (HttpConst.INVCODE_USED):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.invCode_used));
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_invCode_used));
                 break;
             case (HttpConst.INVCODE_NOTEXIST):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.invCode_not_exist));
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_invCode_not_exist));
                 break;
             case (HttpConst.EOSNAME_USED):
                 GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_used));
@@ -197,19 +197,19 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
                 GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_len_invalid));
                 break;
             case (HttpConst.PARAMETERS_INVALID):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.params_invalid));
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_params_invalid));
                 break;
             case (HttpConst.PUBLICKEY_INVALID):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.pubKey_invalid));
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_pubKey_invalid));
                 break;
             case (HttpConst.BALANCE_NOT_ENOUGH):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.no_balance));
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_no_balance));
                 break;
             case (HttpConst.CREATE_ACCOUNT_FAIL):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.default_create_fail_info));
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
                 break;
             default:
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.default_create_fail_info));
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
                 break;
         }
 

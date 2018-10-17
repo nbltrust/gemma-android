@@ -13,7 +13,7 @@
         android:layout_marginEnd="@dimen/dimen_40"
         android:layout_marginStart="@dimen/dimen_40"
         android:layout_marginTop="@dimen/dimen_10"
-        android:text="@string/tip_backup_prikey_friend"
+        android:text="@string/eos_tip_backup_prikey_friend"
         android:textColor="@color/scarlet"
         android:textSize="@dimen/font_3"/>
 
@@ -41,7 +41,7 @@
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_20"
             android:background="@drawable/shape_corner_button_cornblue20"
-            android:text="@string/click_to_copy_priKey"
+            android:text="@string/eos_click_to_copy_priKey"
             android:textColor="@color/cornflowerBlue"
             android:textSize="@dimen/font_3"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -62,7 +62,7 @@
             android:id="@+id/tv_tip_mid_friend_part_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/tip_activate_by_friend_part_one"
+            tools:text="@string/eos_tip_activate_by_friend_part_one"
             android:textColor="@color/blueyGrey"
             android:textSize="@dimen/font_3"/>
 
@@ -72,7 +72,7 @@
             android:id="@+id/tv_tip_mid_friend_part_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/tip_activate_by_friend_part_two"
+            tools:text="@string/eos_tip_activate_by_friend_part_two"
             android:textColor="@color/blueyGrey"
             android:textSize="@dimen/font_3.5"/>
 
@@ -84,7 +84,7 @@
         android:id="@+id/tv_tip_mid_friend_part_three"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/tip_activate_by_friend_part_three"
+        tools:text="@string/eos_tip_activate_by_friend_part_three"
         android:textColor="@color/blueyGrey"
         android:textSize="@dimen/font_3"/>
 
@@ -113,7 +113,7 @@ fb99aa426ef9656e16889012b"
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_20"
             android:background="@drawable/shape_corner_button_cornblue20"
-            android:text="@string/click_to_copy"
+            android:text="@string/eos_click_to_copy"
             android:textColor="@color/cornflowerBlue"
             android:textSize="@dimen/font_3"
             app:layout_constraintBottom_toBottomOf="parent"

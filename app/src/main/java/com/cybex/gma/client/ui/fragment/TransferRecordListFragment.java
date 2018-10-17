@@ -68,7 +68,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        setNavibarTitle(getString(R.string.title_transfer_record), true, true);
+        setNavibarTitle(getString(R.string.eos_title_transfer_record), true, true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
 

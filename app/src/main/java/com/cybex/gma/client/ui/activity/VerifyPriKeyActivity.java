@@ -63,7 +63,7 @@ public class VerifyPriKeyActivity extends XActivity {
 
         if (key.equals("invalid priv string!")) {
             //验证格式未通过
-            GemmaToastUtils.showLongToast(getResources().getString(R.string.prikey_format_invalid));
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_prikey_format_invalid));
         } else if (private_key.equals(inputKey)){
             //验证通过
             AppManager.getAppManager().finishAllActivity();
@@ -77,7 +77,7 @@ public class VerifyPriKeyActivity extends XActivity {
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
-        setNavibarTitle(getString(R.string.verify_priKey), true);
+        setNavibarTitle(getString(R.string.eos_verify_priKey), true);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class VerifyPriKeyActivity extends XActivity {
 
                                       @Override
                                       public void onPermissionDenied(List<String> permissions) {
-                                          GemmaToastUtils.showShortToast(getResources().getString(R.string.set_camera_permission));
+                                          GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_set_camera_permission));
                                           if (AndPermission.hasAlwaysDeniedPermission(mContext, permissions)) {
                                               manager.showSettingDialog(mContext, permissions);
                                           }

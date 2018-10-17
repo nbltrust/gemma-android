@@ -97,7 +97,7 @@ public class BluetoothWalletManageActivity extends XActivity {
 
     @Override
     public void bindUI(View rootView) {
-        setNavibarTitle(getString(R.string.title_wookong_bio), true);
+        setNavibarTitle(getString(R.string.eos_title_wookong_bio), true);
         ButterKnife.bind(this);
     }
 

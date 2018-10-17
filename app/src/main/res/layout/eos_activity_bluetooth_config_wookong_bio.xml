@@ -55,7 +55,7 @@
                 <TextView
                     android:id="@+id/tv_set_pass"
                     style="@style/text_title_config_wallet"
-                    android:text="@string/title_set_wookong_password"/>
+                    android:text="@string/eos_title_set_wookong_password"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                         android:id="@+id/edt_set_pass"
                         style="@style/editText_config_wallet"
                         android:layout_weight="1"
-                        android:hint="@string/hint_set_wookong_password"
+                        android:hint="@string/eos_hint_set_wookong_password"
                         android:inputType="textPassword"/>
 
                     <LinearLayout
@@ -177,7 +177,7 @@
                 android:layout_marginStart="@dimen/button_margin"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:background="@drawable/shape_corner_button_white_with_stroke"
-                android:text="@string/btn_import_mne"
+                android:text="@string/eos_btn_import_mne"
                 android:textColor="@color/cornflowerBlue"/>
 
         </LinearLayout>

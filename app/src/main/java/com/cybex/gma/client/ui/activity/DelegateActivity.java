@@ -95,14 +95,14 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                     break;
                 case STATUS_EXCEED:
                     //超过余额上限
-                    AlertUtil.showShortUrgeAlert(this, getString(R.string.tip_balance_not_enough));
+                    AlertUtil.showShortUrgeAlert(this, getString(R.string.eos_tip_balance_not_enough));
                     break;
                 case STATUS_ZERO:
                     //输入为零
-                    AlertUtil.showShortUrgeAlert(this, getString(R.string.tip_cant_input_zero));
+                    AlertUtil.showShortUrgeAlert(this, getString(R.string.eos_tip_cant_input_zero));
                     break;
                 case STATUS_UNKNOW_ERR:
-                    AlertUtil.showShortUrgeAlert(this, getString(R.string.unknow_err));
+                    AlertUtil.showShortUrgeAlert(this, getString(R.string.eos_unknow_err));
                     break;
 
             }
@@ -130,7 +130,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             {
                 s.delete(posDot + 5, posDot + 6);
                 if (!Alerter.isShowing()){
-                    AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+                    AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
                 }
             }
         }
@@ -152,7 +152,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             {
                 s.delete(posDot + 5, posDot + 6);
                 if (!Alerter.isShowing()){
-                    AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+                    AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
                 }
             }
         }
@@ -174,7 +174,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             {
                 s.delete(posDot + 5, posDot + 6);
                 if (!Alerter.isShowing()){
-                    AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+                    AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
                 }
             }
         }
@@ -196,7 +196,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             {
                 s.delete(posDot + 5, posDot + 6);
                 if (!Alerter.isShowing()){
-                    AlertUtil.showShortCommonAlert(this, getString(R.string.tip_eos_amount_format_invalid));
+                    AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
                 }
             }
         }
@@ -216,8 +216,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         setUnclickable(btUndelegateCpuNet);
         setUnclickable(btDelegateCpuNet);
         ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
-        list.add(new TabTitleDelegateVO(getString(R.string.tab_title_delegate)));
-        list.add(new TabTitleRefundVO(getString(R.string.tab_title_un_delegate)));
+        list.add(new TabTitleDelegateVO(getString(R.string.eos_tab_title_delegate)));
+        list.add(new TabTitleRefundVO(getString(R.string.eos_tab_title_un_delegate)));
         mTab.setTabData(list);
         mTab.setCurrentTab(0);
         mTab.setOnTabSelectListener(new OnTabSelectListener() {
@@ -437,19 +437,19 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
                     //抵押的CPU和NET输入都不为空
                     totalAmount = AmountUtil.add(getDelegateCpu(), getDelegateNet(), 4);
-                    tv_note.setText(String.format(getResources().getString(R.string.delegate_memo),
+                    tv_note.setText(String.format(getResources().getString(R.string.eos_delegate_memo),
                             AmountUtil.round(getDelegateCpu(), 4),
                             AmountUtil.round(getDelegateNet() , 4)));
                 }else if (EmptyUtils.isEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
                     //抵押的CPU输入为空,NET不为空
                     totalAmount = AmountUtil.round(getDelegateNet(), 4);
-                    tv_note.setText(String.format(getResources().getString(R.string.delegate_memo),
+                    tv_note.setText(String.format(getResources().getString(R.string.eos_delegate_memo),
                             "0.0000",
                             AmountUtil.round(getDelegateNet() , 4)));
                 }else if(EmptyUtils.isEmpty(getDelegateNet()) && EmptyUtils.isNotEmpty(getDelegateCpu())){
                     //抵押的NET输入为空
                     totalAmount = AmountUtil.round(getDelegateCpu(), 4);
-                    tv_note.setText(String.format(getResources().getString(R.string.delegate_memo),
+                    tv_note.setText(String.format(getResources().getString(R.string.eos_delegate_memo),
                             AmountUtil.round(getDelegateCpu(), 4),
                             "0.0000"));
                 }else {
@@ -504,19 +504,19 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
                     //解除抵押CPU和NET输入都不为空
                     totalAmount = AmountUtil.add(getunDelegateNet(), getUndelegateCpu(), 4);
-                    tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo),
+                    tv_memo.setText(String.format(getResources().getString(R.string.eos_unDelegate_memo),
                             AmountUtil.round(getUndelegateCpu(), 4),
                             AmountUtil.round(getunDelegateNet(), 4)));
                 }else if (EmptyUtils.isEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
                     //解除抵押CPU输入为空, NET不为空
                     totalAmount = AmountUtil.round(getunDelegateNet(), 4);
-                    tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo),
+                    tv_memo.setText(String.format(getResources().getString(R.string.eos_unDelegate_memo),
                             "0.0000",
                             AmountUtil.round(getunDelegateNet(), 4)));
                 }else if (EmptyUtils.isEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())){
                     //解除抵押NET输入为空， CPU不为空
                     totalAmount = AmountUtil.round(getUndelegateCpu(), 4);
-                    tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo),
+                    tv_memo.setText(String.format(getResources().getString(R.string.eos_unDelegate_memo),
                             AmountUtil.round(getUndelegateCpu(), 4),
                             "0.0000"));
                 }else {
@@ -575,7 +575,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")){
                                             iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
+                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_wrong_password));
 
                                             inputCount++;
                                             if (inputCount > 3){
@@ -613,7 +613,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                             dialog.cancel();
                                         }
                                     }else{
-                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
+                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
                                     }
                                 }
                                 break;
@@ -634,7 +634,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")){
                                             iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
+                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_wrong_password));
 
                                             inputCount++;
                                             if (inputCount > 3){
@@ -673,7 +673,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                             dialog.cancel();
                                         }
                                     }else{
-                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
+                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
                                     }
                                 }
                                 break;
@@ -688,7 +688,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         EditText inputPass = dialog.findViewById(R.id.et_password);
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)){
-            inputPass.setHint(String.format(getResources().getString(R.string.input_pass_hint), curWallet.getCurrentEosName()));
+            inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint), curWallet.getCurrentEosName()));
         }
     }
 

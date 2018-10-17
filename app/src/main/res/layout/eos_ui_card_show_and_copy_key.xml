@@ -27,7 +27,7 @@
         android:layout_width="@dimen/dimen_80"
         android:layout_height="@dimen/dimen_20"
         android:background="@drawable/shape_corner_button_cornblue20"
-        android:text="@string/click_to_copy"
+        android:text="@string/eos_click_to_copy"
         android:textColor="@color/cornflowerBlue"
         android:textSize="@dimen/font_3"
         app:layout_constraintBottom_toBottomOf="parent"

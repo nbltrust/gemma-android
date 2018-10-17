@@ -90,7 +90,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BluetoothFPAndPasswordFragment.this, rootView);
-        setNavibarTitle(getResources().getString(R.string.fp_and_password), true, true);
+        setNavibarTitle(getResources().getString(R.string.eos_fp_and_password), true, true);
     }
 
     @Override
@@ -188,7 +188,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
         for (int i = 0; i < fpCount; i++){
             BluetoothFPVO bluetoothFPVO = new BluetoothFPVO();
             bluetoothFPVO.setFingerprintIndex(fpList[i].data);
-            bluetoothFPVO.setFingerprintName(getString(R.string.fingerprint) + String.valueOf(i+1));
+            bluetoothFPVO.setFingerprintName(getString(R.string.eos_fingerprint) + String.valueOf(i+1));
             fingerprints.add(bluetoothFPVO);
         }
 

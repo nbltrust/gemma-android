@@ -35,7 +35,7 @@ public class ActivateByExchangeFragment extends XFragment {
 
     @OnClick(R.id.tv_tip_mid_exchange_part_two)
     public void goToDapp(){
-        CommonWebViewActivity.startWebView(getActivity(), ApiPath.DAPP_SINGUP_EOS, getString(R.string.activate_account));
+        CommonWebViewActivity.startWebView(getActivity(), ApiPath.DAPP_SINGUP_EOS, getString(R.string.eos_activate_account));
     }
 
     /**
@@ -54,7 +54,7 @@ public class ActivateByExchangeFragment extends XFragment {
             case R.id.bt_click_to_copy_memo:
                 if (getContext() != null){
                     ClipboardUtils.copyText(getContext(), tvShowMemoArea.getText().toString().trim());
-                    GemmaToastUtils.showLongToast(getString(R.string.memo_copied));
+                    GemmaToastUtils.showLongToast(getString(R.string.eos_memo_copied));
                 }
                 break;
         }
@@ -74,11 +74,11 @@ public class ActivateByExchangeFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         tvHintActivateByExchangeBot.setText(Html.fromHtml(getString(R.string.eos_tip_use_eos_to_activate)));
-        tvTipMidExchangePartOne.setText(getString(R.string.tip_activate_by_exchange_part_one));
-        tvTipMidExchangePartTwo.setText(getString(R.string.tip_activate_by_exchange_part_two));
+        tvTipMidExchangePartOne.setText(getString(R.string.eos_tip_activate_by_exchange_part_one));
+        tvTipMidExchangePartTwo.setText(getString(R.string.eos_tip_activate_by_exchange_part_two));
         tvTipMidExchangePartTwo.setTextColor(getResources().getColor(R.color.cornflowerBlue));
         tvTipMidExchangePartTwo.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG);
-        tvTipMidExchangePartThree.setText(Html.fromHtml(getString(R.string.tip_activate_by_exchange_part_three)));
+        tvTipMidExchangePartThree.setText(Html.fromHtml(getString(R.string.eos_tip_activate_by_exchange_part_three)));
 
         if (getArguments() != null){
             String private_key = getArguments().getString("private_key");

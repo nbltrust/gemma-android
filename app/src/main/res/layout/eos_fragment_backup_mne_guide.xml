@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_40"
-        android:text="@string/backup_mne"
+        android:text="@string/eos_backup_mne"
         android:textSize="@dimen/font_4.5"
         android:textColor="@color/darkSlateBlue"
         android:layout_marginTop="@dimen/dimen_10"
@@ -84,7 +84,7 @@
             style="@style/bt_long_in_linearLayout"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:text="@string/show_mne"
+            android:text="@string/eos_btn_show_mne"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="@string/tip_card"
+        android:text="@string/eos_tip_card"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="16sp"/>
@@ -28,7 +28,7 @@
     <com.cybex.gma.client.widget.underline.UnderlineTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/desc_wookong_url"
+        android:text="@string/eos_desc_wookong_url"
         android:layout_gravity="center_horizontal"
         android:textSize="12sp"
         android:lineSpacingExtra="2dp"
@@ -39,7 +39,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bluetooth_scan_step_title"
+        android:text="@string/eos_bluetooth_scan_step_title"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="40dp"
         android:textSize="16sp"/>
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="10dp"
-        android:text="@string/bluetooth_scan_step"/>
+        android:text="@string/eos_bluetooth_scan_step"/>
 
     <Button
         android:id="@+id/btn_start_scan"
@@ -60,7 +60,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="60dp"
         android:background="@drawable/bg_shape_btn_pressed"
-        android:text="@string/btn_start_pair"
+        android:text="@string/eos_btn_start_pair"
         android:textColor="@color/white"
         android:textSize="16sp"/>
 

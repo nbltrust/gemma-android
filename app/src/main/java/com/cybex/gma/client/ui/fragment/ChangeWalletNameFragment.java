@@ -65,7 +65,7 @@ public class ChangeWalletNameFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.manage_wallet), true);
+        setNavibarTitle(getResources().getString(R.string.eos_title_manage_wallet), true);
         textChangedCount = 0;
         mTitleBar.setActionTextColor(getResources().getColor(R.color.whiteTwo));
         mTitleBar.setActionTextSize(18);
@@ -115,7 +115,7 @@ public class ChangeWalletNameFragment extends XFragment {
     private void showSaveIcon(int count) {
         if (count == 1){
             //只在第二次OnTextChanged的时候显示出来Icon
-            mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.save)) {
+            mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.eos_btn_save)) {
                 @Override
                 public void performAction(View view) {
 

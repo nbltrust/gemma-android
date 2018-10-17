@@ -77,7 +77,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.backup_prikey), true,
+        setNavibarTitle(getResources().getString(R.string.eos_btn_backup_prikey), true,
                 true);
         inputCount = 0;
     }
@@ -131,7 +131,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
                         });
                         final String inputPass = password.getText().toString().trim();
                         if (EmptyUtils.isEmpty(inputPass)){
-                            GemmaToastUtils.showLongToast(getString(R.string.please_input_pass));
+                            GemmaToastUtils.showLongToast(getString(R.string.eos_tip_please_input_pass));
                             return;
                         }else{
                             if (!EmptyUtils.isEmpty(curWallet)){
@@ -143,7 +143,7 @@ public class BackUpPriKeyGuideFragment extends XFragment {
 
                                     //密码错误
                                     iv_clear.setVisibility(View.VISIBLE);
-                                    GemmaToastUtils.showLongToast(getString(R.string.wrong_password));
+                                    GemmaToastUtils.showLongToast(getString(R.string.eos_tip_wrong_password));
                                     //如果输错3次以上，弹框提醒
                                     if (inputCount > 3){
                                         dialog.cancel();

@@ -16,7 +16,7 @@
         android:layout_margin="@dimen/dimen_20"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_48"
-        title:sLeftTextString="@string/change_fp_name"
+        title:sLeftTextString="@string/eos_change_fp_name"
         title:sUseShape="true"
         title:sShapeCornersRadius="@dimen/dimen_6"
         title:sRightTvDrawableRight="@drawable/ic_arrow"
@@ -27,7 +27,7 @@
     <Button
         android:id="@+id/bt_delete_fp"
         android:textColor="@color/scarlet"
-        android:text="@string/delete_fingerprint"
+        android:text="@string/eos_delete_fingerprint"
         android:background="@drawable/shape_corner"
         android:layout_margin="@dimen/dimen_20"
         android:layout_width="match_parent"

@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
-                android:text="@string/tip_verify_mne"
+                android:text="@string/eos_tip_verify_mne"
                 android:textAlignment="center"
                 android:textColor="@color/darkSlateBlue"
                 android:textSize="@dimen/font_3.5"/>

@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_10"
-            android:text="@string/tip_activate_by_rmb"
+            android:text="@string/eos_tip_activate_by_rmb"
             android:textColor="@color/blueyGrey"
             android:textSize="@dimen/font_3.5"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:textColor="@color/darkSlateBlue"
-           android:text="@string/tip_need_to_pay"
+           android:text="@string/eos_tip_need_to_pay"
            android:textSize="@dimen/font_3.5"
            android:layout_gravity="center"
            android:gravity="center"/>
@@ -130,7 +130,7 @@
         android:layout_marginEnd="@dimen/dimen_22"
         android:layout_marginStart="@dimen/dimen_22"
         android:layout_marginTop="@dimen/dimen_30"
-        android:text="@string/wechat_pay"
+        android:text="@string/eos_wechat_pay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>

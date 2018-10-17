@@ -33,7 +33,7 @@
 
             <EditText
                 android:id="@+id/editText_setFPName"
-                tools:hint="@string/change_wallet_name_hint"
+                tools:hint="@string/eos_change_wallet_name_hint"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"

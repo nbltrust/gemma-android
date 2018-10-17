@@ -319,7 +319,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                                          @Override
                                          public void onStart(Request<String, ? extends Request> request) {
                                              super.onStart(request);
-                                             getV().showProgressDialog(getV().getResources().getString(R.string.loading_cur_ram_price));
+                                             getV().showProgressDialog(getV().getResources().getString(R.string.eos_loading_cur_ram_price));
                                          }
 
                                          @Override
@@ -354,7 +354,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                                          public void onError(Response<String> response) {
                                              LoggerManager.d("on Error");
                                              GemmaToastUtils.showLongToast(getV().getResources().getString(R.string
-                                                     .load_cur_ram_price_fail));
+                                                     .eos_load_cur_ram_price_fail));
                                              getV().dissmisProgressDialog();
                                          }
                                      }

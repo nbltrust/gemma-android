@@ -47,7 +47,7 @@ public class BluetoothBackupMneGuideFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.backup_mne), true,
+        setNavibarTitle(getResources().getString(R.string.eos_backup_mne), true,
                 true);
 
         bd = getArguments();

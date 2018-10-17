@@ -214,7 +214,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
 
         maxValue = spiltBanlance[0].trim();
         LoggerManager.d("maxValue", maxValue);
-        tvBanlance.setText(getString(R.string.show_remain_balance) + banlance);
+        tvBanlance.setText(getString(R.string.eos_show_remain_balance) + banlance);
 
         etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
                 .Type.decimal, 4, maxValue) {
@@ -304,7 +304,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
                     if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
                             etCollectionAccount.getText().toString().trim())) {
                         //显示alert样式
-                        tvCollectionAmount.setText(getString(R.string.account_name_err));
+                        tvCollectionAmount.setText(getString(R.string.eos_tip_account_name_err));
                         tvCollectionAmount.setTextColor(getResources().getColor(R.color.scarlet));
                     } else {
                         //显示默认样式
@@ -402,7 +402,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
     public void onClickSubmitTransfer(View view) {
         String toAccount = String.valueOf(etCollectionAccount.getText());
         if (toAccount.equals(currentEOSName)) {
-            GemmaToastUtils.showShortToast(getResources().getString(R.string.cant_transfer_to_yourself));
+            GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_tip_cant_transfer_to_yourself));
             return;
         }
 
@@ -492,7 +492,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
             tv_payment_account.setText(currentEOSName);
 
             if (EmptyUtils.isEmpty(etNote.getText().toString().trim())) {
-                memo = String.format(getString(R.string.default_memo), currentEOSName);
+                memo = String.format(getString(R.string.eos_default_memo), currentEOSName);
             } else {
                 memo = String.valueOf(etNote.getText());
             }
@@ -520,7 +520,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
                         EditText etPasword = dialog.findViewById(R.id.et_password);
                         String pwd = String.valueOf(etPasword.getText());
                         if (EmptyUtils.isEmpty(pwd)) {
-                            GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
+                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
                             return;
                         } else {
                             //获取当前账户的私钥
@@ -531,7 +531,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
                                 String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
 
                                 if ("wrong password".equals(privateKey)) {
-                                    GemmaToastUtils.showShortToast(getResources().getString(R.string.wrong_password));
+                                    GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_tip_wrong_password));
                                 } else {
                                     //todo 密码正确，执行转账逻辑
 
@@ -539,7 +539,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
                                 }
 
                             } else {
-                                GemmaToastUtils.showShortToast(getString(R.string.transfer_error));
+                                GemmaToastUtils.showShortToast(getString(R.string.eos_transfer_error));
                             }
                         }
                         break;
@@ -550,8 +550,8 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
         });
         dialog.show();
         EditText etPasword = dialog.findViewById(R.id.et_password);
-        etPasword.setHint(getString(R.string.transfer_eosname_hint) + currentEOSName + getString(
-                R.string.transfer_eosname_hint_last));
+        etPasword.setHint(getString(R.string.eos_transfer_eosname_hint) + currentEOSName + getString(
+                R.string.eos_transfer_eosname_hint_last));
     }
 
     public void clearData() {

@@ -35,7 +35,7 @@ public class ActivateByFriendFragment extends XFragment {
 
     @OnClick(R.id.tv_tip_mid_friend_part_two)
     public void goToDapp(){
-        CommonWebViewActivity.startWebView(getActivity(), ApiPath.DAPP_SINGUP_EOS, getString(R.string.activate_account));
+        CommonWebViewActivity.startWebView(getActivity(), ApiPath.DAPP_SINGUP_EOS, getString(R.string.eos_activate_account));
     }
 
     @OnClick({R.id.bt_click_to_copy_priKey, R.id.bt_click_to_copy_memo})
@@ -50,7 +50,7 @@ public class ActivateByFriendFragment extends XFragment {
             case R.id.bt_click_to_copy_memo:
                 if (getContext() != null){
                     ClipboardUtils.copyText(getContext(), tvShowMemoArea.getText().toString().trim());
-                    GemmaToastUtils.showLongToast(getString(R.string.memo_copied));
+                    GemmaToastUtils.showLongToast(getString(R.string.eos_memo_copied));
                 }
                 break;
         }
@@ -71,11 +71,11 @@ public class ActivateByFriendFragment extends XFragment {
     public void initData(Bundle savedInstanceState) {
         //初始化各个textView
         tvHintActivateByFriendBot.setText(Html.fromHtml(getResources().getString(R.string.eos_tip_use_eos_to_activate)));
-        tvTipMidFriendPartOne.setText(getString(R.string.tip_activate_by_exchange_part_one));
-        tvTipMidFriendPartTwo.setText(getString(R.string.tip_activate_by_exchange_part_two));
+        tvTipMidFriendPartOne.setText(getString(R.string.eos_tip_activate_by_exchange_part_one));
+        tvTipMidFriendPartTwo.setText(getString(R.string.eos_tip_activate_by_exchange_part_two));
         tvTipMidFriendPartTwo.setTextColor(getResources().getColor(R.color.cornflowerBlue));
         tvTipMidFriendPartTwo.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG);
-        tvTipMidFriendPartThree.setText(Html.fromHtml(getString(R.string.tip_activate_by_exchange_part_three)));
+        tvTipMidFriendPartThree.setText(Html.fromHtml(getString(R.string.eos_tip_activate_by_exchange_part_three)));
 
         if (getArguments() != null){
             String private_key = getArguments().getString("private_key");

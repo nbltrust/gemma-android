@@ -140,8 +140,8 @@ public class DelegateFragment extends XFragment {
         setUnclickable(btundelegateCpuNet);
         setUnclickable(btDelegateCpuNet);
         ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
-        list.add(new TabTitleDelegateVO(getString(R.string.tab_title_delegate)));
-        list.add(new TabTitleRefundVO(getString(R.string.tab_title_un_delegate)));
+        list.add(new TabTitleDelegateVO(getString(R.string.eos_tab_title_delegate)));
+        list.add(new TabTitleRefundVO(getString(R.string.eos_tab_title_un_delegate)));
         mTab.setTabData(list);
         mTab.setCurrentTab(0);
         mTab.setOnTabSelectListener(new OnTabSelectListener() {
@@ -359,7 +359,7 @@ public class DelegateFragment extends XFragment {
             String totalAmount = AmountUtil.add(getDelegateCpu(), getDelegateNet(), 4);
             String showAmount = totalAmount + " EOS";
             tv_amount.setText(showAmount);
-            tv_note.setText(String.format(getResources().getString(R.string.delegate_memo), getDelegateCpu(), getDelegateNet()));
+            tv_note.setText(String.format(getResources().getString(R.string.eos_delegate_memo), getDelegateCpu(), getDelegateNet()));
         }
 
     }
@@ -399,7 +399,7 @@ public class DelegateFragment extends XFragment {
             tv_receiver.setText(curWallet.getCurrentEosName());
             String total_amount = AmountUtil.add(getunDelegateNet(), getUndelegateCpu(), 4) + " EOS";
             tv_fund_amount.setText(total_amount);
-            tv_memo.setText(String.format(getResources().getString(R.string.unDelegate_memo), getUndelegateCpu(), getunDelegateNet
+            tv_memo.setText(String.format(getResources().getString(R.string.eos_unDelegate_memo), getUndelegateCpu(), getunDelegateNet
                     ()));
         }
     }
@@ -438,7 +438,7 @@ public class DelegateFragment extends XFragment {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")){
                                             iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
+                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_wrong_password));
 
                                             inputCount++;
                                             if (inputCount > 3){
@@ -458,7 +458,7 @@ public class DelegateFragment extends XFragment {
                                             dialog.cancel();
                                         }
                                     }else{
-                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
+                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
                                     }
                                 }
                                 break;
@@ -479,7 +479,7 @@ public class DelegateFragment extends XFragment {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
                                         if (key.equals("wrong password")){
                                             iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
+                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_wrong_password));
 
                                             inputCount++;
                                             if (inputCount > 3){
@@ -502,7 +502,7 @@ public class DelegateFragment extends XFragment {
                                             dialog.cancel();
                                         }
                                     }else{
-                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.please_input_pass));
+                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
                                     }
                                 }
                                 break;

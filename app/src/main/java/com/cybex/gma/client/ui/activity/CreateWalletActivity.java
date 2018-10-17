@@ -81,18 +81,18 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.edt_eos_name) EditText edtEosName;
     @BindView(R.id.tv_set_pass) TextView tvSetPass;
 
-    @NotEmpty(messageResId = R.string.pass_not_empty, sequence = 2)
-    @Password(min = 8, messageResId = R.string.pass_lenth_invalid, sequence = 2)
+    @NotEmpty(messageResId = R.string.eos_pass_not_empty, sequence = 2)
+    @Password(min = 8, messageResId = R.string.eos_pass_lenth_invalid, sequence = 2)
     @BindView(R.id.edt_set_pass) EditText edtSetPass;
     @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
 
-    @NotEmpty(messageResId = R.string.repeat_input_pass, sequence = 1)
-    @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 1)
+    @NotEmpty(messageResId = R.string.eos_repeat_input_pass, sequence = 1)
+    @ConfirmPassword(messageResId = R.string.eos_password_no_match, sequence = 1)
     @BindView(R.id.et_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.tv_pass_hint) TextView tvPassHint;
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
 
-    @Checked(messageResId = R.string.check_agreement, sequence = 0)
+    @Checked(messageResId = R.string.eos_check_agreement, sequence = 0)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.tv_service_agreement_config) TextView tvServiceAgreementConfig;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
@@ -171,7 +171,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     public void checkAndCreateWallet() {
         validator.validate();
         if (checkboxConfig.isChecked() && !getP().isUserNameValid()) {
-            GemmaToastUtils.showLongToast(getResources().getString(R.string.invalid_eos_username));
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_invalid_eos_username));
         }
     }
 
@@ -550,10 +550,10 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
         switch (errorCode) {
             case (HttpConst.INVCODE_USED):
-                GemmaToastUtils.showLongToast(getResources().getString(R.string.invCode_used));
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_invCode_used));
                 break;
             case (HttpConst.INVCODE_NOTEXIST):
-                GemmaToastUtils.showLongToast(getResources().getString(R.string.invCode_not_exist));
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_invCode_not_exist));
                 break;
             case (HttpConst.EOSNAME_USED):
                 GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_name_used));
@@ -565,19 +565,19 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
                 GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_name_len_invalid));
                 break;
             case (HttpConst.PARAMETERS_INVALID):
-                GemmaToastUtils.showLongToast(getResources().getString(R.string.params_invalid));
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_params_invalid));
                 break;
             case (HttpConst.PUBLICKEY_INVALID):
-                GemmaToastUtils.showLongToast(getResources().getString(R.string.pubKey_invalid));
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_pubKey_invalid));
                 break;
             case (HttpConst.BALANCE_NOT_ENOUGH):
-                GemmaToastUtils.showLongToast(getResources().getString(R.string.no_balance));
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_no_balance));
                 break;
             case (HttpConst.CREATE_ACCOUNT_FAIL):
-                GemmaToastUtils.showLongToast(getResources().getString(R.string.default_create_fail_info));
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_default_create_fail_info));
                 break;
             default:
-                GemmaToastUtils.showLongToast(getResources().getString(R.string.default_create_fail_info));
+                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_default_create_fail_info));
                 break;
         }
 

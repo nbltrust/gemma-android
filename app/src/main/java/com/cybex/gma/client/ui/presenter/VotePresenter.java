@@ -103,7 +103,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                         super.onError(response);
                         if (EmptyUtils.isNotEmpty(getV())) {
                             GemmaToastUtils.showLongToast(
-                                    getV().getResources().getString(R.string.load_node_info_fail));
+                                    getV().getResources().getString(R.string.eos_load_node_info_fail));
                             getV().showError();
                             if (response.body() != null && response.getRawResponse().body() != null) {
                                 try {
@@ -351,7 +351,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                                             getV().hasDelegatedRes(false);
                                             getV().showEmptyOrFinish();
                                             GemmaToastUtils.showLongToast(
-                                                    getV().getResources().getString(R.string.not_enough_delegated_res));
+                                                    getV().getResources().getString(R.string.eos_not_enough_delegated_res));
                                         }
                                     }
                                 }
@@ -364,7 +364,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                             if (EmptyUtils.isNotEmpty(getV())) {
                                 getV().showError();
                                 GemmaToastUtils.showLongToast(
-                                        getV().getResources().getString(R.string.load_avail_res_fail));
+                                        getV().getResources().getString(R.string.eos_load_avail_res_fail));
                                 if (response.body() != null && response.getRawResponse().body() != null){
                                     try {
                                         String err_info_string = response.getRawResponse().body().string();

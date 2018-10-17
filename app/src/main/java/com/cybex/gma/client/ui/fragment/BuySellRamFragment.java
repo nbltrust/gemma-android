@@ -106,8 +106,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         setUnclickable(btSellRam);
         setUnclickable(btBuyRam);
         ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
-        list.add(new TabTitleBuyRamVO(getString(R.string.tab_title_buy)));
-        list.add(new TabTitleSellRamVO(getString(R.string.tab_title_sell)));
+        list.add(new TabTitleBuyRamVO(getString(R.string.eos_tab_title_buy)));
+        list.add(new TabTitleSellRamVO(getString(R.string.eos_tab_title_sell)));
         mTab.setTabData(list);
         mTab.setCurrentTab(0);
 
@@ -349,7 +349,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         String showAmount = AmountUtil.round(getEOSAmount(), 4) + " EOS";
         amount.setText(showAmount);
         TextView memo = dialog.findViewById(R.id.tv_explanation);
-        memo.setText(getResources().getString(R.string.buy_ram));
+        memo.setText(getResources().getString(R.string.eos_tip_buy_ram));
     }
 
     /**
@@ -381,7 +381,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         String showRamAmount = getRamAmount() + " KB";
         amount.setText(showRamAmount);
         TextView memo = dialog.findViewById(R.id.tv_explanation);
-        memo.setText(getResources().getString(R.string.sell_ram));
+        memo.setText(getResources().getString(R.string.eos_tip_sell_ram));
     }
 
     /**
@@ -430,7 +430,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             inputCount++;
                                             iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(
-                                                    getResources().getString(R.string.wrong_password));
+                                                    getResources().getString(R.string.eos_tip_wrong_password));
                                             if (inputCount > 3){
                                                 dialog.cancel();
                                                 showPasswordHintDialog(OPERATION_BUY_RAM);
@@ -443,7 +443,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                         }
                                     } else {
                                         GemmaToastUtils.showLongToast(
-                                                getResources().getString(R.string.please_input_pass));
+                                                getResources().getString(R.string.eos_tip_please_input_pass));
                                     }
 
                                 }
@@ -467,7 +467,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             inputCount++;
                                             iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(
-                                                    getResources().getString(R.string.wrong_password));
+                                                    getResources().getString(R.string.eos_tip_wrong_password));
 
                                             if (inputCount > 3){
                                                 dialog.cancel();
@@ -486,7 +486,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                         }
                                     } else {
                                         GemmaToastUtils.showLongToast(
-                                                getResources().getString(R.string.please_input_pass));
+                                                getResources().getString(R.string.eos_tip_please_input_pass));
                                     }
                                 }
                                 break;
@@ -503,7 +503,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         EditText inputPass = dialog.findViewById(R.id.et_password);
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)){
-            inputPass.setHint(String.format(getResources().getString(R.string.input_pass_hint), curWallet.getCurrentEosName()));
+            inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint), curWallet.getCurrentEosName()));
         }
 
 

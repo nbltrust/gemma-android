@@ -60,7 +60,7 @@ public class TransferRecordDetailFragment extends XFragment {
     public void seeInExplorer(){
         if (EmptyUtils.isNotEmpty(curTransfer)){
             final String url = ApiPath.URL_BLOCK_CHAIN_BROWSER + curTransfer.hash;
-            CommonWebViewActivity.startWebView(getActivity(), url, getString(R.string.transfer_detail));
+            CommonWebViewActivity.startWebView(getActivity(), url, getString(R.string.eos_tip_transfer_detail));
         }
     }
 
@@ -82,7 +82,7 @@ public class TransferRecordDetailFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        setNavibarTitle(getResources().getString(R.string.title_transfer_detail), true, false);
+        setNavibarTitle(getResources().getString(R.string.eos_title_transfer_detail), true, false);
         OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
     }
 
@@ -151,7 +151,7 @@ public class TransferRecordDetailFragment extends XFragment {
         String text = String.valueOf(tvShowTransferId.getText());
         if (EmptyUtils.isNotEmpty(text)) {
             ClipboardUtils.copyText(getActivity(), text);
-            GemmaToastUtils.showShortToast(getString(R.string.copy_success));
+            GemmaToastUtils.showShortToast(getString(R.string.eos_copy_success));
         }
     }
 

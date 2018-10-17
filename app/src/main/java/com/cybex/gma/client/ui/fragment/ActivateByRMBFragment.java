@@ -176,7 +176,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     public void initData(Bundle savedInstanceState) {
         getP().getRMBFeeAmount();
         if (getActivity() != null){
-            AlertUtil.showShortCommonAlert(getActivity(), getActivity().getString(R.string.tip_username_valid));
+            AlertUtil.showShortCommonAlert(getActivity(), getActivity().getString(R.string.eos_tip_username_valid));
         }
         //注册微信支付
         iwxapi = WXAPIFactory.createWXAPI(getActivity(), null);
@@ -212,7 +212,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     }
 
     public void setFee(WXPayBillResult.ResultBean result){
-        tvRmbAmount.setText(String.format(getString(R.string.rmb_fee), result.getRmbPrice()));
+        tvRmbAmount.setText(String.format(getString(R.string.eos_rmb_fee), result.getRmbPrice()));
         newPrice = result.getRmbPrice();
         tvCPU.setRightString(result.getCpu() + " EOS");
         tvNET.setRightString(result.getNet() + " EOS");
@@ -256,7 +256,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         });
         dialog.show();
         TextView tv_price_changed = dialog.findViewById(R.id.tv_price_changed);
-        tv_price_changed.setText(String.format(getString(R.string.payment_price_changed), newPrice));
+        tv_price_changed.setText(String.format(getString(R.string.eos_payment_price_changed), newPrice));
     }
 
     /**

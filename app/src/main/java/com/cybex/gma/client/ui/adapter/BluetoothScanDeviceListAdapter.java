@@ -42,11 +42,11 @@ public class BluetoothScanDeviceListAdapter extends BaseQuickAdapter<BluetoothDe
             }
 
             if (item.status == 0) {
-                vStatus.setText(mContext.getString(R.string.status_un_init));
+                vStatus.setText(mContext.getString(R.string.eos_status_un_init));
             } else if (item.status == 1) {
-                vStatus.setText(mContext.getString(R.string.status_init_no_pair));
+                vStatus.setText(mContext.getString(R.string.eos_status_init_no_pair));
             } else if (item.status == 2) {
-                vStatus.setText(mContext.getString(R.string.status_init_pair));
+                vStatus.setText(mContext.getString(R.string.eos_status_init_pair));
             }
 
 

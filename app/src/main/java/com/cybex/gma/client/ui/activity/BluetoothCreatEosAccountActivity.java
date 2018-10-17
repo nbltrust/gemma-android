@@ -57,7 +57,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
     @BindView(R.id.edt_eos_name) EditText edtEosName;
     @BindView(R.id.iv_eos_name_clear) ImageView ivEosNameClear;
 
-    @Checked(messageResId = R.string.check_agreement, sequence = 0)
+    @Checked(messageResId = R.string.eos_check_agreement, sequence = 0)
     @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
     @BindView(R.id.tv_service_agreement_create_eos_account) TextView tvServiceAgreement;
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
@@ -120,7 +120,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
-        setNavibarTitle(getString(R.string.title_create_eos_account), true);
+        setNavibarTitle(getString(R.string.eos_title_create_eos_account), true);
         validator = new Validator(this);
         validator.setValidationListener(this);
     }

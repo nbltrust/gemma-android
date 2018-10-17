@@ -25,7 +25,7 @@ public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
-        setNavibarTitle(getString(R.string.title_paire_bluetooth), true);
+        setNavibarTitle(getString(R.string.eos_title_paire_bluetooth), true);
     }
 
     @Override

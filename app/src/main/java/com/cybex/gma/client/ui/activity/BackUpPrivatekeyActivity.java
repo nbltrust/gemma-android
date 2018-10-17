@@ -36,7 +36,7 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
-        setNavibarTitle(getResources().getString(R.string.backup_prikey), true);
+        setNavibarTitle(getResources().getString(R.string.eos_btn_backup_prikey), true);
     }
 
     @Override
@@ -59,8 +59,8 @@ public class BackUpPrivatekeyActivity extends XActivity<BackUpPrivateKeyPresente
 
     private List<String> getTitles() {
         List<String> list = new ArrayList<>();
-        list.add(getResources().getString(R.string.tab_title_private_key));
-        list.add(getResources().getString(R.string.tab_title_qr_code));
+        list.add(getResources().getString(R.string.eos_tab_title_private_key));
+        list.add(getResources().getString(R.string.eos_tab_title_qr_code));
 
         return list;
     }

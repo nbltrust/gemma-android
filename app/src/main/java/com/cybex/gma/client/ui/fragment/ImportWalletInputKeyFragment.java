@@ -47,7 +47,7 @@ public class ImportWalletInputKeyFragment extends XFragment {
         final String key = JNIUtil.get_public_key(inputKey);
 
         if (key.equals("invalid priv string!")) {
-            GemmaToastUtils.showLongToast(getResources().getString(R.string.prikey_format_invalid));
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_prikey_format_invalid));
         } else {
             start(ImportWalletConfigFragment.newInstance(inputKey));
         }
@@ -115,7 +115,7 @@ public class ImportWalletInputKeyFragment extends XFragment {
 
                                       @Override
                                       public void onPermissionDenied(List<String> permissions) {
-                                          GemmaToastUtils.showShortToast(getResources().getString(R.string.set_camera_permission));
+                                          GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_set_camera_permission));
                                           if (AndPermission.hasAlwaysDeniedPermission(getActivity(), permissions)) {
                                               manager.showSettingDialog(getContext(), permissions);
                                           }

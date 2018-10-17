@@ -33,7 +33,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/how_to_get_invCode"
+        android:text="@string/eos_how_to_get_invCode"
         android:textColor="@color/cornflowerBlue"
         android:layout_marginStart="@dimen/dimen_40"
         android:layout_marginTop="@dimen/dimen_10"
@@ -41,7 +41,7 @@
 
     <Button
         android:id="@+id/bt_activate"
-        android:text="@string/activate"
+        android:text="@string/eos_activate"
         style="@style/bt_long_in_linearLayout"
         android:textSize="@dimen/font_3.5"
         android:layout_marginTop="@dimen/dimen_40"

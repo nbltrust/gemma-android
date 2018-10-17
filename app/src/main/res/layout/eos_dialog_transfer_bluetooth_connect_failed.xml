@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="@string/connect_failed_tip"
+        android:text="@string/eos_connect_failed_tip"
         android:textColor="#212c67"
         android:textSize="14sp"
         />
@@ -42,7 +42,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/selector_btn_transfer"
-        android:text="@string/btn_connect_retry"
+        android:text="@string/eos_btn_connect_retry"
         android:textColor="@color/white"
         android:textSize="16sp"/>
 

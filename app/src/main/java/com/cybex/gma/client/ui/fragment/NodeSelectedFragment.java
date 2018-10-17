@@ -58,7 +58,7 @@ public class NodeSelectedFragment extends XFragment {
                 case EVENT_THIS_PAGE:
                     //当前页面发送的事件
                     //动态更新顶部状态栏的已选节点数
-                    setNavibarTitle(String.format(getString(R.string.nodes_selected_num),
+                    setNavibarTitle(String.format(getString(R.string.eos_nodes_selected_num),
                             String.valueOf(nodeSelected)), true, false);
                     break;
                 case EVENT_DOWN:
@@ -116,7 +116,7 @@ public class NodeSelectedFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(String.format(getString(R.string.nodes_selected_num),
+        setNavibarTitle(String.format(getString(R.string.eos_nodes_selected_num),
                 String.valueOf(nodeSelected)), true, false);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager

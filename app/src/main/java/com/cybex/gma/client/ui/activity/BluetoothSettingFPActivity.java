@@ -73,7 +73,7 @@ public class BluetoothSettingFPActivity extends XActivity {
         } else if (state == ParamConstants.FINGER_SUCCESS) {
             stage = 1;
             imvFingerPrint.setImageResource(R.drawable.bezier_svg);
-            GemmaToastUtils.showShortToast(getString(R.string.finger_set_success));
+            GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
             setCurrentWalletStatus();
             UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
             finish();
@@ -150,10 +150,10 @@ public class BluetoothSettingFPActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getString(R.string.title_setting_fp), false);
+        setNavibarTitle(getString(R.string.eos_title_setting_fp), false);
         mTitleBar.setActionTextColor(Color.WHITE);
         mTitleBar.setActionTextSize(18);
-        mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.btn_title_skip)) {
+        mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.eos_btn_title_skip)) {
             @Override
             public void performAction(View view) {
                 UISkipMananger.launchHome(BluetoothSettingFPActivity.this);

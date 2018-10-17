@@ -115,40 +115,40 @@ public class GeneralSettingFragment extends XFragment {
         String selectedNode = SPUtils.getInstance().getString("curNode");
             switch (selectedNode){
                 case ApiPath.EOS_CYBEX:
-                    superTextViewChangeNode.setRightString(getString(R.string.eos_cybex));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_cybex));
                     break;
                 case ApiPath.EOS_CYPHER_GLASS:
-                    superTextViewChangeNode.setRightString(getString(R.string.eos_cypher_glass));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_cypher_glass));
                     break;
                 case ApiPath.EOS_GRAVITY:
-                    superTextViewChangeNode.setRightString(getString(R.string.eos_gravity));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_gravity));
                     break;
                 case ApiPath.EOS_GREY_MASS:
-                    superTextViewChangeNode.setRightString(getString(R.string.eos_greymass));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_greymass));
                     break;
                 case ApiPath.EOS_HELLOEOS:
-                    superTextViewChangeNode.setRightString(getString(R.string.hello_eos));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_hello_eos));
                     break;
                 case ApiPath.EOS_HK_EOS:
-                    superTextViewChangeNode.setRightString(getString(R.string.hk_eos));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_hk_eos));
                     break;
                 case ApiPath.EOS_NEW_YORK:
-                    superTextViewChangeNode.setRightString(getString(R.string.eos_newyork));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_newyork));
                     break;
                 case ApiPath.EOS_START_EOS:
-                    superTextViewChangeNode.setRightString(getString(R.string.start_eos));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_start_eos));
                     break;
                 case ApiPath.EOS_AISA:
-                    superTextViewChangeNode.setRightString(getString(R.string.eos_asia));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_asia));
                     break;
                 case ApiPath.EOS_42:
-                    superTextViewChangeNode.setRightString(getString(R.string.eos_42));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_42));
                     break;
                 case ApiPath.EOS_TEST_BEIJING:
-                    superTextViewChangeNode.setRightString(getString(R.string.eos_test_beijing));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_test_beijing));
                     break;
                 default:
-                    superTextViewChangeNode.setRightString(getString(R.string.eos_cybex));
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_cybex));
         }
     }
 

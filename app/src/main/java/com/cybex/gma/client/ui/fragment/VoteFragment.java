@@ -97,7 +97,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                 case EVENT_THIS_PAGE:
                     //当前页面发送的事件
                     //动态更新底部已选投票数
-                    tvVoteNumber.setText(String.format(getResources().getString(R.string.vote_num),
+                    tvVoteNumber.setText(String.format(getResources().getString(R.string.eos_amount_vote_num),
                             String.valueOf(selectedNodes.size())));
                     //动态设置底部textView颜色
                     if (selectedNodes.size() != 0){
@@ -108,19 +108,19 @@ public class VoteFragment extends XFragment<VotePresenter> {
                         if (hasDelegateRes){
                             //如果有抵押的资源
                             tvExecVote.setClickable(true);
-                            tvExecVote.setText(getResources().getString(R.string.title_vote));
+                            tvExecVote.setText(getResources().getString(R.string.eos_title_vote));
                             tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_deep));
                         }else{
                             //没有被抵押的资源
                             tvExecVote.setClickable(false);
-                            tvExecVote.setText(getResources().getString(R.string.no_avail_votes));
+                            tvExecVote.setText(getResources().getString(R.string.eos_tip_no_avail_votes));
                             tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_light));
                         }
                     }else {
                         //已选节点数为0
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.btn_vote_left_light));
                         tvExecVote.setClickable(false);
-                        tvExecVote.setText(getResources().getString(R.string.title_vote));
+                        tvExecVote.setText(getResources().getString(R.string.eos_title_vote));
                         tvExecVote.setBackground(getResources().getDrawable(R.drawable.btn_vote_right_light));
                     }
                     break;
@@ -131,7 +131,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     //下级页面发送的事件
                     selectedNodes.clear();
                     selectedNodes.addAll(event.getVoteNodeVOList());
-                    tvVoteNumber.setText(String.format(getResources().getString(R.string.vote_num),
+                    tvVoteNumber.setText(String.format(getResources().getString(R.string.eos_amount_vote_num),
                             String.valueOf(selectedNodes.size())));
                     if (selectedNodes.size() == 0){
                         //从下级页面回退时把所有节点取消了
@@ -153,7 +153,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(VoteFragment.this, rootView);
-        setNavibarTitle(getResources().getString(R.string.vote), true, true);
+        setNavibarTitle(getResources().getString(R.string.eos_tip_vote), true, true);
     }
 
     @Override
@@ -184,7 +184,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                         curVoteNodeVO.ischecked = true;
                         selectedNodes.add(curVoteNodeVO);
                     }else {
-                          GemmaToastUtils.showLongToast(getResources().getString(R.string.selected_nodes_limit));
+                          GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_selected_nodes_limit));
                     }
                 }
                 //此事件用于更新本页面UI
@@ -215,7 +215,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                         curVoteNodeVO.ischecked = true;
                         selectedNodes.add(curVoteNodeVO);
                     }else {
-                        GemmaToastUtils.showLongToast(getResources().getString(R.string.selected_nodes_limit));
+                        GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_selected_nodes_limit));
                     }
                 }
                 //此事件用于更新本页面UI
@@ -309,9 +309,9 @@ public class VoteFragment extends XFragment<VotePresenter> {
     public void hasDelegatedRes(boolean status){
         hasDelegateRes = status;
         if (hasDelegateRes) {
-            tvExecVote.setText(getString(R.string.title_vote));
+            tvExecVote.setText(getString(R.string.eos_title_vote));
         }else {
-            tvExecVote.setText(getString(R.string.no_avail_votes));
+            tvExecVote.setText(getString(R.string.eos_tip_no_avail_votes));
         }
     }
 
@@ -352,7 +352,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                             if (EmptyUtils.isNotEmpty(inputPass)){
                                 final String key = JNIUtil.get_private_key(cypher, inputPass);
                                 if (key.equals("wrong password")){
-                                    GemmaToastUtils.showLongToast(getString(R.string.wrong_password));
+                                    GemmaToastUtils.showLongToast(getString(R.string.eos_tip_wrong_password));
 
                                     inputCount++;
                                     if (inputCount > 3){
@@ -372,7 +372,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                                     dialog.cancel();
                                 }
                             }else{
-                                GemmaToastUtils.showLongToast(getString(R.string.please_input_pass));
+                                GemmaToastUtils.showLongToast(getString(R.string.eos_tip_please_input_pass));
                             }
 
                         }

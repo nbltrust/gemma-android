@@ -60,13 +60,13 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_set_new_pass) TextView tvSetNewPass;
 
-    @NotEmpty(messageResId = R.string.pass_not_empty, sequence = 2)
-    @Password(min = 8, messageResId = R.string.pass_lenth_invalid, sequence = 2)
+    @NotEmpty(messageResId = R.string.eos_pass_not_empty, sequence = 2)
+    @Password(min = 8, messageResId = R.string.eos_pass_lenth_invalid, sequence = 2)
     @BindView(R.id.edt_set_new_pass) EditText edtSetNewPass;
     @BindView(R.id.tv_repeat_new_pass) TextView tvRepeatNewPass;
 
     @NotEmpty(messageResId = R.string.eos_tip_repeat_password, sequence = 1)
-    @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 1)
+    @ConfirmPassword(messageResId = R.string.eos_password_no_match, sequence = 1)
     @BindView(R.id.edt_repeat_new_pass) EditText edtRepeatNewPass;
     @BindView(R.id.tv_new_pass_hint) TextView tvNewPassHint;
     @BindView(R.id.edt_new_pass_hint) EditText edtNewPassHint;
@@ -453,7 +453,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
             curWallet.setCypher(newCypher);
             curWallet.setPasswordTip(getPassHint());
             DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
-            GemmaToastUtils.showLongToast(getResources().getString(R.string.change_pass_success));
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_change_pass_success));
             pop();
         }
     }

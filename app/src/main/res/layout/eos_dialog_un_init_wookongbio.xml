@@ -22,7 +22,7 @@
         android:layout_marginRight="24dp"
         android:textColor="@color/darkSlateBlue"
         android:lineSpacingExtra="2sp"
-        android:text="@string/tip_status_un_init"
+        android:text="@string/eos_tip_status_un_init"
         />
 
 
@@ -48,7 +48,7 @@
         android:layout_marginBottom="30dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/bg_shape_radius_white_with_border"
-        android:text="@string/btn_import_mne"
+        android:text="@string/eos_btn_import_mne"
         android:textColor="@color/color_fingger_anim"
         android:textSize="@dimen/font_3.5"/>
 

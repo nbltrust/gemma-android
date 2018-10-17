@@ -28,14 +28,14 @@
             android:layout_weight="1"
             android:textColor="@color/darkSlateBlue"
             android:lineSpacingExtra="2sp"
-            android:text="@string/create_use_invCode"
+            android:text="@string/eos_create_use_invCode"
             />
 
         <TextView
             android:id="@+id/tv_get_invCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/how_to_get_invCode"
+            android:text="@string/eos_how_to_get_invCode"
             android:layout_marginEnd="@dimen/dimen_28"
             android:textSize="@dimen/font_3"
             android:textColor="@color/cornflowerBlue"/>
@@ -49,7 +49,7 @@
         android:layout_marginLeft="16dp"
         android:textSize="@dimen/font_4"
         android:singleLine="true"
-        android:hint="@string/input_invCode_hint"
+        android:hint="@string/eos_input_invCode_hint"
         android:paddingLeft="16dp"
         android:textColor="@color/darkSlateBlue"
         android:textColorHint="@color/color_et_hint"

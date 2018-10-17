@@ -67,7 +67,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     public void onStart(Request<WXPayQueryOrderInfoResult, ? extends Request> request) {
                         super.onStart(request);
                         if (getV() != null){
-                            getV().showProgressDialog(getV().getString(R.string.tip_payment_time));
+                            getV().showProgressDialog(getV().getString(R.string.eos_tip_payment_time));
                         }
                     }
 
@@ -147,7 +147,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     public void onStart(Request<WXPayBillResult, ? extends Request> request) {
                         super.onStart(request);
                         if (getV() != null){
-                            getV().showProgressDialog(getV().getString(R.string.tip_loading_fee));
+                            getV().showProgressDialog(getV().getString(R.string.eos_tip_loading_fee));
                         }
                     }
 

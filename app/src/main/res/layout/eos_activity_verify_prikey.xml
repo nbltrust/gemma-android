@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tip_verify_prikey"
+        android:text="@string/eos_tip_verify_prikey"
         android:textColor="@color/blueyGrey"
         android:textSize="@dimen/font_3"
         android:layout_marginStart="@dimen/dimen_46"
@@ -50,7 +50,7 @@
     <Button
         android:id="@+id/bt_verify_input"
         style="@style/bt_long_in_linearLayout"
-        android:text="@string/verify"
+        android:text="@string/eos_verify"
         android:layout_marginStart="@dimen/dimen_46"
         android:layout_marginEnd="@dimen/dimen_46"
         android:layout_marginTop="@dimen/dimen_30"/>

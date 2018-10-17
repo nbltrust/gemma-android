@@ -88,7 +88,7 @@ public class BluetoothBackupMneFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        setNavibarTitle(getResources().getString(R.string.backup_mne), true, true);
+        setNavibarTitle(getResources().getString(R.string.eos_backup_mne), true, true);
     }
 
 

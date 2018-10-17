@@ -118,7 +118,7 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
                     public void accept(HomeCombineDataVO vo) {
                         getV().showMainInfo(vo);
                         getV().dissmisProgressDialog();
-                        GemmaToastUtils.showLongToast(getV().getString(R.string.loading_success));
+                        GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
 
                     }
                 }, new Consumer<Throwable>() {
@@ -155,7 +155,7 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
                                     public void onStart(Request<AccountInfo, ? extends Request> request) {
                                         super.onStart(request);
                                         if (getV() != null){
-                                            getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                                            getV().showProgressDialog(getV().getResources().getString(R.string.eos_loading_account_info));
                                         }
 
                                     }
@@ -164,7 +164,7 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
                                     public void onError(Response<AccountInfo> response) {
                                         if (getV() != null){
                                             getV().dissmisProgressDialog();
-                                            GemmaToastUtils.showLongToast(getV().getString(R.string.load_account_info_fail));
+                                            GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
                                         }
                                     }
 
@@ -196,14 +196,14 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
                             public void onStart(Request<UnitPrice, ? extends Request> request) {
                                 if (getV() != null){
                                     super.onStart(request);
-                                    getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                                    getV().showProgressDialog(getV().getResources().getString(R.string.eos_loading_account_info));
                                 }
                             }
 
                             @Override
                             public void onError(Response<UnitPrice> response) {
                                 super.onError(response);
-                                GemmaToastUtils.showLongToast(getV().getString(R.string.load_account_info_fail));
+                                GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
                             }
 
                             @Override
@@ -264,7 +264,7 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
                 public void onStart(Request<String, ? extends Request> request) {
                     if (getV() != null){
                         super.onStart(request);
-                        getV().showProgressDialog(getV().getResources().getString(R.string.loading_account_info));
+                        getV().showProgressDialog(getV().getResources().getString(R.string.eos_loading_account_info));
                     }
                 }
 
@@ -273,7 +273,7 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
                     if (getV() != null){
                         super.onError(response);
                         getV().dissmisProgressDialog();
-                        GemmaToastUtils.showLongToast(getV().getString(R.string.load_account_info_fail));
+                        GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
                         emitter.onNext(banlance);
                         emitter.onComplete();
                     }
@@ -355,18 +355,18 @@ public class BluetoothWalletPresenter extends XPresenter<BluetoothWalletFragment
 
         if (timeLong < 60 * 60 * 24 * 1000) {
             if (hour < 10) {
-                tip = getV().getString(R.string.tip_remaining_zero_zero_day_zero) + hour + getV().getString(R.string.unit_hours);
+                tip = getV().getString(R.string.eos_tip_remaining_zero_zero_day_zero) + hour + getV().getString(R.string.eos_unit_hours);
             } else {
-                tip = getV().getString(R.string.tip_remaining_zero_zero_day) + hour + getV().getString(R.string.unit_hours);
+                tip = getV().getString(R.string.eos_tip_remaining_zero_zero_day) + hour + getV().getString(R.string.eos_unit_hours);
             }
         } else if ((timeLong / 1000 / 60 / 60 / 24) < 3 && (timeLong / 1000 / 60 / 60 / 24) > 1) {
             if(hour>0){
                 if(hour<10){
-                    tip =getV().getString(R.string.tip_remain)+day+getV().getString(R.string.tip_day_zero) + hour +
-                            getV().getString(R.string.unit_hours);
+                    tip =getV().getString(R.string.eos_tip_remain)+day+getV().getString(R.string.eos_tip_day_zero) + hour +
+                            getV().getString(R.string.eos_unit_hours);
                 }else{
-                    tip = getV().getString(R.string.tip_remain)+day+getV().getString(R.string.tip_day) + hour + getV
-                            ().getString(R.string.unit_hours);
+                    tip = getV().getString(R.string.eos_tip_remain)+day+getV().getString(R.string.eos_tip_day) + hour + getV
+                            ().getString(R.string.eos_unit_hours);
                 }
 
             }

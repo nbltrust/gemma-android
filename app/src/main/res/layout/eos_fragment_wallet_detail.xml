@@ -99,7 +99,7 @@
                     title:sDividerLineType="none"
                     title:sLeftTextColor="@color/darkSlateBlue"
                     title:sLeftTextSize="@dimen/font_3.5"
-                    title:sLeftTextString="@string/export_privateKey"
+                    title:sLeftTextString="@string/eos_export_privateKey"
                     title:sRightTvDrawableRight="@drawable/ic_arrow"
                     title:sUseShape="true"
                     title:sShapeSelectorPressedColor="@color/item_pressed">
@@ -122,7 +122,7 @@
                     title:sLeftTextColor="@color/darkSlateBlue"
                     title:sShapeSelectorPressedColor="@color/item_pressed"
                     title:sLeftTextSize="@dimen/font_3.5"
-                    title:sLeftTextString="@string/changePass"
+                    title:sLeftTextString="@string/eos_changePass"
                     title:sRightTvDrawableRight="@drawable/ic_arrow"
                     title:sUseShape="true"
                     title:sShapeCornersBottomRightRadius="@dimen/dimen_6"

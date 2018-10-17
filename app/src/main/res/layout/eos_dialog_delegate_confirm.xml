@@ -137,7 +137,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/selector_btn_transfer"
-        android:text="@string/confirm_delegate"
+        android:text="@string/eos_confirm_delegate"
         android:textColor="@color/white"
         android:textSize="16sp"/>
 

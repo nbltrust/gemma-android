@@ -54,15 +54,15 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
     @BindView(R.id.bubble) BubbleLayout bubble;
     @BindView(R.id.tv_set_pass) TextView tvSetPass;
-    @NotEmpty(messageResId = R.string.pass_not_empty, sequence = 2)
-    @Password(min = 8, messageResId = R.string.pass_lenth_invalid, sequence = 2)
+    @NotEmpty(messageResId = R.string.eos_pass_not_empty, sequence = 2)
+    @Password(min = 8, messageResId = R.string.eos_pass_lenth_invalid, sequence = 2)
     @BindView(R.id.edt_set_pass) EditText edtSetPass;
     @BindView(R.id.iv_set_pass_clear) ImageView ivSetPassClear;
     @BindView(R.id.iv_set_pass_mask) ImageView ivSetPassMask;
     @BindView(R.id.view_divider_setPass) View viewDividerSetPass;
     @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
-    @NotEmpty(messageResId = R.string.repeat_input_pass, sequence = 1)
-    @ConfirmPassword(messageResId = R.string.password_no_match, sequence = 1)
+    @NotEmpty(messageResId = R.string.eos_repeat_input_pass, sequence = 1)
+    @ConfirmPassword(messageResId = R.string.eos_password_no_match, sequence = 1)
     @BindView(R.id.et_repeat_pass) EditText edtRepeatPass;
     @BindView(R.id.iv_repeat_pass_clear) ImageView ivRepeatPassClear;
     @BindView(R.id.iv_repeat_pass_mask) ImageView ivRepeatPassMask;
@@ -206,7 +206,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         setEditTextHintStyle(edtPassHint, R.string.eos_tip_input_password_hint);
         bubble.setVisibility(View.GONE);
 
-        setNavibarTitle(getResources().getString(R.string.title_wookong_bio), true);
+        setNavibarTitle(getResources().getString(R.string.eos_title_wookong_bio), true);
         /**
          * 设置密码输入区域样式设置
          */
@@ -461,7 +461,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
             switch (msg.what) {
                 case BlueToothWrapper.MSG_INIT_PIN_START:
                     //设置PIN
-                    showProgressDialog(getString(R.string.progress_set_pin));
+                    showProgressDialog(getString(R.string.eos_progress_set_pin));
                     break;
                 case BlueToothWrapper.MSG_INIT_PIN_FINISH:
                     //已完成设置PIN

@@ -283,7 +283,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                     @Override
                     public void onStart(Request<AccountInfo, ? extends Request> request) {
                         super.onStart(request);
-                        getV().showProgressDialog(getV().getString(R.string.verifying_account));
+                        getV().showProgressDialog(getV().getString(R.string.eos_verifying_account));
                     }
 
                     @Override
@@ -315,7 +315,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             bundle.putString("passwordTip", getV().getPassHint());
                             UISkipMananger.launchChooseActivateMethod(getV(), bundle);
                         }else {
-                            GemmaToastUtils.showLongToast(getV().getString(R.string.tip_check_network));
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.eos_tip_check_network));
                         }
                         getV().dissmisProgressDialog();
                     }

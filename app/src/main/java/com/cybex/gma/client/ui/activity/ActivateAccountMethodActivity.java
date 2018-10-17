@@ -33,7 +33,7 @@ public class ActivateAccountMethodActivity extends XActivity {
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
-        setNavibarTitle(getResources().getString(R.string.title_choose_activate_method), true);
+        setNavibarTitle(getResources().getString(R.string.eos_title_choose_activate_method), true);
     }
 
     @Override
@@ -59,10 +59,10 @@ public class ActivateAccountMethodActivity extends XActivity {
 
     private List<String> getTitles() {
         List<String> list = new ArrayList<>();
-        list.add(getResources().getString(R.string.tab_title_activate_by_RMB));
-        list.add(getResources().getString(R.string.tab_title_activate_by_friend));
-        list.add(getResources().getString(R.string.tab_title_activate_by_exchanges));
-        list.add(getResources().getString(R.string.tab_title_activate_by_invCode));
+        list.add(getResources().getString(R.string.eos_tab_title_activate_by_RMB));
+        list.add(getResources().getString(R.string.eos_tab_title_activate_by_friend));
+        list.add(getResources().getString(R.string.eos_tab_title_activate_by_exchanges));
+        list.add(getResources().getString(R.string.eos_tab_title_activate_by_invCode));
 
         return list;
     }

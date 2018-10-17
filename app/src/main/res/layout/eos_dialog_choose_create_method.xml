@@ -22,7 +22,7 @@
         android:layout_marginRight="24dp"
         android:textColor="@color/darkSlateBlue"
         android:lineSpacingExtra="2sp"
-        android:text="@string/choose_create_method"
+        android:text="@string/eos_choose_create_method"
         />
 
 
@@ -34,7 +34,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/shape_corner_button"
-        android:text="@string/get_inv_from_friend"
+        android:text="@string/eos_get_inv_from_friend"
         android:textColor="@color/white"
         android:textSize="@dimen/font_3.5"/>
 
@@ -47,7 +47,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/shape_corner_button"
-        android:text="@string/use_cybex"
+        android:text="@string/eos_use_cybex"
         android:textColor="@color/white"
         android:textSize="@dimen/font_3.5"/>
 
@@ -59,7 +59,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/shape_corner_button"
-        android:text="@string/use_invCode"
+        android:text="@string/eos_use_invCode"
         android:textColor="@color/white"
         android:textSize="@dimen/font_3.5"/>
     <View

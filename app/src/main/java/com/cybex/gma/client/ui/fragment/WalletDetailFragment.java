@@ -105,7 +105,7 @@ public class WalletDetailFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.manage_wallet), true, false);
+        setNavibarTitle(getResources().getString(R.string.eos_title_manage_wallet), true, false);
         inputCount = 0;
         if (getArguments() != null){
             curWallet = getArguments().getParcelable("curWallet");
@@ -223,7 +223,7 @@ public class WalletDetailFragment extends XFragment {
                             }else {
                                 inputCount++;
                                 iv_clear.setVisibility(View.VISIBLE);
-                                GemmaToastUtils.showLongToast(getResources().getString(R.string.wrong_password));
+                                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_wrong_password));
                                 if ( inputCount > 3 ){
                                     dialog.cancel();
                                     showPasswordHintDialog();

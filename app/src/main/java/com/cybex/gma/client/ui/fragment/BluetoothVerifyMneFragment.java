@@ -94,7 +94,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(BluetoothVerifyMneFragment.this, rootView);
-        setNavibarTitle(getResources().getString(R.string.title_verify_mne), true, true);
+        setNavibarTitle(getResources().getString(R.string.eos_title_verify_mne), true, true);
     }
 
 
@@ -194,7 +194,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                                         LoggerManager.d("mne validate success...");
 
 
-                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_success),
+                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_success),
                                                 Prompt.SUCCESS);
 
                                         doGetAddressLogic();
@@ -202,12 +202,12 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                                     } else if (status == -2147483642) {
                                         LoggerManager.d("device disconnected...");
 
-                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_warn),
+                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_warn),
                                                 Prompt.WARNING);
 
                                     } else {
                                         LoggerManager.d("mne validate error...");
-                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_failed),
+                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
                                                 Prompt.ERROR);
                                     }
                                 }
@@ -217,7 +217,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                         }
                     }
                 } else {
-                    TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_failed),
+                    TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
                             Prompt.ERROR);
                 }
             }
@@ -309,7 +309,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
      * 获取秘钥相关逻辑
      */
     private void doGetAddressLogic() {
-        showProgressDialog(getString(R.string.do_get_init_info));
+        showProgressDialog(getString(R.string.eos_do_get_init_info));
         mHandler = new MainHandler();
 
         if ((getAddressThread == null) || (getAddressThread.getState() == Thread.State.TERMINATED)) {
@@ -433,7 +433,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                     break;
                 case BlueToothWrapper.MSG_DEVICE_DISCONNECTED:
                     dissmisProgressDialog();
-                    TSnackbarUtil.showTip(viewRoot, getString(R.string.mne_validate_warn),
+                    TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_warn),
                             Prompt.WARNING);
                     break;
                 default:
