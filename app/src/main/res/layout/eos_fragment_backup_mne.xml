@@ -7,7 +7,7 @@
 
     <include layout="@layout/ui_navibar"/>
 
-    <com.cybex.gma.client.widget.OverScrollView
+    <com.cybex.base.view.OverScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -35,7 +35,7 @@
                 android:textColor="@color/steel"
                 android:textSize="@dimen/font_3"/>
 
-            <com.cybex.gma.client.widget.flowlayout.TagFlowLayout
+            <com.cybex.base.view.flowlayout.TagFlowLayout
                 android:id="@+id/id_flowlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                 android:text="@string/eos_mne_copied"/>
 
         </LinearLayout>
-    </com.cybex.gma.client.widget.OverScrollView>
+    </com.cybex.base.view.OverScrollView>
 
 
 </LinearLayout>

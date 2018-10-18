@@ -1,9 +1,11 @@
 package com.cybex.walletmanagement.ui.activity;
 
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
+import android.widget.Button;
 
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -13,16 +15,19 @@ import me.framework.fragmentation.anim.FragmentAnimator;
 
 public class MnemonicBackupGuideActivity extends XActivity {
 
+    private Button btnShowMne;
+
+
     @Override
     public void bindUI(View view) {
-        Bundle  bd = getIntent().getExtras();
-
-//        if (findFragment(BluetoothBackupMneGuideFragment.class) == null) {
-//            loadRootFragment(R.id.fl_container_backup_mnemonic_guide, BluetoothBackupMneGuideFragment.newInstance(bd));
-//        }
-
-        //让布局向上移来显示软键盘
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        btnShowMne = findViewById(R.id.bt_show_mne);
+        btnShowMne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MnemonicBackupGuideActivity.this,MnemonicShowActivity.class));
+            }
+        });
+        setNavibarTitle(getResources().getString(R.string.walletmanage_backup_title), true);
     }
 
     @Override

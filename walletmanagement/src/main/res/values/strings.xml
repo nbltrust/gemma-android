@@ -1,7 +1,7 @@
 <resources>
 
     <!-- 助记词相关-->
-    <string name="walletmanage_backup_mne">备份助记词</string>
+    <string name="walletmanage_backup_mne">备份钱包</string>
     <string name="walletmanage_show_mne">明白了， 显示助记词</string>
     <string name="walletmanage_hint_no_screenshot_mne">如果有人获取你的助记词将直接获取你的资产！请抄写下助记词并存放在安全的地方！</string>
     <string name="walletmanage_mne_copied">已抄写</string>
@@ -13,6 +13,8 @@
     <string name="walletmanage_title_verify_mne">验证助记词</string>
     <string name="walletmanage_btn_import_mne">导入助记词</string>
 
+    <string name="walletmanage_backup_title">备份助记词</string>
+    <string name="walletmanage_backup_hint">请务必备份助记词，助记词能够恢复私钥，而私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>
     <string name="walletmanage_lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
     <string name="walletmanage_lookAround_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
     <string name="walletmanage_backUp_wallet">备份钱包</string>
@@ -36,5 +38,7 @@
     <string name="walletmanage_look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
     <string name="walletmanage_no_screenshot_hint2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
     <string name="walletmanage_show_QR">显示二维码</string>
+
+
 
 </resources>

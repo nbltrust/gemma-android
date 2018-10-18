@@ -1,2 +1,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cybex.walletmanagement" />
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cybex.walletmanagement" >
+    <application
+        android:allowBackup="true"
+        android:label="@string/walletmanage_app_name"
+        android:supportsRtl="true"
+        tools:replace="android:label"
+        >
+
+        <activity android:name=".ui.activity.MnemonicBackupGuideActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.MnemonicShowActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.MnemonicVerifyActivity">
+
+        </activity>
+
+
+
+
+    </application>
+
+</manifest>

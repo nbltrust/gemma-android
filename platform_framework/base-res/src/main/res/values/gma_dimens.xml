@@ -107,5 +107,24 @@
     <integer name="int_200">200</integer>
     <integer name="int_80">80</integer>
 
+    <!-- 公用 -->
+    <dimen name="bt_radius">75dp</dimen>
+    <dimen name="card_height">44dp</dimen>
+    <dimen name="bt_common_height">44dp</dimen>
+
+
+    <!-- 字体大小 -->
+    <dimen name="font_3.5">14sp</dimen>
+    <dimen name="font_3">12sp</dimen>
+    <dimen name="font_6">24sp</dimen>
+    <dimen name="font_4">16sp</dimen>
+    <dimen name="font_4.2">17sp</dimen>
+    <dimen name="font_4.5">18sp</dimen>
+    <dimen name="font_4.7">19sp</dimen>
+    <dimen name="font_7">28sp</dimen>
+
+    <dimen name="bottombar_height">48dp</dimen>
+    <dimen name="bottombar_gemma_height">52dp</dimen>
+
 
 </resources>

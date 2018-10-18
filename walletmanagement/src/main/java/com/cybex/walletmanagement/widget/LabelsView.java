@@ -1,8 +1,9 @@
-package com.cybex.gma.client.widget;
+package com.cybex.walletmanagement.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,7 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cybex.gma.client.R;
+
+import com.cybex.walletmanagement.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,7 +127,7 @@ public class LabelsView extends ViewGroup implements View.OnClickListener {
             mWordMargin = mTypedArray.getDimensionPixelOffset(R.styleable.labels_view_wordMargin, 0);
             int labelBgResId = mTypedArray.getResourceId(R.styleable.labels_view_labelBackground, 0);
             if(labelBgResId==0x0){
-                mLabelBg = getResources().getDrawable(R.drawable.label_bg);
+                mLabelBg =new ColorDrawable(Color.WHITE);
             }
             mTypedArray.recycle();
         }

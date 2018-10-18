@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,27 +12,27 @@
     </include>
 
     <ImageView
-        android:background="@drawable/walletmanage_ic_security"
-        android:layout_width="@dimen/dimen_54"
-        android:layout_height="@dimen/dimen_54"
-        android:layout_marginTop="@dimen/dimen_72"
+        android:background="@drawable/walletmanage_ic_common_security"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="59.6dp"
         android:layout_gravity="center"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_40"
+        android:layout_height="wrap_content"
         android:text="@string/walletmanage_backup_mne"
-        android:textSize="@dimen/baseservice_font_4.5"
-        android:layout_marginTop="@dimen/dimen_10"
+        android:textColor="@color/color_212c68"
+        android:textSize="@dimen/font_4.5"
+        android:layout_marginTop="19.23dp"
         android:textStyle="bold"
         android:textAlignment="center"
         android:gravity="center"/>
 
     <android.support.constraint.ConstraintLayout
-        android:layout_marginTop="@dimen/dimen_20"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginEnd="@dimen/dimen_20"
-        android:padding="@dimen/dimen_20"
+        android:layout_marginTop="32.7dp"
+        android:layout_marginStart="33.84dp"
+        android:layout_marginEnd="38dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -50,9 +49,10 @@
         <TextView
             android:id="@+id/tv_backup_hint"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_40"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:text="@string/walletmanage_lookAround"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14.61dp"
+            android:textColor="@color/color_757b9f"
+            android:text="@string/walletmanage_backup_hint"
             app:layout_constraintStart_toEndOf="@id/iv_dot_zero"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -69,9 +69,10 @@
         <TextView
             android:id="@+id/tv_look_around_hint"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_40"
-            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14.61dp"
             android:text="@string/walletmanage_lookAround"
+            android:textColor="@color/color_757b9f"
             app:layout_constraintStart_toEndOf="@id/iv_dot_one"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_backup_hint"/>
@@ -88,10 +89,11 @@
         <TextView
             android:id="@+id/tv_look_around_hint_two"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_40"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
-            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginStart="14.61dp"
             android:text="@string/walletmanage_backupSafely"
+            android:textColor="@color/color_757b9f"
             app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_dot_two"
@@ -101,8 +103,11 @@
 
     <Button
         android:id="@+id/bt_show_mne"
-        style="@style/baseservice_bt_long_in_linearLayout"
+        style="@style/bt_long_in_linearLayout"
         android:text="@string/walletmanage_show_mne"
-        android:layout_margin="30dp"/>
+        android:layout_marginLeft="33.84dp"
+        android:layout_marginRight="33.84dp"
+        android:layout_marginTop="38.46dp"
+        />
 
 </LinearLayout>

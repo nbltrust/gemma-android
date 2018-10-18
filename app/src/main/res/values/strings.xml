@@ -673,8 +673,7 @@
     <string name="eos_err_code_3230002">EOS链异常：3230002</string>
     <string name="eos_err_code_3230003">EOS链异常：3230003</string>
     =======
-    <item name="tag_key_data" type="id"/>
-    <item name="tag_key_position" type="id"/>
+
 
     <!-- ============================我是 EOS模块和非EOS模块不严谨的分割线============================ -->
 
