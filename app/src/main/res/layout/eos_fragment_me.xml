@@ -18,6 +18,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:background="@color/whiteTwo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/dimen_10"
@@ -26,9 +27,10 @@
                 android:orientation="vertical">
 
                 <com.allen.library.SuperTextView
+                    title:sUseShape="true"
                     android:id="@+id/superTextView_general"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_44"
+                    android:layout_height="@dimen/dimen_48"
                     android:layout_marginEnd="@dimen/dimen_10"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginTop="@dimen/dimen_10"
@@ -55,9 +57,10 @@
                 </View>
 
                 <com.allen.library.SuperTextView
+                    title:sUseShape="true"
                     android:id="@+id/superTextView_security"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_44"
+                    android:layout_height="@dimen/dimen_48"
                     android:layout_marginEnd="@dimen/dimen_10"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginTop="@dimen/dimen_10"
@@ -85,10 +88,11 @@
 
 
                 <com.allen.library.SuperTextView
+                    title:sUseShape="true"
                     title:sDividerLineType="none"
                     android:id="@+id/superTextView_help"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_44"
+                    android:layout_height="@dimen/dimen_48"
                     title:sLeftTextColor="@color/darkSlateBlue"
                     title:sLeftTextSize="@dimen/font_3.5"
                     title:sLeftTextString="@string/help"
@@ -115,9 +119,10 @@
 
 
                 <com.allen.library.SuperTextView
+                    title:sUseShape="true"
                     android:id="@+id/superTextView_service_agreement"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_44"
+                    android:layout_height="@dimen/dimen_48"
                     android:layout_marginEnd="@dimen/dimen_10"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginTop="@dimen/dimen_10"
@@ -144,10 +149,11 @@
                 </View>
 
                 <com.allen.library.SuperTextView
+                    title:sUseShape="true"
                     title:sDividerLineType="none"
                     android:id="@+id/superTextView_about"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_44"
+                    android:layout_height="@dimen/dimen_48"
                     android:layout_marginEnd="@dimen/dimen_10"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginTop="@dimen/dimen_10"
