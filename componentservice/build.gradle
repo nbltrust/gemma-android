@@ -44,11 +44,16 @@ android {
         }
     }
 
+    repositories{
+        flatDir{
+            dirs 'libs'
+        }
+    }
 
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
 
     api deps.support.appcompatV7
 
@@ -73,5 +78,13 @@ dependencies {
 
     //头条屏幕适配方案
     api 'me.jessyan:autosize:1.0.0'
+
+    api deps.gma.saripaar
+    api deps.gma.happybubble
+    api deps.gma.alerter
+    api deps.third.recyclerviewadapterhelper
+    api deps.third.overscroll
+
+    api(name:'seed39', ext:'aar')
 
 }

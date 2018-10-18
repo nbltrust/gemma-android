@@ -4,6 +4,7 @@ static def increasedVersionCode() {
 
 
 ext {
+    COMPONENT_SERVICE_DIR_PATH = projectDir.getPath() +  "/componentservice/libs"
     android = [
             compileSdkVersion: 28,
             buildToolsVersion: "27.0.3",

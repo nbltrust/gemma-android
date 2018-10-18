@@ -7,7 +7,7 @@ import android.view.View;
 import com.allen.library.SuperTextView;
 import com.cybex.base.view.switchbutton.SwitchButton;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.FingerprintEvent;
 import com.cybex.gma.client.event.RefreshGestureEvent;

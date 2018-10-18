@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.cybex.base.view.lockpattern.util.LockPatternUtil;
 import com.cybex.base.view.lockpattern.widget.LockPatternView;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.RefreshGestureEvent;
 import com.cybex.gma.client.manager.UISkipMananger;

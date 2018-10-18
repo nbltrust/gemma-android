@@ -40,5 +40,52 @@
     <string name="walletmanage_show_QR">显示二维码</string>
 
 
+    <!-- Create Wallet Activity-->
+    <string name="walletmanage_tip_next_step">下一步</string>
+    <string name="walletmanage_tip_set_password">设置密码</string>
+    <string name="walletmanage_tip_create_wallet">创建钱包</string>
+    <string name="walletmanage_tip_repeat_pass">重复密码</string>
+    <string name="walletmanage_title_wallet_name">钱包名称</string>
+    <string name="walletmanage_tip_wallet_username">由小写字母a-z与数字1-5组成，须为12个字符</string>
+    <string name="walletmanage_tip_input_password">最少8位，可混合大小写字母、数字及符号</string>
+    <string name="walletmanage_tip_repeat_password">请再次输入您的密码</string>
+    <string name="walletmanage_tip_input_password_hint">请输入密码提示</string>
+    <string name="walletmanage_title_invitation_code">邀请码</string>
+    <string name="walletmanage_tip_input_inv_code">请输入邀请码</string>
+    <string name="walletmanage_btn_get_invitation">获取邀请码</string>
+    <string name="walletmanage_tip_agree">我已阅读并同意</string>
+    <string name="walletmanage_tip_terms_of_service"><u>服务协议</u></string>
+    <string name="walletmanage_title_password_hint">密码提示（可选）</string>
+    <string name="walletmanage_tip_password_hint">密码提示信息</string>
+    <string name="walletmanage_tip_password_input_part2">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不存储密码，无法提供密码找回服务</string>
+    <string name="walletmanage_tip_security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不储存密码，无法提供密码找回服务</string>
+
+
+    <!-- Annotation -->
+    <string name="walletmanage_name_not_empty">EOS账户名不能为空</string>
+    <string name="walletmanage_pass_not_empty">密码不能为空</string>
+    <string name="walletmanage_pass_lenth_invalid">密码请至少输入8位</string>
+    <string name="walletmanage_password_no_match">两次输入的密码不匹配，请重新输入</string>
+    <string name="walletmanage_repeat_input_pass">请再次输入您的密码</string>
+    <string name="walletmanage_check_agreement">请同意我们的服务协议</string>
+
+    <!-- Toast -->
+    <string name="walletmanage_copy_success">复制成功</string>
+    <string name="walletmanage_change_pass_success">修改密码成功</string>
+    <string name="walletmanage_set_camera_permission">请设置相机相关权限</string>
+    <string name="walletmanage_agree_terms_of_service">请阅读并同意我们的服务协议</string>
+    <string name="walletmanage_invalid_eos_username">EOS用户名不符合规范，请重新输入</string>
+
+    <string name="walletmanage_invCode_used">创建失败，邀请码已被使用！</string>
+    <string name="walletmanage_invCode_not_exist">创建失败，邀请码不存在！</string>
+    <string name="walletmanage_name_used">创建失败，eos账户名已存在！</string>
+    <string name="walletmanage_name_invalid">创建失败，eos账户名格式错误！</string>
+    <string name="walletmanage_name_len_invalid">创建失败，eos账户名长度不为12位！</string>
+    <string name="walletmanage_params_invalid">创建失败，参数错误！</string>
+    <string name="walletmanage_pubKey_invalid">创建失败，无效的公钥！</string>
+    <string name="walletmanage_no_balance">创建失败，账户余额不足！</string>
+    <string name="walletmanage_default_create_fail_info">创建失败，请重新尝试</string>
+    <string name="walletmanage_loading_success">加载成功</string>
+    <string name="walletmanage_tip_pass_no_match">密码不一致</string>
 
 </resources>

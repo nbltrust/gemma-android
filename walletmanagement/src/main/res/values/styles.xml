@@ -3,4 +3,37 @@
     <style name="walletmanage_AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="walletmanage_AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- 配置钱包页面 -->
+    <style name="walletmanage_text_title_config_wallet">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_20</item>
+        <item name="android:layout_marginStart">@dimen/dimen_12</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_12</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/font_3</item>
+        <item name="android:textColor">@color/steel</item>
+        <item name="android:layout_marginTop">@dimen/dimen_6</item>
+    </style>
+
+    <style name="walletmanage_editText_config_wallet">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_50</item>
+        <item name="android:textColor">@color/darkSlateBlue</item>
+        <item name="android:textSize">@dimen/font_4</item>
+        <item name="android:textColorHint">@color/cloudyBlue</item>
+        <item name="android:theme">@style/walletmanage_myEditText</item>
+        <item name="android:background">@null</item>
+        <item name="android:textCursorDrawable">@drawable/walletmanage_cursor_custom</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_12</item>
+        <item name="android:layout_marginStart">@dimen/dimen_12</item>
+        <item name="android:textStyle">normal</item>
+
+    </style>
+
+    <!-- 通用EditText样式 -->
+    <style name="walletmanage_myEditText">
+        <item name="android:colorControlNormal">@color/black</item>
+        <item name="android:colorControlActivated">@color/darkSlateBlue</item>
+    </style>
 </resources>

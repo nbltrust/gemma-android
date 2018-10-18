@@ -13,7 +13,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.componentservice.db.dao.WalletEntityDao;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;

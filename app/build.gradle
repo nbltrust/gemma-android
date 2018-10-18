@@ -216,7 +216,7 @@ android {
 
     repositories{
         flatDir{
-            dirs 'libs'
+            dirs 'libs',rootProject.ext.COMPONENT_SERVICE_DIR_PATH
         }
     }
 
@@ -240,7 +240,7 @@ dependencies {
     implementation deps.butterknife.core
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     annotationProcessor deps.butterknife.compiler
-    implementation deps.gma.happybubble
+
     implementation deps.gma.zxing
     implementation deps.gma.androidanimations
     api deps.gma.MaterialEditText
@@ -252,10 +252,9 @@ dependencies {
 //    api deps.dbflow.sqlciperDatabase
 //    api deps.dbflow.sqlcipher
 
-    implementation deps.third.recyclerviewadapterhelper
-    implementation deps.third.overscroll
-    implementation deps.gma.alerter
-    implementation deps.gma.saripaar
+
+
+
     implementation deps.gma.spinkit
     implementation deps.gma.wechatpay
 
@@ -272,6 +271,7 @@ dependencies {
 
     //implementation(name:'bluetoothlib-release', ext:'aar')
     implementation(name:'bluetoothlib-debug3', ext:'aar')
+
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 

@@ -66,5 +66,83 @@ public class EosWalletEntity extends BaseModel {
     @ColumnIgnore
     public boolean isChecked = false;
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
+    }
+
+    public String getPrivateKey() {
+        return privateKey;
+    }
+
+    public void setPrivateKey(String privateKey) {
+        this.privateKey = privateKey;
+    }
+
+    public String getEosNameJson() {
+        return eosNameJson;
+    }
+
+    public void setEosNameJson(String eosNameJson) {
+        this.eosNameJson = eosNameJson;
+    }
+
+    public String getCurrentEosName() {
+        return currentEosName;
+    }
+
+    public void setCurrentEosName(String currentEosName) {
+        this.currentEosName = currentEosName;
+    }
+
+    public Integer getIsBackUp() {
+        return isBackUp;
+    }
+
+    public void setIsBackUp(Integer isBackUp) {
+        this.isBackUp = isBackUp;
+    }
+
+    public Integer getIsConfirmLib() {
+        return isConfirmLib;
+    }
+
+    public void setIsConfirmLib(Integer isConfirmLib) {
+        this.isConfirmLib = isConfirmLib;
+    }
+
+    public String getTxId() {
+        return txId;
+    }
+
+    public void setTxId(String txId) {
+        this.txId = txId;
+    }
+
+    public String getInvCode() {
+        return invCode;
+    }
+
+    public void setInvCode(String invCode) {
+        this.invCode = invCode;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 }

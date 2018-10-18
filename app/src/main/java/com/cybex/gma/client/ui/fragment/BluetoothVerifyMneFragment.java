@@ -1,51 +1,11 @@
 package com.cybex.gma.client.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.cybex.componentservice.db.entity.WalletEntity;
-import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
-import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.event.AccountRegisterEvent;
-import com.cybex.gma.client.event.ValidateResultEvent;
-import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
-import com.cybex.gma.client.ui.activity.BluetoothPairActivity;
-import com.cybex.gma.client.ui.activity.BluetoothScanResultDialogActivity;
-import com.cybex.gma.client.ui.activity.BluetoothSettingFPActivity;
-import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
 import com.cybex.gma.client.ui.presenter.BluetoothVerifyPresenter;
-import com.cybex.gma.client.utils.CollectionUtils;
-import com.cybex.gma.client.utils.ConvertUtils;
-import com.cybex.gma.client.utils.TSnackbarUtil;
-import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
-import com.extropies.common.CommonUtility;
-import com.extropies.common.MiddlewareInterface;
-import com.hxlx.core.lib.common.async.TaskManager;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.common.utils.AppManager;
-import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
-import com.trycatch.mysnackbar.Prompt;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.framework.fragmentation.ISupportFragment;
 
 /**
