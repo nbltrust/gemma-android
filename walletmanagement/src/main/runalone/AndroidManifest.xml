@@ -11,10 +11,22 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
         <activity android:name=".runalone.ui.WalletManagementMainActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
-        <activity android:name=".ui.activity.MnemonicBackupGuideActivity"></activity>
+        <activity android:name=".ui.activity.MnemonicBackupGuideActivity">
+
+        </activity>
 
         <activity android:name=".ui.activity.MnemonicShowActivity">
+
+        </activity>
+
+
+        <activity android:name=".ui.activity.MnemonicVerifyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -66,6 +66,5 @@
     <color name="color_fingger_anim_default">#9ea3bd</color>
 
     <color name="label_textView"></color>
-    <drawable name="label_bg">#ffffff</drawable>
 
 </resources>

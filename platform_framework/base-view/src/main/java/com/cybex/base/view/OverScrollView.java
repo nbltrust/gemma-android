@@ -1,4 +1,4 @@
-package com.cybex.gma.client.widget;
+package com.cybex.base.view;
 /*
  * Copyright (C) 2006 The Android Open Source Project
  *

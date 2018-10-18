@@ -17,7 +17,7 @@ import com.siberiadante.customdialoglib.CustomDialog;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
-import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
+
 
 public class MnemonicShowActivity extends XActivity {
 
@@ -27,12 +27,12 @@ public class MnemonicShowActivity extends XActivity {
 
     @Override
     public void bindUI(View view) {
-        btnShowMne = view.findViewById(R.id.bt_copied_mne);
-        mFlowLayout = view.findViewById(R.id.id_flowlayout);
+        btnShowMne =  findViewById(R.id.bt_copied_mne);
+        mFlowLayout = findViewById(R.id.id_flowlayout);
         btnShowMne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MnemonicShowActivity.this,MnemonicShowActivity.class));
+                startActivity(new Intent(MnemonicShowActivity.this,MnemonicVerifyActivity.class));
             }
         });
         setNavibarTitle(getResources().getString(R.string.walletmanage_backup_title), true);
@@ -76,18 +76,21 @@ public class MnemonicShowActivity extends XActivity {
      */
     private void showAlertDialog() {
         int[] listenedItems = {R.id.tv_understand};
-        CustomDialog dialog = new CustomDialog(getContext(),
+        CustomDialog dialog = new CustomDialog(this,
                 R.layout.walletmanage_dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override
             public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.tv_understand:
-                        dialog.cancel();
-                        break;
-                    default:
-                        break;
+//                switch (view.getId()) {
+//                    case R.id.tv_understand:
+//                        dialog.cancel();
+//                        break;
+//                    default:
+//                        break;
+//                }
+                if(view.getId()==R.id.tv_understand){
+                    dialog.cancel();
                 }
             }
         });

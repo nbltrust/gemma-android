@@ -7,7 +7,7 @@
 
     <include layout="@layout/ui_navibar"/>
 
-    <com.cybex.gma.client.widget.OverScrollView
+    <com.cybex.base.view.OverScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -54,7 +54,7 @@
                 android:text="@string/eos_mne_copied"/>
 
         </LinearLayout>
-    </com.cybex.gma.client.widget.OverScrollView>
+    </com.cybex.base.view.OverScrollView>
 
 
 </LinearLayout>

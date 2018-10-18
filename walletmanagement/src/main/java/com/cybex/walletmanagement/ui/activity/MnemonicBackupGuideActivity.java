@@ -1,6 +1,7 @@
 package com.cybex.walletmanagement.ui.activity;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,9 +17,10 @@ public class MnemonicBackupGuideActivity extends XActivity {
 
     private Button btnShowMne;
 
+
     @Override
     public void bindUI(View view) {
-        btnShowMne = view.findViewById(R.id.bt_show_mne);
+        btnShowMne = findViewById(R.id.bt_show_mne);
         btnShowMne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

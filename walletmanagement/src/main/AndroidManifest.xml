@@ -16,6 +16,12 @@
 
         </activity>
 
+        <activity android:name=".ui.activity.MnemonicVerifyActivity">
+
+        </activity>
+
+
+
 
     </application>
 
