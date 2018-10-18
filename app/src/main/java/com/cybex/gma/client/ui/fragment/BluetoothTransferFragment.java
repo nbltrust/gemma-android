@@ -91,7 +91,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
     EditText etAmount; //支付金额
     @BindView(R.id.et_note)
     EditText etNote;  //备注
-    @BindView(R.id.btn_transfer)
+    @BindView(R.id.btn_transfer_nextStep)
     Button btnTransfer; //确认转账
     @BindView(R.id.root_scrollview)
     ScrollView rootScrollview;
@@ -398,7 +398,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
         }
     }
 
-    @OnClick({R.id.btn_transfer})
+    @OnClick({R.id.btn_transfer_nextStep})
     public void onClickSubmitTransfer(View view) {
         String toAccount = String.valueOf(etCollectionAccount.getText());
         if (toAccount.equals(currentEOSName)) {
@@ -435,7 +435,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
      * 确认转账dialog
      */
     private void showConfirmTransferDialog() {
-        int[] listenedItems = {R.id.btn_close, R.id.btn_transfer};
+        int[] listenedItems = {R.id.btn_close, R.id.btn_transfer_nextStep};
 
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_transfer_confirm, listenedItems, false, Gravity.BOTTOM);
@@ -450,7 +450,7 @@ public class BluetoothTransferFragment extends XFragment<BluetoothTransferPresen
                         case R.id.btn_close:
                             dialog.cancel();
                             break;
-                        case R.id.btn_transfer:
+                        case R.id.btn_transfer_nextStep:
                             switch (walletType){
                                 case CacheConstants.WALLET_TYPE_SOFT:
                                     showConfirmAuthoriDialog();

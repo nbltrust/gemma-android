@@ -3,10 +3,7 @@
     <solid android:color="@color/cloudyBlueTwo">
     </solid>
     <corners
-        android:topLeftRadius="@dimen/bt_radius"
-        android:topRightRadius="@dimen/bt_radius"
-        android:bottomLeftRadius="@dimen/bt_radius"
-        android:bottomRightRadius="@dimen/bt_radius"
+        android:radius="30dp"
         >
     </corners>
 </shape>

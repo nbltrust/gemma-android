@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:title="http://schemas.android.com/apk/res-auto"
+              android:background="@color/whiteTwo"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_10"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:text="@string/eos_title_brief_info"
+            android:textColor="@color/steel"
+            android:textSize="@dimen/font_3.5"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10"
+            android:background="@drawable/shape_corner"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_10"
+            android:translationZ="@dimen/dimen_3"
+            >
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_cpu_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                title:sLeftTextColor="@color/steel"
+                title:sLeftTextSize="@dimen/font_3.5"
+                title:sLeftTextString="@string/eos_CPU"
+                title:sRightTextColor="@color/darkSlateBlueTwo"
+                title:sRightTextSize="@dimen/font_3"
+                title:sRightTextString="-- EOS"
+                title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                title:sUseShape="true"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <com.cybex.base.view.progress.RoundCornerProgressBar
+                android:id="@+id/progressbar_cpu"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_4"
+                android:layout_margin="@dimen/dimen_10"
+                title:rcBackgroundColor="@color/cloudyBlue"
+                title:rcBackgroundPadding="0dp"
+                title:rcMax="100"
+                title:rcProgress="30"
+                title:rcProgressColor="@color/dark_sky_blue"
+                title:rcRadius="10dp"
+                >
+
+
+            </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_cpu_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                title:sLeftIconHeight="@dimen/dimen_8"
+                title:sLeftIconRes="@drawable/ic_dot_blue"
+                title:sLeftIconWidth="@dimen/dimen_8"
+                title:sLeftTextColor="@color/cloudyBlue"
+                title:sLeftTextSize="@dimen/font_3"
+                title:sLeftTextString="已用 -- ms"
+                title:sRightTextColor="@color/cloudyBlue"
+                title:sRightTextSize="@dimen/font_3"
+                title:sRightTextString="总量 -- ms"
+                title:sUseShape="true"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:background="@color/paleGrey"
+                android:layerType="software">
+            </View>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_net_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                title:sLeftTextColor="@color/steel"
+                title:sLeftTextSize="@dimen/font_3.5"
+                title:sLeftTextString="@string/eos_NET"
+                title:sRightTextColor="@color/darkSlateBlueTwo"
+                title:sRightTextSize="@dimen/font_3"
+                title:sRightTextString="-- EOS"
+                title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                title:sUseShape="true"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <com.cybex.base.view.progress.RoundCornerProgressBar
+                android:id="@+id/progressbar_net"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_4"
+                android:layout_margin="@dimen/dimen_10"
+                title:rcBackgroundColor="@color/cloudyBlue"
+                title:rcBackgroundPadding="0dp"
+                title:rcMax="100"
+                title:rcProgress="10"
+                title:rcProgressColor="@color/dark_sky_blue"
+                title:rcRadius="10dp"
+                >
+
+
+            </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_net_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                title:sLeftIconHeight="@dimen/dimen_8"
+                title:sLeftIconRes="@drawable/ic_dot_blue"
+                title:sLeftIconWidth="@dimen/dimen_8"
+                title:sLeftTextColor="@color/cloudyBlue"
+                title:sLeftTextSize="@dimen/font_3"
+                title:sLeftTextString="已用 -- KB"
+                title:sRightTextColor="@color/cloudyBlue"
+                title:sRightTextSize="@dimen/font_3"
+                title:sRightTextString="总量 -- KB"
+                title:sUseShape="true"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:background="@color/paleGrey"
+                android:layerType="software">
+            </View>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_ram_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                title:sLeftTextColor="@color/steel"
+                title:sLeftTextSize="@dimen/font_3.5"
+                title:sLeftTextString="@string/eos_RAM"
+                title:sRightTextColor="@color/darkSlateBlueTwo"
+                title:sRightTextSize="@dimen/font_3"
+                title:sRightTextString="--- EOS"
+                title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
+                title:sUseShape="true"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <com.cybex.base.view.progress.RoundCornerProgressBar
+                android:id="@+id/progressbar_ram"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_4"
+                android:layout_margin="@dimen/dimen_10"
+                title:rcBackgroundColor="@color/cloudyBlue"
+                title:rcBackgroundPadding="0dp"
+                title:rcMax="100"
+                title:rcProgress="30"
+                title:rcProgressColor="@color/dark_sky_blue"
+                title:rcRadius="10dp"
+                >
+
+            </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_ram_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                title:sLeftIconHeight="@dimen/dimen_8"
+                title:sLeftIconRes="@drawable/ic_dot_blue"
+                title:sLeftIconWidth="@dimen/dimen_8"
+                title:sLeftTextColor="@color/cloudyBlue"
+                title:sLeftTextSize="@dimen/font_3"
+                title:sLeftTextString="已用 -- KB"
+                title:sRightTextColor="@color/cloudyBlue"
+                title:sRightTextSize="@dimen/font_3"
+                title:sRightTextString="总量 -- KB"
+                title:sUseShape="true"
+                >
+
+            </com.allen.library.SuperTextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/view_resource_manage_area"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:text="@string/manage"
+            android:textColor="@color/steel"
+            android:textSize="@dimen/font_3.5"
+            />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTV_delegate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:elevation="@dimen/dimen_1"
+            title:layout_constraintEnd_toEndOf="parent"
+            title:layout_constraintStart_toStartOf="parent"
+            title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
+            title:sLeftTextColor="@color/darkSlateBlue"
+            title:sLeftTextSize="@dimen/font_3"
+            title:sDividerLineColor="@color/light_periwinkle_50"
+            title:sLeftTextString="@string/eos_delegate_undelegate"
+            title:sRightTextString="@string/eos_get_cpu_net"
+            title:sRightTextColor="@color/cloudyBlue"
+            title:sRightTextSize="@dimen/font_3.5"
+            title:sRightTvDrawableRight="@drawable/ic_arrow"
+            title:sShapeSelectorPressedColor="@color/item_pressed"/>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTV_buy_sell_ram"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:elevation="@dimen/dimen_1"
+            title:layout_constraintEnd_toEndOf="parent"
+            title:layout_constraintStart_toStartOf="parent"
+            title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
+            title:sLeftTextColor="@color/darkSlateBlue"
+            title:sLeftTextSize="@dimen/font_3.5"
+            title:sDividerLineColor="@color/light_periwinkle_50"
+            title:sLeftTextString="@string/eos_buy_sell_ram"
+            title:sRightTvDrawableRight="@drawable/ic_arrow"
+            title:sShapeSelectorPressedColor="@color/item_pressed"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:textSize="@dimen/font_3.5"
+        android:textColor="@color/blueyGrey"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:text="@string/eos_tip_manage_resource_wookong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

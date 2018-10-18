@@ -109,12 +109,12 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         if (EmptyUtils.isEmpty(title)) { return; }
         mTitleBar = findViewById(R.id.btn_navibar);
         mTitleBar.setTitle(title);
-        mTitleBar.setTitleColor(R.color.ffffff_white_1000);
+        mTitleBar.setTitleColor(R.color.dark_slate_blue);
         mTitleBar.setTitleSize(20);
         mTitleBar.setImmersive(true);
 
         if (isShowBack) {
-            mTitleBar.setLeftImageResource(R.drawable.ic_btn_back);
+            mTitleBar.setLeftImageResource(R.drawable.ic_notify_back);
             mTitleBar.setLeftClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

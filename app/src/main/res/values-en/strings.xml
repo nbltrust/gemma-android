@@ -73,6 +73,7 @@
     <string name="eos_delegate">Delegate</string>
     <string name="eos_title_resource_management">Manage Resources</string>
     <string name="eos_balance">Balance</string>
+    <string name="eos_delegate_undelegate">Delegate/Undelegate</string>
 
     <string name="eos_amount_cpu_used">used %1$s ms</string>
     <string name="eos_amount_cpu_total">total %1$s ms</string>
@@ -145,7 +146,7 @@
     <string name="eos_tip_redeem_ing">Refunding</string>
     <string name="eos_transfer_records">Transactions</string>
     <string name="resource">Manage Resources</string>
-    <string name="eos_get_cpu_net">Get CPU / NET</string>
+    <string name="eos_get_cpu_net">Manage CPU / NET</string>
     <string name="eos_CPU">CPU</string>
     <string name="eos_NET">NET</string>
     <string name="eos_RAM">RAM</string>
@@ -827,5 +828,8 @@
     <string name="status_accepted">已接受</string>
     <string name="status_sent">已发送</string>
     <string name="status_sending">发送中...%1$s%</string>
+
+    <string name="next_step">下一步</string>
+    <string name="manage">管理</>
 
 </resources>

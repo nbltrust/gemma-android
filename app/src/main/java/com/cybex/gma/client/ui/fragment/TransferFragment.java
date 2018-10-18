@@ -12,12 +12,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cybex.componentservice.db.dao.WalletEntityDao;
 import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
@@ -25,8 +29,6 @@ import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.DeviceInfoEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
-import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
@@ -34,6 +36,7 @@ import com.cybex.gma.client.ui.presenter.TransferPresenter;
 import com.cybex.gma.client.utils.AlertUtil;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
+import com.cybex.gma.client.widget.EditTextWithScrollView;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
@@ -78,40 +81,32 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     public static int m_getPINResult;
     public static String m_getPINString;
     protected static ReentrantLock m_uiLock;
-    @BindView(R.id.icon_receiver)
-    TextView iconReceiver;
-    @BindView(R.id.view_divider)
-    View viewDivider;
-    @BindView(R.id.et_collection_account)
-    EditText etCollectionAccount; //收款账户
-    @BindView(R.id.tv_collection_account)
-    TextView tvCollectionAmount;
-    @BindView(R.id.tv_pay_account)
-    TextView tvPayAccount; //付款账户
-    @BindView(R.id.tv_banlance)
-    TextView tvBanlance; //账户余额
-    @BindView(R.id.et_amount)
-    EditText etAmount; //支付金额
-    @BindView(R.id.et_note)
-    EditText etNote;  //备注
-    @BindView(R.id.btn_transfer)
-    Button btnTransfer; //确认转账
-    @BindView(R.id.root_scrollview)
-    ScrollView rootScrollview;
     Unbinder unbinder;
-    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.iv_transfer_account_clear) ImageView ivTransferAccountClear;
-    @BindView(R.id.tv_title_pay_account) TextView tvTitlePayAccount;
-    @BindView(R.id.tv_amount) TextView tvAmount;
-    @BindView(R.id.iv_transfer_amount_clear) ImageView ivTransferAmountClear;
-    @BindView(R.id.tv_note) TextView tvNote;
-    @BindView(R.id.iv_transfer_memo_clear) ImageView ivTransferMemoClear;
-    @BindView(R.id.imv_wookong_logo) ImageView imvWookongLogo;
+
     CustomFullDialog dialog = null;
     SerializeHandler mSerializeHandler;
     ConnectHandler mConnectHandler;
     SignHandler mSignHandler;
     AlertDialog dlg = null;
+    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
+    @BindView(R.id.tv_title_receiver) TextView tvTitleReceiver;
+    @BindView(R.id.et_receiver_account) EditText etReceiverAccount;
+    @BindView(R.id.tv_title_pay_account) TextView tvTitlePayAccount;
+    @BindView(R.id.imv_wookong_logo) ImageView imvWookongLogo;
+    @BindView(R.id.tv_pay_account) TextView tvPayAccount;
+    @BindView(R.id.imv_arrow_change_account) ImageView imvArrowChangeAccount;
+    @BindView(R.id.view_change_account) RelativeLayout viewChangeAccount;
+    @BindView(R.id.tv_amount) TextView tvAmount;
+    @BindView(R.id.tv_banlance) TextView tvBanlance;
+    @BindView(R.id.et_amount) EditText etAmount;
+    @BindView(R.id.iv_transfer_amount_clear) ImageView ivTransferAmountClear;
+    @BindView(R.id.tv_note) TextView tvNote;
+    @BindView(R.id.et_note) EditTextWithScrollView etNote;
+    @BindView(R.id.iv_transfer_memo_clear) ImageView ivTransferMemoClear;
+    @BindView(R.id.btn_transfer_nextStep) Button btnTransferNextStep;
+    @BindView(R.id.root_scrollview) ScrollView rootScrollview;
+    @BindView(R.id.iv_transfer_account_clear) ImageView ivTransferAccountClear;
+    @BindView(R.id.view_receiver_account) LinearLayout viewReceiverAccount;
     private TransferTransactionVO transactionVO;
     private String maxValue = "";
     private String currentEOSName = "";
@@ -139,7 +134,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     public void onClearClicked(View v) {
         switch (v.getId()) {
             case R.id.iv_transfer_account_clear:
-                etCollectionAccount.setText("");
+                etReceiverAccount.setText("");
                 break;
             case R.id.iv_transfer_amount_clear:
                 etAmount.setText("");
@@ -249,7 +244,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onContextHandleRecieved(ContextHandleEvent event){
+    public void onContextHandleRecieved(ContextHandleEvent event) {
         mContextHandle = event.getContextHanle();
     }
 
@@ -265,13 +260,13 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             imvWookongLogo.setVisibility(View.GONE);
         }
 
-        etCollectionAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     if (EmptyUtils.isEmpty(getCollectionAccount())) {
-                        tvCollectionAmount.setText(getString(R.string.eos_title_receiver));
-                        tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
+                        tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
+                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
                     } else {
                         ivTransferAccountClear.setVisibility(View.VISIBLE);
                     }
@@ -279,24 +274,24 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     ivTransferAccountClear.setVisibility(View.GONE);
                     validateButton();
                     if (EmptyUtils.isEmpty(getCollectionAccount())) {
-                        tvCollectionAmount.setText(getString(R.string.eos_title_receiver));
-                        tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
+                        tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
+                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
                     }
                     if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
-                            etCollectionAccount.getText().toString().trim())) {
+                            etReceiverAccount.getText().toString().trim())) {
                         //显示alert样式
-                        tvCollectionAmount.setText(getString(R.string.eos_tip_account_name_err));
-                        tvCollectionAmount.setTextColor(getResources().getColor(R.color.scarlet));
+                        tvTitleReceiver.setText(getString(R.string.eos_tip_account_name_err));
+                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.scarlet));
                     } else {
                         //显示默认样式
-                        tvCollectionAmount.setText(getString(R.string.eos_title_receiver));
-                        tvCollectionAmount.setTextColor(getResources().getColor(R.color.steel));
+                        tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
+                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
                     }
                 }
             }
         });
 
-        etCollectionAccount.addTextChangedListener(new TextWatcher() {
+        etReceiverAccount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -344,15 +339,15 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
     private void validateButton() {
-        String collectionAccount = String.valueOf(etCollectionAccount.getText());
+        String collectionAccount = String.valueOf(etReceiverAccount.getText());
         String amount = String.valueOf(etAmount.getText());
 
         if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount) && collectionAccount.length() ==
                 ParamConstants.VALID_EOSNAME_LENGTH) {
-            btnTransfer.setEnabled(true);
+            btnTransferNextStep.setEnabled(true);
 
         } else {
-            btnTransfer.setEnabled(false);
+            btnTransferNextStep.setEnabled(false);
 
         }
 
@@ -361,7 +356,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (event != null && event.getPosition() == 1) {
-            etCollectionAccount.setText("");
+            etReceiverAccount.setText("");
             etAmount.setText("");
             etNote.setText("");
             LoggerManager.d("tab transfer selected");
@@ -379,9 +374,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
     }
 
-    @OnClick({R.id.btn_transfer})
+    @OnClick({R.id.btn_transfer_nextStep})
     public void onClickSubmitTransfer(View view) {
-        String toAccount = String.valueOf(etCollectionAccount.getText());
+        String toAccount = String.valueOf(etReceiverAccount.getText());
         if (toAccount.equals(currentEOSName)) {
             GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_tip_cant_transfer_to_yourself));
             return;
@@ -400,7 +395,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
     public boolean isAccountNameValid() {
-        String eosUsername = etCollectionAccount.getText().toString().trim();
+        String eosUsername = etReceiverAccount.getText().toString().trim();
         String regEx = "^[a-z1-5]{12}$";
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher((eosUsername));
@@ -409,7 +404,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     }
 
     public String getCollectionAccount() {
-        return etCollectionAccount.getText().toString().trim();
+        return etReceiverAccount.getText().toString().trim();
     }
 
     public String getAmount() {
@@ -424,7 +419,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
      * 确认转账dialog
      */
     private void showConfirmTransferDialog() {
-        int[] listenedItems = {R.id.btn_close, R.id.btn_transfer};
+        int[] listenedItems = {R.id.btn_close, R.id.btn_transfer_nextStep};
 
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_transfer_confirm, listenedItems, false, Gravity.BOTTOM);
@@ -433,14 +428,14 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                if (curWallet != null){
+                if (curWallet != null) {
                     int walletType = curWallet.getWalletType();
                     switch (view.getId()) {
                         case R.id.btn_close:
                             dialog.cancel();
                             break;
-                        case R.id.btn_transfer:
-                            switch (walletType){
+                        case R.id.btn_transfer_nextStep:
+                            switch (walletType) {
                                 case CacheConstants.WALLET_TYPE_SOFT:
                                     //软钱包转账
                                     showConfirmAuthoriDialog();
@@ -448,13 +443,13 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                 case CacheConstants.WALLET_TYPE_BLUETOOTH:
                                     //蓝牙钱包转账
                                     int status = SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS);
-                                    if (status == CacheConstants.STATUS_BLUETOOTH_DISCONNCETED){
+                                    if (status == CacheConstants.STATUS_BLUETOOTH_DISCONNCETED) {
                                         //蓝牙卡未连接
                                         startConnect();
-                                    }else {
+                                    } else {
                                         //蓝牙卡已连接
                                         getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-                                                getAmount()+ " EOS", getNote());
+                                                getAmount() + " EOS", getNote());
                                     }
                             }
 
@@ -473,7 +468,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         TextView tv_note = dialog.findViewById(R.id.tv_note); //备注
         TextView tv_payment_account = dialog.findViewById(R.id.tv_payment_account);//付款账户
 
-        collectionAccount = String.valueOf(etCollectionAccount.getText());
+        collectionAccount = String.valueOf(etReceiverAccount.getText());
         amount = String.valueOf(etAmount.getText()) + " EOS";
 
         if (EmptyUtils.isNotEmpty(collectionAccount)) {
@@ -527,7 +522,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                 String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
 
                                 if ("wrong password".equals(privateKey)) {
-                                    GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_tip_wrong_password));
+                                    GemmaToastUtils.showShortToast(
+                                            getResources().getString(R.string.eos_tip_wrong_password));
                                 } else {
                                     //密码正确，执行转账逻辑
                                     getP().executeTransferLogic(entity.getCurrentEosName(),
@@ -627,7 +623,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             dialog.cancel();
         }
 
-        etCollectionAccount.setText("");
+        etReceiverAccount.setText("");
         etAmount.setText("");
         etNote.setText("");
 
@@ -638,8 +634,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     /**
      * 连接蓝牙卡
      */
-    public void startConnect(){
-        if (mConnectHandler == null)mConnectHandler = new ConnectHandler();
+    public void startConnect() {
+        if (mConnectHandler == null) { mConnectHandler = new ConnectHandler(); }
         if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
             connectThread = new BlueToothWrapper(mConnectHandler);
             connectThread.setInitContextWithDevNameWrapper(getActivity(),
@@ -650,9 +646,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     /**
      * 调用底层库进行序列化
+     *
      * @param jsonTxStr
      */
-    public void startJsonSerialization(String jsonTxStr){
+    public void startJsonSerialization(String jsonTxStr) {
         mSerializeHandler = new SerializeHandler();
         if ((serializedThread == null) || (serializedThread.getState() == Thread.State.TERMINATED)) {
             serializedThread = new BlueToothWrapper(mSerializeHandler);
@@ -665,13 +662,34 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     /**
      * 调用硬件进行签名
      */
-    public void startSign( byte[] transaction){
+    public void startSign(byte[] transaction) {
 
         mSignHandler = new SignHandler();
         if ((signThread == null) || (signThread.getState() == Thread.State.TERMINATED)) {
             int[] derivePath = {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000};//EOS币种的衍生路径
-            byte[] testTransaction = {(byte)0x74, (byte)0x09, (byte)0x70, (byte)0xd9, (byte)0xff, (byte)0x01, (byte)
-                    0xb5, (byte)0x04, (byte)0x63, (byte)0x2f, (byte)0xed, (byte)0xe1, (byte)0xad, (byte)0xc3, (byte)0xdf, (byte)0xe5, (byte)0x59, (byte)0x90, (byte)0x41, (byte)0x5e, (byte)0x4f, (byte)0xde, (byte)0x01, (byte)0xe1, (byte)0xb8, (byte)0xf3, (byte)0x15, (byte)0xf8, (byte)0x13, (byte)0x6f, (byte)0x47, (byte)0x6c, (byte)0x14, (byte)0xc2, (byte)0x67, (byte)0x5b, (byte)0x01, (byte)0x24, (byte)0x5f, (byte)0x70, (byte)0x5d, (byte)0xd7, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x01, (byte)0x00, (byte)0xa6, (byte)0x82, (byte)0x34, (byte)0x03, (byte)0xea, (byte)0x30, (byte)0x55, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x57, (byte)0x2d, (byte)0x3c, (byte)0xcd, (byte)0xcd, (byte)0x01, (byte)0x20, (byte)0x29, (byte)0xc2, (byte)0xca, (byte)0x55, (byte)0x7a, (byte)0x73, (byte)0x57, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0xa8, (byte)0xed, (byte)0x32, (byte)0x32, (byte)0x21, (byte)0x20, (byte)0x29, (byte)0xc2, (byte)0xca, (byte)0x55, (byte)0x7a, (byte)0x73, (byte)0x57, (byte)0x90, (byte)0x55, (byte)0x8c, (byte)0x86, (byte)0x77, (byte)0x95, (byte)0x4c, (byte)0x3c, (byte)0x10, (byte)0x27, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x04, (byte)0x45, (byte)0x4f, (byte)0x53, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00};
+            byte[] testTransaction = {(byte) 0x74, (byte) 0x09, (byte) 0x70, (byte) 0xd9, (byte) 0xff, (byte) 0x01,
+                    (byte)
+                            0xb5, (byte) 0x04, (byte) 0x63, (byte) 0x2f, (byte) 0xed, (byte) 0xe1, (byte) 0xad,
+                    (byte) 0xc3, (byte) 0xdf, (byte) 0xe5, (byte) 0x59, (byte) 0x90, (byte) 0x41, (byte) 0x5e,
+                    (byte) 0x4f, (byte) 0xde, (byte) 0x01, (byte) 0xe1, (byte) 0xb8, (byte) 0xf3, (byte) 0x15,
+                    (byte) 0xf8, (byte) 0x13, (byte) 0x6f, (byte) 0x47, (byte) 0x6c, (byte) 0x14, (byte) 0xc2,
+                    (byte) 0x67, (byte) 0x5b, (byte) 0x01, (byte) 0x24, (byte) 0x5f, (byte) 0x70, (byte) 0x5d,
+                    (byte) 0xd7, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00,
+                    (byte) 0xa6, (byte) 0x82, (byte) 0x34, (byte) 0x03, (byte) 0xea, (byte) 0x30, (byte) 0x55,
+                    (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x57, (byte) 0x2d, (byte) 0x3c, (byte) 0xcd,
+                    (byte) 0xcd, (byte) 0x01, (byte) 0x20, (byte) 0x29, (byte) 0xc2, (byte) 0xca, (byte) 0x55,
+                    (byte) 0x7a, (byte) 0x73, (byte) 0x57, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                    (byte) 0xa8, (byte) 0xed, (byte) 0x32, (byte) 0x32, (byte) 0x21, (byte) 0x20, (byte) 0x29,
+                    (byte) 0xc2, (byte) 0xca, (byte) 0x55, (byte) 0x7a, (byte) 0x73, (byte) 0x57, (byte) 0x90,
+                    (byte) 0x55, (byte) 0x8c, (byte) 0x86, (byte) 0x77, (byte) 0x95, (byte) 0x4c, (byte) 0x3c,
+                    (byte) 0x10, (byte) 0x27, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                    (byte) 0x00, (byte) 0x04, (byte) 0x45, (byte) 0x4f, (byte) 0x53, (byte) 0x00, (byte) 0x00,
+                    (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                    (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                    (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                    (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                    (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                    (byte) 0x00};
             signThread = new BlueToothWrapper(mSignHandler);
             signThread.setEOSSignWrapper(mContextHandle, mDevIndex, m_uiLock, derivePath, transaction);
             signThread.start();
@@ -681,10 +699,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     /**
      * 获取EOS地址（公钥）
      */
-    public void getEosAddress(){
+    public void getEosAddress() {
         //showProgressDialog("Getting Device Information");
-        if ((getAddressThread == null) || (getAddressThread.getState() == Thread.State.TERMINATED))
-        {
+        if ((getAddressThread == null) || (getAddressThread.getState() == Thread.State.TERMINATED)) {
             getAddressThread = new BlueToothWrapper(mConnectHandler);
             getAddressThread.setGetAddressWrapper(mContextHandle, 0, MiddlewareInterface.PAEW_COIN_TYPE_EOS,
                     CacheConstants.EOS_DERIVE_PATH);
@@ -705,7 +722,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     break;
                 case BlueToothWrapper.MSG_EOS_SERIALIZE_FINISH:
 
-                    BlueToothWrapper.EOSTxSerializeReturn returnValue = (BlueToothWrapper.EOSTxSerializeReturn)msg.obj;
+                    BlueToothWrapper.EOSTxSerializeReturn returnValue = (BlueToothWrapper.EOSTxSerializeReturn) msg.obj;
                     if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         //序列化成功
                         String serializedStr = CommonUtility.byte2hex(returnValue.getSerializeData());
@@ -714,7 +731,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         //把builtStr 送给设备签名
                         startSign(builtStr);
                     }
-                    LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValue.getReturnValue()));
+                    LoggerManager.d(
+                            "Return Value: " + MiddlewareInterface.getReturnString(returnValue.getReturnValue()));
                     dissmisProgressDialog();
                     break;
                 default:
@@ -736,9 +754,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     LoggerManager.d("MSG_EOS_SIGN_START");
                     break;
                 case BlueToothWrapper.MSG_EOS_SIGN_FINISH:
-                    if (dialog != null && dialog.isShowing())dialog.cancel();
+                    if (dialog != null && dialog.isShowing()) { dialog.cancel(); }
                     LoggerManager.d("MSG_EOS_SIGN_FINISH");
-                    BlueToothWrapper.SignReturnValue returnValueSign = (BlueToothWrapper.SignReturnValue)msg.obj;
+                    BlueToothWrapper.SignReturnValue returnValueSign = (BlueToothWrapper.SignReturnValue) msg.obj;
                     LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValueSign
                             .getReturnValue()));
 
@@ -749,7 +767,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         String strSignature = new String(returnValueSign.getSignature());
                         LoggerManager.d("\nSignature Value: " + strSignature);
                         List<String> signatures = new ArrayList<>();
-                        strSignature = strSignature.substring(0,strSignature.length() - 1);
+                        strSignature = strSignature.substring(0, strSignature.length() - 1);
                         signatures.add(strSignature);
                         transactionVO.setSignatures(signatures);
 
@@ -770,7 +788,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                             getP().pushTransaction(buildTransactionJson);
                         }
 
-                    }else {
+                    } else {
                         //签名失败
                         AlertUtil.showLongUrgeAlert(getActivity(), getString(R.string.eos_tip_bio_sign_fail));
                         LoggerManager.d("Sign Fail");
@@ -781,7 +799,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                 case BlueToothWrapper.MSG_GET_AUTH_TYPE:
 
                     final byte[] authTypes = {MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP, MiddlewareInterface
-                        .PAEW_SIGN_AUTH_TYPE_PIN};
+                            .PAEW_SIGN_AUTH_TYPE_PIN};
                     m_authType = authTypes[0];
 
                     m_authTypeResult = MiddlewareInterface.PAEW_RET_SUCCESS;
@@ -854,8 +872,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                                 public void onClick(DialogInterface dialog, int which) {
                                     int PINLength = editPIN.getText().toString().length();
                                     if ((PINLength < m_minPINLen) || (PINLength > m_maxPINLen)) {
-                                        Toast toast = Toast.makeText(getContext(), "Please input PIN between " + m_minPINLen +
-                                                " and " + m_maxPINLen, Toast.LENGTH_SHORT);
+                                        Toast toast = Toast.makeText(getContext(),
+                                                "Please input PIN between " + m_minPINLen +
+                                                        " and " + m_maxPINLen, Toast.LENGTH_SHORT);
                                         toast.setGravity(Gravity.CENTER, 0, 0);
                                         toast.show();
                                         return;
@@ -884,7 +903,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             switch (msg.what) {
                 case BlueToothWrapper.MSG_INIT_CONTEXT_START:
                     LoggerManager.d("MSG_INIT_CONTEXT_START");
-                    if (dialog != null && dialog.isShowing()){
+                    if (dialog != null && dialog.isShowing()) {
                         dialog.cancel();
                     }
                     showConnectBioDialog();
@@ -894,12 +913,14 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     LoggerManager.d("MSG_INIT_CONTEXT_FINISH");
                     BlueToothWrapper.InitContextReturnValue returnValueConnect = (BlueToothWrapper
                             .InitContextReturnValue) msg.obj;
-                    if ((returnValueConnect != null) && (returnValueConnect.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS)) {
+                    if ((returnValueConnect != null) && (returnValueConnect.getReturnValue()
+                            == MiddlewareInterface.PAEW_RET_SUCCESS)) {
                         //连接成功
-                        if (dialog != null && dialog.isShowing()){
+                        if (dialog != null && dialog.isShowing()) {
                             dialog.cancel();
                         }
-                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
+                        SPUtils.getInstance()
+                                .put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
 
                         mContextHandle = returnValueConnect.getContextHandle();
 
@@ -911,11 +932,12 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
                     } else {
                         //连接超时或失败
-                        if (dialog != null && dialog.isShowing()){
+                        if (dialog != null && dialog.isShowing()) {
                             dialog.cancel();
                         }
                         showConnectBioFailDialog();
-                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+                        SPUtils.getInstance()
+                                .put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     }
 
                     connectThread.interrupt();
@@ -939,9 +961,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                             EventBusProvider.postSticky(event);
 
                             getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-                                    getAmount()+ " EOS", getNote());
+                                    getAmount() + " EOS", getNote());
                         }
-                    }else {
+                    } else {
 
                     }
                     dissmisProgressDialog();

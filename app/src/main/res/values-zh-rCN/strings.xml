@@ -83,6 +83,7 @@
     <string name="eos_refund_detail">赎回详情</string>
     <string name="eos_btn_confirm_refund">确认解除抵押</string>
     <string name="eos_undelegate">解除抵押</string>
+    <string name="eos_delegate_undelegate">抵押与赎回</string>
 
     <!-- Buy Sell Ram-->
     <string name="eos_buy_sell_ram">买卖RAM</string>
@@ -147,7 +148,7 @@
     <string name="eos_available_balance">可用余额</string>
     <string name="eos_tip_redeem_ing">正在赎回</string>
     <string name="eos_transfer_records">收支记录</string>
-    <string name="eos_get_cpu_net">获取CPU、NET</string>
+    <string name="eos_get_cpu_net">管理CPU、NET</string>
     <string name="eos_CPU">CPU</string>
     <string name="eos_NET">NET</string>
     <string name="eos_RAM">RAM</string>
@@ -779,4 +780,7 @@
     <string name="status_accepted">已接受</string>
     <string name="status_sent">已发送</string>
     <string name="status_sending">发送中...%1$s%</string>
+
+    <string name="next_step">下一步</string>
+    <string name="manage">管理</>
 </resources>

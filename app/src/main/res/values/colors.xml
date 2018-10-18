@@ -30,7 +30,7 @@
     <color name="tab_unselect">#c6cade</color>
     <color name="tab_normal">#4169d1</color>
 
-    <color name="bg_ui">#f9f9f9</color>
+    <color name="bg_ui">#ffffff</color>
     <color name="font_dark_state_blue">#212c67</color>
     <color name="font_title">#8e8e93</color>
     <color name="vertical_line">#f5f6f8</color>

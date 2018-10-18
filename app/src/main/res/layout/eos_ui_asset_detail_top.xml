@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_rmb_amount">
 
         <Button
-            android:id="@+id/btn_transfer"
+            android:id="@+id/btn_transfer_nextStep"
             style="@style/common_button_clickable"
             android:layout_weight="1"
             android:text="@string/eos_title_transfer"/>
