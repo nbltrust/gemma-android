@@ -1,102 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     android:clickable="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:translationZ="@dimen/dimen_1"
-    android:background="@drawable/bg_shape_radius_white_selector"
-    android:orientation="horizontal"
-    android:padding="@dimen/dimen_16"
-    android:layout_marginTop="@dimen/dimen_12"
-    android:layout_marginEnd="@dimen/dimen_8"
-    android:layout_marginStart="@dimen/dimen_8">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/view_is_node_checked"
-        android:layout_width="@dimen/dimen_30"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/tv_node_checked"
-            android:button="@null"
-            android:background="@drawable/ic_radio_button_unselected"
-            android:layout_gravity="center"
-            android:layout_width="@dimen/dimen_24"
-            android:layout_height="@dimen/dimen_24"/>
-    </LinearLayout>
-    
-    <LinearLayout
-        android:id="@+id/view_node_info"
-        android:padding="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_shape_white_selector"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:layout_marginEnd="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_10">
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/view_is_node_checked"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_node_checked"
+                android:button="@null"
+                android:background="@drawable/ic_radio_button_unselected"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/dimen_24"
+                android:layout_height="@dimen/dimen_24"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_node_info"
+            android:padding="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_node_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/darkSlateBlue"
+                    android:textSize="@dimen/font_4"
+                    android:textStyle="bold"
+                    tools:text="EOS Cannon"/>
+
+                <TextView
+                    android:id="@+id/tv_node_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_3.5"
+                    android:textColor="@color/cornflowerBlue"
+                    tools:text="11.33%"/>
+
+                <TextView
+                    android:id="@+id/tv_node_ranking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="#4"
+                    android:textSize="@dimen/font_3.5"
+                    android:textColor="@color/cornflowerBlue"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    />
+
+            </LinearLayout>
+
             <TextView
-                android:id="@+id/tv_node_name"
+                android:id="@+id/tv_node_alias"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:textColor="@color/blueyGrey"
+                android:textSize="@dimen/font_3"
+                tools:text="eoscannonchn"
+                />
+
+            <TextView
+                android:id="@+id/tv_node_url"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_3"
                 android:textColor="@color/darkSlateBlue"
-                android:textSize="@dimen/font_4"
-                android:textStyle="bold"
-                tools:text="EOS Cannon"/>
-
-            <TextView
-                android:id="@+id/tv_node_percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_3.5"
-                android:textColor="@color/cornflowerBlue"
-                tools:text="11.33%"/>
-
-            <TextView
-                android:id="@+id/tv_node_ranking"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="#4"
-                android:textSize="@dimen/font_3.5"
-                android:textColor="@color/cornflowerBlue"
-                android:textStyle="bold"
-                android:layout_marginStart="@dimen/dimen_10"
+                tools:text="IN EOS WE TRUST CANNON"
                 />
 
         </LinearLayout>
-        
-        <TextView
-            android:id="@+id/tv_node_alias"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blueyGrey"
-            android:textSize="@dimen/font_3"
-            tools:text="eoscannonchn"
-            />
-
-        <TextView
-            android:id="@+id/tv_node_url"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/font_3"
-            android:textColor="@color/darkSlateBlue"
-            tools:text="IN EOS WE TRUST CANNON"
-            />
 
     </LinearLayout>
 
     <View
-        android:layerType="software"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_10">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        style="@style/view_common_divider">
 
     </View>
 

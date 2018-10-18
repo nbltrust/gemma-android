@@ -7,5 +7,5 @@
     <item android:drawable="@drawable/bg_shape_radius_blue_selcted" android:state_checked="true"/>
 
     <!-- 默认时 -->
-    <item android:drawable="@drawable/bg_shape_radius_white"/>
+    <item android:drawable="@drawable/bg_shape_white"/>
 </selector>

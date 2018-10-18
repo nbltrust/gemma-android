@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <view
+        android:background="#0c000050"
+        android:layerType="software"
+        android:layout_width="match_parent"
+        android:layout_height="1dp">
+
+    </view>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textSize="@dimen/font_4"
+            android:text="@string/eos_tip_vote"
+            android:textColor="@color/cornflowerBlue"
+            android:layout_weight="1"
+            android:id="@+id/tv_go_vote"
+            android:layout_width="wrap_content"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <View
+            android:background="#0c000050"
+            android:layerType="software"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+        </View>
+
+        <TextView
+            android:textSize="@dimen/font_4"
+            android:text="@string/eos_title_resource_management"
+            android:textColor="@color/cornflowerBlue"
+            android:layout_weight="1"
+            android:id="@+id/tv_go_resource_manage"
+            android:layout_width="wrap_content"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -9,14 +9,76 @@
     title:layout_constraintStart_toStartOf="parent"
     title:layout_constraintTop_toBottomOf="@id/layout_info">
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:id="@+id/view_resource_manage"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageView
+            title:layout_constraintTop_toTopOf="parent"
+            title:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/iv_eos_asset_logo"
+            android:src="@drawable/ic_asset"
+            android:layout_width="24dp"
+            android:layout_height="24dp"/>
+
+        <TextView
+            android:layout_marginStart="10dp"
+            android:id="@+id/tv_eos"
+            android:textStyle="bold"
+            android:textSize="@dimen/font_4"
+            android:textColor="@color/darkSlateBlue"
+            title:layout_constraintTop_toTopOf="parent"
+            title:layout_constraintBottom_toBottomOf="parent"
+            title:layout_constraintStart_toEndOf="@id/iv_eos_asset_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EOS"/>
+
+        <LinearLayout
+            title:layout_constraintEnd_toEndOf="parent"
+            title:layout_constraintTop_toTopOf="parent"
+            title:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_eos_amount"
+                android:text="0.0000"
+                android:textStyle="bold"
+                android:textAlignment="viewEnd"
+                android:textSize="@dimen/font_4"
+                android:textColor="@color/darkSlateBlue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                title:layout_constraintTop_toBottomOf="@id/tv_eos_amount"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/font_3.5"
+                android:layout_height="wrap_content"
+                android:text="= 0.0000"/>
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
     <com.allen.library.SuperTextView
         android:id="@+id/superTextView_card_record"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginEnd="@dimen/dimen_20"
         android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginTop="@dimen/dimen_30"
+       android:layout_marginTop="10dp"
         android:elevation="@dimen/dimen_1"
+        title:layout_constraintTop_toBottomOf="@id/view_resource_manage"
         title:layout_constraintEnd_toEndOf="parent"
         title:layout_constraintStart_toStartOf="parent"
         title:sLeftTextColor="@color/darkSlateBlue"

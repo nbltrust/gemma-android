@@ -15,7 +15,7 @@
         android:layout_marginRight="8dp"
         android:clickable="true"
         android:translationZ="@dimen/dimen_1"
-        android:background="@drawable/bg_shape_radius_white_selector">
+        android:background="@drawable/bg_shape_white_selector">
 
 
         <ImageView

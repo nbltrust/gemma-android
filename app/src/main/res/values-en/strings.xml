@@ -713,7 +713,10 @@
         save it in secure</string>
     <string name="eos_mne_copied">copied</string>
     <string name="eos_tip_memory_your_mne">Please write your mnemonic down and save it in secure</string>
-    <string name="eos_tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
+    <string name="eos_tip_use_your_mne">
+        Mnemonic is used to restore wallet private key, when comes to restore wallet, like import a PC version EOS
+        wallet, reinstall APP, lost of phone and forget your password, etc, please use your mnemonic to restore your
+        private key.</string>
     <string name="eos_tip_verify_mne">Please click the mnemonic in the right order to verify it</string>
     <string name="eos_tip_import_mne">Copy and paste mnemonic to input area, or use a QR code</string>
     <string name="eos_import_mne">Input Mnemonic，use space to spilt</string>
@@ -817,5 +820,12 @@
     <string name="operate_deal_success">Success</string>
 
     <string name="config_wallet_ing">Configuring...</string>
+
+    <!-- asset detail -->
+    <string name="title_asset_detail">资产详情</string>
+    <string name="income">收款</string>
+    <string name="status_accepted">已接受</string>
+    <string name="status_sent">已发送</string>
+    <string name="status_sending">发送中...%1$s%</string>
 
 </resources>

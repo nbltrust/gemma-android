@@ -42,7 +42,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/bg_shape_radius_white">
+                android:background="@drawable/bg_shape_white">
 
                 <TextView
                     android:id="@+id/icon_receiver"
@@ -100,7 +100,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/bg_shape_radius_white"
+                android:background="@drawable/bg_shape_white"
                 android:orientation="vertical">
 
                 <RelativeLayout

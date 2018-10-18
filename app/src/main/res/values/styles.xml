@@ -27,15 +27,26 @@
 
     </style>
 
+    <!-- 公共button样式 -->
+    <style name="common_button_clickable">
+        <item name="android:textSize">@dimen/font_3.5</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/shape_corner_button</item>
+    </style>
+
+
     <!-- 公用分割线样式-->
     <style name="view_common_divider">
-        <item name="android:layout_marginStart">@dimen/dimen_12</item>
-        <item name="android:layout_marginEnd">@dimen/dimen_12</item>
         <item name="android:layerType">software</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dimen_1</item>
-        <item name="android:background">@color/paleGrey</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/light_periwinkle_50</item>
     </style>
+
+
     <!-- 公用删除icon样式-->
     <style name="clear_icon_common">
         <item name="android:layout_width">wrap_content</item>
@@ -59,6 +70,7 @@
     <style name="input_style">
         <item name="android:textStyle">bold</item>
     </style>
+
 
 
     <!-- Radio Button 样式-->
@@ -197,7 +209,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/cpu_show_area_height</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:background">@drawable/shape_corner_bot_cpublock</item>
+        <item name="android:background">@drawable/shape_corner_token_card</item>
     </style>
 
     <style name="cpu_net_ram">

@@ -79,8 +79,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     private WalletEntity curWallet;
     private int walletID;
     private String curEosUsername;
-    @BindView(R.id.tv_backup_wallet) TextView textViewBackupWallet;
-    @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
     @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
     @BindView(R.id.total_CNY_amount) SuperTextView totalCNYAmount;
     @BindView(R.id.balance) SuperTextView tvBalance;
@@ -123,16 +121,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
-    @OnClick({R.id.tv_backup_wallet, R.id.textView_username})
+    @OnClick( R.id.textView_username)
     public void backUpWallet(View v) {
         switch (v.getId()) {
-            case R.id.tv_backup_wallet:
-                if (!EmptyUtils.isEmpty(curWallet)) {
-                    walletID = curWallet.getId();
-                    EventBusProvider.postSticky(new WalletIDEvent(walletID));
-                    UISkipMananger.launchBakupGuide(getActivity());
-                }
-                break;
             case R.id.textView_username:
                 showChangeEOSNameDialog();
                 break;
@@ -400,17 +391,17 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
         String totalCNY = AmountUtil.mul(unitPrice, totalPrice, 4);
         String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 4);
-        totalEOSAmount.setText(totalPrice + " EOS");
+        totalEOSAmount.setText(totalPrice);
         savedCurrency = SPUtils.getInstance().getInt("currency_unit");
         switch (savedCurrency) {
             case CacheConstants.CURRENCY_CNY:
-                totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+                totalCNYAmount.setLeftString("≈" + totalCNY + " CNY");
                 break;
             case CacheConstants.CURRENCY_USD:
-                totalCNYAmount.setCenterString("≈" + totalUSD + " USD");
+                totalCNYAmount.setLeftString("≈" + totalUSD + " USD");
                 break;
             default:
-                totalCNYAmount.setCenterString("≈" + totalCNY + " CNY");
+                totalCNYAmount.setLeftString("≈" + totalCNY + " CNY");
                 break;
         }
 
@@ -503,20 +494,17 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             textViewUsername.setClickable(false);
         }
 
-        if (isCurWalletBackUp()) {
-            textViewBackupWallet.setVisibility(View.GONE);
-        }
 
         //初始化总资产法币估值显示
         switch (SPUtils.getInstance().getInt("currency_unit")) {
             case CacheConstants.CURRENCY_CNY:
-                totalCNYAmount.setCenterString("≈" + " -- " + " CNY");
+                totalCNYAmount.setLeftString("≈" + " -- " + " CNY");
                 break;
             case CacheConstants.CURRENCY_USD:
-                totalCNYAmount.setCenterString("≈" + " -- " + " USD");
+                totalCNYAmount.setLeftString("≈" + " -- " + " USD");
                 break;
             default:
-                totalCNYAmount.setCenterString("≈" + " -- " + " CNY");
+                totalCNYAmount.setLeftString("≈" + " -- " + " CNY");
         }
 
         //滑动监听,设置上滑文字渐显效果
@@ -587,12 +575,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                         .enableInfiniteDuration(true)
                         .setTextAppearance(R.style.myAlert)
                         .show();
-            }
-
-            if (isCurWalletBackUp()) {
-                textViewBackupWallet.setVisibility(View.GONE);
-            } else {
-                textViewBackupWallet.setVisibility(View.VISIBLE);
             }
         }
     }

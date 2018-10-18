@@ -74,8 +74,6 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
     @BindView(R.id.view_refresh_bluetoothWallet) CommonRefreshLayout refreshLayout;
     private WalletEntity curWallet;
     private int walletID;
-    @BindView(R.id.tv_backup_wallet) TextView textViewBackupWallet;
-    @BindView(R.id.superTextView_total_assets) SuperTextView superTextViewTotalAssets;
     @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
     @BindView(R.id.total_CNY_amount) SuperTextView totalCNYAmount;
     @BindView(R.id.balance) SuperTextView tvBalance;
@@ -109,16 +107,9 @@ public class BluetoothWalletFragment extends XFragment<BluetoothWalletPresenter>
         }
     }
 
-    @OnClick({R.id.tv_backup_wallet, R.id.textView_username})
+    @OnClick( R.id.textView_username)
     public void backUpWallet(View v) {
         switch (v.getId()) {
-            case R.id.tv_backup_wallet:
-                if (!EmptyUtils.isEmpty(curWallet)) {
-                    walletID = curWallet.getId();
-                    EventBusProvider.postSticky(new WalletIDEvent(walletID));
-                    UISkipMananger.launchBakupGuide(getActivity());
-                }
-                break;
             case R.id.textView_username:
                 showChangeEOSNameDialog();
                 break;

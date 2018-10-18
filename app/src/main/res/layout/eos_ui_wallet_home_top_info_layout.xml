@@ -17,84 +17,115 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="18dp"
         android:layout_marginStart="18dp"
-        android:background="@drawable/shape_corner"
+        android:background="@drawable/shape_corner_token_card"
         android:orientation="vertical"
-        android:translationZ="@dimen/dimen_6">
+        android:translationZ="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_asset"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="6dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textColor="@color/darkSlateBlue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="EOS"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:textColor="@color/darkSlateBlue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="nbltrustcom1"
+                            android:textSize="@dimen/font_3"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp">
+
+                    <TextView
+                        android:id="@+id/total_EOS_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:text=" 0.0000"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/darkSlateBlueTwo"
+                        android:textSize="@dimen/font_6"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:text="EOS"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/darkSlateBlue"/>
+
+                </LinearLayout>
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/total_CNY_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    title:sDividerLineType="none"
+                    title:sLeftTextColor="@color/darkSlateBlueTwo"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="≈ 0.0000 CNY"
+                    title:sUseShape="true"
+                    >
+
+                </com.allen.library.SuperTextView>
+
+            </LinearLayout>
+
+            <ImageView
+                android:padding="0dp"
+                android:layout_gravity="end"
+                android:src="@drawable/bg_eos_card"
+                android:layout_width="126dp"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
 
         <com.allen.library.SuperTextView
-            android:id="@+id/superTextView_total_assets"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_15"
-            title:sCenterTextColor="@color/darkSlateBlueTwo"
-            title:sCenterTextGravity="center"
-            title:sCenterTextSize="@dimen/font_3.5"
-            title:sCenterTextString="@string/eos_total_assets"
-            title:sCenterTvDrawableLeft="@drawable/ic_asset"
-            title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-            title:sShapeCornersTopRightRadius="@dimen/dimen_6"
-            title:sUseShape="true"
-            >
-
-        </com.allen.library.SuperTextView>
-
-        <TextView
-            android:id="@+id/total_EOS_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_5"
-            android:gravity="center"
-            android:text=" 0.0000 EOS"
-            android:textAlignment="center"
-            android:textColor="@color/darkSlateBlueTwo"
-            android:textSize="@dimen/font_6"
-            android:textStyle="bold"/>
-
-        <com.allen.library.SuperTextView
-            android:id="@+id/total_CNY_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_5"
-            title:sCenterTextColor="@color/darkSlateBlueTwo"
-            title:sCenterTextSize="@dimen/font_3.5"
-            title:sCenterTextString="≈0.0000 CNY"
-            title:sDividerLineType="none"
-            title:sUseShape="true"
-            >
-
-        </com.allen.library.SuperTextView>
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/tv_backup_wallet"
-            android:layout_width="@dimen/dimen_60"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dimen_5"
-            android:background="@drawable/shape_corner_grey"
-            android:gravity="center"
-            android:text="@string/eos_back_up_wallet"
-            android:textAlignment="center"
-            android:textColor="@color/cornflowerBlue"
-            android:textSize="@dimen/font_3"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginEnd="@dimen/cpu_show_area_margin"
-            android:layout_marginStart="@dimen/cpu_show_area_margin"
-            android:layout_marginTop="@dimen/dimen_15"
-            android:background="@drawable/dash_line"
-            android:elevation="3dp"
-            android:layerType="software">
-
-        </View>
-
-        <com.allen.library.SuperTextView
+            android:layout_marginTop="16dp"
             android:id="@+id/balance"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
+            android:layout_height="@dimen/dimen_28"
             title:sDividerLineType="none"
             title:sLeftTextColor="@color/darkSlateBlueTwo"
             title:sLeftTextSize="@dimen/font_3"
@@ -106,32 +137,19 @@
 
         </com.allen.library.SuperTextView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginEnd="@dimen/cpu_show_area_margin"
-            android:layout_marginStart="@dimen/cpu_show_area_margin"
-            android:background="@drawable/dash_line"
-            android:elevation="3dp"
-            android:layerType="software">
-
-        </View>
-
         <com.allen.library.SuperTextView
             android:id="@+id/redeem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="42dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:minHeight="@dimen/dimen_28"
             title:sDividerLineType="none"
             title:sLeftTextColor="@color/darkSlateBlueTwo"
             title:sLeftTextSize="@dimen/font_3"
             title:sLeftTextString="@string/eos_tip_redeem_ing"
             title:sRightBottomTextColor="#3381e0"
             title:sRightBottomTextSize="12sp"
-            title:sRightTextGravity="right"
             title:sRightTextColor="@color/darkSlateBlueTwo"
+            title:sRightTextGravity="right"
             title:sRightTextSize="@dimen/font_4"
             title:sRightTextString="0.0000 EOS"
             title:sUseShape="true">
@@ -241,7 +259,7 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="2dp"
+        android:layout_height="10dp"
         title:layout_constraintEnd_toEndOf="parent"
         title:layout_constraintStart_toStartOf="parent"
         title:layout_constraintTop_toBottomOf="@id/layout_top_info"
