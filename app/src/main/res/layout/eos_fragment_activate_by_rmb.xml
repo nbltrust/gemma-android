@@ -31,7 +31,7 @@
             android:layout_marginStart="@dimen/dimen_10"
             android:text="@string/eos_tip_activate_by_rmb"
             android:textColor="@color/blueyGrey"
-            android:textSize="@dimen/font_3.5"
+            android:textSize="@dimen/font_4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_dot_one"/>
 
@@ -51,11 +51,12 @@
                 android:layout_height="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_4"
                 app:sLeftTextColor="@color/steel"
-                app:sLeftTextSize="@dimen/font_3.5"
+                app:sLeftTextSize="@dimen/font_4"
                 app:sLeftTextString="CPU:"
                 app:sRightTextColor="@color/darkSlateBlueTwo"
-                app:sRightTextSize="@dimen/font_3.5"
+                app:sRightTextSize="@dimen/font_4"
                 app:sDividerLineType="none"
+                app:sUseShape="true"
                 app:sRightTextString="-- EOS">
 
             </com.allen.library.SuperTextView>
@@ -65,11 +66,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_4"
+                app:sUseShape="true"
                 app:sLeftTextColor="@color/steel"
-                app:sLeftTextSize="@dimen/font_3.5"
+                app:sLeftTextSize="@dimen/font_4"
                 app:sLeftTextString="NET:"
                 app:sRightTextColor="@color/darkSlateBlueTwo"
-                app:sRightTextSize="@dimen/font_3.5"
+                app:sRightTextSize="@dimen/font_4"
                 app:sDividerLineType="none"
                 app:sRightTextString="-- EOS">
 
@@ -80,11 +82,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_4"
+                app:sUseShape="true"
                 app:sLeftTextColor="@color/steel"
-                app:sLeftTextSize="@dimen/font_3.5"
+                app:sLeftTextSize="@dimen/font_4"
                 app:sLeftTextString="RAM:"
                 app:sRightTextColor="@color/darkSlateBlueTwo"
-                app:sRightTextSize="@dimen/font_3.5"
+                app:sRightTextSize="@dimen/font_4"
                 app:sDividerLineType="none"
                 app:sRightTextString="-- EOS">
 
@@ -127,8 +130,8 @@
     <Button
         android:id="@+id/bt_wechat_pay"
         style="@style/bt_long_in_linearLayout"
-        android:layout_marginEnd="@dimen/dimen_30"
-        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginStart="@dimen/dimen_40"
         android:layout_marginTop="@dimen/dimen_30"
         android:text="@string/eos_wechat_pay"
         app:layout_constraintBottom_toBottomOf="parent"

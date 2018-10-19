@@ -2,7 +2,7 @@
 
 <!--
 <RelativeLayout
-    android:background="@drawable/selector_shape_corner_pressed"
+    android:background="@drawable/selector_bg_view_pressed"
     android:translationZ="1dp"
     android:gravity="center_vertical"
     android:layout_height="48dp"

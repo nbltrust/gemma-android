@@ -12,15 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
-import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.base.view.tablayout.CommonTabLayout;
 import com.cybex.base.view.tablayout.listener.CustomTabEntity;
 import com.cybex.base.view.tablayout.listener.OnTabSelectListener;
 import com.cybex.componentservice.db.entity.WalletEntity;
-import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleBuyRamVO;
@@ -37,6 +36,7 @@ import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,45 +51,51 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     private final int OPERATION_BUY_RAM = 1;
     private final int OPERATION_SELL_RAM = 2;
+    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
+    @BindView(R.id.CTL_buy_sell_ram) CommonTabLayout mTab;
+    @BindView(R.id.tv_eos_ram_amount) TextView tvEosRamAmount;
+    @BindView(R.id.tv_available_eos_ram) TextView tvAvaEosRam;
+    @BindView(R.id.edt_buy_ram) EditText edtBuyRam;
+    @BindView(R.id.edt_sell_ram) EditText edtSellRam;
+    @BindView(R.id.tv_ram_unitPrice) SuperTextView tvRamUnitPrice;
+    @BindView(R.id.tv_approximately_amount) TextView tvApproximatelyAmount;
+    @BindView(R.id.bt_buy_ram) Button btBuyRam;
+    @BindView(R.id.bt_sell_ram) Button btSellRam;
+    Unbinder unbinder;
     private ResourceInfoVO resourceInfoVO;
     private String kbPerEOS;
     private String eosPerKb;
     private int inputCount;
-    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.superTextView_ram_amount) SuperTextView superTextViewRamAmount;
-    @BindView(R.id.progressbar_ram) RoundCornerProgressBar progressbarRam;
-    @BindView(R.id.superTextView_ram_status) SuperTextView superTextViewRamStatus;
-    @BindView(R.id.CTL_buy_sell_ram) CommonTabLayout mTab;
-    @BindView(R.id.edt_buy_ram) EditText edtBuyRam;
-    @BindView(R.id.edt_sell_ram) EditText edtSellRam;
-    @BindView(R.id.bt_buy_ram) Button btBuyRam;
-    @BindView(R.id.bt_sell_ram) Button btSellRam;
-    @BindView(R.id.tv_approximately_amount) TextView tvApproximatelyAmount;
-    @BindView(R.id.tv_eos_ram_amount) TextView tvEosRamAmount;
-    @BindView(R.id.tv_available_eos_ram) TextView tvAvaEosRam;
-    @BindView(R.id.tv_ram_unitPrice) SuperTextView tvRamUnitPrice;
-    Unbinder unbinder;
     private String maxValue;
     private String maxRamValue;
 
+    public static BuySellRamFragment newInstance(Bundle args) {
+        BuySellRamFragment fragment = new BuySellRamFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(
+                    Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
     @OnClick(R.id.bt_buy_ram)
     public void showBuyDialog() {
-        if (!NoDoubleClick.isDoubleClick()){
+        if (!NoDoubleClick.isDoubleClick()) {
             showConfirmBuyRamDialog();
         }
     }
 
     @OnClick(R.id.bt_sell_ram)
     public void showSellDialog() {
-        if (!NoDoubleClick.isDoubleClick()){
+        if (!NoDoubleClick.isDoubleClick()) {
             showConfirmSellRamDialog();
         }
-    }
-
-    public static BuySellRamFragment newInstance(Bundle args) {
-        BuySellRamFragment fragment = new BuySellRamFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -99,135 +105,138 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
     public void initData(Bundle savedInstanceState) {
-
-        inputCount = 0;
-        tvApproximatelyAmount.setVisibility(View.GONE);
-        setUnclickable(btSellRam);
-        setUnclickable(btBuyRam);
-        ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
-        list.add(new TabTitleBuyRamVO(getString(R.string.eos_tab_title_buy)));
-        list.add(new TabTitleSellRamVO(getString(R.string.eos_tab_title_sell)));
-        mTab.setTabData(list);
-        mTab.setCurrentTab(0);
-
-        mTab.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                if (position == 0) {
-                    btBuyRam.setVisibility(View.VISIBLE);
-                    btSellRam.setVisibility(View.GONE);
-                    edtBuyRam.setVisibility(View.VISIBLE);
-                    edtSellRam.setVisibility(View.GONE);
-                    tvApproximatelyAmount.setVisibility(View.GONE);
-                    edtBuyRam.setText("");
-                    tvEosRamAmount.setText(getResources().getString(R.string.eos_title_eos_quantity));
-                    if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
-                        String available_eos = resourceInfoVO.getBanlance();
-                        tvAvaEosRam.setText(
-                                String.format(getResources().getString(R.string.eos_amount_available_eos), available_eos));
-                    }
-                    //切换TAB时隐藏软键盘
-                    if (EmptyUtils.isNotEmpty(getActivity()))hideSoftKeyboard(getActivity());
-                    //切换TAB时给maxValue更新值
-
-                } else if (position == 1) {
-                    btBuyRam.setVisibility(View.GONE);
-                    btSellRam.setVisibility(View.VISIBLE);
-                    edtBuyRam.setVisibility(View.GONE);
-                    edtSellRam.setVisibility(View.VISIBLE);
-                    edtSellRam.setText("");
-                    tvApproximatelyAmount.setVisibility(View.GONE);
-                    tvEosRamAmount.setText(getResources().getString(R.string.eos_ram_quantity));
-                    if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
-                        String ramAvailable = calAvailableRam(resourceInfoVO);
-                        tvAvaEosRam.setText(String.format(getResources().getString(R.string.eos_amount_available_ram),
-                                ramAvailable));
-                    }
-
-                    if (EmptyUtils.isNotEmpty(getActivity()))hideSoftKeyboard(getActivity());
-
-                }
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
-
         if (getArguments() != null) {
-            resourceInfoVO = getArguments().getParcelable("ramInfo");
-            if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
-                String ramUsed = AmountUtil.round(String.valueOf(resourceInfoVO.getRamUsed()), 4);
-                String ramUsedKB = AmountUtil.div(ramUsed, "1024", 2);
-                superTextViewRamStatus.setLeftString(getResources().getString(R.string.eos_title_used) + ramUsedKB + " KB");
-                String ramTotal = AmountUtil.round(String.valueOf(resourceInfoVO.getRamTotal()), 4);
-                String ramTotalKB = AmountUtil.div(ramTotal, "1024", 2);
-                superTextViewRamStatus.setRightString(
-                        getResources().getString(R.string.eos_title_total_amount) + ramTotalKB + " KB");
-                tvAvaEosRam.setText(String.format(getResources().getString(R.string.eos_amount_available_eos),
-                        resourceInfoVO.getBanlance()));
-                maxValue = resourceInfoVO.getBanlance().split(" ")[0];
-                maxRamValue = calAvailableRam(resourceInfoVO);
-                initProgressBar(resourceInfoVO.getRamProgress());
-            }
-        }
-        getP().getRamMarketInfo();
+            String ramUnitPriceKB = getArguments().getString(ParamConstants.RAM_UNIT_PRICE);
+            if (ramUnitPriceKB != null) {
+                //显示ram价格
+                tvRamUnitPrice.setRightString(String.format(getString(R.string.eos_amount_ram_unit_price),
+                        ramUnitPriceKB));
 
-        edtBuyRam.addTextChangedListener(new DecimalInputTextWatcher(edtBuyRam, DecimalInputTextWatcher
-                .Type.decimal, 4, maxValue){
-            @Override
-            public void afterTextChanged(Editable s) {
-                super.afterTextChanged(s);
-                if (EmptyUtils.isNotEmpty(getEOSAmount()) && !getEOSAmount().equals(".")) {
-                    setClickable(btBuyRam);
-                    if (EmptyUtils.isNotEmpty(kbPerEOS)) {
-                        String amount =
-                                getResources().getString(R.string.eos_tip_quantity_approxi) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4)
-                                        + " KB";
-                        tvApproximatelyAmount.setText(amount);
-                        tvApproximatelyAmount.setVisibility(View.VISIBLE);
-                    }
-                } else {
+                resourceInfoVO = getArguments().getParcelable("resourceInfo");
+                if (resourceInfoVO != null) {
+                    String balance = resourceInfoVO.getBanlance();
+                    maxValue = balance.split(" ")[0];
+
+                    String ramAvailable = calAvailableRam(resourceInfoVO);
+                    maxRamValue = ramAvailable.split(" ")[0];
+
+                    tvAvaEosRam.setText(String.format(getString(R.string.eos_amount_balance), balance));
+
+                    inputCount = 0;
                     tvApproximatelyAmount.setVisibility(View.GONE);
+                    setUnclickable(btSellRam);
                     setUnclickable(btBuyRam);
-                }
+                    ArrayList<CustomTabEntity> list = new ArrayList<CustomTabEntity>();
+                    list.add(new TabTitleBuyRamVO(getString(R.string.eos_tab_title_buy)));
+                    list.add(new TabTitleSellRamVO(getString(R.string.eos_tab_title_sell)));
+                    mTab.setTabData(list);
+                    mTab.setCurrentTab(0);
 
-                /*
-                String str = s.toString();
-                int posDot = str.indexOf(".");
-                if (str.length() - posDot - 1 > 4)
-                {
-                    s.delete(posDot + 5, posDot + 6);
-                    if (!Alerter.isShowing()){
-                        AlertUtil.showShortCommonAlert(getActivity(), getString(R.string.tip_eos_amount_format_invalid));
-                    }
-                }
-                */
-            }
-        });
+                    mTab.setOnTabSelectListener(new OnTabSelectListener() {
+                        @Override
+                        public void onTabSelect(int position) {
+                            if (position == 0) {
+                                btBuyRam.setVisibility(View.VISIBLE);
+                                btSellRam.setVisibility(View.GONE);
+                                edtBuyRam.setVisibility(View.VISIBLE);
+                                edtSellRam.setVisibility(View.GONE);
+                                tvApproximatelyAmount.setVisibility(View.GONE);
+                                edtBuyRam.setText("");
+                                tvEosRamAmount.setText(getResources().getString(R.string.eos_title_eos_quantity));
+                                if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
+                                    String available_eos = resourceInfoVO.getBanlance();
+                                    tvAvaEosRam.setText(
+                                            String.format(getResources().getString(R.string.eos_amount_available_eos),
+                                                    available_eos));
+                                }
+                                //切换TAB时隐藏软键盘
+                                if (EmptyUtils.isNotEmpty(getActivity())) { hideSoftKeyboard(getActivity()); }
+                                //切换TAB时给maxValue更新值
 
-        edtSellRam.addTextChangedListener(new DecimalInputTextWatcher(edtSellRam, DecimalInputTextWatcher
-                .Type.decimal, 4, maxRamValue){
-            @Override
-            public void afterTextChanged(Editable s) {
-                super.afterTextChanged(s);
-                if (EmptyUtils.isNotEmpty(getEOSAmount()) && !getEOSAmount().equals(".")) {
-                    setClickable(btBuyRam);
-                    if (EmptyUtils.isNotEmpty(kbPerEOS)) {
-                        String amount =
-                                getResources().getString(R.string.eos_tip_quantity_approxi) + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4)
-                                        + " KB";
-                        tvApproximatelyAmount.setText(amount);
-                        tvApproximatelyAmount.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    tvApproximatelyAmount.setVisibility(View.GONE);
-                    setUnclickable(btBuyRam);
+                            } else if (position == 1) {
+                                btBuyRam.setVisibility(View.GONE);
+                                btSellRam.setVisibility(View.VISIBLE);
+                                edtBuyRam.setVisibility(View.GONE);
+                                edtSellRam.setVisibility(View.VISIBLE);
+                                edtSellRam.setText("");
+                                tvApproximatelyAmount.setVisibility(View.GONE);
+                                tvEosRamAmount.setText(getResources().getString(R.string.eos_ram_quantity));
+                                if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
+                                    String ramAvailable = calAvailableRam(resourceInfoVO);
+                                    tvAvaEosRam.setText(
+                                            String.format(getResources().getString(R.string.eos_amount_available_ram),
+                                                    ramAvailable));
+                                }
+
+                                if (EmptyUtils.isNotEmpty(getActivity())) { hideSoftKeyboard(getActivity()); }
+
+                            }
+                        }
+
+                        @Override
+                        public void onTabReselect(int position) {
+
+                        }
+                    });
+
+                    edtBuyRam.addTextChangedListener(new DecimalInputTextWatcher(edtBuyRam, DecimalInputTextWatcher
+                            .Type.decimal, 4, maxValue) {
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            super.afterTextChanged(s);
+                            if (EmptyUtils.isNotEmpty(getEOSAmount()) && !getEOSAmount().equals(".")) {
+                                setClickable(btBuyRam);
+                                if (EmptyUtils.isNotEmpty(kbPerEOS)) {
+                                    String amount =
+                                            getResources().getString(R.string.eos_tip_quantity_approxi) + AmountUtil.mul(
+                                                    kbPerEOS,
+                                                    getEOSAmount(), 4)
+                                                    + " KB";
+                                    tvApproximatelyAmount.setText(amount);
+                                    tvApproximatelyAmount.setVisibility(View.VISIBLE);
+                                }
+                            } else {
+                                tvApproximatelyAmount.setVisibility(View.GONE);
+                                setUnclickable(btBuyRam);
+                            }
+
+                        }
+                    });
+
+                    edtSellRam.addTextChangedListener(new DecimalInputTextWatcher(edtSellRam, DecimalInputTextWatcher
+                            .Type.decimal, 4, maxRamValue) {
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            super.afterTextChanged(s);
+                            if (EmptyUtils.isNotEmpty(getEOSAmount()) && !getEOSAmount().equals(".")) {
+                                setClickable(btSellRam);
+                                if (EmptyUtils.isNotEmpty(kbPerEOS)) {
+                                    String amount =
+                                            getResources().getString(R.string.eos_tip_quantity_approxi) + AmountUtil.mul(
+                                                    kbPerEOS,
+                                                    getEOSAmount(), 4)
+                                                    + " KB";
+                                    tvApproximatelyAmount.setText(amount);
+                                    tvApproximatelyAmount.setVisibility(View.VISIBLE);
+                                }
+                            } else {
+                                tvApproximatelyAmount.setVisibility(View.GONE);
+                                setUnclickable(btSellRam);
+                            }
+                        }
+                    });
                 }
             }
-        });
+
+            }
+
     }
 
     @Override
@@ -250,12 +259,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         super.onStart();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
     public String getEOSAmount() {
         return edtBuyRam.getText().toString().trim();
     }
@@ -276,11 +279,12 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     public void setRamUnitPrice(String ramUnitPriceKB) {
         eosPerKb = ramUnitPriceKB;
-        tvRamUnitPrice.setRightString(String.format(getResources().getString(R.string.eos_amount_ram_unit_price), ramUnitPriceKB));
+        tvRamUnitPrice.setRightString(
+                String.format(getResources().getString(R.string.eos_amount_ram_unit_price), ramUnitPriceKB));
         String ramTotalKB = AmountUtil.div(String.valueOf(resourceInfoVO.getRamTotal()), "1024", 2);
         String ramPrice = AmountUtil.mul(ramUnitPriceKB, ramTotalKB, 4);
-        superTextViewRamAmount.setRightString(
-                String.format(getResources().getString(R.string.eos_amount_ram), ramPrice));
+        //superTextViewRamAmount.setRightString(String.format(getResources().getString(R.string.eos_amount_ram),
+        //ramPrice));
         kbPerEOS = AmountUtil.div("1", ramUnitPriceKB, 8);
     }
 
@@ -290,34 +294,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         String ramAvailable = AmountUtil.sub(ramTotal, ramUsed, 2);
         String ramAvailableKB = AmountUtil.div(ramAvailable, "1024", 2);
         return ramAvailableKB;
-    }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        View view = activity.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
-
-    /**
-     * 初始化Progress样式
-     * 85%progress以上要用红色显示
-     *
-     * @param progress
-     */
-    public void initProgressBar(float progress) {
-        RoundCornerProgressBar progressBar = progressbarRam;
-        if (progress >= ParamConstants.PROGRESS_ALERT) {
-            //显示值>=85%
-            progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
-            progressBar.setProgress(progress);
-            superTextViewRamStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
-        } else {
-            progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
-            progressBar.setProgress(progress);
-            superTextViewRamStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
-        }
     }
 
     /**
@@ -397,7 +373,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.imc_cancel:
-                        switch (operation_type){
+                        switch (operation_type) {
                             case OPERATION_BUY_RAM:
                                 showConfirmBuyRamDialog();
                                 break;
@@ -431,7 +407,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(
                                                     getResources().getString(R.string.eos_tip_wrong_password));
-                                            if (inputCount > 3){
+                                            if (inputCount > 3) {
                                                 dialog.cancel();
                                                 showPasswordHintDialog(OPERATION_BUY_RAM);
                                             }
@@ -469,7 +445,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             GemmaToastUtils.showLongToast(
                                                     getResources().getString(R.string.eos_tip_wrong_password));
 
-                                            if (inputCount > 3){
+                                            if (inputCount > 3) {
                                                 dialog.cancel();
                                                 showPasswordHintDialog(OPERATION_SELL_RAM);
                                             }
@@ -502,8 +478,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         dialog.show();
         EditText inputPass = dialog.findViewById(R.id.et_password);
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)){
-            inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint), curWallet.getCurrentEosName()));
+        if (EmptyUtils.isNotEmpty(curWallet)) {
+            inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint),
+                    curWallet.getCurrentEosName()));
         }
 
 
@@ -534,7 +511,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
         TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)){
+        if (EmptyUtils.isNotEmpty(curWallet)) {
             String passHint = curWallet.getPasswordTip();
             String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);

@@ -35,6 +35,7 @@ import com.cybex.gma.client.ui.activity.ImportWalletActivity;
 import com.cybex.gma.client.ui.activity.InitialActivity;
 import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.activity.ManageWalletActivity;
+import com.cybex.gma.client.ui.activity.ResourceDetailActivity;
 import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.cybex.gma.client.ui.activity.VerifyPriKeyActivity;
@@ -165,6 +166,14 @@ public final class UISkipMananger {
     public static void launchBakupGuide(Activity mContext) {
         launchIntent(mContext, BackUpWalletGuideActivity.class);
         //launchIntent(mContext, BackUpWalletGuideActivity.class, bundle);
+    }
+
+    /**
+     * 跳转到资源详情界面
+     */
+
+    public static void launchResourceDetail(Activity context, Bundle bundle) {
+        launchIntent(context, ResourceDetailActivity.class, bundle);
     }
 
     /**

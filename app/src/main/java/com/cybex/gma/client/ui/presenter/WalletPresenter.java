@@ -206,8 +206,10 @@ public class WalletPresenter extends XPresenter<WalletFragment> {
 
                             @Override
                             public void onError(Response<UnitPrice> response) {
-                                super.onError(response);
-                                GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                                if (getV() != null){
+                                    super.onError(response);
+                                    GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                                }
                             }
 
                             @Override

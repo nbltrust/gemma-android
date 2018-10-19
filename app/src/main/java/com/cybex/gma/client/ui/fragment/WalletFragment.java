@@ -18,16 +18,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.api.ApiPath;
+import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
-import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
-import com.cybex.gma.client.event.WalletIDEvent;
-import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.adapter.ChangeAccountAdapter;
@@ -75,7 +74,7 @@ import jdenticon.AvatarHelper;
 public class WalletFragment extends XFragment<WalletPresenter> {
 
     @BindView(R.id.superTextView_card_vote) SuperTextView superTextViewCardVote;
-    @BindView(R.id.superTextView_card_buy_ram) SuperTextView superTextViewCardBuyRam;
+    @BindView(R.id.view_resource_manage) ConstraintLayout viewResourceManage;
     private WalletEntity curWallet;
     private int walletID;
     private String curEosUsername;
@@ -90,7 +89,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.show_cpu) LinearLayout showCpu;
     @BindView(R.id.layout_info) ConstraintLayout layoutInfo;
     @BindView(R.id.superTextView_card_record) SuperTextView superTextViewCardRecord;
-    @BindView(R.id.superTextView_card_delegate) SuperTextView superTextViewCardDelegate;
     @BindView(R.id.scroll_wallet_tab) NestedScrollView mScrollView;
     @BindView(R.id.progressbar_cpu_small) RoundCornerProgressBar progressBarCPU;
     @BindView(R.id.progressbar_net_small) RoundCornerProgressBar progressBarNET;
@@ -100,28 +98,34 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.view_ram) View viewRAM;
     @BindView(R.id.view_refresh_wallet) CommonRefreshLayout refreshLayout;
     private IWXAPI api;
+    private Bundle bundle;
     Unbinder unbinder;
 
     private ResourceInfoVO resourceInfoVO;
     private String curUSDTPrice;
     private int savedCurrency;
 
+    @OnClick(R.id.view_resource_manage)
+    public void goResourceDetail(){
+        UISkipMananger.launchResourceDetail(getActivity(), bundle);
+    }
+
     @OnClick({R.id.view_cpu, R.id.view_net, R.id.view_ram})
     public void clickViews(View view) {
         switch (view.getId()) {
             case R.id.view_cpu:
-                goToDelegate();
+                goResourceDetail();
                 break;
             case R.id.view_net:
-                goToDelegate();
+                goResourceDetail();
                 break;
             case R.id.view_ram:
-                goToBuySellRam();
+                goResourceDetail();
                 break;
         }
     }
 
-    @OnClick( R.id.textView_username)
+    @OnClick(R.id.textView_username)
     public void backUpWallet(View v) {
         switch (v.getId()) {
             case R.id.textView_username:
@@ -140,20 +144,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @OnClick(R.id.superTextView_card_record)
     public void goToSeeRecord() {
         UISkipMananger.launchTransferRecord(getActivity());
-    }
-
-    @OnClick(R.id.superTextView_card_delegate)
-    public void goToDelegate() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("resourceInfo", resourceInfoVO);
-        UISkipMananger.launchDelegate(getActivity(), bundle);
-    }
-
-    @OnClick(R.id.superTextView_card_buy_ram)
-    public void goToBuySellRam() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("ramInfo", resourceInfoVO);
-        UISkipMananger.launchRamTransaction(getActivity(), bundle);
     }
 
     @OnClick(R.id.superTextView_card_vote)
@@ -199,9 +189,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void onValidateConfirmed(ValidateResultEvent event){
-        if (event.isSuccess()){
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onValidateConfirmed(ValidateResultEvent event) {
+        if (event.isSuccess()) {
             Alerter.hide();
         }
     }
@@ -348,6 +338,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             resourceInfoVO.setRamTotal(ramTotal);
             resourceInfoVO.setCpuWeight(info.getCpu_weight());
             resourceInfoVO.setNetWeight(info.getNet_weight());
+            bundle.putParcelable("resourceInfo", resourceInfoVO);
         }
 
     }
@@ -431,12 +422,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        bundle = new Bundle();
         //初始化当前节点
         if (SPUtils.getInstance().getString("curNode") != null) {
             String curHost = SPUtils.getInstance().getString("curNode");
             LoggerManager.d("curNode", curHost);
             //ApiPath.setHOST_ON_CHAIN(curHost);
-        }else {
+        } else {
             SPUtils.getInstance().put("curNode", ApiPath.EOS_CYBEX);
         }
 
@@ -661,7 +653,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         });
 
     }
-
 
 
 }

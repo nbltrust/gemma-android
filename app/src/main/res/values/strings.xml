@@ -71,8 +71,10 @@
     <string name="eos_title_delegate_net">抵押NET</string>
     <string name="eos_delegate">抵押</string>
     <string name="eos_title_resource_management">资源管理</string>
+    <string name="eos_title_resource_detail">资源详情</string>
     <string name="eos_balance">余额</string>
     <string name="eos_quantity">数量</string>
+    <string name="eos_amount_balance">%1$s 可用</string>
 
     <string name="eos_amount_cpu_used">已用 %1$s ms</string>
     <string name="eos_amount_cpu_total">总量 %1$s ms</string>
@@ -83,7 +85,7 @@
     <string name="eos_refund_detail">赎回详情</string>
     <string name="eos_btn_confirm_refund">确认解除抵押</string>
     <string name="eos_undelegate">解除抵押</string>
-    <string name="eos_delegate_undelegate">抵押与赎回</string>
+    <string name="eos_title_delegate_undelegate">抵押与赎回</string>
 
     <!-- Buy Sell Ram-->
     <string name="eos_buy_sell_ram">买卖RAM</string>
@@ -250,6 +252,7 @@
 
     <!-- Change Wallet Name fragment-->
     <string name="eos_wallet_name_short">钱包名</string>
+    <string name="eos_wallet_name">钱包名称</string>
     <string name="eos_change_wallet_name_hint">请输入新的钱包名称</string>
 
     <!-- Wallet Detail fragment -->

@@ -112,4 +112,6 @@ public interface ParamConstants {
     int FINGER_PRINT_BAND_IMAGE = -2147483594;
     //指纹录入成功
     int FINGER_SUCCESS = 0;
+
+    String RAM_UNIT_PRICE = "ramUnitPrice";
 }

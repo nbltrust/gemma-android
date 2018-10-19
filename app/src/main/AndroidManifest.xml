@@ -76,6 +76,14 @@
 
 
         </activity>
+
+        <!-- 资源详情页面 -->
+        <activity android:name=".ui.activity.ResourceDetailActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
+
+        </activity>
+
         <!-- 创建方式容器界面 -->
         <activity
             android:name=".ui.activity.CreateMethodActivity"
@@ -262,6 +270,8 @@
             android:name=".ui.activity.ActivateAccountMethodActivity"
             android:configChanges="layoutDirection|locale"
             android:screenOrientation="portrait">
+
+
 
         </activity>
 

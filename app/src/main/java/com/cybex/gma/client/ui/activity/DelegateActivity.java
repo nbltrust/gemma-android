@@ -9,17 +9,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.allen.library.SuperTextView;
-import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.base.view.tablayout.CommonTabLayout;
 import com.cybex.base.view.tablayout.listener.CustomTabEntity;
 import com.cybex.base.view.tablayout.listener.OnTabSelectListener;
 import com.cybex.componentservice.db.entity.WalletEntity;
-import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
@@ -58,16 +56,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     private final int STATUS_EXCEED = 4;
     private final int STATUS_VALID = 5;
     private final int STATUS_UNKNOW_ERR = 6;
-
-    private int inputCount;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.superTextView_cpu_amount) SuperTextView superTextViewCpuAmount;
-    @BindView(R.id.progressbar_cpu) RoundCornerProgressBar progressbarCpu;
-    @BindView(R.id.superTextView_cpu_status) SuperTextView superTextViewCpuStatus;
-    @BindView(R.id.superTextView_net_amount) SuperTextView superTextViewNetAmount;
-    @BindView(R.id.progressbar_net) RoundCornerProgressBar progressbarNet;
-    @BindView(R.id.superTextView_net_status) SuperTextView superTextViewNetStatus;
-    @BindView(R.id.tv_remain_balance) TextView tvRemainBalance;
     @BindView(R.id.STL_delegate) CommonTabLayout mTab;
     @BindView(R.id.tv_delegate_cpu) TextView tvDelegateCpu;
     @BindView(R.id.edt_delegate_cpu) EditText edtDelegateCpu;
@@ -79,17 +68,25 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     @BindView(R.id.edt_undelegate_net) EditText edtUndelegateNet;
     @BindView(R.id.bt_delegate_cpu_net) Button btDelegateCpuNet;
     @BindView(R.id.bt_undelegate_cpu_net) Button btUndelegateCpuNet;
+    @BindView(R.id.scroll_delegate) ScrollView scrollDelegate;
     @BindView(R.id.layout_tab_delegate) View tab_delegate;
     @BindView(R.id.layout_tab_undelegate) View tab_undelegate;
+    @BindView(R.id.tv_balance_cpu) TextView tvBalanceCpu;
+    @BindView(R.id.tv_balance_net) TextView tvBalanceNet;
+    @BindView(R.id.tv_balance_cpu_undelegate) TextView tvBalanceCpuUndelegate;
+    @BindView(R.id.tv_balance_net_undelegate) TextView tvBalanceNetUndelegate;
+
+    private int inputCount;
+
 
     private ResourceInfoVO resourceInfoVO;
 
     @OnClick(R.id.bt_delegate_cpu_net)
     public void showDialog() {
-        if (EmptyUtils.isNotEmpty(resourceInfoVO)){
+        if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
             Double balance = Double.parseDouble(resourceInfoVO.getBanlance().split(" ")[0]);
             int status = validateAmount(getDelegateCpu(), getDelegateNet(), balance);
-            switch (status){
+            switch (status) {
                 case STATUS_VALID:
                     showConfirmDelegateiDialog();
                     break;
@@ -110,26 +107,25 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     }
 
     @OnClick(R.id.bt_undelegate_cpu_net)
-    public void showUnDialog(){
+    public void showUnDialog() {
         showConfirmUndelegateiDialog();
     }
 
     @OnTextChanged(value = R.id.edt_delegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterDelegateCpuChanged(Editable s){
+    public void afterDelegateCpuChanged(Editable s) {
         if ((EmptyUtils.isNotEmpty(getDelegateCpu()) || EmptyUtils.isNotEmpty(getDelegateNet()))
-                && (!getDelegateCpu().equals(".") && !getDelegateNet().equals("."))){
+                && (!getDelegateCpu().equals(".") && !getDelegateNet().equals("."))) {
             setClickable(btDelegateCpuNet);
-        }else{
+        } else {
             setUnclickable(btDelegateCpuNet);
         }
 
         String str = s.toString();
         int posDot = str.indexOf(".");
-        if (posDot >= 0){
-            if (str.length() - posDot - 1 > 4)
-            {
+        if (posDot >= 0) {
+            if (str.length() - posDot - 1 > 4) {
                 s.delete(posDot + 5, posDot + 6);
-                if (!Alerter.isShowing()){
+                if (!Alerter.isShowing()) {
                     AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
                 }
             }
@@ -137,21 +133,20 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     }
 
     @OnTextChanged(value = R.id.edt_delegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterDelegateNetChanged(Editable s){
+    public void afterDelegateNetChanged(Editable s) {
         if ((EmptyUtils.isNotEmpty(getDelegateCpu()) || EmptyUtils.isNotEmpty(getDelegateNet()))
                 && (!getDelegateNet().equals(".") && !getDelegateCpu().equals("."))) {
             setClickable(btDelegateCpuNet);
-        }else{
+        } else {
             setUnclickable(btDelegateCpuNet);
         }
 
         String str = s.toString();
         int posDot = str.indexOf(".");
-        if (posDot >= 0){
-            if (str.length() - posDot - 1 > 4)
-            {
+        if (posDot >= 0) {
+            if (str.length() - posDot - 1 > 4) {
                 s.delete(posDot + 5, posDot + 6);
-                if (!Alerter.isShowing()){
+                if (!Alerter.isShowing()) {
                     AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
                 }
             }
@@ -159,21 +154,20 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     }
 
     @OnTextChanged(value = R.id.edt_undelegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterUndelegateCpuChanged(Editable s){
+    public void afterUndelegateCpuChanged(Editable s) {
         if ((EmptyUtils.isNotEmpty(getUndelegateCpu()) || EmptyUtils.isNotEmpty(getunDelegateNet()))
-                && !getUndelegateCpu().equals(".") && !getunDelegateNet().equals(".")){
+                && !getUndelegateCpu().equals(".") && !getunDelegateNet().equals(".")) {
             setClickable(btUndelegateCpuNet);
-        }else{
+        } else {
             setUnclickable(btUndelegateCpuNet);
         }
 
         String str = s.toString();
         int posDot = str.indexOf(".");
-        if (posDot >= 0){
-            if (str.length() - posDot - 1 > 4)
-            {
+        if (posDot >= 0) {
+            if (str.length() - posDot - 1 > 4) {
                 s.delete(posDot + 5, posDot + 6);
-                if (!Alerter.isShowing()){
+                if (!Alerter.isShowing()) {
                     AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
                 }
             }
@@ -181,21 +175,20 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     }
 
     @OnTextChanged(value = R.id.edt_undelegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterundelegateNetChanged(Editable s){
+    public void afterundelegateNetChanged(Editable s) {
         if ((EmptyUtils.isNotEmpty(getunDelegateNet()) || EmptyUtils.isNotEmpty(getUndelegateCpu()))
-                && !getunDelegateNet().equals(".") && !getUndelegateCpu().equals(".")){
+                && !getunDelegateNet().equals(".") && !getUndelegateCpu().equals(".")) {
             setClickable(btUndelegateCpuNet);
-        }else{
+        } else {
             setUnclickable(btUndelegateCpuNet);
         }
 
         String str = s.toString();
         int posDot = str.indexOf(".");
-        if (posDot >= 0){
-            if (str.length() - posDot - 1 > 4)
-            {
+        if (posDot >= 0) {
+            if (str.length() - posDot - 1 > 4) {
                 s.delete(posDot + 5, posDot + 6);
-                if (!Alerter.isShowing()){
+                if (!Alerter.isShowing()) {
                     AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
                 }
             }
@@ -205,7 +198,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     @Override
     public void bindUI(View view) {
         ButterKnife.bind(this);
-        setNavibarTitle(getString(R.string.eos_title_resource_management), true);
+        setNavibarTitle(getString(R.string.eos_title_delegate_undelegate), true);
     }
 
     @Override
@@ -237,34 +230,11 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         });
 
         resourceInfoVO = getIntent().getParcelableExtra("resourceInfo");
-
-        if (resourceInfoVO != null) {
-            String balance = getResources().getString(R.string.eos_balance) + resourceInfoVO.getBanlance();
-            tvRemainBalance.setText(balance);
-            //cpu总量及已用显示
-            String cpuUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuUsed()), "1000", 2);
-            String cpuTotal = AmountUtil.div(String.valueOf(resourceInfoVO.getCpuTotal()), "1000", 2);
-            String cpuWeight = AmountUtil.round(String.valueOf(resourceInfoVO.getCpuWeight()), 4);
-            String cpuAmount = AmountUtil.div(cpuWeight, "10000", 4);
-            superTextViewCpuStatus.setLeftString(String.format(getResources().getString(R.string.eos_amount_cpu_used),
-                    cpuUsed));
-            superTextViewCpuStatus.setRightString(String.format(getResources().getString(R.string.eos_amount_cpu_total), cpuTotal));
-            superTextViewCpuAmount.setRightString(cpuAmount + " EOS");
-            //CPU Progress
-            initCPUProgressBar(resourceInfoVO.getCpuProgress());
-            //NET 总量及已用显示
-            String netUsed = AmountUtil.div(String.valueOf(resourceInfoVO.getNetUsed()), "1024", 2);
-            String netTotal = AmountUtil.div(String.valueOf(resourceInfoVO.getNetTotal()), "1024", 2);
-            String netWeight = AmountUtil.round(String.valueOf(resourceInfoVO.getNetWeight()), 4);
-            String netAmount = AmountUtil.div(netWeight, "10000", 4);
-            superTextViewNetStatus.setLeftString(String.format(getResources().getString(R.string.eos_amount_net_used),
-                    netUsed));
-            superTextViewNetStatus.setRightString(String.format(getResources().getString(R.string.eos_amount_net_total),
-                    netTotal));
-            superTextViewNetAmount.setRightString(netAmount + " EOS");
-            //Net Progress
-            initNETProgressBar(resourceInfoVO.getNetProgress());
-        }
+        String balance = resourceInfoVO.getBanlance();
+        tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), balance));
+        tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), balance));
+        tvBalanceCpuUndelegate.setText(String.format(getString(R.string.eos_amount_balance), balance));
+        tvBalanceNetUndelegate.setText(String.format(getString(R.string.eos_amount_balance), balance));
     }
 
     @Override
@@ -284,118 +254,55 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         return new DefaultHorizontalAnimator();
     }
 
-    /**
-     * 初始化CPU ProgressBar样式
-     * 85%progress以上要用红色显示
-     * @param progress
-     */
-    public void initCPUProgressBar(float progress){
-        RoundCornerProgressBar progressBar = progressbarCpu;
 
-        if (progress >= ParamConstants.PROGRESS_MIN){
-            if (progress >= ParamConstants.PROGRESS_ALERT && progress <= ParamConstants.PROGRESS_MAX){
-                //显示值在85% ～ 100%之间
-                progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
-                progressBar.setProgress(progress);
-                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
-            }else if (progress >= ParamConstants.PROGRESS_MAX){
-                //progress > 100%
-                progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
-                progressBar.setProgress(ParamConstants.PROGRESS_MAX);
-                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
-            }else {
-                //progress 0 ~ 85%
-                progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
-                progressBar.setProgress(progress);
-                superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
-            }
-        }else {
-            //progress < 0
-            progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
-            progressBar.setProgress(ParamConstants.PROGRESS_MIN);
-            superTextViewCpuStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
-        }
-    }
-
-    /**
-     * 初始化NET ProgressBar样式
-     * 85%progress以上要用红色显示
-     * @param progress
-     */
-    public void initNETProgressBar(float progress){
-        RoundCornerProgressBar progressBar = progressbarNet;
-
-        if (progress >= ParamConstants.PROGRESS_MIN){
-            if (progress >= ParamConstants.PROGRESS_ALERT && progress <= ParamConstants.PROGRESS_MAX){
-                //显示值在85% ～ 100%之间
-                progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
-                progressBar.setProgress(progress);
-                superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
-            }else if (progress >= ParamConstants.PROGRESS_MAX){
-                //progress > 100%
-                progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
-                progressBar.setProgress(ParamConstants.PROGRESS_MAX);
-                superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
-            }else {
-                //progress 0 ~ 85%
-                progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
-                progressBar.setProgress(progress);
-                superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
-            }
-        }else {
-            //progress < 0
-            progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
-            progressBar.setProgress(ParamConstants.PROGRESS_MIN);
-            superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
-        }
-    }
-
-    private void showDelegateTab(){
+    private void showDelegateTab() {
         tab_delegate.setVisibility(View.VISIBLE);
         tab_undelegate.setVisibility(View.GONE);
         btDelegateCpuNet.setVisibility(View.VISIBLE);
         btUndelegateCpuNet.setVisibility(View.GONE);
         //隐藏软键盘
-        if (EmptyUtils.isNotEmpty(this))hideSoftKeyboard(this);
+        if (EmptyUtils.isNotEmpty(this)) { hideSoftKeyboard(this); }
     }
 
     public static void hideSoftKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();
         if (view != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(
+                    Activity.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 
-    private void showRefundTab(){
+    private void showRefundTab() {
         tab_delegate.setVisibility(View.GONE);
         tab_undelegate.setVisibility(View.VISIBLE);
         btDelegateCpuNet.setVisibility(View.GONE);
         btUndelegateCpuNet.setVisibility(View.VISIBLE);
-        if (EmptyUtils.isNotEmpty(this))hideSoftKeyboard(this);
+        if (EmptyUtils.isNotEmpty(this)) { hideSoftKeyboard(this); }
     }
 
-    public String getDelegateCpu(){
+    public String getDelegateCpu() {
         return edtDelegateCpu.getText().toString().trim();
     }
 
-    public String getUndelegateCpu(){
+    public String getUndelegateCpu() {
         return edtUndelegateCpu.getText().toString().trim();
     }
 
-    public String getDelegateNet(){
+    public String getDelegateNet() {
         return edtDelegateNet.getText().toString().trim();
     }
-    public String getunDelegateNet(){
+
+    public String getunDelegateNet() {
         return edtUndelegateNet.getText().toString().trim();
     }
 
-    public void setClickable(Button button){
+    public void setClickable(Button button) {
         button.setClickable(true);
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
     }
 
-    public void setUnclickable(Button button){
+    public void setUnclickable(Button button) {
         button.setClickable(false);
         button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
     }
@@ -427,39 +334,39 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
         //给dialog各个TextView设置值
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)){
+        if (EmptyUtils.isNotEmpty(curWallet)) {
             TextView tv_payee = dialog.findViewById(R.id.tv_payee);
             TextView tv_amount = dialog.findViewById(R.id.tv_amount);
             TextView tv_note = dialog.findViewById(R.id.tv_note);
             tv_payee.setText(curWallet.getCurrentEosName());
-            try{
+            try {
                 String totalAmount;
-                if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+                if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())) {
                     //抵押的CPU和NET输入都不为空
                     totalAmount = AmountUtil.add(getDelegateCpu(), getDelegateNet(), 4);
                     tv_note.setText(String.format(getResources().getString(R.string.eos_delegate_memo),
                             AmountUtil.round(getDelegateCpu(), 4),
-                            AmountUtil.round(getDelegateNet() , 4)));
-                }else if (EmptyUtils.isEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())){
+                            AmountUtil.round(getDelegateNet(), 4)));
+                } else if (EmptyUtils.isEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())) {
                     //抵押的CPU输入为空,NET不为空
                     totalAmount = AmountUtil.round(getDelegateNet(), 4);
                     tv_note.setText(String.format(getResources().getString(R.string.eos_delegate_memo),
                             "0.0000",
-                            AmountUtil.round(getDelegateNet() , 4)));
-                }else if(EmptyUtils.isEmpty(getDelegateNet()) && EmptyUtils.isNotEmpty(getDelegateCpu())){
+                            AmountUtil.round(getDelegateNet(), 4)));
+                } else if (EmptyUtils.isEmpty(getDelegateNet()) && EmptyUtils.isNotEmpty(getDelegateCpu())) {
                     //抵押的NET输入为空
                     totalAmount = AmountUtil.round(getDelegateCpu(), 4);
                     tv_note.setText(String.format(getResources().getString(R.string.eos_delegate_memo),
                             AmountUtil.round(getDelegateCpu(), 4),
                             "0.0000"));
-                }else {
+                } else {
                     //两者输入都为空
                     totalAmount = "0.0000";
                 }
                 String showAmount = totalAmount + " EOS";
                 tv_amount.setText(showAmount);
 
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
@@ -493,7 +400,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
         //给dialog各个TextView设置值
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)){
+        if (EmptyUtils.isNotEmpty(curWallet)) {
             TextView tv_receiver = dialog.findViewById(R.id.tv_undelegate_account);
             TextView tv_fund_amount = dialog.findViewById(R.id.tv_undelegate_amount);
             TextView tv_memo = dialog.findViewById(R.id.tv_undelegate_memo);
@@ -501,25 +408,25 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             tv_receiver.setText(curWallet.getCurrentEosName());
             try {
                 String totalAmount;
-                if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
+                if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())) {
                     //解除抵押CPU和NET输入都不为空
                     totalAmount = AmountUtil.add(getunDelegateNet(), getUndelegateCpu(), 4);
                     tv_memo.setText(String.format(getResources().getString(R.string.eos_unDelegate_memo),
                             AmountUtil.round(getUndelegateCpu(), 4),
                             AmountUtil.round(getunDelegateNet(), 4)));
-                }else if (EmptyUtils.isEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
+                } else if (EmptyUtils.isEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())) {
                     //解除抵押CPU输入为空, NET不为空
                     totalAmount = AmountUtil.round(getunDelegateNet(), 4);
                     tv_memo.setText(String.format(getResources().getString(R.string.eos_unDelegate_memo),
                             "0.0000",
                             AmountUtil.round(getunDelegateNet(), 4)));
-                }else if (EmptyUtils.isEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())){
+                } else if (EmptyUtils.isEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())) {
                     //解除抵押NET输入为空， CPU不为空
                     totalAmount = AmountUtil.round(getUndelegateCpu(), 4);
                     tv_memo.setText(String.format(getResources().getString(R.string.eos_unDelegate_memo),
                             AmountUtil.round(getUndelegateCpu(), 4),
                             "0.0000"));
-                }else {
+                } else {
                     //两者都为空
                     totalAmount = "0.0000";
                 }
@@ -527,7 +434,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 String showAmount = totalAmount + " EOS";
                 tv_fund_amount.setText(showAmount);
 
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
@@ -546,7 +453,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 switch (view.getId()) {
                     case R.id.imc_cancel:
                         dialog.cancel();
-                        switch (operation_type){
+                        switch (operation_type) {
                             case OPERATION_DELEGATE:
                                 showConfirmDelegateiDialog();
                                 break;
@@ -557,9 +464,9 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                         break;
                     case R.id.btn_confirm_authorization:
                         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                        switch (operation_type){
+                        switch (operation_type) {
                             case OPERATION_DELEGATE:
-                                if (EmptyUtils.isNotEmpty(curWallet)){
+                                if (EmptyUtils.isNotEmpty(curWallet)) {
                                     //抵押操作
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
@@ -571,32 +478,33 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                     });
                                     String inputPass = mPass.getText().toString().trim();
                                     final String cypher = curWallet.getCypher();
-                                    if (EmptyUtils.isNotEmpty(inputPass)){
+                                    if (EmptyUtils.isNotEmpty(inputPass)) {
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                        if (key.equals("wrong password")){
+                                        if (key.equals("wrong password")) {
                                             iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_wrong_password));
+                                            GemmaToastUtils.showLongToast(
+                                                    getResources().getString(R.string.eos_tip_wrong_password));
 
                                             inputCount++;
-                                            if (inputCount > 3){
+                                            if (inputCount > 3) {
                                                 dialog.cancel();
                                                 showPasswordHintDialog(OPERATION_DELEGATE);
                                             }
-                                        }else{
+                                        } else {
                                             final String curEOSName = curWallet.getCurrentEosName();
-                                            try{
+                                            try {
                                                 String cpu_quantity;
                                                 String net_quantity;
                                                 if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty
-                                                        (getDelegateNet())){
+                                                        (getDelegateNet())) {
                                                     //抵押CPU和NET输入都不为空
                                                     cpu_quantity = AmountUtil.round(getDelegateCpu(), 4);
                                                     net_quantity = AmountUtil.round(getDelegateNet(), 4);
-                                                }else if (EmptyUtils.isEmpty(getDelegateCpu())){
+                                                } else if (EmptyUtils.isEmpty(getDelegateCpu())) {
                                                     //抵押CPU输入为空
                                                     cpu_quantity = "0.0000";
                                                     net_quantity = AmountUtil.round(getDelegateNet(), 4);
-                                                }else {
+                                                } else {
                                                     //抵押NET输入为空
                                                     cpu_quantity = AmountUtil.round(getDelegateCpu(), 4);
                                                     net_quantity = "0.0000";
@@ -607,18 +515,19 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
                                                         stake_cpu_quantity, key);
 
-                                            }catch (NumberFormatException e){
+                                            } catch (NumberFormatException e) {
                                                 e.printStackTrace();
                                             }
                                             dialog.cancel();
                                         }
-                                    }else{
-                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
+                                    } else {
+                                        GemmaToastUtils.showLongToast(
+                                                getResources().getString(R.string.eos_tip_please_input_pass));
                                     }
                                 }
                                 break;
                             case OPERATION_UNDELEGATE:
-                                if (EmptyUtils.isNotEmpty(curWallet)){
+                                if (EmptyUtils.isNotEmpty(curWallet)) {
                                     //解抵押操作
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
@@ -629,34 +538,35 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                         }
                                     });
                                     String inputPass = mPass.getText().toString().trim();
-                                    if (EmptyUtils.isNotEmpty(inputPass)){
+                                    if (EmptyUtils.isNotEmpty(inputPass)) {
                                         final String cypher = curWallet.getCypher();
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                        if (key.equals("wrong password")){
+                                        if (key.equals("wrong password")) {
                                             iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_wrong_password));
+                                            GemmaToastUtils.showLongToast(
+                                                    getResources().getString(R.string.eos_tip_wrong_password));
 
                                             inputCount++;
-                                            if (inputCount > 3){
+                                            if (inputCount > 3) {
                                                 dialog.cancel();
                                                 showPasswordHintDialog(OPERATION_UNDELEGATE);
                                             }
 
-                                        }else{
+                                        } else {
                                             final String curEOSName = curWallet.getCurrentEosName();
                                             try {
                                                 String cpu_quantity;
                                                 String net_quantity;
                                                 if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty
-                                                        (getunDelegateNet())){
+                                                        (getunDelegateNet())) {
                                                     //解除抵押CPU和NET输入都不为空
                                                     cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
                                                     net_quantity = AmountUtil.round(getunDelegateNet(), 4);
-                                                }else if (EmptyUtils.isEmpty(getUndelegateCpu())){
+                                                } else if (EmptyUtils.isEmpty(getUndelegateCpu())) {
                                                     //解除抵押CPU输入为空
                                                     cpu_quantity = "0.0000";
                                                     net_quantity = AmountUtil.round(getunDelegateNet(), 4);
-                                                }else {
+                                                } else {
                                                     //解除抵押NET输入为空
                                                     cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
                                                     net_quantity = "0.0000";
@@ -665,15 +575,17 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 String unstake_net_quantity = net_quantity + " EOS";
                                                 String unstake_cpu_quantity = cpu_quantity + " EOS";
 
-                                                getP().executeUndelegateLogic(curEOSName, curEOSName, unstake_net_quantity,
+                                                getP().executeUndelegateLogic(curEOSName, curEOSName,
+                                                        unstake_net_quantity,
                                                         unstake_cpu_quantity, key);
-                                            }catch (NumberFormatException e){
+                                            } catch (NumberFormatException e) {
                                                 e.printStackTrace();
                                             }
                                             dialog.cancel();
                                         }
-                                    }else{
-                                        GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
+                                    } else {
+                                        GemmaToastUtils.showLongToast(
+                                                getResources().getString(R.string.eos_tip_please_input_pass));
                                     }
                                 }
                                 break;
@@ -687,8 +599,9 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         dialog.show();
         EditText inputPass = dialog.findViewById(R.id.et_password);
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)){
-            inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint), curWallet.getCurrentEosName()));
+        if (EmptyUtils.isNotEmpty(curWallet)) {
+            inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint),
+                    curWallet.getCurrentEosName()));
         }
     }
 
@@ -717,7 +630,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
         TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
         WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)){
+        if (EmptyUtils.isNotEmpty(curWallet)) {
             String passHint = curWallet.getPasswordTip();
             String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);
@@ -726,38 +639,37 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
     /**
      * cpu和net输入阈值判断
+     *
      * @param cpuInput
      * @param netInput
      * @param maxValue
      * @return
      */
-    public int validateAmount(String cpuInput, String netInput, Double maxValue){
+    public int validateAmount(String cpuInput, String netInput, Double maxValue) {
         String totalAmount;
-        if (EmptyUtils.isNotEmpty(cpuInput) && EmptyUtils.isNotEmpty(netInput)){
+        if (EmptyUtils.isNotEmpty(cpuInput) && EmptyUtils.isNotEmpty(netInput)) {
             //CPU和NET输入都不为空
-            totalAmount = AmountUtil.add(cpuInput, netInput,4);
-        }else if (EmptyUtils.isEmpty(cpuInput) && EmptyUtils.isNotEmpty(netInput)){
+            totalAmount = AmountUtil.add(cpuInput, netInput, 4);
+        } else if (EmptyUtils.isEmpty(cpuInput) && EmptyUtils.isNotEmpty(netInput)) {
             //CPU输入空
             totalAmount = AmountUtil.round(netInput, 4);
-        }else if (EmptyUtils.isEmpty(netInput) && EmptyUtils.isNotEmpty(cpuInput)){
+        } else if (EmptyUtils.isEmpty(netInput) && EmptyUtils.isNotEmpty(cpuInput)) {
             //NET输入空
             totalAmount = AmountUtil.round(cpuInput, 4);
-        }else {
+        } else {
             totalAmount = "0.0000";
         }
 
-        try{
+        try {
             Double sum = Double.parseDouble(totalAmount);
-            if (sum <= maxValue && sum > 0){
+            if (sum <= maxValue && sum > 0) {
                 return STATUS_VALID;
-            }
-            else if (sum > maxValue){
+            } else if (sum > maxValue) {
                 return STATUS_EXCEED;
-            }
-            else {
+            } else {
                 return STATUS_ZERO;
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         return STATUS_UNKNOW_ERR;

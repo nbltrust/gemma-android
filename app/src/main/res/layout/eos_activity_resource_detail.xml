@@ -35,7 +35,6 @@
             android:layout_marginTop="@dimen/dimen_10"
             android:layout_marginStart="@dimen/dimen_10"
             android:layout_marginEnd="@dimen/dimen_10"
-            android:background="@drawable/shape_corner"
             android:orientation="vertical"
             android:padding="@dimen/dimen_10"
             android:translationZ="@dimen/dimen_3"
@@ -93,15 +92,9 @@
             </com.allen.library.SuperTextView>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/dimen_10"
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
-            </View>
+                style="@style/common_divider"
+                android:layout_margin="10dp"
+                />
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_net_amount"
@@ -155,15 +148,9 @@
             </com.allen.library.SuperTextView>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/dimen_10"
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
-            </View>
+                style="@style/common_divider"
+                android:layout_margin="10dp"
+                />
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_ram_amount"
@@ -215,6 +202,13 @@
 
             </com.allen.library.SuperTextView>
 
+            <View
+                style="@style/common_divider"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -243,29 +237,36 @@
             android:id="@+id/superTV_delegate"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginEnd="@dimen/dimen_20"
-            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_10"
             android:layout_marginTop="@dimen/dimen_10"
+            title:sUseShape="true"
             title:layout_constraintEnd_toEndOf="parent"
             title:layout_constraintStart_toStartOf="parent"
             title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
             title:sLeftTextColor="@color/darkSlateBlue"
             title:sLeftTextSize="@dimen/font_4"
             title:sDividerLineColor="@color/light_periwinkle_50"
-            title:sLeftTextString="@string/eos_delegate_undelegate"
+            title:sLeftTextString="@string/eos_title_delegate_undelegate"
             title:sRightTextString="@string/eos_get_cpu_net"
             title:sRightTextColor="@color/cloudyBlue"
             title:sRightTextSize="@dimen/font_3.5"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             title:sShapeSelectorPressedColor="@color/item_pressed"/>
 
+        <View
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            style="@style/common_divider"/>
+
         <com.allen.library.SuperTextView
             android:id="@+id/superTV_buy_sell_ram"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginEnd="@dimen/dimen_20"
-            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_10"
             android:layout_marginTop="@dimen/dimen_10"
+            title:sUseShape="true"
             title:layout_constraintEnd_toEndOf="parent"
             title:layout_constraintStart_toStartOf="parent"
             title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
@@ -275,6 +276,11 @@
             title:sLeftTextString="@string/eos_buy_sell_ram"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             title:sShapeSelectorPressedColor="@color/item_pressed"/>
+
+        <View
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            style="@style/common_divider"/>
 
     </LinearLayout>
 

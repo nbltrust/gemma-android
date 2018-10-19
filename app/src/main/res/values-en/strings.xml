@@ -31,6 +31,7 @@
     <string name="eos_tip_security_hint">Password is very important. It\'s used to encrypt your wallets and other private
         data. You are responsible for saving your password carefully. Password can not be recovered if lost.</string>
     <string name="eos_username">EOS account name</string>
+    <string name="eos_wallet_name">Wallet Name</string>
 
 
     <!-- Main Tab Activity-->
@@ -72,13 +73,16 @@
     <string name="eos_title_delegate_net">NET</string>
     <string name="eos_delegate">Delegate</string>
     <string name="eos_title_resource_management">Manage Resources</string>
+    <string name="eos_title_resource_detail">Resource Detail</string>
     <string name="eos_balance">Balance</string>
-    <string name="eos_delegate_undelegate">Delegate/Undelegate</string>
+    <string name="eos_title_delegate_undelegate">Delegate/Undelegate</string>
 
     <string name="eos_amount_cpu_used">used %1$s ms</string>
     <string name="eos_amount_cpu_total">total %1$s ms</string>
     <string name="eos_amount_net_used">used %1$s KB</string>
     <string name="eos_amount_net_total">total %1$s KB</string>
+    <string name="eos_amount_balance">%1$s available</string>
+
 
     <!-- Buy Sell Ram-->
     <string name="eos_buy_sell_ram">RAM Trading</string>

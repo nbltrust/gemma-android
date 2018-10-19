@@ -21,17 +21,15 @@
             android:layout_height="wrap_content"
             tools:text="@string/eos_tip_activate_by_friend_part_one"
             android:textColor="@color/blueyGrey"
-            android:textSize="@dimen/font_3"/>
+            android:textSize="@dimen/font_4"/>
 
         <TextView
-            android:layout_marginStart="@dimen/dimen_2"
-            android:layout_marginEnd="@dimen/dimen_2"
             android:id="@+id/tv_tip_mid_friend_part_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/eos_tip_activate_by_friend_part_two"
             android:textColor="@color/blueyGrey"
-            android:textSize="@dimen/font_3.5"/>
+            android:textSize="@dimen/font_3"/>
 
     </LinearLayout>
 
@@ -43,7 +41,7 @@
         android:layout_height="wrap_content"
         tools:text="@string/eos_tip_activate_by_friend_part_three"
         android:textColor="@color/blueyGrey"
-        android:textSize="@dimen/font_3"/>
+        android:textSize="@dimen/font_4"/>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -72,7 +70,7 @@ fb99aa426ef9656e16889012b"
             android:background="@drawable/shape_corner_button_cornblue20"
             android:text="@string/eos_click_to_copy"
             android:textColor="@color/cornflowerBlue"
-            android:textSize="@dimen/font_3"
+            android:textSize="@dimen/font_4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
@@ -86,8 +84,8 @@ fb99aa426ef9656e16889012b"
         android:textColor="@color/blueyGrey"
         android:layout_marginEnd="@dimen/dimen_40"
         android:layout_marginStart="@dimen/dimen_40"
-        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_20"
         android:text="@string/eos_tip_use_eos_to_activate"
-        android:textSize="@dimen/font_3"/>
+        android:textSize="@dimen/font_4"/>
 
 </LinearLayout>

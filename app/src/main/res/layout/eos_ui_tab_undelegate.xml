@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_undelegate_cpu"
+    <LinearLayout
+        android:layout_marginStart="@dimen/dimen_12"
+        android:layout_marginEnd="@dimen/dimen_12"
+        android:layout_marginTop="@dimen/dimen_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:text="@string/eos_CPU"
-        android:textColor="@color/steel"
-        android:textSize="@dimen/font_3.5"
-        android:layout_marginStart="@dimen/dimen_12"
-        android:layout_marginEnd="@dimen/dimen_12"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_undelegate_cpu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/eos_CPU"
+            android:textColor="@color/steel"
+            android:textSize="@dimen/font_3.5"
+            />
+
+        <TextView
+            android:id="@+id/tv_balance_cpu_undelegate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="0.1 EOS 可用"/>
+
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/edt_undelegate_cpu"
@@ -27,15 +44,37 @@
         android:textCursorDrawable="@drawable/cursor_custom"
         android:textSize="@dimen/font_4"/>
 
-    <TextView
-        android:id="@+id/tv_undelegate_net"
+    <View
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        style="@style/common_divider"/>
+
+    <LinearLayout
+        android:layout_marginStart="@dimen/dimen_12"
+        android:layout_marginEnd="@dimen/dimen_12"
+        android:layout_marginTop="@dimen/dimen_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_12"
-        android:text="@string/eos_NET"
-        android:textColor="@color/steel"
-        android:textSize="@dimen/font_3.5"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_undelegate_net"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/eos_NET"
+            android:textColor="@color/steel"
+            android:textSize="@dimen/font_3.5"/>
+
+
+        <TextView
+            android:id="@+id/tv_balance_net_undelegate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="0.1 EOS 可用"/>
+
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/edt_undelegate_net"
@@ -48,5 +87,10 @@
         android:textColorHint="@color/cloudyBlue"
         android:textCursorDrawable="@drawable/cursor_custom"
         android:textSize="@dimen/font_4"/>
+
+    <View
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        style="@style/common_divider"/>
 
 </LinearLayout>

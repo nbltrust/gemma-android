@@ -4,7 +4,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
+              android:background="@color/whiteTwo"
               android:orientation="vertical">
 
     <include
@@ -33,7 +33,6 @@
         android:layout_marginEnd="@dimen/dimen_20"
         android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_40"
-        android:background="@drawable/shape_corner"
         android:orientation="vertical"
         android:translationZ="@dimen/dimen_3">
 
@@ -42,19 +41,14 @@
             style="@style/card_style"
             title:sLeftTextString="@string/version_info"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
-            title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-            title:sShapeCornersTopRightRadius="@dimen/dimen_6"
             title:sUseShape="true">
 
         </com.allen.library.SuperTextView>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/paleGrey"
-            android:layerType="software"
-            android:layout_marginStart="@dimen/dimen_16"
-            android:layout_marginEnd="@dimen/dimen_16"
+            style="@style/common_divider"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10"
             >
 
         </View>
@@ -64,11 +58,17 @@
             style="@style/card_style"
             title:sLeftTextString="@string/version_update"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
-            title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
-            title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
             title:sUseShape="true">
 
         </com.allen.library.SuperTextView>
+
+        <View
+            style="@style/common_divider"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10"
+            >
+
+        </View>
 
     </LinearLayout>
 
@@ -86,6 +86,8 @@
             android:textAlignment="center"
             android:textColor="@color/blueyGrey"
             android:textSize="@dimen/font_3"/>
+
+
 
     </LinearLayout>
 
