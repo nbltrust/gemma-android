@@ -47,7 +47,7 @@
     </style>
 
     <!-- 公用分割线样式-->
-    <style name="view_common_divider">
+    <style name="common_divider">
         <item name="android:layerType">software</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
@@ -80,14 +80,13 @@
     </style>
 
 
-
     <!-- Radio Button 样式-->
     <style name="mRadioButton">
         <item name="android:layout_marginStart">@dimen/dimen_10</item>
         <item name="android:layout_marginEnd">@dimen/dimen_10</item>
         <item name="android:layout_height">@dimen/card_height</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:textSize">@dimen/font_3.5</item>
+        <item name="android:textSize">@dimen/font_4</item>
         <item name="android:textColor">@color/darkSlateBlue</item>
         <item name="android:button">@null</item>
         <item name="android:layout_gravity">center</item>

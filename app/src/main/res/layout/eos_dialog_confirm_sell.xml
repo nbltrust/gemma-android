@@ -14,7 +14,6 @@
         android:src="@drawable/ic_mask_close"/>
 
     <LinearLayout
-        android:background="@drawable/bg_shape_white"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginLeft="16dp"
@@ -51,12 +50,9 @@
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layerType="software"
-            android:background="@color/horiontal_line"/>
+            style="@style/common_divider"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -86,12 +82,9 @@
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layerType="software"
-            android:background="@color/horiontal_line"/>
+            style="@style/common_divider"/>
 
     </LinearLayout>
 

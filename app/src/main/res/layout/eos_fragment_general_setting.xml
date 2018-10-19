@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/whiteTwo"
     xmlns:title="http://schemas.android.com/apk/res-auto">
 
     <include
@@ -21,11 +21,9 @@
         android:layout_marginEnd="@dimen/dimen_10">
 
         <com.allen.library.SuperTextView
-            android:translationZ="@dimen/dimen_1"
             android:id="@+id/superTextView_change_language"
             title:sUseShape="true"
             title:sShapeSelectorPressedColor="@color/item_pressed"
-            title:sShapeCornersRadius="@dimen/dimen_3"
             title:sLeftTextString="@string/language"
             title:sLeftTextSize="@dimen/font_3.5"
             title:sLeftTextColor="@color/darkSlateBlue"
@@ -35,16 +33,22 @@
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_44"
+            title:sDividerLineType="none"
             >
 
         </com.allen.library.SuperTextView>
 
+        <View
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            style="@style/common_divider">
+        </View>
+
         <com.allen.library.SuperTextView
-            android:translationZ="@dimen/dimen_1"
             android:id="@+id/superTextView_change_unit"
             title:sUseShape="true"
+            title:sDividerLineType="none"
             title:sShapeSelectorPressedColor="@color/item_pressed"
-            title:sShapeCornersRadius="@dimen/dimen_3"
             title:sLeftTextString="@string/current_unit"
             title:sLeftTextSize="@dimen/font_3.5"
             title:sLeftTextColor="@color/darkSlateBlue"
@@ -58,12 +62,17 @@
 
         </com.allen.library.SuperTextView>
 
+        <View
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            style="@style/common_divider">
+        </View>
+
         <com.allen.library.SuperTextView
-            android:translationZ="@dimen/dimen_1"
             android:id="@+id/superTextView_change_node"
             title:sUseShape="true"
+            title:sDividerLineType="none"
             title:sShapeSelectorPressedColor="@color/item_pressed"
-            title:sShapeCornersRadius="@dimen/dimen_3"
             title:sLeftTextString="@string/eos_node_select"
             title:sLeftTextSize="@dimen/font_3.5"
             title:sLeftTextColor="@color/darkSlateBlue"
@@ -76,6 +85,12 @@
             >
 
         </com.allen.library.SuperTextView>
+
+        <View
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            style="@style/common_divider">
+        </View>
 
     </LinearLayout>
 

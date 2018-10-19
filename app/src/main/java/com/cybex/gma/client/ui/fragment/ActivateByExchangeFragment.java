@@ -23,8 +23,6 @@ import butterknife.Unbinder;
 public class ActivateByExchangeFragment extends XFragment {
 
     Unbinder unbinder;
-    @BindView(R.id.tv_show_priKey_area) TextView tvShowPriKeyArea;
-
     @BindView(R.id.tv_tip_mid_exchange_part_one) TextView tvTipMidExchangePartOne;
     @BindView(R.id.tv_tip_mid_exchange_part_two) TextView tvTipMidExchangePartTwo;
     @BindView(R.id.tv_tip_mid_exchange_part_three) TextView tvTipMidExchangePartThree;
@@ -77,14 +75,10 @@ public class ActivateByExchangeFragment extends XFragment {
         tvTipMidExchangePartThree.setText(Html.fromHtml(getString(R.string.eos_tip_activate_by_exchange_part_three)));
 
         if (getArguments() != null) {
-            String private_key = getArguments().getString("private_key");
             String account_name = getArguments().getString("account_name");
-
-            tvShowPriKeyArea.setText(formatKey(private_key));
             String memo = account_name + ParamConstants.SIGNEOS_MEMO_SUFFIX;
             tvShowMemoArea.setText(memo);
         }
-
     }
 
     @Override

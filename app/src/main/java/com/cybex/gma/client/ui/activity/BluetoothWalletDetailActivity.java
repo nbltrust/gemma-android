@@ -12,10 +12,12 @@ import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
 
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.DeviceInfoEvent;
 import com.cybex.componentservice.manager.LoggerManager;
 
+import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.UISkipMananger;
 
 import com.cybex.gma.client.utils.AlertUtil;
@@ -54,7 +56,8 @@ public class BluetoothWalletDetailActivity extends XActivity {
     private ConnectHandler mConnectHandler;
     private FreeContextHandler freeContextHandler;
     private String publicKey;
-    private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
+    private String deviceName;
+    //private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
     /**
      * 按钮点击事件
@@ -95,6 +98,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
         mConnectHandler = new ConnectHandler();
         freeContextHandler = new FreeContextHandler();
         tvPublicKey.setText(publicKey);
+        deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
     }
 
     @Override
@@ -327,6 +331,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
                 case BlueToothWrapper.MSG_FREE_CONTEXT_FINISH:
                     //断开连接结束
                     //LoggerManager.d("MSG_FREE_CONTEXT_FINISH");
+                    BluetoothConnectKeepJob.removeJob();
                     SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     AlertUtil.showShortUrgeAlert(BluetoothWalletDetailActivity.this, "Bio Disconnected");
                     showDisconnectedLayout();
@@ -359,6 +364,8 @@ public class BluetoothWalletDetailActivity extends XActivity {
                             msg.obj;
                     if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
+
+                            BluetoothConnectKeepJob.startConnectPolling(contextHandle, mConnectHandler, 0);
                             LoggerManager.d("EOS Address: " + returnValueAddress.getAddress());
 
                             String[] strArr = returnValueAddress.getAddress().split("####");

@@ -72,7 +72,7 @@
     </LinearLayout>
 
     <View
-        style="@style/view_common_divider">
+        style="@style/common_divider">
 
     </View>
 

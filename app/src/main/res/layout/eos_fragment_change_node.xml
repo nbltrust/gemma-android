@@ -14,7 +14,6 @@
         android:layout_marginEnd="@dimen/dimen_20"
         android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_10"
-        android:background="@drawable/shape_corner"
         android:elevation="@dimen/dimen_3"
         android:orientation="vertical">
 
@@ -28,12 +27,9 @@
                 android:text="@string/eos_node_cybex"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                style="@style/common_divider">
             </View>
 
             <RadioButton
@@ -42,13 +38,11 @@
                 android:text="@string/eos_node_starteos"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                style="@style/common_divider">
             </View>
+
 
             <RadioButton
                 android:id="@+id/radioButton_node_eosnewyork"
@@ -56,13 +50,11 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                style="@style/common_divider">
             </View>
+
 
             <RadioButton
                 android:id="@+id/radioButton_node_greymass"
@@ -70,13 +62,11 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                style="@style/common_divider">
             </View>
+
 
             <RadioButton
                 android:id="@+id/radioButton_node_eosasia"
@@ -84,13 +74,11 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                style="@style/common_divider">
             </View>
+
 
             <RadioButton
                 android:id="@+id/radioButton_node_eosgravity"
@@ -98,13 +86,11 @@
                 android:text="@string/eos_node_eosgravity"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                style="@style/common_divider">
             </View>
+
 
             <RadioButton
                 android:id="@+id/radioButton_node_helloeos"
@@ -112,13 +98,11 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                style="@style/common_divider">
             </View>
+
 
             <RadioButton
                 android:id="@+id/radioButton_node_hkeos"
@@ -126,13 +110,11 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                style="@style/common_divider">
             </View>
+
 
             <RadioButton
                 android:id="@+id/radioButton_node_eos42"
@@ -140,13 +122,11 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                style="@style/common_divider">
             </View>
+
 
             <RadioButton
                 android:id="@+id/radioButton_node_cypherglass"
@@ -154,18 +134,23 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                style="@style/common_divider">
             </View>
+
 
             <RadioButton
                 android:id="@+id/radioButton_node_beijing_test"
                 android:text="@string/eos_node_test_beijing"
                 style="@style/mRadioButton"/>
+
+            <View
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                style="@style/common_divider">
+            </View>
+
 
         </RadioGroup>
 

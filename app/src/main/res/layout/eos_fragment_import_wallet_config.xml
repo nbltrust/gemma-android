@@ -70,7 +70,7 @@
 
                 <View
                     android:id="@+id/view_divider_set_pass"
-                    style="@style/view_common_divider">
+                    style="@style/common_divider">
                 </View>
 
                 <TextView
@@ -110,7 +110,7 @@
 
                 <View
                     android:id="@+id/view_divider_repeat_pass"
-                    style="@style/view_common_divider">
+                    style="@style/common_divider">
                 </View>
 
                 <TextView

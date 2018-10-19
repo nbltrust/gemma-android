@@ -87,7 +87,7 @@
 
                 <View
                     android:id="@+id/view_divider_setPass"
-                    style="@style/view_common_divider">
+                    style="@style/common_divider">
                 </View>
 
 
@@ -129,7 +129,7 @@
 
                 <View
                     android:id="@+id/view_divider_repeatPass"
-                    style="@style/view_common_divider">
+                    style="@style/common_divider">
                 </View>
 
 

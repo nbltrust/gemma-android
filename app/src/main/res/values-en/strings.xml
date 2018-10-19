@@ -240,7 +240,7 @@
     <string name="eos_node_eos42">https://nodes.eos42.io</string>
     <string name="eos_node_cypherglass">https://api.cypherglass.com</string>
     <string name="eos_node_test_beijing">http://47.75.154.248:50003(北京测试链)</string>
-    <string name="eos_node_select">Node</string>
+    <string name="eos_node_select">EOS Nodes</string>
 
     <string name="eos_alias_eos_cybex">EOS CYBEX</string>
     <string name="eos_alias_start_eos">START EOS</string>
@@ -735,7 +735,7 @@
     <string name="security">Security Settings</string>
     <string name="help">Help &amp; Feedback</string>
     <string name="terms_of_service">Terms of Service</string>
-    <string name="about_gemma">About</string>
+    <string name="about_us">About</string>
     <string name="about">About</string>
 
     <string name="face">Face Unlock</string>

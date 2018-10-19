@@ -4,7 +4,7 @@
     xmlns:title="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/whiteTwo"
     android:orientation="vertical">
 
     <include
@@ -17,7 +17,6 @@
         android:layout_marginEnd="@dimen/dimen_20"
         android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_10"
-        android:background="@drawable/shape_corner"
         android:elevation="@dimen/dimen_3"
         android:orientation="vertical">
 
@@ -31,18 +30,23 @@
                 android:text="@string/CNY"/>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
-                android:background="@color/paleGrey"
-                android:layerType="software">
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                style="@style/common_divider">
             </View>
 
             <RadioButton
                 android:id="@+id/radioButton_USD"
                 android:text="@string/USD"
                 style="@style/mRadioButton"/>
+
+            <View
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+
+                style="@style/common_divider">
+            </View>
+
         </RadioGroup>
 
     </LinearLayout>

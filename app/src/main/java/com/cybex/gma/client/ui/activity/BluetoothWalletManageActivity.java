@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.DeviceInfoEvent;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
@@ -53,7 +54,8 @@ public class BluetoothWalletManageActivity extends XActivity {
     private ConnectHandler mConnectHandler;
     private String publicKey;
     private int mDevIndex;
-    private String deviceName = "WOOKONG BIO####ED:C1:FF:D5:9C:FA";
+    private String deviceName = "";
+    //private String deviceName = "WOOKONG BIO####ED:C1:FF:D5:9C:FA";
     //private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
 
@@ -108,6 +110,7 @@ public class BluetoothWalletManageActivity extends XActivity {
         checkConnection();
         mConnectHandler = new ConnectHandler();
         eosAddressInDetailPage.setText(publicKey);
+        deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
     }
 
     @Override

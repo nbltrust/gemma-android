@@ -114,7 +114,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     private String amount = "";
     private String memo = "";
     private String chain_id = "";
-    private String deviceName = "WOOKONG BIO####ED:C1:FF:D5:9C:FA";
+    private String deviceName;
+    //private String deviceName = "WOOKONG BIO####ED:C1:FF:D5:9C:FA";
     //private String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
     private long mContextHandle = 0;
     private int mDevIndex = 0;
@@ -250,6 +251,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
         m_uiLock = new ReentrantLock();
         m_uiLock.lock();
         WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();

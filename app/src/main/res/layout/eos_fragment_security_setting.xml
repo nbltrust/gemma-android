@@ -3,7 +3,7 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@color/whiteTwo"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,8 +18,6 @@
         android:layout_marginTop="@dimen/dimen_10">
 
         <LinearLayout
-            android:background="@drawable/shape_corner"
-            android:translationZ="@dimen/dimen_2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_height"
@@ -49,9 +47,14 @@
 
         </LinearLayout>
 
+        <View
+            android:visibility="gone"
+            style="@style/common_divider"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp">
+        </View>
+
         <LinearLayout
-            android:background="@drawable/shape_corner"
-            android:translationZ="@dimen/dimen_2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_height"
@@ -83,9 +86,13 @@
 
     </LinearLayout>
 
+    <View
+        style="@style/common_divider"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+    </View>
+
     <LinearLayout
-        android:background="@drawable/shape_corner"
-        android:translationZ="@dimen/dimen_2"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -122,10 +129,7 @@
         </LinearLayout>
 
         <View
-            android:background="@color/paleGrey"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layerType="software"
+            style="@style/common_divider"
             android:layout_marginStart="@dimen/dimen_10"
             android:layout_marginEnd="@dimen/dimen_10">
         </View>
@@ -146,6 +150,12 @@
             >
 
         </com.allen.library.SuperTextView>
+
+        <View
+            style="@style/common_divider"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10">
+        </View>
 
 
     </LinearLayout>

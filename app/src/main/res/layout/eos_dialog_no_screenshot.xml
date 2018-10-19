@@ -39,15 +39,19 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"/>
 
+    <View
+        android:layout_marginTop="16dp"
+        style="@style/common_divider">
+    </View>
+
     <TextView
         android:id="@+id/tv_i_understand"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
         android:text="@string/eos_tip_i_understand"
         android:gravity="center"
         android:textSize="17sp"
-        android:textColor="@color/whiteTwo"
+        android:textColor="@color/cornflowerBlue"
         android:background="@drawable/shape_corner_bot_dialog"
         />
 

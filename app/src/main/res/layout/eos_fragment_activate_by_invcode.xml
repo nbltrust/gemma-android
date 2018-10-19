@@ -44,7 +44,7 @@
     <View
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        style="@style/view_common_divider">
+        style="@style/common_divider">
 
     </View>
 
