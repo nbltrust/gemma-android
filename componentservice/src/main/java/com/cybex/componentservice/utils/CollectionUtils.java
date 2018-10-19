@@ -1,8 +1,9 @@
-package com.cybex.gma.client.utils;
+package com.cybex.componentservice.utils;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,6 +12,20 @@ import java.util.Map;
 public class CollectionUtils {
 
     private static final Integer INTEGER_ONE = 1;
+
+    public static boolean isEqualListWithSequence(List a, List b) {
+        if (a.size() != b.size()) {  // size是最简单的相等条件
+            return false;
+        }
+        for (int i = 0; i <a.size(); i++) {
+            if(!a.get(i).equals(b.get(i)))
+                return false;
+        }
+        return true;
+    }
+
+
+
 
     public static boolean isEqualCollection(Collection a, Collection b) {
         if (a.size() != b.size()) {  // size是最简单的相等条件

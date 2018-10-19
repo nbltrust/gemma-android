@@ -1,16 +1,16 @@
 package com.cybex.walletmanagement.ui.activity;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.style.AbsoluteSizeSpan;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,7 +22,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.cybex.componentservice.service.JniService;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.walletmanagement.R;
@@ -31,56 +30,35 @@ import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
-import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mrzhang.component.componentlib.router.Router;
-import com.xujiaji.happybubble.BubbleLayout;
 
-import java.util.List;
 
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
-import seed39.Seed39;
 
 
 @Route(path = "/walletmanage/create")
-public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWalletPresenter> implements Validator.ValidationListener {
+public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWalletPresenter>  {
 
     ImageView ivSetPassMask;
     ImageView ivRepeatPassMask;
-    private Validator validator;
     View viewDividerEosName;
     View viewDividerSetPass;
     View viewDividerRepeatPass;
 
     ScrollView scrollViewCreateWallet;
-    TitleBar btnNavibar;
-    TextView tvInBubble;
-    BubbleLayout bubble;
     TextView tvWalletName;
     ImageView ivWalletNameClear;
     ImageView ivSetPassClear;
     ImageView ivRepeatPassClear;
     ImageView ivPassHintClear;
-
-//    @NotEmpty(messageResId = R.string.walletmanage_name_not_empty, sequence = 3)
     EditText edtWalletName;
     TextView tvSetPass;
-
-//    @NotEmpty(messageResId = R.string.walletmanage_pass_not_empty, sequence = 2)
-//    @Password(min = 8, messageResId = R.string.walletmanage_pass_lenth_invalid, sequence = 2)
     EditText edtSetPass;
     TextView tvRepeatPass;
-
-//    @NotEmpty(messageResId = R.string.walletmanage_repeat_input_pass, sequence = 1)
-//    @ConfirmPassword(messageResId = R.string.walletmanage_password_no_match, sequence = 1)
     EditText edtRepeatPass;
     TextView tvPassHint;
     EditText edtPassHint;
-
-//    @Checked(messageResId = R.string.walletmanage_check_agreement, sequence = 0)
     CheckBox checkboxConfig;
     TextView tvServiceAgreementConfig;
     LinearLayout layoutCheckBox;
@@ -91,27 +69,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
     @Override
     public void bindUI(View view) {
 
-//        System.out.println("czc mnemonic-> "+Seed39.newMnemonic());
-//        System.out.println("czc seed-> "+Seed39.seedByMnemonic(Seed39.newMnemonic()));
-
-        JniService jniService = (JniService) Router.getInstance().getService(JniService.class.getSimpleName());
-
-        //generate mnemonic
-        String mnemonic = Seed39.newMnemonic();
-        String seed = Seed39.seedByMnemonic(mnemonic);
-        Seed39.signEth();
-        //eos
-        String eosPrivKey = Seed39.derivepath(seed, "m/44'/60'/0'/0/0");
-        String publicKey = jniService.get_public_key(eosPrivKey);
-
-        System.out.println("czc mnemonic="+mnemonic);
-        System.out.println("czc seed="+seed);
-        System.out.println("czc eosPrivKey="+eosPrivKey);
-        System.out.println("czc publicKey="+publicKey);
-
         scrollViewCreateWallet = (ScrollView) findViewById(R.id.scroll_create_wallet);
-        bubble = (BubbleLayout) findViewById(R.id.bubble);
-        tvInBubble = (TextView) findViewById(R.id.tv_in_bubble);
         tvWalletName = (TextView) findViewById(R.id.tv_wallet_name);
         edtWalletName = (EditText) findViewById(R.id.edt_wallet_name);
         ivWalletNameClear = (ImageView) findViewById(R.id.iv_wallet_name_clear);
@@ -252,20 +210,19 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         });
     }
 
+
+
     @Override
     public void initData(Bundle savedInstanceState) {
         SoftHideKeyBoardUtil.assistActivity(this);
-        validator = new Validator(this);
-        validator.setValidationListener(this);
         isMask = true;
         initView();
 
         btCreateWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validator.validate();
-                if (checkboxConfig.isChecked() && !getP().isWalletNameValid()) {
-                    GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_invalid_eos_username));
+                if(checkValidation()){
+                    getP().creatWallet(getWalletName(),getPassword(),getPassHint());
                 }
             }
         });
@@ -390,38 +347,37 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
 
     public void initView() {
         //动态设置hint样式
-        setEditTextHintStyle(edtWalletName, R.string.walletmanage_tip_wallet_username);
+        setEditTextHintStyle(edtWalletName, R.string.walletmanage_tip_walletname_hint);
         setEditTextHintStyle(edtSetPass, R.string.walletmanage_tip_input_password);
         setEditTextHintStyle(edtRepeatPass, R.string.walletmanage_tip_repeat_password);
         setEditTextHintStyle(edtPassHint, R.string.walletmanage_tip_input_password_hint);
 
-        bubble.setVisibility(View.GONE);
         setUnclickable(btCreateWallet);
-        edtSetPass.setOnTouchListener(new View.OnTouchListener() {
-            int flag = 0;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                flag++;
-                if (flag % 2 == 0) {
-                    showBubble();
-                    scheduleDismiss();
-                }
-                return false;
-            }
-        });
-        edtRepeatPass.setOnTouchListener(new View.OnTouchListener() {
-            int flag = 0;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                flag++;
-                if (flag % 2 == 0) {
-                    //hideBubble();
-                }
-                return false;
-            }
-        });
+//        edtSetPass.setOnTouchListener(new View.OnTouchListener() {
+//            int flag = 0;
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                flag++;
+//                if (flag % 2 == 0) {
+////                    showBubble();
+////                    scheduleDismiss();
+//                }
+//                return false;
+//            }
+//        });
+//        edtRepeatPass.setOnTouchListener(new View.OnTouchListener() {
+//            int flag = 0;
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                flag++;
+//                if (flag % 2 == 0) {
+//                    //hideBubble();
+//                }
+//                return false;
+//            }
+//        });
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -549,16 +505,13 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
 
 
     public void setWalletNameValidStyle() {
-        if (EmptyUtils.isNotEmpty(getWalletName())) {
-
-        }
         tvWalletName.setTextColor(getResources().getColor(R.color.steel));
-        tvWalletName.setText(getResources().getString(R.string.walletmanage_tip_wallet_username));
-
+        tvWalletName.setText(getResources().getString(R.string.walletmanage_title_wallet_name));
     }
 
     public void setWalletNameInvalidStyle() {
-        tvWalletName.setText(getResources().getString(R.string.walletmanage_title_wallet_name));
+
+        tvWalletName.setText(getResources().getString(R.string.walletmanage_tip_walletname_error));
         tvWalletName.setTextColor(getResources().getColor(R.color.scarlet));
 
     }
@@ -632,54 +585,11 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         return edtPassHint.getText().toString().trim();
     }
 
-    /**
-     * 根据返回值不同Toast不同内容
-     *
-     * @param errorCode
-     */
-    public void showOnErrorInfo(int errorCode) {
-
-//        switch (errorCode) {
-//            case (HttpConst.INVCODE_USED):
-//                GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_invCode_used));
-//                break;
-//            case (HttpConst.INVCODE_NOTEXIST):
-//                GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_invCode_not_exist));
-//                break;
-//            case (HttpConst.EOSNAME_USED):
-//                GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_name_used));
-//                break;
-//            case (HttpConst.EOSNAME_INVALID):
-//                GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_name_invalid));
-//                break;
-//            case (HttpConst.EOSNAME_LENGTH_INVALID):
-//                GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_name_len_invalid));
-//                break;
-//            case (HttpConst.PARAMETERS_INVALID):
-//                GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_params_invalid));
-//                break;
-//            case (HttpConst.PUBLICKEY_INVALID):
-//                GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_pubKey_invalid));
-//                break;
-//            case (HttpConst.BALANCE_NOT_ENOUGH):
-//                GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_no_balance));
-//                break;
-//            case (HttpConst.CREATE_ACCOUNT_FAIL):
-//                GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_default_create_fail_info));
-//                break;
-//            default:
-//                GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_default_create_fail_info));
-//                break;
-//        }
-
-
-    }
 
     @Override
     protected void onDestroy() {
         clearListeners();
         super.onDestroy();
-        //Validate.unreg(this);
     }
 
     /**
@@ -708,19 +618,6 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         edtSetPass.setOnFocusChangeListener(null);
         edtPassHint.setOnFocusChangeListener(null);
         checkboxConfig.setOnCheckedChangeListener(null);
-    }
-
-
-    public void showBubble() {
-        tvWalletName.setVisibility(View.GONE);
-        edtWalletName.setVisibility(View.GONE);
-        bubble.setVisibility(View.VISIBLE);
-    }
-
-    public void hideBubble() {
-        tvWalletName.setVisibility(View.VISIBLE);
-        edtWalletName.setVisibility(View.VISIBLE);
-        bubble.setVisibility(View.GONE);
     }
 
     public void setDividerFocusStyle(View divider) {
@@ -756,52 +653,47 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
 
 
 
-    private void scheduleDismiss(){
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hideBubble();
-            }
-        }, 5000);
-    }
+    private boolean checkValidation() {
+        String walletName = getWalletName();
+        if(TextUtils.isEmpty(walletName)){
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_name_not_empty));
+            return false;
+        }
 
+        String password = getPassword();
+        if(TextUtils.isEmpty(password)){
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_pass_not_empty));
+            return false;
+        }
+        if(!getP().isPasswordValid()){
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_pass_lenth_invalid));
+            return false;
+        }
 
-    /**
-     * 验证框架验证成功回调
-     */
-    @Override
-    public void onValidationSucceeded() {
-        if (getP().isWalletNameValid()) {
-//            getP().creatWallet(getWalletName());
-        }else {
+        String repeatPassword = getRepeatPassword();
+        if(TextUtils.isEmpty(repeatPassword)){
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_repeat_input_pass));
+            return false;
+        }
+        if(!getP().isPasswordMatch()){
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_password_no_match));
+            return false;
+        }
+
+        if (!checkboxConfig.isChecked()) {
+            GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_check_agreement));
+            return false;
+        }
+
+        if (!getP().isWalletNameValid()) {
+//            GemmaToastUtils.showLongToast(getResources().getString(R.string.walletmanage_invalid_walletname));
             AlertUtil.showShortUrgeAlert(this, getString(R.string.walletmanage_name_invalid));
+            return false;
         }
+
+        return true;
     }
 
-    /**
-     * 验证失败回调
-     *
-     * @param errors
-     */
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
 
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(this);
 
-            AlertUtil.showShortUrgeAlert(this, message);
-            if (view instanceof EditText) {
-                GemmaToastUtils.showLongToast(message);
-            } else {
-                GemmaToastUtils.showLongToast(message);
-            }
-        }
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
 }

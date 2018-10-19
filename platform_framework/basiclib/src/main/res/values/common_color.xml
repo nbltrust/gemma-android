@@ -337,6 +337,7 @@
 
     <!--google's material end-->
     <color name="navigation_bar_black_color">#000000</color>
+    <color name="black_color">#000000</color>
 
     <color name="dark_slate_blue">#212c68</color>
 

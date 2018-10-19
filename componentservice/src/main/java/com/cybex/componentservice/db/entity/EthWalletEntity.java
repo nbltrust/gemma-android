@@ -11,6 +11,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(database = GemmaDatabase.class, name = "t_eth_wallet")
 public class EthWalletEntity extends BaseModel {
 
+
     /**
      * 自增长主键id
      */
@@ -24,6 +25,12 @@ public class EthWalletEntity extends BaseModel {
     public String publicKey;
 
     /**
+     * 地址
+     */
+    @Column
+    public String address;
+
+    /**
      * 私钥(multiwallet当钱包类型为3时，单个eth钱包需要保存自己的加密过后的私钥)
      */
     @Column
@@ -33,7 +40,7 @@ public class EthWalletEntity extends BaseModel {
      * 是否已经备份
      */
     @Column
-    public Integer isBackUp;
+    public boolean isBackUp;
 
     public Integer getId() {
         return id;
@@ -59,11 +66,31 @@ public class EthWalletEntity extends BaseModel {
         this.privateKey = privateKey;
     }
 
-    public Integer getIsBackUp() {
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isBackUp() {
         return isBackUp;
     }
 
-    public void setIsBackUp(Integer isBackUp) {
-        this.isBackUp = isBackUp;
+    public void setBackUp(boolean backUp) {
+        isBackUp = backUp;
+    }
+
+    @Override
+    public String toString() {
+        return "EthWalletEntity{" +
+                "id=" + id +
+                ", publicKey='" + publicKey + '\'' +
+                ", address='" + address + '\'' +
+                ", privateKey='" + privateKey + '\'' +
+                ", isBackUp=" + isBackUp +
+                '}';
     }
 }

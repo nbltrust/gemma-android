@@ -46,7 +46,8 @@
     <string name="walletmanage_tip_create_wallet">创建钱包</string>
     <string name="walletmanage_tip_repeat_pass">重复密码</string>
     <string name="walletmanage_title_wallet_name">钱包名称</string>
-    <string name="walletmanage_tip_wallet_username">由小写字母a-z与数字1-5组成，须为12个字符</string>
+    <string name="walletmanage_tip_walletname_hint">请输入创建的钱包名称</string>
+    <string name="walletmanage_tip_walletname_error">钱包名称与已有钱包重复，请修改</string>
     <string name="walletmanage_tip_input_password">最少8位，可混合大小写字母、数字及符号</string>
     <string name="walletmanage_tip_repeat_password">请再次输入您的密码</string>
     <string name="walletmanage_tip_input_password_hint">请输入密码提示</string>
@@ -74,12 +75,12 @@
     <string name="walletmanage_change_pass_success">修改密码成功</string>
     <string name="walletmanage_set_camera_permission">请设置相机相关权限</string>
     <string name="walletmanage_agree_terms_of_service">请阅读并同意我们的服务协议</string>
-    <string name="walletmanage_invalid_eos_username">EOS用户名不符合规范，请重新输入</string>
+    <string name="walletmanage_invalid_walletname">此钱包名称已存在，请重新输入</string>
 
     <string name="walletmanage_invCode_used">创建失败，邀请码已被使用！</string>
     <string name="walletmanage_invCode_not_exist">创建失败，邀请码不存在！</string>
     <string name="walletmanage_name_used">创建失败，eos账户名已存在！</string>
-    <string name="walletmanage_name_invalid">创建失败，eos账户名格式错误！</string>
+    <string name="walletmanage_name_invalid">创建失败，钱包名称已存在</string>
     <string name="walletmanage_name_len_invalid">创建失败，eos账户名长度不为12位！</string>
     <string name="walletmanage_params_invalid">创建失败，参数错误！</string>
     <string name="walletmanage_pubKey_invalid">创建失败，无效的公钥！</string>
@@ -87,5 +88,12 @@
     <string name="walletmanage_default_create_fail_info">创建失败，请重新尝试</string>
     <string name="walletmanage_loading_success">加载成功</string>
     <string name="walletmanage_tip_pass_no_match">密码不一致</string>
+
+
+    <string name="walletmanage_mnemonic_validate_error">验证失败</string>
+    <string name="walletmanage_mnemonic_validate_success">验证成功</string>
+
+
+
 
 </resources>

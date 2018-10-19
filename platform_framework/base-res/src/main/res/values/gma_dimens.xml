@@ -476,4 +476,7 @@
     <dimen name="logo_marginTop">120dp</dimen>
 
 
+    <dimen name="common_view_margin">33.8dp</dimen>
+
+
 </resources>

@@ -68,10 +68,11 @@ public class MultiWalletEntity extends BaseModel {
     @Column
     public String bluetoothDeviceName;
 
-
+    @Column
     @ForeignKey
     public EosWalletEntity eosWalletEntity;
 
+    @Column
     @ForeignKey
     public EthWalletEntity ethWalletEntity;
 
@@ -169,5 +170,23 @@ public class MultiWalletEntity extends BaseModel {
 
     public void setEthWalletEntity(EthWalletEntity ethWalletEntity) {
         this.ethWalletEntity = ethWalletEntity;
+    }
+
+    @Override
+    public String toString() {
+        return "MultiWalletEntity{" +
+                "id=" + id +
+                ", walletName='" + walletName + '\'' +
+                ", mnemonic='" + mnemonic + '\'' +
+                ", cypher='" + cypher + '\'' +
+                ", isCurrentWallet=" + isCurrentWallet +
+                ", passwordTip='" + passwordTip + '\'' +
+                ", isBackUp=" + isBackUp +
+                ", walletType=" + walletType +
+                ", isSetBluetoothFP=" + isSetBluetoothFP +
+                ", bluetoothDeviceName='" + bluetoothDeviceName + '\'' +
+                ", eosWalletEntity=" + eosWalletEntity +
+                ", ethWalletEntity=" + ethWalletEntity +
+                '}';
     }
 }

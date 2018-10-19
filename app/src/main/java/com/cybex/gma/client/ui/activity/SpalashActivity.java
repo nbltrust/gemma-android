@@ -60,13 +60,7 @@ public class SpalashActivity extends XActivity<SpalashActPresenter> {
 //                EosWalletService service = (EosWalletService) router.getService(EosWalletService.class.getSimpleName());
 //                Toast.makeText(context, "balance="+service.getEosBalance(0), Toast.LENGTH_SHORT).show();
 //
-
-                ARouter.getInstance().build("/walletmanage/create")
-//                        .withString("name", "888")
-//                        .withObject("bean", new TransferTestBean("Jack", 11))
-                        .navigation();
-
-//                getP().goToNext();
+                getP().goToNext();
             }
         }, 2000);
     }

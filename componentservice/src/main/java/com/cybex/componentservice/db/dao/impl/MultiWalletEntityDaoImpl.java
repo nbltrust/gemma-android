@@ -3,6 +3,8 @@ package com.cybex.componentservice.db.dao.impl;
 
 import com.cybex.componentservice.db.GemmaDatabase;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity_Table;
 import com.cybex.componentservice.db.util.DBCallback;
@@ -68,13 +70,21 @@ public class MultiWalletEntityDaoImpl implements MultiWalletEntityDao {
     }
 
     @Override
-    public void saveOrUpateEntity(final MultiWalletEntity entity) {
+    public void saveOrUpateEntity(final MultiWalletEntity entity, DBCallback callback) {
         DBFlowUtil.execTransactionAsync(GemmaDatabase.class, new ITransaction() {
             @Override
             public void execute(DatabaseWrapper databaseWrapper) {
+                EthWalletEntity ethWalletEntity = entity.getEthWalletEntity();
+                EosWalletEntity eosWalletEntity = entity.getEosWalletEntity();
+                if (ethWalletEntity != null) {
+                    ethWalletEntity.save();
+                }
+                if (eosWalletEntity != null) {
+                    eosWalletEntity.save();
+                }
                 entity.save();
             }
-        });
+        }, callback);
 
     }
 
@@ -95,4 +105,5 @@ public class MultiWalletEntityDaoImpl implements MultiWalletEntityDao {
         ITransaction transaction = DBFlowUtil.getTransaction(list, OperationType.TYPE_SAVE);
         DBFlowUtil.execTransactionAsync(GemmaDatabase.class, transaction, callback);
     }
+
 }

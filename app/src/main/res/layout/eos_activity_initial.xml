@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkSlateBlue"
+    android:background="@color/white"
     tools:context=".ui.activity.InitialActivity">
 
     <ImageView
@@ -34,6 +34,19 @@
     <Button
         android:id="@+id/bt_import"
         style="@style/bt_create_wallet"
+        android:layout_marginBottom="@dimen/bt_marginTop"
+        android:text="@string/eos_btn_restore_wallet"
+        android:textSize="@dimen/font_3.5"
+        android:background="@drawable/shape_corner_button"
+        android:textColor="@color/whiteTwo"
+        app:layout_constraintBottom_toTopOf="@+id/bt_wookongbio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+    <Button
+        android:id="@+id/bt_wookongbio"
+        style="@style/bt_create_wallet"
         android:layout_marginBottom="@dimen/bt_marginBot"
         android:text="@string/eos_btn_restore_wallet"
         android:textSize="@dimen/font_3.5"
@@ -42,5 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+
 
 </android.support.constraint.ConstraintLayout>

@@ -31,28 +31,6 @@
                 android:orientation="vertical"
                 >
 
-                <com.xujiaji.happybubble.BubbleLayout
-                    android:id="@+id/bubble"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_70"
-                    android:visibility="gone"
-                    app:bubbleColor="@color/buff"
-                    app:bubblePadding="0dp"
-                    app:bubbleRadius="@dimen/bt_radius"
-                    app:lookLength="@dimen/walletmanage_bubble_lookLength"
-                    app:lookPosition="@dimen/walletmanage_bubble_lookPosition"
-                    >
-
-                    <TextView
-                        android:id="@+id/tv_in_bubble"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/dimen_10"
-                        android:text="@string/walletmanage_tip_security_hint"
-                        android:textSize="@dimen/font_3"/>
-
-                </com.xujiaji.happybubble.BubbleLayout>
-
                 <TextView
                     android:id="@+id/tv_wallet_name"
                     style="@style/walletmanage_text_title_config_wallet"
@@ -68,7 +46,7 @@
                         style="@style/walletmanage_editText_config_wallet"
                         android:layout_weight="1"
                         android:inputType="text"
-                        android:hint="@string/walletmanage_tip_wallet_username"/>
+                        android:hint="@string/walletmanage_tip_walletname_hint"/>
 
                     <ImageView
                         android:id="@+id/iv_wallet_name_clear"
