@@ -1,4 +1,4 @@
-package com.cybex.gma.client.manager;
+package com.cybex.componentservice.manager;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;

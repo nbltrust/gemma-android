@@ -83,4 +83,16 @@
     <color name="light_periwinkle_80">#ccdcdde3</color>
 
 
+
+    <!--主页tab背景色-->
+    <color name="colorTabBackground">#ffffff</color>
+    <!--主页上划线颜色-->
+    <color name="colorTabUnderline">#e7e9f8</color>
+    <!--主页tab文字默认颜色-->
+    <color name="colorTabTextUnSelect">#9ea3bd</color>
+    <!--主页tab文字选中颜色-->
+    <color name="colorTabTextSelect">#212c67</color>
+    <!--Tab indicator 颜色 -->
+    <color name="colorTabIndicator">#212c67</color>
+
 </resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <ImageView
+        android:background="@drawable/walletmanage_ic_import_wallet"
+        android:layout_width="@dimen/dimen_54"
+        android:layout_height="@dimen/dimen_54"
+        android:layout_marginTop="@dimen/dimen_72"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:text="@string/walletmanage_import_wallet"
+        android:textSize="@dimen/font_4.5"
+        android:textColor="@color/darkSlateBlue"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:gravity="center"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:background="@drawable/shape_corner"
+        android:layout_marginTop="@dimen/dimen_60"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:padding="@dimen/dimen_20"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_160">
+
+        <ImageView
+            android:id="@+id/iv_dot_one"
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_14"
+            android:background="@drawable/walletmanage_ic_dot_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_look_around_hint"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_40"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="@string/walletmanage_look_around_import"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_dot_one"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <Button
+            android:id="@+id/bt_start_import"
+            style="@style/bt_long_in_linearLayout"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/walletmanage_btn_start_import"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

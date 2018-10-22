@@ -93,7 +93,38 @@
     <string name="walletmanage_mnemonic_validate_error">验证失败</string>
     <string name="walletmanage_mnemonic_validate_success">验证成功</string>
 
+    <!-- Import Wallet-->
+    <string name="walletmanage_import_wallet">导入钱包</string>
+    <string name="walletmanage_tip_input_key">请完整输入备份的私钥</string>
+    <string name="walletmanage_tip_input_key_part2">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>
+    <string name="walletmanage_tip_prikey_copied">私钥已复制，请在使用后及时清空系统剪贴板！</string>
+    <string name="walletmanage_btn_start_input">开始导入</string>
+    <string name="walletmanage_btn_complete_input">完成导入</string>
+    <string name="walletmanage_mnemonic">助记词</string>
+    <string name="walletmanage_privatekey">私钥</string>
 
+
+    <!-- Export(BackUp) Wallet-->
+    <string name="walletmanage_tip_look_around">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
+    <string name="walletmanage_look_around_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
+    <string name="walletmanage_back_up_wallet">备份钱包</string>
+    <string name="walletmanage_tip_back_safely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
+    <string name="walletmanage_btn_show_mnemonic">明白了，显示助记词</string>
+    <string name="walletmanage_btn_show_PriKey">明白了，显示私钥</string>
+    <string name="walletmanage_btn_start_import">明白了，开始导入</string>
+    <string name="walletmanage_btn_backup_later">稍后备份</string>
+
+    <string name="walletmanage_tip_no_screenshot">请勿截图</string>
+    <string name="walletmanage_tip_no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
+    <string name="walletmanage_tip_i_understand">我知道了</string>
+    <string name="walletmanage_tip_safety_first">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
+    <string name="walletmanage_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
+    <string name="walletmanage_tip_encrypto_save">加密储存</string>
+    <string name="walletmanage_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
+
+    <string name="walletmanage_tip_look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
+    <string name="walletmanage_tip_no_screenshot_part2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
+    <string name="walletmanage_tip_show_QR">显示二维码</string>
 
 
 </resources>
