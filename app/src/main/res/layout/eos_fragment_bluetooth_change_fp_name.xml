@@ -19,7 +19,6 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:background="@drawable/shape_corner"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/standard_margin_in_walletDetailPage"
@@ -53,6 +52,13 @@
                 android:background="@drawable/ic_close"/>
 
         </LinearLayout>
+
+        <View
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            style="@style/common_divider">
+
+        </View>
 
     </LinearLayout>
 

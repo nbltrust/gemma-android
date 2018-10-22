@@ -663,9 +663,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         params.setMarginEnd(marginEnd);
     }
 
-    /**
-     * 显示选择创建方式dialog
-     */
+    /*
+
+
     private void showChooseMethodDialog() {
         int[] listenedItems = {R.id.btn_close, R.id.btn_use_invCode, R.id.btn_use_cybex, R.id.btn_invite_friend};
         CustomFullDialog dialog = new CustomFullDialog(this,
@@ -689,9 +689,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         dialog.show();
     }
 
-    /**
-     * 显示获取邀请码dialog
-     */
+
     private void showGetInvCodeDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_create, R.id.tv_get_invCode};
         CustomFullDialog dialog = new CustomFullDialog(this,
@@ -718,6 +716,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         });
         dialog.show();
     }
+
+    */
 
     private void scheduleDismiss(){
         Handler handler = new Handler();

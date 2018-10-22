@@ -71,7 +71,7 @@
             android:gravity="center"
             android:text="@string/eos_copy"
             android:textAlignment="center"
-            android:textColor="@color/whiteTwo"
+            android:textColor="@color/cornflowerBlue"
             android:textSize="@dimen/font_4.2"/>
 
     </LinearLayout>

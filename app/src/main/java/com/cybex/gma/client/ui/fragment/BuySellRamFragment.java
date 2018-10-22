@@ -196,9 +196,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                 if (EmptyUtils.isNotEmpty(kbPerEOS)) {
                                     String amount =
                                             getResources().getString(R.string.eos_tip_quantity_approxi) + AmountUtil.mul(
-                                                    kbPerEOS,
-                                                    getEOSAmount(), 4)
-                                                    + " KB";
+                                                    kbPerEOS, getEOSAmount(), 4) + " KB";
                                     tvApproximatelyAmount.setText(amount);
                                     tvApproximatelyAmount.setVisibility(View.VISIBLE);
                                 }
@@ -220,9 +218,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                 if (EmptyUtils.isNotEmpty(kbPerEOS)) {
                                     String amount =
                                             getResources().getString(R.string.eos_tip_quantity_approxi) + AmountUtil.mul(
-                                                    kbPerEOS,
-                                                    getEOSAmount(), 4)
-                                                    + " KB";
+                                                    kbPerEOS, getEOSAmount(), 4) + " KB";
                                     tvApproximatelyAmount.setText(amount);
                                     tvApproximatelyAmount.setVisibility(View.VISIBLE);
                                 }

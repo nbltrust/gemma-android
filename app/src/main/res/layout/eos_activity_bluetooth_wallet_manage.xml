@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/whiteTwo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -29,7 +30,6 @@
                 android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
                 android:layout_marginTop="@dimen/standard_margin_in_walletDetailPage"
                 android:background="@drawable/selector_bg_view_pressed"
-                android:translationZ="@dimen/dimen_3"
                 title:layout_constraintEnd_toEndOf="parent"
                 title:layout_constraintStart_toStartOf="parent"
                 title:layout_constraintTop_toBottomOf="@+id/btn_navibar"
@@ -81,11 +81,14 @@
 
             </android.support.constraint.ConstraintLayout>
 
+            <View
+                android:layout_marginStart="@dimen/dimen_30"
+                android:layout_marginEnd="@dimen/dimen_30"
+                style="@style/common_divider"/>
+
             <LinearLayout
                 android:visibility="visible"
                 android:id="@+id/view_bio_management"
-                android:background="@drawable/shape_corner"
-                android:translationZ="@dimen/dimen_3"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,14 +112,10 @@
                 </com.allen.library.SuperTextView>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layerType="software"
                     android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginEnd="@dimen/dimen_10"
-                    android:background="@color/paleGrey">
+                    style="@style/common_divider"/>
 
-                </View>
 
             </LinearLayout>
 

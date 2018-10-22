@@ -757,19 +757,6 @@
     <string name="english">English</string>
     <string name="follow_system">跟随系统</string>
 
-    <!-- others -->
-    <string name="status_un_confirmed">未确认</string>
-    <string name="status_confirmed_ing">正在确认</string>
-    <string name="status_confirmed_ok">已确认</string>
-    <string name="status_trade_failed">交易失败</string>
-
-    <string name="title_security_settings">安全设置</string>
-    <string name="operate_deal_ing">操作处理中...</string>
-    <string name="operate_deal_failed">操作失败</string>
-    <string name="operate_deal_success">操作成功</string>
-    <string name="config_wallet_ing">正在配置钱包...</string>
-    <string name="press_again_exit">再按一次退出</string>
-
     <!-- Base WebView-->
     <string name="fast_web_alert_title">温馨提示</string>
     <string name="fast_web_alert_msg">您确定要关闭该页面吗?</string>
@@ -788,6 +775,21 @@
     <string name="status_sent">已发送</string>
     <string name="status_sending">发送中...%1$s%</string>
 
+
+    <!-- others -->
+    <string name="status_un_confirmed">未确认</string>
+    <string name="status_confirmed_ing">正在确认</string>
+    <string name="status_confirmed_ok">已确认</string>
+    <string name="status_trade_failed">交易失败</string>
+
+    <string name="title_security_settings">安全设置</string>
+    <string name="operate_deal_ing">操作处理中...</string>
+    <string name="operate_deal_failed">操作失败</string>
+    <string name="operate_deal_success">操作成功</string>
+    <string name="config_wallet_ing">正在配置钱包...</string>
+    <string name="press_again_exit">再按一次退出</string>
     <string name="next_step">下一步</string>
     <string name="manage">管理</string>
+
+    <string name="tip_back_wallet">请务必备份私钥，私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>
 </resources>

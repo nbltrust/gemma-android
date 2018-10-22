@@ -4,6 +4,7 @@
     xmlns:title="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@color/whiteTwo"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -37,11 +38,9 @@
 
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#e7e9f8"/>
+            style="@style/common_divider"/>
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -79,11 +78,9 @@
 
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#e7e9f8"/>
+            style="@style/common_divider"/>
 
         <com.allen.library.SuperTextView
             android:id="@+id/superTextView_battery_life"
@@ -101,11 +98,9 @@
         </com.allen.library.SuperTextView>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#e7e9f8"/>
+            style="@style/common_divider"/>
 
     </LinearLayout>
 

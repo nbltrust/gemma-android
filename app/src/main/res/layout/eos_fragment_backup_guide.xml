@@ -31,13 +31,12 @@
         android:gravity="center"/>
 
     <android.support.constraint.ConstraintLayout
-        android:background="@drawable/shape_corner"
-        android:layout_marginTop="@dimen/dimen_60"
+        android:layout_marginTop="@dimen/dimen_20"
         android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginEnd="@dimen/dimen_20"
         android:padding="@dimen/dimen_20"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_200">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_dot_one"
@@ -52,11 +51,12 @@
         <TextView
             android:id="@+id/tv_look_around_hint"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_40"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_10"
-            android:text="@string/eos_tip_look_around"
+            android:text="@string/tip_back_wallet"
             app:layout_constraintStart_toEndOf="@id/iv_dot_one"
             app:layout_constraintEnd_toEndOf="parent"/>
+
 
         <ImageView
             android:id="@+id/iv_dot_two"
@@ -64,17 +64,38 @@
             android:layout_height="@dimen/dimen_10"
             android:layout_marginTop="@dimen/dimen_14"
             android:background="@drawable/ic_dot_red"
+            android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_look_around_hint"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"/>
 
         <TextView
             android:id="@+id/tv_look_around_hint_two"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_40"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_14"
+            android:text="@string/eos_tip_look_around"
+            app:layout_constraintStart_toEndOf="@id/iv_dot_one"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"/>
+
+        <ImageView
+            android:id="@+id/iv_dot_three"
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_14"
+            android:background="@drawable/ic_dot_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_look_around_hint_two"/>
+
+        <TextView
+            android:id="@+id/tv_look_around_hint_three"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_40"
             android:layout_marginTop="@dimen/dimen_10"
             android:layout_marginStart="@dimen/dimen_10"
             android:text="@string/eos_tip_back_safely"
-            app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"
+            app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint_two"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_dot_two"
             />
@@ -84,18 +105,13 @@
             style="@style/bt_long_in_linearLayout"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
             android:text="@string/eos_btn_show_PriKey"
+            app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint_three"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <TextView
-            android:id="@+id/testTV"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_20"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/show_priKey"/>
 
     </android.support.constraint.ConstraintLayout>
 

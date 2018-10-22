@@ -3,7 +3,6 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="#f9f9f9"
               android:orientation="vertical">
 
     <ImageView
@@ -15,7 +14,6 @@
 
 
     <LinearLayout
-        android:background="@drawable/bg_shape_white"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginLeft="16dp"
@@ -38,7 +36,6 @@
                 android:textColor="@color/font_title"
                 android:textSize="14sp"/>
 
-
             <TextView
                 android:id="@+id/tv_payee"
                 android:layout_width="wrap_content"
@@ -53,11 +50,9 @@
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="@color/horiontal_line"/>
+            style="@style/common_divider"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -87,11 +82,9 @@
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="@color/horiontal_line"/>
+            style="@style/common_divider"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -126,12 +119,16 @@
 
         </RelativeLayout>
 
+        <View
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            style="@style/common_divider"/>
+
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/bg_shape_white"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp">
@@ -159,6 +156,11 @@
             android:textSize="16sp"
             tools:text="\ufeff@lhy546802341"/>
     </RelativeLayout>
+
+    <View
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        style="@style/common_divider"/>
 
     <Button
         android:id="@+id/btn_transfer_nextStep"
