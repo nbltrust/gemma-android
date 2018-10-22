@@ -3,6 +3,7 @@ package com.cybex.gma.client.ui.activity;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +15,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
+import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
 import com.cybex.gma.client.ui.fragment.TransferRecordDetailFragment;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
+import com.cybex.gma.client.ui.presenter.AssetDetailPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -34,7 +38,7 @@ import butterknife.ButterKnife;
 /**
  * 资产详情页面
  */
-public class AssetDetailActivity extends XActivity {
+public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     private TransferRecordListAdapter mAdapter;
     private boolean isFirstLoad = true;
@@ -58,6 +62,15 @@ public class AssetDetailActivity extends XActivity {
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(manager);
+
+        WalletEntity entity = DBManager.getInstance()
+                .getWalletEntityDao()
+                .getCurrentWalletEntity();
+        if (entity != null) {
+            currentEosName = entity.getCurrentEosName();
+        }
     }
 
     @Override
@@ -108,8 +121,8 @@ public class AssetDetailActivity extends XActivity {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public AssetDetailPresenter newP() {
+        return new AssetDetailPresenter();
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.activity.AboutActivity;
 import com.cybex.gma.client.ui.activity.ActivateAccountMethodActivity;
+import com.cybex.gma.client.ui.activity.AssetDetailActivity;
 import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
@@ -95,6 +96,14 @@ public final class UISkipMananger {
      */
     public static void launchVote(Activity context, Bundle bundle) {
         launchIntent(context, VoteActivity.class, bundle);
+    }
+
+    /**
+     * 跳转到资产详情页面
+     * @param context
+     */
+    public static void launchAssetDetail(Activity context) {
+        launchIntent(context, AssetDetailActivity.class);
     }
 
 

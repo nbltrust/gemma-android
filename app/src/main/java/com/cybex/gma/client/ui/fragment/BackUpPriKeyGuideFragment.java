@@ -36,7 +36,6 @@ import butterknife.Unbinder;
 
 public class BackUpPriKeyGuideFragment extends XFragment {
     @BindView(R.id.show_priKey) Button btShowPrikey;
-    @BindView(R.id.testTV) TextView testTV;
     Unbinder unbinder;
     private Integer walletID;
     private WalletEntity curWallet;
