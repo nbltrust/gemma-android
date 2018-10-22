@@ -454,6 +454,8 @@
     <dimen name="bt_common_height">44dp</dimen>
 
 
+
+
     <!-- 字体大小 -->
     <dimen name="font_3.5">14sp</dimen>
     <dimen name="font_3">12sp</dimen>
@@ -477,6 +479,7 @@
 
 
     <dimen name="common_view_margin">33.8dp</dimen>
+    <dimen name="common_page_content_padding">20dp</dimen>
 
 
 </resources>

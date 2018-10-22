@@ -1,18 +1,18 @@
-package com.cybex.gma.client.ui.activity;
+package com.cybex.walletmanagement.ui.activity;
 
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cybex.gma.client.R;
-import com.cybex.gma.client.event.BarcodeScanEvent;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.manager.PermissionManager;
 import com.cybex.componentservice.utils.SoundPoolHelper;
 import com.cybex.componentservice.utils.listener.PermissionResultListener;
 import com.cybex.qrcode.core.QRCodeView;
 import com.cybex.qrcode.zxing.ZXingView;
+import com.cybex.walletmanagement.R;
+import com.cybex.walletmanagement.event.BarcodeScanEvent;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -21,8 +21,6 @@ import com.yanzhenjie.permission.Permission;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 二维码扫描窗口
@@ -31,15 +29,16 @@ import butterknife.ButterKnife;
  */
 public class BarcodeScanActivity extends XActivity implements QRCodeView.Delegate {
 
-    @BindView(R.id.view_barcode_zxing) ZXingView mZXingView;
-    @BindView(R.id.btn_back) ImageView btnBack;
+    ZXingView mZXingView;
+    ImageView btnBack;
 
     private SoundPoolHelper soundPoolHelper;
     private static final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 666;
 
     @Override
     public void bindUI(View rootView) {
-        ButterKnife.bind(this);
+        mZXingView=findViewById(R.id.view_barcode_zxing);
+        btnBack=findViewById(R.id.btn_back);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class BarcodeScanActivity extends XActivity implements QRCodeView.Delegat
 
     @Override
     public int getLayoutId() {
-        return R.layout.eos_activity_barcode_scan;
+        return R.layout.walletmanage_activity_barcode_scan;
     }
 
     @Override
@@ -79,7 +78,7 @@ public class BarcodeScanActivity extends XActivity implements QRCodeView.Delegat
     @Override
     protected void onStart() {
         super.onStart();
-        PermissionManager manager = PermissionManager.getInstance(this);
+        final PermissionManager manager = PermissionManager.getInstance(this);
         manager.requestPermission(new PermissionResultListener() {
                                       @Override
                                       public void onPermissionGranted() {
@@ -88,7 +87,7 @@ public class BarcodeScanActivity extends XActivity implements QRCodeView.Delegat
 
                                       @Override
                                       public void onPermissionDenied(List<String> permissions) {
-                                          GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_set_camera_permission));
+                                          GemmaToastUtils.showShortToast(getResources().getString(R.string.walletmanage_set_camera_permission));
                                           if (AndPermission.hasAlwaysDeniedPermission(mContext, permissions)) {
                                               manager.showSettingDialog(mContext, permissions);
                                           }

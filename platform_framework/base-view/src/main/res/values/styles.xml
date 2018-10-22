@@ -57,4 +57,9 @@
         <item name="android:animation">@null</item>
     </style>
 
+    <declare-styleable name="LabelLayout">
+        <attr name="text_left" format="string" />
+        <attr name="text_right" format="string" />
+    </declare-styleable>
+
 </resources>

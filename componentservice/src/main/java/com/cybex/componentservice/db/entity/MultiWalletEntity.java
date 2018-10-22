@@ -9,6 +9,11 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 @Table(database = GemmaDatabase.class, name = "t_multi_wallet")
 public class MultiWalletEntity extends BaseModel {
+
+    public static final Integer WALLET_TYPE_MNEMONIC=0;
+    public static final Integer WALLET_TYPE_HARDWARE=1;
+    public static final Integer WALLET_TYPE_PRI_KEY=2;
+
     /**
      * 自增长主键id
      */

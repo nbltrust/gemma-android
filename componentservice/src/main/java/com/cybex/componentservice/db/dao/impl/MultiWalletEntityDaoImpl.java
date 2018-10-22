@@ -51,6 +51,14 @@ public class MultiWalletEntityDaoImpl implements MultiWalletEntityDao {
     }
 
     @Override
+    public List<MultiWalletEntity> getMultiWalletEntityListByWalletType(int walletType) {
+        List<MultiWalletEntity> list = SQLite.select().from(MultiWalletEntity.class)
+                .where(MultiWalletEntity_Table.walletType.eq(walletType))
+                .queryList();
+        return list;
+    }
+
+    @Override
     public List<MultiWalletEntity> getMultiWalletEntityList() {
         List<MultiWalletEntity> list =
                 SQLite.select().from(MultiWalletEntity.class)

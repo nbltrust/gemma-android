@@ -1,4 +1,4 @@
-package com.cybex.gma.client.utils;
+package com.cybex.componentservice.utils;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -12,7 +12,8 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.RawRes;
 
-import com.cybex.gma.client.R;
+
+import com.cybex.componentservice.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

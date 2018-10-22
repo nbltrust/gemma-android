@@ -125,6 +125,19 @@
     <string name="walletmanage_tip_look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
     <string name="walletmanage_tip_no_screenshot_part2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
     <string name="walletmanage_tip_show_QR">显示二维码</string>
+    <string name="walletmanage_tip_input_pri_key">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>
+    <string name="walletmanage_input_pri_key_hint">请完整输入备份的私钥</string>
+    <string name="walletmanage_tip_input_mnemonic">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
+    <string name="walletmanage_input_mnemonic_hint">支持BIP39助记词，用空格分开</string>
+    <string name="walletmanage_wallet_cointype">钱包币种</string>
+    <string name="walletmanage_cointype_eos">EOS</string>
+    <string name="walletmanage_title_import_which_wallet">导入到钱包</string>
+    <string name="walletmanage_create_new_wallet">新建钱包</string>
 
+
+    <!-- Barcode scan activity -->
+    <string name="walletmanage_barcode_scan_hint">将条码放入框内，即可自动扫描</string>
+    <string name="walletmanage_qr_scan_hint">请将二维码放入框内，即可自动扫描</string>
+    <string name="walletmanage_scan_qr_code">扫描二维码</string>
 
 </resources>

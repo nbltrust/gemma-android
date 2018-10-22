@@ -7,13 +7,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
+
+@Route(path = RouterConst.PATH_TO_IMPORT_WALLET_GUIDE_PAGE)
 public class ImportWalletGuideActivity extends XActivity {
 
 
@@ -31,7 +35,7 @@ public class ImportWalletGuideActivity extends XActivity {
         btStartImport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ImportWalletGuideActivity.this, MnemonicShowActivity.class);
+                Intent intent = new Intent(ImportWalletGuideActivity.this, ImportWalletActivity.class);
                 startActivity(intent);
                 finish();
             }
