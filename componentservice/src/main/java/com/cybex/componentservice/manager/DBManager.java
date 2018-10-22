@@ -1,7 +1,9 @@
 package com.cybex.componentservice.manager;
 
 
+import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.dao.WalletEntityDao;
+import com.cybex.componentservice.db.dao.impl.MultiWalletEntityDaoImpl;
 import com.cybex.componentservice.db.dao.impl.WalletEntityDaoImpl;
 
 /**
@@ -28,6 +30,10 @@ public class DBManager {
 
     public WalletEntityDao getWalletEntityDao() {
         return new WalletEntityDaoImpl();
+    }
+
+    public MultiWalletEntityDao getMultiWalletEntityDao() {
+        return new MultiWalletEntityDaoImpl();
     }
 
 

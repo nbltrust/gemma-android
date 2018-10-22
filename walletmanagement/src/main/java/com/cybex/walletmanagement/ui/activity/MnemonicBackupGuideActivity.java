@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.cybex.componentservice.config.BaseConst;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
@@ -16,6 +17,7 @@ import me.framework.fragmentation.anim.FragmentAnimator;
 public class MnemonicBackupGuideActivity extends XActivity {
 
     private Button btnShowMne;
+    String[] mnemonic;
 
 
     @Override
@@ -24,7 +26,10 @@ public class MnemonicBackupGuideActivity extends XActivity {
         btnShowMne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MnemonicBackupGuideActivity.this,MnemonicShowActivity.class));
+                Intent intent = new Intent(MnemonicBackupGuideActivity.this, MnemonicShowActivity.class);
+                intent.putExtra(BaseConst.KEY_MNEMONIC,mnemonic);
+                startActivity(intent);
+                finish();
             }
         });
         setNavibarTitle(getResources().getString(R.string.walletmanage_backup_title), true);
@@ -32,6 +37,7 @@ public class MnemonicBackupGuideActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        mnemonic = getIntent().getStringArrayExtra(BaseConst.KEY_MNEMONIC);
     }
 
     @Override

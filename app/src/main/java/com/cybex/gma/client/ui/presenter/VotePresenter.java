@@ -21,7 +21,7 @@ import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.FetchBPDetailRequest;
 import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
 import com.cybex.gma.client.ui.request.PushTransactionRequest;
-import com.cybex.gma.client.utils.AlertUtil;
+import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;

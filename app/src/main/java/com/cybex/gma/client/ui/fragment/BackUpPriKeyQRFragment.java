@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.WalletIDEvent;

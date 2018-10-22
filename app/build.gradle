@@ -127,6 +127,7 @@ android {
     packagingOptions {
         doNotStrip '*/mips/*.so'
         doNotStrip '*/mips64/*.so'
+        exclude 'META-INF/rxjava.properties'
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
@@ -216,7 +217,7 @@ android {
 
     repositories{
         flatDir{
-            dirs 'libs'
+            dirs 'libs',rootProject.ext.COMPONENT_SERVICE_DIR_PATH
         }
     }
 
@@ -240,7 +241,7 @@ dependencies {
     implementation deps.butterknife.core
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     annotationProcessor deps.butterknife.compiler
-    implementation deps.gma.happybubble
+
     implementation deps.gma.zxing
     implementation deps.gma.androidanimations
     api deps.gma.MaterialEditText
@@ -252,10 +253,9 @@ dependencies {
 //    api deps.dbflow.sqlciperDatabase
 //    api deps.dbflow.sqlcipher
 
-    implementation deps.third.recyclerviewadapterhelper
-    implementation deps.third.overscroll
-    implementation deps.gma.alerter
-    implementation deps.gma.saripaar
+
+
+
     implementation deps.gma.spinkit
     implementation deps.gma.wechatpay
 
@@ -264,7 +264,7 @@ dependencies {
     implementation deps.gma.svgImageViewer
     implementation deps.gma.SuperTextView
 
-    implementation 'com.trycatch.android:mysnackbar:1.2.2'
+
 
 
     implementation project(':componentservice')
@@ -272,6 +272,7 @@ dependencies {
 
     //implementation(name:'bluetoothlib-release', ext:'aar')
     implementation(name:'bluetoothlib-debug3', ext:'aar')
+
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 

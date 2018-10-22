@@ -4,9 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="paleGrey">#f5f6f8</color>
-    <color name="paleGreyTwo">#e7e9f8</color>
-    <color name="pale_grey_two">#dadce8</color>
+    <!--<color name="paleGrey">#f5f6f8</color>-->
+    <!--<color name="paleGreyTwo">#e7e9f8</color>-->
+    <!--<color name="pale_grey_two">#dadce8</color>-->
 
     <!--<color name="darkSlateBlue80">#212c67</color>-->
     <!--<color name="darkSkyBlue">#5596dc</color>-->
@@ -30,7 +30,6 @@
     <color name="tab_unselect">#c6cade</color>
     <color name="tab_normal">#4169d1</color>
 
-    <color name="bg_ui">#ffffff</color>
     <color name="font_dark_state_blue">#212c67</color>
     <color name="font_title">#8e8e93</color>
     <color name="vertical_line">#f5f6f8</color>
@@ -45,18 +44,9 @@
     <color name="light_periwinkle_50">#80dcdde3</color>
 
 
-    <!--主页tab背景色-->
-    <color name="colorTabBackground">#ffffff</color>
-    <!--主页上划线颜色-->
-    <color name="colorTabUnderline">#e7e9f8</color>
-    <!--主页tab文字默认颜色-->
-    <color name="colorTabTextUnSelect">#9ea3bd</color>
-    <!--主页tab文字选中颜色-->
-    <color name="colorTabTextSelect">#212c67</color>
-    <!--Tab indicator 颜色 -->
-    <color name="colorTabIndicator">#212c67</color>
 
-   <color name="item_pressed">#f5f6f8</color>
+
+
 
     <color name="grey_f9f9f9">#f9f9f9</color>
     <color name="grey_a5a5a5">#A5A5A5</color>

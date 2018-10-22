@@ -8,6 +8,10 @@
         tools:replace="android:label"
         >
 
+        <activity android:name=".ui.activity.CreateMnemonicWalletActivity">
+
+        </activity>
+
         <activity android:name=".ui.activity.MnemonicBackupGuideActivity">
 
         </activity>

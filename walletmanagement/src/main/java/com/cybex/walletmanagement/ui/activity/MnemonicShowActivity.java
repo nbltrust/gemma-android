@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.cybex.base.view.flowlayout.FlowLayout;
 import com.cybex.base.view.flowlayout.TagAdapter;
 import com.cybex.base.view.flowlayout.TagFlowLayout;
+import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.siberiadante.customdialoglib.CustomDialog;
@@ -23,7 +26,8 @@ public class MnemonicShowActivity extends XActivity {
 
     private Button btnShowMne;
     private TagFlowLayout mFlowLayout;
-    private String[] mnemonics={"wallet","happy","change","hahah","wallet","happy","change","hahah","wallet","happy","change","hahah"};
+    private String[] mnemonic;
+
 
     @Override
     public void bindUI(View view) {
@@ -32,27 +36,35 @@ public class MnemonicShowActivity extends XActivity {
         btnShowMne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MnemonicShowActivity.this,MnemonicVerifyActivity.class));
+                Intent intent = new Intent(MnemonicShowActivity.this, MnemonicVerifyActivity.class);
+                intent.putExtra(BaseConst.KEY_MNEMONIC,mnemonic);
+                startActivity(intent);
+                finish();
             }
         });
         setNavibarTitle(getResources().getString(R.string.walletmanage_backup_title), true);
 
-
-        mFlowLayout.setAdapter(new TagAdapter<String>(mnemonics) {
-            @Override
-            public View getView(FlowLayout parent, int position, String s) {
-                TextView tv = (TextView) getLayoutInflater().inflate(R.layout.walletmanage_item_tag,
-                        mFlowLayout, false);
-                tv.setText(s);
-                return tv;
+        if(getIntent()!=null){
+            mnemonic = getIntent().getStringArrayExtra(BaseConst.KEY_MNEMONIC);
+            if(mnemonic!=null){
+                mFlowLayout.setAdapter(new TagAdapter<String>(mnemonic) {
+                    @Override
+                    public View getView(FlowLayout parent, int position, String s) {
+                        TextView tv = (TextView) getLayoutInflater().inflate(R.layout.walletmanage_item_tag,
+                                mFlowLayout, false);
+                        tv.setText(s);
+                        return tv;
+                    }
+                });
             }
-        });
-
+        }
         showAlertDialog();
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
+
     }
 
     @Override
@@ -82,13 +94,6 @@ public class MnemonicShowActivity extends XActivity {
 
             @Override
             public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-//                switch (view.getId()) {
-//                    case R.id.tv_understand:
-//                        dialog.cancel();
-//                        break;
-//                    default:
-//                        break;
-//                }
                 if(view.getId()==R.id.tv_understand){
                     dialog.cancel();
                 }

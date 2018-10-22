@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
@@ -24,9 +25,14 @@ public class InitialActivity extends XActivity {
 
     @OnClick(R.id.bt_create_new)
     public void createWallet() {
-        if (!NoDoubleClick.isDoubleClick()) {
-            UISkipMananger.launchIntent(this, CreateWalletActivity.class);
-        }
+//        if (!NoDoubleClick.isDoubleClick()) {
+//            UISkipMananger.launchIntent(this, CreateWalletActivity.class);
+//        }
+
+        ARouter.getInstance().build("/walletmanage/create")
+//                        .withString("name", "888")
+//                        .withObject("bean", new TransferTestBean("Jack", 11))
+                .navigation();
     }
 
     @OnClick(R.id.bt_import)
@@ -34,6 +40,11 @@ public class InitialActivity extends XActivity {
         if (!NoDoubleClick.isDoubleClick()) {
             UISkipMananger.launchIntent(this, ImportWalletActivity.class);
         }
+    }
+
+    @OnClick(R.id.bt_wookongbio)
+    public void withWookong() {
+
     }
 
     @Override

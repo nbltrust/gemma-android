@@ -9,7 +9,7 @@ import com.cybex.base.view.lockpattern.util.LockPatternUtil;
 import com.cybex.base.view.lockpattern.widget.LockPatternIndicator;
 import com.cybex.base.view.lockpattern.widget.LockPatternView;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.event.RefreshGestureEvent;
 import com.hxlx.core.lib.common.cache.ACache;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;

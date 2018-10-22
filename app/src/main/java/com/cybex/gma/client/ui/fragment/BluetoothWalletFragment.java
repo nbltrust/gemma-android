@@ -17,7 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.PollEvent;

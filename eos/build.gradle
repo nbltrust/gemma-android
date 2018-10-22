@@ -46,6 +46,12 @@ android {
         javaMaxHeapSize "4g"
     }
 
+    repositories{
+        flatDir{
+            dirs 'libs',rootProject.ext.COMPONENT_SERVICE_DIR_PATH
+        }
+    }
+
     resourcePrefix "eos_"
 }
 

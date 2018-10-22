@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.cybex.base.view.tablayout.SlidingTabLayout;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.manager.TabLayoutManager;
+import com.cybex.componentservice.manager.TabLayoutManager;
 import com.cybex.gma.client.ui.fragment.BackUpPriKeyFragment;
 import com.cybex.gma.client.ui.fragment.BackUpPriKeyQRFragment;
 import com.cybex.gma.client.ui.presenter.BackUpPrivateKeyPresenter;

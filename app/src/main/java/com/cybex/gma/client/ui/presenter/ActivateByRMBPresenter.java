@@ -7,7 +7,7 @@ import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.api.data.response.CustomData;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.OrderIdEvent;

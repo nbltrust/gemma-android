@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.cybex.componentservice.bean.TransferTestBean;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.service.InitializeService;
 import com.cybex.gma.client.ui.presenter.SpalashActPresenter;
@@ -58,12 +60,6 @@ public class SpalashActivity extends XActivity<SpalashActPresenter> {
 //                EosWalletService service = (EosWalletService) router.getService(EosWalletService.class.getSimpleName());
 //                Toast.makeText(context, "balance="+service.getEosBalance(0), Toast.LENGTH_SHORT).show();
 //
-//
-//                ARouter.getInstance().build("/test/activity")
-//                        .withString("name", "888")
-//                        .withObject("bean", new TransferTestBean("Jack", 11))
-//                        .navigation();
-
                 getP().goToNext();
             }
         }, 2000);

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.RadioButton;
 
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.SPUtils;

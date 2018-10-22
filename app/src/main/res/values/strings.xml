@@ -9,6 +9,7 @@
     <!-- Initial Activity -->
     <string name="eos_btn_create_new_wallet">创建新钱包</string>
     <string name="eos_btn_restore_wallet">从备份恢复已有钱包</string>
+    <string name="eos_btn_wookong">配对WOOKONG Bio</string>
 
     <!-- Create Wallet Activity-->
     <string name="eos_tip_set_password">设置密码</string>

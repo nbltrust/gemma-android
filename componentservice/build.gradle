@@ -44,11 +44,16 @@ android {
         }
     }
 
+    repositories{
+        flatDir{
+            dirs 'libs'
+        }
+    }
 
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
 
     api deps.support.appcompatV7
 
@@ -73,5 +78,17 @@ dependencies {
 
     //头条屏幕适配方案
     api 'me.jessyan:autosize:1.0.0'
+
+    api deps.gma.saripaar
+    api deps.gma.happybubble
+    api deps.gma.alerter
+    api deps.third.recyclerviewadapterhelper
+    api deps.third.overscroll
+
+    api(name:'seed39', ext:'aar')
+
+    api 'org.bitcoinj:bitcoinj-core:0.14.7'
+    api 'org.web3j:core:3.3.1-android'
+    api 'com.trycatch.android:mysnackbar:1.2.2'
 
 }

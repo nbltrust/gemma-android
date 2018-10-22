@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.CacheConstants;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.event.WalletIDEvent;

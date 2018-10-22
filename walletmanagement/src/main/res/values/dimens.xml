@@ -1,3 +1,25 @@
 <resources>
-    <dimen name="walletmanage_fab_margin">16dp</dimen>
+    <dimen name="walletmanage_walletmanage_fab_margin">16dp</dimen>
+    <!-- 创建钱包页面 -->
+    <dimen name="walletmanage_input_layout_height">408dp</dimen>
+    <dimen name="walletmanage_input_layout_margin">12dp</dimen>
+    <dimen name="walletmanage_single_input_height">82dp</dimen>
+    <dimen name="walletmanage_single_input_height_last">73dp</dimen>
+    <dimen name="walletmanage_single_input_margin">16dp</dimen>
+    <dimen name="walletmanage_editText_margin">8dp</dimen>
+    <dimen name="walletmanage_editText_height">46dp</dimen>
+    <dimen name="walletmanage_textView_height">20dp</dimen>
+    <dimen name="walletmanage_textView_marginTop">16dp</dimen>
+    <dimen name="walletmanage_checkBox_length">18dp</dimen>
+    <dimen name="walletmanage_checkBox_marginStart">35dp</dimen>
+    <dimen name="walletmanage_checkBox_marginTop">15dp</dimen>
+    <dimen name="walletmanage_button_margin">32dp</dimen>
+    <dimen name="walletmanage_button_marginTop">29dp</dimen>
+    <dimen name="walletmanage_bubble_lookLength">6dp</dimen>
+    <dimen name="walletmanage_bubble_lookPosition">24dp</dimen>
+    <dimen name="walletmanage_tv_in_bubble_marginTop">10dp</dimen>
+    <dimen name="walletmanage_tv_in_bubble_marginBot">10dp</dimen>
+    <dimen name="walletmanage_tv_in_bubble_marginStart">10dp</dimen>
+    <dimen name="walletmanage_tv_in_bubble_marginEnd">10dp</dimen>
+
 </resources>
