@@ -41,7 +41,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/selector_btn_transfer"
+        android:background="@drawable/eos_selector_btn_transfer"
         android:text="@string/eos_btn_connect_retry"
         android:textColor="@color/white"
         android:textSize="16sp"/>

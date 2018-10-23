@@ -1,0 +1,106 @@
+<resources>
+    <!-- Me/General/About -->
+    <string name="general">General</string>
+    <string name="security">Security Settings</string>
+    <string name="help">Help &amp; Feedback</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="about_us">About</string>
+    <string name="about">About</string>
+
+    <string name="face">Face Unlock</string>
+    <string name="fingerprints">Touch Unlock</string>
+    <string name="pattern">Pattern Unlock</string>
+    <string name="changePattern">Pattern Settings</string>
+
+    <string name="title_currency_unit">Currency</string>
+
+
+    <string name="version_info">What\'s Fresh</string>
+    <string name="version_update">Version Update</string>
+    <string name="copyright">Copyright @2018 Tuolian. All Rights Reserved</string>
+
+    <!-- Gesture login activity -->
+    <string name="gesture_forget_gesture">Forgotten Pattern</string>
+    <string name="gesture_default">Draw your pattern</string>
+    <string name="gesture_error">Not match. Please draw again.</string>
+    <string name="gesture_error_max_retry">Too many attempts, try again %1$d seconds later</string>
+    <string name="gesture_correct">Match</string>
+    <string name="gesture_error_tip_total">attempts</string>
+    <string name="gesture_tip_password_error_retry">Not match,</string>
+
+    <!-- Create gesture activity -->
+    <string name="create_gesture_activity">CreateGestureActivity</string>
+    <string name="create_gesture_default">Draw pattern</string>
+    <string name="create_gesture_correct">Draw again to confirm</string>
+    <string name="create_gesture_less_error">The length of pattern is at least 4</string>
+    <string name="create_gesture_confirm_error">Not match. Please draw again.</string>
+    <string name="create_gesture_confirm_correct">Done</string>
+    <string name="create_gesture_reset">Reset</string>
+
+    <!-- Base WebView-->
+    <string name="fast_web_alert_title">Tips</string>
+    <string name="fast_web_alert_msg">Are you sure to leave?</string>
+    <string name="fast_web_alert_left">Stay</string>
+    <string name="fast_web_alert_right">Close</string>
+    <string name="fast_loading">Loading...</string>
+    <string name="fast_cancel">Cancel</string>
+    <string name="fast_load_more_load_end">No more data</string>
+    <string name="fast_load_more_load_failed">Load fail, click to retry</string>
+    <string name="fast_load_more_loading">Loading...</string>
+
+    <!-- Permission Manage-->
+    <string name="title_dialog">Tips</string>
+    <string name="message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
+    <string name="message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
+    <string name="message_setting_comeback">The user comes back from the settings page.</string>
+    <string name="message_install_failed">Your phone is not allowed us to install apps.</string>
+    <string name="message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>
+    <string name="message_error_storage">Please check the external storage device.</string>
+    <string name="successfully">Successful</string>
+    <string name="failure">Failure</string>
+
+    <string name="setting">Setting</string>
+    <string name="resume">Resume</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Language Setting -->
+    <string name="language">Language</string>
+    <string name="current_unit">Currency</string>
+    <string name="simplified_C">简体中文</string>
+    <string name="USD">USD</string>
+    <string name="CNY">CNY</string>
+    <string name="english">English</string>
+    <string name="follow_system">System</string>
+
+    <!-- others -->
+    <string name="finger_tip_device_no_support">Not supported by this device</string>
+    <string name="finger_tip_verify_failed">Not Recognized. Try again.</string>
+
+    <string name="setting_password_success">Pattern set successfully</string>
+    <string name="setting_new_gesture_pwd">Pattern Settings</string>
+
+    <string name="status_un_confirmed">Pending</string>
+    <string name="status_confirmed_ing">Pending</string>
+    <string name="status_confirmed_ok">Confirmed</string>
+    <string name="status_trade_failed">Failed</string>
+
+    <string name="title_security_settings">Security Settings</string>
+    <string name="operate_deal_ing">Processing...</string>
+    <string name="operate_deal_failed">Failed</string>
+    <string name="operate_deal_success">Success</string>
+
+    <string name="config_wallet_ing">Configuring...</string>
+
+    <!-- asset detail -->
+    <string name="title_asset_detail">资产详情</string>
+    <string name="income">收款</string>
+    <string name="status_accepted">已接受</string>
+    <string name="status_sent">已发送</string>
+    <string name="status_sending">发送中...%1$s%</string>
+
+    <string name="next_step">下一步</string>
+    <string name="manage">管理</string>
+
+    <string name="tip_back_wallet">请务必备份私钥，私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>
+
+</resources>

@@ -36,7 +36,6 @@ import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -265,7 +264,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     public void setClickable(Button button) {
         button.setClickable(true);
-        button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+        button.setBackground(getResources().getDrawable(R.drawable.eos_shape_corner_button));
     }
 
     public void setUnclickable(Button button) {

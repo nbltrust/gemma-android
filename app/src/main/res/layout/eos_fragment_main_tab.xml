@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/bottombar_gemma_height"
-        android:background="@drawable/actionbar_shadow_up"/>
+        android:background="@drawable/eos_actionbar_shadow_up"/>
 
         -->
 
@@ -48,7 +48,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/actionbar_shadow_up"/>
+                android:background="@drawable/eos_actionbar_shadow_up"/>
 
             <com.cybex.gma.client.widget.bottombar.BottomBar
                 android:id="@+id/bottomBar"

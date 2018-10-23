@@ -59,7 +59,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/bg_shape_btn_pressed"
+        android:background="@drawable/eos_bg_shape_btn_pressed"
         android:text="@string/eos_btn_start_pair"
         android:textColor="@color/white"
         android:textSize="16sp"/>

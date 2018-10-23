@@ -339,15 +339,15 @@ public class GestureVerifyActivity extends XActivity {
 
     private enum Status {
         //默认的状态
-        DEFAULT(R.string.gesture_default, R.color.grey_a5a5a5),
+        DEFAULT(R.string.gesture_default, R.color.eos_grey_a5a5a5),
         //密码输入错误
-        ERROR(R.string.gesture_error, R.color.red_f4333c),
+        ERROR(R.string.gesture_error, R.color.eos_red_f4333c),
         //密码输入错误
-        ERROR_MAX_RETRY(R.string.gesture_error_max_retry, R.color.red_f4333c),
+        ERROR_MAX_RETRY(R.string.gesture_error_max_retry, R.color.eos_red_f4333c),
         //至少连接4个点
-        ERROR_MIN_PATTERN_REGISTER_FAIL(R.string.create_gesture_less_error, R.color.red_f4333c),
+        ERROR_MIN_PATTERN_REGISTER_FAIL(R.string.create_gesture_less_error, R.color.eos_red_f4333c),
         //密码输入正确
-        CORRECT(R.string.gesture_correct, R.color.grey_a5a5a5);
+        CORRECT(R.string.gesture_correct, R.color.eos_grey_a5a5a5);
 
         Status(int strId, int colorId) {
             this.strId = strId;

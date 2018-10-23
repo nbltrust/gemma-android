@@ -92,7 +92,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:background="@drawable/btn_vote_left_light"
+                    android:background="@drawable/eos_btn_vote_left_light"
                     android:text="@string/eos_vote_num_init"
                     android:textColor="#ffffff"
                     android:textSize="14sp"/>
@@ -103,7 +103,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:background="@drawable/btn_vote_right_light"
+                    android:background="@drawable/eos_btn_vote_right_light"
                     android:text="@string/eos_title_vote"
                     android:textColor="#ffffff"
                     android:textSize="14sp"/>

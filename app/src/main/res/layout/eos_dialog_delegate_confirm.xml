@@ -34,7 +34,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_receiver"
-                android:textColor="@color/font_title"
+                android:textColor="@color/eos_font_title"
                 android:textSize="14sp"/>
 
             <TextView
@@ -54,7 +54,7 @@
             android:layout_height="1px"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="@color/horiontal_line"/>
+            android:background="@color/eos_horiontal_line"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_fund"
-                android:textColor="@color/font_title"
+                android:textColor="@color/eos_font_title"
                 android:textSize="14sp"/>
 
 
@@ -88,7 +88,7 @@
             android:layout_height="1px"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="@color/horiontal_line"/>
+            android:background="@color/eos_horiontal_line"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_memo"
-                android:textColor="@color/font_title"
+                android:textColor="@color/eos_font_title"
                 android:textSize="14sp"/>
 
             <TextView
@@ -131,7 +131,7 @@
             android:layout_height="1px"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="@color/horiontal_line"/>
+            android:background="@color/eos_horiontal_line"/>
 
     </LinearLayout>
 
@@ -143,7 +143,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/selector_btn_transfer"
+        android:background="@drawable/eos_selector_btn_transfer"
         android:text="@string/eos_confirm_delegate"
         android:textColor="@color/white"
         android:textSize="16sp"/>

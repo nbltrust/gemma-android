@@ -173,7 +173,7 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
 
     public void setClickableStyle(Button button) {
         //button.setClickable(true);
-        button.setBackground(getDrawable(R.drawable.shape_corner_button));
+        button.setBackground(getDrawable(R.drawable.eos_shape_corner_button));
     }
 
     public void setUnClickableStyle(Button button) {

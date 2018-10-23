@@ -33,7 +33,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/shape_corner_button"
+        android:background="@drawable/eos_shape_corner_button"
         android:text="@string/eos_btn_create_new_wallet"
         android:textColor="@color/white"
         android:textSize="@dimen/font_3.5"/>
@@ -47,9 +47,9 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/bg_shape_radius_white_with_border"
+        android:background="@drawable/eos_bg_shape_radius_white_with_border"
         android:text="@string/eos_btn_import_mne"
-        android:textColor="@color/color_fingger_anim"
+        android:textColor="@color/eos_color_fingger_anim"
         android:textSize="@dimen/font_3.5"/>
 
 

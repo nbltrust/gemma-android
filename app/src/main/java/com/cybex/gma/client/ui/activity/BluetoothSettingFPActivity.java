@@ -72,7 +72,7 @@ public class BluetoothSettingFPActivity extends XActivity {
             drawFingerprint();
         } else if (state == ParamConstants.FINGER_SUCCESS) {
             stage = 1;
-            imvFingerPrint.setImageResource(R.drawable.bezier_svg);
+            imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
             GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
             setCurrentWalletStatus();
             UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
@@ -90,29 +90,29 @@ public class BluetoothSettingFPActivity extends XActivity {
 
     public void initVectorDrawable() {
         vectorDrawableHashMap.put(1,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim01, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim01, null));
         vectorDrawableHashMap.put(2,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim02, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim02, null));
         vectorDrawableHashMap.put(3,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim03, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim03, null));
         vectorDrawableHashMap.put(4,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim04, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim04, null));
         vectorDrawableHashMap.put(5,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim05, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim05, null));
         vectorDrawableHashMap.put(6,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim06, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim06, null));
         vectorDrawableHashMap.put(7,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim07, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim07, null));
         vectorDrawableHashMap.put(8,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim08, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim08, null));
         vectorDrawableHashMap.put(9,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim09, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim09, null));
         vectorDrawableHashMap.put(10,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim10, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim10, null));
         vectorDrawableHashMap.put(11,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim11, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim11, null));
         vectorDrawableHashMap.put(12,
-                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.bezier_anim12, null));
+                (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.eos_bezier_anim12, null));
 
     }
 

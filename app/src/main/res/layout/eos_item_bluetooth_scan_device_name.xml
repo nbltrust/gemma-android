@@ -14,7 +14,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/bg_shape_radius_blue_selector"
+        android:background="@drawable/eos_bg_shape_radius_blue_selector"
         android:clickable="true">
 
         <CheckedTextView

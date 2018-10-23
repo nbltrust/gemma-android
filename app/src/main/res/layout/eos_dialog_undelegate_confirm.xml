@@ -14,7 +14,7 @@
         android:src="@drawable/ic_mask_close"/>
 
     <LinearLayout
-        android:background="@drawable/bg_shape_white"
+        android:background="@drawable/eos_bg_shape_white"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginLeft="16dp"
@@ -34,7 +34,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_refund_username"
-                android:textColor="@color/font_title"
+                android:textColor="@color/eos_font_title"
                 android:textSize="14sp"/>
 
 
@@ -55,7 +55,7 @@
             android:layout_height="1px"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="@color/horiontal_line"/>
+            android:background="@color/eos_horiontal_line"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_fund"
-                android:textColor="@color/font_title"
+                android:textColor="@color/eos_font_title"
                 android:textSize="14sp"/>
 
 
@@ -90,7 +90,7 @@
             android:layout_height="1px"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="@color/horiontal_line"/>
+            android:background="@color/eos_horiontal_line"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_memo"
-                android:textColor="@color/font_title"
+                android:textColor="@color/eos_font_title"
                 android:textSize="14sp"/>
 
 
@@ -136,7 +136,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/selector_btn_transfer"
+        android:background="@drawable/eos_selector_btn_transfer"
         android:text="@string/eos_btn_confirm_refund"
         android:textColor="@color/white"
         android:textSize="16sp"/>

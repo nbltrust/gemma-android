@@ -52,8 +52,8 @@
         android:hint="@string/eos_input_invCode_hint"
         android:paddingLeft="16dp"
         android:textColor="@color/darkSlateBlue"
-        android:textColorHint="@color/color_et_hint"
-        android:background="@drawable/bg_shape_white"
+        android:textColorHint="@color/eos_color_et_hint"
+        android:background="@drawable/eos_bg_shape_white"
         android:layout_width="match_parent"
         android:layout_height="48dp"/>
 
@@ -65,7 +65,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/selector_btn_transfer"
+        android:background="@drawable/eos_selector_btn_transfer"
         android:text="@string/eos_tip_create_wallet"
         android:textColor="@color/white"
         android:textSize="@dimen/font_3.5"/>

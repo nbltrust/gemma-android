@@ -246,7 +246,7 @@
             title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
             title:sLeftTextColor="@color/darkSlateBlue"
             title:sLeftTextSize="@dimen/font_4"
-            title:sDividerLineColor="@color/light_periwinkle_50"
+            title:sDividerLineColor="@color/eos_light_periwinkle_50"
             title:sLeftTextString="@string/eos_title_delegate_undelegate"
             title:sRightTextString="@string/eos_get_cpu_net"
             title:sRightTextColor="@color/cloudyBlue"
@@ -272,7 +272,7 @@
             title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
             title:sLeftTextColor="@color/darkSlateBlue"
             title:sLeftTextSize="@dimen/font_4"
-            title:sDividerLineColor="@color/light_periwinkle_50"
+            title:sDividerLineColor="@color/eos_light_periwinkle_50"
             title:sLeftTextString="@string/eos_buy_sell_ram"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             title:sShapeSelectorPressedColor="@color/item_pressed"/>

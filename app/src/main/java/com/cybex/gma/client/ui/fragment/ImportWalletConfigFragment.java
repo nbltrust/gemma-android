@@ -466,7 +466,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
      * Button可点击样式
      */
     public void setButtonClickableStyle() {
-        btnCompleteImport.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+        btnCompleteImport.setBackground(getResources().getDrawable(R.drawable.eos_shape_corner_button));
 
     }
 
@@ -490,7 +490,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         } else {
             ivRepeatPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg));
     }
 
     public void setRepeatPassFocusStyle() {
@@ -502,7 +502,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         } else {
             ivRepeatPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg));
     }
 
     /**
@@ -517,7 +517,7 @@ public class ImportWalletConfigFragment extends XFragment<ImportWalletConfigPres
         } else {
             ivRepeatPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg_scalet));
     }
 
     public void setDividerFocusStyle(View divider) {

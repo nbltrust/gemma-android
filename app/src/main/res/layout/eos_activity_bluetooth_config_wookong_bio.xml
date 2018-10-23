@@ -214,7 +214,7 @@
                 android:layout_marginEnd="@dimen/button_margin"
                 android:layout_marginStart="@dimen/button_margin"
                 android:layout_marginTop="@dimen/button_margin"
-                android:background="@drawable/shape_corner_button"
+                android:background="@drawable/eos_shape_corner_button"
                 android:text="@string/eos_btn_create_new_wallet"
                 android:textColor="@color/whiteTwo"/>
 

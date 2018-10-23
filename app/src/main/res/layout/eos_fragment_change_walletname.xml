@@ -48,10 +48,10 @@
                 android:layout_height="match_parent"
                 android:paddingStart="@dimen/dimen_10"
                 android:textSize="@dimen/font_3.5"
-                android:textCursorDrawable="@drawable/cursor_custom"
+                android:textCursorDrawable="@drawable/eos_cursor_custom"
                 android:background="@null"
                 android:textColor="@color/darkSlateBlue"
-                android:textColorHint="@color/color_et_hint"/>
+                android:textColorHint="@color/eos_color_et_hint"/>
 
             <ImageView
                 android:id="@+id/clear_wallet_name"

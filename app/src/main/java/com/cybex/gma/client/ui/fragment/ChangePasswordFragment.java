@@ -85,7 +85,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
     @OnTextChanged(value = R.id.edt_set_new_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onPasswordChanged() {
         if (isAllFilled() && isPasswordMatch()) {
-            btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+            btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.eos_shape_corner_button));
         } else {
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
         }
@@ -107,7 +107,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         }
 
         if (isAllFilled() && isPasswordMatch()) {
-            btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+            btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.eos_shape_corner_button));
         } else {
             btnConfirmChangePass.setBackground(getResources().getDrawable(R.drawable.shape_corner_button_unclickable));
         }
@@ -368,7 +368,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         }else {
             ivRepeatNewPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg));
     }
 
     public void setRepeatPassFocusStyle() {
@@ -380,7 +380,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         }else {
             ivRepeatNewPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg));
     }
 
     public void setRepeatPassInvalidStyle() {
@@ -392,7 +392,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         }else {
             ivRepeatNewPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+        //edtRepeatNewPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg_scalet));
     }
 
     public void setEditTextHintStyle(EditText editText, int resId) {

@@ -487,7 +487,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         } else {
             ivRepeatPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg));
     }
 
     public void setRepeatPassFocusStyle() {
@@ -499,7 +499,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         } else {
             ivRepeatPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg));
     }
 
     public void setRepeatPassInvalidStyle() {
@@ -512,7 +512,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         } else {
             ivRepeatPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg_scalet));
     }
 
     public void setClickable(Button button) {

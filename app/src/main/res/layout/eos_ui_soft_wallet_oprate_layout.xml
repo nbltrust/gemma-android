@@ -23,7 +23,7 @@
             title:layout_constraintTop_toTopOf="parent"
             title:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/iv_eos_asset_logo"
-            android:src="@drawable/ic_asset"
+            android:src="@drawable/eos_ic_asset"
             android:layout_width="24dp"
             android:layout_height="24dp"/>
 

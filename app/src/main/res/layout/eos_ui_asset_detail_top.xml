@@ -13,7 +13,7 @@
         android:id="@+id/iv_logo_eos_asset"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/ic_asset"
+        android:src="@drawable/eos_ic_asset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 

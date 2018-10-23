@@ -41,7 +41,7 @@
         android:inputType="numberDecimal"
         android:paddingStart="0dp"
         android:textColorHint="@color/cloudyBlue"
-        android:textCursorDrawable="@drawable/cursor_custom"
+        android:textCursorDrawable="@drawable/eos_cursor_custom"
         android:textSize="@dimen/font_4"/>
 
     <View
@@ -85,7 +85,7 @@
         android:inputType="numberDecimal"
         android:hint="@string/eos_amount_undelegate"
         android:textColorHint="@color/cloudyBlue"
-        android:textCursorDrawable="@drawable/cursor_custom"
+        android:textCursorDrawable="@drawable/eos_cursor_custom"
         android:textSize="@dimen/font_4"/>
 
     <View

@@ -33,7 +33,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/shape_corner_button"
+        android:background="@drawable/eos_shape_corner_button"
         android:text="@string/eos_get_inv_from_friend"
         android:textColor="@color/white"
         android:textSize="@dimen/font_3.5"/>
@@ -46,7 +46,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/shape_corner_button"
+        android:background="@drawable/eos_shape_corner_button"
         android:text="@string/eos_use_cybex"
         android:textColor="@color/white"
         android:textSize="@dimen/font_3.5"/>
@@ -58,7 +58,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/shape_corner_button"
+        android:background="@drawable/eos_shape_corner_button"
         android:text="@string/eos_use_invCode"
         android:textColor="@color/white"
         android:textSize="@dimen/font_3.5"/>

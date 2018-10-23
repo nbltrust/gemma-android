@@ -1,0 +1,20 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/eos_bezier_svg">
+
+    <target
+        android:name="line_101"
+        android:animation="@animator/eos_anim_trim_path_end" />
+    <target
+        android:name="line_102"
+        android:animation="@animator/eos_anim_trim_path_end" />
+    <target
+        android:name="line_103"
+        android:animation="@animator/eos_anim_trim_path_end" />
+
+    <target
+        android:name="stage11"
+        android:animation="@animator/eos_anim_default_gone" />
+    <target
+        android:name="stage12"
+        android:animation="@animator/eos_anim_default_gone" />
+</animated-vector>

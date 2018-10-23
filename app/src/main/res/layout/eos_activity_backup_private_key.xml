@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/di_notify_bg"/>
+        android:background="@drawable/eos_di_notify_bg"/>
 
     <include layout="@layout/eos_ui_layout_view_pager"/>
 </LinearLayout>

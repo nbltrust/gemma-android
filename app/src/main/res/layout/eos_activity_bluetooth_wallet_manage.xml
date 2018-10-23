@@ -29,7 +29,7 @@
                 android:layout_marginEnd="@dimen/standard_margin_in_walletDetailPage"
                 android:layout_marginStart="@dimen/standard_margin_in_walletDetailPage"
                 android:layout_marginTop="@dimen/standard_margin_in_walletDetailPage"
-                android:background="@drawable/selector_bg_view_pressed"
+                android:background="@drawable/eos_selector_bg_view_pressed"
                 title:layout_constraintEnd_toEndOf="parent"
                 title:layout_constraintStart_toStartOf="parent"
                 title:layout_constraintTop_toBottomOf="@+id/btn_navibar"

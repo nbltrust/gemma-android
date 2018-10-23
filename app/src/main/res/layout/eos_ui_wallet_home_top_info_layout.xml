@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="18dp"
         android:layout_marginStart="18dp"
-        android:background="@drawable/shape_corner_token_card"
+        android:background="@drawable/eos_shape_corner_token_card"
         android:orientation="vertical"
         android:translationZ="10dp">
 
@@ -41,7 +41,7 @@
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/ic_asset"/>
+                        android:src="@drawable/eos_ic_asset"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -115,7 +115,7 @@
             <ImageView
                 android:padding="0dp"
                 android:layout_gravity="end"
-                android:src="@drawable/bg_eos_card"
+                android:src="@drawable/eos_bg_eos_card"
                 android:layout_width="126dp"
                 android:layout_height="match_parent"/>
 

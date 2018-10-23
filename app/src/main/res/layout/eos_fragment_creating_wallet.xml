@@ -39,10 +39,11 @@
             android:layout_margin="@dimen/dimen_20"
             title:sCenterTextString="@string/eos_please_confirm"
             title:sCenterTextColor="@color/whiteTwo"
+            title:sCenterTextSize="@dimen/font_3"
             title:sLeftIconShowCircle="true"
             title:sDividerLineType="none"
             title:sLeftIconRes="@color/whiteTwo"
-            title:sBackgroundDrawableRes="@drawable/bg_red_with_dot"
+            title:sBackgroundDrawableRes="@drawable/eos_bg_red_with_dot"
             >
 
         </com.allen.library.SuperTextView>
@@ -80,7 +81,7 @@
 
                 <Button
                     android:id="@+id/bt_export_priKey"
-                    android:background="@drawable/shape_corner_button"
+                    android:background="@drawable/eos_shape_corner_button"
                     android:layout_width="100dp"
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"

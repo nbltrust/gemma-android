@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/eos_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/eos_colorPrimaryDark</item>
+        <item name="colorAccent">@color/eos_colorAccent</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
@@ -109,7 +109,7 @@
         <!--<item name="android:textAlignment">center</item>-->
         <!--<item name="android:layout_gravity">center</item>-->
         <!--<item name="android:gravity">center</item>-->
-        <!--<item name="android:background">@drawable/shape_corner_button</item>-->
+        <!--<item name="android:background">@drawable/eos_shape_corner_button</item>-->
     <!--</style>-->
 
     <!--&lt;!&ndash; 约束布局中长按钮的样式 &ndash;&gt;-->
@@ -163,7 +163,7 @@
         <item name="android:textColorHint">@color/cloudyBlue</item>
         <item name="android:theme">@style/myEditText</item>
         <item name="android:background">@null</item>
-        <item name="android:textCursorDrawable">@drawable/cursor_custom</item>
+        <item name="android:textCursorDrawable">@drawable/eos_cursor_custom</item>
         <item name="android:layout_marginEnd">@dimen/dimen_12</item>
         <item name="android:layout_marginStart">@dimen/dimen_12</item>
         <item name="android:textStyle">normal</item>
@@ -177,8 +177,8 @@
         <item name="android:textSize">@dimen/font_4</item>
         <item name="android:textColorHint">@color/cloudyBlue</item>
         <item name="android:theme">@style/myEditText</item>
-        <item name="android:background">@drawable/selector_edt_bg</item>
-        <item name="android:textCursorDrawable">@drawable/cursor_custom</item>
+        <item name="android:background">@drawable/eos_selector_edt_bg</item>
+        <item name="android:textCursorDrawable">@drawable/eos_cursor_custom</item>
         <item name="android:layout_marginEnd">@dimen/dimen_12</item>
         <item name="android:layout_marginStart">@dimen/dimen_12</item>
         <item name="android:textStyle">bold</item>
@@ -198,7 +198,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/cpu_show_area_height</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:background">@drawable/shape_corner_token_card</item>
+        <item name="android:background">@drawable/eos_shape_corner_token_card</item>
     </style>
 
     <style name="cpu_net_ram">

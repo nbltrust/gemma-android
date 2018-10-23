@@ -225,7 +225,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/di_notify_bg"/>
+                android:src="@drawable/eos_di_notify_bg"/>
 
             <include
                 android:id="@+id/layout_tab_delegate"

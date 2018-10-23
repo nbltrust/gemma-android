@@ -39,7 +39,7 @@
             android:textColor="@color/darkSlateBlue"
             android:textColorHint="@color/blueyGrey"
             app:met_hideUnderline="true"
-            android:textCursorDrawable="@drawable/cursor_custom"
+            android:textCursorDrawable="@drawable/eos_cursor_custom"
             />
 
     </LinearLayout>

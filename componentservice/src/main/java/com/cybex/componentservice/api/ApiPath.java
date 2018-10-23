@@ -26,7 +26,7 @@ public class ApiPath {
      */
 
     //中心化服务器host
-    public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3001";
+    public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3005";
     //"http://139.196.73.117:3002"微信支付沙盒测试环境
     //"http://139.196.73.117:3001"真实环境
     //"http://139.196.73.117:3005"灰度staging环境

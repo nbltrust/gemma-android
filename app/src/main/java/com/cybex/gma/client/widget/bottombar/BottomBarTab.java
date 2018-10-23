@@ -63,7 +63,7 @@ public class BottomBarTab extends FrameLayout {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
         mIcon.setImageResource(icon);
         mIcon.setLayoutParams(params);
-        mIcon.setColorFilter(ContextCompat.getColor(context, R.color.tab_unselect));
+        mIcon.setColorFilter(ContextCompat.getColor(context, R.color.eos_tab_unselect));
         lLContainer.addView(mIcon);
 
         mTvTitle = new TextView(context);
@@ -75,7 +75,7 @@ public class BottomBarTab extends FrameLayout {
         paramsTv.bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2,
                 getResources().getDisplayMetrics());
         mTvTitle.setTextSize(12);
-        mTvTitle.setTextColor(ContextCompat.getColor(context, R.color.tab_unselect));
+        mTvTitle.setTextColor(ContextCompat.getColor(context, R.color.eos_tab_unselect));
         mTvTitle.setLayoutParams(paramsTv);
         lLContainer.addView(mTvTitle);
 
@@ -84,7 +84,7 @@ public class BottomBarTab extends FrameLayout {
         int min = dip2px(context, 20);
         int padding = dip2px(context, 3);
         mTvUnreadCount = new TextView(context);
-        mTvUnreadCount.setBackgroundResource(R.drawable.bg_msg_bubble);
+        mTvUnreadCount.setBackgroundResource(R.drawable.eos_bg_msg_bubble);
         mTvUnreadCount.setMinWidth(min);
         mTvUnreadCount.setTextColor(Color.WHITE);
         mTvUnreadCount.setPadding(padding, 0, padding, 0);
@@ -104,11 +104,11 @@ public class BottomBarTab extends FrameLayout {
     public void setSelected(boolean selected) {
         super.setSelected(selected);
         if (selected) {
-            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.tab_normal));
-            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.tab_normal));
+            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.eos_tab_normal));
+            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.eos_tab_normal));
         } else {
-            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.tab_unselect));
-            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.tab_unselect));
+            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.eos_tab_unselect));
+            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.eos_tab_unselect));
         }
     }
 

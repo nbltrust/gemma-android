@@ -32,7 +32,7 @@ public class WalletManageListAdapter extends BaseQuickAdapter<WalletVO, BaseView
             //默认被选中的选项卡
             helper.setText(R.id.tv_item_walletName, item.getWalletName());
             helper.setTextColor(R.id.tv_item_walletName, 0xffffffff);
-            helper.setBackgroundRes(R.id.layout_item_wallet, R.drawable.shape_corner_button);
+            helper.setBackgroundRes(R.id.layout_item_wallet, R.drawable.eos_shape_corner_button);
             //设置背景色为cornflowerBlue
         } else {
             helper.setText(R.id.tv_item_walletName, item.getWalletName());

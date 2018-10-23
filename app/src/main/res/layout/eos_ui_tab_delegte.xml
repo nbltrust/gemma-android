@@ -40,7 +40,7 @@
         android:textColorHint="@color/cloudyBlue"
         style="@style/editText_config_wallet"
         android:paddingStart="0dp"
-        android:textCursorDrawable="@drawable/cursor_custom"/>
+        android:textCursorDrawable="@drawable/eos_cursor_custom"/>
 
     <View
         android:layout_marginStart="10dp"
@@ -82,7 +82,7 @@
         android:hint="@string/eos_amount_delegate"
         android:textColorHint="@color/cloudyBlue"
         style="@style/editText_config_wallet"
-        android:textCursorDrawable="@drawable/cursor_custom"
+        android:textCursorDrawable="@drawable/eos_cursor_custom"
         android:background="@null"/>
 
     <View

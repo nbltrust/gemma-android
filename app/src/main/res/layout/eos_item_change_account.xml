@@ -13,7 +13,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_shape_radius_blue_selector"
+        android:background="@drawable/eos_bg_shape_radius_blue_selector"
         android:checked="false"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"

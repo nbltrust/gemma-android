@@ -316,7 +316,7 @@ public class DelegateFragment extends XFragment {
 
     public void setClickable(Button button){
         button.setClickable(true);
-        button.setBackground(getResources().getDrawable(R.drawable.shape_corner_button));
+        button.setBackground(getResources().getDrawable(R.drawable.eos_shape_corner_button));
     }
 
     public void setUnclickable(Button button){

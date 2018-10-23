@@ -326,7 +326,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         } else {
             ivRepeatPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg));
     }
 
     public void setRepeatPassFocusStyle() {
@@ -338,7 +338,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         } else {
             ivRepeatPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg));
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg));
     }
 
     public void setRepeatPassInvalidStyle() {
@@ -351,7 +351,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         } else {
             ivRepeatPassClear.setVisibility(View.GONE);
         }
-        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.selector_edt_bg_scalet));
+        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg_scalet));
     }
 
     public void setClickable(Button button) {

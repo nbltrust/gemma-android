@@ -42,7 +42,7 @@ public class VerifyPriKeyActivity extends XActivity {
     public void onInputChanged(Editable s){
         if (EmptyUtils.isNotEmpty(s.toString())){
             btVerifyInput.setClickable(true);
-            btVerifyInput.setBackground(getDrawable(R.drawable.shape_corner_button));
+            btVerifyInput.setBackground(getDrawable(R.drawable.eos_shape_corner_button));
         }else {
             btVerifyInput.setClickable(false);
             btVerifyInput.setBackground(getDrawable(R.drawable.shape_corner_button_unclickable));
