@@ -449,7 +449,7 @@
     <integer name="int_80">80</integer>
 
     <!-- 公用 -->
-    <dimen name="bt_radius">75dp</dimen>
+    <dimen name="eos_bt_radius">75dp</dimen>
     <dimen name="card_height">44dp</dimen>
     <dimen name="bt_common_height">44dp</dimen>
 

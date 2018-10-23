@@ -2,7 +2,7 @@
     <string name="eos_app_name">base-res</string>
 
     <!-- Me/General/About -->
-    <string name="title_me">我的</string>
+    <string name="eos_title_me">我的</string>
     <string name="general">通用</string>
     <string name="security">安全设置</string>
     <string name="help">帮助与反馈</string>
@@ -47,9 +47,9 @@
     <string name="create_gesture_reset">重新设置</string>
 
     <!-- Barcode scan activity -->
-    <string name="barcode_scan_hint">将条码放入框内，即可自动扫描</string>
-    <string name="qr_scan_hint">请将二维码放入框内，即可自动扫描</string>
-    <string name="scan_qr_code">扫描二维码</string>
+    <string name="eos_barcode_scan_hint">将条码放入框内，即可自动扫描</string>
+    <string name="eos_qr_scan_hint">请将二维码放入框内，即可自动扫描</string>
+    <string name="eos_scan_qr_code">扫描二维码</string>
 
     <!-- Permission Manage-->
     <string name="title_dialog">Tips</string>
@@ -105,7 +105,7 @@
     <string name="operate_deal_failed">操作失败</string>
     <string name="operate_deal_success">操作成功</string>
     <string name="config_wallet_ing">正在配置钱包...</string>
-    <string name="press_again_exit">再按一次退出</string>
+    <string name="eos_press_again_exit">再按一次退出</string>
     <string name="next_step">下一步</string>
     <string name="manage">管理</string>
 

@@ -59,7 +59,7 @@
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_importWallet"
-                style="@style/card_style"
+                style="@style/eos_card_style"
                 android:layout_marginEnd="@dimen/dimen_20"
                 android:layout_marginStart="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_10"
@@ -79,7 +79,7 @@
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_createWallet"
-                style="@style/card_style"
+                style="@style/eos_card_style"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="@dimen/dimen_10"
@@ -99,7 +99,7 @@
 
             <com.allen.library.SuperTextView
                 android:id="@+id/tv_match_bluetooth"
-                style="@style/card_style"
+                style="@style/eos_card_style"
                 android:visibility="visible"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"

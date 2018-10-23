@@ -450,6 +450,8 @@
     <string name="eos_tip_bluetooth_transfer">若未找到，请检查手机蓝牙和设备电源。</string>
     <string name="eos_connecting_bio">正在连接WOOKONG Bio</string>
 
+    <string name="eos_tip_manage_resource_wookong">WOOKONG Bio 暂不支持资源抵押或买卖RAM，若要进行此类操作请使用其他账户为该账户抵押资源或买卖RAM。</string>
+
     <!--蓝牙钱包配置end -->
 
     <!-- 助记词相关-->

@@ -33,7 +33,7 @@
         android:layout_marginEnd="@dimen/dimen_30"
         android:padding="@dimen/dimen_16">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
+        <EditText
             android:id="@+id/edt_input_priKey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             android:textSize="@dimen/font_3.5"
             android:textColor="@color/darkSlateBlue"
             android:textColorHint="@color/blueyGrey"
-            app:met_hideUnderline="true"
+            android:background="@null"
             android:textCursorDrawable="@drawable/eos_cursor_custom"
             />
 

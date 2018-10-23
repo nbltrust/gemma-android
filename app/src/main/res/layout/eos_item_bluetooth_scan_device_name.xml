@@ -25,7 +25,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
             android:paddingRight="10dp"
-            android:textColor="@color/account_change_color_selector"
+            android:textColor="@color/eos_account_change_color_selector"
             android:textSize="13sp"
             tools:text="WOOKONG-XXXXXXX"/>
 

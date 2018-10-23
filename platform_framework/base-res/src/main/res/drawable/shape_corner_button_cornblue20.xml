@@ -3,10 +3,10 @@
     <solid android:color="@color/cornflowerBlue20">
     </solid>
     <corners
-        android:topLeftRadius="@dimen/bt_radius"
-        android:topRightRadius="@dimen/bt_radius"
-        android:bottomLeftRadius="@dimen/bt_radius"
-        android:bottomRightRadius="@dimen/bt_radius"
+        android:topLeftRadius="@dimen/eos_bt_radius"
+        android:topRightRadius="@dimen/eos_bt_radius"
+        android:bottomLeftRadius="@dimen/eos_bt_radius"
+        android:bottomRightRadius="@dimen/eos_bt_radius"
         >
     </corners>
 </shape>

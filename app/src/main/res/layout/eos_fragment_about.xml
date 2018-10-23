@@ -38,7 +38,7 @@
 
         <com.allen.library.SuperTextView
             android:id="@+id/superTextView_version_info"
-            style="@style/card_style"
+            style="@style/eos_card_style"
             title:sLeftTextString="@string/version_info"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             title:sUseShape="true">
@@ -55,7 +55,7 @@
 
         <com.allen.library.SuperTextView
             android:id="@+id/superTextView_update"
-            style="@style/card_style"
+            style="@style/eos_card_style"
             title:sLeftTextString="@string/version_update"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             title:sUseShape="true">

@@ -56,7 +56,7 @@
         <TextView
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/scan_qr_code"
+            android:text="@string/eos_scan_qr_code"
             android:gravity="center"
             android:textSize="18sp"
             android:textColor="#ffffff"

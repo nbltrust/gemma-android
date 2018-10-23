@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".runalone.ui.EosMainActivity"
-    tools:showIn="@layout/activity_eos_main">
+    tools:showIn="@layout/eos_activity_eos_main">
 
 </android.support.constraint.ConstraintLayout>

@@ -10,19 +10,19 @@
         android:layout_margin="32dp"
         >
         <TextView
-            style="@style/text_title"
+            style="@style/eos_text_title"
             android:text="@string/eos_look_around"/>
 
         <TextView
-            style="@style/text_body"
+            style="@style/eos_text_body"
             android:text="@string/eos_tip_look_around_hint"/>
 
         <TextView
-            style="@style/text_title"
+            style="@style/eos_text_title"
             android:text="@string/eos_tip_no_screenshot"/>
 
         <TextView
-            style="@style/text_body"
+            style="@style/eos_text_body"
             android:text="@string/eos_tip_no_screenshot_part2"/>
 
         <ImageView

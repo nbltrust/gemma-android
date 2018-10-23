@@ -129,14 +129,14 @@
     <!--</style>-->
 
     <!-- 备份私钥页面 -->
-    <style name="text_title">
+    <style name="eos_text_title">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">30dp</item>
         <item name="android:textSize">@dimen/font_3.5</item>
         <item name="android:textColor">@color/darkSlateBlue</item>
     </style>
 
-    <style name="text_body">
+    <style name="eos_text_body">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:textSize">@dimen/font_3</item>
@@ -144,7 +144,7 @@
     </style>
 
     <!-- 配置钱包页面 -->
-    <style name="text_title_config_wallet">
+    <style name="eos_text_title_config_wallet">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_20</item>
         <item name="android:layout_marginStart">@dimen/dimen_12</item>
@@ -155,7 +155,7 @@
         <item name="android:layout_marginTop">@dimen/dimen_6</item>
     </style>
 
-    <style name="editText_config_wallet">
+    <style name="eos_editText_config_wallet">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_50</item>
         <item name="android:textColor">@color/darkSlateBlue</item>
@@ -170,46 +170,26 @@
 
     </style>
 
-    <style name="editText_config_wallet_bold">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dimen_50</item>
-        <item name="android:textColor">@color/darkSlateBlue</item>
-        <item name="android:textSize">@dimen/font_4</item>
-        <item name="android:textColorHint">@color/cloudyBlue</item>
-        <item name="android:theme">@style/myEditText</item>
-        <item name="android:background">@drawable/eos_selector_edt_bg</item>
-        <item name="android:textCursorDrawable">@drawable/eos_cursor_custom</item>
-        <item name="android:layout_marginEnd">@dimen/dimen_12</item>
-        <item name="android:layout_marginStart">@dimen/dimen_12</item>
-        <item name="android:textStyle">bold</item>
-
-    </style>
-
     <!-- 钱包主页面 -->
-    <style name="bottom_card">
-        <item name="android:layout_marginStart">@dimen/bot_card_margin</item>
-        <item name="android:layout_marginEnd">@dimen/bot_card_margin</item>
-        <item name="android:layout_height">@dimen/bot_card_height</item>
-    </style>
 
-    <style name="show_cpu_status_area">
+    <style name="eos_show_cpu_status_area">
         <item name="android:layout_marginStart">0dp</item>
         <item name="android:layout_marginEnd">0dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/cpu_show_area_height</item>
+        <item name="android:layout_height">@dimen/eos_cpu_show_area_height</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:background">@drawable/eos_shape_corner_token_card</item>
     </style>
 
-    <style name="cpu_net_ram">
-        <item name="android:layout_width">@dimen/single_cpu_width</item>
-        <item name="android:layout_height">@dimen/single_cpu_height</item>
-        <item name="android:layout_marginBottom">@dimen/single_cpu_margin</item>
-        <item name="android:layout_marginStart">@dimen/single_cpu_margin</item>
-        <item name="android:layout_marginTop">@dimen/single_cpu_margin</item>
+    <style name="eos_cpu_net_ram">
+        <item name="android:layout_width">@dimen/eos_single_cpu_width</item>
+        <item name="android:layout_height">@dimen/eos_single_cpu_height</item>
+        <item name="android:layout_marginBottom">@dimen/eos_single_cpu_margin</item>
+        <item name="android:layout_marginStart">@dimen/eos_single_cpu_margin</item>
+        <item name="android:layout_marginTop">@dimen/eos_single_cpu_margin</item>
     </style>
 
-    <style name="textView_cpu_net_ram">
+    <style name="eos_textView_cpu_net_ram">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAlignment">viewStart</item>
@@ -220,7 +200,7 @@
         <item name="android:textSize">@dimen/font_3</item>
     </style>
 
-    <style name="progressBar_cpu_net_ram">
+    <style name="eos_progressBar_cpu_net_ram">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_3</item>
         <item name="android:layout_marginTop">@dimen/dimen_10</item>
@@ -229,111 +209,9 @@
     </style>
 
     <!-- 管理钱包页面 -->
-    <style name="card_style">
+    <style name="eos_card_style">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/card_height</item>
+        <item name="android:layout_height">@dimen/eos_card_height</item>
     </style>
-
-
-    <!--创建钱包页面 -->
-
-
-    <!-- 输入区域整体样式 -->
-    <style name="layout_input_area">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/input_layout_height</item>
-        <item name="android:layout_marginStart">@dimen/input_layout_margin</item>
-        <item name="android:layout_marginEnd">@dimen/input_layout_margin</item>
-        <item name="android:layout_marginTop">@dimen/input_layout_margin</item>
-    </style>
-    <!-- 单一输入区域样式 -->
-    <style name="layout_single_input_area">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/single_input_height</item>
-        <item name="android:layout_marginStart">@dimen/single_input_margin</item>
-        <item name="android:layout_marginEnd">@dimen/single_input_margin</item>
-    </style>
-
-
-    <style name="editText_general">
-        <item name="android:layout_width">@dimen/x265</item>
-        <item name="android:layout_height">@dimen/x36</item>
-        <item name="android:layout_marginTop">@dimen/x6</item>
-        <item name="android:textSize">@dimen/x12</item>
-        <item name="android:textColor">@color/darkSlateBlue</item>
-        <item name="android:theme">@style/editText_sub</item>
-    </style>
-
-    <style name="editText_sub">
-        <item name="android:colorControlNormal">@color/paleGreyTwo</item>
-        <item name="android:colorControlActivated">@color/darkSlateBlue</item>
-    </style>
-
-    <style name="textView_general">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/textView_height</item>
-        <item name="android:layout_marginTop">@dimen/textView_marginTop</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/steel</item>
-    </style>
-
-    <!-- Create Wallet Success页面样式-->
-    <!-- 消息显示区域 -->
-    <style name="show_area">
-        <item name="android:layout_marginStart">@dimen/x14</item>
-        <item name="android:layout_marginEnd">@dimen/x14</item>
-        <item name="android:layout_marginTop">@dimen/x41</item>
-        <item name="android:layout_height">@dimen/x159</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:background">@drawable/shape_corner</item>
-    </style>
-
-    <!-- 文本显示区域 -->
-
-    <style name="textView_in_create_success">
-        <item name="android:layout_marginStart">@dimen/x14</item>
-        <item name="android:layout_marginEnd">@dimen/x14</item>
-        <item name="android:layout_marginTop">@dimen/x23</item>
-        <item name="android:layout_height">@dimen/x70</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:textSize">@dimen/x14</item>
-
-    </style>
-
-    <!-- 按钮 -->
-    <style name="button_in_create_success">
-        <item name="android:layout_width">@dimen/x126</item>
-        <item name="android:layout_height">@dimen/x36</item>
-        <item name="android:layout_marginTop">@dimen/x32</item>
-        <item name="android:textSize">@dimen/x14</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:layout_marginStart">@dimen/x14</item>
-        <item name="android:layout_marginBottom">@dimen/x17</item>
-    </style>
-
-    <!-- BackUp Warning 页面样式-->
-
-    <!-- 按钮 -->
-    <style name="button_in_backUpWarning">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/x44</item>
-        <item name="android:textSize">@dimen/x14</item>
-        <item name="android:textColor">@color/whiteTwo</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:background">@color/cornflowerBlueTwo</item>
-    </style>
-
-    <style name="layout_show_mne">
-        <item name="android:orientation">horizontal</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/x160</item>
-        <item name="android:layout_marginStart">@dimen/x16</item>
-        <item name="android:layout_marginEnd">@dimen/x16</item>
-        <item name="android:layout_marginTop">@dimen/x14</item>
-    </style>
-
-
-
-
 
 </resources>

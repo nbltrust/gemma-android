@@ -158,21 +158,21 @@
 
         <LinearLayout
             android:id="@+id/show_cpu"
-            style="@style/show_cpu_status_area">
+            style="@style/eos_show_cpu_status_area">
 
             <LinearLayout
                 android:id="@+id/view_cpu"
-                style="@style/cpu_net_ram"
+                style="@style/eos_cpu_net_ram"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/textView_cpu_net_ram"
+                    style="@style/eos_textView_cpu_net_ram"
                     android:text="@string/eos_CPU"/>
 
                 <com.cybex.base.view.progress.RoundCornerProgressBar
                     android:id="@+id/progressbar_cpu_small"
-                    style="@style/progressBar_cpu_net_ram"
+                    style="@style/eos_progressBar_cpu_net_ram"
                     title:rcBackgroundColor="@color/cloudyBlue"
                     title:rcBackgroundPadding="0dp"
                     title:rcMax="100"
@@ -196,17 +196,17 @@
 
             <LinearLayout
                 android:id="@+id/view_net"
-                style="@style/cpu_net_ram"
+                style="@style/eos_cpu_net_ram"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/textView_cpu_net_ram"
+                    style="@style/eos_textView_cpu_net_ram"
                     android:text="@string/eos_NET"/>
 
                 <com.cybex.base.view.progress.RoundCornerProgressBar
                     android:id="@+id/progressbar_net_small"
-                    style="@style/progressBar_cpu_net_ram"
+                    style="@style/eos_progressBar_cpu_net_ram"
                     title:rcBackgroundColor="@color/cloudyBlue"
                     title:rcBackgroundPadding="0dp"
                     title:rcMax="100"
@@ -230,17 +230,17 @@
 
             <LinearLayout
                 android:id="@+id/view_ram"
-                style="@style/cpu_net_ram"
+                style="@style/eos_cpu_net_ram"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/textView_cpu_net_ram"
+                    style="@style/eos_textView_cpu_net_ram"
                     android:text="@string/eos_RAM"/>
 
                 <com.cybex.base.view.progress.RoundCornerProgressBar
                     android:id="@+id/progressbar_ram_small"
-                    style="@style/progressBar_cpu_net_ram"
+                    style="@style/eos_progressBar_cpu_net_ram"
                     title:rcBackgroundColor="@color/cloudyBlue"
                     title:rcBackgroundPadding="0dp"
                     title:rcMax="100"

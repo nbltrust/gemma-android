@@ -18,7 +18,7 @@
 
        <TextView
            android:elevation="@dimen/dimen_2"
-           style="@style/card_style"
+           style="@style/eos_card_style"
            android:id="@+id/tv_item_walletName"
            android:paddingStart="@dimen/dimen_10"
            android:paddingEnd="@dimen/dimen_10"

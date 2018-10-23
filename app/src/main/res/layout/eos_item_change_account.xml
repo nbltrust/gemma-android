@@ -17,7 +17,7 @@
         android:checked="false"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
-        android:textColor="@color/account_change_color_selector"
+        android:textColor="@color/eos_account_change_color_selector"
         android:textSize="16sp"
         tools:text="gemma001"/>
 

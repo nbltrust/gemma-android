@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.cybex.gma.client.R;
@@ -34,7 +35,7 @@ import butterknife.OnTextChanged;
 public class VerifyPriKeyActivity extends XActivity {
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.edt_input_priKey) MaterialEditText edtInputPriKey;
+    @BindView(R.id.edt_input_priKey) EditText edtInputPriKey;
     @BindView(R.id.bt_verify_input) Button btVerifyInput;
     private String private_key;
 

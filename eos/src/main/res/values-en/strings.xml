@@ -149,7 +149,7 @@
     <string name="eos_available_balance">Balance</string>
     <string name="eos_tip_redeem_ing">Refunding</string>
     <string name="eos_transfer_records">Transactions</string>
-    <string name="resource">Manage Resources</string>
+    <string name="eos_resource">Manage Resources</string>
     <string name="eos_get_cpu_net">Manage CPU / NET</string>
     <string name="eos_CPU">CPU</string>
     <string name="eos_NET">NET</string>
@@ -159,7 +159,7 @@
     <string name="eos_title_wallet">Wallet</string>
 
     <!-- create methods -->
-    <string name="title_invite_friend">Request from a friend</string>
+    <string name="eos_title_invite_friend">Request from a friend</string>
     <!--
     <string name="method_one">Recommend</string>
     <string name="method_two">Alternatively</string>
@@ -228,9 +228,9 @@
     <string name="eos_input_password">Enter @\'s password</string>
 
     <!-- Barcode scan activity -->
-    <string name="barcode_scan_hint">Align Bar Code within frame to scan</string>
-    <string name="qr_scan_hint">Align QR Code within frame to scan</string>
-    <string name="scan_qr_code">Scan</string>
+    <string name="eos_barcode_scan_hint">Align Bar Code within frame to scan</string>
+    <string name="eos_qr_scan_hint">Align QR Code within frame to scan</string>
+    <string name="eos_scan_qr_code">Scan</string>
 
     <!-- Change Node Setting -->
     <string name="eos_node_cybex">http://52.77.177.200:8888(eoscybex)</string>
@@ -305,10 +305,10 @@
     <string name="eos_tip_lock_pattern_3">Draw original pattern</string>
     <string name="eos_change_pattern">Change Pattern</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="eos_hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="title_me">Me</string>
-    <string name="press_again_exit">Back again to exit</string>
+    <string name="eos_title_me">Me</string>
+    <string name="eos_press_again_exit">Back again to exit</string>
 
     <string name="eos_creating">Pending...</string>
     <string name="eos_please_confirm">The account is still in the air until 100% confirmed.</string>
@@ -442,6 +442,8 @@
     <string name="eos_create_fail">Create fail, the account name has been taken by another user</string>
     <string name="eos_tip_cant_input_zero">CPU and NET can not all be zero</string>
     <string name="eos_unknow_err">Unknown Error</string>
+
+    <string name="eos_tip_manage_resource_wookong">WOOKONG Bio 暂不支持资源抵押或买卖RAM，若要进行此类操作请使用其他账户为该账户抵押资源或买卖RAM。</string>
 
 
 

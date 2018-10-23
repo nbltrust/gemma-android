@@ -83,7 +83,7 @@
 
             <EditText
                 android:id="@+id/edt_buy_ram"
-                style="@style/editText_config_wallet"
+                style="@style/eos_editText_config_wallet"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50"
                 android:layout_marginStart="@dimen/dimen_12"
@@ -96,7 +96,7 @@
 
             <EditText
                 android:id="@+id/edt_sell_ram"
-                style="@style/editText_config_wallet"
+                style="@style/eos_editText_config_wallet"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50"
                 android:layout_marginStart="@dimen/dimen_12"

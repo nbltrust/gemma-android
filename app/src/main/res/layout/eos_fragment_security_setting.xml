@@ -20,7 +20,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/card_height"
+            android:layout_height="@dimen/eos_card_height"
             android:visibility="gone"
             android:layout_marginStart="@dimen/dimen_20"
             android:layout_marginEnd="@dimen/dimen_20"
@@ -57,7 +57,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/card_height"
+            android:layout_height="@dimen/eos_card_height"
             android:layout_marginStart="@dimen/dimen_20"
             android:layout_marginEnd="@dimen/dimen_20"
             android:layout_marginTop="@dimen/dimen_10"
@@ -104,7 +104,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/card_height"
+            android:layout_height="@dimen/eos_card_height"
             >
 
             <TextView
@@ -146,7 +146,7 @@
             title:sLeftTextSize="@dimen/font_3.5"
             android:visibility="gone"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/card_height"
+            android:layout_height="@dimen/eos_card_height"
             >
 
         </com.allen.library.SuperTextView>

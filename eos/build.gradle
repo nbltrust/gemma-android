@@ -67,6 +67,8 @@ dependencies {
     api project(':componentservice')
     annotationProcessor deps.arouter.compiler
 
+    api deps.gma.MaterialEditText
+
     implementation deps.gma.spinkit
     implementation deps.gma.wechatpay
     implementation deps.gma.SuperTextView

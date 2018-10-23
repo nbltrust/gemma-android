@@ -38,7 +38,7 @@
         android:inputType="numberDecimal"
         android:hint="@string/eos_amount_delegate"
         android:textColorHint="@color/cloudyBlue"
-        style="@style/editText_config_wallet"
+        style="@style/eos_editText_config_wallet"
         android:paddingStart="0dp"
         android:textCursorDrawable="@drawable/eos_cursor_custom"/>
 
@@ -81,7 +81,7 @@
         android:textSize="@dimen/font_4"
         android:hint="@string/eos_amount_delegate"
         android:textColorHint="@color/cloudyBlue"
-        style="@style/editText_config_wallet"
+        style="@style/eos_editText_config_wallet"
         android:textCursorDrawable="@drawable/eos_cursor_custom"
         android:background="@null"/>
 

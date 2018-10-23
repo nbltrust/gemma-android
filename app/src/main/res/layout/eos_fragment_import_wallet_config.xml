@@ -35,7 +35,7 @@
 
                 <TextView
                     android:id="@+id/tv_set_pass"
-                    style="@style/text_title_config_wallet"
+                    style="@style/eos_text_title_config_wallet"
                     android:text="@string/eos_tip_set_password"/>
 
                 <LinearLayout
@@ -45,7 +45,7 @@
 
                     <EditText
                         android:id="@+id/edt_set_pass"
-                        style="@style/editText_config_wallet"
+                        style="@style/eos_editText_config_wallet"
                         android:inputType="textPassword"
                         android:layout_weight="1"
                         android:hint="@string/eos_tip_input_password"/>
@@ -75,7 +75,7 @@
 
                 <TextView
                     android:id="@+id/tv_repeat_pass"
-                    style="@style/text_title_config_wallet"
+                    style="@style/eos_text_title_config_wallet"
                     android:text="@string/eos_tip_repeat_pass"
                     android:layout_marginTop="@dimen/dimen_10"/>
 
@@ -88,7 +88,7 @@
                         android:id="@+id/et_repeat_pass"
                         android:inputType="textPassword"
                         android:layout_weight="1"
-                        style="@style/editText_config_wallet"
+                        style="@style/eos_editText_config_wallet"
                         android:hint="@string/eos_tip_repeat_password"/>
 
                     <LinearLayout
@@ -115,7 +115,7 @@
 
                 <TextView
                     android:id="@+id/tv_pass_hint_f"
-                    style="@style/text_title_config_wallet"
+                    style="@style/eos_text_title_config_wallet"
                     android:text="@string/eos_title_password_hint"
                     android:layout_marginTop="@dimen/dimen_10"/>
 
@@ -126,7 +126,7 @@
 
                     <EditText
                         android:id="@+id/edt_pass_hint"
-                        style="@style/editText_config_wallet"
+                        style="@style/eos_editText_config_wallet"
                         android:hint="@string/eos_tip_input_password_hint"
                         android:layout_weight="1"
                         android:layout_marginStart="@dimen/dimen_14"
@@ -145,13 +145,13 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_marginTop="@dimen/checkBox_marginTop"
-                android:layout_marginStart="@dimen/checkBox_marginStart">
+                android:layout_marginTop="@dimen/eos_checkBox_marginTop"
+                android:layout_marginStart="@dimen/eos_checkBox_marginStart">
 
                 <CheckBox
                     android:id="@+id/checkbox_config"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/checkBox_length"
+                    android:layout_height="@dimen/eos_checkBox_length"
                     android:text="@string/eos_tip_agree"
                     android:theme="@style/myCheckBox"
                     android:textSize="@dimen/font_3"
@@ -171,9 +171,9 @@
                 android:id="@+id/btn_complete_import"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bt_inInitPage_height"
-                android:layout_marginStart="@dimen/button_margin"
-                android:layout_marginEnd="@dimen/button_margin"
-                android:layout_marginTop="@dimen/button_margin"
+                android:layout_marginStart="@dimen/eos_button_margin"
+                android:layout_marginEnd="@dimen/eos_button_margin"
+                android:layout_marginTop="@dimen/eos_button_margin"
                 android:text="@string/eos_btn_complete_input"
                 android:background="@drawable/shape_corner_button_unclickable"
                 android:textColor="@color/whiteTwo"

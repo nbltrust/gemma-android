@@ -101,10 +101,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     title:sLeftTextColor="@color/steel"
-                    title:sLeftTextSize="@dimen/total_assets_text_size"
+                    title:sLeftTextSize="@dimen/eos_total_assets_text_size"
                     title:sLeftTextString="@string/eos_title_receiver"
                     title:sRightTextColor="@color/darkSlateBlue"
-                    title:sRightTextSize="@dimen/total_assets_text_size"
+                    title:sRightTextSize="@dimen/eos_total_assets_text_size"
                     title:sShapeSolidColor="@color/whiteTwo"
                     title:sUseShape="true">
                 </com.allen.library.SuperTextView>
@@ -121,10 +121,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     title:sLeftTextColor="@color/steel"
-                    title:sLeftTextSize="@dimen/total_assets_text_size"
+                    title:sLeftTextSize="@dimen/eos_total_assets_text_size"
                     title:sLeftTextString="@string/eos_title_block_time"
                     title:sRightTextColor="@color/darkSlateBlue"
-                    title:sRightTextSize="@dimen/total_assets_text_size"
+                    title:sRightTextSize="@dimen/eos_total_assets_text_size"
                     title:sShapeSolidColor="@color/whiteTwo"
                     title:sUseShape="true">
 
@@ -142,10 +142,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     title:sLeftTextColor="@color/steel"
-                    title:sLeftTextSize="@dimen/total_assets_text_size"
+                    title:sLeftTextSize="@dimen/eos_total_assets_text_size"
                     title:sLeftTextString="@string/eos_title_transfer_status"
                     title:sRightTextColor="@color/darkSlateBlue"
-                    title:sRightTextSize="@dimen/total_assets_text_size"
+                    title:sRightTextSize="@dimen/eos_total_assets_text_size"
                     title:sShapeSolidColor="@color/whiteTwo"
                     title:sUseShape="true">
 
@@ -252,10 +252,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     title:sLeftTextColor="@color/steel"
-                    title:sLeftTextSize="@dimen/total_assets_text_size"
+                    title:sLeftTextSize="@dimen/eos_total_assets_text_size"
                     title:sLeftTextString="@string/eos_title_block_num"
                     title:sRightTextColor="@color/darkSlateBlue"
-                    title:sRightTextSize="@dimen/total_assets_text_size"
+                    title:sRightTextSize="@dimen/eos_total_assets_text_size"
                     title:sShapeSolidColor="@color/whiteTwo"
                     title:sUseShape="true">
 

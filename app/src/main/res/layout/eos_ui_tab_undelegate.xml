@@ -34,7 +34,7 @@
 
     <EditText
         android:id="@+id/edt_undelegate_cpu"
-        style="@style/editText_config_wallet"
+        style="@style/eos_editText_config_wallet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
         android:hint="@string/eos_amount_undelegate"
@@ -78,7 +78,7 @@
 
     <EditText
         android:id="@+id/edt_undelegate_net"
-        style="@style/editText_config_wallet"
+        style="@style/eos_editText_config_wallet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
         android:background="@null"

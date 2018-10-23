@@ -1,3 +1,24 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="eos_fab_margin">16dp</dimen>
+
+    <!-- 公用 -->
+    <dimen name="eos_card_height">48dp</dimen>
+
+
+    <!-- 创建钱包页面 -->
+    <dimen name="eos_checkBox_length">18dp</dimen>
+    <dimen name="eos_checkBox_marginStart">35dp</dimen>
+    <dimen name="eos_checkBox_marginTop">15dp</dimen>
+    <dimen name="eos_button_margin">32dp</dimen>
+    <dimen name="eos_bubble_lookLength">6dp</dimen>
+    <dimen name="eos_bubble_lookPosition">24dp</dimen>
+    <!-- 钱包主页面 -->
+    <dimen name="eos_total_assets_text_size">14sp</dimen>
+    <dimen name="eos_cpu_show_area_height">56dp</dimen>
+    <dimen name="eos_single_cpu_margin">8dp</dimen>
+    <dimen name="eos_single_cpu_height">50dp</dimen>
+    <dimen name="eos_single_cpu_width">100dp</dimen>
+    <!-- 管理钱包页面 -->
+    <dimen name="eos_standard_margin_in_walletDetailPage">20dp</dimen>
+
 </resources>
