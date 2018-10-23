@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/whiteTwo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_20"
+        android:orientation="vertical"
+        >
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_bWallet_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            title:sLeftTextColor="@color/darkSlateBlue"
+            title:sLeftTextSize="@dimen/eos_total_assets_text_size"
+            title:sLeftTextString="@string/eos_name"
+            title:sRightTextColor="@color/cloudyBlue"
+            title:sRightTextString="WOOKONG Bio"
+            title:sRightTextSize="@dimen/eos_total_assets_text_size"
+            title:sShapeSolidColor="@color/whiteTwo"
+            title:sRightTvDrawableRight="@drawable/ic_arrow"
+            title:sUseShape="true">
+        </com.allen.library.SuperTextView>
+
+
+        <View
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            style="@style/common_divider"/>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/whiteTwo"
+            android:paddingTop="@dimen/dimen_16"
+            android:paddingBottom="@dimen/dimen_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:gravity="center_vertical"
+                android:text="@string/eos_public_key"
+                android:textColor="@color/darkSlateBlue"
+                android:textSize="@dimen/font_3.5"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/tv_publicKey"
+                android:layout_width="@dimen/dimen_250"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/cloudyBlue"
+                title:layout_constraintBottom_toBottomOf="parent"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintTop_toTopOf="parent"
+                tools:text="EOS8Z6sVxrRx3CpsczvnNfJuotjTEAGrrycpxb8JRogacot1RDVwb"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+
+        <View
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            style="@style/common_divider"/>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_battery_life"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            title:sLeftTextColor="@color/darkSlateBlue"
+            title:sLeftTextSize="@dimen/eos_total_assets_text_size"
+            title:sLeftTextString="@string/eos_battery_left"
+            title:sRightTextColor="@color/cloudyBlue"
+            title:sRightTextSize="@dimen/eos_total_assets_text_size"
+            title:sShapeSolidColor="@color/whiteTwo"
+            title:sRightTextString="--%"
+            title:sUseShape="true">
+
+        </com.allen.library.SuperTextView>
+
+        <View
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            style="@style/common_divider"/>
+
+    </LinearLayout>
+
+    <Button
+        android:visibility="visible"
+        android:textColor="@color/cornflowerBlue"
+        android:id="@+id/bt_to_connect"
+        android:layout_margin="@dimen/dimen_20"
+        android:layout_width="match_parent"
+        android:text="@string/eos_btn_to_connect"
+        android:background="@drawable/shape_corner"
+        android:layout_height="@dimen/dimen_44"/>
+
+    <Button
+        android:visibility="gone"
+        android:textColor="@color/cornflowerBlue"
+        android:id="@+id/bt_cancel_pair"
+        android:layout_margin="@dimen/dimen_20"
+        android:layout_width="match_parent"
+        android:text="@string/eos_to_cancel_pair"
+        android:background="@drawable/shape_corner"
+        android:layout_height="@dimen/dimen_44"/>
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/bt_format"
+        android:text="@string/eos_btn_to_format"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:background="@drawable/shape_corner"
+        android:textColor="@color/scarlet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_44"/>
+
+</LinearLayout>

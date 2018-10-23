@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="8dp"
+    title:layout_constraintEnd_toEndOf="parent"
+    title:layout_constraintStart_toStartOf="parent">
+
+    <!-- 顶部信息布局-->
+    <include layout="@layout/eos_ui_wallet_home_top_info_layout"/>
+
+
+    <!-- 硬钱包start-->
+    <include layout="@layout/eos_ui_bluetooth_device_layout"
+        />
+
+
+    <include layout="@layout/eos_ui_bluetooth_wallet_oprate_layout"
+        />
+    <!-- 硬钱包end-->
+
+
+</android.support.constraint.ConstraintLayout>
+
+
+

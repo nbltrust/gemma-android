@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_ui"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <include layout="@layout/ui_navibar"/>
+
+    <ScrollView
+        android:id="@+id/root_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_navibar"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/eos_bg_shape_white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_title_receiver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/eos_title_receiver"
+                        android:textColor="#8e8e93"
+                        android:textSize="16sp"
+                        />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:id="@+id/view_receiver_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/tv_title_receiver"
+                        android:layout_marginTop="14dp">
+
+                        <EditText
+                            android:id="@+id/et_receiver_account"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginStart="15dp"
+                            android:background="@null"
+                            android:hint="@string/eos_account_name"
+                            android:singleLine="true"
+                            android:textColor="@color/darkSlateBlue"
+                            android:textColorHint="#c6cade"
+                            android:textCursorDrawable="@drawable/eos_cursor_custom"
+                            android:textSize="16sp"/>
+
+                        <ImageView
+                            android:id="@+id/iv_transfer_account_clear"
+                            style="@style/clear_icon_common"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:background="@color/eos_horiontal_line"/>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_title_pay_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/eos_title_payer_account"
+                        android:textColor="#8e8e93"
+                        android:textSize="16sp"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/view_change_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/tv_title_pay_account"
+                        android:layout_marginTop="14dp">
+
+                        <ImageView
+                            android:id="@+id/imv_wookong_logo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/wookong_logo"
+                            android:visibility="gone"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_pay_account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_15"
+                            android:layout_toEndOf="@+id/imv_wookong_logo"
+                            android:singleLine="true"
+                            android:textColor="@color/darkSlateBlue"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="账户1"
+                            />
+
+                        <ImageView
+                            android:id="@+id/imv_arrow_change_account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="8dp"
+                            android:src="@drawable/ic_tab_drop_light_blue"
+                            android:visibility="gone"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:background="@color/eos_horiontal_line"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/eos_title_fund"
+                        android:textColor="#8e8e93"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_banlance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="16dp"
+                        android:singleLine="true"
+                        android:text="@string/eos_remain_balance_zero"
+                        android:textColor="#535c8a"
+                        android:textSize="14sp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_amount"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/et_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/eos_tip_transfer"
+                            android:inputType="numberDecimal"
+                            android:singleLine="true"
+                            android:textColor="@color/darkSlateBlue"
+                            android:textColorHint="#c6cade"
+                            android:textCursorDrawable="@drawable/eos_cursor_custom"
+                            android:textSize="16sp"/>
+
+                        <ImageView
+                            android:id="@+id/iv_transfer_amount_clear"
+                            style="@style/clear_icon_common"/>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:background="@color/eos_horiontal_line"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_note"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/eos_title_memo_optional"
+                        android:textColor="#8e8e93"
+                        android:textSize="16sp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_note"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:orientation="horizontal">
+
+                        <com.cybex.gma.client.widget.EditTextWithScrollView
+                            android:id="@+id/et_note"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/eos_input_transfer_hint"
+                            android:maxLines="3"
+                            android:minHeight="50dp"
+                            android:textColor="@color/darkSlateBlue"
+                            android:textColorHint="#c6cade"
+                            android:textCursorDrawable="@drawable/eos_cursor_custom"
+                            android:textSize="16sp"/>
+
+                        <ImageView
+                            android:id="@+id/iv_transfer_memo_clear"
+                            style="@style/clear_icon_common"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginBottom="18dp"
+                    android:background="@color/eos_horiontal_line"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_transfer_nextStep"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="40dp"
+                style="@style/common_button_unClickable"
+                android:enabled="false"
+                android:text="@string/next_step"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

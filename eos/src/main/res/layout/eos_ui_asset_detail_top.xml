@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/view_asset_top"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp">
+
+    <ImageView
+        android:id="@+id/iv_logo_eos_asset"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/eos_ic_asset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_eos_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="0.0000"
+        android:textColor="@color/darkSlateBlue"
+        android:textSize="@dimen/font_4"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_logo_eos_asset"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/eos_eos"
+        android:textColor="@color/darkSlateBlue"
+        android:textSize="@dimen/font_3"
+        app:layout_constraintStart_toEndOf="@id/tv_eos_amount"
+        app:layout_constraintTop_toBottomOf="@id/iv_logo_eos_asset"/>
+
+    <TextView
+        android:id="@+id/tv_rmb_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="= 0.00"
+        android:textColor="@color/darkSlateBlue"
+        android:textSize="@dimen/font_3.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_eos_amount"/>
+
+    <LinearLayout
+        android:id="@+id/view_asset_buttons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_rmb_amount">
+
+        <Button
+            android:id="@+id/btn_transfer_nextStep"
+            style="@style/common_button_clickable"
+            android:layout_weight="1"
+            android:text="@string/eos_title_transfer"/>
+
+        <Button
+            android:id="@+id/btn_receive"
+            style="@style/common_button_clickable"
+            android:layout_marginStart="30dp"
+            android:layout_weight="1"
+            android:text="@string/income"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

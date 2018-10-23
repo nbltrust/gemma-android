@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/whiteTwo"
+    xmlns:title="http://schemas.android.com/apk/res-auto">
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/superTextView_change_fp_name"
+        android:layout_margin="@dimen/dimen_20"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48"
+        title:sLeftTextString="@string/eos_change_fp_name"
+        title:sUseShape="true"
+        title:sRightTvDrawableRight="@drawable/ic_arrow"
+        >
+
+    </com.allen.library.SuperTextView>
+
+    <Button
+        android:id="@+id/bt_delete_fp"
+        android:textColor="@color/scarlet"
+        android:text="@string/eos_delete_fingerprint"
+        android:background="@drawable/shape_corner"
+        android:layout_margin="@dimen/dimen_20"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48"/>
+
+</LinearLayout>

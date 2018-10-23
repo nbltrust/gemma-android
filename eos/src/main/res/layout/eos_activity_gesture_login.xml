@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/eos_grey_f9f9f9"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imv_logo"
+        android:src="@drawable/ic_logo_sign_in"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/messageTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
+        <com.cybex.base.view.lockpattern.widget.LockPatternView
+            android:id="@+id/lockPatternView"
+            android:layout_width="270dp"
+            android:layout_height="270dp"
+            android:layout_gravity="center_horizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/forgetGestureBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/eos_layout_grey_bg"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/gesture_forget_gesture"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+    <ScrollView
+        android:id="@+id/scroll_wallet_config"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:background="@drawable/shape_corner"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_14"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingStart="@dimen/dimen_8"
+                android:paddingEnd="@dimen/dimen_8"
+                android:paddingBottom="@dimen/dimen_10"
+                >
+
+                <TextView
+                    android:id="@+id/tv_set_pass"
+                    style="@style/eos_text_title_config_wallet"
+                    android:text="@string/eos_tip_set_password"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_set_pass"
+                        style="@style/eos_editText_config_wallet"
+                        android:inputType="textPassword"
+                        android:layout_weight="1"
+                        android:hint="@string/eos_tip_input_password"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_set_pass_clear"
+                            style="@style/clear_icon_common"/>
+
+                        <ImageView
+                            android:id="@+id/iv_set_pass_mask"
+                            style="@style/mask_icon_common"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/view_divider_set_pass"
+                    style="@style/common_divider">
+                </View>
+
+                <TextView
+                    android:id="@+id/tv_repeat_pass"
+                    style="@style/eos_text_title_config_wallet"
+                    android:text="@string/eos_tip_repeat_pass"
+                    android:layout_marginTop="@dimen/dimen_10"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_repeat_pass"
+                        android:inputType="textPassword"
+                        android:layout_weight="1"
+                        style="@style/eos_editText_config_wallet"
+                        android:hint="@string/eos_tip_repeat_password"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_repeat_pass_clear"
+                            style="@style/clear_icon_common"/>
+
+                        <ImageView
+                            android:id="@+id/iv_repeat_pass_mask"
+                            style="@style/mask_icon_common"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_divider_repeat_pass"
+                    style="@style/common_divider">
+                </View>
+
+                <TextView
+                    android:id="@+id/tv_pass_hint_f"
+                    style="@style/eos_text_title_config_wallet"
+                    android:text="@string/eos_title_password_hint"
+                    android:layout_marginTop="@dimen/dimen_10"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_pass_hint"
+                        style="@style/eos_editText_config_wallet"
+                        android:hint="@string/eos_tip_input_password_hint"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/dimen_14"
+                        android:background="@null"/>
+
+                    <ImageView
+                        android:id="@+id/iv_pass_hint_clear"
+                        style="@style/clear_icon_common"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_checkBox"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="@dimen/eos_checkBox_marginTop"
+                android:layout_marginStart="@dimen/eos_checkBox_marginStart">
+
+                <CheckBox
+                    android:id="@+id/checkbox_config"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/eos_checkBox_length"
+                    android:text="@string/eos_tip_agree"
+                    android:theme="@style/myCheckBox"
+                    android:textSize="@dimen/font_3"
+                    android:textColor="@color/blueyGrey"/>
+
+                <TextView
+                    android:id="@+id/tv_service_agreement_config"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/darkSlateBlue"
+                    android:textSize="@dimen/font_3"
+                    android:text="@string/eos_tip_terms_of_service"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_complete_import"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bt_inInitPage_height"
+                android:layout_marginStart="@dimen/eos_button_margin"
+                android:layout_marginEnd="@dimen/eos_button_margin"
+                android:layout_marginTop="@dimen/eos_button_margin"
+                android:text="@string/eos_btn_complete_input"
+                android:background="@drawable/shape_corner_button_unclickable"
+                android:textColor="@color/whiteTwo"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_3">
+            </View>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

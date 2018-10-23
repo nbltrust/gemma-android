@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+   <LinearLayout
+       android:id="@+id/layout_item_wallet"
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="@dimen/dimen_20"
+       android:background="@drawable/shape_corner"
+       android:translationZ="@dimen/dimen_2"
+       android:layout_marginEnd="@dimen/dimen_20"
+       android:layout_marginTop="@dimen/dimen_5">
+
+       <TextView
+           android:elevation="@dimen/dimen_2"
+           style="@style/eos_card_style"
+           android:id="@+id/tv_item_walletName"
+           android:paddingStart="@dimen/dimen_10"
+           android:paddingEnd="@dimen/dimen_10"
+           android:gravity="center_vertical"
+           android:textColor="@color/darkSlateBlue"
+           android:textSize="@dimen/font_3.5"
+           tools:text="EOS-WALLET-DEFAULT"
+           android:layout_weight="1"
+           />
+
+       <LinearLayout
+           android:id="@+id/layout_more"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:orientation="horizontal"
+           android:paddingEnd="@dimen/dimen_10">
+           <ImageView
+               android:id="@+id/imv_wookong_logo"
+               android:visibility="gone"
+               android:layout_gravity="center_vertical"
+               android:src="@drawable/wookong_logo"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+           <ImageView
+               android:id="@+id/iv_ic_more"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center_vertical"
+               android:background="@drawable/ic_tab_more"/>
+
+       </LinearLayout>
+
+   </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_3"
+        android:layerType="software">
+    </View>
+</LinearLayout>

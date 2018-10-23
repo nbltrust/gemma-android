@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+<RelativeLayout
+    android:background="@drawable/eos_selector_bg_view_pressed"
+    android:translationZ="1dp"
+    android:gravity="center_vertical"
+    android:layout_height="48dp"
+    android:layout_width="match_parent"
+    title:layout_constraintEnd_toEndOf="parent"
+    title:layout_constraintStart_toStartOf="parent"
+    title:layout_constraintTop_toBottomOf="@id/layout_info">
+
+    <ImageView
+        android:id="@+id/imv_wookong_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/wookong_logo"/>
+
+    <TextView
+        android:id="@+id/tv_device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/imv_wookong_logo"
+        android:text="WOOKONG Bio"
+        android:textColor="#212c67"
+        android:textSize="16sp"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_arrow"/>
+
+</RelativeLayout>
+-->
+<com.allen.library.SuperTextView
+    android:id="@+id/bluetooth_device_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_48"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
+    android:elevation="1dp"
+    title:layout_constraintEnd_toEndOf="parent"
+    title:layout_constraintStart_toStartOf="parent"
+    title:layout_constraintTop_toBottomOf="@id/layout_info"
+    title:sLeftTextColor="@color/darkSlateBlue"
+    title:sShapeCornersRadius="6dp"
+    title:sShapeSelectorPressedColor="@color/item_pressed"
+    title:sLeftTextSize="@dimen/font_4"
+    title:sLeftTextString="WOOKONG Bio"
+    title:sLeftTvDrawableLeft="@drawable/wookong_logo"
+    title:sRightTvDrawableRight="@drawable/ic_arrow"
+    title:sUseShape="true">
+
+</com.allen.library.SuperTextView>
+
+
+

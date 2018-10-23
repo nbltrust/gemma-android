@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:title="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/whiteTwo"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+    <ImageView
+        android:layout_width="@dimen/dimen_120"
+        android:layout_height="@dimen/dimen_120"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:background="@drawable/ic_login_logo"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:textAlignment="center"
+        android:textColor="@color/darkSlateBlue"
+        android:textSize="@dimen/font_4"
+        android:text="GEMMA 1.0.0"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_40"
+        android:orientation="vertical"
+        android:translationZ="@dimen/dimen_3">
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_version_info"
+            style="@style/eos_card_style"
+            title:sLeftTextString="@string/version_info"
+            title:sRightTvDrawableRight="@drawable/ic_arrow"
+            title:sUseShape="true">
+
+        </com.allen.library.SuperTextView>
+
+        <View
+            style="@style/common_divider"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10"
+            >
+
+        </View>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_update"
+            style="@style/eos_card_style"
+            title:sLeftTextString="@string/version_update"
+            title:sRightTvDrawableRight="@drawable/ic_arrow"
+            title:sUseShape="true">
+
+        </com.allen.library.SuperTextView>
+
+        <View
+            style="@style/common_divider"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10"
+            >
+
+        </View>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:text="@string/copyright"
+            android:textAlignment="center"
+            android:textColor="@color/blueyGrey"
+            android:textSize="@dimen/font_3"/>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

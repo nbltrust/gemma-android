@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#f5f5f5"
+              android:orientation="vertical">
+
+    <include layout="@layout/ui_navibar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="@string/eos_tip_card"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:layout_width="280dp"
+        android:layout_height="160dp"
+        android:scaleType="centerInside"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/icon_wookong_bio"/>
+
+    <com.cybex.gma.client.widget.underline.UnderlineTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eos_desc_wookong_url"
+        android:layout_gravity="center_horizontal"
+        android:textSize="12sp"
+        android:lineSpacingExtra="2dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eos_bluetooth_scan_step_title"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="40dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/eos_bluetooth_scan_step"/>
+
+    <Button
+        android:id="@+id/btn_start_scan"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/eos_bg_shape_btn_pressed"
+        android:text="@string/eos_btn_start_pair"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
+
+
+</LinearLayout>

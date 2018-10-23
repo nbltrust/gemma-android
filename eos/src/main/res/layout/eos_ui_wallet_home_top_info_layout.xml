@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/layout_info"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="2dp"
+    android:layout_marginStart="2dp"
+    android:paddingTop="12dp"
+    title:layout_constraintEnd_toEndOf="parent"
+    title:layout_constraintStart_toStartOf="parent">
+
+    <LinearLayout
+        android:id="@+id/layout_top_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:layout_marginStart="18dp"
+        android:background="@drawable/eos_shape_corner_token_card"
+        android:orientation="vertical"
+        android:translationZ="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/eos_ic_asset"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="6dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textColor="@color/darkSlateBlue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="EOS"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:textColor="@color/darkSlateBlue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="nbltrustcom1"
+                            android:textSize="@dimen/font_3"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp">
+
+                    <TextView
+                        android:id="@+id/total_EOS_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:text=" 0.0000"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/darkSlateBlueTwo"
+                        android:textSize="@dimen/font_6"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:text="EOS"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/darkSlateBlue"/>
+
+                </LinearLayout>
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/total_CNY_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    title:sDividerLineType="none"
+                    title:sLeftTextColor="@color/darkSlateBlueTwo"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="≈ 0.0000 CNY"
+                    title:sUseShape="true"
+                    >
+
+                </com.allen.library.SuperTextView>
+
+            </LinearLayout>
+
+            <ImageView
+                android:padding="0dp"
+                android:layout_gravity="end"
+                android:src="@drawable/eos_bg_eos_card"
+                android:layout_width="126dp"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <com.allen.library.SuperTextView
+            android:layout_marginTop="16dp"
+            android:id="@+id/balance"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_28"
+            title:sDividerLineType="none"
+            title:sLeftTextColor="@color/darkSlateBlueTwo"
+            title:sLeftTextSize="@dimen/font_3"
+            title:sLeftTextString="@string/eos_available_balance"
+            title:sRightTextColor="@color/darkSlateBlueTwo"
+            title:sRightTextSize="@dimen/font_4"
+            title:sRightTextString="0.0000 EOS"
+            title:sUseShape="true">
+
+        </com.allen.library.SuperTextView>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/redeem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dimen_28"
+            title:sDividerLineType="none"
+            title:sLeftTextColor="@color/darkSlateBlueTwo"
+            title:sLeftTextSize="@dimen/font_3"
+            title:sLeftTextString="@string/eos_tip_redeem_ing"
+            title:sRightBottomTextColor="#3381e0"
+            title:sRightBottomTextSize="12sp"
+            title:sRightTextColor="@color/darkSlateBlueTwo"
+            title:sRightTextGravity="right"
+            title:sRightTextSize="@dimen/font_4"
+            title:sRightTextString="0.0000 EOS"
+            title:sUseShape="true">
+
+        </com.allen.library.SuperTextView>
+
+        <LinearLayout
+            android:id="@+id/show_cpu"
+            style="@style/eos_show_cpu_status_area">
+
+            <LinearLayout
+                android:id="@+id/view_cpu"
+                style="@style/eos_cpu_net_ram"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/eos_textView_cpu_net_ram"
+                    android:text="@string/eos_CPU"/>
+
+                <com.cybex.base.view.progress.RoundCornerProgressBar
+                    android:id="@+id/progressbar_cpu_small"
+                    style="@style/eos_progressBar_cpu_net_ram"
+                    title:rcBackgroundColor="@color/cloudyBlue"
+                    title:rcBackgroundPadding="0dp"
+                    title:rcMax="100"
+                    title:rcProgress="0"
+                    title:rcProgressColor="@color/dark_sky_blue"
+                    title:rcRadius="10dp"
+                    >
+
+                </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/cloudyBlue"
+                android:layerType="software"
+                >
+            </View>
+
+            <LinearLayout
+                android:id="@+id/view_net"
+                style="@style/eos_cpu_net_ram"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/eos_textView_cpu_net_ram"
+                    android:text="@string/eos_NET"/>
+
+                <com.cybex.base.view.progress.RoundCornerProgressBar
+                    android:id="@+id/progressbar_net_small"
+                    style="@style/eos_progressBar_cpu_net_ram"
+                    title:rcBackgroundColor="@color/cloudyBlue"
+                    title:rcBackgroundPadding="0dp"
+                    title:rcMax="100"
+                    title:rcProgress="0"
+                    title:rcProgressColor="@color/dark_sky_blue"
+                    title:rcRadius="10dp"
+                    >
+
+                </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/cloudyBlue"
+                android:layerType="software">
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/view_ram"
+                style="@style/eos_cpu_net_ram"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/eos_textView_cpu_net_ram"
+                    android:text="@string/eos_RAM"/>
+
+                <com.cybex.base.view.progress.RoundCornerProgressBar
+                    android:id="@+id/progressbar_ram_small"
+                    style="@style/eos_progressBar_cpu_net_ram"
+                    title:rcBackgroundColor="@color/cloudyBlue"
+                    title:rcBackgroundPadding="0dp"
+                    title:rcMax="100"
+                    title:rcProgress="0"
+                    title:rcProgressColor="@color/dark_sky_blue"
+                    title:rcRadius="10dp"
+                    >
+
+                </com.cybex.base.view.progress.RoundCornerProgressBar>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        title:layout_constraintEnd_toEndOf="parent"
+        title:layout_constraintStart_toStartOf="parent"
+        title:layout_constraintTop_toBottomOf="@id/layout_top_info"
+        >
+
+    </View>
+
+</android.support.constraint.ConstraintLayout>

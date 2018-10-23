@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+    <ScrollView
+        android:id="@+id/scroll_wallet_manage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_existed_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/eos_curwallets"
+                android:textColor="@color/steel"
+                android:textSize="@dimen/font_3.5"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:layout_marginTop="@dimen/dimen_10"/>
+
+            <LinearLayout
+                android:id="@+id/layout_wallet_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_wallet_manage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/eos_wallet_manege"
+                android:textColor="@color/steel"
+                android:textSize="@dimen/font_3.5"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:layout_marginTop="@dimen/dimen_10"/>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_importWallet"
+                style="@style/eos_card_style"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:translationZ="@dimen/dimen_1"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@id/layout_wallet_number"
+                title:sLeftTextColor="@color/darkSlateBlue"
+                title:sLeftTextString="@string/eos_import_wallet"
+                title:sRightTvDrawableRight="@drawable/ic_arrow"
+                title:sShapeCornersRadius="@dimen/dimen_3"
+                title:sUseShape="true"
+                title:sShapeSelectorPressedColor="@color/item_pressed"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_createWallet"
+                style="@style/eos_card_style"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:translationZ="@dimen/dimen_1"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@id/superTextView_importWallet"
+                title:sLeftTextColor="@color/darkSlateBlue"
+                title:sLeftTextString="@string/eos_tip_create_wallet"
+                title:sRightTvDrawableRight="@drawable/ic_arrow"
+                title:sShapeCornersRadius="@dimen/dimen_3"
+                title:sShapeSelectorPressedColor="@color/item_pressed"
+                title:sUseShape="true">
+
+            </com.allen.library.SuperTextView>
+
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/tv_match_bluetooth"
+                style="@style/eos_card_style"
+                android:visibility="visible"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:translationZ="@dimen/dimen_1"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@id/superTextView_importWallet"
+                title:sLeftTextColor="@color/darkSlateBlue"
+                title:sLeftIconRes="@drawable/wookong_logo"
+                title:sLeftTextString="@string/eos_match_wookong_bio"
+                title:sRightTvDrawableRight="@drawable/ic_arrow"
+                title:sShapeCornersRadius="@dimen/dimen_3"
+                title:sShapeSelectorPressedColor="@color/item_pressed"
+                title:sUseShape="true">
+
+            </com.allen.library.SuperTextView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_3"
+                android:layerType="software">
+            </View>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</LinearLayout>
+
+

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteTwo"
+    android:orientation="vertical">
+
+    <include layout="@layout/ui_navibar"/>
+
+
+        <ScrollView
+            android:id="@+id/scroll_me"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:background="@color/whiteTwo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:orientation="vertical">
+
+                <com.allen.library.SuperTextView
+                    title:sUseShape="true"
+                    android:id="@+id/superTextView_general"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_48"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="@string/general"
+                    title:sLeftIconRes="@drawable/ic_general"
+                    title:sLeftIconHeight="@dimen/dimen_24"
+                    title:sLeftIconWidth="@dimen/dimen_24"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sLeftTextGravity="center"
+                    title:sDividerLineType="none"
+                    title:sShapeSelectorPressedColor="@color/item_pressed">
+
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:background="@color/paleGrey"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/dimen_50"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_height="1dp"
+                    android:layerType="software">
+                </View>
+
+                <com.allen.library.SuperTextView
+                    title:sUseShape="true"
+                    android:id="@+id/superTextView_security"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_48"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="@string/security"
+                    title:sLeftIconRes="@drawable/ic_safe"
+                    title:sLeftIconHeight="@dimen/dimen_24"
+                    title:sLeftIconWidth="@dimen/dimen_24"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sLeftTextGravity="center"
+                    title:sDividerLineType="none"
+                    title:sShapeSelectorPressedColor="@color/item_pressed">
+
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:background="@color/paleGrey"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/dimen_50"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_height="1dp"
+                    android:layerType="software">
+                </View>
+
+
+                <com.allen.library.SuperTextView
+                    title:sUseShape="true"
+                    title:sDividerLineType="none"
+                    android:id="@+id/superTextView_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_48"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="@string/help"
+                    title:sLeftIconRes="@drawable/ic_help"
+                    title:sLeftIconHeight="@dimen/dimen_24"
+                    title:sLeftIconWidth="@dimen/dimen_24"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sLeftTextGravity="center"
+                    title:sShapeSelectorPressedColor="@color/item_pressed">
+
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:background="@color/paleGrey"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/dimen_50"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_height="1dp"
+                    android:layerType="software">
+                </View>
+
+
+                <com.allen.library.SuperTextView
+                    title:sUseShape="true"
+                    android:id="@+id/superTextView_service_agreement"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_48"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="@string/terms_of_service"
+                    title:sLeftIconRes="@drawable/ic_service_agreement"
+                    title:sLeftIconHeight="@dimen/dimen_24"
+                    title:sLeftIconWidth="@dimen/dimen_24"
+                    title:sDividerLineType="none"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sLeftTextGravity="center"
+                    title:sShapeSelectorPressedColor="@color/item_pressed">
+
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:background="@color/paleGrey"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/dimen_50"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_height="1dp"
+                    android:layerType="software">
+                </View>
+
+                <com.allen.library.SuperTextView
+                    title:sUseShape="true"
+                    title:sDividerLineType="none"
+                    android:id="@+id/superTextView_about"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_48"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextSize="@dimen/font_3.5"
+                    title:sLeftTextString="@string/about_us"
+                    title:sLeftTextGravity="center"
+                    title:sLeftIconRes="@drawable/ic_about"
+                    title:sLeftIconHeight="@dimen/dimen_24"
+                    title:sLeftIconWidth="@dimen/dimen_24"
+                    title:sRightTvDrawableRight="@drawable/ic_arrow"
+                    title:sShapeSelectorPressedColor="@color/item_pressed">
+
+                </com.allen.library.SuperTextView>
+
+                <View
+                    android:background="@color/paleGrey"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/dimen_50"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_height="1dp"
+                    android:layerType="software">
+                </View>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+</LinearLayout>
