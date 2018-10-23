@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner_dialog"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_password_hint"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/ic_success"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="6dp"
+        android:text="@string/eos_format_success"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_4"/>
+
+    <TextView
+        android:id="@+id/tv_tip_init"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/dimen_66"
+        android:layout_marginStart="@dimen/dimen_66"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:text="@string/eos_tip_to_init"
+        android:textColor="@color/blueyGrey"
+        android:textSize="@dimen/font_4"
+        />
+
+    <View
+        android:layout_marginTop="@dimen/dimen_20"
+       style="@style/common_divider">
+
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_corner_left_bot"
+            android:gravity="center"
+            android:text="@string/eos_cancel_cn"
+            android:textColor="@color/cornflowerBlue"
+            android:textSize="17sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_init"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_corner_right_bot"
+            android:gravity="center"
+            android:text="@string/eos_initialize"
+            android:textColor="@color/cornflowerBlue"
+            android:textSize="17sp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner_white">
+
+    <TextView
+        android:id="@+id/tv_title_priKey"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/eos_priKey_en"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_4"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/dimen_10"
+        />
+
+    <TextView
+        android:background="@drawable/shape_corner"
+        android:padding="@dimen/dimen_16"
+        android:id="@+id/tv_content_priKey"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_86"
+        android:layout_marginEnd="@dimen/dimen_60"
+        android:layout_marginStart="@dimen/dimen_60"
+        android:layout_marginTop="@dimen/dimen_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_priKey"
+        tools:text="5JGsR8tZkYvzx6DoRbUkoJJCqkpd8XLTCjL1Tsk7GmBwDskdjsKvK"/>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_60"
+        android:layout_marginStart="@dimen/dimen_60"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_content_priKey">
+
+        <TextView
+            android:paddingTop="@dimen/dimen_8"
+            android:paddingBottom="@dimen/dimen_8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_corner_left_bot"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:gravity="center"
+            android:text="@string/fast_web_alert_right"
+            android:textAlignment="center"
+            android:textColor="@color/cornflowerBlue"
+            android:textSize="@dimen/font_4.2"/>
+
+        <TextView
+            android:paddingTop="@dimen/dimen_8"
+            android:paddingBottom="@dimen/dimen_8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_corner_right_bot"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:gravity="center"
+            android:text="@string/eos_copy"
+            android:textAlignment="center"
+            android:textColor="@color/cornflowerBlue"
+            android:textSize="@dimen/font_4.2"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

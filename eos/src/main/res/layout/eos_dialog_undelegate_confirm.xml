@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#f9f9f9"
+              android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="60dp"
+        android:layout_height="48dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_mask_close"/>
+
+    <LinearLayout
+        android:background="@drawable/eos_bg_shape_white"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:text="@string/eos_refund_username"
+                android:textColor="@color/eos_font_title"
+                android:textSize="14sp"/>
+
+
+            <TextView
+                android:id="@+id/tv_undelegate_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/darkSlateBlue"
+                android:textSize="16sp"
+                tools:text="0.0001 EOS"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/eos_horiontal_line"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:text="@string/eos_title_fund"
+                android:textColor="@color/eos_font_title"
+                android:textSize="14sp"/>
+
+
+            <TextView
+                android:id="@+id/tv_undelegate_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:textSize="@dimen/font_4"
+                android:textColor="@color/darkSlateBlue"
+                tools:text="2.2345 EOS"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/eos_horiontal_line"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_refund_account_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:text="@string/eos_title_memo"
+                android:textColor="@color/eos_font_title"
+                android:textSize="14sp"/>
+
+
+            <TextView
+                android:id="@+id/tv_undelegate_memo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="16dp"
+                android:layout_toEndOf="@id/tv_note_title"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="viewEnd"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="@color/darkSlateBlue"
+                tools:text="\ufeff@gemma12345资金用途描述不超过50个字，资金用途资金用途描述不超过50个字，资金用途"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_confirm_refund"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/eos_selector_btn_transfer"
+        android:text="@string/eos_btn_confirm_refund"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
+
+</LinearLayout>

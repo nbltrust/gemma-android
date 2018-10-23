@@ -1,0 +1,48 @@
+package com.cybex.eos.ui.model.vo;
+
+import com.cybex.eos.ui.model.response.AccountInfo;
+
+/**
+ * 首页聚合数据Data
+ *
+ * Created by wanglin on 2018/8/10.
+ */
+public class HomeCombineDataVO {
+
+    private AccountInfo accountInfo;
+    private String unitPrice;
+    private String banlance;
+    private String unitPriceUSDT;
+
+    public AccountInfo getAccountInfo() {
+        return accountInfo;
+    }
+
+    public void setAccountInfo(AccountInfo accountInfo) {
+        this.accountInfo = accountInfo;
+    }
+
+    public String getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(String unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public String getBanlance() {
+        return banlance;
+    }
+
+    public void setBanlance(String banlance) {
+        this.banlance = banlance;
+    }
+
+    public String getUnitPriceUSDT() {
+        return unitPriceUSDT;
+    }
+
+    public void setUnitPriceUSDT(String unitPriceUSDT) {
+        this.unitPriceUSDT = unitPriceUSDT;
+    }
+}

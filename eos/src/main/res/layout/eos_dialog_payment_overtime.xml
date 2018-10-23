@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/shape_corner_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:src="@drawable/ic_payment_overtime"
+        android:id="@+id/iv_password_hint"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_password_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eos_payment_overtime"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:textSize="@dimen/font_4"
+        android:layout_marginTop="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eos_tip_payment_overtime"
+        android:layout_gravity="center"
+        android:textSize="@dimen/font_4"
+        android:textColor="@color/blueyGrey"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_66"
+        android:layout_marginEnd="@dimen/dimen_66"
+        />
+
+    <View
+        android:layout_marginTop="16dp"
+        style="@style/common_divider">
+
+    </View>
+
+    <TextView
+        android:id="@+id/tv_i_understand"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/eos_ok"
+        android:gravity="center"
+        android:textSize="@dimen/font_4"
+        android:textColor="@color/cornflowerBlue"
+        android:background="@drawable/shape_corner_bot_dialog"
+        />
+
+</LinearLayout>
