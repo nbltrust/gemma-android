@@ -195,4 +195,20 @@ public class EosWalletEntity extends BaseModel implements Parcelable {
             return new EosWalletEntity[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "EosWalletEntity{" +
+                "id=" + id +
+                ", publicKey='" + publicKey + '\'' +
+                ", privateKey='" + privateKey + '\'' +
+                ", eosNameJson='" + eosNameJson + '\'' +
+                ", currentEosName='" + currentEosName + '\'' +
+                ", isBackUp=" + isBackUp +
+                ", isConfirmLib=" + isConfirmLib +
+                ", txId='" + txId + '\'' +
+                ", invCode='" + invCode + '\'' +
+                ", isChecked=" + isChecked +
+                '}';
+    }
 }

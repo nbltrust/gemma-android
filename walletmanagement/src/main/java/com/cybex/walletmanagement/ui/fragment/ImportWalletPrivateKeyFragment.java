@@ -18,8 +18,10 @@ import com.cybex.walletmanagement.event.BarcodeScanEvent;
 import com.cybex.walletmanagement.event.QrResultEvent;
 import com.cybex.walletmanagement.event.SelectCoinTypeEvent;
 import com.cybex.walletmanagement.event.SelectImportWhichWalletEvent;
+import com.cybex.walletmanagement.ui.activity.ConfigNewWalletActivity;
 import com.cybex.walletmanagement.ui.activity.SelectImportWhichWalletActivity;
 import com.cybex.walletmanagement.ui.activity.SelectWalletCoinTypeActivity;
+import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -145,9 +147,14 @@ public class ImportWalletPrivateKeyFragment extends XFragment {
 
 
         //jump to config page
+        ImportWalletConfigBean config = new ImportWalletConfigBean();
+        config.setWalletType(MultiWalletEntity.WALLET_TYPE_PRI_KEY);
+        config.setPriKey(edtShowPrikey.getText().toString().trim());
+        config.setCoinType(currentCoinType);
 
-
-
+        Intent intent = new Intent(getContext(), ConfigNewWalletActivity.class);
+        intent.putExtra(WalletManageConst.KEY_IMPORT_WALLET_CONFIG,config);
+        startActivity(intent);
     }
 
     @Override

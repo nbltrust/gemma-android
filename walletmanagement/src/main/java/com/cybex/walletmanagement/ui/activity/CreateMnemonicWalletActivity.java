@@ -1,6 +1,5 @@
 package com.cybex.walletmanagement.ui.activity;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;

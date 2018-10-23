@@ -17,7 +17,7 @@ import me.framework.fragmentation.anim.FragmentAnimator;
 public class MnemonicBackupGuideActivity extends XActivity {
 
     private Button btnShowMne;
-    String[] mnemonic;
+    String mnemonic;
 
 
     @Override
@@ -37,7 +37,7 @@ public class MnemonicBackupGuideActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mnemonic = getIntent().getStringArrayExtra(BaseConst.KEY_MNEMONIC);
+        mnemonic = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
     }
 
     @Override

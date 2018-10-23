@@ -1,14 +1,19 @@
 package com.cybex.walletmanagement.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.walletmanagement.R;
+import com.cybex.walletmanagement.config.WalletManageConst;
 import com.cybex.walletmanagement.event.BarcodeScanEvent;
 import com.cybex.walletmanagement.event.QrResultEvent;
+import com.cybex.walletmanagement.ui.activity.ConfigNewWalletActivity;
+import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -92,7 +97,16 @@ public class ImportWalletMnemonicFragment extends XFragment {
         //check mnemonic
         final String mnemonic = edtShowMnemonic.getText().toString().trim();
         if(isMnemonicValid(mnemonic)){
-//            start(ImportWalletConfigFragment.newInstance(inputKey));
+            //jump to config page
+            ImportWalletConfigBean config = new ImportWalletConfigBean();
+            config.setWalletType(MultiWalletEntity.WALLET_TYPE_MNEMONIC);
+            config.setMnemonic(mnemonic);
+
+            Intent intent = new Intent(getContext(), ConfigNewWalletActivity.class);
+            intent.putExtra(WalletManageConst.KEY_IMPORT_WALLET_CONFIG,config);
+            startActivity(intent);
+
+
         }else{
 //            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_prikey_format_invalid));
 
@@ -100,7 +114,7 @@ public class ImportWalletMnemonicFragment extends XFragment {
     }
 
     private boolean isMnemonicValid(String mnemonic) {
-        return false;
+        return true;
     }
 
     @Override

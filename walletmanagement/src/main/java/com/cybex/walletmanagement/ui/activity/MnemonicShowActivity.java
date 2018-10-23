@@ -45,7 +45,8 @@ public class MnemonicShowActivity extends XActivity {
         setNavibarTitle(getResources().getString(R.string.walletmanage_backup_title), true);
 
         if(getIntent()!=null){
-            mnemonic = getIntent().getStringArrayExtra(BaseConst.KEY_MNEMONIC);
+            String mnemonicStr = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
+            mnemonic = mnemonicStr.split(" ");
             if(mnemonic!=null){
                 mFlowLayout.setAdapter(new TagAdapter<String>(mnemonic) {
                     @Override
