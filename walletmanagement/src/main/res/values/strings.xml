@@ -140,4 +140,13 @@
     <string name="walletmanage_qr_scan_hint">请将二维码放入框内，即可自动扫描</string>
     <string name="walletmanage_scan_qr_code">扫描二维码</string>
 
+    <!--wallet coin type-->
+    <string name="walletmanage_coin_type_title">钱包币种</string>
+
+    <!--import to which wallet-->
+    <string name="walletmanage_import_which_wallet_title">导入到钱包</string>
+
+    <!--import wallet-->
+    <string name="walletmanage_import_wallet_title">导入钱包</string>
+
 </resources>

@@ -24,6 +24,7 @@ public class ChangeAccountAdapter extends BaseQuickAdapter<EOSNameVO, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder helper, EOSNameVO item) {
+
         CheckedTextView tv = helper.getView(R.id.tv_account_name);
         if (EmptyUtils.isNotEmpty(item)) {
             tv.setText(item.getEosName());

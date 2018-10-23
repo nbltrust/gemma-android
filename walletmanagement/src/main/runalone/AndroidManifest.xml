@@ -31,11 +31,7 @@
         </activity>
 
         <activity android:name=".ui.activity.CreateMnemonicWalletActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".ui.activity.ImportWalletGuideActivity">
@@ -47,6 +43,18 @@
         </activity>
 
         <activity android:name=".ui.activity.BarcodeScanActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.SelectWalletCoinTypeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.activity.SelectImportWhichWalletActivity">
 
         </activity>
 

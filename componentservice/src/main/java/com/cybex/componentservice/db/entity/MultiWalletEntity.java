@@ -1,14 +1,18 @@
 package com.cybex.componentservice.db.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.cybex.componentservice.db.GemmaDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ColumnIgnore;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 @Table(database = GemmaDatabase.class, name = "t_multi_wallet")
-public class MultiWalletEntity extends BaseModel {
+public class MultiWalletEntity extends BaseModel implements Parcelable {
 
     public static final Integer WALLET_TYPE_MNEMONIC=0;
     public static final Integer WALLET_TYPE_HARDWARE=1;
@@ -80,6 +84,9 @@ public class MultiWalletEntity extends BaseModel {
     @Column
     @ForeignKey
     public EthWalletEntity ethWalletEntity;
+
+    @ColumnIgnore
+    public boolean isChecked;
 
     public Integer getId() {
         return id;
@@ -194,4 +201,57 @@ public class MultiWalletEntity extends BaseModel {
                 ", ethWalletEntity=" + ethWalletEntity +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.walletName);
+        dest.writeString(this.mnemonic);
+        dest.writeString(this.cypher);
+        dest.writeValue(this.isCurrentWallet);
+        dest.writeString(this.passwordTip);
+        dest.writeValue(this.isBackUp);
+        dest.writeInt(this.walletType);
+        dest.writeInt(this.isSetBluetoothFP);
+        dest.writeString(this.bluetoothDeviceName);
+        dest.writeParcelable(this.eosWalletEntity, flags);
+        dest.writeParcelable(this.ethWalletEntity, flags);
+        dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
+    }
+
+    public MultiWalletEntity() {
+    }
+
+    protected MultiWalletEntity(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.walletName = in.readString();
+        this.mnemonic = in.readString();
+        this.cypher = in.readString();
+        this.isCurrentWallet = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.passwordTip = in.readString();
+        this.isBackUp = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.walletType = in.readInt();
+        this.isSetBluetoothFP = in.readInt();
+        this.bluetoothDeviceName = in.readString();
+        this.eosWalletEntity = in.readParcelable(EosWalletEntity.class.getClassLoader());
+        this.ethWalletEntity = in.readParcelable(EthWalletEntity.class.getClassLoader());
+        this.isChecked = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<MultiWalletEntity> CREATOR = new Parcelable.Creator<MultiWalletEntity>() {
+        @Override
+        public MultiWalletEntity createFromParcel(Parcel source) {
+            return new MultiWalletEntity(source);
+        }
+
+        @Override
+        public MultiWalletEntity[] newArray(int size) {
+            return new MultiWalletEntity[size];
+        }
+    };
 }

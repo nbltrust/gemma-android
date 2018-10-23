@@ -7,5 +7,4 @@ public class BaseConst {
 
 
 
-    public static final String COIN_TYPE_EOS="EOS";
 }

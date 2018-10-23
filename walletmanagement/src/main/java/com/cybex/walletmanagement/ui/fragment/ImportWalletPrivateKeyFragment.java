@@ -1,5 +1,6 @@
 package com.cybex.walletmanagement.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,12 +8,18 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cybex.base.view.LabelLayout;
+import com.cybex.componentservice.bean.CoinType;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.walletmanagement.R;
+import com.cybex.walletmanagement.config.WalletManageConst;
 import com.cybex.walletmanagement.event.BarcodeScanEvent;
 import com.cybex.walletmanagement.event.QrResultEvent;
+import com.cybex.walletmanagement.event.SelectCoinTypeEvent;
+import com.cybex.walletmanagement.event.SelectImportWhichWalletEvent;
+import com.cybex.walletmanagement.ui.activity.SelectImportWhichWalletActivity;
+import com.cybex.walletmanagement.ui.activity.SelectWalletCoinTypeActivity;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -33,8 +40,8 @@ public class ImportWalletPrivateKeyFragment extends XFragment {
     MaterialEditText edtShowPrikey;
     LabelLayout labelCoinType;
     LabelLayout labelWhichWallet;
-    private String currentCoinType= BaseConst.COIN_TYPE_EOS;
-    private int importWalletId= -1;
+    private CoinType currentCoinType= CoinType.EOS;
+    private MultiWalletEntity importWallet= null;
     private List<MultiWalletEntity> wallets;
 
 
@@ -57,6 +64,25 @@ public class ImportWalletPrivateKeyFragment extends XFragment {
         if(message.isMnemonicType)return;
         if (!EmptyUtils.isEmpty(message)) {
             edtShowPrikey.setText(message.getResult());
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeCoinType(SelectCoinTypeEvent message) {
+        if (!EmptyUtils.isEmpty(message)) {
+            labelCoinType.setRightText(message.cointype.coinName);
+            currentCoinType=message.cointype;
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeImportWallet(SelectImportWhichWalletEvent message) {
+        if (!EmptyUtils.isEmpty(message)&&message.walletEntity!=null) {
+            labelWhichWallet.setRightText(message.walletEntity.getWalletName());
+            importWallet=message.walletEntity;
+        }else{
+            labelWhichWallet.setRightText(getString(R.string.walletmanage_create_new_wallet));
+            importWallet=null;
         }
     }
 
@@ -95,14 +121,17 @@ public class ImportWalletPrivateKeyFragment extends XFragment {
         labelCoinType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                Intent intent = new Intent(getActivity(), SelectWalletCoinTypeActivity.class);
+                intent.putExtra(WalletManageConst.KEY_SELECT_COINTYPE,currentCoinType);
+                startActivity(intent);
             }
         });
         labelWhichWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), SelectImportWhichWalletActivity.class);
+                intent.putExtra(WalletManageConst.KEY_SELECT_IMPORT_WHICH_WALLET,importWallet);
+                startActivity(intent);
             }
         });
 

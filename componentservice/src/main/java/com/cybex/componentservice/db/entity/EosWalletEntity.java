@@ -1,5 +1,8 @@
 package com.cybex.componentservice.db.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.cybex.componentservice.db.GemmaDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ColumnIgnore;
@@ -9,7 +12,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 
 @Table(database = GemmaDatabase.class, name = "t_eos_wallet")
-public class EosWalletEntity extends BaseModel {
+public class EosWalletEntity extends BaseModel implements Parcelable {
 
     /**
      * 自增长主键id
@@ -145,4 +148,51 @@ public class EosWalletEntity extends BaseModel {
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.publicKey);
+        dest.writeString(this.privateKey);
+        dest.writeString(this.eosNameJson);
+        dest.writeString(this.currentEosName);
+        dest.writeValue(this.isBackUp);
+        dest.writeValue(this.isConfirmLib);
+        dest.writeString(this.txId);
+        dest.writeString(this.invCode);
+        dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
+    }
+
+    public EosWalletEntity() {
+    }
+
+    protected EosWalletEntity(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.publicKey = in.readString();
+        this.privateKey = in.readString();
+        this.eosNameJson = in.readString();
+        this.currentEosName = in.readString();
+        this.isBackUp = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.isConfirmLib = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.txId = in.readString();
+        this.invCode = in.readString();
+        this.isChecked = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<EosWalletEntity> CREATOR = new Parcelable.Creator<EosWalletEntity>() {
+        @Override
+        public EosWalletEntity createFromParcel(Parcel source) {
+            return new EosWalletEntity(source);
+        }
+
+        @Override
+        public EosWalletEntity[] newArray(int size) {
+            return new EosWalletEntity[size];
+        }
+    };
 }

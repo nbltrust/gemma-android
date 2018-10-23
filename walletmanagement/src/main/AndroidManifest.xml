@@ -36,6 +36,14 @@
 
         </activity>
 
+        <activity android:name=".ui.activity.SelectWalletCoinTypeActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.SelectImportWhichWalletActivity">
+
+        </activity>
+
 
 
 

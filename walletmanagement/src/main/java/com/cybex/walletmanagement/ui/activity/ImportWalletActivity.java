@@ -47,7 +47,7 @@ public class ImportWalletActivity extends XActivity {
     public void bindUI(View view) {
         vpContent = findViewById(R.id.vp_content);
         mSlidingTab =  findViewById(R.id.view_sliding_tab);
-        setNavibarTitle(getResources().getString(R.string.walletmanage_backup_title), true);
+        setNavibarTitle(getResources().getString(R.string.walletmanage_import_wallet_title), true);
 
         ImageView mCollectView = (ImageView) mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.walletmanage_ic_notify_scan) {
             @Override

@@ -1,5 +1,8 @@
 package com.cybex.componentservice.db.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.cybex.componentservice.db.GemmaDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ColumnIgnore;
@@ -9,7 +12,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 
 @Table(database = GemmaDatabase.class, name = "t_eth_wallet")
-public class EthWalletEntity extends BaseModel {
+public class EthWalletEntity extends BaseModel implements Parcelable {
 
 
     /**
@@ -93,4 +96,41 @@ public class EthWalletEntity extends BaseModel {
                 ", isBackUp=" + isBackUp +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeString(this.publicKey);
+        dest.writeString(this.address);
+        dest.writeString(this.privateKey);
+        dest.writeByte(this.isBackUp ? (byte) 1 : (byte) 0);
+    }
+
+    public EthWalletEntity() {
+    }
+
+    protected EthWalletEntity(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.publicKey = in.readString();
+        this.address = in.readString();
+        this.privateKey = in.readString();
+        this.isBackUp = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<EthWalletEntity> CREATOR = new Parcelable.Creator<EthWalletEntity>() {
+        @Override
+        public EthWalletEntity createFromParcel(Parcel source) {
+            return new EthWalletEntity(source);
+        }
+
+        @Override
+        public EthWalletEntity[] newArray(int size) {
+            return new EthWalletEntity[size];
+        }
+    };
 }
