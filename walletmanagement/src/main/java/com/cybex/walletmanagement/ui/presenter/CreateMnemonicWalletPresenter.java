@@ -2,7 +2,6 @@ package com.cybex.walletmanagement.ui.presenter;
 
 
 import android.content.Intent;
-
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
@@ -11,22 +10,14 @@ import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.componentservice.service.JniService;
-import com.cybex.componentservice.utils.HexUtil;
-import com.cybex.walletmanagement.config.WalletManageConst;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.walletmanagement.ui.activity.CreateMnemonicWalletActivity;
 import com.cybex.walletmanagement.ui.activity.MnemonicBackupGuideActivity;
-import com.google.common.collect.ImmutableList;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
-import com.mrzhang.component.componentlib.router.Router;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
-
-import org.bitcoinj.crypto.ChildNumber;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -150,9 +141,7 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
                 ethWalletEntities.add(ethWalletEntity);
                 multiWalletEntity.setEthWalletEntities(ethWalletEntities);
 
-                JniService jniService = (JniService) Router.getInstance().getService(JniService.class.getSimpleName());
-
-                String eosPublic = jniService.get_public_key(eosPriv);
+                String eosPublic = JNIUtil.get_public_key(eosPriv);
                 LoggerManager.d(" eosPublic="+eosPublic);
                 EosWalletEntity eosWalletEntity = new EosWalletEntity();
                 eosWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, eosPriv));

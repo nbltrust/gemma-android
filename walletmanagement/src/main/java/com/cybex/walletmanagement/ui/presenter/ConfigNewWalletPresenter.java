@@ -1,8 +1,6 @@
 package com.cybex.walletmanagement.ui.presenter;
 
 
-import android.content.Intent;
-
 import com.cybex.componentservice.bean.CoinType;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
@@ -12,36 +10,14 @@ import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.componentservice.service.JniService;
-import com.cybex.componentservice.utils.HexUtil;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.walletmanagement.ui.activity.ConfigNewWalletActivity;
-import com.cybex.walletmanagement.ui.activity.CreateMnemonicWalletActivity;
-import com.cybex.walletmanagement.ui.activity.MnemonicBackupGuideActivity;
 import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
-import com.google.common.collect.ImmutableList;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
-import com.mrzhang.component.componentlib.router.Router;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
-
-import org.bitcoinj.crypto.ChildNumber;
-import org.bitcoinj.crypto.DeterministicHierarchy;
-import org.bitcoinj.crypto.DeterministicKey;
-import org.bitcoinj.crypto.HDKeyDerivation;
-import org.bitcoinj.crypto.MnemonicCode;
-import org.bitcoinj.wallet.DeterministicSeed;
-import org.web3j.crypto.ECKeyPair;
-import org.web3j.crypto.Wallet;
-import org.web3j.crypto.WalletFile;
-
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -92,8 +68,6 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                 multiWalletEntity.setCypher(HashGenUtil.generateHashFromText(password, HashGenUtil.TYPE_SHA256));
                 multiWalletEntity.setIsCurrentWallet(1);
 
-                JniService jniService = (JniService) Router.getInstance().getService(JniService.class.getSimpleName());
-
                 if(walletType==MultiWalletEntity.WALLET_TYPE_MNEMONIC){
                     String encryptMnemonic = Seed39.keyEncrypt(password, configBean.getMnemonic());
                     multiWalletEntity.setMnemonic(encryptMnemonic);
@@ -115,7 +89,7 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                     multiWalletEntity.setEthWalletEntities(ethWalletEntities);
 
 
-                    String eosPublic = jniService.get_public_key(eosPriv);
+                    String eosPublic = JNIUtil.get_public_key(eosPriv);
                     EosWalletEntity eosWalletEntity = new EosWalletEntity();
                     eosWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, eosPriv));
                     eosWalletEntity.setPublicKey(eosPublic);
@@ -148,7 +122,7 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                         );
                     }else if(CoinType.EOS.equals(configBean.getCoinType())){
                         String eosPriv=configBean.getPriKey();
-                        String eosPublic = jniService.get_public_key(eosPriv);
+                        String eosPublic = JNIUtil.get_public_key(eosPriv);
                         EosWalletEntity eosWalletEntity = new EosWalletEntity();
                         eosWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, eosPriv));
                         eosWalletEntity.setPublicKey(eosPublic);
