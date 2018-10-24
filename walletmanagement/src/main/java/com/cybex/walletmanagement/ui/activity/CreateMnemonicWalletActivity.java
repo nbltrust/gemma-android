@@ -132,7 +132,6 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
             }
         });
 
-
         edtSetPass.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -209,8 +208,6 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
             }
         });
     }
-
-
 
     @Override
     public void initData(Bundle savedInstanceState) {
@@ -503,7 +500,6 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         super.onBackPressedSupport();
     }
 
-
     public void setWalletNameValidStyle() {
         tvWalletName.setTextColor(getResources().getColor(R.color.steel));
         tvWalletName.setText(getResources().getString(R.string.walletmanage_title_wallet_name));
@@ -651,8 +647,6 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         params.setMarginEnd(marginEnd);
     }
 
-
-
     private boolean checkValidation() {
         String walletName = getWalletName();
         if(TextUtils.isEmpty(walletName)){
@@ -693,7 +687,5 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
 
         return true;
     }
-
-
 
 }

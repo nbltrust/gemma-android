@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/walletmanage_backup_mne"
-        android:textColor="@color/color_212c68"
+        android:textColor="@color/black_title"
         android:textSize="@dimen/font_4.5"
         android:layout_marginTop="19.23dp"
         android:textStyle="bold"

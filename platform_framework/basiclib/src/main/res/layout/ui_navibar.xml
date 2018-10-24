@@ -6,8 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentTop="true"
-        android:background="@color/white"
-        android:text="11"/>
+        android:background="@color/white"/>
 
 
 
