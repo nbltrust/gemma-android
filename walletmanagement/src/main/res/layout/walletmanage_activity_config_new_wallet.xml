@@ -26,7 +26,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_14"
                 android:orientation="vertical"
                 >
 
@@ -164,21 +163,19 @@
 
                 </LinearLayout>
 
-
-
                 <View
-                    android:id="@+id/view_divider_passHint"
+                    android:id="@+id/view_divider_pass_hint"
                     style="@style/common_divider">
                 </View>
 
-
             </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/layout_checkBox"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_marginStart="@dimen/walletmanage_checkBox_marginStart"
+                android:layout_marginStart="14dp"
                 android:layout_marginTop="@dimen/walletmanage_checkBox_marginTop"
                 android:orientation="horizontal">
 
@@ -187,8 +184,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/walletmanage_checkBox_length"
                     android:text="@string/walletmanage_tip_agree"
-                    android:textColor="@color/black_context"
+                    android:textColor="@color/grey_content"
                     android:textSize="@dimen/font_3.5"
+                    android:gravity="center_vertical"
                     android:theme="@style/myCheckBox"/>
 
                 <TextView
@@ -196,21 +194,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/walletmanage_tip_terms_of_service"
-                    android:textColor="@color/black_context"
+                    android:textColor="@color/black_content"
+                    android:layout_marginLeft="6dp"
                     android:textSize="@dimen/font_3.5"
                     />
             </LinearLayout>
 
+
             <Button
                 android:id="@+id/bt_finish_import"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="38dp"
-                android:layout_marginRight="38dp"
-                android:background="@drawable/shape_corner_button_unclickable"
+                android:layout_marginTop="38dp"
+                style="@style/bt_long_in_linearLayout"
+                android:layout_marginLeft="@dimen/common_view_margin"
+                android:layout_marginRight="@dimen/common_view_margin"
                 android:text="@string/walletmanage_finish_import"
-                android:textColor="@color/whiteTwo"/>
+                />
 
         </LinearLayout>
 
