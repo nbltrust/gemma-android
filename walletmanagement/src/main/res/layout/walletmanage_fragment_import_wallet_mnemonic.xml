@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/whiteTwo"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--<include-->
@@ -13,10 +13,10 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_30"
+        android:layout_height="wrap_content"
         android:text="@string/walletmanage_tip_input_mnemonic"
-        android:textColor="@color/blueyGrey"
-        android:textSize="@dimen/font_3"
+        android:textColor="@color/black_title"
+        android:textSize="@dimen/font_4"
         android:layout_marginStart="@dimen/dimen_46"
         android:layout_marginEnd="@dimen/dimen_46"
         android:layout_marginTop="@dimen/dimen_20"/>
@@ -24,7 +24,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:background="@drawable/shape_corner"
+        android:background="@drawable/shape_corner_with_stroke"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100"
         android:layout_marginTop="@dimen/dimen_20"
@@ -37,9 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/walletmanage_input_mnemonic_hint"
-            android:textSize="@dimen/font_3.5"
-            android:textColor="@color/darkSlateBlue"
-            android:textColorHint="@color/blueyGrey"
+            android:textSize="@dimen/font_4"
+            android:textColor="@color/black_context"
+            android:textColorHint="@color/black_context"
             app:met_hideUnderline="true"
             android:textCursorDrawable="@drawable/walletmanage_cursor_custom"
             />

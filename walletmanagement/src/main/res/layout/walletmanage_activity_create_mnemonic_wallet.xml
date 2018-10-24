@@ -28,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_14"
-                android:background="@drawable/shape_corner"
                 android:orientation="vertical"
                 >
 
@@ -169,6 +168,12 @@
 
                 </LinearLayout>
 
+                <View
+                    android:id="@+id/view_divider_passHint"
+                    style="@style/common_divider">
+                </View>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -185,7 +190,7 @@
                     android:layout_height="@dimen/walletmanage_checkBox_length"
                     android:text="@string/walletmanage_tip_agree"
                     android:textColor="@color/blueyGrey"
-                    android:textSize="@dimen/font_3"
+                    android:textSize="@dimen/font_3.5"
                     android:theme="@style/myCheckBox"/>
 
                 <TextView
@@ -194,7 +199,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/walletmanage_tip_terms_of_service"
                     android:textColor="@color/darkSlateBlue"
-                    android:textSize="@dimen/font_3"
+                    android:textSize="@dimen/font_3.5"
                     />
             </LinearLayout>
 
@@ -205,6 +210,7 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="38dp"
                 android:layout_marginRight="38dp"
+                android:textSize="@dimen/font_4"
                 android:background="@drawable/shape_corner_button_unclickable"
                 android:text="@string/walletmanage_tip_next_step"
                 android:textColor="@color/whiteTwo"/>

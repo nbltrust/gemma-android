@@ -13,9 +13,9 @@
 
     <ImageView
         android:background="@drawable/walletmanage_ic_common_security"
-        android:layout_width="43dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="59.6dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
         android:layout_gravity="center"/>
 
     <TextView
@@ -51,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="14.61dp"
-            android:textColor="@color/color_757b9f"
+            android:textColor="@color/black_context"
             android:text="@string/walletmanage_backup_hint"
             app:layout_constraintStart_toEndOf="@id/iv_dot_zero"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="14.61dp"
             android:text="@string/walletmanage_lookAround"
-            android:textColor="@color/color_757b9f"
+            android:textColor="@color/black_context"
             app:layout_constraintStart_toEndOf="@id/iv_dot_one"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_backup_hint"/>
@@ -93,7 +93,7 @@
             android:layout_marginTop="@dimen/dimen_10"
             android:layout_marginStart="14.61dp"
             android:text="@string/walletmanage_backupSafely"
-            android:textColor="@color/color_757b9f"
+            android:textColor="@color/black_context"
             app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_dot_two"

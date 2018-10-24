@@ -132,15 +132,15 @@
     <style name="eos_text_title">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">30dp</item>
-        <item name="android:textSize">@dimen/font_3.5</item>
-        <item name="android:textColor">@color/darkSlateBlue</item>
+        <item name="android:textSize">@dimen/font_4</item>
+        <item name="android:textColor">@color/black_title</item>
     </style>
 
     <style name="eos_text_body">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:textSize">@dimen/font_3</item>
-        <item name="android:textColor">@color/blueyGrey</item>
+        <item name="android:textSize">@dimen/font_4</item>
+        <item name="android:textColor">@color/black_context</item>
     </style>
 
     <!-- 配置钱包页面 -->

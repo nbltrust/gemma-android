@@ -21,6 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/common_text_size_medium"
+            android:textColor="@color/black_title"
             android:text="@string/walletmanage_create_new_wallet"
             android:layout_marginLeft="@dimen/common_page_content_padding"
             />
@@ -39,6 +40,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/common_text_size_micro"
         android:text="已有的钱包"
+        android:textColor="@color/black_context"
         android:layout_marginLeft="30dp"
         />
 

@@ -25,7 +25,7 @@
                 android:layout_marginTop="@dimen/dimen_20"
                 android:text="@string/walletmanage_tip_verify_mne"
                 android:textAlignment="center"
-                android:textColor="@color/darkSlateBlue"
+                android:textColor="@color/black_title"
                 android:textSize="@dimen/font_3.5"/>
 
 

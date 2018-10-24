@@ -198,7 +198,7 @@
     <style name="bt_long_in_linearLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/bt_common_height</item>
-        <item name="android:textSize">@dimen/font_3.5</item>
+        <item name="android:textSize">@dimen/font_4</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_gravity">center</item>

@@ -17,17 +17,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/walletmanage_tip_memory_your_mne"
-            android:textColor="@color/darkSlateBlue"
-            android:textSize="@dimen/font_3.5" />
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/font_4" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_10"
             android:layout_marginTop="@dimen/dimen_20"
             android:text="@string/walletmanage_tip_use_your_mne"
-            android:textColor="@color/steel"
-            android:textSize="@dimen/font_3" />
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_3.5" />
 
         <com.cybex.base.view.flowlayout.TagFlowLayout
             android:id="@+id/id_flowlayout"
@@ -43,7 +42,7 @@
             style="@style/bt_long_in_linearLayout"
             android:layout_marginEnd="@dimen/dimen_40"
             android:layout_marginStart="@dimen/dimen_40"
-            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_30"
             android:text="@string/walletmanage_mne_copied" />
 
     </LinearLayout>
