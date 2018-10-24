@@ -160,7 +160,7 @@
         <item name="android:layout_height">@dimen/dimen_50</item>
         <item name="android:textColor">@color/black_context</item>
         <item name="android:textSize">@dimen/font_4</item>
-        <item name="android:textColorHint">@color/very_light_pink</item>
+        <item name="android:textColorHint">@color/grey_content</item>
         <item name="android:theme">@style/myEditText</item>
         <item name="android:background">@null</item>
         <item name="android:textCursorDrawable">@drawable/eos_cursor_custom</item>

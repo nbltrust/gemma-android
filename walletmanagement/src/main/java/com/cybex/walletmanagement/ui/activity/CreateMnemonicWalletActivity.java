@@ -45,6 +45,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
     View viewDividerEosName;
     View viewDividerSetPass;
     View viewDividerRepeatPass;
+    View viewDividerPassHint;
 
     ScrollView scrollViewCreateWallet;
     TextView tvWalletName;
@@ -63,6 +64,8 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
     TextView tvServiceAgreementConfig;
     LinearLayout layoutCheckBox;
     Button btCreateWallet;
+
+
 
     private boolean isMask;//true为密文显示密码
 
@@ -86,6 +89,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         viewDividerRepeatPass = findViewById(R.id.view_divider_repeatPass);
         tvPassHint = (TextView) findViewById(R.id.tv_pass_hint);
         edtPassHint = (EditText) findViewById(R.id.edt_pass_hint);
+        viewDividerPassHint = findViewById(R.id.view_divider_pass_hint);
         ivPassHintClear = (ImageView) findViewById(R.id.iv_pass_hint_clear);
         layoutCheckBox = (LinearLayout) findViewById(R.id.layout_checkBox);
         checkboxConfig = (CheckBox) findViewById(R.id.checkbox_config);
@@ -431,7 +435,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     setDividerFocusStyle(viewDividerSetPass);
-                    tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    tvSetPass.setTextColor(getResources().getColor(R.color.black_content));
                     edtSetPass.setTypeface(Typeface.DEFAULT_BOLD);
                     if (EmptyUtils.isNotEmpty(getPassword())){
                         ivSetPassClear.setVisibility(View.VISIBLE);
@@ -439,7 +443,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
                 } else {
                     setDividerDefaultStyle(viewDividerSetPass);
                     ivSetPassClear.setVisibility(View.GONE);
-                    tvSetPass.setTextColor(getResources().getColor(R.color.steel));
+                    tvSetPass.setTextColor(getResources().getColor(R.color.black_context));
                     if (EmptyUtils.isEmpty(getPassword())) { edtSetPass.setTypeface(Typeface.DEFAULT); }
                 }
             }
@@ -481,11 +485,13 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     if (EmptyUtils.isNotEmpty(getPassHint())) { ivPassHintClear.setVisibility(View.VISIBLE); }
-                    tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    tvPassHint.setTextColor(getResources().getColor(R.color.black_content));
                     edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
+                    setDividerFocusStyle(viewDividerPassHint);
                 } else {
                     ivPassHintClear.setVisibility(View.GONE);
-                    tvPassHint.setTextColor(getResources().getColor(R.color.steel));
+                    tvPassHint.setTextColor(getResources().getColor(R.color.black_context));
+                    setDividerDefaultStyle(viewDividerPassHint);
                     if (EmptyUtils.isEmpty(getPassHint())) { edtPassHint.setTypeface(Typeface.DEFAULT); }
                 }
             }
@@ -501,26 +507,28 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
     }
 
     public void setWalletNameValidStyle() {
-        tvWalletName.setTextColor(getResources().getColor(R.color.steel));
+        tvWalletName.setTextColor(getResources().getColor(R.color.black_context));
         tvWalletName.setText(getResources().getString(R.string.walletmanage_title_wallet_name));
+        setDividerDefaultStyle(viewDividerEosName);
     }
 
     public void setWalletNameInvalidStyle() {
 
         tvWalletName.setText(getResources().getString(R.string.walletmanage_tip_walletname_error));
         tvWalletName.setTextColor(getResources().getColor(R.color.scarlet));
-
+        setDividerAlertStyle(viewDividerEosName);
     }
 
     public void setWalletNameFocusedStyle() {
-        tvWalletName.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+        tvWalletName.setTextColor(getResources().getColor(R.color.black_title));
         tvWalletName.setText(getResources().getString(R.string.walletmanage_title_wallet_name));
+        setDividerFocusStyle(viewDividerEosName);
     }
 
     public void setRepeatPassValidStyle() {
         //两次输入密码匹配
         tvRepeatPass.setText(getResources().getString(R.string.walletmanage_tip_repeat_pass));
-        tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
+        tvRepeatPass.setTextColor(getResources().getColor(R.color.black_context));
         setDividerDefaultStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
             ivRepeatPassClear.setVisibility(View.VISIBLE);
@@ -532,7 +540,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
 
     public void setRepeatPassFocusStyle() {
         tvRepeatPass.setText(getResources().getString(R.string.walletmanage_tip_repeat_pass));
-        tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+        tvRepeatPass.setTextColor(getResources().getColor(R.color.black_title));
         setDividerFocusStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
             ivRepeatPassClear.setVisibility(View.VISIBLE);
@@ -556,13 +564,13 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
     }
 
     public void setClickable(Button button) {
-        //button.setClickable(true);
-        button.setBackgroundColor(getResources().getColor(R.color.cornflowerBlueTwo));
+//        button.setBackgroundColor(getResources().getColor(R.color.btn_clickable));
+        button.setEnabled(true);
     }
 
     public void setUnclickable(Button button) {
-        // button.setClickable(false);
-        button.setBackgroundColor(getResources().getColor(R.color.cloudyBlueTwo));
+//        button.setBackgroundColor(getResources().getColor(R.color.btn_unclickable));
+        button.setEnabled(false);
     }
 
     public String getWalletName() {
@@ -603,7 +611,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         String hintStr = getResources().getString(resId);
         SpannableString ss = new SpannableString(hintStr);
         AbsoluteSizeSpan ass = new AbsoluteSizeSpan(14, true);
-        editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
+//        editText.setHintTextColor(getResources().getColor(R.color.cloudyBlue));
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         editText.setHint(new SpannableString(ss));
     }
@@ -619,26 +627,26 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
     public void setDividerFocusStyle(View divider) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 3);
-        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
-                .getDimension(R.dimen.dimen_12));
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.common_page_content_padding), (int) getResources()
+                .getDimension(R.dimen.common_page_content_padding));
         divider.setLayoutParams(params);
-        divider.setBackgroundColor(getResources().getColor(R.color.dark_slate_blue));
+        divider.setBackgroundColor(getResources().getColor(R.color.black_title));
 
     }
 
     public void setDividerDefaultStyle(View divider) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
-        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
-                .getDimension(R.dimen.dimen_12));
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.common_page_content_padding), (int) getResources()
+                .getDimension(R.dimen.common_page_content_padding));
         divider.setLayoutParams(params);
-        divider.setBackgroundColor(getResources().getColor(R.color.paleGrey));
+        divider.setBackgroundColor(getResources().getColor(R.color.dddddd_grey_350));
 
     }
 
     public void setDividerAlertStyle(View divider) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 3);
-        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
-                .getDimension(R.dimen.dimen_12));
+        setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.common_page_content_padding), (int) getResources()
+                .getDimension(R.dimen.common_page_content_padding));
         divider.setBackgroundColor(getResources().getColor(R.color.scarlet));
     }
 

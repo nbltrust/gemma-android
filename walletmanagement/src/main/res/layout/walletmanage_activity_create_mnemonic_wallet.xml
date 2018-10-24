@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-              android:background="@color/whiteTwo"
+    android:background="@color/whiteTwo"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
@@ -15,7 +15,6 @@
 
     <ScrollView
         android:id="@+id/scroll_create_wallet"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -27,7 +26,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_14"
                 android:orientation="vertical"
                 >
 
@@ -169,10 +167,9 @@
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/view_divider_passHint"
+                    android:id="@+id/view_divider_pass_hint"
                     style="@style/common_divider">
                 </View>
-
 
             </LinearLayout>
 
@@ -180,17 +177,18 @@
                 android:id="@+id/layout_checkBox"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_marginStart="@dimen/walletmanage_checkBox_marginStart"
+                android:layout_marginStart="14dp"
                 android:layout_marginTop="@dimen/walletmanage_checkBox_marginTop"
                 android:orientation="horizontal">
 
                 <CheckBox
                     android:id="@+id/checkbox_config"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/walletmanage_checkBox_length"
+                    android:layout_height="18dp"
                     android:text="@string/walletmanage_tip_agree"
-                    android:textColor="@color/blueyGrey"
+                    android:textColor="@color/grey_content"
                     android:textSize="@dimen/font_3.5"
+                    android:gravity="center_vertical"
                     android:theme="@style/myCheckBox"/>
 
                 <TextView
@@ -198,22 +196,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/walletmanage_tip_terms_of_service"
-                    android:textColor="@color/darkSlateBlue"
+                    android:textColor="@color/black_content"
+                    android:layout_marginLeft="6dp"
                     android:textSize="@dimen/font_3.5"
                     />
             </LinearLayout>
 
             <Button
                 android:id="@+id/bt_create_wallet"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
                 android:layout_marginTop="25dp"
-                android:layout_marginLeft="38dp"
-                android:layout_marginRight="38dp"
-                android:textSize="@dimen/font_4"
-                android:background="@drawable/shape_corner_button_unclickable"
+                style="@style/bt_long_in_linearLayout"
+                android:layout_marginLeft="@dimen/common_view_margin"
+                android:layout_marginRight="@dimen/common_view_margin"
                 android:text="@string/walletmanage_tip_next_step"
-                android:textColor="@color/whiteTwo"/>
+                />
 
         </LinearLayout>
 

@@ -450,8 +450,8 @@
 
     <!-- 公用 -->
     <dimen name="eos_bt_radius">75dp</dimen>
-    <dimen name="card_height">44dp</dimen>
-    <dimen name="bt_common_height">44dp</dimen>
+    <dimen name="card_height">42dp</dimen>
+    <dimen name="bt_common_height">42dp</dimen>
 
     <dimen name="common_text_size_large">22dp</dimen>
     <dimen name="common_text_size_medium">16dp</dimen>
@@ -482,7 +482,7 @@
 
 
     <dimen name="common_view_margin">33.8dp</dimen>
-    <dimen name="common_page_content_padding">20dp</dimen>
+    <dimen name="common_page_content_padding">19.2dp</dimen>
 
 
 </resources>

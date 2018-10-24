@@ -5,7 +5,12 @@
     <color name="color_ffffff">#ffffff</color>
     <color name="color_000000">#000000</color>
     <color name="black_title">#333333</color>
+    <color name="black_content">#333333</color>
     <color name="black_context">#666666</color>
+    <color name="grey_content">#cccccc</color>
+    <color name="checkbox_normal">#dadada</color>
+    <color name="btn_unclickable">#ababab</color>
+    <color name="btn_clickable">#333333</color>
     <color name="color_f2f2f2">#f2f2f2</color>
     <color name="color_cccccc">#cccccc</color>
     <color name="color_55bef6">#55bef6</color>

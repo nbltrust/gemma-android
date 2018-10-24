@@ -124,12 +124,12 @@
 
     <!-- 公用分割线样式-->
     <style name="common_divider">
-        <item name="android:layout_marginStart">@dimen/dimen_12</item>
-        <item name="android:layout_marginEnd">@dimen/dimen_12</item>
+        <item name="android:layout_marginStart">@dimen/common_page_content_padding</item>
+        <item name="android:layout_marginEnd">@dimen/common_page_content_padding</item>
         <item name="android:layerType">software</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_1</item>
-        <item name="android:background">@color/paleGrey</item>
+        <item name="android:background">@color/dddddd_grey_350</item>
     </style>
     <!-- 公用删除icon样式-->
     <style name="clear_icon_common">
@@ -148,7 +148,7 @@
         <item name="android:src">@drawable/ic_visible</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:visibility">visible</item>
-        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_15</item>
     </style>
 
     <style name="input_style">
@@ -171,14 +171,14 @@
 
     <!-- 通用EditText样式 -->
     <style name="myEditText">
-        <item name="android:colorControlNormal">@color/paleGrey</item>
-        <item name="android:colorControlActivated">@color/darkSlateBlue</item>
+        <item name="android:colorControlNormal">@color/black_context</item>
+        <item name="android:colorControlActivated">@color/black_content</item>
     </style>
 
     <!-- checkbox样式 -->
     <style name="myCheckBox" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
-        <item name="android:colorControlActivated">@color/cornflowerBlue</item>
-        <item name="android:colorControlNormal">@color/cloudyBlue</item>
+        <item name="android:colorControlActivated">@color/black_content</item>
+        <item name="android:colorControlNormal">@color/checkbox_normal</item>
     </style>
 
     <!-- 通用switch样式 -->

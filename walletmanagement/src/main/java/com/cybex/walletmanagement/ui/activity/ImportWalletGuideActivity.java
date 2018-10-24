@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -40,7 +39,7 @@ public class ImportWalletGuideActivity extends XActivity {
                 finish();
             }
         });
-        setNavibarTitle(getResources().getString(R.string.walletmanage_backup_title), true);
+        setNavibarTitle(getResources().getString(R.string.walletmanage_import_wallet), true);
     }
 
     @Override
