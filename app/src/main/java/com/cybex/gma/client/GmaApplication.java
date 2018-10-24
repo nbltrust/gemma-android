@@ -3,10 +3,7 @@ package com.cybex.gma.client;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.config.HttpConfig;
 import com.cybex.componentservice.db.GemmaDatabase;
-import com.cybex.componentservice.service.JniService;
-import com.cybex.gma.client.utils.arouter.JniServiceImpl;
 import com.hxlx.core.lib.base.BaseApplication;
-import com.mrzhang.component.componentlib.router.Router;
 import com.raizlabs.android.dbflow.config.DatabaseConfig;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowLog;
@@ -30,10 +27,6 @@ public class GmaApplication extends BaseApplication {
         initDBFlow();
         HttpConfig.init(this);
         initRefresh();
-
-        Router router = Router.getInstance();
-        router.addService(JniService.class.getSimpleName(), new JniServiceImpl());
-
     }
 
 

@@ -33,16 +33,6 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
-        externalNativeBuild {
-            cmake {
-//                cppFlags "-fexceptions"
-//                arguments '-DANDROID_STL=c++_shared',
-//                        '-DANDROID_TOOLCHAIN=gcc'
-                cppFlags ""
-                arguments "-DANDROID_STL=c++_shared"
-            }
-        }
-
         ndk {
             //设置支持的SO库架构:ObjectBox only supports "armeabi-v7a" and "arm64-v8a" ABIs. "armeabi" is outdated.
             abiFilters 'arm64-v8a' /*, 'armeabi-v7a', 'x86' armeabi-v7a向下兼容armeabi, 'x86_64', 'arm64-v8a'*/
@@ -143,12 +133,6 @@ android {
         javaMaxHeapSize "4g"
     }
 
-
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
 
     //build type setting
     buildTypes {
