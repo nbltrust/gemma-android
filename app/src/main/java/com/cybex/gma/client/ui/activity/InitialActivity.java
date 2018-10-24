@@ -30,8 +30,6 @@ public class InitialActivity extends XActivity {
             ARouter.getInstance().build(RouterConst.PATH_TO_CREATE_MNEMONIC_PAGE)
                     .navigation();
         }
-
-
     }
 
     @OnClick(R.id.bt_import)
