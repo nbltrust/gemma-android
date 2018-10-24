@@ -204,7 +204,7 @@
 
             <Button
                 android:id="@+id/bt_create_wallet"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="38dp"
                 style="@style/bt_long_in_linearLayout"
                 android:layout_marginLeft="@dimen/common_view_margin"
                 android:layout_marginRight="@dimen/common_view_margin"

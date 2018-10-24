@@ -150,6 +150,6 @@
     <string name="walletmanage_import_wallet_title">导入钱包</string>
     <string name="walletmanage_finish_import">完成导入</string>
     <!--config wallet-->
-    <string name="walletmanage_config_wallet_title">创建钱包</string>
+    <string name="walletmanage_config_wallet_title">配置钱包</string>
 
 </resources>

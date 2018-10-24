@@ -12,7 +12,7 @@
     <dimen name="walletmanage_textView_marginTop">16dp</dimen>
     <dimen name="walletmanage_checkBox_length">18dp</dimen>
     <dimen name="walletmanage_checkBox_marginStart">35dp</dimen>
-    <dimen name="walletmanage_checkBox_marginTop">38dp</dimen>
+    <dimen name="walletmanage_checkBox_marginTop">12dp</dimen>
     <dimen name="walletmanage_button_margin">32dp</dimen>
     <dimen name="walletmanage_button_marginTop">29dp</dimen>
     <dimen name="walletmanage_bubble_lookLength">6dp</dimen>
