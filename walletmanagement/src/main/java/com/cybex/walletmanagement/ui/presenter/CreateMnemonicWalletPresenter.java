@@ -23,6 +23,8 @@ import com.mrzhang.component.componentlib.router.Router;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.bitcoinj.crypto.ChildNumber;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -142,8 +144,11 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
                 ethWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, privKey));
                 ethWalletEntity.setPublicKey(publicKey);
                 ethWalletEntity.setBackUp(false);
+                ethWalletEntity.setMultiWalletEntity(multiWalletEntity);
 
-                multiWalletEntity.setEthWalletEntity(ethWalletEntity);
+                List<EthWalletEntity> ethWalletEntities=new ArrayList<>();
+                ethWalletEntities.add(ethWalletEntity);
+                multiWalletEntity.setEthWalletEntities(ethWalletEntities);
 
                 JniService jniService = (JniService) Router.getInstance().getService(JniService.class.getSimpleName());
 
@@ -153,7 +158,10 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
                 eosWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, eosPriv));
                 eosWalletEntity.setPublicKey(eosPublic);
                 eosWalletEntity.setIsBackUp(0);
-                multiWalletEntity.setEosWalletEntity(eosWalletEntity);
+                eosWalletEntity.setMultiWalletEntity(multiWalletEntity);
+                List<EosWalletEntity> eosWalletEntities=new ArrayList<>();
+                eosWalletEntities.add(eosWalletEntity);
+                multiWalletEntity.setEosWalletEntities(eosWalletEntities);
 
                 LoggerManager.d("descrypt mnemonic=" + Seed39.keyDecrypt(password, encryptMnemonic));
 

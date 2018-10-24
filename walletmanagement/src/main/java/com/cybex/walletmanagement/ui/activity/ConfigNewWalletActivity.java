@@ -95,7 +95,7 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
         checkboxConfig = (CheckBox) findViewById(R.id.checkbox_config);
         tvServiceAgreementConfig = (TextView) findViewById(R.id.tv_service_agreement_config);
         btFinishImport = (Button) findViewById(R.id.bt_finish_import);
-        setNavibarTitle(getResources().getString(R.string.walletmanage_tip_create_wallet), true);
+        setNavibarTitle(getResources().getString(R.string.walletmanage_config_wallet_title), true);
 
 
         edtWalletName.addTextChangedListener(new TextWatcher() {

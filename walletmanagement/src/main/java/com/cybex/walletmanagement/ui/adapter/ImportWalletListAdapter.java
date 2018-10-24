@@ -31,7 +31,7 @@ public class ImportWalletListAdapter extends BaseQuickAdapter<MultiWalletEntity,
 
         helper.addOnClickListener(R.id.rootview_wallet);
 
-        if(item.isChecked){
+        if(item.isChecked()){
             //如果该选项卡被选择
             ivCheckbox.setImageResource(R.drawable.ic_radio_button_selected);
         }else {

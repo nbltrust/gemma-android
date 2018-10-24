@@ -6,10 +6,13 @@ import android.os.Parcelable;
 import com.cybex.componentservice.db.GemmaDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ColumnIgnore;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import java.util.List;
 
 @Table(database = GemmaDatabase.class, name = "t_multi_wallet")
 public class MultiWalletEntity extends BaseModel implements Parcelable {
@@ -22,71 +25,71 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
      * 自增长主键id
      */
     @PrimaryKey(autoincrement = true)
-    public Integer id;
+    private Integer id;
     /**
      * 钱包名称
      */
     @Column
-    public String walletName;
+    private String walletName;
 
     /**
      * 助记词（当钱包类型为1的时候，保存password加密过后的助记词）
      */
     @Column
-    public String mnemonic;
+    private String mnemonic;
 
     /**
      * 摘要信息（保存sha256之后password，用于校验用户输入密码的正确性）
      */
     @Column
-    public String cypher;
+    private String cypher;
 
     /**
      * 是否当前钱包  （1---是  0---否）
      */
     @Column
-    public Integer isCurrentWallet;
+    private Integer isCurrentWallet;
 
     /**
      * 密码提示
      */
     @Column
-    public String passwordTip;
+    private String passwordTip;
 
     /**
      * 是否已经备份
      */
     @Column
-    public Integer isBackUp;
+    private Integer isBackUp;
 
     /**
      * 钱包类型 (0--助记词软件钱包   1--硬件钱包  2-导入单个私钥类型的软钱包)
      */
     @Column(defaultValue = "0")
-    public int walletType;
+    private int walletType;
 
     /**
      * 是否设置蓝牙指纹 0--无   1--有
      */
     @Column(defaultValue = "0")
-    public int isSetBluetoothFP;
+    private int isSetBluetoothFP;
 
     /**
      * 蓝牙卡硬件地址
      */
     @Column
-    public String bluetoothDeviceName;
+    private String bluetoothDeviceName;
 
-    @Column
-    @ForeignKey
-    public EosWalletEntity eosWalletEntity;
+    private List<EthWalletEntity> ethWalletEntities;
+    private List<EosWalletEntity> eosWalletEntities;
 
-    @Column
-    @ForeignKey
-    public EthWalletEntity ethWalletEntity;
-
-    @ColumnIgnore
-    public boolean isChecked;
+//    @Column
+//    @ForeignKey
+//    private EosWalletEntity eosWalletEntity;
+//
+//    @Column
+//    @ForeignKey
+//    private EthWalletEntity ethWalletEntity;
 
     public Integer getId() {
         return id;
@@ -168,21 +171,46 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         this.bluetoothDeviceName = bluetoothDeviceName;
     }
 
-    public EosWalletEntity getEosWalletEntity() {
-        return eosWalletEntity;
+
+    public void setEthWalletEntities(List<EthWalletEntity> ethWalletEntities) {
+        this.ethWalletEntities = ethWalletEntities;
     }
 
-    public void setEosWalletEntity(EosWalletEntity eosWalletEntity) {
-        this.eosWalletEntity = eosWalletEntity;
+    public void setEosWalletEntities(List<EosWalletEntity> eosWalletEntities) {
+        this.eosWalletEntities = eosWalletEntities;
     }
 
-    public EthWalletEntity getEthWalletEntity() {
-        return ethWalletEntity;
+    public boolean isChecked() {
+        return isChecked;
     }
 
-    public void setEthWalletEntity(EthWalletEntity ethWalletEntity) {
-        this.ethWalletEntity = ethWalletEntity;
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
+
+    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "ethWalletEntities")
+    public List<EthWalletEntity> getEthWalletEntities() {
+        if (ethWalletEntities == null || ethWalletEntities.isEmpty()) {
+            ethWalletEntities = SQLite.select()
+                    .from(EthWalletEntity.class)
+                    .where(EthWalletEntity_Table.multiWalletEntity_id.eq(id))
+                    .queryList();
+        }
+        return ethWalletEntities;
+    }
+
+
+    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "eosWalletEntities")
+    public List<EosWalletEntity> getEosWalletEntities() {
+        if (eosWalletEntities == null || eosWalletEntities.isEmpty()) {
+            eosWalletEntities = SQLite.select()
+                    .from(EosWalletEntity.class)
+                    .where(EosWalletEntity_Table.multiWalletEntity_id.eq(id))
+                    .queryList();
+        }
+        return eosWalletEntities;
+    }
+
 
     @Override
     public String toString() {
@@ -197,10 +225,19 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
                 ", walletType=" + walletType +
                 ", isSetBluetoothFP=" + isSetBluetoothFP +
                 ", bluetoothDeviceName='" + bluetoothDeviceName + '\'' +
-                ", eosWalletEntity=" + eosWalletEntity +
-                ", ethWalletEntity=" + ethWalletEntity +
+                ", ethWalletEntities=" + ethWalletEntities +
+                ", eosWalletEntities=" + eosWalletEntities +
+                ", isChecked=" + isChecked +
                 '}';
     }
+
+
+
+
+
+    @ColumnIgnore
+    private boolean isChecked;
+
 
     @Override
     public int describeContents() {
@@ -219,8 +256,8 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         dest.writeInt(this.walletType);
         dest.writeInt(this.isSetBluetoothFP);
         dest.writeString(this.bluetoothDeviceName);
-        dest.writeParcelable(this.eosWalletEntity, flags);
-        dest.writeParcelable(this.ethWalletEntity, flags);
+        dest.writeTypedList(this.ethWalletEntities);
+        dest.writeTypedList(this.eosWalletEntities);
         dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
     }
 
@@ -238,12 +275,12 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         this.walletType = in.readInt();
         this.isSetBluetoothFP = in.readInt();
         this.bluetoothDeviceName = in.readString();
-        this.eosWalletEntity = in.readParcelable(EosWalletEntity.class.getClassLoader());
-        this.ethWalletEntity = in.readParcelable(EthWalletEntity.class.getClassLoader());
+        this.ethWalletEntities = in.createTypedArrayList(EthWalletEntity.CREATOR);
+        this.eosWalletEntities = in.createTypedArrayList(EosWalletEntity.CREATOR);
         this.isChecked = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<MultiWalletEntity> CREATOR = new Parcelable.Creator<MultiWalletEntity>() {
+    public static final Creator<MultiWalletEntity> CREATOR = new Creator<MultiWalletEntity>() {
         @Override
         public MultiWalletEntity createFromParcel(Parcel source) {
             return new MultiWalletEntity(source);

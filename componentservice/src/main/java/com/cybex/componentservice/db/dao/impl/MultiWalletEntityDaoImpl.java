@@ -10,6 +10,7 @@ import com.cybex.componentservice.db.entity.MultiWalletEntity_Table;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.db.util.DBFlowUtil;
 import com.cybex.componentservice.db.util.OperationType;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
@@ -82,13 +83,17 @@ public class MultiWalletEntityDaoImpl implements MultiWalletEntityDao {
         DBFlowUtil.execTransactionAsync(GemmaDatabase.class, new ITransaction() {
             @Override
             public void execute(DatabaseWrapper databaseWrapper) {
-                EthWalletEntity ethWalletEntity = entity.getEthWalletEntity();
-                EosWalletEntity eosWalletEntity = entity.getEosWalletEntity();
-                if (ethWalletEntity != null) {
-                    ethWalletEntity.save();
+                List<EthWalletEntity> ethWalletEntities = entity.getEthWalletEntities();
+                List<EosWalletEntity> eosWalletEntities = entity.getEosWalletEntities();
+                if (ethWalletEntities != null) {
+                    for (EthWalletEntity ethWalletEntity : ethWalletEntities) {
+                        ethWalletEntity.save();
+                    }
                 }
-                if (eosWalletEntity != null) {
-                    eosWalletEntity.save();
+                if (eosWalletEntities != null) {
+                    for (EosWalletEntity eosWalletEntity : eosWalletEntities) {
+                        eosWalletEntity.save();
+                    }
                 }
                 entity.save();
             }

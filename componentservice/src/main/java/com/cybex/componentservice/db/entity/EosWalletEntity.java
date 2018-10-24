@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.cybex.componentservice.db.GemmaDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ColumnIgnore;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -18,56 +19,80 @@ public class EosWalletEntity extends BaseModel implements Parcelable {
      * 自增长主键id
      */
     @PrimaryKey(autoincrement = true)
-    public Integer id;
+    private Integer id;
 
     /**
      * 公钥
      */
     @Column
-    public String publicKey;
+    private String publicKey;
 
     /**
      * 私钥(multiwallet当钱包类型为3时，单个eos钱包需要保存自己的加密过后的私钥)
      */
     @Column
-    public String privateKey;
+    private String privateKey;
 
     /**
      * 账户eos的名称对象列表转换为json的数据
      */
     @Column
-    public String eosNameJson;
+    private String eosNameJson;
 
     /**
      * 在当前钱包，并且当前选择的eosname
      */
     @Column
-    public String currentEosName;
+    private String currentEosName;
 
     /**
      * 是否已经备份
      */
     @Column
-    public Integer isBackUp;
+    private Integer isBackUp;
     /**
      * 是否被链上确认100创建成功 (1---是  0---否 -1---失败）
      */
     @Column(defaultValue = "0")
-    public Integer isConfirmLib;
+    private Integer isConfirmLib;
 
     /**
      * 每次创建流程由中心化服务器返回的hash值
      */
     @Column
-    public String txId;
+    private String txId;
     /**
      * 邀请码
      */
     @Column
-    public String invCode;
+    private String invCode;
 
     @ColumnIgnore
-    public boolean isChecked = false;
+    private boolean isChecked = false;
+
+    /**
+     * 使用时需要手动调用load（）
+     */
+    @Column
+    @ForeignKey(stubbedRelationship = true)
+    private MultiWalletEntity multiWalletEntity;
+
+    @Override
+    public String toString() {
+        return "EosWalletEntity{" +
+                "id=" + id +
+                ", publicKey='" + publicKey + '\'' +
+                ", privateKey='" + privateKey + '\'' +
+                ", eosNameJson='" + eosNameJson + '\'' +
+                ", currentEosName='" + currentEosName + '\'' +
+                ", isBackUp=" + isBackUp +
+                ", isConfirmLib=" + isConfirmLib +
+                ", txId='" + txId + '\'' +
+                ", invCode='" + invCode + '\'' +
+                ", isChecked=" + isChecked +
+                ", multiWalletEntity=" + multiWalletEntity +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -149,6 +174,14 @@ public class EosWalletEntity extends BaseModel implements Parcelable {
         isChecked = checked;
     }
 
+    public MultiWalletEntity getMultiWalletEntity() {
+        return multiWalletEntity;
+    }
+
+    public void setMultiWalletEntity(MultiWalletEntity multiWalletEntity) {
+        this.multiWalletEntity = multiWalletEntity;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -166,6 +199,7 @@ public class EosWalletEntity extends BaseModel implements Parcelable {
         dest.writeString(this.txId);
         dest.writeString(this.invCode);
         dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.multiWalletEntity, flags);
     }
 
     public EosWalletEntity() {
@@ -182,6 +216,7 @@ public class EosWalletEntity extends BaseModel implements Parcelable {
         this.txId = in.readString();
         this.invCode = in.readString();
         this.isChecked = in.readByte() != 0;
+        this.multiWalletEntity = in.readParcelable(MultiWalletEntity.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<EosWalletEntity> CREATOR = new Parcelable.Creator<EosWalletEntity>() {
@@ -195,20 +230,4 @@ public class EosWalletEntity extends BaseModel implements Parcelable {
             return new EosWalletEntity[size];
         }
     };
-
-    @Override
-    public String toString() {
-        return "EosWalletEntity{" +
-                "id=" + id +
-                ", publicKey='" + publicKey + '\'' +
-                ", privateKey='" + privateKey + '\'' +
-                ", eosNameJson='" + eosNameJson + '\'' +
-                ", currentEosName='" + currentEosName + '\'' +
-                ", isBackUp=" + isBackUp +
-                ", isConfirmLib=" + isConfirmLib +
-                ", txId='" + txId + '\'' +
-                ", invCode='" + invCode + '\'' +
-                ", isChecked=" + isChecked +
-                '}';
-    }
 }

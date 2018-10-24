@@ -79,9 +79,9 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
         final ImportWalletConfigBean configBean = getV().getConfigBean();
         LoggerManager.d("configBean=" + configBean);
 
-        Disposable subscribe = Observable.create(new ObservableOnSubscribe<List<String>>() {
+        Disposable subscribe = Observable.create(new ObservableOnSubscribe<Object>() {
             @Override
-            public void subscribe(final ObservableEmitter<List<String>> emitter) throws Exception {
+            public void subscribe(final ObservableEmitter<Object> emitter) throws Exception {
                 MultiWalletEntity multiWalletEntity = new MultiWalletEntity();
 
                 int walletType = configBean.getWalletType();
@@ -109,7 +109,10 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                     ethWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, privKey));
                     ethWalletEntity.setPublicKey(publicKey);
                     ethWalletEntity.setBackUp(false);
-                    multiWalletEntity.setEthWalletEntity(ethWalletEntity);
+                    ethWalletEntity.setMultiWalletEntity(multiWalletEntity);
+                    List<EthWalletEntity> ethWalletEntities=new ArrayList<>();
+                    ethWalletEntities.add(ethWalletEntity);
+                    multiWalletEntity.setEthWalletEntities(ethWalletEntities);
 
 
                     String eosPublic = jniService.get_public_key(eosPriv);
@@ -117,7 +120,10 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                     eosWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, eosPriv));
                     eosWalletEntity.setPublicKey(eosPublic);
                     eosWalletEntity.setIsBackUp(0);
-                    multiWalletEntity.setEosWalletEntity(eosWalletEntity);
+                    eosWalletEntity.setMultiWalletEntity(multiWalletEntity);
+                    List<EosWalletEntity> eosWalletEntities=new ArrayList<>();
+                    eosWalletEntities.add(eosWalletEntity);
+                    multiWalletEntity.setEosWalletEntities(eosWalletEntities);
 
                 }else if(walletType==MultiWalletEntity.WALLET_TYPE_PRI_KEY){
 
@@ -133,7 +139,10 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                         ethWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, privKey));
                         ethWalletEntity.setPublicKey(publicKey);
                         ethWalletEntity.setBackUp(false);
-                        multiWalletEntity.setEthWalletEntity(ethWalletEntity);
+                        ethWalletEntity.setMultiWalletEntity(multiWalletEntity);
+                        List<EthWalletEntity> ethWalletEntities=new ArrayList<>();
+                        ethWalletEntities.add(ethWalletEntity);
+                        multiWalletEntity.setEthWalletEntities(ethWalletEntities);
                         LoggerManager.d(" configBean.getPriKey()="+privKey
                                 +"   publicKey="+publicKey +"   address="+address
                         );
@@ -144,7 +153,10 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                         eosWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, eosPriv));
                         eosWalletEntity.setPublicKey(eosPublic);
                         eosWalletEntity.setIsBackUp(0);
-                        multiWalletEntity.setEosWalletEntity(eosWalletEntity);
+                        eosWalletEntity.setMultiWalletEntity(multiWalletEntity);
+                        List<EosWalletEntity> eosWalletEntities=new ArrayList<>();
+                        eosWalletEntities.add(eosWalletEntity);
+                        multiWalletEntity.setEosWalletEntities(eosWalletEntities);
                     }
                 }
 
@@ -164,7 +176,7 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                                 SQLite.select().from(MultiWalletEntity.class)
                                         .queryList();
                         LoggerManager.d("list=" + list);
-                        emitter.onNext(null);
+                        emitter.onNext(new Object());
                         emitter.onComplete();
                     }
 
@@ -178,17 +190,18 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<String>>() {
+                .subscribe(new Consumer<Object>() {
                     @Override
-                    public void accept(List<String> mnemonic) {
+                    public void accept(Object mnemonic) {
                         getV().dissmisProgressDialog();
-                        Intent intent = new Intent(getV(), MnemonicBackupGuideActivity.class);
-                        getV().startActivity(intent);
-                        getV().finish();
+//                        Intent intent = new Intent(getV(), MnemonicBackupGuideActivity.class);
+//                        getV().startActivity(intent);
+//                        getV().finish();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
+                        LoggerManager.d("throwable="+throwable.getMessage());
                         getV().dissmisProgressDialog();
                     }
                 });

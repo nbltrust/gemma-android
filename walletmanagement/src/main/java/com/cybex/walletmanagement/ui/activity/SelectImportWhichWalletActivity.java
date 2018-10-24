@@ -63,12 +63,12 @@ public class SelectImportWhichWalletActivity extends XActivity {
 
         setNewWalletSelect(true);
         MultiWalletEntity selectedWallet = getIntent().getParcelableExtra(WalletManageConst.KEY_SELECT_IMPORT_WHICH_WALLET);
-        LoggerManager.e("czc selectedWallet="+selectedWallet);
+        LoggerManager.d("selectedWallet="+selectedWallet);
         if(selectedWallet!=null){
             for (MultiWalletEntity wallet : wallets) {
-                wallet.isChecked=false;
+                wallet.setChecked(false);
                 if(wallet.getId()==selectedWallet.getId()){
-                    wallet.isChecked=true;
+                    wallet.setChecked(true);
                     setNewWalletSelect(false);
                 }
             }
@@ -80,10 +80,10 @@ public class SelectImportWhichWalletActivity extends XActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 for (MultiWalletEntity wallet : wallets) {
-                    wallet.isChecked=false;
+                    wallet.setChecked(false);
                 }
                 setNewWalletSelect(false);
-                wallets.get(position).isChecked=true;
+                wallets.get(position).setChecked(true);
                 adatper.notifyDataSetChanged();
                 EventBusProvider.post(new SelectImportWhichWalletEvent(wallets.get(position)));
             }
@@ -93,7 +93,7 @@ public class SelectImportWhichWalletActivity extends XActivity {
             @Override
             public void onClick(View v) {
                 for (MultiWalletEntity wallet : wallets) {
-                    wallet.isChecked=false;
+                    wallet.setChecked(false);
                 }
                 setNewWalletSelect(true);
                 adatper.notifyDataSetChanged();
