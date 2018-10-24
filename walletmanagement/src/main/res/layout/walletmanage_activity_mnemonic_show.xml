@@ -33,16 +33,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/shape_corner"
-            android:padding="@dimen/dimen_20"
+            android:background="@drawable/shape_corner_radius"
+            android:padding="@dimen/dimen_16"
             app:max_select="1" />
 
         <Button
             android:id="@+id/bt_copied_mne"
             style="@style/bt_long_in_linearLayout"
-            android:layout_marginEnd="@dimen/dimen_40"
-            android:layout_marginStart="@dimen/dimen_40"
-            android:layout_marginTop="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/common_view_margin"
+            android:layout_marginStart="@dimen/common_view_margin"
+            android:layout_marginTop="@dimen/dimen_38"
             android:text="@string/walletmanage_mne_copied" />
 
     </LinearLayout>

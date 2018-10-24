@@ -13,9 +13,9 @@
 
     <ImageView
         android:background="@drawable/walletmanage_ic_common_security"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="53dp"
         android:layout_gravity="center"/>
 
     <TextView
@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="14.61dp"
             android:textColor="@color/black_context"
+            android:textSize="@dimen/font_4"
             android:text="@string/walletmanage_backup_hint"
             app:layout_constraintStart_toEndOf="@id/iv_dot_zero"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -73,6 +74,7 @@
             android:layout_marginStart="14.61dp"
             android:text="@string/walletmanage_lookAround"
             android:textColor="@color/black_context"
+            android:textSize="@dimen/font_4"
             app:layout_constraintStart_toEndOf="@id/iv_dot_one"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_backup_hint"/>
@@ -94,6 +96,7 @@
             android:layout_marginStart="14.61dp"
             android:text="@string/walletmanage_backupSafely"
             android:textColor="@color/black_context"
+            android:textSize="@dimen/font_4"
             app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_dot_two"
@@ -105,8 +108,8 @@
         android:id="@+id/bt_show_mne"
         style="@style/bt_long_in_linearLayout"
         android:text="@string/walletmanage_show_mne"
-        android:layout_marginLeft="33.84dp"
-        android:layout_marginRight="33.84dp"
+        android:layout_marginLeft="@dimen/common_view_margin"
+        android:layout_marginRight="@dimen/common_view_margin"
         android:layout_marginTop="38.46dp"
         />
 

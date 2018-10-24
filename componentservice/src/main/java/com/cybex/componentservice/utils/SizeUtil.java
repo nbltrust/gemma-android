@@ -1,4 +1,4 @@
-package com.cybex.gma.client.utils;
+package com.cybex.componentservice.utils;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;

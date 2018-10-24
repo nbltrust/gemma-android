@@ -1,17 +1,15 @@
 package com.cybex.walletmanagement.ui.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cybex.base.view.flowlayout.FlowLayout;
-import com.cybex.base.view.flowlayout.TagAdapter;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.CollectionUtils;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.componentservice.utils.TSnackbarUtil;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.widget.LabelsView;
@@ -133,39 +131,50 @@ public class MnemonicVerifyActivity extends XActivity {
      * 设置上方LabelView初始样式
      */
     public void initAboveLabelView() {
-        viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.shape_corner));
+        viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.shape_corner_radius));
         viewClickToShowMne.setWordMargin(30);
         viewClickToShowMne.setLineMargin(40);
         viewClickToShowMne.setSelectType(LabelsView.SelectType.SINGLE);
         viewClickToShowMne.setLabelTextSize(42);
         viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.whiteTwo));
         viewClickToShowMne.setLabelTextPadding(40, 20, 40, 20);
+
     }
 
     /**
      * 设置上方LabelView正常显示样式
      */
     public void setAboveLabelView() {
-        viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.walletmanage_shape_corner_text));
-        viewClickToShowMne.setWordMargin(20);
-        viewClickToShowMne.setLineMargin(20);
+
+        int horizontalViewPadding = SizeUtil.dp2px(12);
+        int verticalViewPadding = SizeUtil.dp2px(15);
+        viewClickToShowMne.setPadding(horizontalViewPadding,verticalViewPadding,horizontalViewPadding,verticalViewPadding);
+
+        viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.walletmanage_shape_verify_mnemonic_above));
+        viewClickToShowMne.setWordMargin(SizeUtil.dp2px(7.5f));
+        viewClickToShowMne.setLineMargin(SizeUtil.dp2px(11.5f));
         viewClickToShowMne.setSelectType(LabelsView.SelectType.SINGLE);
-        viewClickToShowMne.setLabelTextSize(42);
-        viewClickToShowMne.setLabelTextColor(Color.parseColor("#4169d1"));
-        viewClickToShowMne.setLabelTextPadding(40, 20, 40, 20);
+        viewClickToShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
+        viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.black_content));
+
+        int horizontalPadding = SizeUtil.dp2px(15);
+        int verticalPadding = SizeUtil.dp2px(5.5f);
+        viewClickToShowMne.setLabelTextPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
     }
 
     /**
      * 设置下方LabelView样式
      */
     public void initBelowLabelView() {
-        viewShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.walletmanage_shape_corner_text_clicked));
-        viewShowMne.setWordMargin(20);
-        viewShowMne.setLineMargin(20);
+        viewShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.walletmanage_shape_verify_mnemonic_bottom));
+        viewShowMne.setWordMargin(SizeUtil.dp2px(7.5f));
+        viewShowMne.setLineMargin(SizeUtil.dp2px(11.5f));
         viewShowMne.setSelectType(LabelsView.SelectType.SINGLE);
-        viewShowMne.setLabelTextSize(42);
+        viewShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
         viewShowMne.setLabelTextColor(Color.WHITE);
-        viewShowMne.setLabelTextPadding(40, 20, 40, 20);
+        int horizontalPadding = SizeUtil.dp2px(15);
+        int verticalPadding = SizeUtil.dp2px(5.5f);
+        viewShowMne.setLabelTextPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
     }
 
     /**

@@ -11,8 +11,6 @@ import com.cybex.base.view.flowlayout.FlowLayout;
 import com.cybex.base.view.flowlayout.TagAdapter;
 import com.cybex.base.view.flowlayout.TagFlowLayout;
 import com.cybex.componentservice.config.BaseConst;
-import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.manager.DBManager;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.siberiadante.customdialoglib.CustomDialog;
@@ -88,14 +86,14 @@ public class MnemonicShowActivity extends XActivity {
      * 显示请勿截图Dialog
      */
     private void showAlertDialog() {
-        int[] listenedItems = {R.id.tv_understand};
+        int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(this,
                 R.layout.walletmanage_dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override
             public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-                if(view.getId()==R.id.tv_understand){
+                if(view.getId()==R.id.tv_i_understand){
                     dialog.cancel();
                 }
             }
