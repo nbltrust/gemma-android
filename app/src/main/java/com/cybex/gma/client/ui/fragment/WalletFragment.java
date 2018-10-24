@@ -22,7 +22,9 @@ import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.ClipboardUtils;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
@@ -45,6 +47,7 @@ import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.common.utils.DateUtil;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -80,6 +83,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.tv_eos_value) TextView tvEosValue;
     @BindView(R.id.view_soft_wallet) ConstraintLayout viewSoftWallet;
     @BindView(R.id.tv_account_name) TextView tvAccountName;
+    @BindView(R.id.iv_back) ImageView ivBack;
+    @BindView(R.id.iv_copy) ImageView ivCopy;
+    @BindView(R.id.tv_current_account) TextView tvCurrentAccount;
+    @BindView(R.id.iv_change_account) ImageView ivChangeAccount;
+    @BindView(R.id.view_top_navigation) ConstraintLayout viewTopNavigation;
+    @BindView(R.id.show_cpu) LinearLayout showCpu;
+    @BindView(R.id.tv_assets) TextView tvAssets;
     private WalletEntity curWallet;
     private int walletID;
     private String curEosUsername;
@@ -88,8 +98,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.balance) SuperTextView tvBalance;
     @BindView(R.id.redeem) SuperTextView tvRedeem;
     @BindView(R.id.layout_top_info) LinearLayout layoutTopInfo;
-    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.show_cpu) LinearLayout showCpu;
+    //@BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.layout_info) ConstraintLayout layoutInfo;
     @BindView(R.id.scroll_wallet_tab) NestedScrollView mScrollView;
     @BindView(R.id.progressbar_cpu_small) RoundCornerProgressBar progressBarCPU;
@@ -127,7 +136,29 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
-    public void goResourceManagement(){
+    @OnClick({R.id.iv_copy, R.id.iv_back})
+    public void onNavigationBarClicked(View v){
+        switch (v.getId()){
+            case R.id.iv_copy:
+                //复制账户名
+                if (getActivity() != null){
+                    ClipboardUtils.copyText(getActivity(), getAccountName());
+                    GemmaToastUtils.showLongToast(getString(R.string.eos_copy_success));
+                }
+                break;
+            case R.id.iv_back:
+                if (getActivity() != null){
+                    getActivity().finish();
+                }
+                break;
+        }
+    }
+
+    public String getAccountName(){
+        return tvAccountName.getText().toString().trim();
+    }
+
+    public void goResourceManagement() {
         UISkipMananger.launchResourceDetail(getActivity(), bundle);
     }
 
@@ -417,7 +448,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void bindUI(View rootView) {
-        setNavibarTitle("GEMMA", false);//设置标题
         unbinder = ButterKnife.bind(this, rootView);
         //OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
     }
@@ -451,6 +481,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             curEosUsername = curWallet.getCurrentEosName();
             //textViewUsername.setText(curWallet.getCurrentEosName());
             tvAccountName.setText(curWallet.getCurrentEosName());
+            tvCurrentAccount.setText(curWallet.getCurrentEosName());
             //生成头像
             //generatePortrait(curWallet.getCurrentEosName());
             //设置Alert
@@ -468,14 +499,19 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             String json = curWallet.getEosNameJson();
             List<String> eosNamelist = GsonUtils.parseString2List(json, String.class);
             if (EmptyUtils.isNotEmpty(eosNamelist) && eosNamelist.size() > 1) {
+                //如果当前有多个eos账户
+
+                /*
                 Drawable drawable = getResources().getDrawable(
                         R.drawable.ic_common_drop_white);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(),
                         drawable.getMinimumHeight());
-                //textViewUsername.setCompoundDrawables(null, null, drawable, null);
+                textViewUsername.setCompoundDrawables(null, null, drawable, null);
 
-                //textViewUsername.setClickable(true);
+                textViewUsername.setClickable(true);
+                */
             } else {
+                //只有一个eos账户
                 //textViewUsername.setCompoundDrawables(null, null, null, null);
                 //textViewUsername.setClickable(false);
 
@@ -527,6 +563,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 }
             }
         });
+
+        bundle.putString(ParamConstants.EOS_ALL_ASSET_VALUE, getAssetsValue());
+        bundle.putString(ParamConstants.EOS_AMOUNT, getEosAmount());
     }
 
     @Override
@@ -592,20 +631,17 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     }
 
+    public String getAssetsValue(){
+        return totalCNYAmount.getText().toString().trim();
+    }
+
+    public String getEosAmount(){
+        return tvEosAmount.getText().toString().trim();
+    }
+
     public static int px2dp(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
-    }
-
-    /**
-     * 判断当前钱包是否已经备份过
-     *
-     * @param
-     * @return
-     */
-    public boolean isCurWalletBackUp() {
-        return !EmptyUtils.isEmpty(curWallet)
-                && curWallet.getIsBackUp().equals(CacheConstants.ALREADY_BACKUP);
     }
 
     private void showChangeEOSNameDialog() {

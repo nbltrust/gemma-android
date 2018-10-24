@@ -109,8 +109,9 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         if (EmptyUtils.isEmpty(title)) { return; }
         mTitleBar = findViewById(R.id.btn_navibar);
         mTitleBar.setTitle(title);
-        mTitleBar.setTitleColor(R.color.black_color);
-        mTitleBar.setTitleSize(20);
+        mTitleBar.setTitleColor(R.color.black_title);
+        mTitleBar.setBackgroundColor(getResources().getColor(R.color.ffffff_white_1000));
+        mTitleBar.setTitleSize(18);
         mTitleBar.setImmersive(true);
 
         if (isShowBack) {

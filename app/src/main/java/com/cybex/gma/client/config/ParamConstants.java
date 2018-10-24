@@ -114,4 +114,6 @@ public interface ParamConstants {
     int FINGER_SUCCESS = 0;
 
     String RAM_UNIT_PRICE = "ramUnitPrice";
+    String EOS_ALL_ASSET_VALUE = "eosAssetsValue";
+    String EOS_AMOUNT = "eosAmount";
 }

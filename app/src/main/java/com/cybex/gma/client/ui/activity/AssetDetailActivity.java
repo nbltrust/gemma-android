@@ -56,7 +56,7 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @BindView(R.id.view_asset_top) ConstraintLayout viewAssetTop;
     @BindView(R.id.list_multiple_status_view) MultipleStatusView listMultipleStatusView;
     @BindView(R.id.rv_list) RecyclerView mRecyclerView;
-    @BindView(R.id.view_scroll) NestedScrollView viewScroll;
+    //@BindView(R.id.view_scroll) NestedScrollView viewScroll;
     @BindView(R.id.view_refresh_asset) CommonRefreshLayout viewRefresh;
     @BindView(R.id.tv_vote) TextView tvVote;
     @BindView(R.id.tv_resource_manage) TextView tvResourceManage;
@@ -78,6 +78,12 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         bundle = getIntent().getExtras();
+        if (bundle != null){
+            String assetsValue = bundle.getString(ParamConstants.EOS_ALL_ASSET_VALUE);
+            tvRmbAmount.setText(assetsValue);
+            String eosAmount = bundle.getString(ParamConstants.EOS_AMOUNT);
+            tvEosAmount.setText(eosAmount);
+        }
         viewRefresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {

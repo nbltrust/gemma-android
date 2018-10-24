@@ -8,11 +8,24 @@
     title:layout_constraintEnd_toEndOf="parent"
     title:layout_constraintStart_toStartOf="parent"
     title:layout_constraintTop_toBottomOf="@id/layout_info">
+    
+    
+    <TextView
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        title:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/tv_assets"
+        android:textColor="@color/black_title"
+        android:textSize="@dimen/font_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eos_total_assets"/>
 
     <android.support.constraint.ConstraintLayout
-        android:layout_marginTop="30dp"
+        title:layout_constraintTop_toBottomOf="@id/tv_assets"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:id="@+id/view_resource_manage"
@@ -69,7 +82,16 @@
 
         </LinearLayout>
 
+
+
     </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_marginStart="62dp"
+        android:layout_marginEnd="28dp"
+        title:layout_constraintTop_toBottomOf="@id/view_resource_manage"
+        style="@style/common_divider">
+    </View>
 
     <!--
 

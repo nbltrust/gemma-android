@@ -76,11 +76,12 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
     protected void setNavibarTitle(final String title, final boolean isShowBack) {
         mTitleBar = rootView.findViewById(R.id.btn_navibar);
         mTitleBar.setTitle(title);
-        mTitleBar.setTitleColor(R.color.dark_slate_blue);
-        mTitleBar.setTitleSize(20);
+        mTitleBar.setTitleColor(R.color.black_title);
+        mTitleBar.setBackgroundColor(getResources().getColor(R.color.ffffff_white_1000));
+        mTitleBar.setTitleSize(18);
         mTitleBar.setImmersive(true);
         if (isShowBack) {
-            mTitleBar.setLeftImageResource(R.drawable.ic_btn_back);
+            mTitleBar.setLeftImageResource(R.drawable.ic_notify_back);
             mTitleBar.setLeftClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -100,8 +101,9 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
 
         mTitleBar = rootView.findViewById(R.id.btn_navibar);
         mTitleBar.setTitle(title);
-        mTitleBar.setTitleColor(R.color.black_color);
-        mTitleBar.setTitleSize(20);
+        mTitleBar.setTitleColor(R.color.black_title);
+        mTitleBar.setBackgroundColor(getResources().getColor(R.color.ffffff_white_1000));
+        mTitleBar.setTitleSize(18);
         mTitleBar.setImmersive(true);
 
         if (isShowBack) {

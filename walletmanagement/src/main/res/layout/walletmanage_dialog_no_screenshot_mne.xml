@@ -45,7 +45,7 @@
     </View>
 
     <TextView
-        android:id="@+id/tv_i_understand"
+        android:id="@+id/tv_understand"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/walletmanage_tip_i_understand"

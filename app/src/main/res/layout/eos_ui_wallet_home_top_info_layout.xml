@@ -20,7 +20,7 @@
         android:layout_marginStart="18dp"
         android:background="@drawable/eos_shape_corner_token_card"
         android:orientation="vertical"
-        android:translationZ="10dp">
+        android:translationZ="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"

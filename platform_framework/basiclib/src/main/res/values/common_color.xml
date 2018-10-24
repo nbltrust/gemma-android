@@ -340,5 +340,7 @@
     <color name="black_color">#000000</color>
 
     <color name="dark_slate_blue">#212c68</color>
+    <color name="black_title">#333333</color>
+    <color name="black_context">#666666</color>
 
 </resources>

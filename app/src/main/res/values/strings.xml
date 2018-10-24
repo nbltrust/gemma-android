@@ -147,7 +147,7 @@
     <string name="eos_tip_pass_no_match">密码不一致</string>
 
     <!-- Wallet Fragment-->
-    <string name="eos_total_assets">账户总资产</string>
+    <string name="eos_total_assets">资产</string>
     <string name="eos_available_balance">可用余额</string>
     <string name="eos_tip_redeem_ing">正在赎回</string>
     <string name="eos_transfer_records">收支记录</string>
