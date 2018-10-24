@@ -30,6 +30,7 @@
                 android:orientation="vertical"
                 >
 
+                <!--
                 <com.xujiaji.happybubble.BubbleLayout
                     android:id="@+id/bubble"
                     android:layout_width="match_parent"
@@ -82,6 +83,7 @@
                     android:layout_marginEnd="10dp"
                     style="@style/common_divider"/>
 
+                 -->
 
                 <TextView
                     android:id="@+id/tv_set_pass"

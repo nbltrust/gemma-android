@@ -24,7 +24,7 @@
         <TextView
             android:textSize="@dimen/font_4"
             android:text="@string/eos_tip_vote"
-            android:textColor="@color/cornflowerBlue"
+            android:textColor="@color/black_context"
             android:layout_weight="1"
             android:id="@+id/tv_vote"
             android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
         <TextView
             android:textSize="@dimen/font_4"
             android:text="@string/eos_title_resource_management"
-            android:textColor="@color/cornflowerBlue"
+            android:textColor="@color/black_context"
             android:layout_weight="1"
             android:id="@+id/tv_resource_manage"
             android:layout_width="wrap_content"

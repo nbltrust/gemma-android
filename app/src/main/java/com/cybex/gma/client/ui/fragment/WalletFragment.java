@@ -18,12 +18,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.api.ApiPath;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
-import com.cybex.componentservice.config.CacheConstants;
-import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
@@ -38,7 +37,6 @@ import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
 import com.cybex.gma.client.utils.AmountUtil;
-import com.cybex.gma.client.utils.encryptation.EncryptationManager;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -48,7 +46,6 @@ import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.common.utils.DateUtil;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
-import com.pixplicity.sharp.Sharp;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.siberiadante.customdialoglib.CustomFullDialog;
@@ -65,7 +62,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.hypertrack.smart_scheduler.SmartScheduler;
-import jdenticon.AvatarHelper;
 
 /**
  * 钱包Fragment
@@ -74,22 +70,27 @@ import jdenticon.AvatarHelper;
  */
 public class WalletFragment extends XFragment<WalletPresenter> {
 
-    @BindView(R.id.superTextView_card_vote) SuperTextView superTextViewCardVote;
     @BindView(R.id.view_resource_manage) ConstraintLayout viewResourceManage;
+    @BindView(R.id.tv_number_of_tokens) TextView tvNumberOfTokens;
+    @BindView(R.id.view_eos_tokens) LinearLayout viewEosTokens;
+    @BindView(R.id.tv_currency_type) TextView tvCurrencyType;
+    @BindView(R.id.iv_eos_asset_logo) ImageView ivEosAssetLogo;
+    @BindView(R.id.tv_eos) TextView tvEos;
+    @BindView(R.id.tv_eos_amount) TextView tvEosAmount;
+    @BindView(R.id.tv_eos_value) TextView tvEosValue;
+    @BindView(R.id.view_soft_wallet) ConstraintLayout viewSoftWallet;
+    @BindView(R.id.tv_account_name) TextView tvAccountName;
     private WalletEntity curWallet;
     private int walletID;
     private String curEosUsername;
     @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
-    @BindView(R.id.total_CNY_amount) SuperTextView totalCNYAmount;
+    @BindView(R.id.total_CNY_amount) TextView totalCNYAmount;
     @BindView(R.id.balance) SuperTextView tvBalance;
     @BindView(R.id.redeem) SuperTextView tvRedeem;
     @BindView(R.id.layout_top_info) LinearLayout layoutTopInfo;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.imageView_portrait) ImageView imageViewPortrait;
-    @BindView(R.id.textView_username) TextView textViewUsername;
     @BindView(R.id.show_cpu) LinearLayout showCpu;
     @BindView(R.id.layout_info) ConstraintLayout layoutInfo;
-    @BindView(R.id.superTextView_card_record) SuperTextView superTextViewCardRecord;
     @BindView(R.id.scroll_wallet_tab) NestedScrollView mScrollView;
     @BindView(R.id.progressbar_cpu_small) RoundCornerProgressBar progressBarCPU;
     @BindView(R.id.progressbar_net_small) RoundCornerProgressBar progressBarNET;
@@ -107,25 +108,30 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     private int savedCurrency;
 
     @OnClick(R.id.view_resource_manage)
-    public void goResourceDetail(){
-        UISkipMananger.launchResourceDetail(getActivity(), bundle);
+    public void goResourceDetail() {
+        UISkipMananger.launchAssetDetail(getActivity(), bundle);
     }
 
     @OnClick({R.id.view_cpu, R.id.view_net, R.id.view_ram})
     public void clickViews(View view) {
         switch (view.getId()) {
             case R.id.view_cpu:
-                goResourceDetail();
+                goResourceManagement();
                 break;
             case R.id.view_net:
-                goResourceDetail();
+                goResourceManagement();
                 break;
             case R.id.view_ram:
-                goResourceDetail();
+                goResourceManagement();
                 break;
         }
     }
 
+    public void goResourceManagement(){
+        UISkipMananger.launchResourceDetail(getActivity(), bundle);
+    }
+
+    /*
     @OnClick(R.id.textView_username)
     public void backUpWallet(View v) {
         switch (v.getId()) {
@@ -136,30 +142,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                 break;
         }
     }
+    */
 
     @Override
     public boolean useEventBus() {
         return true;
     }
 
-    @OnClick(R.id.superTextView_card_record)
-    public void goToSeeRecord() {
-        UISkipMananger.launchTransferRecord(getActivity());
-    }
-
-    @OnClick(R.id.superTextView_card_vote)
-    public void goToVote() {
-        /*
-        if (EmptyUtils.isNotEmpty(curWallet)) {
-            Bundle bundle = new Bundle();
-            bundle.putString("cur_eos_name", curWallet.getCurrentEosName());
-            UISkipMananger.launchVote(getActivity(), bundle);
-        }
-        */
-
-        Bundle bundle = new Bundle();
-        UISkipMananger.launchAssetDetail(getActivity());
-    }
 
     public static WalletFragment newInstance() {
         Bundle args = new Bundle();
@@ -351,7 +340,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     private void setProgressColor(RoundCornerProgressBar progressBar, int progress) {
         if (progress < 85) {
-            progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
+            progressBar.setProgressColor(getResources().getColor(R.color.black_context));
         } else {
             progressBar.setProgressColor(getResources().getColor(R.color.scarlet));
         }
@@ -389,16 +378,23 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         String totalCNY = AmountUtil.mul(unitPrice, totalPrice, 4);
         String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 4);
         totalEOSAmount.setText(totalPrice);
+        tvEosAmount.setText(totalPrice);
         savedCurrency = SPUtils.getInstance().getInt("currency_unit");
         switch (savedCurrency) {
             case CacheConstants.CURRENCY_CNY:
-                totalCNYAmount.setLeftString("≈" + totalCNY + " CNY");
+                tvCurrencyType.setText("≈ ¥ ");
+                tvEosValue.setText(" ≈ " + totalCNY);
+                totalCNYAmount.setText(totalCNY);
                 break;
             case CacheConstants.CURRENCY_USD:
-                totalCNYAmount.setLeftString("≈" + totalUSD + " USD");
+                tvCurrencyType.setText("≈ $ ");
+                totalCNYAmount.setText(" ≈ " + totalUSD);
+                tvEosValue.setText(totalUSD);
                 break;
             default:
-                totalCNYAmount.setLeftString("≈" + totalCNY + " CNY");
+                tvCurrencyType.setText("≈ ¥ ");
+                tvEosValue.setText(" ≈ " + totalCNY);
+                totalCNYAmount.setText(totalCNY);
                 break;
         }
 
@@ -453,9 +449,10 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)) {
             curEosUsername = curWallet.getCurrentEosName();
-            textViewUsername.setText(curWallet.getCurrentEosName());
+            //textViewUsername.setText(curWallet.getCurrentEosName());
+            tvAccountName.setText(curWallet.getCurrentEosName());
             //生成头像
-            generatePortrait(curWallet.getCurrentEosName());
+            //generatePortrait(curWallet.getCurrentEosName());
             //设置Alert
             if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
                 if (Alerter.isShowing()) {
@@ -475,34 +472,35 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                         R.drawable.ic_common_drop_white);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(),
                         drawable.getMinimumHeight());
-                textViewUsername.setCompoundDrawables(null, null, drawable, null);
+                //textViewUsername.setCompoundDrawables(null, null, drawable, null);
 
-                textViewUsername.setClickable(true);
+                //textViewUsername.setClickable(true);
             } else {
-                textViewUsername.setCompoundDrawables(null, null,
-                        null, null);
-                textViewUsername.setClickable(false);
+                //textViewUsername.setCompoundDrawables(null, null, null, null);
+                //textViewUsername.setClickable(false);
 
             }
 
         } else {
-            textViewUsername.setCompoundDrawables(null, null,
-                    null, null);
+            //textViewUsername.setCompoundDrawables(null, null, null, null);
 
-            textViewUsername.setClickable(false);
+            //textViewUsername.setClickable(false);
         }
 
 
         //初始化总资产法币估值显示
         switch (SPUtils.getInstance().getInt("currency_unit")) {
             case CacheConstants.CURRENCY_CNY:
-                totalCNYAmount.setLeftString("≈" + " -- " + " CNY");
+                tvCurrencyType.setText("≈ ¥ ");
+                totalCNYAmount.setText(" -- ");
                 break;
             case CacheConstants.CURRENCY_USD:
-                totalCNYAmount.setLeftString("≈" + " -- " + " USD");
+                tvCurrencyType.setText("≈ $ ");
+                totalCNYAmount.setText(" -- ");
                 break;
             default:
-                totalCNYAmount.setLeftString("≈" + " -- " + " CNY");
+                tvCurrencyType.setText("≈ ¥ ");
+                totalCNYAmount.setText(" -- ");
         }
 
         //滑动监听,设置上滑文字渐显效果
@@ -552,19 +550,21 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         return new WalletPresenter();
     }
 
+    /*
     public void generatePortrait(String eosName) {
         String hash = EncryptationManager.getEncrypt().encryptSHA256(eosName);
         final String str = AvatarHelper.Companion.getInstance().getAvatarSvg(hash, 62, null);
         Sharp.loadString(str).into(imageViewPortrait);
     }
+    */
 
     @Override
     public void onStart() {
         super.onStart();
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         if (EmptyUtils.isNotEmpty(curWallet)) {
-            textViewUsername.setText(curWallet.getCurrentEosName());
-            generatePortrait(curWallet.getCurrentEosName());
+            tvAccountName.setText(curWallet.getCurrentEosName());
+            //generatePortrait(curWallet.getCurrentEosName());
             if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
                 Alerter.create(getActivity())
                         .setText(getResources().getString(R.string.eos_please_confirm_alert))
@@ -646,8 +646,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
                     adapter.notifyDataSetChanged();
                     getP().saveNewEntity(voList.get(position).getEosName());
-                    textViewUsername.setText(voList.get(position).getEosName());
-                    generatePortrait(voList.get(position).getEosName());
+                    tvAccountName.setText(voList.get(position).getEosName());
+                    //generatePortrait(voList.get(position).getEosName());
 
                     EventBusProvider.postSticky(new ChangeAccountEvent());
 

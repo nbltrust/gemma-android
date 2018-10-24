@@ -15,7 +15,7 @@
     <!-- 钱包主页面 -->
     <dimen name="eos_total_assets_text_size">14sp</dimen>
     <dimen name="eos_cpu_show_area_height">56dp</dimen>
-    <dimen name="eos_single_cpu_margin">8dp</dimen>
+    <dimen name="eos_single_cpu_margin">0dp</dimen>
     <dimen name="eos_single_cpu_height">50dp</dimen>
     <dimen name="eos_single_cpu_width">100dp</dimen>
     <!-- 管理钱包页面 -->

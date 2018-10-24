@@ -102,8 +102,8 @@ public final class UISkipMananger {
      * 跳转到资产详情页面
      * @param context
      */
-    public static void launchAssetDetail(Activity context) {
-        launchIntent(context, AssetDetailActivity.class);
+    public static void launchAssetDetail(Activity context, Bundle bundle) {
+        launchIntent(context, AssetDetailActivity.class, bundle);
     }
 
 

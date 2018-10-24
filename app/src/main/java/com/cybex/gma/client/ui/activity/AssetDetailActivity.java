@@ -19,6 +19,7 @@ import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
 import com.cybex.gma.client.ui.fragment.TransferRecordDetailFragment;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
@@ -44,6 +45,7 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
     private boolean isFirstLoad = true;
     private int currentLastPos = -1;
     private String currentEosName = "";
+    private Bundle bundle;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.iv_logo_eos_asset) ImageView ivLogoEosAsset;
     @BindView(R.id.tv_eos_amount) TextView tvEosAmount;
@@ -75,6 +77,7 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        bundle = getIntent().getExtras();
         viewRefresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
@@ -96,7 +99,6 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
             }
         });
 
-
         //第一次请求数据
         doRequest(-1);
 
@@ -107,10 +109,28 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 if (mAdapter != null && EmptyUtils.isNotEmpty(mAdapter.getData())) {
                     Bundle bundle = new Bundle();
                     TransferHistory curTransfer = mAdapter.getData().get(position);
-                    bundle.putParcelable(ParamConstants. KEY_CUR_TRANSFER, curTransfer);
+                    bundle.putParcelable(ParamConstants.KEY_CUR_TRANSFER, curTransfer);
                     start(TransferRecordDetailFragment.newInstance(bundle));
                 }
 
+            }
+        });
+
+        tvResourceManage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               UISkipMananger.launchResourceDetail(AssetDetailActivity.this, bundle);
+            }
+        });
+
+        tvVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                if (EmptyUtils.isNotEmpty(curWallet)) {
+                    bundle.putString("cur_eos_name", curWallet.getCurrentEosName());
+                    UISkipMananger.launchVote(AssetDetailActivity.this, bundle);
+                }
             }
         });
     }

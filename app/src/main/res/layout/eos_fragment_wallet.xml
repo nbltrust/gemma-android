@@ -47,11 +47,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingBottom="@dimen/dimen_10">
+                    <!--
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/imageView_portrait"
@@ -78,6 +79,7 @@
                             tools:text="GEMMA1234567"/>
 
                     </LinearLayout>
+                    -->
 
                     <include
                         layout="@layout/eos_ui_wallet_home_info">

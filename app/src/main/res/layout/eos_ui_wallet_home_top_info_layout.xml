@@ -3,6 +3,7 @@
     android:id="@+id/layout_info"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="2dp"
@@ -28,7 +29,7 @@
 
             <LinearLayout
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <LinearLayout
@@ -39,30 +40,33 @@
                     android:paddingStart="10dp">
 
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/eos_ic_asset"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="6dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="4dp"
                         android:orientation="vertical">
 
                         <TextView
-                            android:textColor="@color/darkSlateBlue"
+                            android:textColor="@color/black_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="EOS"
+                            android:text="@string/eos_eos"
+                            android:textSize="@dimen/font_4.5"
                             android:textStyle="bold"/>
 
                         <TextView
-                            android:textColor="@color/darkSlateBlue"
+                            android:id="@+id/tv_account_name"
+                            android:textColor="@color/black_context"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="nbltrustcom1"
-                            android:textSize="@dimen/font_3"/>
+                            android:text="  ----  "
+                            android:textSize="@dimen/font_3.5"/>
 
                     </LinearLayout>
 
@@ -72,7 +76,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingStart="10dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="12dp"
+                    >
 
                     <TextView
                         android:id="@+id/total_EOS_amount"
@@ -81,56 +87,106 @@
                         android:layout_marginTop="@dimen/dimen_5"
                         android:text=" 0.0000"
                         android:textAlignment="viewStart"
-                        android:textColor="@color/darkSlateBlueTwo"
+                        android:textColor="@color/black_title"
                         android:textSize="@dimen/font_6"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="6dp"
                         android:layout_marginTop="@dimen/dimen_5"
                         android:text="EOS"
+                        android:textSize="@dimen/font_3.5"
                         android:textAlignment="gravity"
-                        android:textColor="@color/darkSlateBlue"/>
+                        android:textColor="@color/black_context"/>
 
                 </LinearLayout>
 
-                <com.allen.library.SuperTextView
-                    android:id="@+id/total_CNY_amount"
+                <LinearLayout
+                    android:layout_marginTop="6dp"
+                    android:visibility="gone"
+                    android:id="@+id/view_eos_tokens"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:textColor="@color/black_context"
+                        android:textSize="@dimen/font_3"
+                        android:layout_marginStart="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" + "/>
+
+                    <TextView
+                        android:id="@+id/tv_number_of_tokens"
+                        android:textColor="@color/black_context"
+                        android:textSize="@dimen/font_3.5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text=" 2 "
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:textSize="@dimen/font_3"
+                        android:textColor="@color/black_context"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="tokens"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    title:sDividerLineType="none"
-                    title:sLeftTextColor="@color/darkSlateBlueTwo"
-                    title:sLeftTextSize="@dimen/font_3.5"
-                    title:sLeftTextString="≈ 0.0000 CNY"
-                    title:sUseShape="true"
-                    >
+                    android:orientation="horizontal">
 
-                </com.allen.library.SuperTextView>
+
+                    <TextView
+                        android:id="@+id/tv_currency_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text=" ≈ ¥ "
+                        android:textColor="@color/black_context"
+                        android:layout_marginStart="15dp"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black_context"
+                        android:id="@+id/total_CNY_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_3.5"
+                        android:textStyle="bold"
+                        android:text=" 0.00"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
             <ImageView
-                android:padding="0dp"
                 android:layout_gravity="end"
-                android:src="@drawable/eos_bg_eos_card"
-                android:layout_width="126dp"
-                android:layout_height="match_parent"/>
+                android:src="@drawable/eos_card_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
         <com.allen.library.SuperTextView
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/balance"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_28"
             title:sDividerLineType="none"
-            title:sLeftTextColor="@color/darkSlateBlueTwo"
+            title:sLeftTextColor="@color/black_context"
             title:sLeftTextSize="@dimen/font_3"
             title:sLeftTextString="@string/eos_available_balance"
-            title:sRightTextColor="@color/darkSlateBlueTwo"
+            title:sRightTextColor="@color/black_context"
             title:sRightTextSize="@dimen/font_4"
             title:sRightTextString="0.0000 EOS"
             title:sUseShape="true">
@@ -138,17 +194,18 @@
         </com.allen.library.SuperTextView>
 
         <com.allen.library.SuperTextView
+            android:layout_marginStart="5dp"
             android:id="@+id/redeem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/dimen_28"
             title:sDividerLineType="none"
-            title:sLeftTextColor="@color/darkSlateBlueTwo"
+            title:sLeftTextColor="@color/black_context"
             title:sLeftTextSize="@dimen/font_3"
             title:sLeftTextString="@string/eos_tip_redeem_ing"
             title:sRightBottomTextColor="#3381e0"
             title:sRightBottomTextSize="12sp"
-            title:sRightTextColor="@color/darkSlateBlueTwo"
+            title:sRightTextColor="@color/black_context"
             title:sRightTextGravity="right"
             title:sRightTextSize="@dimen/font_4"
             title:sRightTextString="0.0000 EOS"
@@ -185,14 +242,6 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="34dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/cloudyBlue"
-                android:layerType="software"
-                >
-            </View>
 
             <LinearLayout
                 android:id="@+id/view_net"
@@ -218,15 +267,6 @@
                 </com.cybex.base.view.progress.RoundCornerProgressBar>
 
             </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="34dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/cloudyBlue"
-                android:layerType="software">
-
-            </View>
 
             <LinearLayout
                 android:id="@+id/view_ram"

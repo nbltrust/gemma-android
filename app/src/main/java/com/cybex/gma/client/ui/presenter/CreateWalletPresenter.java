@@ -174,7 +174,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
      * 用户名规则：12位小写字母a-z+数字1-5
      *
      * @return
-     */
+
 
     public boolean isUserNameValid() {
         String eosUsername = getV().getEOSUserName();
@@ -184,6 +184,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         boolean res = matcher.matches();
         return res;
     }
+     */
 
     public boolean isPasswordMatch(){
         return getV().getPassword().equals(getV().getRepeatPassword());
@@ -308,7 +309,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             final String publicKey = keyPair[0];
                             final String priateKey = keyPair[1];
                             Bundle bundle = new Bundle();
-                            bundle.putString("account_name", getV().getEOSUserName());
+                            //bundle.putString("account_name", getV().getEOSUserName());
                             bundle.putString("public_key", publicKey);
                             bundle.putString("private_key", priateKey);
                             bundle.putString("password", getV().getPassword());

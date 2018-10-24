@@ -255,7 +255,7 @@
 
     <!-- 公共button不可点击样式 -->
     <style name="common_button_unClickable">
-        <item name="android:textSize">@dimen/font_3.5</item>
+        <item name="android:textSize">@dimen/font_4</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_width">wrap_content</item>
@@ -263,9 +263,9 @@
         <item name="android:background">@drawable/shape_corner_button_unclickable</item>
     </style>
 
-    <!-- 公共button样式 -->
+    <!-- 公共button样式 黑底 -->
     <style name="common_button_clickable">
-        <item name="android:textSize">@dimen/font_3.5</item>
+        <item name="android:textSize">@dimen/font_4</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_width">wrap_content</item>
@@ -273,6 +273,16 @@
         <item name="android:background">@drawable/shape_corner_button</item>
     </style>
 
+
+    <!-- 公共button样式 白底 -->
+    <style name="common_button_clickable_white">
+        <item name="android:textSize">@dimen/font_4</item>
+        <item name="android:textColor">@color/black_context</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/shape_corner_button_white_with_stroke</item>
+    </style>
 
 
 

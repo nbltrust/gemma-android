@@ -9,7 +9,7 @@
         android:bottomRightRadius="@dimen/eos_bt_radius"
         >
     </corners>
-    <stroke android:color="@color/cornflowerBlue"
+    <stroke android:color="@color/black_title"
         android:width="1px">
 
     </stroke>

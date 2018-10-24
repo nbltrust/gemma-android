@@ -4,8 +4,8 @@
     <!-- 不含alpha，格式：color_色值 -->
     <color name="color_ffffff">#ffffff</color>
     <color name="color_000000">#000000</color>
-    <color name="color_333333">#333333</color>
-    <color name="color_666666">#666666</color>
+    <color name="black_title">#333333</color>
+    <color name="black_context">#666666</color>
     <color name="color_f2f2f2">#f2f2f2</color>
     <color name="color_cccccc">#cccccc</color>
     <color name="color_55bef6">#55bef6</color>
@@ -66,6 +66,7 @@
     <color name="darkSlateBlue">#212c67</color>
     <color name="darkSlateBlueTwo">#212c68</color>
     <color name="blueyGrey">#9ea3bd</color>
+    <color name="very_light_pink">#cccccc</color>
     <color name="scarlet">#d0021b</color>
     <color name="buff">#fff9a6</color>
     <color name="steel">#8e8e93</color>
@@ -95,4 +96,6 @@
     <!--Tab indicator 颜色 -->
     <color name="colorTabIndicator">#212c67</color>
 
+    <!-- ===========================V0.5============================== -->
+    
 </resources>

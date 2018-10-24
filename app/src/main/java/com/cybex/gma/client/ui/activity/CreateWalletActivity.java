@@ -63,24 +63,25 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @BindView(R.id.iv_set_pass_mask) ImageView ivSetPassMask;
     @BindView(R.id.iv_repeat_pass_mask) ImageView ivRepeatPassMask;
     private Validator validator;
-    @BindView(R.id.view_divider_eosName) View viewDividerEosName;
+    //@BindView(R.id.view_divider_eosName) View viewDividerEosName;
     @BindView(R.id.view_divider_setPass) View viewDividerSetPass;
     @BindView(R.id.view_divider_repeatPass) View viewDividerRepeatPass;
 
     @BindView(R.id.scroll_create_wallet) ScrollView scrollViewCreateWallet;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
-    @BindView(R.id.bubble) BubbleLayout bubble;
-    @BindView(R.id.tv_eos_name) TextView tvEosName;
-    @BindView(R.id.iv_eos_name_clear) ImageView ivEosNameClear;
+    //@BindView(R.id.bubble) BubbleLayout bubble;
+    //@BindView(R.id.tv_eos_name) TextView tvEosName;
+    //@BindView(R.id.iv_eos_name_clear) ImageView ivEosNameClear;
     @BindView(R.id.iv_set_pass_clear) ImageView ivSetPassClear;
     @BindView(R.id.iv_repeat_pass_clear) ImageView ivRepeatPassClear;
     @BindView(R.id.iv_pass_hint_clear) ImageView ivPassHintClear;
 
+    /*
     @NotEmpty(messageResId = R.string.eos_name_not_empty, sequence = 3)
     @BindView(R.id.edt_eos_name) EditText edtEosName;
+    */
     @BindView(R.id.tv_set_pass) TextView tvSetPass;
-
     @NotEmpty(messageResId = R.string.eos_pass_not_empty, sequence = 2)
     @Password(min = 8, messageResId = R.string.eos_pass_lenth_invalid, sequence = 2)
     @BindView(R.id.edt_set_pass) EditText edtSetPass;
@@ -101,6 +102,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     private boolean isMask;//true为密文显示密码
 
 
+    /*
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterEosNameChanged(Editable s) {
         if (isAllTextFilled() && checkboxConfig.isChecked() && getP().isPasswordMatch()) {
@@ -126,6 +128,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             ivEosNameClear.setVisibility(View.GONE);
         }
     }
+    */
 
     @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterPassChanged(Editable s) {
@@ -170,7 +173,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     @OnClick(R.id.bt_create_wallet)
     public void checkAndCreateWallet() {
         validator.validate();
-        if (checkboxConfig.isChecked() && !getP().isUserNameValid()) {
+        if (checkboxConfig.isChecked()) {
             GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_invalid_eos_username));
         }
     }
@@ -249,12 +252,9 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
      *
      * @param v
      */
-    @OnClick({R.id.iv_eos_name_clear, R.id.iv_set_pass_clear, R.id.iv_repeat_pass_clear, R.id.iv_pass_hint_clear})
+    @OnClick({R.id.iv_set_pass_clear, R.id.iv_repeat_pass_clear, R.id.iv_pass_hint_clear})
     public void onClearClicked(View v) {
         switch (v.getId()) {
-            case R.id.iv_eos_name_clear:
-                edtEosName.setText("");
-                break;
             case R.id.iv_set_pass_clear:
                 edtSetPass.setText("");
                 break;
@@ -269,12 +269,11 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     public void initView() {
         //动态设置hint样式
-        setEditTextHintStyle(edtEosName, R.string.eos_tip_eos_username);
         setEditTextHintStyle(edtSetPass, R.string.eos_tip_input_password);
         setEditTextHintStyle(edtRepeatPass, R.string.eos_tip_repeat_password);
         setEditTextHintStyle(edtPassHint, R.string.eos_tip_input_password_hint);
 
-        bubble.setVisibility(View.GONE);
+        //bubble.setVisibility(View.GONE);
         setUnclickable(btCreateWallet);
         edtSetPass.setOnTouchListener(new View.OnTouchListener() {
             int flag = 0;
@@ -283,8 +282,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             public boolean onTouch(View v, MotionEvent event) {
                 flag++;
                 if (flag % 2 == 0) {
-                    showBubble();
-                    scheduleDismiss();
+                    //showBubble();
+                    //scheduleDismiss();
                 }
                 return false;
             }
@@ -304,7 +303,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && isAllTextFilled() && getP().isUserNameValid() && getP().isPasswordMatch()) {
+                if (isChecked && isAllTextFilled() && getP().isPasswordMatch()) {
                     setClickable(btCreateWallet);
                 } else {
                     setUnclickable(btCreateWallet);
@@ -314,7 +313,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         setNavibarTitle(getResources().getString(R.string.eos_tip_create_wallet), true);
         /**
          * eos用户名输入区域样式设置
-         */
+
         edtEosName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -348,6 +347,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
             }
         });
+         */
 
         /**
          * 设置密码输入区域样式设置
@@ -455,6 +455,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         return super.getP();
     }
 
+    /*
     public void setEOSNameValidStyle() {
         if (EmptyUtils.isNotEmpty(getEOSUserName())) {
 
@@ -476,6 +477,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         tvEosName.setTextColor(getResources().getColor(R.color.darkSlateBlue));
         tvEosName.setText(getResources().getString(R.string.eos_title_eos_username));
     }
+    */
 
     public void setRepeatPassValidStyle() {
         //两次输入密码匹配
@@ -525,9 +527,11 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         button.setBackgroundColor(getResources().getColor(R.color.cloudyBlueTwo));
     }
 
+    /*
     public String getEOSUserName() {
         return edtEosName.getText().toString().trim();
     }
+    */
 
     public String getPassword() {
         return edtSetPass.getText().toString().trim();
@@ -598,8 +602,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
      */
     public boolean isAllTextFilled() {
         return !EmptyUtils.isEmpty(getPassword())
-                && !EmptyUtils.isEmpty(getRepeatPassword())
-                && !EmptyUtils.isEmpty(getEOSUserName());
+                && !EmptyUtils.isEmpty(getRepeatPassword());
     }
 
     public void setEditTextHintStyle(EditText editText, int resId) {
@@ -612,14 +615,14 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
     }
 
     public void clearListeners() {
-        edtEosName.setOnFocusChangeListener(null);
+        //edtEosName.setOnFocusChangeListener(null);
         edtRepeatPass.setOnFocusChangeListener(null);
         edtSetPass.setOnFocusChangeListener(null);
         edtPassHint.setOnFocusChangeListener(null);
         checkboxConfig.setOnCheckedChangeListener(null);
     }
 
-
+    /*
     public void showBubble() {
         tvEosName.setVisibility(View.GONE);
         edtEosName.setVisibility(View.GONE);
@@ -631,6 +634,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         edtEosName.setVisibility(View.VISIBLE);
         bubble.setVisibility(View.GONE);
     }
+    */
 
     public void setDividerFocusStyle(View divider) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -717,7 +721,8 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
         dialog.show();
     }
 
-    */
+
+
 
     private void scheduleDismiss(){
         Handler handler = new Handler();
@@ -728,6 +733,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
             }
         }, 5000);
     }
+     */
 
 
     /**
@@ -735,11 +741,15 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
      */
     @Override
     public void onValidationSucceeded() {
+        /*
         if (getP().isUserNameValid()) {
             getP().verifyAccount(getEOSUserName());
         }else {
             AlertUtil.showShortUrgeAlert(this, getString(R.string.eos_name_invalid));
         }
+        */
+
+
     }
 
     /**

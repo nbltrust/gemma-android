@@ -59,6 +59,17 @@
             android:configChanges="layoutDirection|locale"
             android:theme="@style/SplashScreen">
 
+
+
+        </activity>
+
+
+        <!-- 初始页面 -->
+        <activity
+            android:name=".ui.activity.InitialActivity"
+            android:configChanges="layoutDirection|locale"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -179,15 +190,7 @@
         </activity>
 
 
-        <!-- 初始页面 -->
-        <activity
-            android:name=".ui.activity.InitialActivity"
-            android:configChanges="layoutDirection|locale"
-            android:screenOrientation="portrait"
-            >
 
-
-        </activity>
         <!-- 关于页面 -->
         <activity
             android:name=".ui.activity.AboutActivity"
