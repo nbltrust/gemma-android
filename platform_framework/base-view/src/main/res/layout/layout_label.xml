@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tv_left_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="zuobian"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/iv_right"
+        android:layout_marginRight="15dp"
+        android:text="youbian"
+        android:textSize="16dp" />
+
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/back_black" />
+
+</RelativeLayout>
+

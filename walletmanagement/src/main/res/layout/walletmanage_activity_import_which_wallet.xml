@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:id="@+id/container_new"
+        android:layout_height="50dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_medium"
+            android:text="@string/walletmanage_create_new_wallet"
+            android:layout_marginLeft="@dimen/common_page_content_padding"
+            />
+
+        <ImageView
+            android:id="@+id/iv_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/common_text_size_micro"
+        android:text="已有的钱包"
+        android:layout_marginLeft="30dp"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleview_walletlist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+
+</LinearLayout>

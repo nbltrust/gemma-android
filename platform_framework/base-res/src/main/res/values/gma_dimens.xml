@@ -453,6 +453,11 @@
     <dimen name="card_height">44dp</dimen>
     <dimen name="bt_common_height">44dp</dimen>
 
+    <dimen name="common_text_size_large">22dp</dimen>
+    <dimen name="common_text_size_medium">16dp</dimen>
+    <dimen name="common_text_size_small">14dp</dimen>
+    <dimen name="common_text_size_micro">12dp</dimen>
+
 
     <!-- 字体大小 -->
     <dimen name="font_3.5">14sp</dimen>
@@ -477,6 +482,7 @@
 
 
     <dimen name="common_view_margin">33.8dp</dimen>
+    <dimen name="common_page_content_padding">20dp</dimen>
 
 
 </resources>

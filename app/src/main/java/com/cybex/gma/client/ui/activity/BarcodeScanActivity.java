@@ -9,7 +9,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.BarcodeScanEvent;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.manager.PermissionManager;
-import com.cybex.gma.client.utils.SoundPoolHelper;
+import com.cybex.componentservice.utils.SoundPoolHelper;
 import com.cybex.componentservice.utils.listener.PermissionResultListener;
 import com.cybex.qrcode.core.QRCodeView;
 import com.cybex.qrcode.zxing.ZXingView;

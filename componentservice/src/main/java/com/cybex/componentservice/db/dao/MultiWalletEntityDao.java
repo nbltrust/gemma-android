@@ -36,6 +36,13 @@ public interface MultiWalletEntityDao {
      */
     MultiWalletEntity getMultiWalletEntityByID(int id);
 
+    /**
+     * 根据walletType查询获取钱包列表对象
+     *
+     * @return
+     */
+    List<MultiWalletEntity> getMultiWalletEntityListByWalletType(int walletType);
+
 
     /**
      * 获取钱包列表对象

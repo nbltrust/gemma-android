@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_30"
+        android:text="@string/walletmanage_tip_input_pri_key"
+        android:textColor="@color/blueyGrey"
+        android:textSize="@dimen/font_3"
+        android:layout_marginStart="@dimen/dimen_46"
+        android:layout_marginEnd="@dimen/dimen_46"
+        android:layout_marginTop="@dimen/dimen_20"/>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/shape_corner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_marginEnd="@dimen/dimen_30"
+        android:padding="@dimen/dimen_16">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/edt_show_priKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/walletmanage_input_pri_key_hint"
+            android:textSize="@dimen/font_3.5"
+            android:textColor="@color/darkSlateBlue"
+            android:textColorHint="@color/blueyGrey"
+            app:met_hideUnderline="true"
+            android:textCursorDrawable="@drawable/walletmanage_cursor_custom"
+            />
+
+    </LinearLayout>
+    
+    <com.cybex.base.view.LabelLayout
+        android:id="@+id/label_coin_type"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:text_left="@string/walletmanage_wallet_cointype"
+        app:text_right="@string/walletmanage_cointype_eos"
+        android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_marginRight="@dimen/common_page_content_padding"
+        />
+
+    <com.cybex.base.view.LabelLayout
+        android:id="@+id/label_which_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:text_left="@string/walletmanage_title_import_which_wallet"
+        app:text_right="@string/walletmanage_create_new_wallet"
+        android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_marginRight="@dimen/common_page_content_padding"
+        />
+
+    <Button
+        android:id="@+id/bt_next_step"
+        style="@style/bt_long_in_linearLayout"
+        android:text="@string/walletmanage_tip_next_step"
+        android:layout_marginStart="@dimen/dimen_46"
+        android:layout_marginEnd="@dimen/dimen_46"
+        android:layout_marginTop="@dimen/dimen_30"/>
+
+</LinearLayout>

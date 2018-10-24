@@ -242,9 +242,9 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     annotationProcessor deps.butterknife.compiler
 
-    implementation deps.gma.zxing
-    implementation deps.gma.androidanimations
-    api deps.gma.MaterialEditText
+//    implementation deps.gma.zxing
+//    implementation deps.gma.androidanimations
+//    api deps.gma.MaterialEditText
     implementation deps.gma.agentweb
 
     annotationProcessor deps.dbflow.processor

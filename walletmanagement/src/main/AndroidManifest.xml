@@ -24,6 +24,30 @@
 
         </activity>
 
+        <activity android:name=".ui.activity.ImportWalletGuideActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.ImportWalletActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.BarcodeScanActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.SelectWalletCoinTypeActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.SelectImportWhichWalletActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.ConfigNewWalletActivity">
+
+        </activity>
+
 
 
 

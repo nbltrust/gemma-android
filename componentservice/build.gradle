@@ -91,4 +91,8 @@ dependencies {
     api 'org.web3j:core:3.3.1-android'
     api 'com.trycatch.android:mysnackbar:1.2.2'
 
+    api deps.gma.zxing
+    api deps.gma.androidanimations
+    api deps.gma.MaterialEditText
+
 }

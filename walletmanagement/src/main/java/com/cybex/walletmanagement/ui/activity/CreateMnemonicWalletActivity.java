@@ -1,6 +1,5 @@
 package com.cybex.walletmanagement.ui.activity;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.walletmanagement.R;
@@ -37,7 +37,7 @@ import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
 
-@Route(path = "/walletmanage/create")
+@Route(path = RouterConst.PATH_TO_CREATE_MNEMONIC_PAGE)
 public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWalletPresenter>  {
 
     ImageView ivSetPassMask;
