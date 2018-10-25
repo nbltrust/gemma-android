@@ -2,6 +2,7 @@ package com.cybex.walletmanagement.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -84,8 +85,9 @@ public class MnemonicVerifyActivity extends XActivity {
         viewClickToShowMne.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
             @Override
             public void onLabelClick(TextView label, Object data, int position) {
-                selectedLabels.remove(label.getText().toString());
-                unSelectedLabels.add(label.getText().toString());
+                String remove = selectedLabels.remove(position);
+                unSelectedLabels.add(remove);
+
                 updateAboveLabelView(selectedLabels);
                 updateBottomLabelView(unSelectedLabels);
             }
@@ -98,7 +100,7 @@ public class MnemonicVerifyActivity extends XActivity {
                     setAboveLabelView();
                 }
                 selectedLabels.add(label.getText().toString());
-                unSelectedLabels.remove(label.getText().toString());
+                unSelectedLabels.remove(position);
                 updateAboveLabelView(selectedLabels);
                 updateBottomLabelView(unSelectedLabels);
                 isInit = false;

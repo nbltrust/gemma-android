@@ -86,14 +86,14 @@ public class MnemonicShowActivity extends XActivity {
      * 显示请勿截图Dialog
      */
     private void showAlertDialog() {
-        int[] listenedItems = {R.id.tv_i_understand};
+        int[] listenedItems = {R.id.tv_understand};
         CustomDialog dialog = new CustomDialog(this,
                 R.layout.walletmanage_dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override
             public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-                if(view.getId()==R.id.tv_i_understand){
+                if(view.getId()==R.id.tv_understand){
                     dialog.cancel();
                 }
             }
