@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
+@Route(path = RouterConst.PATH_TO_BACKUP_MNEMONIC_GUIDE_PAGE)
 public class MnemonicBackupGuideActivity extends XActivity {
 
     private Button btnShowMne;

@@ -2,8 +2,11 @@ package com.cybex.walletmanagement.ui.presenter;
 
 
 import android.content.Intent;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
@@ -188,9 +191,10 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
                     @Override
                     public void accept(String mnemonic) {
                         getV().dissmisProgressDialog();
-                        Intent intent = new Intent(getV(), MnemonicBackupGuideActivity.class);
-                        intent.putExtra(BaseConst.KEY_MNEMONIC,mnemonic);
-                        getV().startActivity(intent);
+                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+                                .withInt(BaseConst.KEY_INIT_TYPE,BaseConst.APP_HOME_INITTYPE_TO_BACKUP_MNEMONIC_GUIDE)
+                                .withString(BaseConst.KEY_MNEMONIC,mnemonic)
+                                .navigation();
                         getV().finish();
                     }
                 }, new Consumer<Throwable>() {

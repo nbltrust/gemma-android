@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.CollectionUtils;
 import com.cybex.componentservice.utils.SizeUtil;
@@ -119,13 +121,15 @@ public class MnemonicVerifyActivity extends XActivity {
                 if (CollectionUtils.isEqualListWithSequence(selectedLabels, answerLabels)) {
                     TSnackbarUtil.showTip(viewRoot, getString(R.string.walletmanage_mnemonic_validate_success),
                             Prompt.SUCCESS);
+                    ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+                            .navigation();
                 } else {
                     TSnackbarUtil.showTip(viewRoot, getString(R.string.walletmanage_mnemonic_validate_error),
                             Prompt.ERROR);
                 }
             }
-        }
 
+        }
     }
 
 
