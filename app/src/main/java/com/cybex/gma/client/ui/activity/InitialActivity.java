@@ -42,7 +42,8 @@ public class InitialActivity extends XActivity {
 
     @OnClick(R.id.bt_wookongbio)
     public void withWookong() {
-
+        Bundle bd = new Bundle();
+        UISkipMananger.skipBluetoothPaireActivity(InitialActivity.this, bd);
     }
 
     @Override

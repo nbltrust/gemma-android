@@ -22,11 +22,11 @@ public class WookongBioManager {
         }
     }
 
-    public static WookongBioManager getInstance() {
+    public static WookongBioManager getInstance(Handler curHandler) {
         if (mInstance == null) {
             synchronized (WookongBioManager.class) {
                 if (mInstance == null) {
-                    mInstance = new WookongBioManager(mHandler);
+                    mInstance = new WookongBioManager(curHandler);
                 }
             }
         }
@@ -49,5 +49,111 @@ public class WookongBioManager {
             connectThread.start();
     }
 
+    /**
+     * 调用中间件setGetInfoWrapper来获取设备信息
+     * @param mContextHandle
+     * @param devIndex
+     */
+    public void getDeviceInfo(long mContextHandle, int devIndex){
+        connectThread.setGetInfoWrapper(mContextHandle, devIndex);
+        connectThread.start();
+    }
+
+    /**
+     * 调用中间件setGetFPListWrapper来获取已录入的指纹列表信息
+     * @param mContextHandle
+     * @param devIndex
+     */
+    public void getFPList(long mContextHandle, int devIndex){
+        connectThread.setGetFPListWrapper(mContextHandle, devIndex);
+        connectThread.start();
+    }
+
+
+    /**
+     * 调用中间件setEnrollFPWrapper来获取录入指纹信息
+     * @param mContextHandle
+     * @param devIndex
+     */
+    public void erollFP(long mContextHandle, int devIndex){
+        connectThread.setEnrollFPWrapper(mContextHandle, devIndex);
+        connectThread.start();
+    }
+
+
+    /**
+     * 调用中间件setVerifyFPWrapper来验证指纹
+     * @param mContextHandle
+     * @param devIndex
+     */
+    public void verifyFP(long mContextHandle, int devIndex){
+        connectThread.setVerifyFPWrapper(mContextHandle, devIndex);
+        connectThread.start();
+    }
+
+
+    /**
+     * 调用中间件setFormatDeviceWrapper来执行格式化硬件
+     * @param mContextHandle
+     * @param devIndex
+     */
+    public void startFormat(long mContextHandle, int devIndex){
+        connectThread.setFormatDeviceWrapper(mContextHandle, devIndex);
+        connectThread.start();
+    }
+
+
+    /**
+     * 调用中间件setGetAddressWrapper来获取币种地址（公钥）
+     * @param mContextHandle
+     * @param devIndex
+     */
+    public void getAddress(long mContextHandle, int devIndex, byte coinType, int[] derivePath){
+        connectThread.setGetAddressWrapper(mContextHandle, devIndex, coinType, derivePath);
+        connectThread.start();
+    }
+
+
+    /**
+     * 调用中间件setGetDevListWrapper来查找设备
+     */
+    public void startScan(Activity mContext, String deviceName){
+        connectThread.setGetDevListWrapper(mContext, deviceName);
+        connectThread.start();
+    }
+
+
+    /**
+     * 调用中间件setEOSTxSerializeWrapper来执行EOS签名前的结构体序列化操作
+     */
+    public void startEosSerialization(String strEOSTxString){
+        connectThread.setEOSTxSerializeWrapper(strEOSTxString);
+        connectThread.start();
+    }
+
+
+    /**
+     * 调用中间件setGenerateSeedGetMnesWrapper来产生种子并由种子生成助记词
+     */
+    public void startGenerateSeedGetMnes(long mContextHandle, int devIndex, int seedLen){
+        connectThread.setGenerateSeedGetMnesWrapper(mContextHandle, devIndex, seedLen);
+        connectThread.start();
+    }
+
+
+    /**
+     * 释放Handler资源避免内存泄露
+     */
+    public void freeResource(){
+        mHandler.removeCallbacksAndMessages(connectThread);
+        mHandler=null;
+    }
+
+    /**
+     * 终止线程
+     */
+    public void freeThread(){
+        connectThread.interrupt();
+    }
 
 }

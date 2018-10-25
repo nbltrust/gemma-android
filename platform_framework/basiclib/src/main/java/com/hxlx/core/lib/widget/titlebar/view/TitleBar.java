@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.text.TextUtils;
@@ -240,6 +241,11 @@ public class TitleBar extends ViewGroup implements View.OnClickListener, ScrollA
 
     public void setTitleSize(float size) {
         mCenterText.setTextSize(size);
+    }
+
+    public void setTitleBold(boolean isBold){
+        if (isBold)mCenterText.setTypeface(Typeface.DEFAULT_BOLD);
+        else mCenterText.setTypeface(Typeface.DEFAULT);
     }
 
     public void setTitleBackground(int resId) {

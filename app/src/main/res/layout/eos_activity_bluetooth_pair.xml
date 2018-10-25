@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#f5f5f5"
+              android:background="@color/whiteTwo"
               android:orientation="vertical">
 
     <include layout="@layout/ui_navibar"/>
@@ -14,51 +15,98 @@
         android:layout_marginTop="20dp"
         android:text="@string/eos_tip_card"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/font_4"
+        android:textStyle="bold"/>
 
     <ImageView
-        android:layout_width="280dp"
-        android:layout_height="160dp"
-        android:scaleType="centerInside"
+        android:layout_width="320dp"
+        android:layout_height="190dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:background="@drawable/icon_wookong_bio"/>
+        android:background="@drawable/wookong_bio_card"
+        android:scaleType="centerInside"/>
 
-    <com.cybex.gma.client.widget.underline.UnderlineTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/eos_desc_wookong_url"
         android:layout_gravity="center_horizontal"
-        android:textSize="12sp"
+        android:layout_marginTop="16dp"
         android:lineSpacingExtra="2dp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/black"/>
+        android:text="@string/eos_desc_wookong_url"
+        android:textColor="@color/black_context"
+        android:textSize="@dimen/font_3"/>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black_title"
         android:text="@string/eos_bluetooth_scan_step_title"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="40dp"
         android:textSize="16sp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/eos_bluetooth_scan_step"/>
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:padding="@dimen/dimen_10">
+
+        <ImageView
+            android:id="@+id/iv_dot_one"
+            android:layout_width="@dimen/dimen_8"
+            android:layout_height="@dimen/dimen_8"
+            android:layout_marginTop="@dimen/dimen_6"
+            android:background="@drawable/ic_dot_red"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:textSize="@dimen/font_4"
+            android:textColor="@color/black_context"
+            android:id="@+id/tv_look_around_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/eos_tip_bluetooth_scan_step_one"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_dot_one"/>
+
+        <ImageView
+            android:id="@+id/iv_dot_two"
+            android:layout_width="@dimen/dimen_8"
+            android:layout_height="@dimen/dimen_8"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/ic_dot_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_look_around_hint"/>
+
+        <TextView
+            android:textSize="@dimen/font_4"
+            android:textColor="@color/black_context"
+            android:id="@+id/tv_look_around_hint_two"
+            android:layout_width="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:text="@string/eos_tip_bluetooth_scan_step_two"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_dot_two"
+            app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"
+            />
+
+    </android.support.constraint.ConstraintLayout>
 
     <Button
         android:id="@+id/btn_start_scan"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/eos_bg_shape_btn_pressed"
         android:text="@string/eos_btn_start_pair"
         android:textColor="@color/white"

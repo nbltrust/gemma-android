@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:background="#f9f9f9">
+                android:layout_height="300dp"
+                android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,14 +11,29 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imv_close"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="16dp"
+        <android.support.constraint.ConstraintLayout
+            android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            android:clickable="true"
-            android:src="@drawable/ic_close_blue"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imv_close"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_close_blue"/>
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/view_spinKit"
+                app:SpinKit_Color="#3F51B5"
+                style="@style/SpinKitView.Circle"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="20dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+
+        </android.support.constraint.ConstraintLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,11 +42,12 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="14dp"
             android:text="@string/eos_title_scan_result"
-            android:textColor="#212c67"
+            android:textColor="@color/black_context"
             android:textSize="14sp"/>
 
 
         <com.cybex.base.view.statusview.MultipleStatusView
+            android:background="@color/whiteTwo"
             android:id="@+id/list_multiple_status_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,7 +58,7 @@
             app:contentView="@layout/eos_content_recycler_scan_result"
             app:emptyView="@layout/eos_empty_scan_result"
             app:errorView="@layout/error_view"
-            app:loadingView="@layout/loading_view"
+            app:loadingView="@layout/loading_view_bio"
             app:noNetworkView="@layout/no_network_view"
             />
 

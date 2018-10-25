@@ -29,4 +29,6 @@
     <string name="finish_refresh">Refreshed</string>
     <string name="pull_to_refresh">Pull to refresh</string>
 
+    <string name="scanning_bio">Scanning available WOOKONG Bio(s)</string>
+
 </resources>

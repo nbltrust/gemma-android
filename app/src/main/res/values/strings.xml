@@ -389,12 +389,12 @@
     <string name="eos_title_wookong_bio">WOOKONG Bio</string>
     <string name="eos_match_wookong_bio">配对 WOOKONG Bio</string>
 
-    <string name="eos_tip_card">第一款支持EOS的蓝牙硬件钱包</string>
+    <string name="eos_tip_card">第一款支持多币种的蓝牙指纹硬件钱包</string>
     <string name="eos_desc_wookong_url">点击查看 更多WOOKONG Bio介绍</string>
     <string name="eos_bluetooth_scan_step_title">准备使用WOOKONG Bio</string>
-    <string name="eos_bluetooth_scan_step">
-        1.确保打开手机蓝牙\n2.启动WOOKONG Bio
-    </string>
+
+    <string name="eos_tip_bluetooth_scan_step_one">确保手机蓝牙已开启</string>
+    <string name="eos_tip_bluetooth_scan_step_two">启动WOOKONG Bio</string>
 
     <string name="eos_btn_start_pair">开始配对</string>
     <string name="eos_title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>

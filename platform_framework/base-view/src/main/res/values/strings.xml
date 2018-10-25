@@ -29,4 +29,6 @@
     <string name="finish_refresh">刷新完成</string>
     <string name="pull_to_refresh">下拉刷新</string>
 
+    <string name="scanning_bio">正在搜索可连接的WOOKONG Bio</string>
+
 </resources>

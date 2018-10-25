@@ -112,6 +112,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
         mTitleBar.setTitleColor(R.color.black_title);
         mTitleBar.setBackgroundColor(getResources().getColor(R.color.ffffff_white_1000));
         mTitleBar.setTitleSize(18);
+        mTitleBar.setTitleBold(true);
         mTitleBar.setImmersive(true);
 
         if (isShowBack) {
@@ -358,10 +359,9 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
                             .setCancellable(true)
                             .setCustomView(imageView)
                             .setBackgroundColor(getResources().getColor(R.color.white))
-                            //.setAnimationSpeed(2)
                             .setDimAmount(0.5f);
                 }
-                kProgressHUD.setLabel(prompt, getResources().getColor(R.color.cornflowerBlueTwo));
+                kProgressHUD.setLabel(prompt, getResources().getColor(R.color.black_context));
                 kProgressHUD.show();
             }
         });

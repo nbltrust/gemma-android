@@ -18,6 +18,8 @@ import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.api.ApiPath;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -83,6 +85,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     @BindView(R.id.show_cpu) LinearLayout showCpu;
     @BindView(R.id.tv_assets) TextView tvAssets;
     private WalletEntity curWallet;
+    private EosWalletEntity curEosWallet;
     private int walletID;
     private String curEosUsername;
     @BindView(R.id.total_EOS_amount) TextView totalEOSAmount;
@@ -464,6 +467,9 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         });
 
         curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        curEosWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                .getEosWalletEntities().get(0);
+
         if (EmptyUtils.isNotEmpty(curWallet)) {
             curEosUsername = curWallet.getCurrentEosName();
             //textViewUsername.setText(curWallet.getCurrentEosName());
@@ -611,6 +617,10 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         }
 
         dissmisProgressDialog();
+
+    }
+
+    public void getCurrentEosWallet(){
 
     }
 

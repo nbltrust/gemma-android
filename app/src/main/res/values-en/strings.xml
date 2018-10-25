@@ -636,12 +636,12 @@
     <string name="eos_title_wookong_bio">WOOKONG Bio</string>
     <string name="eos_match_wookong_bio">Pairing WOOKONG Bio</string>
 
-    <string name="eos_tip_card">The first wallet supports bluetooth hardware</string>
+    <string name="eos_tip_card">The first wallet supports bluetooth hardware with fingerprints</string>
     <string name="eos_desc_wookong_url">See more about WOOKONG Bio</string>
     <string name="eos_bluetooth_scan_step_title">Ready WOOKONG Bio</string>
-    <string name="eos_bluetooth_scan_step">
-        1.Make sure bluetooth is ready \n2.WOOKONG Bio is power on
-    </string>
+
+    <string name="eos_tip_bluetooth_scan_step_one">Make sure bluetooth is ready</string>
+    <string name="eos_tip_bluetooth_scan_step_two">WOOKONG Bio is power on</string>
 
     <string name="eos_btn_start_pair">Start pair</string>
     <string name="eos_title_scan_result">Choose the WOOKONG Bio you want to connect.Please check your bluetooth and
