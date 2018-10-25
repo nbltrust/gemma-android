@@ -7,6 +7,7 @@
     <color name="black_title">#333333</color>
     <color name="black_content">#333333</color>
     <color name="black_context">#666666</color>
+    <color name="black_grey">#999999</color>
     <color name="grey_content">#cccccc</color>
     <color name="checkbox_normal">#dadada</color>
     <color name="btn_unclickable">#ababab</color>
@@ -66,7 +67,7 @@
     <color name="cornflowerBlue">#426bd4</color>
     <color name="cornflowerBlue20">#33426bd4</color>
     <color name="whiteTwo">#ffffff</color>
-    <color name="white">#f9f9f9</color>
+    <color name="white">#ffffff</color>
     <color name="cloudyBlue">#c6cade</color>
     <color name="darkSlateBlue">#212c67</color>
     <color name="darkSlateBlueTwo">#212c68</color>

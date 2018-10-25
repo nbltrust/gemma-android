@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:gravity="center_vertical"
     android:id="@+id/rootview_wallet"
-    android:layout_height="50dp"
+    android:layout_height="53.8dp"
     >
 
     <TextView
         android:id="@+id/tv_wallet_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/common_text_size_medium"
+        android:textSize="@dimen/font_4"
+        android:textColor="@color/black_content"
         android:text="EOS"
         android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_centerVertical="true"
         />
 
     <ImageView
@@ -20,6 +21,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:src="@drawable/ic_radio_button_selected"
+        android:layout_marginRight="@dimen/common_view_margin"
+        android:layout_centerVertical="true"
+        />
+
+    <View
+        android:visibility="visible"
+        style="@style/common_divider"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_marginRight="@dimen/common_page_content_padding"
         />
 
 </RelativeLayout>

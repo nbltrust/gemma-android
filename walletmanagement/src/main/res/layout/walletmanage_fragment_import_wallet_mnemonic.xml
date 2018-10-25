@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whiteTwo"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--<include-->
@@ -15,30 +15,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/walletmanage_tip_input_mnemonic"
-        android:textColor="@color/black_title"
+        android:textColor="@color/black_context"
         android:textSize="@dimen/font_4"
-        android:layout_marginStart="@dimen/dimen_46"
-        android:layout_marginEnd="@dimen/dimen_46"
-        android:layout_marginTop="@dimen/dimen_20"/>
+        android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_marginRight="@dimen/common_page_content_padding"
+        android:layout_marginTop="@dimen/dimen_16"/>
 
 
     <LinearLayout
         android:orientation="vertical"
         android:background="@drawable/shape_corner_with_stroke"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_100"
-        android:layout_marginTop="@dimen/dimen_20"
-        android:layout_marginStart="@dimen/dimen_30"
-        android:layout_marginEnd="@dimen/dimen_30"
-        android:padding="@dimen/dimen_16">
+        android:layout_height="96dp"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:layout_marginStart="@dimen/common_page_content_padding"
+        android:layout_marginEnd="@dimen/common_page_content_padding"
+        android:paddingLeft="@dimen/dimen_15"
+        android:paddingRight="@dimen/dimen_15"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        >
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edt_show_mnemonic"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="start"
             android:hint="@string/walletmanage_input_mnemonic_hint"
             android:textSize="@dimen/font_4"
-            android:textColor="@color/black_context"
+            android:textColor="@color/black_content"
             android:textColorHint="@color/black_context"
             app:met_hideUnderline="true"
             android:textCursorDrawable="@drawable/walletmanage_cursor_custom"
@@ -50,8 +55,8 @@
         android:id="@+id/bt_next_step"
         style="@style/bt_long_in_linearLayout"
         android:text="@string/walletmanage_tip_next_step"
-        android:layout_marginStart="@dimen/dimen_46"
-        android:layout_marginEnd="@dimen/dimen_46"
-        android:layout_marginTop="@dimen/dimen_30"/>
+        android:layout_marginStart="@dimen/common_view_margin"
+        android:layout_marginEnd="@dimen/common_view_margin"
+        android:layout_marginTop="38dp"/>
 
 </LinearLayout>

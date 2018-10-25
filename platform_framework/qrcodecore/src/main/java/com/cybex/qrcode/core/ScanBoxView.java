@@ -32,6 +32,7 @@ public class ScanBoxView extends View {
     private TextPaint mTipPaint;
 
     private int mMaskColor;
+    private int mRectMaskColor;
     private int mCornerColor;
     private int mCornerLength;
     private int mCornerSize;
@@ -89,6 +90,7 @@ public class ScanBoxView extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mMaskColor = Color.parseColor("#33FFFFFF");
+        mRectMaskColor=Color.TRANSPARENT;
         mCornerColor = Color.WHITE;
         mCornerLength = QRCodeUtil.dp2px(context, 20);
         mCornerSize = QRCodeUtil.dp2px(context, 3);
@@ -155,6 +157,8 @@ public class ScanBoxView extends View {
             mRectWidth = typedArray.getDimensionPixelSize(attr, mRectWidth);
         } else if (attr == R.styleable.QRCodeView_qrcv_maskColor) {
             mMaskColor = typedArray.getColor(attr, mMaskColor);
+        }else if (attr == R.styleable.QRCodeView_qrcv_rectMaskColor) {
+            mRectMaskColor = typedArray.getColor(attr, mRectMaskColor);
         } else if (attr == R.styleable.QRCodeView_qrcv_cornerColor) {
             mCornerColor = typedArray.getColor(attr, mCornerColor);
         } else if (attr == R.styleable.QRCodeView_qrcv_scanLineColor) {
@@ -255,6 +259,8 @@ public class ScanBoxView extends View {
         // 画遮罩层
         drawMask(canvas);
 
+        drawRectMask(canvas);
+
         // 画边框线
         drawBorderLine(canvas);
 
@@ -286,6 +292,19 @@ public class ScanBoxView extends View {
             canvas.drawRect(0, mFramingRect.top, mFramingRect.left, mFramingRect.bottom + 1, mPaint);
             canvas.drawRect(mFramingRect.right + 1, mFramingRect.top, width, mFramingRect.bottom + 1, mPaint);
             canvas.drawRect(0, mFramingRect.bottom + 1, width, height, mPaint);
+        }
+    }
+
+
+    /**
+     * 画框中遮罩
+     */
+    private void drawRectMask(Canvas canvas) {
+        if (mRectMaskColor != Color.TRANSPARENT) {
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(mRectMaskColor);
+            mPaint.setStrokeWidth(mBorderSize);
+            canvas.drawRect(mFramingRect, mPaint);
         }
     }
 
