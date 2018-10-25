@@ -86,13 +86,13 @@
         app:layout_constraintTop_toBottomOf="@id/view_asset_value">
 
         <Button
-            android:id="@+id/btn_transfer_nextStep"
+            android:id="@+id/btn_go_transfer"
             style="@style/common_button_clickable"
             android:layout_weight="1"
             android:text="@string/eos_title_transfer"/>
 
         <Button
-            android:id="@+id/btn_receive"
+            android:id="@+id/btn_collect"
             style="@style/common_button_clickable_white"
             android:layout_marginStart="30dp"
             android:layout_weight="1"

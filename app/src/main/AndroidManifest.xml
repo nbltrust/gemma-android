@@ -75,6 +75,26 @@
             >
 
 
+        </activity>
+
+        <!-- EOS Home 界面 -->
+        <activity android:name=".ui.activity.EosHomeActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
+
+        </activity>
+
+        <!-- EOS 转账页面 -->
+        <activity android:name=".ui.activity.TransferActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
+
+        </activity>
+
+        <!-- 收款页面 -->
+        <activity android:name=".ui.activity.CollectActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
 
         </activity>
 

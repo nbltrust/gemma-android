@@ -167,7 +167,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        setNavibarTitle(getString(R.string.eos_title_transfer), false);
+        setNavibarTitle(getString(R.string.eos_title_transfer), true, true);
     }
 
     @Override
@@ -251,6 +251,12 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
+        etReceiverAccount.setText("");
+        etAmount.setText("");
+        etNote.setText("");
+        getP().requestBanlanceInfo();
+
         deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
         m_uiLock = new ReentrantLock();
         m_uiLock.lock();
@@ -355,6 +361,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     }
 
+    /*
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (event != null && event.getPosition() == 1) {
@@ -365,6 +372,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             getP().requestBanlanceInfo();
         }
     }
+    */
 
     @OnClick({R.id.et_note})
     public void onClickEvent(EditText v) {

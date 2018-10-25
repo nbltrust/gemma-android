@@ -148,15 +148,15 @@ public class ResourceDetailActivity extends XActivity<ResourceDetailPresenter> {
                 superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_red));
             }else {
                 //progress 0 ~ 85%
-                progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
+                progressBar.setProgressColor(getResources().getColor(R.color.black_context));
                 progressBar.setProgress(progress);
-                superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
+                superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_black));
             }
         }else {
             //progress < 0
-            progressBar.setProgressColor(getResources().getColor(R.color.dark_sky_blue));
+            progressBar.setProgressColor(getResources().getColor(R.color.black_context));
             progressBar.setProgress(ParamConstants.PROGRESS_MIN);
-            superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_blue));
+            superTextViewNetStatus.setLeftIcon(getResources().getDrawable(R.drawable.ic_dot_black));
         }
     }
 }

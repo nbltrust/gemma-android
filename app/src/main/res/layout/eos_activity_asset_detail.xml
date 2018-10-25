@@ -3,6 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/whiteTwo"
               android:orientation="vertical">
 
     <LinearLayout
@@ -39,6 +40,7 @@
                         android:layout_height="match_parent">
 
                         <com.cybex.base.view.statusview.MultipleStatusView
+                            android:background="@color/whiteTwo"
                             android:id="@+id/list_multiple_status_view"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

@@ -2,7 +2,6 @@ package com.cybex.gma.client.ui.activity;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -50,8 +50,8 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @BindView(R.id.iv_logo_eos_asset) ImageView ivLogoEosAsset;
     @BindView(R.id.tv_eos_amount) TextView tvEosAmount;
     @BindView(R.id.tv_rmb_amount) TextView tvRmbAmount;
-    @BindView(R.id.btn_transfer_nextStep) Button btnTransferNextStep;
-    @BindView(R.id.btn_receive) Button btnReceive;
+    @BindView(R.id.btn_go_transfer) Button btnGoTransfer;
+    @BindView(R.id.btn_collect) Button btnCollect;
     @BindView(R.id.view_asset_buttons) LinearLayout viewAssetButtons;
     @BindView(R.id.view_asset_top) ConstraintLayout viewAssetTop;
     @BindView(R.id.list_multiple_status_view) MultipleStatusView listMultipleStatusView;
@@ -77,10 +77,12 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        setNavibarTitle(getString(R.string.title_asset_detail), true);
         bundle = getIntent().getExtras();
         if (bundle != null){
             String assetsValue = bundle.getString(ParamConstants.EOS_ALL_ASSET_VALUE);
             tvRmbAmount.setText(assetsValue);
+            LoggerManager.d("assetsValue received", assetsValue);
             String eosAmount = bundle.getString(ParamConstants.EOS_AMOUNT);
             tvEosAmount.setText(eosAmount);
         }
@@ -137,6 +139,20 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
                     bundle.putString("cur_eos_name", curWallet.getCurrentEosName());
                     UISkipMananger.launchVote(AssetDetailActivity.this, bundle);
                 }
+            }
+        });
+
+        btnGoTransfer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UISkipMananger.launchTransfer(AssetDetailActivity.this);
+            }
+        });
+
+        btnCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UISkipMananger.launchCollect(AssetDetailActivity.this);
             }
         });
     }

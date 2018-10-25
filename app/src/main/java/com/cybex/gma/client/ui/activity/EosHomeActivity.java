@@ -1,7 +1,6 @@
-package com.cybex.gma.client.ui.fragment;
+package com.cybex.gma.client.ui.activity;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -30,18 +29,17 @@ import com.cybex.gma.client.event.PollEvent;
 import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.adapter.ChangeAccountAdapter;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
 import com.cybex.gma.client.ui.model.response.AccountRefoundRequest;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
-import com.cybex.gma.client.ui.presenter.WalletPresenter;
+import com.cybex.gma.client.ui.presenter.EosHomePresenter;
 import com.cybex.gma.client.utils.AmountUtil;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
-import com.hxlx.core.lib.mvp.lite.XFragment;
+import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.SPUtils;
@@ -53,7 +51,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.tapadoo.alerter.Alerter;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -66,12 +63,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.hypertrack.smart_scheduler.SmartScheduler;
 
-/**
- * 钱包Fragment
- *
- * Created by wanglin on 2018/7/9.
- */
-public class WalletFragment extends XFragment<WalletPresenter> {
+public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     @BindView(R.id.view_resource_manage) ConstraintLayout viewResourceManage;
     @BindView(R.id.tv_number_of_tokens) TextView tvNumberOfTokens;
@@ -108,7 +100,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     @BindView(R.id.view_ram) View viewRAM;
     @BindView(R.id.view_refresh_wallet) CommonRefreshLayout refreshLayout;
     private Bundle bundle;
-    Unbinder unbinder;
 
     private ResourceInfoVO resourceInfoVO;
     private String curUSDTPrice;
@@ -119,7 +110,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         bundle.putString(ParamConstants.EOS_ALL_ASSET_VALUE, getAssetsValue());
         bundle.putString(ParamConstants.EOS_AMOUNT, getEosAmount());
         LoggerManager.d("assetsValue",  getAssetsValue());
-        UISkipMananger.launchAssetDetail(getActivity(), bundle);
+        UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
     }
 
     @OnClick({R.id.view_cpu, R.id.view_net, R.id.view_ram})
@@ -142,15 +133,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         switch (v.getId()){
             case R.id.iv_copy:
                 //复制账户名
-                if (getActivity() != null){
-                    ClipboardUtils.copyText(getActivity(), getAccountName());
+
+                    ClipboardUtils.copyText(this, getAccountName());
                     GemmaToastUtils.showLongToast(getString(R.string.eos_copy_success));
-                }
+
                 break;
             case R.id.iv_back:
-                if (getActivity() != null){
-                    getActivity().finish();
-                }
+                finish();
                 break;
         }
     }
@@ -161,7 +150,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     public void goResourceManagement() {
 
-        UISkipMananger.launchResourceDetail(getActivity(), bundle);
+        UISkipMananger.launchResourceDetail(EosHomeActivity.this, bundle);
     }
 
     /*
@@ -183,13 +172,6 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     }
 
 
-    public static WalletFragment newInstance() {
-        Bundle args = new Bundle();
-        WalletFragment fragment = new WalletFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onReceivePollevent(PollEvent pollEvent) {
         if (EmptyUtils.isNotEmpty(pollEvent) && pollEvent.isDone()) {
@@ -200,6 +182,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         }
     }
 
+    /*
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onTabSelctedEvent(TabSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
@@ -208,6 +191,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             }
         }
     }
+    */
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onChangeAccountEvent(ChangeAccountEvent event) {
@@ -450,12 +434,13 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @Override
     public void bindUI(View rootView) {
-        unbinder = ButterKnife.bind(this, rootView);
+      ButterKnife.bind(this);
         //OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        getP().requestHomeCombineDataVO();
         bundle = new Bundle();
         //初始化当前节点
         if (SPUtils.getInstance().getString("curNode") != null) {
@@ -487,9 +472,9 @@ public class WalletFragment extends XFragment<WalletPresenter> {
             //生成头像
             //generatePortrait(curWallet.getCurrentEosName());
             //设置Alert
-            if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
+            if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED)) {
                 if (Alerter.isShowing()) {
-                    Alerter.create(getActivity())
+                    Alerter.create(this)
                             .setText(getResources().getString(R.string.eos_please_confirm_alert))
                             .setBackgroundColorRes(R.color.scarlet)
                             .enableInfiniteDuration(true)
@@ -545,8 +530,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (getContext() != null) {
-                    float dpY = px2dp(getContext(), scrollY);
+
+                    float dpY = px2dp(EosHomeActivity.this, scrollY);
                     if (dpY > 14) {
                         if (curWallet != null) {
                             curEosUsername = curWallet.getCurrentEosName();
@@ -562,7 +547,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
                         title.setAlpha(1);
                         mTitleBar.setTitle(getString(R.string.eos_app_name));
                     }
-                }
+
             }
         });
     }
@@ -573,7 +558,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         ImageView mCollectView = (ImageView) mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.ic_add_wallet) {
             @Override
             public void performAction(View view) {
-                UISkipMananger.launchWalletManagement(getActivity());
+                UISkipMananger.launchWalletManagement(EosHomeActivity.this);
             }
         });
     }
@@ -584,8 +569,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     }
 
     @Override
-    public WalletPresenter newP() {
-        return new WalletPresenter();
+    public EosHomePresenter newP() {
+        return new EosHomePresenter();
     }
 
     /*
@@ -603,8 +588,8 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         if (EmptyUtils.isNotEmpty(curWallet)) {
             tvAccountName.setText(curWallet.getCurrentEosName());
             //generatePortrait(curWallet.getCurrentEosName());
-            if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED) && getActivity() != null) {
-                Alerter.create(getActivity())
+            if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED)) {
+                Alerter.create(this)
                         .setText(getResources().getString(R.string.eos_please_confirm_alert))
                         .setBackgroundColorRes(R.color.scarlet)
                         .enableSwipeToDismiss()
@@ -616,13 +601,12 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-        SmartScheduler jobScheduler = SmartScheduler.getInstance(getActivity().getApplicationContext());
-        boolean reslut = jobScheduler.removeJob(2);
+    public void onDestroy() {
+        super.onDestroy();
+        SmartScheduler jobScheduler = SmartScheduler.getInstance(EosHomeActivity.this.getApplicationContext());
+        boolean result = jobScheduler.removeJob(2);
         jobScheduler.removeJob(1);
-        if (reslut) {
+        if (result) {
             LoggerManager.d("Job repeat Removed");
         }
 
@@ -646,7 +630,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
     private void showChangeEOSNameDialog() {
         int[] listenedItems = {R.id.imv_close};
 
-        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+        CustomFullDialog dialog = new CustomFullDialog(this,
                 R.layout.eos_dialog_change_account, listenedItems, false, Gravity.BOTTOM);
 
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
@@ -664,7 +648,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         dialog.show();
 
         RecyclerView mRecyclerView = dialog.findViewById(R.id.rv_list);
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         List<EOSNameVO> voList = getP().getEOSNameVOList();
         ChangeAccountAdapter adapter = new ChangeAccountAdapter(voList);
@@ -694,6 +678,4 @@ public class WalletFragment extends XFragment<WalletPresenter> {
         });
 
     }
-
-
 }

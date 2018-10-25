@@ -212,7 +212,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                         @Override
                         public void afterTextChanged(Editable s) {
                             super.afterTextChanged(s);
-                            if (EmptyUtils.isNotEmpty(getEOSAmount()) && !getEOSAmount().equals(".")) {
+                            if (EmptyUtils.isNotEmpty(getRamAmount()) && !getRamAmount().equals(".")) {
                                 setClickable(btSellRam);
                                 if (EmptyUtils.isNotEmpty(kbPerEOS)) {
                                     String amount =

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/whiteTwo"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/view_top_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/whiteTwo">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                title:layout_constraintTop_toTopOf="parent"
+                title:layout_constraintBottom_toBottomOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_notify_back"/>
+
+            <ImageView
+                android:id="@+id/iv_copy"
+                android:layout_marginEnd="4dp"
+                title:layout_constraintEnd_toStartOf="@id/tv_current_account"
+                title:layout_constraintTop_toTopOf="parent"
+                title:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_copy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_current_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="nbltrustcom1"
+                android:textSize="@dimen/font_4"
+                android:textColor="@color/black_two"
+                title:layout_constraintEnd_toStartOf="@id/iv_change_account"
+                title:layout_constraintTop_toTopOf="parent"
+                title:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <ImageView
+                android:visibility="gone"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintTop_toTopOf="parent"
+                title:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/iv_change_account"
+                android:src="@drawable/eos_ic_change_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+        <com.cybex.base.view.refresh.CommonRefreshLayout
+            android:paddingTop="2dp"
+            android:background="@color/whiteTwo"
+            android:id="@+id/view_refresh_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            title:srlEnableLoadmore="false"
+            title:srlEnableRefresh="true">
+
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/scroll_wallet_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                title:layout_constraintBottom_toBottomOf="parent"
+                title:layout_constraintEnd_toEndOf="parent"
+                title:layout_constraintStart_toStartOf="parent"
+                title:layout_constraintTop_toBottomOf="@id/imageView_portrait">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dimen_10">
+
+                    <include
+                        layout="@layout/eos_ui_wallet_home_info">
+
+                    </include>
+
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+
+        </com.cybex.base.view.refresh.CommonRefreshLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+

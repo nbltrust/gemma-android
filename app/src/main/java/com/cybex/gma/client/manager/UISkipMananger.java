@@ -24,10 +24,12 @@ import com.cybex.gma.client.ui.activity.BluetoothWalletDetailActivity;
 import com.cybex.gma.client.ui.activity.BluetoothWalletManageActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
 import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
+import com.cybex.gma.client.ui.activity.CollectActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateMethodActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
+import com.cybex.gma.client.ui.activity.EosHomeActivity;
 import com.cybex.gma.client.ui.activity.FingerprintVerifyActivity;
 import com.cybex.gma.client.ui.activity.GeneralSettingActivity;
 import com.cybex.gma.client.ui.activity.GestureCreateActivity;
@@ -38,6 +40,7 @@ import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.activity.ManageWalletActivity;
 import com.cybex.gma.client.ui.activity.ResourceDetailActivity;
 import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
+import com.cybex.gma.client.ui.activity.TransferActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.cybex.gma.client.ui.activity.VerifyPriKeyActivity;
 import com.cybex.gma.client.ui.activity.VoteActivity;
@@ -63,21 +66,21 @@ public final class UISkipMananger {
     }
 
     /**
-     * 跳转到主界面(MainTab)
+     * 跳转到EOS主界面
      *
      * @param context
      */
     public static void launchHomeSingle(Activity context) {
-        launchNewTaskIntent(context, MainTabActivity.class);
+        launchNewTaskIntent(context, EosHomeActivity.class);
     }
 
     /**
-     * 跳转到主界面(MainTab)
+     * 跳跳转到EOS主界面
      *
      * @param context
      */
     public static void launchHome(Activity context) {
-        launchIntent(context, MainTabActivity.class);
+        launchIntent(context, EosHomeActivity.class);
     }
 
 
@@ -88,6 +91,15 @@ public final class UISkipMananger {
      */
     public static void launchCreateWallet(Context context) {
         startActivity(context, CreateWalletActivity.class);
+    }
+
+    /**
+     * 跳转到转账页面
+     *
+     * @param context
+     */
+    public static void launchTransfer(Context context) {
+        startActivity(context, TransferActivity.class);
     }
 
     /**
@@ -104,6 +116,15 @@ public final class UISkipMananger {
      */
     public static void launchAssetDetail(Activity context, Bundle bundle) {
         launchIntent(context, AssetDetailActivity.class, bundle);
+    }
+
+    /**
+     * 跳转到收款页面
+     *
+     * @param context
+     */
+    public static void launchCollect(Context context) {
+        startActivity(context, CollectActivity.class);
     }
 
 
