@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="baseservice_passwordvalidate_cancel_icon" type="id" />
+    <item name="baseservice_passwordvalidate_confirm" type="id" />
+    <item name="baseservice_passwordvalidate_hint" type="id" />
+    <item name="baseservice_passwordvalidate_et_password" type="id" />
+
+
+
+</resources>

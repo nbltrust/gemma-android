@@ -92,6 +92,16 @@ public class CustomFullDialog extends Dialog implements View.OnClickListener {
         this.mIsDismiss = isDismiss;
     }
 
+    public CustomFullDialog(Context context, int layoutResID, int[] listenedItems, boolean isDismiss, boolean isDismissTouchOut,int position) {
+        super(context, R.style.Custom_Dialog_Style); //dialog的样式
+        this.context = context;
+        this.mLayoutResId = layoutResID;
+        this.mIds = listenedItems;
+        this.mPosition = position;
+        this.mIsDismiss = isDismiss;
+        this.mIsDismissTouchOut = isDismissTouchOut;
+    }
+
     /**
      * @param context
      * @param layoutResID 布局Id

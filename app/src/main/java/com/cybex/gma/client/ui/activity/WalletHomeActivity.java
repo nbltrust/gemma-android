@@ -15,9 +15,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.widget.EosCardView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import java.util.ArrayList;
 
@@ -63,6 +67,22 @@ public class WalletHomeActivity extends XActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         handleInitType();
 
+//
+//        MultiWalletEntity currentMultiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+//
+//        PasswordValidateHelper passwordValidateHelper = new PasswordValidateHelper(currentMultiWalletEntity, this);
+//        passwordValidateHelper.startValidatePassword(new PasswordValidateHelper.PasswordValidateCallback() {
+//            @Override
+//            public void onValidateSuccess() {
+//                GemmaToastUtils.showShortToast("onValidateSuccess");
+//
+//            }
+//
+//            @Override
+//            public void onValidateFail(int failedCount) {
+//                GemmaToastUtils.showShortToast("onValidateFail");
+//            }
+//        });
 
 
     }
