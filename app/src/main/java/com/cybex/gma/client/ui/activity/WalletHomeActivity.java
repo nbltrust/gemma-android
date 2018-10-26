@@ -16,7 +16,10 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.widget.EosCardView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,8 +50,8 @@ public class WalletHomeActivity extends XActivity {
     ImageView mIvWalletManage;
     @BindView(R.id.iv_settings)
     ImageView mIvSettings;
-    @BindView(R.id.recycler_tokens)
-    RecyclerView mRecyclerTokens;
+    @BindView(R.id.eos_card)
+    EosCardView mEosCardView;
     private Unbinder unbinder;
 
 
@@ -59,6 +62,8 @@ public class WalletHomeActivity extends XActivity {
         //让布局向上移来显示软键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         handleInitType();
+
+
 
     }
 

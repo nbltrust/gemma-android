@@ -119,7 +119,11 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-
+    <!-- 公用横向间隔距离-->
+    <style name="common_horizontal_padding">
+        <item name="android:layout_marginLeft">@dimen/common_page_content_padding</item>
+        <item name="android:layout_marginRight">@dimen/common_page_content_padding</item>
+    </style>
 
 
     <!-- 公用分割线样式-->

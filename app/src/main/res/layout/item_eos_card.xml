@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_info"
+    android:layout_width="match_parent"
+    android:layout_height="204dp"
+    android:background="@drawable/shape_corner_token_card"
+    android:paddingLeft="15dp">
+
+
+    <ImageView
+        android:id="@+id/iv_eos_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:src="@drawable/eos_ic_asset" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="29dp"
+        android:layout_toRightOf="@+id/iv_eos_icon"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/eos_eos"
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/font_4.5"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_account_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="待激活"
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_3.5" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/total_eos_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96.15dp"
+        android:gravity="bottom"
+        android:text="0.0000"
+        android:textColor="@color/black_title"
+        android:textSize="@dimen/font_6"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/total_eos_amount"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="7.6dp"
+        android:layout_toRightOf="@+id/total_eos_amount"
+        android:text="EOS"
+        android:textColor="@color/black_context"
+        android:textSize="@dimen/font_3.5" />
+
+
+    <LinearLayout
+        android:id="@+id/view_eos_tokens"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/total_eos_amount"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_3.5" />
+
+        <TextView
+            android:id="@+id/tv_tokens_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_4.5"
+            android:textStyle="bold"
+            android:layout_marginLeft="4dp"
+            tools:text="2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_3.5"
+            android:layout_marginLeft="4dp"
+            android:text="tokens" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_below="@+id/view_eos_tokens"
+        android:layout_marginTop="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tv_currency_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="≈ ¥"
+            android:textSize="@dimen/font_3.5"
+            android:textColor="@color/black_context" />
+
+        <TextView
+            android:id="@+id/total_price_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_4.5"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/eos_card_bg" />
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_token_icons"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="27dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>

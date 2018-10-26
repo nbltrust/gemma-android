@@ -46,9 +46,6 @@ public class SelectWalletCoinTypeActivity extends XActivity {
 
         CoinType selectedCoinType = (CoinType) getIntent().getSerializableExtra(WalletManageConst.KEY_SELECT_COINTYPE);
 
-        LoggerManager.e("czc selectedCoinType="+selectedCoinType.coinName);
-        LoggerManager.e("czc CoinType.EOS.equals(selectedCoinType))="+CoinType.EOS.equals(selectedCoinType));
-
         coins.add(new CoinTypeBean(CoinType.EOS,CoinType.EOS.equals(selectedCoinType)));
         coins.add(new CoinTypeBean(CoinType.ETH,CoinType.ETH.equals(selectedCoinType)));
 

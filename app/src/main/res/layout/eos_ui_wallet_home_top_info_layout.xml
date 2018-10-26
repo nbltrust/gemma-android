@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="18dp"
         android:layout_marginStart="18dp"
-        android:background="@drawable/eos_shape_corner_token_card"
+        android:background="@drawable/shape_corner_token_card"
         android:orientation="vertical"
         android:translationZ="4dp">
 

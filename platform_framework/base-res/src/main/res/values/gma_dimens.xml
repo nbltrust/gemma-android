@@ -460,14 +460,14 @@
 
 
     <!-- 字体大小 -->
-    <dimen name="font_3.5">14sp</dimen>
-    <dimen name="font_3">12sp</dimen>
-    <dimen name="font_6">24sp</dimen>
-    <dimen name="font_4">16sp</dimen>
-    <dimen name="font_4.2">17sp</dimen>
-    <dimen name="font_4.5">18sp</dimen>
-    <dimen name="font_4.7">19sp</dimen>
-    <dimen name="font_7">28sp</dimen>
+    <dimen name="font_3.5">13.46dp</dimen>
+    <dimen name="font_3">11.53dp</dimen>
+    <dimen name="font_6">23dp</dimen>
+    <dimen name="font_4">15.38dp</dimen>
+    <dimen name="font_4.2">16.15dp</dimen>
+    <dimen name="font_4.5">17.3dp</dimen>
+    <dimen name="font_4.7">18dp</dimen>
+    <dimen name="font_7">27dp</dimen>
 
     <dimen name="bottombar_height">48dp</dimen>
     <dimen name="bottombar_gemma_height">52dp</dimen>

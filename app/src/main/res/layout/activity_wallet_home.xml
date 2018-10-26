@@ -7,8 +7,8 @@
               android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="@dimen/common_page_content_padding"
+        android:layout_marginTop="27dp"
         android:id="@+id/view_wookong_status"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
@@ -33,17 +33,16 @@
 
     </LinearLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="6dp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="52dp"
+        android:gravity="center_vertical"
+        >
 
         <TextView
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/common_page_content_padding"
             android:id="@+id/tv_wallet_name"
-            tools:text="钱包名称"
+            android:text="钱包名称"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,34 +53,56 @@
         <ImageView
             android:src="@drawable/ic_add_wallet"
             android:id="@+id/iv_wallet_manage"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/iv_settings"
+            android:layout_toLeftOf="@+id/iv_settings"
+            android:layout_marginRight="@dimen/common_page_content_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <ImageView
             android:src="@drawable/ic_general"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/common_page_content_padding"
             android:id="@+id/iv_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
 
-    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_tokens"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="60dp"
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/recycler_tokens"-->
+        <!--android:layout_marginStart="20dp"-->
+        <!--android:layout_marginEnd="20dp"-->
+        <!--android:layout_marginTop="40dp"-->
+        <!--android:layout_marginBottom="60dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+
+    <!--</android.support.v7.widget.RecyclerView>-->
+
+    <com.cybex.gma.client.widget.EosCardView
+        android:id="@+id/eos_card"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="204dp"
+        android:layout_marginTop="27dp"
+        style="@style/common_horizontal_padding"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="10dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        >
+    </com.cybex.gma.client.widget.EosCardView>
 
-
-    </android.support.v7.widget.RecyclerView>
+    <com.cybex.gma.client.widget.EthCardView
+        android:id="@+id/eth_card"
+        android:layout_width="match_parent"
+        android:layout_height="204dp"
+        android:layout_marginTop="27dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="10dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        style="@style/common_horizontal_padding"
+        >
+    </com.cybex.gma.client.widget.EthCardView>
 
 </LinearLayout>
