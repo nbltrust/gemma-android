@@ -140,13 +140,32 @@ public class WookongBioManager {
         connectThread.start();
     }
 
+    /**
+     * 调用中间件setInitPINWrapper来初始化PIN码
+     */
+    public void initPIN(long mContextHandle,int devIndex, String password){
+        connectThread.setInitPINWrapper(mContextHandle, devIndex, password);
+        connectThread.start();
+    }
+
+
+    /**
+     * 调用中间件setGetCheckCodeWrapper来初始化PIN码
+     */
+    public void getCheckCode(long mContextHandle, int devIndex){
+        connectThread.setGetCheckCodeWrapper(mContextHandle, 0);
+        connectThread.start();
+    }
+
 
     /**
      * 释放Handler资源避免内存泄露
      */
     public void freeResource(){
-        mHandler.removeCallbacksAndMessages(connectThread);
-        mHandler=null;
+        if (mHandler != null){
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler=null;
+        }
     }
 
     /**

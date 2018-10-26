@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="#f9f9f9"
+              android:background="#ffffff"
               android:orientation="vertical">
 
     <RelativeLayout
@@ -29,7 +29,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
-            app:SpinKit_Color="#3F51B5"
+            app:SpinKit_Color="@color/black_context"
             />
 
     </RelativeLayout>
@@ -39,10 +39,10 @@
         android:id="@+id/tv_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="24dp"
         android:text="@string/eos_transefer_bluetooth_connect_tip"
-        android:textColor="#212c67"
+        android:textColor="@color/black_title"
         android:textSize="14sp"
         />
 
@@ -50,12 +50,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="@color/dark_slate_blue"
+        android:textSize="@dimen/font_4"
+        android:textColor="@color/black_title"
         android:lineSpacingExtra="0sp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dimen_50"
-        android:layout_marginBottom="@dimen/dimen_50"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginBottom="@dimen/dimen_30"
+        android:textStyle="bold"
         android:text="@string/eos_transfer_bluetooth_tip"
         />
 

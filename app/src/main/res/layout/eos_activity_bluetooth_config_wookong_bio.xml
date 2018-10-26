@@ -5,6 +5,7 @@
               android:layout_height="match_parent"
               android:focusable="true"
               android:focusableInTouchMode="true"
+              android:background="@color/whiteTwo"
               android:orientation="vertical">
 
     <include
@@ -61,7 +62,7 @@
                     android:layout_height="50dp">
 
                     <TextView
-                        android:textColor="@color/darkSlateBlue"
+                        android:textColor="@color/black_title"
                         android:layout_marginStart="12dp"
                         android:textStyle="bold"
                         android:layout_gravity="center"
@@ -72,13 +73,15 @@
                 </LinearLayout>
 
                 <View
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     style="@style/common_divider">
                 </View>
 
                 <TextView
                     android:id="@+id/tv_set_pass"
                     style="@style/eos_text_title_config_wallet"
-                    android:text="@string/eos_title_set_wookong_password"/>
+                    android:text="@string/eos_tip_set_password"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -109,6 +112,8 @@
                 </LinearLayout>
 
                 <View
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:id="@+id/view_divider_setPass"
                     style="@style/common_divider">
                 </View>
@@ -151,6 +156,8 @@
 
 
                 <View
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:id="@+id/view_divider_repeatPass"
                     style="@style/common_divider">
                 </View>
@@ -179,10 +186,18 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:id="@+id/view_divider_passTip"
+                    style="@style/common_divider">
+                </View>
+
                 <LinearLayout
                     android:id="@+id/layout_checkBox"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
                     android:layout_marginTop="@dimen/eos_checkBox_marginTop"
                     android:orientation="horizontal">
 
@@ -191,7 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/eos_checkBox_length"
                         android:text="@string/eos_tip_agree"
-                        android:textColor="@color/blueyGrey"
+                        android:textColor="@color/black_context"
                         android:textSize="@dimen/font_3"
                         android:theme="@style/myCheckBox"/>
 
@@ -200,7 +215,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/eos_tip_terms_of_service"
-                        android:textColor="@color/darkSlateBlue"
+                        android:textColor="@color/black_context"
                         android:textSize="@dimen/font_3"
                         />
                 </LinearLayout>
@@ -213,9 +228,9 @@
                 android:layout_height="@dimen/bt_inInitPage_height"
                 android:layout_marginEnd="@dimen/eos_button_margin"
                 android:layout_marginStart="@dimen/eos_button_margin"
-                android:layout_marginTop="@dimen/eos_button_margin"
+                android:layout_marginTop="26dp"
                 android:background="@drawable/eos_shape_corner_button"
-                android:text="@string/eos_btn_create_new_wallet"
+                android:text="@string/eos_tip_create_wallet"
                 android:textColor="@color/whiteTwo"/>
 
             <Button
@@ -224,10 +239,16 @@
                 android:layout_height="@dimen/bt_inInitPage_height"
                 android:layout_marginEnd="@dimen/eos_button_margin"
                 android:layout_marginStart="@dimen/eos_button_margin"
-                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_15"
                 android:background="@drawable/shape_corner_button_white_with_stroke"
                 android:text="@string/eos_btn_import_mne"
-                android:textColor="@color/cornflowerBlue"/>
+                android:textColor="@color/black_title"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp">
+
+            </View>
 
         </LinearLayout>
 

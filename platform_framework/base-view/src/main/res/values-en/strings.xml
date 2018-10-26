@@ -31,4 +31,7 @@
 
     <string name="scanning_bio">Scanning available WOOKONG Bio(s)</string>
 
+    <string name="transefer_bluetooth_connect_tip">Check your bluetooth and device power if the device is not shown</string>
+    <string name="transfer_bluetooth_tip">Connecting WOOKONG Bio</string>
+
 </resources>

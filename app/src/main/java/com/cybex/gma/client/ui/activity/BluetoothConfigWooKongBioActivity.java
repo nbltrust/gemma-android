@@ -18,9 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.manager.WookongBioManager;
 import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
@@ -356,12 +358,15 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     public void setClickable(Button button) {
         //button.setClickable(true);
-        button.setBackgroundColor(getResources().getColor(R.color.cornflowerBlueTwo));
+        button.setBackground(getDrawable(R.drawable.shape_corner_button_clickable));
+        button.setTextColor(getResources().getColor(R.color.whiteTwo));
     }
 
     public void setUnclickable(Button button) {
         // button.setClickable(false);
-        button.setBackgroundColor(getResources().getColor(R.color.cloudyBlueTwo));
+        //button.setBackground(getDrawable(R.drawable.shape_corner_with_black_stroke));
+        button.setBackground(getDrawable(R.drawable.shape_corner_button_unclickable));
+       // button.setTextColor(getResources().getColor(R.color.black_title));
     }
 
 
@@ -379,9 +384,12 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     @Override
     protected void onDestroy() {
-        clearListeners();
         super.onDestroy();
-        //Validate.unreg(this);
+        clearListeners();
+        if (mHandler != null){
+            WookongBioManager.getInstance(mHandler).freeThread();
+            WookongBioManager.getInstance(mHandler).freeResource();
+        }
     }
 
     public void setEditTextHintStyle(EditText editText, int resId) {
@@ -448,9 +456,15 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         String password = String.valueOf(edtSetPass.getText());
 
         mHandler = new BluetoothHandler();
+
+        /*
         blueToothThread = new BlueToothWrapper(mHandler);
         blueToothThread.setInitPINWrapper(0, 0, password);
         blueToothThread.start();
+        */
+
+        WookongBioManager.getInstance(mHandler).initPIN(contextHandle,0, password);
+        LoggerManager.d("contextHandle", contextHandle);
     }
 
 
@@ -509,5 +523,6 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
             }
         }
     }
+
 
 }

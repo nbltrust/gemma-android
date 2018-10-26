@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.manager.WookongBioManager;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.base.view.flowlayout.FlowLayout;
 import com.cybex.base.view.flowlayout.TagAdapter;
@@ -100,10 +101,12 @@ public class BluetoothBackupMneFragment extends XFragment {
         }
 
         handler = new BluetoothHandler();
+        /*
         generateSeedThread = new BlueToothWrapper(handler);
         generateSeedThread.setGenerateSeedGetMnesWrapper(contextHandle, 0, 16);
         generateSeedThread.start();
-
+        */
+        WookongBioManager.getInstance(handler).startGenerateSeedGetMnes(contextHandle,0, 16);
         showAlertDialog();
     }
 

@@ -114,5 +114,7 @@
     <item name="tag_key_position" type="id"/>
     <string name="collect">收款</string>
 
+    <string name="reconnect">重试连接</string>
+
 
 </resources>

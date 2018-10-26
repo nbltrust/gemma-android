@@ -104,4 +104,5 @@
 
     <string name="tip_back_wallet">请务必备份私钥，私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>
 
+    <string name="reconnect">Reconnect</string>
 </resources>

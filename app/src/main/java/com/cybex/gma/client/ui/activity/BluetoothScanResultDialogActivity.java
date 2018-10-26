@@ -14,18 +14,19 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
-import com.cybex.gma.client.R;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.manager.WookongBioManager;
 import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.MiddlewareInterface;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.SPUtils;
@@ -45,24 +46,21 @@ import butterknife.ButterKnife;
 public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
 
+    private static final String DEVICE_PREFIX = "WOOKONG";
+    private static final int DEVICE_LIFE_CYCLE_PRODUCE = 2;//produce
+    private static final int DEVICE_LIFE_CYCLE_USER = 4;//user
     @BindView(R.id.imv_close) ImageView imvClose;
     @BindView(R.id.rv_list) RecyclerView rvList;
     @BindView(R.id.list_multiple_status_view) MultipleStatusView statusView;
-
+    @BindView(R.id.view_spinKit) SpinKitView viewSpinKit;
     private BluetoothScanDeviceListAdapter mAdapter;
     private List<BluetoothDeviceVO> deviceNameList = new ArrayList<>();
-
     private BlueToothWrapper mScanThread;
     private ScanDeviceHandler mHandler;
     private BlueToothWrapper connectThread;
     private BlueToothWrapper getDeviceInfoThread;
     private BlueToothWrapper getFPListThread;
-
-    private static final String DEVICE_PREFIX = "WOOKONG";
-
     private int updatePosition = 0;
-    private static final int DEVICE_LIFE_CYCLE_PRODUCE = 2;//produce
-    private static final int DEVICE_LIFE_CYCLE_USER = 4;//user
     private long contextHandle = 0;
 
     @Override
@@ -73,26 +71,36 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         getWindow().setGravity(Gravity.BOTTOM);
         ButterKnife.bind(this);
 
+
         mHandler = new ScanDeviceHandler();
         //调起Activity时执行一次扫描
-
         this.startScan();
         this.initView();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        if (mHandler != null){
+//            WookongBioManager.getInstance(mHandler).freeThread();
+//            WookongBioManager.getInstance(mHandler).freeResource();
+//            mHandler = null;
+//        }
+    }
 
     private void startScan() {
-        /*
+
+
         if ((mScanThread == null) || (mScanThread.getState() == Thread.State.TERMINATED)) {
             mScanThread = new BlueToothWrapper(mHandler);
             mScanThread.setGetDevListWrapper(this, null);
             mScanThread.start();
 
-        }*/
+        }
 
-        WookongBioManager.getInstance(mHandler).startScan(this, DEVICE_PREFIX);
+        //WookongBioManager.getInstance(mHandler).startScan(this, DEVICE_PREFIX);
+
     }
-
 
     private void initView() {
         imvClose.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +110,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvList.setLayoutManager(manager);
@@ -114,7 +121,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (EmptyUtils.isNotEmpty(deviceNameList)) {
                     String deviceName = deviceNameList.get(position).deviceName;
-                    SPUtils.getInstance().put(ParamConstants.DEVICE_NAME ,deviceName);
+                    SPUtils.getInstance().put(ParamConstants.DEVICE_NAME, deviceName);
 
                     updatePosition = position;
 
@@ -122,12 +129,12 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     LoggerManager.d(status);
                     if (status == -1) {
 
-                        WookongBioManager.getInstance(mHandler).startConnect(BluetoothScanResultDialogActivity.this,
-                                deviceName);
-                        deviceNameList.get(position).isShowProgress = true;
-                        mAdapter.notifyDataSetChanged();
+//                        WookongBioManager.getInstance(mHandler).startConnect(BluetoothScanResultDialogActivity.this,
+//                                deviceName);
+//                        deviceNameList.get(position).isShowProgress = true;
+//                        mAdapter.notifyDataSetChanged();
 
-                        /*
+
                         if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
                             connectThread = new BlueToothWrapper(mHandler);
                             connectThread.setInitContextWithDevNameWrapper(BluetoothScanResultDialogActivity.this,
@@ -138,7 +145,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                             deviceNameList.get(position).isShowProgress = true;
                             mAdapter.notifyDataSetChanged();
                         }
-                        */
+
                     } else if (status == 0) {
                         //status == 0 未初始化
                         //status == 1 已初始化但没有配对信息
@@ -159,7 +166,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         });
 
     }
-
 
     /**
      * 显示Wookong bio对话框
@@ -191,7 +197,34 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         finish();
                         break;
                     case R.id.btn_import_mne:
+                        //dialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    /**
+     * 显示重新连接Wookong bio对话框
+     */
+    private void showConnectBioFailDialog() {
+        int[] listenedItems = {R.id.imv_back, R.id.btn_reconnect};
+        CustomFullDialog dialog = new CustomFullDialog(this,
+                R.layout.eos_dialog_transfer_bluetooth_connect_failed, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imc_cancel:
                         dialog.cancel();
+                        break;
+                    case R.id.btn_reconnect:
+                        //重新连接
+                        dialog.cancel();
+                        startScan();
                         break;
                     default:
                         break;
@@ -208,11 +241,14 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             switch (msg.what) {
                 case BlueToothWrapper.MSG_ENUM_START:
                     //开始一次新的扫描
+                    LoggerManager.d("MSG_ENUM_START");
+                    viewSpinKit.setVisibility(View.VISIBLE);
                     deviceNameList.clear();
                     mAdapter.notifyDataSetChanged();
                     statusView.showLoading();
                     break;
                 case BlueToothWrapper.MSG_ENUM_UPDATE:
+                    LoggerManager.d("MSG_ENUM_UPDATE");
                     //更新蓝牙设备列表
                     String[] devNames = (String[]) msg.obj;
                     if (EmptyUtils.isNotEmpty(devNames)) {
@@ -241,16 +277,22 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 case BlueToothWrapper.MSG_INIT_FINISH:
                     break;
                 case BlueToothWrapper.MSG_ENUM_FINISH:
+                    LoggerManager.d("MSG_ENUM_FINISH");
+                    viewSpinKit.setVisibility(View.GONE);
                     //完成列表更新
                     if (EmptyUtils.isNotEmpty(deviceNameList) && deviceNameList.size() > 0) {
                         deviceNameList.get(updatePosition).isShowProgress = false;
                     } else {
-                        if(statusView!=null){
+                        if (statusView != null) {
                             statusView.showEmpty();
                         }
 
-                        //mScanThread.interrupt();
-                        WookongBioManager.getInstance(mHandler).freeThread();
+                        mScanThread.interrupt();
+                        /*
+                        if (mHandler != null){
+                            WookongBioManager.getInstance(mHandler).freeThread();
+                        }
+                        */
                     }
 
                     break;
@@ -260,7 +302,8 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     BlueToothWrapper.InitContextReturnValue returnValue = (BlueToothWrapper.InitContextReturnValue) msg.obj;
                     if ((returnValue != null) && (returnValue.getReturnValue()
                             == MiddlewareInterface.PAEW_RET_SUCCESS)) {
-                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
+                        SPUtils.getInstance()
+                                .put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
                         deviceNameList.get(updatePosition).isShowProgress = false;
                         mAdapter.notifyDataSetChanged();
 
@@ -270,7 +313,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         event.setContextHanle(contextHandle);
                         EventBusProvider.postSticky(event);
 
-                        /*
+
                         if ((getDeviceInfoThread == null) || (getDeviceInfoThread.getState()
                                 == Thread.State.TERMINATED)) {
                             getDeviceInfoThread = new BlueToothWrapper(mHandler);
@@ -279,13 +322,17 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                             getDeviceInfoThread.start();
 
                         }
-                        */
 
-                        WookongBioManager.getInstance(mHandler).getDeviceInfo(contextHandle, 0);
+
+//                        if (mHandler != null){
+//                            WookongBioManager.getInstance(mHandler).getDeviceInfo(contextHandle, 0);
+//                        }
                     }
 
-                    WookongBioManager.getInstance(mHandler).freeThread();
-                    //connectThread.interrupt();
+//                    if (mHandler != null){
+//                        WookongBioManager.getInstance(mHandler).freeThread();
+//                    }
+                    connectThread.interrupt();
                     break;
                 case BlueToothWrapper.MSG_GET_DEV_INFO_FINISH:
                     //获得设备信息
@@ -304,15 +351,15 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                             deviceNameList.get(updatePosition).status = 1;
                             mAdapter.notifyDataSetChanged();
 
-                            /*
+
                             if ((getFPListThread == null) || (getFPListThread.getState()
                                     == Thread.State.TERMINATED)) {
                                 getFPListThread = new BlueToothWrapper(mHandler);
                                 getFPListThread.setGetFPListWrapper(0, updatePosition);
                                 getFPListThread.start();
                             }
-                            */
-                            WookongBioManager.getInstance(mHandler).getFPList(contextHandle,0);
+
+                            //WookongBioManager.getInstance(mHandler).getFPList(contextHandle, 0);
                         }
 
                     }
@@ -332,12 +379,5 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     break;
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        WookongBioManager.getInstance(mHandler).freeThread();
-        WookongBioManager.getInstance(mHandler).freeResource();
     }
 }

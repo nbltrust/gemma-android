@@ -30,5 +30,7 @@
     <string name="pull_to_refresh">下拉刷新</string>
 
     <string name="scanning_bio">正在搜索可连接的WOOKONG Bio</string>
+    <string name="transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>
+    <string name="transfer_bluetooth_tip">正在连接WOOKONG Bio</string>
 
 </resources>
