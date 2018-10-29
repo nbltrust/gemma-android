@@ -2,13 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="240dp"
                 android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
 
         <android.support.constraint.ConstraintLayout
             android:layout_marginStart="16dp"
@@ -30,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="20dp"
             android:text="@string/eos_connect_failed_tip"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"/>
@@ -38,7 +40,7 @@
         <Button
             android:id="@+id/btn_reconnect"
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:layout_gravity="center"

@@ -387,8 +387,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         super.onDestroy();
         clearListeners();
         if (mHandler != null){
-            WookongBioManager.getInstance(mHandler).freeThread();
-            WookongBioManager.getInstance(mHandler).freeResource();
+            WookongBioManager.getInstance().freeThread();
+            WookongBioManager.getInstance().freeResource();
         }
     }
 
@@ -456,6 +456,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         String password = String.valueOf(edtSetPass.getText());
 
         mHandler = new BluetoothHandler();
+        WookongBioManager.getInstance().init(mHandler);
 
         /*
         blueToothThread = new BlueToothWrapper(mHandler);
@@ -463,7 +464,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         blueToothThread.start();
         */
 
-        WookongBioManager.getInstance(mHandler).initPIN(contextHandle,0, password);
+        WookongBioManager.getInstance().initPIN(contextHandle,0, password);
         LoggerManager.d("contextHandle", contextHandle);
     }
 

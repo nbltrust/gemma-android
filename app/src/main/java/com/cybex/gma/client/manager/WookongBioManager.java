@@ -15,22 +15,31 @@ public class WookongBioManager {
     private static volatile WookongBioManager mInstance = null;
     private static Handler mHandler;
 
-    private WookongBioManager(Handler handler){
+    private WookongBioManager( ){
+        /*
         mHandler = handler;
         if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
             connectThread = new BlueToothWrapper(mHandler);
         }
+        */
     }
 
-    public static WookongBioManager getInstance(Handler curHandler) {
+    public static WookongBioManager getInstance() {
         if (mInstance == null) {
             synchronized (WookongBioManager.class) {
                 if (mInstance == null) {
-                    mInstance = new WookongBioManager(curHandler);
+                    mInstance = new WookongBioManager();
                 }
             }
         }
         return mInstance;
+    }
+
+    public void init(Handler handler){
+        mHandler = handler;
+        if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
+            connectThread = new BlueToothWrapper(mHandler);
+        }
     }
 
     /**

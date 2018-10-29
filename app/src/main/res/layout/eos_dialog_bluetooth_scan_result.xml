@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="240dp"
                 android:background="#ffffff">
 
     <LinearLayout
@@ -56,7 +56,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="12dp"
             app:contentView="@layout/eos_content_recycler_scan_result"
-            app:emptyView="@layout/eos_empty_scan_result"
+            app:emptyView="@layout/empty_view"
             app:errorView="@layout/error_view"
             app:loadingView="@layout/loading_view_bio"
             app:noNetworkView="@layout/no_network_view"

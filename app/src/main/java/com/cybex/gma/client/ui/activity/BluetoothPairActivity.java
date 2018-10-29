@@ -37,7 +37,6 @@ public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
 
 
     @BindView(R.id.btn_start_scan) Button btnStartScan;
-    CustomFullDialog dialog;
 
     @Override
     public void bindUI(View rootView) {

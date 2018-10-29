@@ -101,12 +101,13 @@ public class BluetoothBackupMneFragment extends XFragment {
         }
 
         handler = new BluetoothHandler();
+        WookongBioManager.getInstance().init(handler);
         /*
         generateSeedThread = new BlueToothWrapper(handler);
         generateSeedThread.setGenerateSeedGetMnesWrapper(contextHandle, 0, 16);
         generateSeedThread.start();
         */
-        WookongBioManager.getInstance(handler).startGenerateSeedGetMnes(contextHandle,0, 16);
+        WookongBioManager.getInstance().startGenerateSeedGetMnes(contextHandle,0, 16);
         showAlertDialog();
     }
 

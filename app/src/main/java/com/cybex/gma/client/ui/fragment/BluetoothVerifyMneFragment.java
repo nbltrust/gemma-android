@@ -327,8 +327,12 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        WookongBioManager.getInstance(mHandler).freeThread();
-        WookongBioManager.getInstance(mHandler).freeResource();
+        if (mHandler != null){
+            WookongBioManager.getInstance().freeThread();
+            WookongBioManager.getInstance().freeResource();
+            mHandler = null;
+        }
+
     }
 
 
@@ -338,6 +342,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
     private void doGetAddressLogic() {
         showProgressDialog(getString(R.string.eos_do_get_init_info));
         mHandler = new MainHandler();
+        WookongBioManager.getInstance().init(mHandler);
 
         /*
         if ((getAddressThread == null) || (getAddressThread.getState() == Thread.State.TERMINATED)) {
@@ -348,7 +353,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         }
         */
 
-        WookongBioManager.getInstance(mHandler).getAddress(contextHandle, 0, MiddlewareInterface.PAEW_COIN_TYPE_EOS,
+        WookongBioManager.getInstance().getAddress(contextHandle, 0, MiddlewareInterface.PAEW_COIN_TYPE_EOS,
                 deriveEOSPaths);
     }
 
@@ -365,7 +370,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         }
         */
 
-        WookongBioManager.getInstance(mHandler).getCheckCode(contextHandle, 0);
+        WookongBioManager.getInstance().getCheckCode(contextHandle, 0);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
