@@ -83,7 +83,7 @@ public class PasswordValidateHelper {
                             //密码正确，
                             dialog.cancel();
                             if(callback!=null){
-                                callback.onValidateSuccess();
+                                callback.onValidateSuccess(pwd);
                             }
                         }
                     }
@@ -105,7 +105,7 @@ public class PasswordValidateHelper {
 
 
     public interface PasswordValidateCallback {
-        void onValidateSuccess();
+        void onValidateSuccess(String password);
         void onValidateFail(int failedCount);
     }
 }
