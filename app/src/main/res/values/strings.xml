@@ -478,8 +478,6 @@
     <!-- Others -->
 
 
-
-
     <!-- EOS Err Code-->
 
     <string name="eos_err_code_3000000">EOS链异常：3000000，请稍后再试</string>

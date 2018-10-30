@@ -69,14 +69,6 @@ public class BluetoothConnectKeepJob {
         }
     }
 
-    public static void connect(Handler mainHandler, Activity context, String deviceName){
-        if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
-            connectThread = new BlueToothWrapper(mainHandler);
-            connectThread.setInitContextWithDevNameWrapper(context,
-                    deviceName);
-            connectThread.start();
-        }
-    }
 
 
 }

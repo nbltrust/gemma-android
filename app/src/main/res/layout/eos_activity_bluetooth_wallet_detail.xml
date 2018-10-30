@@ -25,10 +25,10 @@
             android:id="@+id/superTextView_bWallet_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            title:sLeftTextColor="@color/darkSlateBlue"
+            title:sLeftTextColor="@color/black_title"
             title:sLeftTextSize="@dimen/eos_total_assets_text_size"
             title:sLeftTextString="@string/eos_name"
-            title:sRightTextColor="@color/cloudyBlue"
+            title:sRightTextColor="@color/very_light_pink"
             title:sRightTextString="WOOKONG Bio"
             title:sRightTextSize="@dimen/eos_total_assets_text_size"
             title:sShapeSolidColor="@color/whiteTwo"
@@ -41,6 +41,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             style="@style/common_divider"/>
+
+        <!--
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -82,11 +84,13 @@
             android:layout_marginRight="10dp"
             style="@style/common_divider"/>
 
+        -->
+
         <com.allen.library.SuperTextView
             android:id="@+id/superTextView_battery_life"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            title:sLeftTextColor="@color/darkSlateBlue"
+            title:sLeftTextColor="@color/black_title"
             title:sLeftTextSize="@dimen/eos_total_assets_text_size"
             title:sLeftTextString="@string/eos_battery_left"
             title:sRightTextColor="@color/cloudyBlue"
@@ -106,22 +110,22 @@
 
     <Button
         android:visibility="visible"
-        android:textColor="@color/cornflowerBlue"
+        android:textColor="@color/whiteTwo"
         android:id="@+id/bt_to_connect"
         android:layout_margin="@dimen/dimen_20"
         android:layout_width="match_parent"
-        android:text="@string/eos_btn_to_connect"
-        android:background="@drawable/shape_corner"
+        android:text="@string/eos_btn_connect"
+        android:background="@drawable/shape_corner_button"
         android:layout_height="@dimen/dimen_44"/>
 
     <Button
         android:visibility="gone"
-        android:textColor="@color/cornflowerBlue"
+        android:textColor="@color/black_title"
         android:id="@+id/bt_cancel_pair"
         android:layout_margin="@dimen/dimen_20"
         android:layout_width="match_parent"
         android:text="@string/eos_to_cancel_pair"
-        android:background="@drawable/shape_corner"
+        android:background="@drawable/shape_corner_button_white_with_stroke"
         android:layout_height="@dimen/dimen_44"/>
 
     <Button
@@ -130,7 +134,7 @@
         android:text="@string/eos_btn_to_format"
         android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginEnd="@dimen/dimen_20"
-        android:background="@drawable/shape_corner"
+        android:background="@drawable/shape_corner_button_red"
         android:textColor="@color/scarlet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_44"/>

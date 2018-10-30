@@ -55,29 +55,6 @@ import me.framework.fragmentation.ISupportFragment;
  */
 
 public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresenter> {
-//    @Override
-//    public void bindUI(View rootView) {
-//
-//    }
-//
-//    @Override
-//    public void initData(Bundle savedInstanceState) {
-//
-//    }
-//
-//    @Override
-//    public int getLayoutId() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public BluetoothVerifyPresenter newP() {
-//        return null;
-//    }
-//
-//    public static ISupportFragment newInstance(Bundle bd) {
-//        return null;
-//    }
 
     Unbinder unbinder;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
@@ -148,7 +125,6 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
 
                     //打乱顺序
                     //Collections.shuffle(tempLabels);
-
 
                     viewShowMne.setLabels(tempLabels);
                     unSelectedLabels.addAll(tempLabels);
@@ -273,7 +249,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         viewClickToShowMne.setLineMargin(20);
         viewClickToShowMne.setSelectType(LabelsView.SelectType.SINGLE);
         viewClickToShowMne.setLabelTextSize(42);
-        viewClickToShowMne.setLabelTextColor(Color.parseColor("#4169d1"));
+        viewClickToShowMne.setLabelTextColor(Color.parseColor("#333333"));
         viewClickToShowMne.setLabelTextPadding(40, 20, 40, 20);
     }
 
@@ -330,7 +306,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         if (mHandler != null){
             WookongBioManager.getInstance().freeThread();
             WookongBioManager.getInstance().freeResource();
-            mHandler = null;
+            mHandler.removeCallbacksAndMessages(null);
         }
 
     }

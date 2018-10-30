@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/whiteTwo"
               android:orientation="vertical">
 
 
@@ -13,7 +14,7 @@
         android:layout_height="160dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
-        android:background="@drawable/icon_wookong_bio"
+        android:background="@drawable/wookong_bio_card"
         android:scaleType="centerInside"/>
 
 
@@ -23,7 +24,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="2.7sp"
-        android:textColor="@color/steel"
+        android:textColor="@color/black_context"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
@@ -31,6 +32,7 @@
         />
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="40dp"
@@ -45,6 +47,15 @@
             android:src="@null" />
 
     </RelativeLayout>
+
+    <WebView
+        android:id="@+id/webView_fingerprints"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="120dp"
+        android:layout_height="120dp">
+
+    </WebView>
 
 
 

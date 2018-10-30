@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:focusable="true"
+              android:background="@color/whiteTwo"
               android:focusableInTouchMode="true"
               android:orientation="vertical">
 
@@ -83,6 +84,7 @@
 
             </LinearLayout>
 
+            <!--
             <LinearLayout
                 android:id="@+id/layout_checkBox"
                 android:layout_width="match_parent"
@@ -108,14 +110,15 @@
                     android:textSize="@dimen/font_3"
                     />
             </LinearLayout>
-
+            -->
             <Button
                 android:id="@+id/bt_create_wallet"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bt_inInitPage_height"
                 android:layout_marginEnd="@dimen/eos_button_margin"
                 android:layout_marginStart="@dimen/eos_button_margin"
-                android:layout_marginTop="@dimen/eos_button_margin"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_corner_button_unclickable"
                 android:text="@string/eos_tip_create_wallet"
                 android:textColor="@color/whiteTwo"/>

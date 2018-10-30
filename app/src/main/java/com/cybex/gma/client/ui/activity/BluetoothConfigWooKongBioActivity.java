@@ -12,6 +12,8 @@ import android.text.method.PasswordTransformationMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,13 +21,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AlertUtil;
+import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.manager.WookongBioManager;
 import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
-import com.cybex.componentservice.utils.AlertUtil;
-import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -33,6 +35,7 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
@@ -75,6 +78,12 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
     @BindView(R.id.bt_import_mne) Button btImportMne;
     @BindView(R.id.scroll_create_wallet) ScrollView scrollCreateWallet;
+    @BindView(R.id.tv_wallet_name) TextView tvWalletName;
+    @BindView(R.id.view_divider_passTip) View viewDividerPassTip;
+    @Checked(messageResId = R.string.eos_check_agreement, sequence = 0)
+    @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
+    @BindView(R.id.tv_service_agreement_config) TextView tvServiceAgreementConfig;
+    @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     private Validator validator;
     private boolean isMask;
     private BlueToothWrapper blueToothThread;
@@ -91,7 +100,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         }
 
         if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword()) && isPasswordMatch()
-                && isPasswordLengthValid()) {
+                && isPasswordLengthValid() && checkboxConfig.isChecked()) {
             setClickable(btCreateWallet);
         } else {
             setUnclickable(btCreateWallet);
@@ -108,7 +117,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         }
 
         if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword()) && isPasswordMatch()
-                && isPasswordLengthValid()) {
+                && isPasswordLengthValid() && checkboxConfig.isChecked()) {
             setClickable(btCreateWallet);
         } else {
             setUnclickable(btCreateWallet);
@@ -287,6 +296,10 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
+        mHandler = new BluetoothHandler();
+        WookongBioManager.getInstance().init(mHandler);
+
         setUnclickable(btCreateWallet);
         SoftHideKeyBoardUtil.assistActivity(this);
         validator = new Validator(this);
@@ -298,8 +311,17 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
             contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE, 0);
         }
 
-
         initView();
+        checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && EmptyUtils.isNotEmpty(getPassword())&& EmptyUtils.isNotEmpty(getRepeatPassword())){
+                    setClickable(btCreateWallet);
+                }else {
+                    setUnclickable(btCreateWallet);
+                }
+            }
+        });
 
     }
 
@@ -366,7 +388,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         // button.setClickable(false);
         //button.setBackground(getDrawable(R.drawable.shape_corner_with_black_stroke));
         button.setBackground(getDrawable(R.drawable.shape_corner_button_unclickable));
-       // button.setTextColor(getResources().getColor(R.color.black_title));
+        // button.setTextColor(getResources().getColor(R.color.black_title));
     }
 
 
@@ -386,7 +408,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
     protected void onDestroy() {
         super.onDestroy();
         clearListeners();
-        if (mHandler != null){
+        if (mHandler != null) {
             WookongBioManager.getInstance().freeThread();
             WookongBioManager.getInstance().freeResource();
         }
@@ -455,17 +477,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         //设置初始化PIN
         String password = String.valueOf(edtSetPass.getText());
 
-        mHandler = new BluetoothHandler();
-        WookongBioManager.getInstance().init(mHandler);
-
-        /*
-        blueToothThread = new BlueToothWrapper(mHandler);
-        blueToothThread.setInitPINWrapper(0, 0, password);
-        blueToothThread.start();
-        */
-
-        WookongBioManager.getInstance().initPIN(contextHandle,0, password);
         LoggerManager.d("contextHandle", contextHandle);
+        WookongBioManager.getInstance().initPIN(0, 0, password);
     }
 
 

@@ -133,7 +133,6 @@ android {
         javaMaxHeapSize "4g"
     }
 
-
     //build type setting
     buildTypes {
         debug {
@@ -199,9 +198,9 @@ android {
 //        }
     }
 
-    repositories{
-        flatDir{
-            dirs 'libs',rootProject.ext.COMPONENT_SERVICE_DIR_PATH
+    repositories {
+        flatDir {
+            dirs 'libs', rootProject.ext.COMPONENT_SERVICE_DIR_PATH
         }
     }
 
@@ -238,8 +237,6 @@ dependencies {
 //    api deps.dbflow.sqlcipher
 
 
-
-
     implementation deps.gma.spinkit
     implementation deps.gma.wechatpay
 
@@ -254,7 +251,7 @@ dependencies {
     implementation project(':componentservice')
     annotationProcessor deps.arouter.compiler
 
-    implementation(name:'bluetoothlib-release', ext:'aar')
+    implementation(name: 'bluetoothlib-release', ext: 'aar')
     // implementation(name:'bluetoothlib-debug3', ext:'aar')
 
 

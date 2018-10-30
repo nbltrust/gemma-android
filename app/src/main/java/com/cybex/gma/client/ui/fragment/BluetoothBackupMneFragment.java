@@ -15,6 +15,7 @@ import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.base.view.flowlayout.FlowLayout;
 import com.cybex.base.view.flowlayout.TagAdapter;
 import com.cybex.base.view.flowlayout.TagFlowLayout;
+import com.cybex.gma.client.widget.LabelsView;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -102,11 +103,6 @@ public class BluetoothBackupMneFragment extends XFragment {
 
         handler = new BluetoothHandler();
         WookongBioManager.getInstance().init(handler);
-        /*
-        generateSeedThread = new BlueToothWrapper(handler);
-        generateSeedThread.setGenerateSeedGetMnesWrapper(contextHandle, 0, 16);
-        generateSeedThread.start();
-        */
         WookongBioManager.getInstance().startGenerateSeedGetMnes(contextHandle,0, 16);
         showAlertDialog();
     }
@@ -130,7 +126,12 @@ public class BluetoothBackupMneFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if (handler != null){
+            WookongBioManager.getInstance().freeThread();
+            WookongBioManager.getInstance().freeResource();
+        }
     }
+
 
     /**
      * 显示请勿截图Dialog

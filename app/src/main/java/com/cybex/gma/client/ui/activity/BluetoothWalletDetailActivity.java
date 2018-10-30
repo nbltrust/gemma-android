@@ -365,7 +365,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
                     if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
 
-                            BluetoothConnectKeepJob.startConnectPolling(contextHandle, mConnectHandler, 0);
+                            //BluetoothConnectKeepJob.startConnectPolling(contextHandle, mConnectHandler, 0);
                             LoggerManager.d("EOS Address: " + returnValueAddress.getAddress());
 
                             String[] strArr = returnValueAddress.getAddress().split("####");

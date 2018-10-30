@@ -3,11 +3,12 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/whiteTwo"
               android:orientation="vertical">
 
     <include layout="@layout/ui_navibar"/>
 
-    <com.cybex.base.view.OverScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -23,8 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/eos_tip_memory_your_mne"
-                android:textColor="@color/darkSlateBlue"
-                android:textSize="@dimen/font_3.5"/>
+                android:textColor="@color/black_title"
+                android:textSize="@dimen/font_4"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -32,14 +33,14 @@
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:text="@string/eos_tip_use_your_mne"
-                android:textColor="@color/steel"
-                android:textSize="@dimen/font_3"/>
+                android:textColor="@color/black_context"
+                android:textSize="@dimen/font_3.5"/>
 
             <com.cybex.base.view.flowlayout.TagFlowLayout
                 android:id="@+id/id_flowlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_corner"
+                android:background="@drawable/shape_corner_with_stroke"
                 android:padding="@dimen/dimen_20"
                 android:layout_marginTop="20dp"
                 app:max_select="1"
@@ -54,7 +55,7 @@
                 android:text="@string/eos_mne_copied"/>
 
         </LinearLayout>
-    </com.cybex.base.view.OverScrollView>
+    </ScrollView>
 
 
 </LinearLayout>

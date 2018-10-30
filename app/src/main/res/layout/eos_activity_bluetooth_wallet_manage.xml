@@ -41,40 +41,63 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/eos_standard_margin_in_walletDetailPage"
                     android:layout_marginTop="@dimen/dimen_20"
-                    android:paddingStart="@dimen/eos_standard_margin_in_walletDetailPage"
+                    android:paddingStart="10dp"
                     android:text="@string/eos_title_wookong_bio"
-                    android:textColor="@color/darkSlateBlue"
-                    android:textSize="@dimen/font_6"
+                    android:textColor="@color/black_title"
+                    android:textSize="@dimen/font_4"
                     android:textStyle="bold"
                     title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
                     title:layout_constraintStart_toStartOf="parent"
                     title:layout_constraintTop_toTopOf="parent"/>
 
+
+                <ImageView
+                    android:src="@drawable/wookong_logo"
+                    android:id="@+id/iv_wooKong_logo"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginEnd="3dp"
+                    title:layout_constraintTop_toTopOf="parent"
+                    title:layout_constraintEnd_toStartOf="@id/tv_connection_status"/>
+
                 <TextView
                     android:id="@+id/tv_connection_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:layout_marginEnd="@dimen/dimen_3"
                     android:layout_marginTop="@dimen/dimen_26"
-                    android:textColor="@color/cloudyBlue"
+                    title:layout_goneMarginEnd="3dp"
+                    android:textColor="@color/very_light_pink"
                     android:textSize="@dimen/font_3"
+                    title:layout_constraintTop_toTopOf="parent"
+                    title:layout_constraintEnd_toStartOf="@id/iv_manage_wooKong"
+                    android:text="未连接"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_manage_wooKong"
+                    android:src="@drawable/ic_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_26"
+                    android:layout_marginEnd="10dp"
                     title:layout_constraintEnd_toEndOf="parent"
                     title:layout_constraintTop_toTopOf="parent"
-                    android:text="未连接"
                     />
 
                 <TextView
                     android:id="@+id/eosAddress_in_detailPage"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="@dimen/eos_standard_margin_in_walletDetailPage"
                     android:ellipsize="middle"
-                    android:paddingStart="@dimen/eos_standard_margin_in_walletDetailPage"
                     android:paddingTop="@dimen/dimen_10"
+                    android:paddingStart="10dp"
                     android:singleLine="true"
-                    tools:text="EOS5jvZ4TxzZhLh6cU3VNxcr4qRxRa5fYsxoxFmKZw2VXy49AaYpQ"
-                    android:textColor="@color/darkSlateBlue"
-                    android:textSize="@dimen/font_4"
+                    tools:text="多币种硬件钱包"
+                    android:textColor="@color/black_context"
+                    android:textSize="@dimen/font_3.5"
                     title:layout_constraintEnd_toEndOf="parent"
                     title:layout_constraintStart_toStartOf="parent"
                     title:layout_constraintTop_toBottomOf="@id/tv_walletName_in_detailPage"/>
@@ -93,16 +116,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_20"
-                android:layout_marginEnd="@dimen/dimen_20"
-                android:layout_marginTop="@dimen/dimen_10">
+                android:layout_marginEnd="@dimen/dimen_20">
 
                 <com.allen.library.SuperTextView
                     android:id="@+id/superTextView_changePass"
                     style="@style/eos_card_style"
-                    title:sLeftTextColor="@color/darkSlateBlue"
+                    title:sLeftTextColor="@color/black_title"
                     title:sShapeSelectorPressedColor="@color/item_pressed"
                     title:sLeftTextSize="@dimen/font_3.5"
-                    android:paddingStart="@dimen/dimen_10"
                     title:sLeftTextString="@string/eos_fp_and_password"
                     title:sRightTvDrawableRight="@drawable/ic_arrow"
                     title:sUseShape="true"
@@ -116,7 +137,6 @@
                     android:layout_marginEnd="@dimen/dimen_10"
                     style="@style/common_divider"/>
 
-
             </LinearLayout>
 
             <Button
@@ -126,9 +146,9 @@
                 android:layout_marginTop="@dimen/dimen_40"
                 android:layout_marginStart="@dimen/dimen_20"
                 android:layout_marginEnd="@dimen/dimen_20"
-                android:background="@drawable/shape_corner_button_white"
+                android:background="@drawable/shape_corner_button_white_with_stroke"
                 android:text="@string/eos_btn_connect"
-                android:textColor="@color/cornflowerBlue"/>
+                android:textColor="@color/black_title"/>
 
             <Button
                 android:visibility="gone"
@@ -138,13 +158,13 @@
                 android:layout_marginStart="@dimen/dimen_20"
                 android:layout_marginEnd="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_40"
-                android:background="@drawable/shape_corner_button_white"
+                android:background="@drawable/shape_corner_button_white_with_stroke"
                 android:text="@string/eos_btn_disconnect"
-                android:textColor="@color/cornflowerBlue"/>
+                android:textColor="@color/black_title"/>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2"
+                android:layout_height="@dimen/dimen_6"
                 android:layerType="software">
             </View>
 

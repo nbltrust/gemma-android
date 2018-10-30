@@ -2,9 +2,17 @@ package com.cybex.gma.client.manager;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 
+import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.gma.client.GmaApplication;
+import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.job.JobUtils;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
+
+import io.hypertrack.smart_scheduler.Job;
+import io.hypertrack.smart_scheduler.SmartScheduler;
 
 /**
  * 蓝牙连接管理类
@@ -12,14 +20,17 @@ import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 public class WookongBioManager {
 
     private static BlueToothWrapper connectThread = null;
+    private static BlueToothWrapper heartBeatThread = null;
     private static volatile WookongBioManager mInstance = null;
-    private static Handler mHandler;
+    private static Handler mainHandler;
+    private static Handler mHeartBeatHandler;
+    public static final int intervalTime = 12*1000;
 
     private WookongBioManager( ){
         /*
-        mHandler = handler;
+        mainHandler = handler;
         if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
-            connectThread = new BlueToothWrapper(mHandler);
+            connectThread = new BlueToothWrapper(mainHandler);
         }
         */
     }
@@ -35,10 +46,65 @@ public class WookongBioManager {
         return mInstance;
     }
 
+    /**
+     * 调用中间件getInfo方法作为心跳与设备保持连接
+     */
+    public void startHeartBeat(long mContextHandle, int devIndex){
+
+            SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+            if (smartScheduler.contains(ParamConstants.BLUETOOTH_CONNECT_JOB)) {
+                smartScheduler.removeJob(ParamConstants.BLUETOOTH_CONNECT_JOB);
+            }
+            SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
+                @Override
+                public void onJobScheduled(Context context, Job job) {
+                    LoggerManager.d("bluetooth connect polling executed...");
+                    if ((heartBeatThread == null) || (heartBeatThread.getState() == Thread.State.TERMINATED)) {
+                        heartBeatThread.setGetInfoWrapper(mContextHandle, devIndex);
+                        heartBeatThread.start();
+                    }
+                }
+            };
+
+            Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.BLUETOOTH_CONNECT_JOB, callback, intervalTime);
+            smartScheduler.addJob(job);
+    }
+
+    /**
+     * 停止心跳信息发送
+     */
+    public void stopHeartBeat(){
+        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+        if (smartScheduler != null && smartScheduler.contains(ParamConstants.BLUETOOTH_CONNECT_JOB)) {
+            smartScheduler.removeJob(ParamConstants.BLUETOOTH_CONNECT_JOB);
+        }
+
+        heartBeatThread.interrupt();
+        if (mHeartBeatHandler != null){
+            mHeartBeatHandler.removeCallbacksAndMessages(null);
+            mHeartBeatHandler = null;
+        }
+    }
+
+    /**
+     * 心跳初始化
+     * @param heartBeatHandler
+     */
+    public void initHeartBeat(Handler heartBeatHandler){
+        mHeartBeatHandler = heartBeatHandler;
+
+        if ((heartBeatThread == null) || (heartBeatThread.getState() == Thread.State.TERMINATED)) {
+            heartBeatThread = new BlueToothWrapper(mHeartBeatHandler);
+        }
+    }
+    /**
+     * 初始化
+     * @param handler
+     */
     public void init(Handler handler){
-        mHandler = handler;
+        mainHandler = handler;
         if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
-            connectThread = new BlueToothWrapper(mHandler);
+            connectThread = new BlueToothWrapper(mainHandler);
         }
     }
 
@@ -171,9 +237,9 @@ public class WookongBioManager {
      * 释放Handler资源避免内存泄露
      */
     public void freeResource(){
-        if (mHandler != null){
-            mHandler.removeCallbacksAndMessages(null);
-            mHandler=null;
+        if (mainHandler != null){
+            mainHandler.removeCallbacksAndMessages(null);
+            mainHandler =null;
         }
     }
 

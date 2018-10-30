@@ -6,16 +6,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.webkit.ValueCallback;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 
 import com.cybex.componentservice.db.dao.WalletEntityDao;
 import com.cybex.componentservice.db.entity.WalletEntity;
-import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.manager.WookongBioManager;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -34,6 +37,8 @@ import butterknife.ButterKnife;
 public class BluetoothSettingFPActivity extends XActivity {
 
     @BindView(R.id.imv_finger_print) ImageView imvFingerPrint;
+    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
+    @BindView(R.id.webView_fingerprints) WebView mWebView;
     private BlueToothWrapper enrollFPThread;
     private FPHandler mHandler;
     private Bundle bd;
@@ -68,16 +73,32 @@ public class BluetoothSettingFPActivity extends XActivity {
      */
     private void doFPLogic(int state) {
         LoggerManager.d("FP state: " + state);
-        if (state == ParamConstants.FINGER_GOOD) {
-            drawFingerprint();
-        } else if (state == ParamConstants.FINGER_SUCCESS) {
-            stage = 1;
-            imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
-            GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
-            setCurrentWalletStatus();
-            UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
-            finish();
+        if (stage <= 12){
+            //前12次录入
+            if (state == ParamConstants.FINGER_GOOD) {
+                drawFingerprint();
+            } else if (state == ParamConstants.FINGER_SUCCESS) {
+                stage = 1;
+                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
+                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
+                setCurrentWalletStatus();
+                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+                finish();
+            }
+        }else {
+            //12-16次录入，每次都有可能成功
+            if (state == ParamConstants.FINGER_GOOD) {
+                drawFingerprint();
+            } else if (state == ParamConstants.FINGER_SUCCESS) {
+                stage = 1;
+                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
+                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
+                setCurrentWalletStatus();
+                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+                finish();
+            }
         }
+
 
     }
 
@@ -117,6 +138,18 @@ public class BluetoothSettingFPActivity extends XActivity {
     }
 
     private void drawFingerprint() {
+        mWebView.post(new Runnable() {
+            @Override
+            public void run() {
+                mWebView.evaluateJavascript("finger:next()", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+
+                    }
+                });
+            }
+        });
+        /*
         if (bezierAnimator != null && bezierAnimator.isRunning()) {
             return;
         }
@@ -127,6 +160,7 @@ public class BluetoothSettingFPActivity extends XActivity {
         }
 
         stage++;
+        */
     }
 
     @Override
@@ -135,11 +169,12 @@ public class BluetoothSettingFPActivity extends XActivity {
 
         mHandler = new FPHandler();
         bd = getIntent().getExtras();
-        if (bd != null){
+        if (bd != null) {
             contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE);
         }
         //初始化指纹动画
-        initVectorDrawable();
+        //initVectorDrawable();
+        initWebView();
 
         if ((enrollFPThread == null) || (enrollFPThread.getState() == Thread.State.TERMINATED)) {
             enrollFPThread = new BlueToothWrapper(mHandler);
@@ -160,7 +195,6 @@ public class BluetoothSettingFPActivity extends XActivity {
                 finish();
             }
         });
-
     }
 
     @Override
@@ -173,10 +207,25 @@ public class BluetoothSettingFPActivity extends XActivity {
         return null;
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        BluetoothConnectKeepJob.removeJob();
+        WookongBioManager.getInstance().stopHeartBeat();
+        //BluetoothConnectKeepJob.removeJob();
+    }
+
+    public void initWebView(){
+        WebSettings webSettings = mWebView.getSettings();
+        // 设置与Js交互的权限
+        webSettings.setJavaScriptEnabled(true);
+        //载入JS代码
+        mWebView.evaluateJavascript("file:///android_asset/finger.html", new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {
+                //JS返回的字符串
+            }
+        });
+
+
     }
 }

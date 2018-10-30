@@ -57,10 +57,9 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
     @BindView(R.id.edt_eos_name) EditText edtEosName;
     @BindView(R.id.iv_eos_name_clear) ImageView ivEosNameClear;
 
-    @Checked(messageResId = R.string.eos_check_agreement, sequence = 0)
-    @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
-    @BindView(R.id.tv_service_agreement_create_eos_account) TextView tvServiceAgreement;
-    @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
+    //@BindView(R.id.checkbox_config) CheckBox checkboxConfig;
+    //@BindView(R.id.tv_service_agreement_create_eos_account) TextView tvServiceAgreement;
+    //@BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
     @BindView(R.id.scroll_create_wallet) ScrollView scrollCreateWallet;
 
@@ -70,47 +69,47 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
 
     @OnTextChanged(value = R.id.edt_eos_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onChanged(Editable s) {
-        if (EmptyUtils.isNotEmpty(s.toString()) && isUserNameValid() && checkboxConfig.isChecked()) {
+        if (EmptyUtils.isNotEmpty(s.toString()) && isUserNameValid()) {
             setClickableStyle(btCreateWallet);
         } else {
             setUnClickableStyle(btCreateWallet);
         }
     }
 
-
-    @OnClick(R.id.tv_service_agreement_create_eos_account)
-    public void goToSeeTermsofService() {
-        int savedLanguageType = LanguageManager.getInstance(this).getLanguageType();
-        switch (savedLanguageType) {
-            case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
-                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                        .string.terms_of_service));
-                break;
-            case LanguageManager.LanguageType.LANGUAGE_EN:
-                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
-                        .string.terms_of_service));
-                break;
-            case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
-                Locale systemLanguageType = LanguageManager.getInstance(this).getSysLocale();
-                switch (systemLanguageType.getDisplayLanguage()) {
-                    case CN:
-                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
-                                .getString(R.string.terms_of_service));
-                        break;
-                    case EN:
-                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources()
-                                .getString(R.string.terms_of_service));
-                        break;
-                    default:
-                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
-                                .getString(R.string.terms_of_service));
-                }
-                break;
-            default:
-                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-                        .string.terms_of_service));
-        }
-    }
+//
+//    @OnClick(R.id.tv_service_agreement_create_eos_account)
+//    public void goToSeeTermsofService() {
+//        int savedLanguageType = LanguageManager.getInstance(this).getLanguageType();
+//        switch (savedLanguageType) {
+//            case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
+//                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
+//                        .string.terms_of_service));
+//                break;
+//            case LanguageManager.LanguageType.LANGUAGE_EN:
+//                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
+//                        .string.terms_of_service));
+//                break;
+//            case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+//                Locale systemLanguageType = LanguageManager.getInstance(this).getSysLocale();
+//                switch (systemLanguageType.getDisplayLanguage()) {
+//                    case CN:
+//                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
+//                                .getString(R.string.terms_of_service));
+//                        break;
+//                    case EN:
+//                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources()
+//                                .getString(R.string.terms_of_service));
+//                        break;
+//                    default:
+//                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
+//                                .getString(R.string.terms_of_service));
+//                }
+//                break;
+//            default:
+//                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
+//                        .string.terms_of_service));
+//        }
+//    }
 
     @OnClick(R.id.bt_create_wallet)
     public void createWallet() {
@@ -131,21 +130,21 @@ public class BluetoothCreatEosAccountActivity extends XActivity implements
         btCreateWallet.setClickable(true);
         setUnClickableStyle(btCreateWallet);
 
-        checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (EmptyUtils.isNotEmpty(getEOSUserName()) && isChecked && isUserNameValid()) {
-                    setClickableStyle(btCreateWallet);
-                } else {
-                    setUnClickableStyle(btCreateWallet);
-                }
-
-                if (!isChecked) {
-                    setUnClickableStyle(btCreateWallet);
-
-                }
-            }
-        });
+//        checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (EmptyUtils.isNotEmpty(getEOSUserName()) && isChecked && isUserNameValid()) {
+//                    setClickableStyle(btCreateWallet);
+//                } else {
+//                    setUnClickableStyle(btCreateWallet);
+//                }
+//
+//                if (!isChecked) {
+//                    setUnClickableStyle(btCreateWallet);
+//
+//                }
+//            }
+//        });
     }
 
     @Override

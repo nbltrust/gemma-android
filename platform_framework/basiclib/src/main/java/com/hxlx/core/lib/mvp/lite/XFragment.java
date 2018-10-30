@@ -105,6 +105,7 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         mTitleBar.setTitleColor(R.color.black_title);
         mTitleBar.setBackgroundColor(getResources().getColor(R.color.ffffff_white_1000));
         mTitleBar.setTitleSize(18);
+        mTitleBar.setTitleBold(true);
         mTitleBar.setImmersive(true);
 
         if (isShowBack) {

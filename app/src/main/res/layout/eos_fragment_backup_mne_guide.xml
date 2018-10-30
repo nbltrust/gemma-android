@@ -12,7 +12,7 @@
     </include>
 
     <ImageView
-        android:background="@drawable/ic_security"
+        android:background="@drawable/ic_common_security"
         android:layout_width="@dimen/dimen_54"
         android:layout_height="@dimen/dimen_54"
         android:layout_marginTop="@dimen/dimen_72"
@@ -23,7 +23,7 @@
         android:layout_height="@dimen/dimen_40"
         android:text="@string/eos_backup_mne"
         android:textSize="@dimen/font_4.5"
-        android:textColor="@color/darkSlateBlue"
+        android:textColor="@color/black_title"
         android:layout_marginTop="@dimen/dimen_10"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -52,6 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_40"
             android:layout_marginStart="@dimen/dimen_10"
+            android:textColor="@color/black_context"
             android:text="@string/eos_tip_look_around"
             app:layout_constraintStart_toEndOf="@id/iv_dot_one"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -71,6 +72,7 @@
             android:layout_height="@dimen/dimen_40"
             android:layout_marginTop="@dimen/dimen_10"
             android:layout_marginStart="@dimen/dimen_10"
+            android:textColor="@color/black_context"
             android:text="@string/eos_tip_back_safely"
             app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"
             app:layout_constraintEnd_toEndOf="parent"

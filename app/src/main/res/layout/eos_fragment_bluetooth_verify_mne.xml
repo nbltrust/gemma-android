@@ -3,6 +3,7 @@
               xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/whiteTwo"
               android:orientation="vertical">
 
     <include
@@ -10,7 +11,7 @@
 
     </include>
 
-    <com.cybex.base.view.OverScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -26,10 +27,10 @@
                 android:text="@string/eos_tip_verify_mne"
                 android:textAlignment="center"
                 android:textColor="@color/black_title"
-                android:textSize="@dimen/font_3.5"/>
+                android:textSize="@dimen/font_4"/>
 
 
-            <com.cybex.walletmanagement.widget.LabelsView
+            <com.cybex.gma.client.widget.LabelsView
                 android:id="@+id/view_click_to_show_mne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,10 +38,10 @@
                 android:background="@drawable/shape_corner"
                 android:padding="@dimen/dimen_20">
 
-            </com.cybex.walletmanagement.widget.LabelsView>
+            </com.cybex.gma.client.widget.LabelsView>
 
 
-            <com.cybex.walletmanagement.widget.LabelsView
+            <com.cybex.gma.client.widget.LabelsView
                 android:id="@+id/view_show_mne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,13 +49,13 @@
                 android:layout_marginStart="@dimen/dimen_20"
                 android:padding="@dimen/dimen_20">
 
-            </com.cybex.walletmanagement.widget.LabelsView>
+            </com.cybex.gma.client.widget.LabelsView>
 
 
         </LinearLayout>
 
 
-    </com.cybex.base.view.OverScrollView>
+    </ScrollView>
 
 
 </LinearLayout>

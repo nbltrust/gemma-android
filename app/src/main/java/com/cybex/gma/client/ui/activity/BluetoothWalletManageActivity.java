@@ -256,7 +256,7 @@ public class BluetoothWalletManageActivity extends XActivity {
                             EventBusProvider.postSticky(event);
                             AlertUtil.showShortCommonAlert(BluetoothWalletManageActivity.this, "Bio Connected");
                             showConnectedLayout();
-                            BluetoothConnectKeepJob.startConnectPolling(mContextHandle, mConnectHandler, 0);
+                            //BluetoothConnectKeepJob.startConnectPolling(mContextHandle, mConnectHandler, 0);
                         }
                     }else {
                         showDisconnectedLayout();
