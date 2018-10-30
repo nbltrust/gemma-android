@@ -159,6 +159,56 @@
     <string name="walletmanage_btn_confirm_change">确认修改</string>
     <string name="walletmanage_title_change_pass">修改密码</string>
 
+    <!--蓝牙钱包配置start -->
+    <string name="walletmanage_title_wookong_bio">WOOKONG Bio</string>
+    <string name="walletmanage_match_wookong_bio">配对 WOOKONG Bio</string>
+
+    <string name="walletmanage_tip_card">第一款支持多币种的蓝牙指纹硬件钱包</string>
+    <string name="walletmanage_desc_wookong_url">点击查看 更多WOOKONG Bio介绍</string>
+    <string name="walletmanage_bluetooth_scan_step_title">准备使用WOOKONG Bio</string>
+
+    <string name="walletmanage_tip_bluetooth_scan_step_one">确保手机蓝牙已开启</string>
+    <string name="walletmanage_tip_bluetooth_scan_step_two">启动WOOKONG Bio</string>
+
+    <string name="walletmanage_btn_start_pair">开始配对</string>
+    <string name="walletmanage_title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>
+    <string name="walletmanage_title_paire_bluetooth">WOOKONG Bio</string>
+    <string name="walletmanage_empty_no_device">请点击图片重新扫描</string>
+    <string name="walletmanage_title_set_wookong_password">设置WOOKONG Bio密码</string>
+    <string name="walletmanage_hint_set_wookong_password">长度8-16， 建议混合大小写字母、数字及符号</string>
+    <string name="walletmanage_tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
+    <string name="walletmanage_status_un_init">未初始化</string>
+    <string name="walletmanage_status_not_connected">未连接</string>
+    <string name="walletmanage_status_init_no_pair">已经初始化但没有配对信息</string>
+    <string name="walletmanage_status_init_pair">已经初始化但没有配对信息</string>
+
+    <string name="walletmanage_tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>
+
+    <string name="walletmanage_progress_set_pin">正在设置PIN...</string>
+
+    <string name="walletmanage_title_create_eos_account">创建EOS账户</string>
+
+    <string name="walletmanage_mne_validate_success">验证成功</string>
+    <string name="walletmanage_mne_validate_failed">验证失败</string>
+    <string name="walletmanage_mne_validate_warn">蓝牙连接已断开，请重新连接</string>
+    <string name="walletmanage_do_get_init_info">正在获取初始化信息...</string>
+    <string name="walletmanage_title_setting_fp">设置指纹</string>
+    <string name="walletmanage_btn_title_skip">跳过</string>
+    <string name="walletmanage_finger_set_success">指纹录入成功</string>
+    <string name="walletmanage_wookong_password_hint">请输入WOOKONG Bio的密码以确认授权</string>
+    <string name="walletmanage_transfer_error">当前账户转账出现异常</string>
+    <string name="walletmanage_transfer_eosname_hint">请输入@</string>
+    <string name="walletmanage_transfer_eosname_hint_last">的密码</string>
+    <string name="walletmanage_transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>
+    <string name="walletmanage_transfer_bluetooth_tip">正在连接WOOKONG Bio</string>
+    <string name="walletmanage_connect_sure_tip">请在WOOKONG Bio上按指纹以确认授权</string>
+    <string name="walletmanage_connect_sure_battery_tip">请在WOOKONG Bio上按键以确认转账</string>
+    <string name="walletmanage_connect_failed_tip">连接失败。请检查手机蓝牙和设备电源。</string>
+    <string name="walletmanage_btn_connect_retry">重试连接</string>
+    <string name="walletmanage_btn_connect">连接</string>
+    <string name="walletmanage_btn_disconnect">断开连接</string>
+    <string name="walletmanage_tip_bio_sign_fail">签名失败，请重新尝试</string>
+
     <!-- WOOKONG BIO 详情页面-->
     <string name="walletmanage_name">名称</string>
     <string name="walletmanage_public_key">公钥</string>
@@ -178,6 +228,7 @@
     <string name="walletmanage_tip_manage_resource_wookong">WOOKONG Bio 暂不支持资源抵押或买卖RAM，若要进行此类操作请使用其他账户为该账户抵押资源或买卖RAM。</string>
 
 
+    <string name="walletmanage_title_wooKong_bio">WOOKONG Bio</string>
     <!-- 指纹管理 -->
     <string name="walletmanage_delete_fingerprint">删除指纹</string>
     <string name="walletmanage_change_fp_name">修改名称</string>

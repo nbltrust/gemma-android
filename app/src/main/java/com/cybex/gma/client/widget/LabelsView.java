@@ -13,8 +13,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.cybex.walletmanagement.R;
+import com.cybex.gma.client.R;
 
 import java.util.ArrayList;
 import java.util.List;

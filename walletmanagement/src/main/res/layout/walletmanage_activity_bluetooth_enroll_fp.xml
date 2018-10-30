@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/whiteTwo"
+              android:orientation="vertical">
+
+
+    <include layout="@layout/ui_navibar"/>
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/wookong_bio_card"
+        android:scaleType="centerInside"/>
+
+
+    <TextView
+        android:text="将手指放在指纹识别区域上再移开，重复此步骤"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="2.7sp"
+        android:textColor="@color/black_context"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="16sp"
+        />
+
+    <WebView
+        android:id="@+id/webView_fingerprints"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="120dp"
+        android:layout_height="120dp">
+
+    </WebView>
+
+
+
+</LinearLayout>

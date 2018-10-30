@@ -83,7 +83,6 @@ dependencies {
 
     implementation deps.gma.SuperTextView
 
-
 }
 
 //JIMU
