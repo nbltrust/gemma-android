@@ -152,5 +152,42 @@
     <!--config wallet-->
     <string name="walletmanage_config_wallet_title">配置钱包</string>
     <string name="walletmanage_exist_wallet">已有的钱包</string>
+    <string name="walletmanage_fp_and_password">指纹与密码</string>
 
+    <!-- Change Password Fragment-->
+    <string name="walletmanage_new_password">新密码</string>
+    <string name="walletmanage_btn_confirm_change">确认修改</string>
+    <string name="walletmanage_title_change_pass">修改密码</string>
+
+    <!-- WOOKONG BIO 详情页面-->
+    <string name="walletmanage_name">名称</string>
+    <string name="walletmanage_public_key">公钥</string>
+    <string name="walletmanage_battery_left">电量</string>
+    <string name="walletmanage_btn_to_connect">点击连接</string>
+    <string name="walletmanage_btn_to_format">格式化</string>
+    <string name="walletmanage_to_cancel_pair">取消配对</string>
+    <string name="walletmanage_confirm_format">确认格式化</string>
+    <string name="walletmanage_tip_format">一旦格式化，WOOKONG Bio将清除私钥，请在格式化前备份助记词或转移资产。</string>
+    <string name="walletmanage_confirm">确认</string>
+    <string name="walletmanage_format_success">格式化成功</string>
+    <string name="walletmanage_initialize">初始化</string>
+    <string name="walletmanage_tip_to_init">是否重新初始化WOOKONG Bio？</string>
+    <string name="walletmanage_tip_bluetooth_transfer">若未找到，请检查手机蓝牙和设备电源。</string>
+    <string name="walletmanage_connecting_bio">正在连接WOOKONG Bio</string>
+
+    <string name="walletmanage_tip_manage_resource_wookong">WOOKONG Bio 暂不支持资源抵押或买卖RAM，若要进行此类操作请使用其他账户为该账户抵押资源或买卖RAM。</string>
+
+
+    <!-- 指纹管理 -->
+    <string name="walletmanage_delete_fingerprint">删除指纹</string>
+    <string name="walletmanage_change_fp_name">修改名称</string>
+    <string name="walletmanage_fingerprint">指纹</string>
+    <string name="walletmanage_add_fingerprint">添加指纹</string>
+    <string name="walletmanage_change_pass">修改密码</string>
+    <string name="walletmanage_password">密码</string>
+
+    <!-- Change Wallet Name fragment-->
+    <string name="walletmanage_wallet_name_short">钱包名</string>
+    <string name="walletmanage_wallet_name">钱包名称</string>
+    <string name="walletmanage_change_wallet_name_hint">请输入新的钱包名称</string>
 </resources>

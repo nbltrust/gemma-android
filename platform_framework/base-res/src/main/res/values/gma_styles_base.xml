@@ -128,8 +128,10 @@
 
     <!-- 公用分割线样式-->
     <style name="common_divider">
+        <!--
         <item name="android:layout_marginStart">@dimen/common_page_content_padding</item>
         <item name="android:layout_marginEnd">@dimen/common_page_content_padding</item>
+        -->
         <item name="android:layerType">software</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_1</item>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteTwo"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_20"
+        android:orientation="vertical"
+        >
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_bWallet_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            title:sLeftTextColor="@color/black_title"
+            title:sLeftTextSize="@dimen/font_4"
+            title:sLeftTextString="@string/walletmanage_name"
+            title:sRightTextColor="@color/very_light_pink"
+            title:sRightTextSize="@dimen/font_4"
+            title:sRightTextString="WOOKONG Bio"
+            title:sRightTvDrawableRight="@drawable/ic_arrow"
+            title:sShapeSolidColor="@color/whiteTwo"
+            title:sUseShape="true">
+        </com.allen.library.SuperTextView>
+
+
+        <View
+            style="@style/common_divider"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/superTextView_battery_life"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            title:sLeftTextColor="@color/black_title"
+            title:sLeftTextSize="@dimen/font_4"
+            title:sLeftTextString="@string/walletmanage_battery_left"
+            title:sRightTextColor="@color/cloudyBlue"
+            title:sRightTextSize="@dimen/font_4"
+            title:sRightTextString="--%"
+            title:sShapeSolidColor="@color/whiteTwo"
+            title:sUseShape="true">
+
+        </com.allen.library.SuperTextView>
+
+        <View
+            style="@style/common_divider"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_to_connect"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_44"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@drawable/shape_corner_button"
+        android:text="@string/btn_connect"
+        android:textColor="@color/whiteTwo"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/bt_cancel_pair"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_44"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@drawable/shape_corner_button_white_with_stroke"
+        android:text="@string/walletmanage_to_cancel_pair"
+        android:textColor="@color/black_title"
+        android:visibility="visible"/>
+
+    <Button
+        android:id="@+id/bt_format"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_44"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@drawable/shape_corner_button_red"
+        android:text="@string/walletmanage_btn_to_format"
+        android:textColor="@color/scarlet"
+        android:visibility="visible"/>
+
+</LinearLayout>

@@ -26,10 +26,9 @@
                 android:id="@+id/layout_wallet_briefInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/eos_standard_margin_in_walletDetailPage"
-                android:layout_marginStart="@dimen/eos_standard_margin_in_walletDetailPage"
-                android:layout_marginTop="@dimen/eos_standard_margin_in_walletDetailPage"
-                android:background="@drawable/eos_selector_bg_view_pressed"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/walletmanage_selector_bg_view_pressed"
                 title:layout_constraintEnd_toEndOf="parent"
                 title:layout_constraintStart_toStartOf="parent"
                 title:layout_constraintTop_toBottomOf="@+id/btn_navibar"
@@ -39,14 +38,13 @@
                     android:id="@+id/tv_walletName_in_detailPage"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/eos_standard_margin_in_walletDetailPage"
-                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"
                     android:paddingStart="10dp"
-                    android:text="@string/eos_title_wookong_bio"
+                    android:text="WOOKONG Bio"
                     android:textColor="@color/black_title"
                     android:textSize="@dimen/font_4"
                     android:textStyle="bold"
-                    title:layout_constraintEnd_toStartOf="@id/iv_arrow_in_detailPage"
                     title:layout_constraintStart_toStartOf="parent"
                     title:layout_constraintTop_toTopOf="parent"/>
 
@@ -87,10 +85,9 @@
                     />
 
                 <TextView
-                    android:id="@+id/eosAddress_in_detailPage"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_marginEnd="@dimen/eos_standard_margin_in_walletDetailPage"
+                    android:layout_marginEnd="@dimen/dimen_20"
                     android:ellipsize="middle"
                     android:paddingTop="@dimen/dimen_10"
                     android:paddingStart="10dp"
@@ -119,13 +116,13 @@
                 android:layout_marginEnd="@dimen/dimen_20">
 
                 <com.allen.library.SuperTextView
-                    android:id="@+id/superTextView_changePass"
+                    android:id="@+id/superTextView_fp_and_pass"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     title:sLeftTextColor="@color/black_title"
                     title:sShapeSelectorPressedColor="@color/item_pressed"
                     title:sLeftTextSize="@dimen/font_3.5"
-                    title:sLeftTextString="@string/eos_fp_and_password"
+                    title:sLeftTextString="@string/walletmanage_fp_and_password"
                     title:sRightTvDrawableRight="@drawable/ic_arrow"
                     title:sUseShape="true"
                     title:sShapeCornersRadius="@dimen/dimen_6"
@@ -148,7 +145,7 @@
                 android:layout_marginStart="@dimen/dimen_20"
                 android:layout_marginEnd="@dimen/dimen_20"
                 android:background="@drawable/shape_corner_button_white_with_stroke"
-                android:text="@string/eos_btn_connect"
+                android:text="@string/btn_connect"
                 android:textColor="@color/black_title"/>
 
             <Button
@@ -160,7 +157,7 @@
                 android:layout_marginEnd="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_40"
                 android:background="@drawable/shape_corner_button_white_with_stroke"
-                android:text="@string/eos_btn_disconnect"
+                android:text="@string/btn_disconnect"
                 android:textColor="@color/black_title"/>
 
             <View

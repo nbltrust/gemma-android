@@ -54,6 +54,13 @@
             android:name=".ui.activity.SpalashActivity"
             android:configChanges="layoutDirection|locale"
             android:theme="@style/SplashScreen">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
         </activity>
 
         <!-- 初始页面 -->
@@ -317,12 +324,6 @@
             android:name=".ui.activity.BluetoothWalletManageActivity"
             android:configChanges="layoutDirection|locale"
             android:screenOrientation="portrait">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
 
         </activity>
 

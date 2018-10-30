@@ -81,6 +81,8 @@ dependencies {
     api project(':componentservice')
     annotationProcessor deps.arouter.compiler
 
+    implementation deps.gma.SuperTextView
+
 
 }
 

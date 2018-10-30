@@ -42,7 +42,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_bWallet_name) SuperTextView superTextViewBWalletName;
-    @BindView(R.id.tv_publicKey) TextView tvPublicKey;
+    //@BindView(R.id.tv_publicKey) TextView tvPublicKey;
     @BindView(R.id.superTextView_battery_life) SuperTextView superTextViewBatteryLife;
     @BindView(R.id.bt_to_connect) Button btToConnect;
     @BindView(R.id.bt_cancel_pair) Button btCancelPair;
@@ -97,7 +97,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
         checkConnection();
         mConnectHandler = new ConnectHandler();
         freeContextHandler = new FreeContextHandler();
-        tvPublicKey.setText(publicKey);
+        //tvPublicKey.setText(publicKey);
         deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
     }
 
@@ -181,14 +181,14 @@ public class BluetoothWalletDetailActivity extends XActivity {
         btCancelPair.setVisibility(View.VISIBLE);
         btToConnect.setVisibility(View.GONE);
         btFormat.setVisibility(View.VISIBLE);
-        tvPublicKey.setText(publicKey);
+        //tvPublicKey.setText(publicKey);
     }
 
     public void showDisconnectedLayout(){
         btCancelPair.setVisibility(View.GONE);
         btToConnect.setVisibility(View.VISIBLE);
         btFormat.setVisibility(View.GONE);
-        tvPublicKey.setText("");
+        //tvPublicKey.setText("");
 
     }
 
@@ -370,7 +370,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
 
                             String[] strArr = returnValueAddress.getAddress().split("####");
                             String publicKey = strArr[0];
-                            tvPublicKey.setText(publicKey);
+                            //tvPublicKey.setText(publicKey);
 
                             DeviceInfoEvent event = new DeviceInfoEvent();
                             event.setEosPublicKey(publicKey);
