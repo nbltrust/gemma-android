@@ -9,8 +9,12 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+
+import java.util.List;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -44,6 +48,8 @@ public class ImportWalletGuideActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
+
     }
 
     @Override

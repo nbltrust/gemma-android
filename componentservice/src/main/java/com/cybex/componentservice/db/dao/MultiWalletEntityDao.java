@@ -65,6 +65,13 @@ public interface MultiWalletEntityDao {
     void saveOrUpateEntity(MultiWalletEntity entity, DBCallback callback);
 
     /**
+     * 同步保存MultiWalletEntity对象
+     *
+     * @param entity
+     */
+    void saveOrUpateEntitySync(MultiWalletEntity entity);
+
+    /**
      * 批量同步保存MultiWalletEntity 列表对象
      *
      * @param list

@@ -60,6 +60,7 @@
     <declare-styleable name="LabelLayout">
         <attr name="text_left" format="string" />
         <attr name="text_right" format="string" />
+        <attr name="text_right_isShow" format="boolean" />
     </declare-styleable>
 
 </resources>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="eos_colorPrimary">#3F51B5</color>
-    <color name="eos_colorPrimaryDark">#303F9F</color>
-    <color name="eos_colorAccent">#FF4081</color>
+    <color name="eos_colorPrimary">#333333</color>
+    <color name="eos_colorPrimaryDark">#333333</color>
+    <color name="eos_colorAccent">#333333</color>
 
     <!--<color name="paleGrey">#f5f6f8</color>-->
     <!--<color name="paleGreyTwo">#e7e9f8</color>-->

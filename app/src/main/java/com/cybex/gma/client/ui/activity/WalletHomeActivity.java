@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -57,6 +58,13 @@ public class WalletHomeActivity extends XActivity {
     @BindView(R.id.eos_card)
     EosCardView mEosCardView;
     private Unbinder unbinder;
+
+
+    @OnClick(R.id.iv_wallet_manage)
+    public void onWalletManageIconClick(View view){
+        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_MANAGE_PAGE)
+                .navigation();
+    }
 
 
     @Override

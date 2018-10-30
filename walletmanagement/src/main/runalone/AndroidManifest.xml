@@ -47,11 +47,7 @@
         </activity>
 
         <activity android:name=".ui.activity.SelectWalletCoinTypeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".ui.activity.SelectImportWhichWalletActivity">
@@ -59,6 +55,26 @@
         </activity>
 
         <activity android:name=".ui.activity.ConfigNewWalletActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.WalletManageActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.SelectCurrentWalletActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.activity.WalletManageInnerActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.ChangeWalletNameActivity">
 
         </activity>
 

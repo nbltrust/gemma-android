@@ -2,7 +2,9 @@ package com.cybex.gma.client.ui.presenter;
 
 import android.os.Bundle;
 
+import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.dao.WalletEntityDao;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.config.CacheConstants;
@@ -23,8 +25,8 @@ public class SpalashActPresenter extends XPresenter<SpalashActivity> {
 
     public void goToNext() {
 
-        WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
-        List<WalletEntity> entityList = dao.getWalletEntityList();
+        MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
+        List<MultiWalletEntity> entityList = dao.getMultiWalletEntityList();
         if (EmptyUtils.isNotEmpty(entityList)) {
             boolean isOpenGesture = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_GESTURE);
             if (isOpenGesture) {

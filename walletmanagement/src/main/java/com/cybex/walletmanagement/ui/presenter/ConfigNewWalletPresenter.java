@@ -1,9 +1,11 @@
 package com.cybex.walletmanagement.ui.presenter;
 
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.bean.CoinType;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
@@ -68,7 +70,7 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                 multiWalletEntity.setCypher(HashGenUtil.generateHashFromText(password, HashGenUtil.TYPE_SHA256));
                 multiWalletEntity.setIsCurrentWallet(1);
 
-                if(walletType==MultiWalletEntity.WALLET_TYPE_MNEMONIC){
+                if(walletType==MultiWalletEntity.WALLET_TYPE_IMPORT_MNEMONIC){
                     String encryptMnemonic = Seed39.keyEncrypt(password, configBean.getMnemonic());
                     multiWalletEntity.setMnemonic(encryptMnemonic);
 
@@ -168,9 +170,8 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                     @Override
                     public void accept(Object mnemonic) {
                         getV().dissmisProgressDialog();
-//                        Intent intent = new Intent(getV(), MnemonicBackupGuideActivity.class);
-//                        getV().startActivity(intent);
-//                        getV().finish();
+                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+                                .navigation();
                     }
                 }, new Consumer<Throwable>() {
                     @Override

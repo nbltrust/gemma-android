@@ -15,6 +15,7 @@ public class LabelLayout extends RelativeLayout{
     private TextView tvLeft;
     private TextView tvRight;
     private View rootview;
+    private boolean rightIsShow;
 
     public LabelLayout(Context context) {
         super(context);
@@ -49,8 +50,10 @@ public class LabelLayout extends RelativeLayout{
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LabelLayout, 0, 0);
             String leftStr = typedArray.getString(R.styleable.LabelLayout_text_left);
             String rightStr = typedArray.getString(R.styleable.LabelLayout_text_right);
+            rightIsShow = typedArray.getBoolean(R.styleable.LabelLayout_text_right_isShow,true);
             tvLeft.setText(leftStr);
             tvRight.setText(rightStr);
+            tvRight.setVisibility(rightIsShow?View.VISIBLE:View.GONE);
             typedArray.recycle();
         }
 

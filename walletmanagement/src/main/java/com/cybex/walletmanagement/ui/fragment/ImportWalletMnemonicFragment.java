@@ -99,7 +99,7 @@ public class ImportWalletMnemonicFragment extends XFragment {
         if(isMnemonicValid(mnemonic)){
             //jump to config page
             ImportWalletConfigBean config = new ImportWalletConfigBean();
-            config.setWalletType(MultiWalletEntity.WALLET_TYPE_MNEMONIC);
+            config.setWalletType(MultiWalletEntity.WALLET_TYPE_IMPORT_MNEMONIC);
             config.setMnemonic(mnemonic);
 
             Intent intent = new Intent(getContext(), ConfigNewWalletActivity.class);

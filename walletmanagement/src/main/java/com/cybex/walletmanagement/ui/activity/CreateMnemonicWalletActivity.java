@@ -11,6 +11,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.walletmanagement.R;
@@ -31,6 +34,8 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
+
+import java.util.List;
 
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -42,13 +47,14 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
 
     ImageView ivSetPassMask;
     ImageView ivRepeatPassMask;
-    View viewDividerEosName;
+    View viewDividerWalletName;
     View viewDividerSetPass;
     View viewDividerRepeatPass;
     View viewDividerPassHint;
 
     ScrollView scrollViewCreateWallet;
     TextView tvWalletName;
+    ViewGroup llWalletname;
     ImageView ivWalletNameClear;
     ImageView ivSetPassClear;
     ImageView ivRepeatPassClear;
@@ -75,8 +81,9 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         scrollViewCreateWallet = (ScrollView) findViewById(R.id.scroll_create_wallet);
         tvWalletName = (TextView) findViewById(R.id.tv_wallet_name);
         edtWalletName = (EditText) findViewById(R.id.edt_wallet_name);
+        llWalletname = (ViewGroup) findViewById(R.id.ll_walletname);
         ivWalletNameClear = (ImageView) findViewById(R.id.iv_wallet_name_clear);
-        viewDividerEosName = findViewById(R.id.view_divider_eosName);
+        viewDividerWalletName = findViewById(R.id.view_divider_walletName);
         tvSetPass = (TextView) findViewById(R.id.tv_set_pass);
         edtSetPass = (EditText) findViewById(R.id.edt_set_pass);
         ivSetPassClear = (ImageView) findViewById(R.id.iv_set_pass_clear);
@@ -215,9 +222,20 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
         SoftHideKeyBoardUtil.assistActivity(this);
         isMask = true;
         initView();
+
+        List<MultiWalletEntity> multiWalletEntityList = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
+        if(multiWalletEntityList.size()>0){
+
+        }else{
+            edtWalletName.setText("UNNAMED-WALLET");
+            llWalletname.setVisibility(View.GONE);
+            tvWalletName.setVisibility(View.GONE);
+            viewDividerWalletName.setVisibility(View.GONE);
+        }
 
         btCreateWallet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -411,13 +429,13 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
                 }
 
                 if (hasFocus) {
-                    setDividerFocusStyle(viewDividerEosName);
+                    setDividerFocusStyle(viewDividerWalletName);
                     edtWalletName.setTypeface(Typeface.DEFAULT_BOLD);
                     if (EmptyUtils.isNotEmpty(getWalletName())){
                         ivWalletNameClear.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    setDividerDefaultStyle(viewDividerEosName);
+                    setDividerDefaultStyle(viewDividerWalletName);
                     ivWalletNameClear.setVisibility(View.GONE);
                     if (EmptyUtils.isEmpty(getWalletName())) {
                         edtWalletName.setTypeface(Typeface.DEFAULT);
@@ -509,20 +527,20 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
     public void setWalletNameValidStyle() {
         tvWalletName.setTextColor(getResources().getColor(R.color.black_context));
         tvWalletName.setText(getResources().getString(R.string.walletmanage_title_wallet_name));
-        setDividerDefaultStyle(viewDividerEosName);
+        setDividerDefaultStyle(viewDividerWalletName);
     }
 
     public void setWalletNameInvalidStyle() {
 
         tvWalletName.setText(getResources().getString(R.string.walletmanage_tip_walletname_error));
         tvWalletName.setTextColor(getResources().getColor(R.color.scarlet));
-        setDividerAlertStyle(viewDividerEosName);
+        setDividerAlertStyle(viewDividerWalletName);
     }
 
     public void setWalletNameFocusedStyle() {
         tvWalletName.setTextColor(getResources().getColor(R.color.black_title));
         tvWalletName.setText(getResources().getString(R.string.walletmanage_title_wallet_name));
-        setDividerFocusStyle(viewDividerEosName);
+        setDividerFocusStyle(viewDividerWalletName);
     }
 
     public void setRepeatPassValidStyle() {

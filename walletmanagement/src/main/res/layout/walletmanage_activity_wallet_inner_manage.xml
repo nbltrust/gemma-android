@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/ui_navibar"></include>
+
+    <RelativeLayout
+        android:id="@+id/container_wallet_name"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <TextView
+            android:id="@+id/tv_wallet_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_page_content_padding"
+            android:layout_marginTop="21dp"
+            android:text="主钱包"
+            android:textColor="@color/black_content"
+            android:textSize="@dimen/font_4"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_wallet_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_page_content_padding"
+            android:layout_marginTop="42dp"
+            android:text="多币种钱包"
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_3.5" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30.6dp"
+            android:src="@drawable/ic_tab_arrow" />
+
+
+        <View
+            style="@style/common_divider_nopadding"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/common_page_content_padding"
+            android:layout_marginRight="@dimen/common_page_content_padding" />
+    </RelativeLayout>
+
+
+    <com.cybex.base.view.LabelLayout
+        android:id="@+id/label_export_mnemonic"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_marginRight="@dimen/common_page_content_padding"
+        app:text_left="导出助记词" />
+
+    <com.cybex.base.view.LabelLayout
+        android:id="@+id/label_export_pri_key"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_marginRight="@dimen/common_page_content_padding"
+        app:text_left="导出私钥" />
+
+    <com.cybex.base.view.LabelLayout
+        android:id="@+id/label_change_psw"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_marginRight="@dimen/common_page_content_padding"
+        app:text_left="修改密码" />
+
+</LinearLayout>
+

@@ -29,6 +29,9 @@ public class InitialActivity extends XActivity {
         if (!NoDoubleClick.isDoubleClick()) {
             ARouter.getInstance().build(RouterConst.PATH_TO_CREATE_MNEMONIC_PAGE)
                     .navigation();
+//            ARouter.getInstance().build("/walletmange/test")
+//                    .navigation();
+
         }
     }
 

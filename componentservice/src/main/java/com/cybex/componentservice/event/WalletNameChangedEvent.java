@@ -1,4 +1,4 @@
-package com.cybex.gma.client.event;
+package com.cybex.componentservice.event;
 
 public class WalletNameChangedEvent {
 

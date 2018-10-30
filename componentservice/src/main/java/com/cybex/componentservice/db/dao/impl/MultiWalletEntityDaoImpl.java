@@ -72,7 +72,7 @@ public class MultiWalletEntityDaoImpl implements MultiWalletEntityDao {
     public List<MultiWalletEntity> getBluetoothWalletList() {
         List<MultiWalletEntity> list =
                 SQLite.select().from(MultiWalletEntity.class)
-                        .where(MultiWalletEntity_Table.walletType.eq(1))
+                        .where(MultiWalletEntity_Table.walletType.eq(MultiWalletEntity.WALLET_TYPE_HARDWARE))
                         .queryList();
 
         return list;
@@ -99,6 +99,23 @@ public class MultiWalletEntityDaoImpl implements MultiWalletEntityDao {
             }
         }, callback);
 
+    }
+
+    @Override
+    public void saveOrUpateEntitySync(MultiWalletEntity entity) {
+        List<EthWalletEntity> ethWalletEntities = entity.getEthWalletEntities();
+        List<EosWalletEntity> eosWalletEntities = entity.getEosWalletEntities();
+        if (ethWalletEntities != null) {
+            for (EthWalletEntity ethWalletEntity : ethWalletEntities) {
+                ethWalletEntity.save();
+            }
+        }
+        if (eosWalletEntities != null) {
+            for (EosWalletEntity eosWalletEntity : eosWalletEntities) {
+                eosWalletEntity.save();
+            }
+        }
+        entity.save();
     }
 
     @Override

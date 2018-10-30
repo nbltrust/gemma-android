@@ -10,15 +10,10 @@ import android.widget.TextView;
 
 import com.cybex.componentservice.R;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.entity.WalletEntity;
-import com.cybex.componentservice.manager.DBManager;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
-
-import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
 public class PasswordValidateHelper {
 
@@ -37,9 +32,9 @@ public class PasswordValidateHelper {
         iconRes=R.drawable.ic_mask_close;
     }
 
-    public PasswordValidateHelper() {
-
-    }
+//    public PasswordValidateHelper() {
+//
+//    }
 
     public void setHintStr(String hintStr) {
         this.hintStr = hintStr;

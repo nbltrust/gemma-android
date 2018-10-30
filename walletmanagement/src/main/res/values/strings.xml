@@ -189,5 +189,21 @@
     <!-- Change Wallet Name fragment-->
     <string name="walletmanage_wallet_name_short">钱包名</string>
     <string name="walletmanage_wallet_name">钱包名称</string>
+
+    <!--select wallet-->
+    <string name="walletmanage_select_wallet_title">选择钱包</string>
+    <string name="walletmanage_wallet_type_multi">多币种钱包</string>
+    <string name="walletmanage_wallet_type_eos">EOS钱包</string>
+    <string name="walletmanage_wallet_type_eth">ETH钱包</string>
+    <string name="walletmanage_wallet_type_hardware">多币种硬件钱包</string>
+    <!--manage wallet-->
+    <string name="walletmanage_manage_wallet_title">管理钱包</string>
+    <string name="walletmanage_wookong_bio_description">WOOKONG Bio 是一款面向个人用户使用\n的便携式蓝牙硬件钱包，为数字资产提供更\n安全的保护。</string>
+    <!--change wallet name-->
+    <string name="walletmanage_change_wallet_name_title">修改钱包名称</string>
     <string name="walletmanage_change_wallet_name_hint">请输入新的钱包名称</string>
+    <string name="walletmanage_same_wallet_name">钱包名称不能与已有钱包名相同</string>
+    <string name="walletmanage_empty_wallet_name">钱包名称不能为空！</string>
+    <string name="walletmanage_change_name_success">更改成功</string>
+    <string name="walletmanage_change_name_fail">更改失败</string>
 </resources>

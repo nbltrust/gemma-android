@@ -121,8 +121,9 @@ public class MnemonicVerifyActivity extends XActivity {
                 if (CollectionUtils.isEqualListWithSequence(selectedLabels, answerLabels)) {
                     TSnackbarUtil.showTip(viewRoot, getString(R.string.walletmanage_mnemonic_validate_success),
                             Prompt.SUCCESS);
-                    ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
-                            .navigation();
+//                    ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+//                            .navigation();
+                    finish();
                 } else {
                     TSnackbarUtil.showTip(viewRoot, getString(R.string.walletmanage_mnemonic_validate_error),
                             Prompt.ERROR);

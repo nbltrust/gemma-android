@@ -10,17 +10,22 @@ import android.widget.Button;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
+import seed39.Seed39;
 
 @Route(path = RouterConst.PATH_TO_BACKUP_MNEMONIC_GUIDE_PAGE)
 public class MnemonicBackupGuideActivity extends XActivity {
 
     private Button btnShowMne;
     String mnemonic;
+    private MultiWalletEntity wallet;
 
 
     @Override
@@ -29,10 +34,31 @@ public class MnemonicBackupGuideActivity extends XActivity {
         btnShowMne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MnemonicBackupGuideActivity.this, MnemonicShowActivity.class);
-                intent.putExtra(BaseConst.KEY_MNEMONIC,mnemonic);
-                startActivity(intent);
-                finish();
+                if(wallet!=null){
+                    PasswordValidateHelper passwordValidateHelper = new PasswordValidateHelper(wallet,context);
+                    passwordValidateHelper.startValidatePassword(new PasswordValidateHelper.PasswordValidateCallback() {
+                        @Override
+                        public void onValidateSuccess(String password) {
+                            String encryptMnemonic = wallet.getMnemonic();
+                            String decryptMnemonic = Seed39.keyDecrypt(password, encryptMnemonic);
+                            Intent intent = new Intent(MnemonicBackupGuideActivity.this, MnemonicShowActivity.class);
+                            intent.putExtra(BaseConst.KEY_MNEMONIC,decryptMnemonic);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                        @Override
+                        public void onValidateFail(int failedCount) {
+                        }
+                    });
+
+                }else{
+                    Intent intent = new Intent(MnemonicBackupGuideActivity.this, MnemonicShowActivity.class);
+                    intent.putExtra(BaseConst.KEY_MNEMONIC,mnemonic);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
         setNavibarTitle(getResources().getString(R.string.walletmanage_backup_title), true);
@@ -41,6 +67,7 @@ public class MnemonicBackupGuideActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         mnemonic = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
+        wallet = getIntent().getParcelableExtra(BaseConst.KEY_WALLET_ENTITY);
     }
 
     @Override

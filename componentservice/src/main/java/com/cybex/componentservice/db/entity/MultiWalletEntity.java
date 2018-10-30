@@ -18,8 +18,9 @@ import java.util.List;
 public class MultiWalletEntity extends BaseModel implements Parcelable {
 
     public static final Integer WALLET_TYPE_MNEMONIC=0;
-    public static final Integer WALLET_TYPE_HARDWARE=1;
-    public static final Integer WALLET_TYPE_PRI_KEY=2;
+    public static final Integer WALLET_TYPE_IMPORT_MNEMONIC=1;
+    public static final Integer WALLET_TYPE_HARDWARE=2;
+    public static final Integer WALLET_TYPE_PRI_KEY=3;
 
     /**
      * 自增长主键id
@@ -63,7 +64,7 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
     private Integer isBackUp;
 
     /**
-     * 钱包类型 (0--助记词软件钱包   1--硬件钱包  2-导入单个私钥类型的软钱包)
+     * 钱包类型 (0--新建助记词软件钱包 1-导入助记词类软钱包  2--硬件钱包  3-导入单个私钥类型的软钱包)
      */
     @Column(defaultValue = "0")
     private int walletType;

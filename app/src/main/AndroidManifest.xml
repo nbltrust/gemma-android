@@ -54,7 +54,6 @@
             android:name=".ui.activity.SpalashActivity"
             android:configChanges="layoutDirection|locale"
             android:theme="@style/SplashScreen">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

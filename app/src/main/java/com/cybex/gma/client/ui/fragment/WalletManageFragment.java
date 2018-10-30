@@ -15,7 +15,7 @@ import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.event.TabSelectedEvent;
-import com.cybex.gma.client.event.WalletNameChangedEvent;
+import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.activity.MainTabActivity;

@@ -45,6 +45,7 @@ import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.cybex.gma.client.ui.activity.VerifyPriKeyActivity;
 import com.cybex.gma.client.ui.activity.VoteActivity;
 import com.cybex.gma.client.ui.activity.WalletDetailActivity;
+import com.cybex.gma.client.ui.activity.WalletHomeActivity;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
 /**
@@ -80,7 +81,7 @@ public final class UISkipMananger {
      * @param context
      */
     public static void launchHome(Activity context) {
-        launchIntent(context, EosHomeActivity.class);
+        launchIntent(context, WalletHomeActivity.class);
     }
 
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+    </include>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@drawable/shape_corner"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="@dimen/common_page_content_padding"
+        android:layout_marginEnd="@dimen/common_page_content_padding"
+        >
+
+        <EditText
+            android:id="@+id/editText_setWalletName"
+            android:hint="@string/walletmanage_change_wallet_name_hint"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/dimen_10"
+            android:textSize="@dimen/font_4"
+            android:textCursorDrawable="@drawable/cursor_custom"
+            android:background="@null"
+            android:textColor="@color/black_content"
+            android:textColorHint="@color/grey_content"/>
+
+        <ImageView
+            android:id="@+id/clear_wallet_name"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/ic_close"/>
+
+    </LinearLayout>
+
+    <View
+        style="@style/common_divider"/>
+
+
+</LinearLayout>
+
