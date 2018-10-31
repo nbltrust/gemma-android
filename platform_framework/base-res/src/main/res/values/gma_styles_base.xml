@@ -144,6 +144,15 @@
         <item name="android:layout_height">@dimen/dimen_1</item>
         <item name="android:background">@color/dddddd_grey_350</item>
     </style>
+
+    <style name="common_divider_withpadding">
+        <item name="android:layout_marginStart">@dimen/common_page_content_padding</item>
+        <item name="android:layout_marginEnd">@dimen/common_page_content_padding</item>
+        <item name="android:layerType">software</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_1</item>
+        <item name="android:background">@color/dddddd_grey_350</item>
+    </style>
     <!-- 公用删除icon样式-->
     <style name="clear_icon_common">
         <item name="android:layout_width">wrap_content</item>

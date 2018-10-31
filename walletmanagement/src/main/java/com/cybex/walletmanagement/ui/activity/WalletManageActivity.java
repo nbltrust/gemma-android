@@ -2,20 +2,21 @@ package com.cybex.walletmanagement.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.base.view.LabelLayout;
-import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.event.ChangeSelectedWalletEvent;
+import com.cybex.componentservice.event.WalletNameChangedEvent;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.siberiadante.customdialoglib.CustomDialog;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -28,6 +29,7 @@ public class WalletManageActivity extends XActivity {
     private LabelLayout labelImportWallet;
     private LabelLayout labelCreateWallet;
     private RelativeLayout containerWookong;
+    private MultiWalletEntity currentWallet;
 
 
     @Override
@@ -60,6 +62,10 @@ public class WalletManageActivity extends XActivity {
         });
         setNavibarTitle(getResources().getString(R.string.walletmanage_manage_wallet_title), true);
 
+
+        currentWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        labelCurrentWallet.setRightText(currentWallet.getWalletName());
+
     }
 
     @Override
@@ -84,22 +90,25 @@ public class WalletManageActivity extends XActivity {
         return new DefaultHorizontalAnimator();
     }
 
-    /**
-     * 显示请勿截图Dialog
-     */
-    private void showAlertDialog() {
-        int[] listenedItems = {R.id.tv_understand};
-        CustomDialog dialog = new CustomDialog(this,
-                R.layout.walletmanage_dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);
-        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
-
-            @Override
-            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-                if(view.getId()==R.id.tv_understand){
-                    dialog.cancel();
-                }
-            }
-        });
-        dialog.show();
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeWallet(ChangeSelectedWalletEvent event) {
+        if(event.getCurrentWallet().getId()!=currentWallet.getId()){
+            currentWallet=event.getCurrentWallet();
+            labelCurrentWallet.setRightText(currentWallet.getWalletName());
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeWalletName(WalletNameChangedEvent event) {
+        if(event.getWalletID()==currentWallet.getId()){
+            currentWallet.setWalletName(event.getWalletName());
+            labelCurrentWallet.setRightText(currentWallet.getWalletName());
+        }
+    }
+
 }

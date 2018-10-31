@@ -48,15 +48,15 @@ public class SelectImportWhichWalletActivity extends XActivity {
         setNavibarTitle(getResources().getString(R.string.walletmanage_import_which_wallet_title), true);
 
         //test data
-        MultiWalletEntity entity = new MultiWalletEntity();
-        entity.setId(0);
-        entity.setWalletName("wallet1");
-        wallets.add(entity);
-
-        entity = new MultiWalletEntity();
-        entity.setId(1);
-        entity.setWalletName("wallet2");
-        wallets.add(entity);
+//        MultiWalletEntity entity = new MultiWalletEntity();
+//        entity.setId(0);
+//        entity.setWalletName("wallet1");
+//        wallets.add(entity);
+//
+//        entity = new MultiWalletEntity();
+//        entity.setId(1);
+//        entity.setWalletName("wallet2");
+//        wallets.add(entity);
 
         List<MultiWalletEntity> priKeyWallets = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityListByWalletType(MultiWalletEntity.WALLET_TYPE_PRI_KEY);
         wallets.addAll(priKeyWallets);

@@ -43,7 +43,7 @@
     </LinearLayout>
 
     <View
-        style="@style/common_divider"/>
+        style="@style/common_divider_withpadding"/>
 
 
 </LinearLayout>

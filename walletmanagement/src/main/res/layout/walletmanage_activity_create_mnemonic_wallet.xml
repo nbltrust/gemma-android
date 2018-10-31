@@ -59,7 +59,7 @@
                 <View
                     android:visibility="visible"
                     android:id="@+id/view_divider_walletName"
-                    style="@style/common_divider">
+                    style="@style/common_divider_withpadding">
                 </View>
 
 
@@ -98,7 +98,7 @@
 
                 <View
                     android:id="@+id/view_divider_setPass"
-                    style="@style/common_divider">
+                    style="@style/common_divider_withpadding">
                 </View>
 
 
@@ -140,7 +140,7 @@
 
                 <View
                     android:id="@+id/view_divider_repeatPass"
-                    style="@style/common_divider">
+                    style="@style/common_divider_withpadding">
                 </View>
 
 
@@ -169,7 +169,7 @@
 
                 <View
                     android:id="@+id/view_divider_pass_hint"
-                    style="@style/common_divider">
+                    style="@style/common_divider_withpadding">
                 </View>
 
             </LinearLayout>

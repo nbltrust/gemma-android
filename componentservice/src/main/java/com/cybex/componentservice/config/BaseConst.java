@@ -7,6 +7,7 @@ public class BaseConst {
     public static final String KEY_PRI_KEY="key_pri_key";
     public static final String KEY_INIT_TYPE="key_init_type";
     public static final String KEY_WALLET_ENTITY="key_wallet_entity";
+    public static final String KEY_PASSWORD="key_password";
 
 
     public static final String MNEMONIC_PATH_ETH="m/44'/60'/0'/0/";

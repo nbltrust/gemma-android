@@ -159,6 +159,8 @@
     <string name="walletmanage_new_password">新密码</string>
     <string name="walletmanage_btn_confirm_change">确认修改</string>
     <string name="walletmanage_title_change_pass">修改密码</string>
+    <string name="walletmanage_psw_change_success">密码修改成功</string>
+    <string name="walletmanage_psw_change_fail">密码修改失败</string>
 
     <!--蓝牙钱包配置start -->
     <string name="walletmanage_title_wookong_bio">WOOKONG Bio</string>

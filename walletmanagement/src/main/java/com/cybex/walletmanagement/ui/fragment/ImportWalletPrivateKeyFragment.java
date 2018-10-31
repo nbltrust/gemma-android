@@ -162,9 +162,9 @@ public class ImportWalletPrivateKeyFragment extends XFragment {
         setButtonUnclickable(btnNext);
         wallets = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityListByWalletType(MultiWalletEntity.WALLET_TYPE_PRI_KEY);
 
-//        if(wallets.size()==0){
-//            labelWhichWallet.setVisibility(View.GONE);
-//        }
+        if(wallets.size()==0){
+            labelWhichWallet.setVisibility(View.GONE);
+        }
 
     }
 

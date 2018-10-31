@@ -104,7 +104,7 @@ public class BackUpPriKeyQRFragment extends XFragment {
         TaskManager.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                ivRealQR.setImageBitmap(QRCodeEncoder.syncEncodeQRCode(privateKey, SizeUtil.dp2px(188)));
+                ivRealQR.setImageBitmap(QRCodeEncoder.syncEncodeQRCode(privateKey, SizeUtil.dp2px(173)));
             }
         });
 

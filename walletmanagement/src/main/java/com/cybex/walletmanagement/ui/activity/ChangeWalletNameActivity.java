@@ -84,10 +84,7 @@ public class ChangeWalletNameActivity extends XActivity {
                         @Override
                         public void onSucceed() {
                             GemmaToastUtils.showLongToast(getString(R.string.walletmanage_change_name_success));
-                            WalletNameChangedEvent event = new WalletNameChangedEvent();
-                            event.setWalletID(wallet.getId());
-                            event.setWalletName(name);
-                            EventBusProvider.postSticky(new WalletNameChangedEvent());
+                            EventBusProvider.post(new WalletNameChangedEvent(wallet.getId(),name));
                             finish();
                         }
 

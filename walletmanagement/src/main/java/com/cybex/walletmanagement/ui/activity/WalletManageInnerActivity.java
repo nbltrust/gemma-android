@@ -2,22 +2,25 @@ package com.cybex.walletmanagement.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cybex.base.view.LabelLayout;
-import com.cybex.base.view.flowlayout.FlowLayout;
-import com.cybex.base.view.flowlayout.TagAdapter;
-import com.cybex.base.view.flowlayout.TagFlowLayout;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.event.RefreshCurrentWalletEvent;
+import com.cybex.componentservice.event.WalletNameChangedEvent;
+import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.walletmanagement.R;
+import com.cybex.walletmanagement.event.BarcodeScanEvent;
+import com.cybex.walletmanagement.event.QrResultEvent;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.siberiadante.customdialoglib.CustomDialog;
+import com.hxlx.core.lib.utils.EmptyUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -78,6 +81,21 @@ public class WalletManageInnerActivity extends XActivity {
             @Override
             public void onClick(View v) {
 
+                PasswordValidateHelper passwordValidateHelper = new PasswordValidateHelper(wallet, context);
+                passwordValidateHelper.startValidatePassword(new PasswordValidateHelper.PasswordValidateCallback() {
+                    @Override
+                    public void onValidateSuccess(String password) {
+                        Intent intent = new Intent(WalletManageInnerActivity.this, ChangePasswordActivity.class);
+                        intent.putExtra(BaseConst.KEY_WALLET_ENTITY,wallet);
+                        intent.putExtra(BaseConst.KEY_PASSWORD,password);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onValidateFail(int failedCount) {
+
+                    }
+                });
             }
         });
 
@@ -127,6 +145,27 @@ public class WalletManageInnerActivity extends XActivity {
     public FragmentAnimator onCreateFragmentAnimator() {
         // 设置横向(和安卓4.x动画相同)
         return new DefaultHorizontalAnimator();
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshWallet(RefreshCurrentWalletEvent event) {
+        if (event.getCurrentWallet().getId()==wallet.getId()) {
+            wallet=event.getCurrentWallet();
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshWalletName(WalletNameChangedEvent event) {
+        if (event.getWalletID()==wallet.getId()) {
+            wallet.setWalletName(event.getWalletName());
+            tvWalletName.setText(wallet.getWalletName());
+        }
     }
 
 

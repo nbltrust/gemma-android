@@ -11,7 +11,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.componentservice.bean.CoinType;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.event.ChangeSelectedWalletEvent;
 import com.cybex.componentservice.event.RefreshCurrentWalletEvent;
+import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.walletmanagement.R;
@@ -24,6 +26,9 @@ import com.cybex.walletmanagement.ui.adapter.SelectCurrentWalletAdapter;
 import com.cybex.walletmanagement.ui.model.CoinTypeBean;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +44,7 @@ public class SelectCurrentWalletActivity extends XActivity {
     private SelectCurrentWalletAdapter adatper;
     private MultiWalletEntity checkedWallet;
 
-    private List<MultiWalletEntity> wallets=new ArrayList<>();
+    private List<MultiWalletEntity> wallets = new ArrayList<>();
 
 
     @Override
@@ -54,9 +59,9 @@ public class SelectCurrentWalletActivity extends XActivity {
         wallets.addAll(allWallets);
 
         for (MultiWalletEntity wallet : wallets) {
-            if(wallet.getIsCurrentWallet()!=0){
+            if (wallet.getIsCurrentWallet() != 0) {
                 wallet.setChecked(true);
-                checkedWallet=wallet;
+                checkedWallet = wallet;
                 break;
             }
         }
@@ -67,11 +72,11 @@ public class SelectCurrentWalletActivity extends XActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if(view.getId()==R.id.iv_tip){
+                if (view.getId() == R.id.iv_tip) {
                     MultiWalletEntity wallet = wallets.get(position);
 
                     int walletType = wallet.getWalletType();
-                    if(walletType==MultiWalletEntity.WALLET_TYPE_HARDWARE){
+                    if (walletType == MultiWalletEntity.WALLET_TYPE_HARDWARE) {
 
 
                     }
@@ -80,20 +85,31 @@ public class SelectCurrentWalletActivity extends XActivity {
 //                        intent.putExtra(BaseConst.KEY_WALLET_ENTITY,wallet);
 //                        startActivity(intent);
 //                    }
-                    else{
+                    else {
                         Intent intent = new Intent(context, WalletManageInnerActivity.class);
-                        intent.putExtra(BaseConst.KEY_WALLET_ENTITY,wallet);
+                        intent.putExtra(BaseConst.KEY_WALLET_ENTITY, wallet);
                         startActivity(intent);
                     }
 
 
-                }else if(view.getId()==R.id.rootview_wallet){
+                } else if (view.getId() == R.id.rootview_wallet) {
                     for (MultiWalletEntity wallet : wallets) {
                         wallet.setChecked(false);
+                        wallet.setIsCurrentWallet(0);
                     }
                     wallets.get(position).setChecked(true);
+                    checkedWallet=wallets.get(position);
+                    checkedWallet.setIsCurrentWallet(1);
                     adatper.notifyDataSetChanged();
-                    EventBusProvider.post(new SelectImportWhichWalletEvent(wallets.get(position)));
+
+                    MultiWalletEntity current = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+                    if (checkedWallet != null && current != null && checkedWallet.getId() != current.getId()) {
+                        current.setIsCurrentWallet(0);
+//                        checkedWallet.setIsCurrentWallet(1);
+                        current.save();
+                        checkedWallet.save();
+                        EventBusProvider.post(new ChangeSelectedWalletEvent(checkedWallet));
+                    }
                 }
 
             }
@@ -113,15 +129,6 @@ public class SelectCurrentWalletActivity extends XActivity {
 
     @Override
     protected void onDestroy() {
-        MultiWalletEntity current = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-        if(checkedWallet!=null&&current!=null&&checkedWallet.getId()!=current.getId()){
-
-            current.setIsCurrentWallet(0);
-            checkedWallet.setIsCurrentWallet(1);
-            current.save();
-            checkedWallet.save();
-            EventBusProvider.post(new RefreshCurrentWalletEvent(checkedWallet));
-        }
         super.onDestroy();
     }
 
@@ -134,5 +141,41 @@ public class SelectCurrentWalletActivity extends XActivity {
     public FragmentAnimator onCreateFragmentAnimator() {
         // 设置横向(和安卓4.x动画相同)
         return new DefaultHorizontalAnimator();
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshWallet(RefreshCurrentWalletEvent event) {
+        int index=-1;
+        for (int i = 0; i < wallets.size(); i++) {
+            MultiWalletEntity walletEntity = wallets.get(i);
+            if (event.getCurrentWallet().getId() == walletEntity.getId()) {
+                index=i;
+                break;
+            }
+        }
+        if(index>=0){
+            wallets.set(index,event.getCurrentWallet());
+            if (wallets.get(index).getId() == checkedWallet.getId()) {
+                wallets.get(index).setChecked(true);
+            }
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshWalletName(WalletNameChangedEvent event) {
+        for (MultiWalletEntity walletEntity : wallets) {
+            if (event.getWalletID() == walletEntity.getId()) {
+                walletEntity.setWalletName(event.getWalletName());
+                adatper.notifyDataSetChanged();
+                break;
+            }
+        }
+
     }
 }

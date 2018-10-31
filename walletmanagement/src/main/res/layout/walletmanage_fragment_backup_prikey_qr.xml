@@ -33,15 +33,16 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="76dp"
-            android:background="@drawable/ic_qr_code" />
+            android:layout_marginTop="62dp"
+            android:background="@drawable/ic_qr_code"
+            android:visibility="visible"/>
 
         <ImageView
             android:id="@+id/iv_real_QR"
-            android:layout_width="188dp"
-            android:layout_height="188dp"
+            android:layout_width="173dp"
+            android:layout_height="173dp"
             android:layout_gravity="center"
-            android:layout_marginTop="76dp"
+            android:layout_marginTop="62dp"
             android:background="@color/white"
             android:visibility="gone" />
 
