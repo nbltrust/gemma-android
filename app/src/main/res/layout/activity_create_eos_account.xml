@@ -30,28 +30,6 @@
                 android:orientation="vertical"
                 >
 
-                <com.xujiaji.happybubble.BubbleLayout
-                    android:id="@+id/bubble"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_70"
-                    android:visibility="gone"
-                    app:bubbleColor="@color/buff"
-                    app:bubblePadding="0dp"
-                    app:bubbleRadius="@dimen/eos_bt_radius"
-                    app:lookLength="@dimen/eos_bubble_lookLength"
-                    app:lookPosition="@dimen/eos_bubble_lookPosition"
-                    >
-
-                    <TextView
-                        android:id="@+id/tv_in_bubble"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/dimen_10"
-                        android:text="@string/eos_tip_security_hint"
-                        android:textSize="@dimen/font_3"/>
-
-                </com.xujiaji.happybubble.BubbleLayout>
-
                 <TextView
                     android:id="@+id/tv_eos_name"
                     style="@style/eos_text_title_config_wallet"
@@ -85,7 +63,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/bt_create_wallet"
+                android:id="@+id/bt_next_step"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bt_inInitPage_height"
                 android:layout_marginEnd="@dimen/eos_button_margin"
@@ -93,7 +71,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_corner_button_unclickable"
-                android:text="@string/eos_tip_create_wallet"
+                android:text="@string/next_step"
                 android:textColor="@color/whiteTwo"/>
 
         </LinearLayout>

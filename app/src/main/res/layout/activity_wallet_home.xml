@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
+              android:background="@color/whiteTwo"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -42,7 +43,7 @@
         <TextView
             android:layout_marginStart="@dimen/common_page_content_padding"
             android:id="@+id/tv_wallet_name"
-            android:text="钱包名称"
+            android:text="我的钱包"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

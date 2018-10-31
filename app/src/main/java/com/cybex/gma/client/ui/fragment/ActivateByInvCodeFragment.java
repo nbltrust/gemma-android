@@ -6,14 +6,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.activity.ActivateAccountMethodActivity;
+import com.cybex.gma.client.ui.activity.CreateEosAccountActivity;
 import com.cybex.gma.client.ui.presenter.ActivateByInvCodePresenter;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -37,16 +43,13 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
     @BindView(R.id.edt_invCode) EditText edtInvCode;
     private String account_name;
     private String public_key;
-    private String private_key;
-    private String password;
-    private String passwordTip;
     private String invCode;
 
     Unbinder unbinder;
 
     @OnClick(R.id.bt_activate)
     public void goActivate(){
-        getP().createAccount(account_name, private_key, public_key, password, invCode, passwordTip);
+        getP().createAccount(account_name, public_key, getInvCode());
     }
 
     /**
@@ -57,25 +60,18 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
     public void onCreateStatusReceieved(ValidateResultEvent event){
         if (event != null){
             dissmisProgressDialog();
-            if(event.isSuccess()){//创建成功
-                //跳转到备份私钥页面
-                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                if (curWallet != null && getArguments() != null){
-                    final String private_key = getArguments().getString("private_key");
-                    KeySendEvent keySendEvent = new KeySendEvent(private_key);
-                    EventBusProvider.postSticky(keySendEvent);
-                    WalletIDEvent walletIDEvent = new WalletIDEvent(curWallet.getId());
-                    EventBusProvider.postSticky(walletIDEvent);
-                    UISkipMananger.launchBakupGuide(getActivity());
-                }
+            if(event.isSuccess()){
+                //创建成功
+                //跳转到EOS主界面
+                AppManager.getAppManager().finishActivity(CreateEosAccountActivity.class);
+                AppManager.getAppManager().finishActivity(ActivateAccountMethodActivity.class);
+                UISkipMananger.launchHome(getActivity());
 
             }else {
                 //创建失败,弹框，删除当前钱包，判断是否还有钱包，跳转
-                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
-                List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao()
-                        .getWalletEntityList();
-                showFailDialog(EmptyUtils.isEmpty(walletEntityList));
+                List<MultiWalletEntity> multiWalletEntities = DBManager.getInstance().getMultiWalletEntityDao()
+                        .getMultiWalletEntityList();
+                showFailDialog(EmptyUtils.isEmpty(multiWalletEntities));
             }
 
         }
@@ -95,12 +91,11 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
     @Override
     public void initData(Bundle savedInstanceState) {
         if (getArguments() != null){
-            account_name = getArguments().getString("account_name");
-            public_key = getArguments().getString("public_key");
-            private_key = getArguments().getString("private_key");
-            password = getArguments().getString("password");
-            passwordTip = getArguments().getString("passwordTip");
-            invCode = getInvCode();
+            account_name = getArguments().getString(ParamConstants.EOS_USERNAME);
+            EosWalletEntity curEosWallet = getCurEosWallet();
+            if (curEosWallet != null){
+                public_key = curEosWallet.getPublicKey();
+            }
         }
     }
 
@@ -137,12 +132,25 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
                         }else {
                             //如果有钱包
                             //更新当前钱包为最后一个钱包，跳转主页面
-                            List<WalletEntity> walletList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
-                            WalletEntity newCurWallet = walletList.get(walletList.size() - 1);
-                            newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-                            DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(newCurWallet);
-                            AppManager.getAppManager().finishAllActivity();
-                            UISkipMananger.launchHomeSingle(getActivity());
+//                            List<MultiWalletEntity> multiWalletEntities = DBManager.getInstance()
+//                                    .getMultiWalletEntityDao().getMultiWalletEntityList();
+//                            MultiWalletEntity newCurWallet = multiWalletEntities.get(multiWalletEntities.size() - 1);
+//                            newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
+//                            DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntity(newCurWallet,
+//                                    new DBCallback() {
+//                                        @Override
+//                                        public void onSucceed() {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onFailed(Throwable error) {
+//
+//                                        }
+//                                    });
+                            AppManager.getAppManager().finishActivity(CreateEosAccountActivity.class);
+                            AppManager.getAppManager().finishActivity(ActivateAccountMethodActivity.class);
+                            //UISkipMananger.launchHome(getActivity());
                         }
 
                         dialog.cancel();
@@ -153,5 +161,21 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
             }
         });
         dialog.show();
+    }
+
+    /**
+     * 获取当前EOS钱包
+     * @return
+     */
+    private EosWalletEntity getCurEosWallet(){
+        EosWalletEntity curEosWallet = new EosWalletEntity();
+        MultiWalletEntity multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
+
+        if (multiWalletEntity != null){
+            curEosWallet = multiWalletEntity.getEosWalletEntities().get(0);
+        }
+
+        return curEosWallet;
     }
 }

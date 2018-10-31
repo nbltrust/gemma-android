@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/eos_tip_activate_by_friend_part_one"
-            android:textColor="@color/blueyGrey"
+            android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"/>
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/eos_tip_activate_by_friend_part_two"
-            android:textColor="@color/blueyGrey"
+            android:textColor="@color/black_context"
             android:textSize="@dimen/font_3"/>
 
     </LinearLayout>
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@string/eos_tip_activate_by_friend_part_three"
-        android:textColor="@color/blueyGrey"
+        android:textColor="@color/black_context"
         android:textSize="@dimen/font_4"/>
 
     <android.support.constraint.ConstraintLayout
@@ -56,7 +56,7 @@
             android:id="@+id/tv_show_memo_area"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:textColor="@color/darkSlateBlue"
+            android:textColor="@color/black_title"
             android:textSize="@dimen/font_4"
             android:textStyle="bold"
             tools:text="stevensteven-EOS1234bb567aeaf0b681b
@@ -67,9 +67,9 @@ fb99aa426ef9656e16889012b"
             android:id="@+id/bt_click_to_copy_memo"
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_20"
-            android:background="@drawable/shape_corner_button_cornblue20"
+            android:background="@drawable/shape_corner_button_white"
             android:text="@string/eos_click_to_copy"
-            android:textColor="@color/cornflowerBlue"
+            android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +81,7 @@ fb99aa426ef9656e16889012b"
         android:id="@+id/tv_hint_activate_by_friend_bot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/blueyGrey"
+        android:textColor="@color/black_context"
         android:layout_marginEnd="@dimen/dimen_40"
         android:layout_marginStart="@dimen/dimen_40"
         android:layout_marginTop="@dimen/dimen_20"

@@ -15,10 +15,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.presenter.WalletHomePresenter;
 import com.cybex.gma.client.widget.EosCardView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -33,7 +36,7 @@ import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
 @Route(path = RouterConst.PATH_TO_WALLET_HOME)
-public class WalletHomeActivity extends XActivity {
+public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Autowired(name = BaseConst.KEY_INIT_TYPE)
     int initType = BaseConst.APP_HOME_INITTYPE_NONE;
@@ -41,7 +44,11 @@ public class WalletHomeActivity extends XActivity {
     // 再点一次退出程序时间设置
     private static final long WAIT_TIME = 2000L;
     private long TOUCH_TIME = 0;
+    private boolean isEOSActivated;
 
+    public static final int STATE_WAIT_NOTIFY=0;
+    public static final int STATE_CREATING=1;
+    public static final int STATE_CREATED=2;
 
     @BindView(R.id.view_wookong_status)
     LinearLayout mViewWookongStatus;
@@ -64,6 +71,17 @@ public class WalletHomeActivity extends XActivity {
     public void onWalletManageIconClick(View view){
         ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_MANAGE_PAGE)
                 .navigation();
+    }
+
+    @OnClick({R.id.eos_card, R.id.eth_card})
+    public void onCardClick(View v){
+        switch (v.getId()){
+            case R.id.eos_card:
+
+                break;
+            case R.id.eth_card:
+                break;
+        }
     }
 
 
@@ -149,7 +167,35 @@ public class WalletHomeActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        isEOSActivated = false;
+        hideWookongStatus();
+        //核验EOS账户是否被激活
+        //todo 优化后可以只执行一次
+        MultiWalletEntity multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
+        if ( multiWalletEntity != null){
+            EosWalletEntity  eosWalletEntity = multiWalletEntity.getEosWalletEntities().get(0);
+            String eos_public_key = eosWalletEntity.getPublicKey();
+            getP().getKeyAccounts(eos_public_key);
 
+            if (isEOSActivated){
+                //账户已被激活
+                mEosCardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转EOS主页面
+                    }
+                });
+            }else {
+                mEosCardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //跳转创建钱包页面
+                        UISkipMananger.launchCreateEosAccount(WalletHomeActivity.this);
+                    }
+                });
+            }
+        }
     }
 
     @Override
@@ -158,8 +204,8 @@ public class WalletHomeActivity extends XActivity {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public WalletHomePresenter newP() {
+        return new WalletHomePresenter();
     }
 
     @Override
@@ -168,6 +214,19 @@ public class WalletHomeActivity extends XActivity {
         if (unbinder != null) {
             unbinder.unbind();
         }
+    }
+
+    public void setEOSActivated(boolean EOSActivated) {
+        isEOSActivated = EOSActivated;
+    }
+
+
+    public void showEostoBeActivatedLayout(){
+        mEosCardView.setState(STATE_WAIT_NOTIFY);
+    }
+
+    public void hideWookongStatus(){
+        mViewWookongStatus.setVisibility(View.GONE);
     }
 
 }

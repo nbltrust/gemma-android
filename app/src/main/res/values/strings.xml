@@ -412,7 +412,7 @@
 
     <string name="eos_progress_set_pin">正在设置PIN...</string>
 
-    <string name="eos_title_create_eos_account">创建EOS账户</string>
+    <string name="eos_title_create_eos_account">创建账户</string>
 
     <string name="eos_mne_validate_success">验证成功</string>
     <string name="eos_mne_validate_failed">验证失败</string>

@@ -20,7 +20,7 @@
             android:background="@null"
             android:hint="@string/eos_tip_input_inv_code"
             android:textColorHint="@color/cloudy_blue"
-            android:textColor="@color/darkSlateBlue"
+            android:textColor="@color/black_context"
             android:paddingStart="@dimen/dimen_20"
             android:paddingTop="@dimen/dimen_5"
             android:paddingBottom="@dimen/dimen_5"
@@ -36,7 +36,7 @@
             android:textAlignment="center"
             android:layout_gravity="center"
             android:text="@string/eos_how_to_get_invCode"
-            android:textColor="@color/cornflowerBlue"
+            android:textColor="@color/black_context"
             android:textSize="@dimen/font_3"/>
 
     </LinearLayout>

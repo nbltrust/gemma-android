@@ -25,6 +25,7 @@ import com.cybex.gma.client.ui.activity.BluetoothWalletManageActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
 import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
 import com.cybex.gma.client.ui.activity.CollectActivity;
+import com.cybex.gma.client.ui.activity.CreateEosAccountActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
 import com.cybex.gma.client.ui.activity.CreateMethodActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
@@ -92,6 +93,15 @@ public final class UISkipMananger {
      */
     public static void launchCreateWallet(Context context) {
         startActivity(context, CreateWalletActivity.class);
+    }
+
+    /**
+     * 跳转到创建EOS账户名页面
+     *
+     * @param context
+     */
+    public static void launchCreateEosAccount(Context context) {
+        startActivity(context, CreateEosAccountActivity.class);
     }
 
     /**

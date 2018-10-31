@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.config.CacheConstants;
@@ -42,11 +44,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import seed39.Seed39;
 
 public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 
     Unbinder unbinder;
     IWXAPI iwxapi;
+    EosWalletEntity curEosWallet;
     @BindView(R.id.iv_dot_one) ImageView ivDotOne;
     @BindView(R.id.tv_look_around_hint) TextView tvLookAroundHint;
     @BindView(R.id.tv_CPU) SuperTextView tvCPU;
@@ -67,8 +71,12 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     @OnClick(R.id.bt_wechat_pay)
     public void initPayProcess(){
         if (getArguments() != null){
-            account_name = getArguments().getString("account_name");
-            public_key = getArguments().getString("public_key");
+            String publicKey = curEosWallet.getPublicKey();
+            if (EmptyUtils.isNotEmpty(publicKey)){
+                account_name = getArguments().getString(ParamConstants.EOS_USERNAME);
+                public_key = publicKey;
+            }
+
             //String rmbFee = tvRmbAmount.getText().toString().trim();
             LoggerManager.d("newPrice", newPrice);
             getP().getPrepaidInfo(account_name, public_key, newPrice);
@@ -144,24 +152,35 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         if (event != null){
             dissmisProgressDialog();
             if(event.isSuccess()){//创建成功
-                //跳转到备份私钥页面
-                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                if (curWallet != null && getArguments() != null){
-                    final String private_key = getArguments().getString("private_key");
+                //跳转到主界面
+                UISkipMananger.launchHome(getActivity());
+                /*
+                if (curEosWallet != null && getArguments() != null){
+                    final String private_key_cypher = curEosWallet.getPrivateKey();
+                    final String private_key = Seed39.keyDecrypt(password, private_key_cypher);
+
                     KeySendEvent keySendEvent = new KeySendEvent(private_key);
                     EventBusProvider.postSticky(keySendEvent);
-                    WalletIDEvent walletIDEvent = new WalletIDEvent(curWallet.getId());
+                    WalletIDEvent walletIDEvent = new WalletIDEvent(curEosWallet.getId());
                     EventBusProvider.postSticky(walletIDEvent);
                     UISkipMananger.launchBakupGuide(getActivity());
                 }
+                */
 
             }else {
                 //创建失败,弹框，删除当前钱包，判断是否还有钱包，跳转
+
+                List<MultiWalletEntity> walletEntityList = DBManager.getInstance().getMultiWalletEntityDao()
+                        .getMultiWalletEntityList();
+                showFailDialog(EmptyUtils.isEmpty(walletEntityList));
+
+                /*
                 WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
                 DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
                 List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao()
                         .getWalletEntityList();
                 showFailDialog(EmptyUtils.isEmpty(walletEntityList));
+                */
             }
 
         }
@@ -181,6 +200,8 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         //注册微信支付
         iwxapi = WXAPIFactory.createWXAPI(getActivity(), null);
         iwxapi.registerApp(ParamConstants.WXPAY_APPID);
+
+        curEosWallet = getCurEosWallet();
 
     }
 
@@ -345,6 +366,23 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+
+    /**
+     * 获取当前EOS钱包
+     * @return
+     */
+    private EosWalletEntity getCurEosWallet(){
+        EosWalletEntity curEosWallet = new EosWalletEntity();
+        MultiWalletEntity multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
+
+        if (multiWalletEntity != null){
+            curEosWallet = multiWalletEntity.getEosWalletEntities().get(0);
+        }
+
+        return curEosWallet;
     }
 
 }

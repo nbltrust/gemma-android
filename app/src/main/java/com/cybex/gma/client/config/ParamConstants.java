@@ -116,4 +116,8 @@ public interface ParamConstants {
     String RAM_UNIT_PRICE = "ramUnitPrice";
     String EOS_ALL_ASSET_VALUE = "eosAssetsValue";
     String EOS_AMOUNT = "eosAmount";
+
+    String EOS_USERNAME = "account_name";
+    String EOS_PUBLIC_KEY = "eos_pub_key";
+
 }

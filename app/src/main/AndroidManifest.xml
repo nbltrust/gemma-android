@@ -83,6 +83,13 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- 创建 EOS账户 界面 -->
+        <activity android:name=".ui.activity.CreateEosAccountActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
+
+        </activity>
+
         <!-- EOS 转账页面 -->
         <activity
             android:name=".ui.activity.TransferActivity"

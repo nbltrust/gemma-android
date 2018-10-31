@@ -69,7 +69,7 @@ public class CreateWalletActivity extends XActivity<CreateWalletPresenter> imple
 
     @BindView(R.id.scroll_create_wallet) ScrollView scrollViewCreateWallet;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.tv_in_bubble) TextView tvInBubble;
+    //@BindView(R.id.tv_in_bubble) TextView tvInBubble;
     //@BindView(R.id.bubble) BubbleLayout bubble;
     //@BindView(R.id.tv_eos_name) TextView tvEosName;
     //@BindView(R.id.iv_eos_name_clear) ImageView ivEosNameClear;

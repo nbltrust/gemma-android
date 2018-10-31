@@ -664,7 +664,7 @@
 
     <string name="eos_progress_set_pin">Setting PIN...</string>
 
-    <string name="eos_title_create_eos_account">Create EOS account</string>
+    <string name="eos_title_create_eos_account">Create account</string>
 
     <string name="eos_mne_validate_success">Validation success</string>
     <string name="eos_mne_validate_failed">Validation fail</string>
