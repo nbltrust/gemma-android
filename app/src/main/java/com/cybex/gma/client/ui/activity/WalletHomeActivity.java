@@ -14,12 +14,14 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletHomePresenter;
 import com.cybex.gma.client.widget.EosCardView;
@@ -44,11 +46,10 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     // 再点一次退出程序时间设置
     private static final long WAIT_TIME = 2000L;
     private long TOUCH_TIME = 0;
-    private boolean isEOSActivated;
+    private int eosStatus;
 
-    public static final int STATE_WAIT_NOTIFY=0;
-    public static final int STATE_CREATING=1;
-    public static final int STATE_CREATED=2;
+    private MultiWalletEntity curWallet;
+    private EosWalletEntity curEosWallet;
 
     @BindView(R.id.view_wookong_status)
     LinearLayout mViewWookongStatus;
@@ -167,34 +168,24 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        isEOSActivated = false;
-        hideWookongStatus();
-        //核验EOS账户是否被激活
-        //todo 优化后可以只执行一次
-        MultiWalletEntity multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao()
-                .getCurrentMultiWalletEntity();
-        if ( multiWalletEntity != null){
-            EosWalletEntity  eosWalletEntity = multiWalletEntity.getEosWalletEntities().get(0);
-            String eos_public_key = eosWalletEntity.getPublicKey();
-            getP().getKeyAccounts(eos_public_key);
+        eosStatus = ParamConstants.EOSNAME_NOT_ACTIVATED;
 
-            if (isEOSActivated){
-                //账户已被激活
-                mEosCardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //跳转EOS主页面
-                    }
-                });
+        curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        if (curWallet != null){
+            //1.判断是否为蓝牙钱包
+            if (curWallet.getWalletType() == BaseConst.WALLET_TYPE_BLUETOOTH){
+                //蓝牙钱包显示状态
+                mViewWookongStatus.setVisibility(View.VISIBLE);
+                //todo 蓝牙连接状态判断
             }else {
-                mEosCardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //跳转创建钱包页面
-                        UISkipMananger.launchCreateEosAccount(WalletHomeActivity.this);
-                    }
-                });
+                //非蓝牙钱包隐藏蓝牙状态
+                mViewWookongStatus.setVisibility(View.INVISIBLE);
             }
+            //2.核验EOS账户是否被激活
+
+            curEosWallet = curWallet.getEosWalletEntities().get(0);
+            final int status = curEosWallet.getIsConfirmLib();
+            initEosCardView(status);
         }
     }
 
@@ -216,17 +207,39 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         }
     }
 
-    public void setEOSActivated(boolean EOSActivated) {
-        isEOSActivated = EOSActivated;
+    public void initEosCardView(int eosStatus){
+        if (eosStatus == ParamConstants.EOSNAME_ACTIVATED){
+            //账户已被激活
+            mEosCardView.setAccountName(curEosWallet.getCurrentEosName());
+            mEosCardView.setState(ParamConstants.EOSNAME_ACTIVATED);
+            mEosCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //跳转EOS主页面
+                }
+            });
+        }else if (eosStatus == ParamConstants.EOSNAME_NOT_ACTIVATED){
+            //待激活
+            mEosCardView.setState(ParamConstants.EOSNAME_NOT_ACTIVATED);
+            mEosCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //跳转创建钱包页面
+                    UISkipMananger.launchCreateEosAccount(WalletHomeActivity.this);
+                }
+            });
+        }else {
+            //正在激活
+            mEosCardView.setState(ParamConstants.EOSNAME_CONFIRMING);
+            mEosCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //跳转EOS主页面
+                }
+            });
+        }
     }
 
 
-    public void showEostoBeActivatedLayout(){
-        mEosCardView.setState(STATE_WAIT_NOTIFY);
-    }
-
-    public void hideWookongStatus(){
-        mViewWookongStatus.setVisibility(View.GONE);
-    }
 
 }

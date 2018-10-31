@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -67,9 +68,8 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
 
-        WalletEntity entity = DBManager.getInstance()
-                .getWalletEntityDao()
-                .getCurrentWalletEntity();
+        EosWalletEntity entity = DBManager.getInstance()
+                .getMultiWalletEntityDao().getCurrentMultiWalletEntity().getEosWalletEntities().get(0);
         if (entity != null) {
             currentEosName = entity.getCurrentEosName();
         }

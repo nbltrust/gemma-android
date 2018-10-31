@@ -13,6 +13,7 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -46,6 +47,8 @@ public class CreateEosAccountActivity extends XActivity implements Validator.Val
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        validator = new Validator(this);
+        validator.setValidationListener(this);
         bd = new Bundle();
         //删除icon
         ivEosNameClear.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +122,13 @@ public class CreateEosAccountActivity extends XActivity implements Validator.Val
 
     @Override
     public void onValidationSucceeded() {
-        bd.putString(ParamConstants.EOS_USERNAME,  getEOSUsername());
-        UISkipMananger.launchChooseActivateMethod(CreateEosAccountActivity.this, bd);
+        if (isUserNameValid()){
+            bd.putString(ParamConstants.EOS_USERNAME,  getEOSUsername());
+            UISkipMananger.launchChooseActivateMethod(CreateEosAccountActivity.this, bd);
+        }else {
+            GemmaToastUtils.showLongToast(getString(R.string.eos_tip_username_valid));
+        }
+
     }
 
     @Override

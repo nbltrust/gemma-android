@@ -51,7 +51,7 @@ public class EosWalletEntity extends BaseModel implements Parcelable {
     @Column
     private Integer isBackUp;
     /**
-     * 是否被链上确认100创建成功 (1---是  0---否 -1---失败）
+     * 是否被链上确认100创建成功 (0---否 1---创建中 2---是 ）
      */
     @Column(defaultValue = "0")
     private Integer isConfirmLib;

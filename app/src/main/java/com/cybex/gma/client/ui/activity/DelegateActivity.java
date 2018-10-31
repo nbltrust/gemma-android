@@ -15,10 +15,13 @@ import android.widget.TextView;
 import com.cybex.base.view.tablayout.CommonTabLayout;
 import com.cybex.base.view.tablayout.listener.CustomTabEntity;
 import com.cybex.base.view.tablayout.listener.OnTabSelectListener;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.model.response.EOSErrorInfo;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
@@ -77,7 +80,6 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     @BindView(R.id.tv_balance_net_undelegate) TextView tvBalanceNetUndelegate;
 
     private int inputCount;
-
 
     private ResourceInfoVO resourceInfoVO;
 
@@ -333,7 +335,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         dialog.show();
 
         //给dialog各个TextView设置值
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        EosWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                .getEosWalletEntities().get(0);
         if (EmptyUtils.isNotEmpty(curWallet)) {
             TextView tv_payee = dialog.findViewById(R.id.tv_payee);
             TextView tv_amount = dialog.findViewById(R.id.tv_amount);
@@ -399,7 +402,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         dialog.show();
 
         //给dialog各个TextView设置值
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        EosWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                .getEosWalletEntities().get(0);
         if (EmptyUtils.isNotEmpty(curWallet)) {
             TextView tv_receiver = dialog.findViewById(R.id.tv_undelegate_account);
             TextView tv_fund_amount = dialog.findViewById(R.id.tv_undelegate_amount);
@@ -463,9 +467,11 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                         }
                         break;
                     case R.id.btn_confirm_authorization:
-                        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                        EosWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                                .getEosWalletEntities().get(0);
                         switch (operation_type) {
                             case OPERATION_DELEGATE:
+                                /*
                                 if (EmptyUtils.isNotEmpty(curWallet)) {
                                     //抵押操作
                                     EditText mPass = dialog.findViewById(R.id.et_password);
@@ -525,8 +531,10 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 getResources().getString(R.string.eos_tip_please_input_pass));
                                     }
                                 }
+                                */
                                 break;
                             case OPERATION_UNDELEGATE:
+                                /*
                                 if (EmptyUtils.isNotEmpty(curWallet)) {
                                     //解抵押操作
                                     EditText mPass = dialog.findViewById(R.id.et_password);
@@ -589,7 +597,9 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                     }
                                 }
                                 break;
+                                */
                         }
+
                         break;
                     default:
                         break;
@@ -598,7 +608,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         });
         dialog.show();
         EditText inputPass = dialog.findViewById(R.id.et_password);
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        EosWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                .getEosWalletEntities().get(0);
         if (EmptyUtils.isNotEmpty(curWallet)) {
             inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint),
                     curWallet.getCurrentEosName()));
@@ -629,9 +640,10 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         dialog.show();
 
         TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)) {
-            String passHint = curWallet.getPasswordTip();
+        MultiWalletEntity walletEntity  = DBManager.getInstance().getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
+        if (walletEntity != null){
+            String passHint = walletEntity.getPasswordTip();
             String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);
         }

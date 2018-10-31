@@ -84,7 +84,6 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     @BindView(R.id.view_top_navigation) ConstraintLayout viewTopNavigation;
     @BindView(R.id.show_cpu) LinearLayout showCpu;
     @BindView(R.id.tv_assets) TextView tvAssets;
-    private WalletEntity curWallet;
     private EosWalletEntity curEosWallet;
     private int walletID;
     private String curEosUsername;
@@ -156,19 +155,6 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         UISkipMananger.launchResourceDetail(EosHomeActivity.this, bundle);
     }
 
-    /*
-    @OnClick(R.id.textView_username)
-    public void backUpWallet(View v) {
-        switch (v.getId()) {
-            case R.id.textView_username:
-                showChangeEOSNameDialog();
-                break;
-            default:
-                break;
-        }
-    }
-    */
-
     @Override
     public boolean useEventBus() {
         return true;
@@ -184,17 +170,6 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
             }
         }
     }
-
-    /*
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onTabSelctedEvent(TabSelectedEvent event) {
-        if (EmptyUtils.isNotEmpty(event) && event.getPosition() == 0) {
-            if (event.isRefresh()) {
-                getP().requestHomeCombineDataVO();
-            }
-        }
-    }
-    */
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onChangeAccountEvent(ChangeAccountEvent event) {
@@ -466,19 +441,18 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
             }
         });
 
-        curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
         curEosWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
                 .getEosWalletEntities().get(0);
 
-        if (EmptyUtils.isNotEmpty(curWallet)) {
-            curEosUsername = curWallet.getCurrentEosName();
+        if (EmptyUtils.isNotEmpty(curEosWallet)) {
+            curEosUsername = curEosWallet.getCurrentEosName();
             //textViewUsername.setText(curWallet.getCurrentEosName());
-            tvAccountName.setText(curWallet.getCurrentEosName());
-            tvCurrentAccount.setText(curWallet.getCurrentEosName());
+            tvAccountName.setText(curEosWallet.getCurrentEosName());
+            tvCurrentAccount.setText(curEosWallet.getCurrentEosName());
             //生成头像
             //generatePortrait(curWallet.getCurrentEosName());
             //设置Alert
-            if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED)) {
+            if (curEosWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED)) {
                 if (Alerter.isShowing()) {
                     Alerter.create(this)
                             .setText(getResources().getString(R.string.eos_please_confirm_alert))
@@ -489,7 +463,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                 }
             }
             //多账户切换
-            String json = curWallet.getEosNameJson();
+            String json = curEosWallet.getEosNameJson();
             List<String> eosNamelist = GsonUtils.parseString2List(json, String.class);
             if (EmptyUtils.isNotEmpty(eosNamelist) && eosNamelist.size() > 1) {
                 //如果当前有多个eos账户
@@ -539,8 +513,8 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
                     float dpY = px2dp(EosHomeActivity.this, scrollY);
                     if (dpY > 14) {
-                        if (curWallet != null) {
-                            curEosUsername = curWallet.getCurrentEosName();
+                        if (curEosWallet != null) {
+                            curEosUsername = curEosWallet.getCurrentEosName();
                             mTitleBar.setTitle(curEosUsername);
                             TextView title = mTitleBar.getmCenterText();
                             float alpha = (dpY * (float) 1.29 + (float) 1.94) / 100;
@@ -579,22 +553,15 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         return new EosHomePresenter();
     }
 
-    /*
-    public void generatePortrait(String eosName) {
-        String hash = EncryptationManager.getEncrypt().encryptSHA256(eosName);
-        final String str = AvatarHelper.Companion.getInstance().getAvatarSvg(hash, 62, null);
-        Sharp.loadString(str).into(imageViewPortrait);
-    }
-    */
-
     @Override
     public void onStart() {
         super.onStart();
-        curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)) {
-            tvAccountName.setText(curWallet.getCurrentEosName());
+        curEosWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                .getEosWalletEntities().get(0);
+        if (EmptyUtils.isNotEmpty(curEosWallet)) {
+            tvAccountName.setText(curEosWallet.getCurrentEosName());
             //generatePortrait(curWallet.getCurrentEosName());
-            if (curWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED)) {
+            if (curEosWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED)) {
                 Alerter.create(this)
                         .setText(getResources().getString(R.string.eos_please_confirm_alert))
                         .setBackgroundColorRes(R.color.scarlet)

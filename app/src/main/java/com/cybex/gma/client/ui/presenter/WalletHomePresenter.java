@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.gma.client.config.HttpConst;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.activity.WalletHomeActivity;
 import com.cybex.gma.client.ui.model.request.GetkeyAccountReqParams;
 import com.cybex.gma.client.ui.model.response.GetKeyAccountsResult;
@@ -43,7 +44,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                             List<String> account_names = result.account_names;
                             final String curEOSName = account_names.get(0);
                             */
-                            getV().setEOSActivated(true);
+                            getV().initOnClickListeners(ParamConstants.STATUS_CONFIRMING);
 
                             }else if (response != null && response.body() != null && response.code() == HttpConst
                                     .SERVER_INTERNAL_ERR ){

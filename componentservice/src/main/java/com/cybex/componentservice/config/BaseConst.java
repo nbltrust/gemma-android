@@ -18,6 +18,14 @@ public class BaseConst {
     public static final int APP_HOME_INITTYPE_NONE=-1;
     public static final int APP_HOME_INITTYPE_TO_BACKUP_MNEMONIC_GUIDE=0;
 
+    /**
+     * 钱包类型 (0--新建助记词软件钱包 1-导入助记词类软钱包  2--硬件钱包  3-导入单个私钥类型的软钱包)
+     */
+    public static final int WALLET_TYPE_MNE_CREATE = 0;
+    public static final int WALLET_TYPE_MNE_IMPORT = 1;
+    public static final int WALLET_TYPE_BLUETOOTH = 2;
+    public static final int WALLET_TYPE_PRIKEY_IMPORT = 3;
+
 
 
 

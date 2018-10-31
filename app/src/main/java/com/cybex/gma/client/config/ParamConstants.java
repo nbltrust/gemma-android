@@ -43,11 +43,6 @@ public interface ParamConstants {
     boolean NODE_NOT_SELECT = false;//节点未被选择
 
 
-    int EVENT_DOWN = 1;//事件从上级页面发送
-    int EVENT_THIS_PAGE = 0;//事件在本页面发送
-    int EVENT_UP = 2;//事件从下级页面发送
-
-
     String GESTURE_SKIP_TYPE = "gesture_skip_type";//手势设置类型
     int GESTURE_SKIP_TYPE_CHANGE = 0x1001;//修改手势密码
     int GESTURE_SKIP_TYPE_LOGIN_VERIFY = 0x1002;//登录验证手势密码
@@ -63,12 +58,6 @@ public interface ParamConstants {
     int STATUS_CONFIRMING = 2;
     int STATUS_CONFIRMED = 3;
     int STATUS_FAIL = 4;
-
-    /**
-     * 导入钱包：1，创建钱包：0
-     */
-    int OPERATION_CREATE = 0;
-    int OPERATION_IMPORT = 1;
 
     String CN = "中文";
     String EN = "English";
@@ -119,5 +108,11 @@ public interface ParamConstants {
 
     String EOS_USERNAME = "account_name";
     String EOS_PUBLIC_KEY = "eos_pub_key";
+
+    //EOS用户名状态
+    int EOSNAME_NOT_ACTIVATED = 0;
+    int EOSNAME_CONFIRMING = 1;
+    int EOSNAME_ACTIVATED = 2;
+
 
 }

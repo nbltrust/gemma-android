@@ -67,7 +67,7 @@ public class ActivateByFriendFragment extends XFragment {
                 Html.fromHtml(getResources().getString(R.string.eos_tip_use_eos_to_activate)));
         tvTipMidFriendPartOne.setText(getString(R.string.eos_tip_activate_by_exchange_part_one));
         tvTipMidFriendPartTwo.setText(getString(R.string.eos_tip_activate_by_exchange_part_two));
-        tvTipMidFriendPartTwo.setTextColor(getResources().getColor(R.color.cornflowerBlue));
+        tvTipMidFriendPartTwo.setTextColor(getResources().getColor(R.color.highlight));
         tvTipMidFriendPartTwo.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         tvTipMidFriendPartThree.setText(Html.fromHtml(getString(R.string.eos_tip_activate_by_exchange_part_three)));
 

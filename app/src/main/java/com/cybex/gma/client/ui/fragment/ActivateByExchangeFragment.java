@@ -70,7 +70,7 @@ public class ActivateByExchangeFragment extends XFragment {
         tvHintActivateByExchangeBot.setText(Html.fromHtml(getString(R.string.eos_tip_use_eos_to_activate)));
         tvTipMidExchangePartOne.setText(getString(R.string.eos_tip_activate_by_exchange_part_one));
         tvTipMidExchangePartTwo.setText(getString(R.string.eos_tip_activate_by_exchange_part_two));
-        tvTipMidExchangePartTwo.setTextColor(getResources().getColor(R.color.cornflowerBlue));
+        tvTipMidExchangePartTwo.setTextColor(getResources().getColor(R.color.highlight));
         tvTipMidExchangePartTwo.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         tvTipMidExchangePartThree.setText(Html.fromHtml(getString(R.string.eos_tip_activate_by_exchange_part_three)));
 

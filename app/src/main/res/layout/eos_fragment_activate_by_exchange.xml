@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/eos_tip_activate_by_exchange_part_two"
-            android:textColor="@color/black_context"
+            android:textColor="@color/highlight"
             android:textSize="@dimen/font_3"/>
 
     </LinearLayout>

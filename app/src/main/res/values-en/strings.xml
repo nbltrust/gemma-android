@@ -399,20 +399,20 @@
 
     <string name="eos_tip_activate_by_exchange_part_one">Please transfer in any exchange that support memo into smart contract </string>
     <string name="eos_tip_activate_by_exchange_part_two">signupeoseos </string>
-    <string name="eos_tip_activate_by_exchange_part_three"><Data><![CDATA[and<font color = "#426bd4">use words followed as memo
+    <string name="eos_tip_activate_by_exchange_part_three"><Data><![CDATA[and<font color = "#ff5500">use words followed as memo
     </font>]]></Data>，to finish creating.</string>
 
     <string name="eos_tip_activate_by_friend_part_one">Please let your friend transfer into smart contract </string>
     <string name="eos_tip_activate_by_friend_part_two">signupeoseos </string>
     <string
-        name="eos_tip_activate_by_friend_part_three"><Data><![CDATA[and<font color = "#426bd4">use words followed as memo
+        name="eos_tip_activate_by_friend_part_three"><Data><![CDATA[and<font color = "#ff5500">use words followed as memo
     </font>]]></Data>，to finish creating.</string>
 
     <string
-        name="eos_tip_use_eos_to_activate"><Data><![CDATA[In order to create your account, please transfer at least<font color="#426bd4"> 2 EOS </font>
+        name="eos_tip_use_eos_to_activate"><Data><![CDATA[In order to create your account, please transfer at least<font color="#ff5500"> 2 EOS </font>
         ：your account will delegate <font color = "#426bd4"> 0.1 EOS</font>
-        for CPU，<font color = "#426bd4"> 0.1 EOS</font> for NET，
-        the remaining<font color="#426bd4"> 1.8 EOS </font>will be used for purchasing RAM at current
+        for CPU，<font color = "#ff5500"> 0.1 EOS</font> for NET，
+        the remaining<font color="#ff5500"> 1.8 EOS </font>will be used for purchasing RAM at current
         price。]]></Data></string>
 
     <string name="eos_click_to_copy_priKey">copy</string>

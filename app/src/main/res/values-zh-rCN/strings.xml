@@ -170,10 +170,10 @@
 
     <!-- create methods -->
     <string
-        name="eos_tip_use_eos_to_activate"><Data><![CDATA[为保证顺利创建账户，建议至少转<font color="#426bd4"> 2 EOS </font>
-        ：账户将抵押 <font color = "#426bd4"> 0.1 EOS</font>
-        作为CPU，<font color = "#426bd4"> 0.1 EOS</font> 作为NET，
-        剩余<font color="#426bd4"> 1.8 EOS </font>将按现价购买RAM。]]></Data></string>
+        name="eos_tip_use_eos_to_activate"><Data><![CDATA[为保证顺利创建账户，建议至少转<font color="#ff5500"> 2 EOS </font>
+        ：账户将抵押 <font color = "#ff5500"> 0.1 EOS</font>
+        作为CPU，<font color = "#ff5500"> 0.1 EOS</font> 作为NET，
+        剩余<font color="#ff5500"> 1.8 EOS </font>将按现价购买RAM。]]></Data></string>
 
     <string name="eos_tip_give_out_pubkey">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
     <string name="eos_show_priKey">查看私钥</string>
@@ -315,12 +315,12 @@
     <string name="eos_tip_activate_by_friend">请持有EOS的好友向智能合约signupeoseos转账并将以下文字作为备注(memo)，即可完成账户创建。</string>
     <string name="eos_tip_activate_by_exchange_part_one">请从支持memo功能的交易所向智能合约 </string>
     <string name="eos_tip_activate_by_exchange_part_two">signupeoseos </string>
-    <string name="eos_tip_activate_by_exchange_part_three"><Data><![CDATA[转账<font color = "#426bd4">并将以下文字作为备注(memo)
+    <string name="eos_tip_activate_by_exchange_part_three"><Data><![CDATA[转账<font color = "#ff5500">并将以下文字作为备注(memo)
     </font>]]></Data>，即可完成账户创建。</string>
 
     <string name="eos_tip_activate_by_friend_part_one">请持有EOS的好友向智能合约 </string>
     <string name="eos_tip_activate_by_friend_part_two">signupeoseos </string>
-    <string name="eos_tip_activate_by_friend_part_three"><Data><![CDATA[转账<font color = "#426bd4">并将以下文字作为备注(memo)
+    <string name="eos_tip_activate_by_friend_part_three"><Data><![CDATA[转账<font color = "#ff5500">并将以下文字作为备注(memo)
     </font>]]></Data>，即可完成账户创建。</string>
 
     <string name="eos_click_to_copy_priKey">复制私钥</string>
