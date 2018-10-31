@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <com.cybex.base.view.tablayout.SlidingTabLayout
+        android:id="@+id/view_sliding_tab"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="53.8dp"
+        android:background="@color/colorTabBackground"
+        android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_marginRight="@dimen/common_page_content_padding"
+        app:tl_indicator_color="@color/black_content"
+        app:tl_indicator_gravity="BOTTOM"
+        app:tl_indicator_height="1dp"
+        app:tl_indicator_width="161dp"
+        app:tl_indicator_style="NORMAL"
+        app:tl_underline_color="@color/black_content"
+        app:tl_indicator_width_equal_title="false"
+        app:tl_tab_padding="0dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textBold="SELECT"
+        app:tl_textSelectColor="@color/black_content"
+        app:tl_textUnselectColor="@color/black_grey"
+        app:tl_textsize="@dimen/font_4.5"/>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

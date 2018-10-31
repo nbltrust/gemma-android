@@ -53,7 +53,7 @@
             android:layout_marginStart="14.61dp"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"
-            android:text="@string/walletmanage_pri_key_backup_hint"
+            android:text="@string/walletmanage_backup_hint"
             app:layout_constraintStart_toEndOf="@id/iv_dot_zero"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -72,7 +72,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="14.61dp"
-            android:text="@string/walletmanage_pri_key_lookAround"
+            android:text="@string/walletmanage_lookAround"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"
             app:layout_constraintStart_toEndOf="@id/iv_dot_one"
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginStart="14.61dp"
-            android:text="@string/walletmanage_pri_key_backup_safely"
+            android:text="@string/walletmanage_backupSafely"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"
             app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"
@@ -105,9 +105,9 @@
     </android.support.constraint.ConstraintLayout>
 
     <Button
-        android:id="@+id/bt_show_mne"
+        android:id="@+id/bt_show_pri"
         style="@style/bt_long_in_linearLayout"
-        android:text="@string/walletmanage_show_mne"
+        android:text="@string/walletmanage_pri_key_show_pri"
         android:layout_marginLeft="@dimen/common_view_margin"
         android:layout_marginRight="@dimen/common_view_margin"
         android:layout_marginTop="38.46dp"

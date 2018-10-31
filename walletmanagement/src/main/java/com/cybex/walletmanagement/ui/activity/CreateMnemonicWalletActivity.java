@@ -31,6 +31,7 @@ import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.ui.presenter.CreateMnemonicWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
@@ -103,6 +104,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         tvServiceAgreementConfig = (TextView) findViewById(R.id.tv_service_agreement_config);
         btCreateWallet = (Button) findViewById(R.id.bt_create_wallet);
         setNavibarTitle(getResources().getString(R.string.walletmanage_tip_create_wallet), true);
+
 
 
         edtWalletName.addTextChangedListener(new TextWatcher() {
@@ -344,6 +346,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
                 edtPassHint.setText("");
             }
         });
+
     }
 
     @Override
@@ -434,6 +437,9 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
                     if (EmptyUtils.isNotEmpty(getWalletName())){
                         ivWalletNameClear.setVisibility(View.VISIBLE);
                     }
+
+                    edtWalletName.requestFocus();
+                    KeyboardUtils.showKeyBoard(context,edtWalletName);
                 } else {
                     setDividerDefaultStyle(viewDividerWalletName);
                     ivWalletNameClear.setVisibility(View.GONE);
@@ -458,6 +464,8 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
                     if (EmptyUtils.isNotEmpty(getPassword())){
                         ivSetPassClear.setVisibility(View.VISIBLE);
                     }
+                    edtSetPass.requestFocus();
+                    KeyboardUtils.showKeyBoard(context,edtSetPass);
                 } else {
                     setDividerDefaultStyle(viewDividerSetPass);
                     ivSetPassClear.setVisibility(View.GONE);
@@ -489,6 +497,8 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
 
                 if (hasFocus) {
                     edtRepeatPass.setTypeface(Typeface.DEFAULT_BOLD);
+                    edtRepeatPass.requestFocus();
+                    KeyboardUtils.showKeyBoard(context,edtRepeatPass);
                 } else {
                     ivRepeatPassClear.setVisibility(View.GONE);
                     if (EmptyUtils.isEmpty(getRepeatPassword())) { edtRepeatPass.setTypeface(Typeface.DEFAULT); }
@@ -506,6 +516,8 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
                     tvPassHint.setTextColor(getResources().getColor(R.color.black_content));
                     edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
                     setDividerFocusStyle(viewDividerPassHint);
+                    edtPassHint.requestFocus();
+                    KeyboardUtils.showKeyBoard(context,edtPassHint);
                 } else {
                     ivPassHintClear.setVisibility(View.GONE);
                     tvPassHint.setTextColor(getResources().getColor(R.color.black_context));

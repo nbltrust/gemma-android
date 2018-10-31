@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/common_page_content_padding"
+        android:layout_marginStart="@dimen/common_page_content_padding"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/walletmanage_text_title"
+            android:text="@string/walletmanage_look_around" />
+
+        <TextView
+            style="@style/walletmanage_text_body"
+            android:text="@string/walletmanage_tip_look_around_hint" />
+
+        <TextView
+            style="@style/walletmanage_text_title"
+            android:text="@string/walletmanage_tip_no_screenshot" />
+
+        <TextView
+            style="@style/walletmanage_text_body"
+            android:text="@string/walletmanage_tip_no_screenshot_part2" />
+
+        <ImageView
+            android:id="@+id/iv_fake_QR"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="76dp"
+            android:background="@drawable/ic_qr_code" />
+
+        <ImageView
+            android:id="@+id/iv_real_QR"
+            android:layout_width="188dp"
+            android:layout_height="188dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="76dp"
+            android:background="@color/white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_show_QR"
+        style="@style/bt_long_in_linearLayout"
+        android:layout_marginEnd="@dimen/common_view_margin"
+        android:layout_marginStart="@dimen/common_view_margin"
+        android:layout_marginTop="38dp"
+        android:text="@string/walletmanage_tip_show_QR" />
+
+    <Button
+        android:id="@+id/bt_key_saved"
+        style="@style/bt_long_in_linearLayout"
+        android:layout_marginEnd="@dimen/common_view_margin"
+        android:layout_marginStart="@dimen/common_view_margin"
+        android:layout_marginTop="38dp"
+        android:text="@string/walletmanage_key_saved"
+        android:visibility="gone" />
+
+</LinearLayout>

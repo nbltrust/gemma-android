@@ -29,6 +29,7 @@ import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
 import com.cybex.walletmanagement.ui.presenter.ConfigNewWalletPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
@@ -394,6 +395,9 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
                     if (EmptyUtils.isNotEmpty(getWalletName())){
                         ivWalletNameClear.setVisibility(View.VISIBLE);
                     }
+
+                    edtWalletName.requestFocus();
+                    KeyboardUtils.showKeyBoard(context,edtWalletName);
                 } else {
                     setDividerDefaultStyle(viewDividerEosName);
                     ivWalletNameClear.setVisibility(View.GONE);
@@ -418,6 +422,8 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
                     if (EmptyUtils.isNotEmpty(getPassword())){
                         ivSetPassClear.setVisibility(View.VISIBLE);
                     }
+                    edtSetPass.requestFocus();
+                    KeyboardUtils.showKeyBoard(context,edtSetPass);
                 } else {
                     setDividerDefaultStyle(viewDividerSetPass);
                     ivSetPassClear.setVisibility(View.GONE);
@@ -449,6 +455,8 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
 
                 if (hasFocus) {
                     edtRepeatPass.setTypeface(Typeface.DEFAULT_BOLD);
+                    edtRepeatPass.requestFocus();
+                    KeyboardUtils.showKeyBoard(context,edtRepeatPass);
                 } else {
                     ivRepeatPassClear.setVisibility(View.GONE);
                     if (EmptyUtils.isEmpty(getRepeatPassword())) { edtRepeatPass.setTypeface(Typeface.DEFAULT); }
@@ -466,6 +474,8 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
                     tvPassHint.setTextColor(getResources().getColor(R.color.black_content));
                     edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
                     setDividerFocusStyle(viewDividerPassHint);
+                    edtPassHint.requestFocus();
+                    KeyboardUtils.showKeyBoard(context,edtPassHint);
                 } else {
                     ivPassHintClear.setVisibility(View.GONE);
                     tvPassHint.setTextColor(getResources().getColor(R.color.black_context));

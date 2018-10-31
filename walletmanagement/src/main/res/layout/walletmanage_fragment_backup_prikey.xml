@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_page_content_padding"
+        android:layout_marginEnd="@dimen/common_page_content_padding"
+        android:layout_marginTop="4dp"
+        >
+
+        <TextView
+            style="@style/walletmanage_text_title"
+            android:text="@string/walletmanage_safety_first"/>
+
+        <TextView
+            style="@style/walletmanage_text_body"
+            android:text="@string/walletmanage_tip_safety_first"/>
+
+        <TextView
+            style="@style/walletmanage_text_title"
+            android:text="@string/walletmanage_save_offline"/>
+
+        <TextView
+            style="@style/walletmanage_text_body"
+            android:text="@string/walletmanage_tip_save_offline"/>
+
+        <TextView
+            style="@style/walletmanage_text_title"
+            android:text="@string/walletmanage_tip_encrypto_save"/>
+
+        <TextView
+            style="@style/walletmanage_text_body"
+            android:text="@string/walletmanage_tip_encrypto_save_hint"/>
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/walletmanage_ui_card_show_and_copy_key">
+
+    </include>
+
+    <Button
+        android:id="@+id/bt_copied_priKey"
+        style="@style/bt_long_in_linearLayout"
+        android:layout_marginStart="@dimen/common_view_margin"
+        android:layout_marginEnd="@dimen/common_view_margin"
+        android:layout_marginTop="@dimen/dimen_38"
+        android:text="@string/walletmanage_key_saved"
+        />
+
+</LinearLayout>

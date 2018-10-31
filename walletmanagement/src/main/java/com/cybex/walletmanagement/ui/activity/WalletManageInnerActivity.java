@@ -67,6 +67,9 @@ public class WalletManageInnerActivity extends XActivity {
         labelExportPriKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(WalletManageInnerActivity.this, SelectWhichCoinExportPriKeyActivity.class);
+                intent.putExtra(BaseConst.KEY_WALLET_ENTITY,wallet);
+                startActivity(intent);
 
             }
         });

@@ -78,6 +78,18 @@
 
         </activity>
 
+        <activity android:name=".ui.activity.SelectWhichCoinExportPriKeyActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.PrivateKeyBackupGuideActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.PriKeyShowActivity">
+
+        </activity>
+
         <!--头条屏幕适配方案-->
         <meta-data
             android:name="design_width_in_dp"

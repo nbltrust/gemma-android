@@ -27,9 +27,9 @@
     <string name="walletmanage_no_screenshot">请勿截图</string>
     <string name="walletmanage_no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
     <string name="walletmanage_i_understand">我知道了</string>
-    <string name="walletmanage_safety_first">安全第一</string>
+    <!--<string name="walletmanage_safety_first">安全第一</string>-->
     <string name="walletmanage_safety_first_hint">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
-    <string name="walletmanage_save_offline">离线储存</string>
+    <!--<string name="walletmanage_save_offline">离线储存</string>-->
     <string name="walletmanage_save_offline_hint">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
     <string name="walletmanage_encrypto_save">加密储存</string>
     <string name="walletmanage_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
@@ -104,6 +104,7 @@
     <string name="walletmanage_privatekey">私钥</string>
 
 
+
     <!-- Export(BackUp) Wallet-->
     <string name="walletmanage_tip_look_around">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
     <string name="walletmanage_look_around_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
@@ -117,10 +118,10 @@
     <string name="walletmanage_tip_no_screenshot">请勿截图</string>
     <string name="walletmanage_tip_no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
     <string name="walletmanage_tip_i_understand">我知道了</string>
-    <string name="walletmanage_tip_safety_first">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
-    <string name="walletmanage_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
-    <string name="walletmanage_tip_encrypto_save">加密储存</string>
-    <string name="walletmanage_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
+    <!--<string name="walletmanage_tip_safety_first">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>-->
+    <!--<string name="walletmanage_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>-->
+    <!--<string name="walletmanage_tip_encrypto_save">加密储存</string>-->
+    <!--<string name="walletmanage_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>-->
 
     <string name="walletmanage_tip_look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
     <string name="walletmanage_tip_no_screenshot_part2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
@@ -257,4 +258,21 @@
     <string name="walletmanage_empty_wallet_name">钱包名称不能为空！</string>
     <string name="walletmanage_change_name_success">更改成功</string>
     <string name="walletmanage_change_name_fail">更改失败</string>
+
+    <!--pri key backup-->
+    <string name="walletmanage_pri_key_backup_title">备份私钥</string>
+    <string name="walletmanage_pri_key_backup_hint">请务必备份私钥，私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>
+    <string name="walletmanage_pri_key_lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
+    <string name="walletmanage_pri_key_backup_safely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
+    <string name="walletmanage_pri_key_show_pri">明白了，显示私钥</string>
+    <string name="walletmanage_barcode">二维码</string>
+    <string name="walletmanage_click_to_copy_priKey">复制私钥</string>
+
+    <string name="walletmanage_safety_first">安全第一</string>
+    <string name="walletmanage_tip_safety_first">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
+    <string name="walletmanage_save_offline">离线储存</string>
+    <string name="walletmanage_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
+    <string name="walletmanage_tip_encrypto_save">加密储存</string>
+    <string name="walletmanage_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
+    <string name="walletmanage_key_saved">我已安全储存私钥</string>
 </resources>

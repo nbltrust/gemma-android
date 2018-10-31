@@ -2,7 +2,9 @@ package com.cybex.componentservice.config;
 
 public class BaseConst {
     public static final String KEY_BACKUP_MNEMONIC_TYPE="key_backup_mnemonic_type";
+    public static final String KEY_COIN_TYPE="key_coin_type";
     public static final String KEY_MNEMONIC="key_mnemonic";
+    public static final String KEY_PRI_KEY="key_pri_key";
     public static final String KEY_INIT_TYPE="key_init_type";
     public static final String KEY_WALLET_ENTITY="key_wallet_entity";
 

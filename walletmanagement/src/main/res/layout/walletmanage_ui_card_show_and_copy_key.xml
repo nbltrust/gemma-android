@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="105dp"
+    android:layout_marginStart="@dimen/common_page_content_padding"
+    android:layout_marginEnd="@dimen/common_page_content_padding"
+    android:layout_marginTop="@dimen/dimen_20"
+    android:background="@drawable/shape_corner_with_stroke"
+    android:padding="@dimen/dimen_10">
+
+    <TextView
+        android:id="@+id/tv_show_priKey_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_title"
+        android:textSize="@dimen/font_4"
+        android:textStyle="bold"
+        tools:text="1234 bb56 7aea f0b6 81bf b99a a426 ef96 56e1 6889 012b"
+        />
+
+    <Button
+        android:id="@+id/bt_click_to_copy"
+        android:layout_width="70dp"
+        android:layout_height="18dp"
+        android:paddingRight="7.6dp"
+        android:gravity="end"
+        android:background="@null"
+        android:text="@string/walletmanage_click_to_copy_priKey"
+        android:textColor="@color/black_context"
+        android:textSize="@dimen/font_3.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</android.support.constraint.ConstraintLayout>

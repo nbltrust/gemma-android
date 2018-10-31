@@ -64,6 +64,18 @@
 
         </activity>
 
+        <activity android:name=".ui.activity.SelectWhichCoinExportPriKeyActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.PrivateKeyBackupGuideActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.PriKeyShowActivity">
+
+        </activity>
+
 
 
 
