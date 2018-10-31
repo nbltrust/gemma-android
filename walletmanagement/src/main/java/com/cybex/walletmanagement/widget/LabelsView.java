@@ -155,13 +155,13 @@ public class LabelsView extends ViewGroup implements View.OnClickListener {
                 begin = false;
             }
 
-            if (maxWidth <= lineWidth + view.getMeasuredWidth()) {
+            if (maxWidth < lineWidth + view.getMeasuredWidth()) {
                 contentHeight += mLineMargin;
                 contentHeight += maxItemHeight;
                 maxItemHeight = 0;
                 maxLineWidth = Math.max(maxLineWidth, lineWidth);
                 lineWidth = 0;
-                begin = true;
+//                begin = true; 这里置为true，会导致换行时，少算一个mWordMargin，造成measure与layout结果不一致
             }
             maxItemHeight = Math.max(maxItemHeight, view.getMeasuredHeight());
 

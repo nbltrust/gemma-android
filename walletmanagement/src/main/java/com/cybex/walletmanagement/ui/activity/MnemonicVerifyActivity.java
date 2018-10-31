@@ -22,6 +22,7 @@ import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.trycatch.mysnackbar.Prompt;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -58,6 +59,7 @@ public class MnemonicVerifyActivity extends XActivity {
     public void initData(Bundle savedInstanceState) {
         isInit = true;
         initAboveLabelView();
+//        setAboveLabelView();
         initBelowLabelView();
 
         if (getIntent() == null) {
@@ -75,7 +77,7 @@ public class MnemonicVerifyActivity extends XActivity {
             answerLabels.addAll(tempLabels);
 
             //打乱顺序
-            //Collections.shuffle(tempLabels);
+            Collections.shuffle(tempLabels);
 
 
             viewShowMne.setLabels(tempLabels);
@@ -89,7 +91,10 @@ public class MnemonicVerifyActivity extends XActivity {
             public void onLabelClick(TextView label, Object data, int position) {
                 String remove = selectedLabels.remove(position);
                 unSelectedLabels.add(remove);
-
+                if(selectedLabels.size()==0){
+                    initAboveLabelView();
+                    isInit=true;
+                }
                 updateAboveLabelView(selectedLabels);
                 updateBottomLabelView(unSelectedLabels);
             }
@@ -138,14 +143,17 @@ public class MnemonicVerifyActivity extends XActivity {
      * 设置上方LabelView初始样式
      */
     public void initAboveLabelView() {
-        viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.shape_corner_radius));
-        viewClickToShowMne.setWordMargin(30);
-        viewClickToShowMne.setLineMargin(40);
-        viewClickToShowMne.setSelectType(LabelsView.SelectType.SINGLE);
-        viewClickToShowMne.setLabelTextSize(42);
-        viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.whiteTwo));
-        viewClickToShowMne.setLabelTextPadding(40, 20, 40, 20);
 
+        int horizontalViewPadding = SizeUtil.dp2px(12);
+        int verticalViewPadding = SizeUtil.dp2px(31f);
+        viewClickToShowMne.setPadding(horizontalViewPadding,verticalViewPadding,horizontalViewPadding,verticalViewPadding);
+
+        viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.walletmanage_shape_verify_mnemonic_above));
+        viewClickToShowMne.setWordMargin(SizeUtil.dp2px(7.5f));
+        viewClickToShowMne.setLineMargin(SizeUtil.dp2px(11.5f));
+        viewClickToShowMne.setSelectType(LabelsView.SelectType.NONE);
+        viewClickToShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
+        viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.black_content));
     }
 
     /**
@@ -160,7 +168,7 @@ public class MnemonicVerifyActivity extends XActivity {
         viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.walletmanage_shape_verify_mnemonic_above));
         viewClickToShowMne.setWordMargin(SizeUtil.dp2px(7.5f));
         viewClickToShowMne.setLineMargin(SizeUtil.dp2px(11.5f));
-        viewClickToShowMne.setSelectType(LabelsView.SelectType.SINGLE);
+        viewClickToShowMne.setSelectType(LabelsView.SelectType.NONE);
         viewClickToShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
         viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.black_content));
 
