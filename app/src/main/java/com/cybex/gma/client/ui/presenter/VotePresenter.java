@@ -1,6 +1,8 @@
 package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -304,9 +306,10 @@ public class VotePresenter extends XPresenter<VoteFragment> {
      * 获取已抵押的资源数
      */
     public void getTotalDelegatedRes() {
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)) {
-            final String eosName = curWallet.getCurrentEosName();
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+        if (EmptyUtils.isNotEmpty(curWallet) && EmptyUtils.isNotEmpty(curEosWallet)) {
+            final String eosName = curEosWallet.getCurrentEosName();
             GetAccountInfoReqParams params = new GetAccountInfoReqParams();
             params.setAccount_name(eosName);
             String jsonParams = GsonUtils.objectToJson(params);

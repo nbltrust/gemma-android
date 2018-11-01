@@ -492,10 +492,11 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         });
         dialog.show();
         EditText inputPass = dialog.findViewById(R.id.et_password);
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)) {
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+        if (EmptyUtils.isNotEmpty(curWallet) && curEosWallet != null) {
             inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint),
-                    curWallet.getCurrentEosName()));
+                    curEosWallet.getCurrentEosName()));
         }
 
 
@@ -525,8 +526,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         dialog.show();
 
         TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)) {
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+        if (EmptyUtils.isNotEmpty(curWallet) && curEosWallet != null) {
             String passHint = curWallet.getPasswordTip();
             String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);

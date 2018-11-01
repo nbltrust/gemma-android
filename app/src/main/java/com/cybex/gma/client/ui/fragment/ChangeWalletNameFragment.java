@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.db.entity.WalletEntity;
@@ -32,7 +33,7 @@ public class ChangeWalletNameFragment extends XFragment {
     @BindView(R.id.clear_wallet_name) ImageView clearWalletName;
     Unbinder unbinder;
     private int textChangedCount;//TextChanged执行次数
-    private WalletEntity curWallet;
+    private MultiWalletEntity curWallet;
     private final int requestCode = 3;
 
     @OnTextChanged(value = R.id.editText_setWalletName, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -71,7 +72,7 @@ public class ChangeWalletNameFragment extends XFragment {
         mTitleBar.setActionTextSize(18);
         if (getArguments() != null) {
             int currentID = getArguments().getInt("walletID");
-            curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentID);
+            curWallet = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityByID(currentID);
             if (EmptyUtils.isNotEmpty(curWallet)) {
                 setWalletName.setText(curWallet.getWalletName());
                 //showSaveIcon();
@@ -103,8 +104,8 @@ public class ChangeWalletNameFragment extends XFragment {
     }
 
     public boolean isWalletNameExist(String walletName) {
-        List<WalletEntity> list = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
-        for (WalletEntity walletEntity : list) {
+        List<MultiWalletEntity> list = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
+        for (MultiWalletEntity walletEntity : list) {
             if (walletEntity.getWalletName().equals(walletName)) {
                 return true;
             }
@@ -125,10 +126,9 @@ public class ChangeWalletNameFragment extends XFragment {
                     } else if (EmptyUtils.isNotEmpty(getWalletName())) {
                         //允许修改，保存新钱包名
 
-
                         final String name = getWalletName();
                         curWallet.setWalletName(name);
-                        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
+                        DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(curWallet);
                         GemmaToastUtils.showLongToast(ParamConstants.CHANGE_NAME_SUCCESS);
                         Bundle bundle = new Bundle();
                         bundle.putParcelable("curWallet", curWallet);

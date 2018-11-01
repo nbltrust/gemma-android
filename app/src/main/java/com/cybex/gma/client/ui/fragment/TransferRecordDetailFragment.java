@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.componentservice.api.ApiPath;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.db.entity.WalletEntity;
@@ -39,7 +41,8 @@ public class TransferRecordDetailFragment extends XFragment {
     @BindView(R.id.tv_show_memo) TextView tvShowMemo;
     @BindView(R.id.tv_transfer_id) TextView tvTransferId;
     private TransferHistory curTransfer;
-    private WalletEntity curWallet;
+    private MultiWalletEntity curWallet;
+    private EosWalletEntity curEosWallet;
     private String curEosName;
     @BindView(R.id.arrow) ImageView arrow;
     @BindView(R.id.tv_income_or_out) TextView tvIncomeOrOut;
@@ -90,13 +93,13 @@ public class TransferRecordDetailFragment extends XFragment {
     public void initData(Bundle savedInstanceState) {
 
         //判断此交易的类型
-        curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-
+        curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        curEosWallet = curWallet.getEosWalletEntities().get(0);
         Bundle bd = getArguments();
         if (bd != null) {
             curTransfer = getArguments().getParcelable(ParamConstants.KEY_CUR_TRANSFER);
-            if (!EmptyUtils.isEmpty(curWallet)) {
-                curEosName = curWallet.getCurrentEosName();
+            if (!EmptyUtils.isEmpty(curWallet) && EmptyUtils.isNotEmpty(curEosWallet)) {
+                curEosName = curEosWallet.getCurrentEosName();
                 //设置收入&支出页面不同的值(箭头，加减号，收入/支出)
                 if (curTransfer.from.equals(curEosName)) {
                     //转出操作

@@ -20,10 +20,14 @@ import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletHomePresenter;
 import com.cybex.gma.client.widget.EosCardView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +67,14 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     @BindView(R.id.eos_card)
     EosCardView mEosCardView;
     private Unbinder unbinder;
+
+    //todo 更新EOS钱包状态
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onValidateResultReceived(ValidateResultEvent event){
+        if (event.isSuccess()){
+            //创建成功
+        }
+    }
 
 
     @OnClick(R.id.iv_wallet_manage)
@@ -214,6 +226,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 @Override
                 public void onClick(View v) {
                     //跳转EOS主页面
+                    UISkipMananger.launchEOSHome(WalletHomeActivity.this);
                 }
             });
         }else if (eosStatus == ParamConstants.EOSNAME_NOT_ACTIVATED){
@@ -233,6 +246,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 @Override
                 public void onClick(View v) {
                     //跳转EOS主页面
+                    UISkipMananger.launchEOSHome(WalletHomeActivity.this);
                 }
             });
         }

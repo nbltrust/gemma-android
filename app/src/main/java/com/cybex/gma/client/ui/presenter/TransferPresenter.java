@@ -1,6 +1,8 @@
 package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.config.CacheConstants;
@@ -14,6 +16,7 @@ import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
 
+import com.cybex.gma.client.ui.model.response.EOSErrorInfo;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionTmpVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
@@ -51,10 +54,11 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     private static final String VALUE_SYMBOL = "EOS";
 
     public void requestBanlanceInfo() {
-        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (entity == null) { return; }
+        MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+        if (entity == null && eosEntity != null) { return; }
 
-        String currentEOSName = entity.getCurrentEosName();
+        String currentEOSName = eosEntity.getCurrentEosName();
         GetCurrencyBalanceReqParams params = new GetCurrencyBalanceReqParams();
         params.setAccount(currentEOSName);
         params.setCode(VALUE_CODE);
@@ -550,7 +554,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
      * 返回当前钱包类型
      */
     public int getWalletType() {
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         if (curWallet != null) {
             switch (curWallet.getWalletType()) {
                 case CacheConstants.WALLET_TYPE_BLUETOOTH:

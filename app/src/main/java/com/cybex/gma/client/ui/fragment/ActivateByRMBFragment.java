@@ -340,10 +340,11 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                         }else {
                             //如果有钱包
                             //更新当前钱包为最后一个钱包，跳转主页面
-                            List<WalletEntity> walletList = DBManager.getInstance().getWalletEntityDao().getWalletEntityList();
-                            WalletEntity newCurWallet = walletList.get(walletList.size() - 1);
+                            List<MultiWalletEntity> walletList = DBManager.getInstance().getMultiWalletEntityDao()
+                                    .getMultiWalletEntityList();
+                            MultiWalletEntity newCurWallet = walletList.get(walletList.size() - 1);
                             newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-                            DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(newCurWallet);
+                            DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(newCurWallet);
                             AppManager.getAppManager().finishAllActivity();
                             UISkipMananger.launchHomeSingle(getActivity());
                         }

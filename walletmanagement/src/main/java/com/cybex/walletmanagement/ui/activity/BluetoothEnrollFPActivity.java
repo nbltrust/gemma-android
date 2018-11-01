@@ -10,7 +10,9 @@ import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.dao.WalletEntityDao;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -104,10 +106,10 @@ public class BluetoothEnrollFPActivity extends XActivity {
     }
 
     private void setCurrentWalletStatus() {
-        WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
-        WalletEntity entity = dao.getCurrentWalletEntity();
+        MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
+        MultiWalletEntity entity = dao.getCurrentWalletEntity();
         entity.setIsSetBluetoothFP(1);
-        dao.saveOrUpateEntity(entity);
+        dao.saveOrUpateEntitySync(entity);
     }
 
     private void drawFingerprint() {

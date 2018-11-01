@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -43,7 +44,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
     SuperTextView superTextViewBluetoothChangePass;
     ScrollView scrollWalletManage;
     private int currentID;
-    private WalletEntity curWallet;
+    private MultiWalletEntity curWallet;
     private long mContextHandle;
     private List<BluetoothFPVO> fingerprints;
     private BluetoothFPManageAdapter mAdapter;
@@ -83,7 +84,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        curWallet = DBManager.getInstance().getWalletEntityDao().getBluetoothWalletList().get(0);
+        curWallet = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList().get(0);
         if (curWallet != null) {
             currentID = curWallet.getId();
         }

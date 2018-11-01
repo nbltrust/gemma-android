@@ -15,12 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -45,7 +47,7 @@ import butterknife.Unbinder;
 public class ChangePasswordFragment extends XFragment implements Validator.ValidationListener {
 
     Unbinder unbinder;
-    private WalletEntity curWallet;
+    private MultiWalletEntity curWallet;
     private String priKey;
     private Validator validator;
     private boolean isMask;
@@ -216,7 +218,7 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
         setNavibarTitle(getResources().getString(R.string.eos_title_change_pass), true, false);
         if (getArguments() != null) {
             final int currentId = getArguments().getInt("walletID");
-            curWallet = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID(currentId);
+            curWallet = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityByID(currentId);
             priKey = getArguments().getString("key");
 
             edtSetNewPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -448,11 +450,12 @@ public class ChangePasswordFragment extends XFragment implements Validator.Valid
 
     @Override
     public void onValidationSucceeded() {
-        final String newCypher = JNIUtil.get_cypher(getPassword(), priKey);
+
+        final String newCypher = HashGenUtil.generateHashFromText(getPassword(), HashGenUtil.TYPE_SHA256);
         if (!EmptyUtils.isEmpty(curWallet)) {
             curWallet.setCypher(newCypher);
             curWallet.setPasswordTip(getPassHint());
-            DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
+            DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(curWallet);
             GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_change_pass_success));
             pop();
         }

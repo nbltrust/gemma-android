@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -134,9 +135,10 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
         tvVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+                EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
                 if (EmptyUtils.isNotEmpty(curWallet)) {
-                    bundle.putString("cur_eos_name", curWallet.getCurrentEosName());
+                    bundle.putString("cur_eos_name", curEosWallet.getCurrentEosName());
                     UISkipMananger.launchVote(AssetDetailActivity.this, bundle);
                 }
             }

@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.event.WalletIDEvent;
@@ -20,6 +21,7 @@ import com.cybex.gma.client.ui.JNIUtil;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
@@ -30,6 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+import seed39.Seed39;
 
 
 /**
@@ -199,37 +202,39 @@ public class WalletDetailFragment extends XFragment {
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_authorization:
-                        EditText edtPassword = dialog.findViewById(R.id.et_password);
-                        ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
-                        iv_clear.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                edtPassword.setText("");
-                            }
-                        });
-                        //检查密码是否正确
-                        final String inputPass = edtPassword.getText().toString().trim();
-                        //重新获取curWallet，为确保修改密码过后验证的是新的密码
-                        WalletEntity walletEntity = DBManager.getInstance().getWalletEntityDao().getWalletEntityByID
-                                (currentID);
-                        if (!EmptyUtils.isEmpty(walletEntity)){
-                            final String cypher = walletEntity.getCypher();
-                            final String priKey = JNIUtil.get_private_key(cypher, inputPass);
-                            final String generatedCypher = JNIUtil.get_cypher(inputPass, priKey);
-                            if (cypher.equals(generatedCypher)){
-                                //验证通过
-                                start(ChangePasswordFragment.newInstance(priKey,currentID));
-                                dialog.cancel();
-                            }else {
-                                inputCount++;
-                                iv_clear.setVisibility(View.VISIBLE);
-                                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_wrong_password));
-                                if ( inputCount > 3 ){
-                                    dialog.cancel();
-                                    showPasswordHintDialog();
-                                }
-                            }
-                        }
+//                        EditText edtPassword = dialog.findViewById(R.id.et_password);
+//                        ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
+//                        iv_clear.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                edtPassword.setText("");
+//                            }
+//                        });
+//                        //检查密码是否正确
+//                        final String inputPass = edtPassword.getText().toString().trim();
+//                        //重新获取curWallet，为确保修改密码过后验证的是新的密码
+//                        MultiWalletEntity walletEntity = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityByID
+//                                (currentID);
+//                        if (!EmptyUtils.isEmpty(walletEntity)){
+//                            final String cypher = walletEntity.getCypher();
+//                            final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
+//                                    .TYPE_SHA256);
+//
+//                            if (cypher.equals(hashPwd)){
+//                                //验证通过
+//                                String priKey = Seed39.keyDecrypt(inputPass, )
+//                                start(ChangePasswordFragment.newInstance(priKey,currentID));
+//                                dialog.cancel();
+//                            }else {
+//                                inputCount++;
+//                                iv_clear.setVisibility(View.VISIBLE);
+//                                GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_wrong_password));
+//                                if ( inputCount > 3 ){
+//                                    dialog.cancel();
+//                                    showPasswordHintDialog();
+//                                }
+//                            }
+//                        }
 
                         break;
                     default:

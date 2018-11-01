@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.ClipboardUtils;
@@ -34,9 +36,10 @@ public class CollectActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getString(R.string.collect), true);
-        WalletEntity walletEntity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (walletEntity != null){
-            tvCurEosName.setText(walletEntity.getCurrentEosName());
+        MultiWalletEntity walletEntity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        EosWalletEntity eosWallet = walletEntity.getEosWalletEntities().get(0);
+        if (walletEntity != null && eosWallet != null){
+            tvCurEosName.setText(eosWallet.getCurrentEosName());
             showQRCode(getCurEosName());
         }
 

@@ -125,6 +125,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
      * @param passwordTip
      */
 
+    //todo 更改存储逻辑
     public void saveAccount(
             final String publicKey, final String publickey_sign, final String
             password, final String eosUsername, final String passwordTip, final String txId, final String SN) {

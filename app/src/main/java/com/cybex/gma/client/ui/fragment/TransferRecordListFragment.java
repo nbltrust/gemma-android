@@ -9,6 +9,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -72,11 +74,12 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
 
-        WalletEntity entity = DBManager.getInstance()
-                .getWalletEntityDao()
-                .getCurrentWalletEntity();
-        if (entity != null) {
-            currentEosName = entity.getCurrentEosName();
+        MultiWalletEntity entity = DBManager.getInstance()
+                .getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
+        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+        if (entity != null && eosEntity != null) {
+            currentEosName = eosEntity.getCurrentEosName();
         }
     }
 
