@@ -150,6 +150,12 @@
     <!--import wallet-->
     <string name="walletmanage_import_wallet_title">导入钱包</string>
     <string name="walletmanage_finish_import">完成导入</string>
+    <string name="walletmanage_import_pri_key_invalid">私钥格式错误，请检查私钥</string>
+    <string name="walletmanage_import_mnemonic_invalid">助记词格式错误，请检查助记词</string>
+    <string name="walletmanage_eos_account_exist">该钱包下已存在EOS</string>
+    <string name="walletmanage_eth_account_exist">该钱包下已存在ETH</string>
+    <string name="walletmanage_import_success">导入成功</string>
+    <string name="walletmanage_import_fail">导入失败</string>
     <!--config wallet-->
     <string name="walletmanage_config_wallet_title">配置钱包</string>
     <string name="walletmanage_exist_wallet">已有的钱包</string>

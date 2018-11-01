@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
@@ -75,6 +76,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
 
 
     private boolean isMask;//true为密文显示密码
+    private boolean isInitial;
 
     @Override
     public void bindUI(View view) {
@@ -222,6 +224,8 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         });
     }
 
+
+
     @Override
     public void initData(Bundle savedInstanceState) {
 
@@ -233,7 +237,8 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         if(multiWalletEntityList.size()>0){
 
         }else{
-            edtWalletName.setText("UNNAMED-WALLET");
+            isInitial = true;
+            edtWalletName.setText(BaseConst.INITIAL_WALLET_NAME);
             llWalletname.setVisibility(View.GONE);
             tvWalletName.setVisibility(View.GONE);
             viewDividerWalletName.setVisibility(View.GONE);
@@ -724,6 +729,10 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         }
 
         return true;
+    }
+
+    public boolean isInitial() {
+        return isInitial;
     }
 
 }

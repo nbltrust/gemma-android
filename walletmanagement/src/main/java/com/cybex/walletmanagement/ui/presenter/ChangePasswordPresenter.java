@@ -1,6 +1,8 @@
 package com.cybex.walletmanagement.ui.presenter;
 
 
+import android.text.TextUtils;
+
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
@@ -62,9 +64,12 @@ public class ChangePasswordPresenter extends XPresenter<ChangePasswordActivity> 
                 walletEntity.setCypher(hashNewPwd);
                 walletEntity.setPasswordTip(hint);
 
-                String decryptMnemonic = Seed39.keyDecrypt(oldPsw, walletEntity.getMnemonic());
-                walletEntity.setMnemonic(Seed39.keyEncrypt(newPsw, decryptMnemonic));
 
+                String mnemonic = walletEntity.getMnemonic();
+                if(!TextUtils.isEmpty(mnemonic)){
+                    String decryptMnemonic = Seed39.keyDecrypt(oldPsw, mnemonic);
+                    walletEntity.setMnemonic(Seed39.keyEncrypt(newPsw, decryptMnemonic));
+                }
 
                 List<EthWalletEntity> ethWalletEntities = walletEntity.getEthWalletEntities();
                 for (EthWalletEntity ethWalletEntity : ethWalletEntities) {

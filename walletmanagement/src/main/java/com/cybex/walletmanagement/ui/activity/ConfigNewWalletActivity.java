@@ -20,6 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
@@ -32,6 +35,8 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+
+import java.util.List;
 
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -68,6 +73,11 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
     private boolean isMask;//true为密文显示密码
 
     private ImportWalletConfigBean configBean;
+
+
+
+    private boolean isInitial;
+    private List<MultiWalletEntity> wallets;
 
     @Override
     public void bindUI(View view) {
@@ -131,7 +141,7 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
                     }
                 }
 
-                if (EmptyUtils.isNotEmpty(getWalletName())) {
+                if (EmptyUtils.isNotEmpty(getWalletName())&&!isInitial) {
                     ivWalletNameClear.setVisibility(View.VISIBLE);
                 } else {
                     ivWalletNameClear.setVisibility(View.GONE);
@@ -331,6 +341,15 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
                 edtPassHint.setText("");
             }
         });
+
+
+        wallets = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
+        if(wallets.size()==0){
+            isInitial = true;
+            edtWalletName.setText(BaseConst.INITIAL_WALLET_NAME);
+            edtWalletName.setFocusable(false);
+            edtWalletName.setTypeface(Typeface.DEFAULT_BOLD);
+        }
     }
 
     @Override
@@ -392,7 +411,7 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
                 if (hasFocus) {
                     setDividerFocusStyle(viewDividerEosName);
                     edtWalletName.setTypeface(Typeface.DEFAULT_BOLD);
-                    if (EmptyUtils.isNotEmpty(getWalletName())){
+                    if (EmptyUtils.isNotEmpty(getWalletName())&&!isInitial){
                         ivWalletNameClear.setVisibility(View.VISIBLE);
                     }
 
@@ -690,6 +709,10 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
 
     public ImportWalletConfigBean getConfigBean() {
         return configBean;
+    }
+
+    public boolean isInitial() {
+        return isInitial;
     }
 
 

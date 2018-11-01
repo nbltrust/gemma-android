@@ -8,10 +8,14 @@ import android.widget.Button;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.event.CloseInitialPageEvent;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
 
@@ -94,5 +98,16 @@ public class InitialActivity extends XActivity {
                 } catch (Exception e) {}
             }
         }
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void closeSelf(CloseInitialPageEvent event) {
+         finish();
     }
 }

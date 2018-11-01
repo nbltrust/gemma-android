@@ -42,6 +42,9 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     @Autowired(name = BaseConst.KEY_INIT_TYPE)
     int initType = BaseConst.APP_HOME_INITTYPE_NONE;
 
+    @Autowired(name = BaseConst.KEY_MNEMONIC)
+    String mnemonic ;
+
     // 再点一次退出程序时间设置
     private static final long WAIT_TIME = 2000L;
     private long TOUCH_TIME = 0;
@@ -121,7 +124,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 //            }
 //        });
 
-
     }
 
     @Override
@@ -131,6 +133,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         if (intent != null) {
             //onNewIntent中Arouter不会自动给initType赋值
             initType = intent.getIntExtra(BaseConst.KEY_INIT_TYPE, -1);
+            mnemonic = intent.getStringExtra(BaseConst.KEY_MNEMONIC);
             handleInitType();
         }
 
@@ -140,7 +143,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         //根据跳转到主页面的类型，响应
         if (initType != BaseConst.APP_HOME_INITTYPE_NONE) {
             if (initType == BaseConst.APP_HOME_INITTYPE_TO_BACKUP_MNEMONIC_GUIDE) {
-                String mnemonic = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
+//                String mnemonic = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
                 ARouter.getInstance().build(RouterConst.PATH_TO_BACKUP_MNEMONIC_GUIDE_PAGE)
                         .withString(BaseConst.KEY_MNEMONIC, mnemonic)
                         .navigation();
@@ -192,10 +195,11 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
             }
             //2.核验EOS账户是否被激活
-
-            curEosWallet = curWallet.getEosWalletEntities().get(0);
-            final int status = curEosWallet.getIsConfirmLib();
-            initEosCardView(status);
+            if(curWallet.getEosWalletEntities().size()>0){
+                curEosWallet = curWallet.getEosWalletEntities().get(0);
+                final int status = curEosWallet.getIsConfirmLib();
+                initEosCardView(status);
+            }
         }
     }
 

@@ -10,8 +10,14 @@ import android.widget.Button;
 import com.cybex.base.view.LabelLayout;
 import com.cybex.componentservice.bean.CoinType;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.PasswordValidateHelper;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.config.WalletManageConst;
 import com.cybex.walletmanagement.event.BarcodeScanEvent;
@@ -24,12 +30,16 @@ import com.cybex.walletmanagement.ui.activity.SelectWalletCoinTypeActivity;
 import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import seed39.Seed39;
 
 
 /**
@@ -140,21 +150,132 @@ public class ImportWalletPrivateKeyFragment extends XFragment {
     }
 
     public void goConfigWallet() {
+        final String priKey = edtShowPrikey.getText().toString().trim();
         //check priv key
+        boolean isValid=true;
+        if(currentCoinType==CoinType.EOS){
+            String publcKey =JNIUtil.get_public_key(priKey);
+            if (publcKey.equals("invalid priv string!")) {
+                //验证格式未通过
+                isValid=false;
+            }
+        }else if(currentCoinType==CoinType.ETH){
+//            String seed = Seed39.seedByMnemonic("asdfas sdfsf");
+//            LoggerManager.e("seed="+seed);
+//
+//            String publickey2 = Seed39.getEthereumPublicKeyFromPrivateKey("12323sadfasdf");
+//            LoggerManager.e("publickey2="+publickey2);
+//
+//            isValid=false;
 
+        }
+        if(!isValid){
+            GemmaToastUtils.showShortToast(getString(R.string.walletmanage_import_pri_key_invalid));
+            return;
+        }
 
         //if import to exist wallet, need check password
+        if(importWallet!=null){
+            PasswordValidateHelper passwordValidateHelper = new PasswordValidateHelper(importWallet, context);
+            passwordValidateHelper.setConfirmStr(getString(R.string.walletmanage_finish_import));
+            if(currentCoinType==CoinType.EOS){
+                //check if exist eos wallet
+                List<EosWalletEntity> eosWalletEntities = importWallet.getEosWalletEntities();
+                if(eosWalletEntities.size()>0){
+                    //show toast
+                    GemmaToastUtils.showShortToast(getString(R.string.walletmanage_eos_account_exist));
+                    return;
+                }
+                //check password
+                passwordValidateHelper.startValidatePassword(new PasswordValidateHelper.PasswordValidateCallback() {
+                    @Override
+                    public void onValidateSuccess(String password) {
 
+                        String eosPublic = JNIUtil.get_public_key(priKey);
+                        EosWalletEntity eosWalletEntity = new EosWalletEntity();
+                        eosWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, priKey));
+                        eosWalletEntity.setPublicKey(eosPublic);
+                        eosWalletEntity.setIsBackUp(0);
+                        eosWalletEntity.setMultiWalletEntity(importWallet);
+                        importWallet.getEosWalletEntities().add(eosWalletEntity);
 
+                        DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntity(importWallet, new DBCallback() {
+                            @Override
+                            public void onSucceed() {
+                                GemmaToastUtils.showShortToast(getString(R.string.walletmanage_import_success));
+                                getActivity().finish();
+                            }
+
+                            @Override
+                            public void onFailed(Throwable error) {
+                                GemmaToastUtils.showShortToast(getString(R.string.walletmanage_import_fail));
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onValidateFail(int failedCount) {
+
+                    }
+                });
+            }else if(currentCoinType==CoinType.ETH){
+                //check if exist eth wallet
+                List<EthWalletEntity> ethWalletEntities = importWallet.getEthWalletEntities();
+                if(ethWalletEntities.size()>0){
+                    //show toast
+                    GemmaToastUtils.showShortToast(getString(R.string.walletmanage_eth_account_exist));
+                    return;
+                }
+                //check password
+                passwordValidateHelper.startValidatePassword(new PasswordValidateHelper.PasswordValidateCallback() {
+                    @Override
+                    public void onValidateSuccess(String password) {
+
+                        String publicKey = Seed39.getEthereumPublicKeyFromPrivateKey(priKey);
+                        String address = Seed39.getEthereumAddressFromPrivateKey(priKey);
+
+                        EthWalletEntity ethWalletEntity = new EthWalletEntity();
+                        ethWalletEntity.setAddress(address);
+                        ethWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, priKey));
+                        ethWalletEntity.setPublicKey(publicKey);
+                        ethWalletEntity.setBackUp(false);
+                        ethWalletEntity.setMultiWalletEntity(importWallet);
+                        importWallet.getEthWalletEntities().add(ethWalletEntity);
+
+                        DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntity(importWallet, new DBCallback() {
+                            @Override
+                            public void onSucceed() {
+                                GemmaToastUtils.showShortToast(getString(R.string.walletmanage_import_success));
+                                getActivity().finish();
+                            }
+
+                            @Override
+                            public void onFailed(Throwable error) {
+                                GemmaToastUtils.showShortToast(getString(R.string.walletmanage_import_fail));
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onValidateFail(int failedCount) {
+
+                    }
+                });
+            }
+
+            return;
+        }
+        //create new wallet
         //jump to config page
         ImportWalletConfigBean config = new ImportWalletConfigBean();
         config.setWalletType(MultiWalletEntity.WALLET_TYPE_PRI_KEY);
-        config.setPriKey(edtShowPrikey.getText().toString().trim());
+        config.setPriKey(priKey);
         config.setCoinType(currentCoinType);
 
         Intent intent = new Intent(getContext(), ConfigNewWalletActivity.class);
         intent.putExtra(WalletManageConst.KEY_IMPORT_WALLET_CONFIG,config);
         startActivity(intent);
+        getActivity().finish();
     }
 
     @Override

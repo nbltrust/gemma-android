@@ -26,6 +26,9 @@ public class BaseConst {
     public static final int WALLET_TYPE_BLUETOOTH = 2;
     public static final int WALLET_TYPE_PRIKEY_IMPORT = 3;
 
+    public static final String INITIAL_WALLET_NAME="Unnamed Wallet 1";
+
+
 
 
 

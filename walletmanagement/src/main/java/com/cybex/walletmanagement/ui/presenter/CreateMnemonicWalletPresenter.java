@@ -1,8 +1,6 @@
 package com.cybex.walletmanagement.ui.presenter;
 
 
-import android.content.Intent;
-
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
@@ -11,16 +9,19 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.event.CloseInitialPageEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.walletmanagement.ui.activity.CreateMnemonicWalletActivity;
-import com.cybex.walletmanagement.ui.activity.MnemonicBackupGuideActivity;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -125,12 +126,12 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
                 String address = Seed39.getEthereumAddressFromPrivateKey(privKey);
                 String eosPriv = Seed39.deriveWIF(seed, BaseConst.MNEMONIC_PATH_EOS, false);
 //                String eosPrivCompress = Seed39.deriveWIF(seed, "m/44'/194'/0'/0/", true);
-                LoggerManager.d(" mnemonic="+mnemonic);
-                LoggerManager.d(" seed="+seed);
-                LoggerManager.d(" privKey="+privKey);
-                LoggerManager.d(" publicKey="+publicKey);
-                LoggerManager.d(" address="+address);
-                LoggerManager.d(" eosPriv="+eosPriv);
+                LoggerManager.d(" mnemonic=" + mnemonic);
+                LoggerManager.d(" seed=" + seed);
+                LoggerManager.d(" privKey=" + privKey);
+                LoggerManager.d(" publicKey=" + publicKey);
+                LoggerManager.d(" address=" + address);
+                LoggerManager.d(" eosPriv=" + eosPriv);
 //                LoggerManager.d(" eosPrivCompress="+eosPrivCompress);
 
                 EthWalletEntity ethWalletEntity = new EthWalletEntity();
@@ -140,18 +141,18 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
                 ethWalletEntity.setBackUp(false);
                 ethWalletEntity.setMultiWalletEntity(multiWalletEntity);
 
-                List<EthWalletEntity> ethWalletEntities=new ArrayList<>();
+                List<EthWalletEntity> ethWalletEntities = new ArrayList<>();
                 ethWalletEntities.add(ethWalletEntity);
                 multiWalletEntity.setEthWalletEntities(ethWalletEntities);
 
                 String eosPublic = JNIUtil.get_public_key(eosPriv);
-                LoggerManager.d(" eosPublic="+eosPublic);
+                LoggerManager.d(" eosPublic=" + eosPublic);
                 EosWalletEntity eosWalletEntity = new EosWalletEntity();
                 eosWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, eosPriv));
                 eosWalletEntity.setPublicKey(eosPublic);
                 eosWalletEntity.setIsBackUp(0);
                 eosWalletEntity.setMultiWalletEntity(multiWalletEntity);
-                List<EosWalletEntity> eosWalletEntities=new ArrayList<>();
+                List<EosWalletEntity> eosWalletEntities = new ArrayList<>();
                 eosWalletEntities.add(eosWalletEntity);
                 multiWalletEntity.setEosWalletEntities(eosWalletEntities);
 
@@ -192,9 +193,13 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
                     public void accept(String mnemonic) {
                         getV().dissmisProgressDialog();
                         ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
-                                .withInt(BaseConst.KEY_INIT_TYPE,BaseConst.APP_HOME_INITTYPE_TO_BACKUP_MNEMONIC_GUIDE)
-                                .withString(BaseConst.KEY_MNEMONIC,mnemonic)
+                                .withInt(BaseConst.KEY_INIT_TYPE, BaseConst.APP_HOME_INITTYPE_TO_BACKUP_MNEMONIC_GUIDE)
+                                .withString(BaseConst.KEY_MNEMONIC, mnemonic)
                                 .navigation();
+                        if (getV().isInitial()) {
+                            EventBusProvider.post(new CloseInitialPageEvent());
+                        } else {
+                        }
                         getV().finish();
                     }
                 }, new Consumer<Throwable>() {

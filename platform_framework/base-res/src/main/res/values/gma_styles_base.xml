@@ -160,7 +160,7 @@
         <item name="android:src">@drawable/ic_close</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:visibility">gone</item>
-        <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+        <item name="android:layout_marginEnd">6dp</item>
     </style>
 
     <!-- 公用明文密文icon样式-->
@@ -170,7 +170,7 @@
         <item name="android:src">@drawable/ic_visible</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:visibility">visible</item>
-        <item name="android:layout_marginEnd">@dimen/dimen_15</item>
+        <item name="android:layout_marginEnd">@dimen/common_page_content_padding</item>
     </style>
 
     <style name="input_style">

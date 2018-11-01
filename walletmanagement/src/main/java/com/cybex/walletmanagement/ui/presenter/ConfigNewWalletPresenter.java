@@ -10,11 +10,13 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.event.CloseInitialPageEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.walletmanagement.ui.activity.ConfigNewWalletActivity;
 import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -172,6 +174,10 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                         getV().dissmisProgressDialog();
                         ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
                                 .navigation();
+                        if(getV().isInitial()){
+                            EventBusProvider.post(new CloseInitialPageEvent());
+                        }
+                        getV().finish();
                     }
                 }, new Consumer<Throwable>() {
                     @Override

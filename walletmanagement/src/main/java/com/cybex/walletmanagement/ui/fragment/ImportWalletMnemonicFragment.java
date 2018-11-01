@@ -105,6 +105,7 @@ public class ImportWalletMnemonicFragment extends XFragment {
             Intent intent = new Intent(getContext(), ConfigNewWalletActivity.class);
             intent.putExtra(WalletManageConst.KEY_IMPORT_WALLET_CONFIG,config);
             startActivity(intent);
+            getActivity().finish();
 
 
         }else{

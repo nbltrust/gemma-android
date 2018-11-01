@@ -51,7 +51,8 @@
 
                     <ImageView
                         android:id="@+id/iv_wallet_name_clear"
-                        style="@style/clear_icon_common"/>
+                        style="@style/clear_icon_common"
+                        android:layout_marginEnd="@dimen/common_page_content_padding"/>
 
                 </LinearLayout>
 
@@ -131,7 +132,8 @@
 
                         <ImageView
                             android:id="@+id/iv_repeat_pass_mask"
-                            style="@style/mask_icon_common"/>
+                            style="@style/mask_icon_common"
+                            android:layout_marginEnd="@dimen/common_page_content_padding"/>
 
                     </LinearLayout>
 
@@ -163,7 +165,8 @@
 
                     <ImageView
                         android:id="@+id/iv_pass_hint_clear"
-                        style="@style/clear_icon_common"/>
+                        style="@style/clear_icon_common"
+                        android:layout_marginEnd="@dimen/common_page_content_padding"/>
 
                 </LinearLayout>
 
