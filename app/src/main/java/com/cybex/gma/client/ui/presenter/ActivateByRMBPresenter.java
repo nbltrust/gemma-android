@@ -5,7 +5,10 @@ import android.support.annotation.NonNull;
 import com.cybex.componentservice.api.callback.CustomRequestCallback;
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.api.data.response.CustomData;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
@@ -14,6 +17,7 @@ import com.cybex.gma.client.event.OrderIdEvent;
 import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.ActivateByRMBFragment;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
@@ -172,8 +176,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
     /**
      * 创建账户
      */
-    public void createAccount(String eos_username, String private_key, String public_key, String password,  String
-            orderId, String passwordTip){
+    public void createAccount(String eos_username, String public_key, String orderId){
 
         UserRegisterReqParams params = new UserRegisterReqParams();
         params.setApp_id(ParamConstants.APP_ID_GEMMA);
@@ -182,6 +185,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
         params.setPublic_key(public_key);
 
         String jsonParams = GsonUtils.objectToJson(params);
+        LoggerManager.d("create req params", jsonParams);
 
         new UserRegisterRequest(UserRegisterResult.class)
                 .setJsonParams(jsonParams)
@@ -202,8 +206,11 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                 UserRegisterResult registerResult = data.result;
                                 if (registerResult != null) {
                                     String txId = registerResult.txId;
-                                    saveAccount(public_key, private_key, password, eos_username, passwordTip, txId, orderId);
+                                    updateWallet(eos_username, txId, orderId);
+                                    //saveAccount(public_key, private_key, password, eos_username, passwordTip, txId,
+                                            //orderId);
                                     TimeStampValidateJob.executedCreateLogic(eos_username, public_key);
+                                    UISkipMananger.launchEOSHome(getV().getActivity());
                                 }
                             } else {
                                 LoggerManager.d("err");
@@ -275,4 +282,38 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
         //最后执行存入操作，此前包此时为当前钱包
         DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
     }
+
+
+    public void updateWallet(
+            final String eosUsername, final String txId, final String invCode) {
+
+        MultiWalletEntity multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
+
+        List<EosWalletEntity> eosWalletEntities = DBManager.getInstance().getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity().getEosWalletEntities();
+        EosWalletEntity walletEntity = eosWalletEntities.get(0);
+
+        //设置eosNameJson
+        List<String> account_names = new ArrayList<>();
+        account_names.add(eosUsername);
+        final String eosNameJson = GsonUtils.objectToJson(account_names);
+        walletEntity.setEosNameJson(eosNameJson);
+        //设置currentEosName，创建钱包步骤中可以直接设置，因为默认eosNameJson中只会有一个用户名字符串
+        walletEntity.setCurrentEosName(eosUsername);
+        //设置当前Transaction的Hash值
+        walletEntity.setTxId(txId);
+        //设置邀请码
+        walletEntity.setInvCode(invCode);
+
+        //更新钱包
+        eosWalletEntities.remove(0);
+        eosWalletEntities.add(walletEntity);
+        multiWalletEntity.setEosWalletEntities(eosWalletEntities);
+
+        DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(multiWalletEntity);
+    }
+
 }
+
+

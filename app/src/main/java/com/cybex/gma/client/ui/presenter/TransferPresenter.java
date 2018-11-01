@@ -556,12 +556,12 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                 case CacheConstants.WALLET_TYPE_BLUETOOTH:
                     //蓝牙钱包
                     return CacheConstants.WALLET_TYPE_BLUETOOTH;
-                case CacheConstants.WALLET_TYPE_SOFT:
+                case CacheConstants.WALLET_TYPE_MNE_CREATE:
                     //软件钱包
-                    return CacheConstants.WALLET_TYPE_SOFT;
+                    return CacheConstants.WALLET_TYPE_MNE_CREATE;
             }
         }
-        return CacheConstants.WALLET_TYPE_SOFT;
+        return CacheConstants.WALLET_TYPE_MNE_CREATE;
     }
 
     /**

@@ -15,6 +15,8 @@ import com.allen.library.SuperTextView;
 import com.cybex.base.view.tablayout.CommonTabLayout;
 import com.cybex.base.view.tablayout.listener.CustomTabEntity;
 import com.cybex.base.view.tablayout.listener.OnTabSelectListener;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -30,6 +32,7 @@ import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
@@ -41,6 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import seed39.Seed39;
 
 
 /**
@@ -379,13 +383,13 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_authorization:
-                        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+                        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
 
                         switch (operation_type) {
                             case OPERATION_BUY_RAM:
                                 //买入RAM操作
                                 if (EmptyUtils.isNotEmpty(curWallet)) {
-                                    final String cypher = curWallet.getCypher();
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
                                     iv_clear.setOnClickListener(new View.OnClickListener() {
@@ -394,10 +398,17 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             mPass.setText("");
                                         }
                                     });
+
+                                    //验证密码
                                     String inputPass = mPass.getText().toString().trim();
+                                    final String cypher = curWallet.getCypher();
+                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
+                                            .TYPE_SHA256);
+                                    final String saved_pri_key = curEosWallet.getPrivateKey();
                                     if (EmptyUtils.isNotEmpty(inputPass)) {
-                                        final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                        if (key.equals("wrong password")) {
+
+                                        if (!cypher.equals(hashPwd)) {
+                                            //密码错误
                                             inputCount++;
                                             iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(
@@ -407,7 +418,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                                 showPasswordHintDialog(OPERATION_BUY_RAM);
                                             }
                                         } else {
-                                            final String curEOSName = curWallet.getCurrentEosName();
+                                            //密码正确
+                                            final String key = Seed39.keyDecrypt(inputPass, saved_pri_key);
+                                            final String curEOSName = curEosWallet.getCurrentEosName();
                                             String quantity = AmountUtil.add(getEOSAmount(), "0", 4) + " EOS";
                                             getP().executeBuyRamLogic(curEOSName, curEOSName, quantity, key);
                                             dialog.cancel();
@@ -422,7 +435,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                             //卖出RAM操作
                             case OPERATION_SELL_RAM:
                                 if (EmptyUtils.isNotEmpty(curWallet)) {
-                                    final String cypher = curWallet.getCypher();
+
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
                                     iv_clear.setOnClickListener(new View.OnClickListener() {
@@ -432,9 +445,14 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                         }
                                     });
                                     String inputPass = mPass.getText().toString().trim();
+                                    final String cypher = curWallet.getCypher();
+                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
+                                            .TYPE_SHA256);
+                                    final String saved_pri_key = curEosWallet.getPrivateKey();
+
                                     if (EmptyUtils.isNotEmpty(inputPass)) {
-                                        final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                        if (key.equals("wrong password")) {
+                                        if (!cypher.equals(hashPwd)) {
+                                            //密码错误
                                             inputCount++;
                                             iv_clear.setVisibility(View.VISIBLE);
                                             GemmaToastUtils.showLongToast(
@@ -445,7 +463,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                                 showPasswordHintDialog(OPERATION_SELL_RAM);
                                             }
                                         } else {
-                                            final String curEOSName = curWallet.getCurrentEosName();
+                                            //密码正确
+                                            final String key = Seed39.keyDecrypt(inputPass, saved_pri_key);
+                                            final String curEOSName = curEosWallet.getCurrentEosName();
                                             String ramAmountInStr = AmountUtil.mul(String.valueOf(getRamAmount()),
                                                     "1024", 0);
                                             String bytesInStr = AmountUtil.round(ramAmountInStr, 0);

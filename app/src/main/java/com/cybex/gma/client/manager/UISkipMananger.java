@@ -68,21 +68,30 @@ public final class UISkipMananger {
     }
 
     /**
-     * 跳转到EOS主界面
+     * 跳转到钱包主界面
      *
      * @param context
      */
     public static void launchHomeSingle(Activity context) {
-        launchNewTaskIntent(context, EosHomeActivity.class);
+        launchNewTaskIntent(context, WalletHomeActivity.class);
     }
 
     /**
-     * 跳跳转到EOS主界面
+     * 跳转到钱包主界面
      *
      * @param context
      */
     public static void launchHome(Activity context) {
         launchIntent(context, WalletHomeActivity.class);
+    }
+
+    /**
+     * 跳转到EOS主界面
+     *
+     * @param context
+     */
+    public static void launchEOSHome(Activity context) {
+        launchIntent(context, EosHomeActivity.class);
     }
 
 

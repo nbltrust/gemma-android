@@ -54,28 +54,27 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
 
     /**
      * 时间戳比较验证状态判断
-     * @param event
      */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onCreateStatusReceieved(ValidateResultEvent event){
-        if (event != null){
-            dissmisProgressDialog();
-            if(event.isSuccess()){
-                //创建成功
-                //跳转到EOS主界面
-                AppManager.getAppManager().finishActivity(CreateEosAccountActivity.class);
-                AppManager.getAppManager().finishActivity(ActivateAccountMethodActivity.class);
-                UISkipMananger.launchHome(getActivity());
-
-            }else {
-                //创建失败,弹框，删除当前钱包，判断是否还有钱包，跳转
-                List<MultiWalletEntity> multiWalletEntities = DBManager.getInstance().getMultiWalletEntityDao()
-                        .getMultiWalletEntityList();
-                showFailDialog(EmptyUtils.isEmpty(multiWalletEntities));
-            }
-
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+//    public void onCreateStatusReceieved(ValidateResultEvent event){
+//        if (event != null){
+//            dissmisProgressDialog();
+//            if(event.isSuccess()){
+//                //创建成功
+//                //跳转到EOS主界面
+//                AppManager.getAppManager().finishActivity(CreateEosAccountActivity.class);
+//                AppManager.getAppManager().finishActivity(ActivateAccountMethodActivity.class);
+//                UISkipMananger.launchHome(getActivity());
+//
+//            }else {
+//                //创建失败,弹框，删除当前钱包，判断是否还有钱包，跳转
+//                List<MultiWalletEntity> multiWalletEntities = DBManager.getInstance().getMultiWalletEntityDao()
+//                        .getMultiWalletEntityList();
+//                showFailDialog(EmptyUtils.isEmpty(multiWalletEntities));
+//            }
+//
+//        }
+//    }
 
     public static ActivateByInvCodeFragment newInstance(Bundle args) {
         ActivateByInvCodeFragment fragment = new ActivateByInvCodeFragment();

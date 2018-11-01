@@ -18,22 +18,22 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cybex.componentservice.db.dao.WalletEntityDao;
-import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AlertUtil;
+import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.gma.client.R;
-import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.event.DeviceInfoEvent;
-import com.cybex.gma.client.event.TabSelectedEvent;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
-import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
 import com.cybex.gma.client.widget.EditTextWithScrollView;
@@ -46,6 +46,7 @@ import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -63,6 +64,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+import seed39.Seed39;
 
 /**
  * 转账Fragment
@@ -260,9 +262,11 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
         m_uiLock = new ReentrantLock();
         m_uiLock.lock();
-        WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
-        WalletEntity entity = dao.getCurrentWalletEntity();
-        if (entity != null && getP().getWalletType() == CacheConstants.WALLET_TYPE_BLUETOOTH) {
+        MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
+        MultiWalletEntity entity = dao.getCurrentMultiWalletEntity();
+        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+
+        if (entity != null && eosEntity != null && getP().getWalletType() == CacheConstants.WALLET_TYPE_BLUETOOTH) {
             imvWookongLogo.setVisibility(View.VISIBLE);
         } else {
             imvWookongLogo.setVisibility(View.GONE);
@@ -437,7 +441,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                MultiWalletEntity curWallet = DBManager.getInstance()
+                        .getMultiWalletEntityDao()
+                        .getCurrentMultiWalletEntity();
                 if (curWallet != null) {
                     int walletType = curWallet.getWalletType();
                     switch (view.getId()) {
@@ -446,7 +452,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                             break;
                         case R.id.btn_transfer_nextStep:
                             switch (walletType) {
-                                case CacheConstants.WALLET_TYPE_SOFT:
+                                case CacheConstants.WALLET_TYPE_MNE_CREATE:
                                     //软钱包转账
                                     showConfirmAuthoriDialog();
                                     break;
@@ -506,55 +512,82 @@ public class TransferFragment extends XFragment<TransferPresenter> {
      * 显示确认授权dialog
      */
     private void showConfirmAuthoriDialog() {
-        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-        dialog = new CustomFullDialog(getContext(),
-                R.layout.eos_dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
-            @Override
-            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.imc_cancel:
+
+        MultiWalletEntity wallet = DBManager.getInstance().getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
+        PasswordValidateHelper passwordValidateHelper = new PasswordValidateHelper(wallet, context);
+        passwordValidateHelper.startValidatePassword(
+                new PasswordValidateHelper.PasswordValidateCallback() {
+                    @Override
+                    public void onValidateSuccess(String password) {
+                        //密码正确，执行转账逻辑
+                        String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
+                        String privateKey  = Seed39.keyDecrypt(password, saved_pri_key);
+                        getP().executeTransferLogic(wallet.getEosWalletEntities().get(0)
+                                        .getCurrentEosName(),
+                                collectionAccount, amount, memo, privateKey);
                         dialog.cancel();
-                        showConfirmTransferDialog();
-                        break;
-                    case R.id.btn_confirm_authorization:
-                        EditText etPasword = dialog.findViewById(R.id.et_password);
-                        String pwd = String.valueOf(etPasword.getText());
-                        if (EmptyUtils.isEmpty(pwd)) {
-                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
-                            return;
-                        } else {
-                            //获取当前账户的私钥
-                            WalletEntity entity = DBManager.getInstance()
-                                    .getWalletEntityDao()
-                                    .getCurrentWalletEntity();
-                            if (entity != null) {
-                                String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
+                    }
 
-                                if ("wrong password".equals(privateKey)) {
-                                    GemmaToastUtils.showShortToast(
-                                            getResources().getString(R.string.eos_tip_wrong_password));
-                                } else {
-                                    //密码正确，执行转账逻辑
-                                    getP().executeTransferLogic(entity.getCurrentEosName(),
-                                            collectionAccount, amount, memo, privateKey);
-                                    dialog.cancel();
-                                }
+                    @Override
+                    public void onValidateFail(int failedCount) {
+                        showPasswordHintDialog();
+                    }
+                });
 
-                            } else {
-                                GemmaToastUtils.showShortToast(getString(R.string.eos_transfer_error));
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        dialog.show();
-        EditText etPasword = dialog.findViewById(R.id.et_password);
-        etPasword.setHint(getString(R.string.eos_transfer_eosname_hint) + currentEOSName + getString(
-                R.string.eos_transfer_eosname_hint_last));
+//        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
+//        dialog = new CustomFullDialog(getContext(),
+//                R.layout.eos_dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
+//        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+//            @Override
+//            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+//                switch (view.getId()) {
+//                    case R.id.imc_cancel:
+//                        dialog.cancel();
+//                        showConfirmTransferDialog();
+//                        break;
+//                    case R.id.btn_confirm_authorization:
+//                        EditText etPasword = dialog.findViewById(R.id.et_password);
+//                        String pwd = String.valueOf(etPasword.getText());
+//
+//
+//
+//                        if (EmptyUtils.isEmpty(pwd)) {
+//                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
+//                            return;
+//                        } else {
+//                            //获取当前账户的私钥
+//                            MultiWalletEntity entity = DBManager.getInstance()
+//                                    .getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+//
+//                            if (entity != null) {
+//                                String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
+//
+//                                if ("wrong password".equals(privateKey)) {
+//                                    GemmaToastUtils.showShortToast(
+//                                            getResources().getString(R.string.eos_tip_wrong_password));
+//                                } else {
+//                                    //密码正确，执行转账逻辑
+//                                    getP().executeTransferLogic(entity.getEosWalletEntities().get(0)
+//                                                    .getCurrentEosName(),
+//                                            collectionAccount, amount, memo, privateKey);
+//                                    dialog.cancel();
+//                                }
+//
+//                            } else {
+//                                GemmaToastUtils.showShortToast(getString(R.string.eos_transfer_error));
+//                            }
+//                        }
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
+//        dialog.show();
+//        EditText etPasword = dialog.findViewById(R.id.et_password);
+//        etPasword.setHint(getString(R.string.eos_transfer_eosname_hint) + currentEOSName + getString(
+//                R.string.eos_transfer_eosname_hint_last));
     }
 
     /**
@@ -626,6 +659,38 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             }
         });
         dialog.show();
+    }
+
+    /**
+     * 显示密码提示Dialog
+     */
+    private void showPasswordHintDialog() {
+        int[] listenedItems = {R.id.tv_i_understand};
+        CustomDialog dialog = new CustomDialog(getContext(),
+                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.tv_i_understand:
+                        dialog.cancel();
+                        showConfirmAuthoriDialog();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+
+        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)) {
+            String passHint = curWallet.getPasswordTip();
+            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
+            tv_pass_hint.setText(showInfo);
+        }
     }
 
     public void clearData() {

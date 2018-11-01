@@ -17,20 +17,18 @@ import com.cybex.base.view.tablayout.listener.CustomTabEntity;
 import com.cybex.base.view.tablayout.listener.OnTabSelectListener;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.utils.AlertUtil;
+import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.JNIUtil;
-import com.cybex.gma.client.ui.model.response.EOSErrorInfo;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
 import com.cybex.gma.client.ui.presenter.DelegatePresenter;
-import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.gma.client.utils.AmountUtil;
-import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
@@ -45,6 +43,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
+import seed39.Seed39;
 
 /**
  * 资源抵押页面容器Activity
@@ -467,13 +466,13 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                         }
                         break;
                     case R.id.btn_confirm_authorization:
-                        EosWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
-                                .getEosWalletEntities().get(0);
+                        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao()
+                                .getCurrentMultiWalletEntity();
+                        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
                         switch (operation_type) {
                             case OPERATION_DELEGATE:
-                                /*
+                                //抵押操作
                                 if (EmptyUtils.isNotEmpty(curWallet)) {
-                                    //抵押操作
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
                                     iv_clear.setOnClickListener(new View.OnClickListener() {
@@ -482,22 +481,18 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                             mPass.setText("");
                                         }
                                     });
+                                    //验证密码
+
                                     String inputPass = mPass.getText().toString().trim();
                                     final String cypher = curWallet.getCypher();
-                                    if (EmptyUtils.isNotEmpty(inputPass)) {
-                                        final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                        if (key.equals("wrong password")) {
-                                            iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(
-                                                    getResources().getString(R.string.eos_tip_wrong_password));
-
-                                            inputCount++;
-                                            if (inputCount > 3) {
-                                                dialog.cancel();
-                                                showPasswordHintDialog(OPERATION_DELEGATE);
-                                            }
-                                        } else {
-                                            final String curEOSName = curWallet.getCurrentEosName();
+                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
+                                            .TYPE_SHA256);
+                                    final String saved_pri_key = curEosWallet.getPrivateKey();
+                                    if (saved_pri_key != null) {
+                                        final String private_key = Seed39.keyDecrypt(inputPass, saved_pri_key);
+                                        if (hashPwd.equals(cypher)) {
+                                            //密码正确
+                                            final String curEOSName = curEosWallet.getCurrentEosName();
                                             try {
                                                 String cpu_quantity;
                                                 String net_quantity;
@@ -519,24 +514,30 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 String stake_net_quantity = net_quantity + " EOS";
                                                 String stake_cpu_quantity = cpu_quantity + " EOS";
                                                 getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
-                                                        stake_cpu_quantity, key);
+                                                        stake_cpu_quantity, private_key);
 
                                             } catch (NumberFormatException e) {
                                                 e.printStackTrace();
                                             }
                                             dialog.cancel();
                                         }
+
                                     } else {
+                                        //密码错误
+                                        iv_clear.setVisibility(View.VISIBLE);
                                         GemmaToastUtils.showLongToast(
-                                                getResources().getString(R.string.eos_tip_please_input_pass));
+                                                getResources().getString(R.string.eos_tip_wrong_password));
+
+                                        inputCount++;
+                                        if (inputCount > 3) {
+                                            dialog.cancel();
+                                            showPasswordHintDialog(OPERATION_DELEGATE);
+                                        }
                                     }
                                 }
-                                */
                                 break;
                             case OPERATION_UNDELEGATE:
-                                /*
                                 if (EmptyUtils.isNotEmpty(curWallet)) {
-                                    //解抵押操作
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
                                     iv_clear.setOnClickListener(new View.OnClickListener() {
@@ -545,37 +546,32 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                             mPass.setText("");
                                         }
                                     });
+                                    //验证密码
+
                                     String inputPass = mPass.getText().toString().trim();
-                                    if (EmptyUtils.isNotEmpty(inputPass)) {
-                                        final String cypher = curWallet.getCypher();
-                                        final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                        if (key.equals("wrong password")) {
-                                            iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(
-                                                    getResources().getString(R.string.eos_tip_wrong_password));
-
-                                            inputCount++;
-                                            if (inputCount > 3) {
-                                                dialog.cancel();
-                                                showPasswordHintDialog(OPERATION_UNDELEGATE);
-                                            }
-
-                                        } else {
-                                            final String curEOSName = curWallet.getCurrentEosName();
+                                    final String cypher = curWallet.getCypher();
+                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
+                                            .TYPE_SHA256);
+                                    final String saved_pri_key = curEosWallet.getPrivateKey();
+                                    if (saved_pri_key != null) {
+                                        final String private_key = Seed39.keyDecrypt(inputPass, saved_pri_key);
+                                        if (hashPwd.equals(cypher)) {
+                                            //密码正确
+                                            final String curEOSName = curEosWallet.getCurrentEosName();
                                             try {
                                                 String cpu_quantity;
                                                 String net_quantity;
                                                 if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty
                                                         (getunDelegateNet())) {
-                                                    //解除抵押CPU和NET输入都不为空
+                                                    //抵押CPU和NET输入都不为空
                                                     cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
                                                     net_quantity = AmountUtil.round(getunDelegateNet(), 4);
-                                                } else if (EmptyUtils.isEmpty(getUndelegateCpu())) {
-                                                    //解除抵押CPU输入为空
+                                                } else if (EmptyUtils.isEmpty(getDelegateCpu())) {
+                                                    //抵押CPU输入为空
                                                     cpu_quantity = "0.0000";
                                                     net_quantity = AmountUtil.round(getunDelegateNet(), 4);
                                                 } else {
-                                                    //解除抵押NET输入为空
+                                                    //抵押NET输入为空
                                                     cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
                                                     net_quantity = "0.0000";
                                                 }
@@ -585,21 +581,27 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
                                                 getP().executeUndelegateLogic(curEOSName, curEOSName,
                                                         unstake_net_quantity,
-                                                        unstake_cpu_quantity, key);
+                                                        unstake_cpu_quantity, private_key);
                                             } catch (NumberFormatException e) {
                                                 e.printStackTrace();
                                             }
                                             dialog.cancel();
                                         }
+
                                     } else {
+                                        //密码错误
+                                        iv_clear.setVisibility(View.VISIBLE);
                                         GemmaToastUtils.showLongToast(
-                                                getResources().getString(R.string.eos_tip_please_input_pass));
+                                                getResources().getString(R.string.eos_tip_wrong_password));
+
+                                        inputCount++;
+                                        if (inputCount > 3) {
+                                            dialog.cancel();
+                                            showPasswordHintDialog(OPERATION_UNDELEGATE);
+                                        }
                                     }
                                 }
-                                break;
-                                */
                         }
-
                         break;
                     default:
                         break;
@@ -608,11 +610,11 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         });
         dialog.show();
         EditText inputPass = dialog.findViewById(R.id.et_password);
-        EosWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+        EosWalletEntity curEosWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
                 .getEosWalletEntities().get(0);
-        if (EmptyUtils.isNotEmpty(curWallet)) {
+        if (EmptyUtils.isNotEmpty(curEosWallet)) {
             inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint),
-                    curWallet.getCurrentEosName()));
+                    curEosWallet.getCurrentEosName()));
         }
     }
 
@@ -640,9 +642,9 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         dialog.show();
 
         TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
-        MultiWalletEntity walletEntity  = DBManager.getInstance().getMultiWalletEntityDao()
+        MultiWalletEntity walletEntity = DBManager.getInstance().getMultiWalletEntityDao()
                 .getCurrentMultiWalletEntity();
-        if (walletEntity != null){
+        if (walletEntity != null) {
             String passHint = walletEntity.getPasswordTip();
             String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);

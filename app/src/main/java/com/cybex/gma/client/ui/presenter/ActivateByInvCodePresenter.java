@@ -14,6 +14,7 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.ActivateByInvCodeFragment;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
@@ -64,6 +65,7 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                                     String txId = registerResult.txId;
                                     updateWallet(eos_username, txId, invCode);
                                     TimeStampValidateJob.executedCreateLogic(eos_username, public_key);
+                                    UISkipMananger.launchEOSHome(getV().getActivity());
                                 }
                             } else {
                                 LoggerManager.d("err");
@@ -116,18 +118,7 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
         eosWalletEntities.add(walletEntity);
         multiWalletEntity.setEosWalletEntities(eosWalletEntities);
 
-        DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntity(multiWalletEntity, new DBCallback() {
-            @Override
-            public void onSucceed() {
-
-            }
-
-            @Override
-            public void onFailed(Throwable error) {
-
-            }
-        });
-
+        DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(multiWalletEntity);
 
 
         //获取当前数据库中已存入的钱包个数

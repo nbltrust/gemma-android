@@ -5,20 +5,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
-import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.NodeSelectedEvent;
-import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.adapter.VoteNodeListAdapter;
 import com.cybex.gma.client.ui.model.vo.VoteNodeVO;
 import com.cybex.gma.client.ui.presenter.VotePresenter;
@@ -30,7 +29,6 @@ import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.siberiadante.customdialoglib.CustomDialog;
-import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -43,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import seed39.Seed39;
 
 /**
  * 投票主页面
@@ -70,7 +69,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
     Unbinder unbinder;
 
     @OnClick(R.id.tv_exec_vote)
-    public void vote(){
+    public void vote() {
         showConfirmAuthorDialog();
     }
 
@@ -90,33 +89,33 @@ public class VoteFragment extends XFragment<VotePresenter> {
         return fragment;
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING      , sticky = true)
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
     public void onNodeSelectChanged(NodeSelectedEvent event) {
         if (EmptyUtils.isNotEmpty(event)) {
-            switch (event.getEventType()){
+            switch (event.getEventType()) {
                 case EVENT_THIS_PAGE:
                     //当前页面发送的事件
                     //动态更新底部已选投票数
                     tvVoteNumber.setText(String.format(getResources().getString(R.string.eos_amount_vote_num),
                             String.valueOf(selectedNodes.size())));
                     //动态设置底部textView颜色
-                    if (selectedNodes.size() != 0){
+                    if (selectedNodes.size() != 0) {
                         //已选节点数不为0
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable
                                 .eos_btn_vote_left_deep));
                         LoggerManager.d("hasDelegateRes", hasDelegateRes);
-                        if (hasDelegateRes){
+                        if (hasDelegateRes) {
                             //如果有抵押的资源
                             tvExecVote.setClickable(true);
                             tvExecVote.setText(getResources().getString(R.string.eos_title_vote));
                             tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_deep));
-                        }else{
+                        } else {
                             //没有被抵押的资源
                             tvExecVote.setClickable(false);
                             tvExecVote.setText(getResources().getString(R.string.eos_tip_no_avail_votes));
                             tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_light));
                         }
-                    }else {
+                    } else {
                         //已选节点数为0
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_left_light));
                         tvExecVote.setClickable(false);
@@ -133,7 +132,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     selectedNodes.addAll(event.getVoteNodeVOList());
                     tvVoteNumber.setText(String.format(getResources().getString(R.string.eos_amount_vote_num),
                             String.valueOf(selectedNodes.size())));
-                    if (selectedNodes.size() == 0){
+                    if (selectedNodes.size() == 0) {
                         //从下级页面回退时把所有节点取消了
                         tvExecVote.setClickable(false);
                         tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_light));
@@ -179,12 +178,12 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     selectedNodes.remove(curVoteNodeVO);
                 } else {
                     //点选
-                    if (selectedNodes.size() < SELECTED_NODES_LIMIT){
+                    if (selectedNodes.size() < SELECTED_NODES_LIMIT) {
                         //向已选列表中添加
                         curVoteNodeVO.ischecked = true;
                         selectedNodes.add(curVoteNodeVO);
-                    }else {
-                          GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_selected_nodes_limit));
+                    } else {
+                        GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_selected_nodes_limit));
                     }
                 }
                 //此事件用于更新本页面UI
@@ -210,11 +209,11 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     selectedNodes.remove(curVoteNodeVO);
                 } else {
                     //点选
-                    if (selectedNodes.size() < SELECTED_NODES_LIMIT){
+                    if (selectedNodes.size() < SELECTED_NODES_LIMIT) {
                         //向已选列表中添加
                         curVoteNodeVO.ischecked = true;
                         selectedNodes.add(curVoteNodeVO);
-                    }else {
+                    } else {
                         GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_selected_nodes_limit));
                     }
                 }
@@ -277,7 +276,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
         selectedNodes.clear();
     }
 
-    public void showLoading(){
+    public void showLoading() {
         listMultipleStatusView.showLoading();
     }
 
@@ -306,16 +305,16 @@ public class VoteFragment extends XFragment<VotePresenter> {
         }
     }
 
-    public void hasDelegatedRes(boolean status){
+    public void hasDelegatedRes(boolean status) {
         hasDelegateRes = status;
         if (hasDelegateRes) {
             tvExecVote.setText(getString(R.string.eos_title_vote));
-        }else {
+        } else {
             tvExecVote.setText(getString(R.string.eos_tip_no_avail_votes));
         }
     }
 
-    public void setTotalDelegatedResource(String total_amount){
+    public void setTotalDelegatedResource(String total_amount) {
         tvResource.setText(total_amount);
         /*
         if (EmptyUtils.isNotEmpty(selectedNodes)){
@@ -332,62 +331,90 @@ public class VoteFragment extends XFragment<VotePresenter> {
      * 显示投票授权dialog
      */
     private void showConfirmAuthorDialog() {
-        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-        CustomFullDialog dialog = new CustomFullDialog(getContext(),
-                R.layout.eos_dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
-
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
-            @Override
-            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.imc_cancel:
-                        dialog.cancel();
-                        break;
-                    case R.id.btn_confirm_authorization:
-                        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                        if (EmptyUtils.isNotEmpty(curWallet)){
-                            final String cypher = curWallet.getCypher();
-                            EditText mPass = dialog.findViewById(R.id.et_password);
-                            String inputPass = mPass.getText().toString().trim();
-                            if (EmptyUtils.isNotEmpty(inputPass)){
-                                final String key = JNIUtil.get_private_key(cypher, inputPass);
-                                if (key.equals("wrong password")){
-                                    GemmaToastUtils.showLongToast(getString(R.string.eos_tip_wrong_password));
-
-                                    inputCount++;
-                                    if (inputCount > 3){
-                                        dialog.cancel();
-                                        showPasswordHintDialog();
-                                    }
-
-                                }else{
-                                    //密码正确，执行投票操作
-                                    final String curEOSName = curWallet.getCurrentEosName();
-                                    List<String> producers = new ArrayList<>();
-                                    for(VoteNodeVO vo : selectedNodes){
-                                        producers.add(vo.getAccount());
-                                    }
-                                    Collections.sort(producers);
-                                    getP().executeVoteLogic(curEOSName, producers, key);
-                                    dialog.cancel();
-                                }
-                            }else{
-                                GemmaToastUtils.showLongToast(getString(R.string.eos_tip_please_input_pass));
-                            }
-
+        MultiWalletEntity wallet = DBManager.getInstance().getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
+        PasswordValidateHelper passwordValidateHelper = new PasswordValidateHelper(wallet, context);
+        passwordValidateHelper.startValidatePassword(
+                new PasswordValidateHelper.PasswordValidateCallback() {
+                    @Override
+                    public void onValidateSuccess(String password) {
+                        //密码正确，执行投票操作
+                        final String curEOSName = wallet.getEosWalletEntities().get(0).getCurrentEosName();
+                        String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
+                        final String key = Seed39.keyDecrypt(password, saved_pri_key);
+                        List<String> producers = new ArrayList<>();
+                        for (VoteNodeVO vo : selectedNodes) {
+                            producers.add(vo.getAccount());
                         }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        dialog.show();
-        if (getArguments() != null){
-            String eosname = getArguments().getString("cur_eos_name");
-            EditText etPasword = dialog.findViewById(R.id.et_password);
-            etPasword.setHint("请输入@" + eosname + "的密码");
-        }
+                        Collections.sort(producers);
+                        getP().executeVoteLogic(curEOSName, producers, key);
+                    }
+
+                    @Override
+                    public void onValidateFail(int failedCount) {
+                            showPasswordHintDialog();
+                    }
+                });
+
+
+//        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
+//        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+//                R.layout.eos_dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
+//
+//        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+//            @Override
+//            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+//                switch (view.getId()) {
+//                    case R.id.imc_cancel:
+//                        dialog.cancel();
+//                        break;
+//                    case R.id.btn_confirm_authorization:
+//                        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+//                        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+//                        if (EmptyUtils.isNotEmpty(curWallet) && EmptyUtils.isNotEmpty(curEosWallet)){
+//                            final String cypher = curWallet.getCypher();
+//                            EditText mPass = dialog.findViewById(R.id.et_password);
+//                            String inputPass = mPass.getText().toString().trim();
+//                            if (EmptyUtils.isNotEmpty(inputPass)){
+//                                final String key = JNIUtil.get_private_key(cypher, inputPass);
+//
+//                                if (key.equals("wrong password")){
+//                                    GemmaToastUtils.showLongToast(getString(R.string.eos_tip_wrong_password));
+//
+//                                    inputCount++;
+//                                    if (inputCount > 3){
+//                                        dialog.cancel();
+//                                        showPasswordHintDialog();
+//                                    }
+//
+//                                }else{
+//                                    //密码正确，执行投票操作
+//                                    final String curEOSName = curEosWallet.getCurrentEosName();
+//                                    List<String> producers = new ArrayList<>();
+//                                    for(VoteNodeVO vo : selectedNodes){
+//                                        producers.add(vo.getAccount());
+//                                    }
+//                                    Collections.sort(producers);
+//                                    getP().executeVoteLogic(curEOSName, producers, key);
+//                                    dialog.cancel();
+//                                }
+//                            }else{
+//                                GemmaToastUtils.showLongToast(getString(R.string.eos_tip_please_input_pass));
+//                            }
+//
+//                        }
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
+//        dialog.show();
+//        if (getArguments() != null){
+//            String eosname = getArguments().getString("cur_eos_name");
+//            EditText etPasword = dialog.findViewById(R.id.et_password);
+//            etPasword.setHint("请输入@" + eosname + "的密码");
+//        }
     }
 
     /**
@@ -414,8 +441,8 @@ public class VoteFragment extends XFragment<VotePresenter> {
         dialog.show();
 
         TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
-        WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)){
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        if (EmptyUtils.isNotEmpty(curWallet)) {
             String passHint = curWallet.getPasswordTip();
             String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);

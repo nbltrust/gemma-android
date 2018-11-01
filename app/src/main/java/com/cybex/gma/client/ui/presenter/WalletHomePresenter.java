@@ -44,7 +44,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                             List<String> account_names = result.account_names;
                             final String curEOSName = account_names.get(0);
                             */
-                            getV().initOnClickListeners(ParamConstants.STATUS_CONFIRMING);
+                            //getV().initOnClickListeners(ParamConstants.STATUS_CONFIRMING);
 
                             }else if (response != null && response.body() != null && response.code() == HttpConst
                                     .SERVER_INTERNAL_ERR ){

@@ -113,11 +113,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                     //调真正创建账户接口
                     LoggerManager.d("orderId", orderId);
                     if (getArguments() != null){
-                        String private_key = getArguments().getString("private_key");
-                        String password = getArguments().getString("password");
-                        String passwordTip = getArguments().getString("passwordTip");
-                        getP().createAccount(account_name, private_key, public_key,
-                                password, orderId, passwordTip);
+                        getP().createAccount(account_name, public_key, orderId);
                     }
                     break;
                 case ParamConstants.WX_SUCCESS_TOREFUND:
@@ -145,46 +141,45 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 
     /**
      * 时间戳比较验证状态判断
-     * @param event
      */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onCreateStatusReceieved(ValidateResultEvent event){
-        if (event != null){
-            dissmisProgressDialog();
-            if(event.isSuccess()){//创建成功
-                //跳转到主界面
-                UISkipMananger.launchHome(getActivity());
-                /*
-                if (curEosWallet != null && getArguments() != null){
-                    final String private_key_cypher = curEosWallet.getPrivateKey();
-                    final String private_key = Seed39.keyDecrypt(password, private_key_cypher);
-
-                    KeySendEvent keySendEvent = new KeySendEvent(private_key);
-                    EventBusProvider.postSticky(keySendEvent);
-                    WalletIDEvent walletIDEvent = new WalletIDEvent(curEosWallet.getId());
-                    EventBusProvider.postSticky(walletIDEvent);
-                    UISkipMananger.launchBakupGuide(getActivity());
-                }
-                */
-
-            }else {
-                //创建失败,弹框，删除当前钱包，判断是否还有钱包，跳转
-
-                List<MultiWalletEntity> walletEntityList = DBManager.getInstance().getMultiWalletEntityDao()
-                        .getMultiWalletEntityList();
-                showFailDialog(EmptyUtils.isEmpty(walletEntityList));
-
-                /*
-                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
-                List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao()
-                        .getWalletEntityList();
-                showFailDialog(EmptyUtils.isEmpty(walletEntityList));
-                */
-            }
-
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+//    public void onCreateStatusReceieved(ValidateResultEvent event){
+//        if (event != null){
+//            dissmisProgressDialog();
+//            if(event.isSuccess()){//创建成功
+//                //跳转到主界面
+//                UISkipMananger.launchHome(getActivity());
+//                /*
+//                if (curEosWallet != null && getArguments() != null){
+//                    final String private_key_cypher = curEosWallet.getPrivateKey();
+//                    final String private_key = Seed39.keyDecrypt(password, private_key_cypher);
+//
+//                    KeySendEvent keySendEvent = new KeySendEvent(private_key);
+//                    EventBusProvider.postSticky(keySendEvent);
+//                    WalletIDEvent walletIDEvent = new WalletIDEvent(curEosWallet.getId());
+//                    EventBusProvider.postSticky(walletIDEvent);
+//                    UISkipMananger.launchBakupGuide(getActivity());
+//                }
+//                */
+//
+//            }else {
+//                //创建失败,弹框，删除当前钱包，判断是否还有钱包，跳转
+//
+//                List<MultiWalletEntity> walletEntityList = DBManager.getInstance().getMultiWalletEntityDao()
+//                        .getMultiWalletEntityList();
+//                showFailDialog(EmptyUtils.isEmpty(walletEntityList));
+//
+//                /*
+//                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+//                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
+//                List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao()
+//                        .getWalletEntityList();
+//                showFailDialog(EmptyUtils.isEmpty(walletEntityList));
+//                */
+//            }
+//
+//        }
+//    }
 
     @Override
     public void bindUI(View rootView) {

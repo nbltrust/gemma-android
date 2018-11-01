@@ -26,8 +26,14 @@ public interface CacheConstants {
     int CURRENCY_CNY = 1;
     int CURRENCY_USD = 2;
 
-    int WALLET_TYPE_SOFT = 0;
-    int WALLET_TYPE_BLUETOOTH = 1;
+    /**
+     *  钱包类型 (0--新建助记词软件钱包 1-导入助记词类软钱包  2--硬件钱包  3-导入单个私钥类型的软钱包)
+     */
+
+    int WALLET_TYPE_MNE_CREATE = 0;
+    int WALLET_TYPE_MNE_IMPORT = 1;
+    int WALLET_TYPE_BLUETOOTH = 2;
+    int WALLET_TYPE_PRIKEY_IMPORT = 3;
 
     int STATUS_BLUETOOTH_DISCONNCETED = 0;
     int STATUS_BLUETOOTH_CONNCETED = 1;

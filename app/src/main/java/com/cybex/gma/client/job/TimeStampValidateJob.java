@@ -3,6 +3,8 @@ package com.cybex.gma.client.job;
 import android.content.Context;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.gma.client.GmaApplication;
 import com.cybex.componentservice.config.CacheConstants;
@@ -22,6 +24,7 @@ import com.cybex.gma.client.ui.request.GetBlockRequest;
 import com.cybex.gma.client.ui.request.GetKeyAccountsRequest;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.android.logger.MemoryLog;
 import com.hxlx.core.lib.utils.common.utils.DateUtil;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -149,10 +152,11 @@ public class TimeStampValidateJob {
                                         LoggerManager.d("create success");
 
                                         //更改当前钱包状态
-                                        WalletEntity successWallet = DBManager.getInstance().getWalletEntityDao()
-                                                .getCurrentWalletEntity();
-                                        successWallet.setIsConfirmLib(CacheConstants.IS_CONFIRMED);
-                                        DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(successWallet);
+                                        MultiWalletEntity successWallet = DBManager.getInstance().getMultiWalletEntityDao()
+                                                .getCurrentMultiWalletEntity();
+                                        EosWalletEntity successEosWallet = successWallet.getEosWalletEntities().get(0);
+                                        successEosWallet.setIsConfirmLib(CacheConstants.IS_CONFIRMED);
+                                        DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(successWallet);
 
                                         //Post成功事件
                                         ValidateResultEvent event_success = new ValidateResultEvent();

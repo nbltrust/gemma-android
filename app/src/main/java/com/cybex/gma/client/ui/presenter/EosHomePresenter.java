@@ -1,7 +1,10 @@
 package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.dao.WalletEntityDao;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -59,15 +62,16 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
      */
     public List<EOSNameVO> getEOSNameVOList() {
         List<EOSNameVO> voList = new ArrayList<>();
-        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (entity != null) {
-            List<String> eosNameList = GsonUtils.parseString2List(entity.getEosNameJson(), String.class);
+        MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+        if (entity != null && eosEntity != null) {
+            List<String> eosNameList = GsonUtils.parseString2List(eosEntity.getEosNameJson(), String.class);
 
             if (EmptyUtils.isNotEmpty(eosNameList) && eosNameList.size() > 1) {
                 for (int i = 0; i < eosNameList.size(); i++) {
                     String eosName = eosNameList.get(i);
                     EOSNameVO vo = new EOSNameVO();
-                    vo.isChecked = eosName.equals(entity.getCurrentEosName());
+                    vo.isChecked = eosName.equals(eosEntity.getCurrentEosName());
 
                     vo.setEosName(eosName);
                     voList.add(vo);
@@ -81,11 +85,15 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
 
 
     public void saveNewEntity(String currentEOSName) {
-        WalletEntityDao dao = DBManager.getInstance().getWalletEntityDao();
-        WalletEntity entity = dao.getCurrentWalletEntity();
-        if (entity != null) {
-            entity.setCurrentEosName(currentEOSName);
-            dao.saveOrUpateEntity(entity);
+        MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
+        MultiWalletEntity entity = dao.getCurrentMultiWalletEntity();
+        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+        if (eosEntity != null) {
+            eosEntity.setCurrentEosName(currentEOSName);
+            List<EosWalletEntity> list = entity.getEosWalletEntities();
+            list.remove(0);
+            list.add(eosEntity);
+            dao.saveOrUpateEntitySync(entity);
         }
     }
 
@@ -135,13 +143,14 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
                 @Override
                 public void subscribe(ObservableEmitter<AccountInfo> e) {
                     try {
-                        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
+                        MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+                        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
                         if (entity == null) {
                             e.onComplete();
                             return;
                         }
 
-                        String account_name = entity.getCurrentEosName();
+                        String account_name = eosEntity.getCurrentEosName();
 
                         GetAccountInfoReqParams params = new GetAccountInfoReqParams();
                         params.setAccount_name(account_name);
@@ -313,10 +322,11 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
 
 
     public void requestBanlanceInfo(StringCallback callback) {
-        WalletEntity entity = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-        if (entity == null) { return; }
+        MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+        if (eosEntity == null || entity == null) { return; }
 
-        String currentEOSName = entity.getCurrentEosName();
+        String currentEOSName = eosEntity.getCurrentEosName();
         GetCurrencyBalanceReqParams params = new GetCurrencyBalanceReqParams();
         params.setAccount(currentEOSName);
         params.setCode(VALUE_CODE);
