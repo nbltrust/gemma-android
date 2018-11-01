@@ -26,7 +26,7 @@ import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
-import com.cybex.gma.client.ui.base.CommonWebViewActivity;
+import com.cybex.componentservice.ui.activity.CommonWebViewActivity;
 import com.cybex.gma.client.ui.presenter.ImportWalletConfigPresenter;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.hxlx.core.lib.mvp.lite.XFragment;

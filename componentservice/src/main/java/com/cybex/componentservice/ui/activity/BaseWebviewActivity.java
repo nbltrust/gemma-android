@@ -1,7 +1,8 @@
-package com.cybex.gma.client.ui.base;
+package com.cybex.componentservice.ui.activity;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
@@ -14,8 +15,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.cybex.gma.client.R;
-import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.componentservice.R;
 import com.hxlx.core.lib.mvp.lite.BasePresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.just.agentweb.AgentWeb;
@@ -76,7 +76,9 @@ public abstract class BaseWebviewActivity<P extends BasePresenter> extends XActi
         Bundle bundle = new Bundle();
         bundle.putString(KEY_URL, url);
         bundle.putString(KEY_TITLE, title);
-        UISkipMananger.startActivity(mActivity, activity, bundle);
+        Intent intent = new Intent(mActivity, activity);
+        intent.putExtras(bundle);
+        mActivity.startActivity(intent);
     }
 
 
@@ -192,7 +194,7 @@ public abstract class BaseWebviewActivity<P extends BasePresenter> extends XActi
 
     @Override
     public int getLayoutId() {
-        return R.layout.eos_activity_common_webview;
+        return R.layout.baseservice_activity_common_webview;
     }
 
 }

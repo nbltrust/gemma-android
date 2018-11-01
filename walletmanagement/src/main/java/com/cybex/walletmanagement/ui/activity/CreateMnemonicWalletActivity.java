@@ -22,10 +22,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.cybex.componentservice.api.ApiPath;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.ui.activity.CommonWebViewActivity;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.walletmanagement.R;
@@ -38,6 +40,7 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 
 import java.util.List;
+import java.util.Locale;
 
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -256,35 +259,35 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
             @Override
             public void onClick(View v) {
                 int savedLanguageType = LanguageManager.getInstance(context).getLanguageType();
-//                switch (savedLanguageType) {
-//                    case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
-//                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-//                                .string.terms_of_service));
-//                        break;
-//                    case LanguageManager.LanguageType.LANGUAGE_EN:
-//                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
-//                                .string.terms_of_service));
-//                        break;
-//                    case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
-//                        Locale systemLanguageType = LanguageManager.getInstance(this).getSysLocale();
-//                        switch (systemLanguageType.getDisplayLanguage()) {
-//                            case CN:
-//                                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
-//                                        .getString(R.string.terms_of_service));
-//                                break;
-//                            case EN:
-//                                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_EN, getResources()
-//                                        .getString(R.string.terms_of_service));
-//                                break;
-//                            default:
-//                                CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources()
-//                                        .getString(R.string.terms_of_service));
-//                        }
-//                        break;
-//                    default:
-//                        CommonWebViewActivity.startWebView(this, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-//                                .string.terms_of_service));
-//                }
+                switch (savedLanguageType) {
+                    case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
+                        CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
+                                .string.terms_of_service));
+                        break;
+                    case LanguageManager.LanguageType.LANGUAGE_EN:
+                        CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
+                                .string.terms_of_service));
+                        break;
+                    case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+                        Locale systemLanguageType = LanguageManager.getInstance(context).getSysLocale();
+                        switch (systemLanguageType.getDisplayLanguage()) {
+                            case BaseConst.CN:
+                                CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources()
+                                        .getString(R.string.terms_of_service));
+                                break;
+                            case BaseConst.EN:
+                                CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_EN, getResources()
+                                        .getString(R.string.terms_of_service));
+                                break;
+                            default:
+                                CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources()
+                                        .getString(R.string.terms_of_service));
+                        }
+                        break;
+                    default:
+                        CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
+                                .string.terms_of_service));
+                }
             }
         });
 

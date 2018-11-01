@@ -228,7 +228,7 @@ dependencies {
 //    implementation deps.gma.zxing
 //    implementation deps.gma.androidanimations
 //    api deps.gma.MaterialEditText
-    implementation deps.gma.agentweb
+//    implementation deps.gma.agentweb
 
     annotationProcessor deps.dbflow.processor
 //    api deps.dbflow.core

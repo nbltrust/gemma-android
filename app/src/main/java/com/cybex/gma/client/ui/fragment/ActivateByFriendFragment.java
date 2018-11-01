@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.cybex.componentservice.api.ApiPath;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.ui.base.CommonWebViewActivity;
+import com.cybex.componentservice.ui.activity.CommonWebViewActivity;
 import com.cybex.gma.client.utils.ClipboardUtils;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;

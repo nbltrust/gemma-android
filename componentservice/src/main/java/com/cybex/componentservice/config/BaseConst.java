@@ -29,6 +29,10 @@ public class BaseConst {
     public static final String INITIAL_WALLET_NAME="Unnamed Wallet 1";
 
 
+    public static final String CN = "中文";
+    public static final String EN = "English";
+
+
 
 
 

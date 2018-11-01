@@ -234,7 +234,7 @@
 
         <!-- 应用内浏览器窗口 -->
         <activity
-            android:name=".ui.base.CommonWebViewActivity"
+            android:name="com.cybex.componentservice.ui.activity.CommonWebViewActivity"
             android:configChanges="locale|layoutDirection|mcc|mnc|orientation|screenSize"
             android:hardwareAccelerated="true"
             android:label="@string/fast_loading"

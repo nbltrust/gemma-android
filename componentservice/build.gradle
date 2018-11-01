@@ -123,6 +123,7 @@ dependencies {
     api deps.gma.zxing
     api deps.gma.androidanimations
     api deps.gma.MaterialEditText
+    api deps.gma.agentweb
 
     api (name: 'bluetoothlib-release', ext: 'aar')
 
