@@ -107,7 +107,7 @@ public class BluetoothEnrollFPActivity extends XActivity {
 
     private void setCurrentWalletStatus() {
         MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
-        MultiWalletEntity entity = dao.getCurrentWalletEntity();
+        MultiWalletEntity entity = dao.getCurrentMultiWalletEntity();
         entity.setIsSetBluetoothFP(1);
         dao.saveOrUpateEntitySync(entity);
     }
