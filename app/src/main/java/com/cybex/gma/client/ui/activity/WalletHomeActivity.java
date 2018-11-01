@@ -2,7 +2,6 @@ package com.cybex.gma.client.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -14,21 +13,17 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
-import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.utils.PasswordValidateHelper;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletHomePresenter;
 import com.cybex.gma.client.widget.EosCardView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +46,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     private MultiWalletEntity curWallet;
     private EosWalletEntity curEosWallet;
 
+    @BindView(R.id.rootview)
+    LinearLayout rootview;
     @BindView(R.id.view_wookong_status)
     LinearLayout mViewWookongStatus;
     @BindView(R.id.iv_wookong_logo)
@@ -94,6 +91,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         handleInitType();
 
+        rootview.setPaddingRelative(0, SizeUtil.getStatusBarHeight(),0,0);
 //
 //        MultiWalletEntity currentMultiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
 //

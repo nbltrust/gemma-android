@@ -143,6 +143,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
      */
     protected void setImmersiveStyle(){
         Sofia.with(mContext)
+                .statusBarDarkFont()
                 .statusBarBackgroundAlpha(0)
                 .navigationBarBackgroundAlpha(0)
                 .invasionStatusBar();

@@ -1,5 +1,6 @@
 package com.cybex.componentservice.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
@@ -18,6 +19,19 @@ public class SizeUtil {
 
     public static int getScreenHeight() {
         return getDisplayMetrics().heightPixels;
+    }
+
+    public static int getStatusBarHeight() {
+        return getInternalDimensionSize(Resources.getSystem(), "status_bar_height");
+    }
+
+    private static int getInternalDimensionSize(Resources res, String key) {
+        int result = 0;
+        int resourceId = res.getIdentifier(key, "dimen", "android");
+        if (resourceId > 0) {
+            result = res.getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     public static int px2dp(float pxValue) {
