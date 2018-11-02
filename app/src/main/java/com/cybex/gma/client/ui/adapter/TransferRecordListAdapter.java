@@ -1,17 +1,22 @@
 package com.cybex.gma.client.ui.adapter;
 
+import android.graphics.Color;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
+import com.hxlx.core.lib.utils.common.utils.DateUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,31 +72,48 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
     @Override
     protected void convert(BaseViewHolder helper, TransferHistory item) {
         if (item != null) {
+
+            //time header
+            TextView tvHeaderDate = helper.getView(R.id.tv_header_date);
+            Date date = DateUtil.strToDate(item.time, DateUtil.Format.EOS_DATE_FORMAT);
+            tvHeaderDate.setText(DateUtil.date2str(date,DateUtil.Format.TRANSFER_ITEM_DATE));
+            int adapterPosition = helper.getAdapterPosition();
+            if(adapterPosition==0){
+                tvHeaderDate.setVisibility(View.VISIBLE);
+            }else {
+                List<TransferHistory> data = getData();
+                TransferHistory lastItem = data.get(adapterPosition - 1);
+                boolean sameDay = DateUtil.isSameDay(item.time, lastItem.time, DateUtil.Format.EOS_DATE_FORMAT);
+                tvHeaderDate.setVisibility(sameDay?View.GONE:View.VISIBLE);
+            }
+
             ImageView iconArrow = helper.getView(R.id.imv_arrow);
             String account = "";
             if (!TextUtils.isEmpty(currentEosName)) {
-                if (item.from.equals(currentEosName)) {
+                if (item.from.equals(currentEosName)||adapterPosition%2==0) {
                     //转出 -
                     account = item.to;
-                    iconArrow.setImageResource(R.drawable.icon_arrow_up);
+                    iconArrow.setImageResource(R.drawable.ic_tab_pay);
                     helper.setText(R.id.tv_transfer_amount, "-" + item.value);
+                    helper.setTextColor(R.id.tv_transfer_amount, Color.parseColor("#ff3b30"));
+
+                    helper.setText(R.id.tv_transfer_account,
+                            mContext.getResources()
+                                    .getString(R.string.transfer_to) + account);
 
                 } else {
                     //转入 +
                     account = item.from;
-                    iconArrow.setImageResource(R.drawable.icon_arrow_down);
+                    iconArrow.setImageResource(R.drawable.ic_tab_income);
                     helper.setText(R.id.tv_transfer_amount, "+" + item.value);
+                    helper.setTextColor(R.id.tv_transfer_amount, Color.parseColor("#4cd964"));
+
+                    helper.setText(R.id.tv_transfer_account,
+                            mContext.getResources()
+                                    .getString(R.string.transfer_from) + account);
                 }
-
-
-                helper.setText(R.id.tv_transfer_account,
-                        mContext.getResources()
-                                .getString(R.string.eos_at_char) + account);
             }
-
-
             helper.setText(R.id.tv_transfer_status, getCurrentStatus(item.status));
-            helper.setText(R.id.tv_transfer_date, item.time);
         }
 
 

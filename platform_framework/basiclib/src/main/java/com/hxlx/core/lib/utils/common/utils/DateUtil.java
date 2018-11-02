@@ -380,6 +380,8 @@ public class DateUtil {
         return tarYear == comYear;
     }
 
+
+
     public static Date str2date(String str, String format) {
         Date date = null;
         try {
@@ -492,6 +494,21 @@ public class DateUtil {
         Date date = str2date(dateStr, oldFormat);
         Date curDate = new Date();
         return curDate.getYear() == date.getYear();
+    }
+
+    public static boolean isSameDay(String dateStr1,String dateStr2, String oldFormat) {
+        Date date1 = str2date(dateStr1, oldFormat);
+        Date date2 = str2date(dateStr2, oldFormat);
+        if(date1.getYear()!=date2.getYear()){
+            return false;
+        }
+        if(date1.getMonth()!=date2.getMonth()){
+            return false;
+        }
+        if(date1.getDate()!=date2.getDate()){
+            return false;
+        }
+        return true;
     }
 
     public static String formatMillisTime(long timeMillis, String pattern) {
@@ -687,6 +704,7 @@ public class DateUtil {
         public static final String EOS_DATE_FORMAT_WITH_MILLI = "yyyy-MM-dd'T'HH:mm:ss.SSS";
         public static final String EOS_TIMESTAMP_FORMAT_DATE = "yyyy-MM-dd";
         public static final String EOS_TIMESTAMP_FORMAT_TIME = "HH:mm:ss.SSS";
+        public static final String TRANSFER_ITEM_DATE = "MM-dd yyyy";
     }
 
 
