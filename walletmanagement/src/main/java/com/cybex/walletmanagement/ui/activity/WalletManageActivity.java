@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.base.view.LabelLayout;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
@@ -38,6 +39,14 @@ public class WalletManageActivity extends XActivity {
         labelImportWallet = (LabelLayout) findViewById(R.id.label_import_wallet);
         labelCreateWallet = (LabelLayout) findViewById(R.id.label_create_wallet);
         containerWookong = (RelativeLayout) findViewById(R.id.container_wookong);
+
+        containerWookong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance().build(RouterConst.PATH_TO_BLUETOOTH_PAIR)
+                        .navigation();
+            }
+        });
 
         labelCurrentWallet.setOnClickListener(new View.OnClickListener() {
             @Override

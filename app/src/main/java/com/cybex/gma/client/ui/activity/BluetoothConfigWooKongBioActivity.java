@@ -25,6 +25,7 @@ import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.manager.WookongBioManager;
 import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
@@ -226,7 +227,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     setDividerFocusStyle(viewDividerSetPass);
-                    tvSetPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    tvSetPass.setTextColor(getResources().getColor(R.color.black_title));
                     edtSetPass.setTypeface(Typeface.DEFAULT_BOLD);
                     if (EmptyUtils.isNotEmpty(getPassword())) {
                         ivSetPassClear.setVisibility(View.VISIBLE);
@@ -234,7 +235,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
                 } else {
                     setDividerDefaultStyle(viewDividerSetPass);
                     ivSetPassClear.setVisibility(View.GONE);
-                    tvSetPass.setTextColor(getResources().getColor(R.color.steel));
+                    tvSetPass.setTextColor(getResources().getColor(R.color.black_context));
                     if (EmptyUtils.isEmpty(getPassword())) { edtSetPass.setTypeface(Typeface.DEFAULT); }
                 }
             }
@@ -276,11 +277,11 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     if (EmptyUtils.isNotEmpty(getPassHint())) { ivPassHintClear.setVisibility(View.VISIBLE); }
-                    tvPassHint.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+                    tvPassHint.setTextColor(getResources().getColor(R.color.black_title));
                     edtPassHint.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
                     ivPassHintClear.setVisibility(View.GONE);
-                    tvPassHint.setTextColor(getResources().getColor(R.color.steel));
+                    tvPassHint.setTextColor(getResources().getColor(R.color.black_context));
                     if (EmptyUtils.isEmpty(getPassHint())) { edtPassHint.setTypeface(Typeface.DEFAULT); }
                 }
             }
@@ -292,6 +293,15 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearListeners();
+        WookongBioManager.getInstance().freeThread();
+        WookongBioManager.getInstance().freeResource();
+
     }
 
     @Override
@@ -326,11 +336,6 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
     }
 
     @Override
-    public void onBackPressedSupport() {
-        super.onBackPressedSupport();
-    }
-
-    @Override
     public int getLayoutId() {
         return R.layout.eos_activity_bluetooth_config_wookong_bio;
     }
@@ -340,10 +345,40 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         return null;
     }
 
+    @Override
+    public void onBackPressedSupport() {
+        super.onBackPressedSupport();
+    }
+
+    @Override
+    protected void setNavibarTitle(String title, boolean isShowBack) {
+        if (EmptyUtils.isEmpty(title)) { return; }
+        mTitleBar = findViewById(com.hxlx.core.lib.R.id.btn_navibar);
+        mTitleBar.setTitle(title);
+        mTitleBar.setTitleColor(com.hxlx.core.lib.R.color.black_title);
+        mTitleBar.setBackgroundColor(getResources().getColor(com.hxlx.core.lib.R.color.ffffff_white_1000));
+        mTitleBar.setTitleSize(18);
+        mTitleBar.setTitleBold(true);
+        mTitleBar.setImmersive(true);
+
+        if (isShowBack) {
+            mTitleBar.setLeftImageResource(com.hxlx.core.lib.R.drawable.ic_notify_back);
+            mTitleBar.setLeftClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BluetoothConnectKeepJob.removeJob();
+                    WookongBioManager.getInstance().freeContext(contextHandle);
+                    finish();
+                }
+            });
+        }
+
+    }
+
     public void setRepeatPassValidStyle() {
         //两次输入密码匹配
         tvRepeatPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
-        tvRepeatPass.setTextColor(getResources().getColor(R.color.steel));
+        tvRepeatPass.setTextColor(getResources().getColor(R.color.black_context));
         setDividerDefaultStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
             ivRepeatPassClear.setVisibility(View.VISIBLE);
@@ -355,7 +390,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     public void setRepeatPassFocusStyle() {
         tvRepeatPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
-        tvRepeatPass.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+        tvRepeatPass.setTextColor(getResources().getColor(R.color.black_title));
         setDividerFocusStyle(viewDividerRepeatPass);
         if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
             ivRepeatPassClear.setVisibility(View.VISIBLE);
@@ -391,7 +426,6 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         // button.setTextColor(getResources().getColor(R.color.black_title));
     }
 
-
     public String getPassword() {
         return edtSetPass.getText().toString().trim();
     }
@@ -402,16 +436,6 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
     public String getPassHint() {
         return edtPassHint.getText().toString().trim();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        clearListeners();
-        if (mHandler != null) {
-            WookongBioManager.getInstance().freeThread();
-            WookongBioManager.getInstance().freeResource();
-        }
     }
 
     public void setEditTextHintStyle(EditText editText, int resId) {
@@ -435,7 +459,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
                 .getDimension(R.dimen.dimen_12));
         divider.setLayoutParams(params);
-        divider.setBackgroundColor(getResources().getColor(R.color.dark_slate_blue));
+        divider.setBackgroundColor(getResources().getColor(R.color.black_title));
 
     }
 
@@ -444,7 +468,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         setHorizontalMargins(params, (int) getResources().getDimension(R.dimen.dimen_12), (int) getResources()
                 .getDimension(R.dimen.dimen_12));
         divider.setLayoutParams(params);
-        divider.setBackgroundColor(getResources().getColor(R.color.paleGrey));
+        divider.setBackgroundColor(getResources().getColor(R.color.very_light_pink));
 
     }
 
@@ -481,6 +505,26 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
         WookongBioManager.getInstance().initPIN(0, 0, password);
     }
 
+    /**
+     * 验证失败回调
+     *
+     * @param errors
+     */
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            AlertUtil.showShortUrgeAlert(this, message);
+            if (view instanceof EditText) {
+                GemmaToastUtils.showLongToast(message);
+            } else {
+                GemmaToastUtils.showLongToast(message);
+            }
+        }
+    }
 
     class BluetoothHandler extends Handler {
 
@@ -512,28 +556,6 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
 
                 default:
                     break;
-            }
-        }
-    }
-
-
-    /**
-     * 验证失败回调
-     *
-     * @param errors
-     */
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(this);
-
-            AlertUtil.showShortUrgeAlert(this, message);
-            if (view instanceof EditText) {
-                GemmaToastUtils.showLongToast(message);
-            } else {
-                GemmaToastUtils.showLongToast(message);
             }
         }
     }

@@ -19,6 +19,7 @@ import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.manager.WookongBioManager;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
@@ -212,8 +213,8 @@ public class BluetoothSettingFPActivity extends XActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        WookongBioManager.getInstance().stopHeartBeat();
-        //BluetoothConnectKeepJob.removeJob();
+       //WookongBioManager.getInstance().stopHeartBeat();
+        BluetoothConnectKeepJob.removeJob();
     }
 
     public void initWebView(){

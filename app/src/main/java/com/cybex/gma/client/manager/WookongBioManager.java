@@ -119,10 +119,11 @@ public class WookongBioManager {
     /**
      * 调用中间件freeContext方法与设备断开连接
      */
-    public void disconnect(long mContextHandle){
+    public void freeContext(long mContextHandle){
             connectThread.setFreeContextWrapper(mContextHandle);
             connectThread.start();
     }
+
 
     /**
      * 调用中间件setGetInfoWrapper来获取设备信息
@@ -228,7 +229,7 @@ public class WookongBioManager {
      * 调用中间件setGetCheckCodeWrapper来初始化PIN码
      */
     public void getCheckCode(long mContextHandle, int devIndex){
-        connectThread.setGetCheckCodeWrapper(mContextHandle, 0);
+        connectThread.setGetCheckCodeWrapper(mContextHandle, devIndex);
         connectThread.start();
     }
 
@@ -247,7 +248,7 @@ public class WookongBioManager {
      * 终止线程
      */
     public void freeThread(){
-        connectThread.interrupt();
+        if (connectThread != null)connectThread.interrupt();
     }
 
 }

@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
@@ -33,6 +34,7 @@ import butterknife.ButterKnife;
  *
  * Created by wanglin on 2018/9/3.
  */
+@Route(path = "/bluetooth/pair")
 public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
 
 
@@ -67,4 +69,8 @@ public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
         return new BluetoothPairPresenter();
     }
 
+    @Override
+    public boolean useArouter() {
+        return true;
+    }
 }

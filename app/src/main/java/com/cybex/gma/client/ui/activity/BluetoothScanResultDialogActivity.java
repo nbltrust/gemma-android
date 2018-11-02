@@ -16,7 +16,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ContextHandleEvent;
@@ -70,7 +69,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
         mHandler = new ScanDeviceHandler();
         WookongBioManager.getInstance().init(mHandler);
-        WookongBioManager.getInstance().initHeartBeat(mHandler);
 
         //调起Activity时执行一次扫描
         this.startScan();
@@ -80,11 +78,8 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mHandler != null){
-            //WookongBioManager.getInstance().disconnect(contextHandle);
-            WookongBioManager.getInstance().freeThread();
-            WookongBioManager.getInstance().freeResource();
-        }
+        WookongBioManager.getInstance().freeThread();
+        WookongBioManager.getInstance().freeResource();
     }
 
     private void startScan() {
@@ -108,6 +103,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                viewSpinKit.setVisibility(View.GONE);
                 if (EmptyUtils.isNotEmpty(deviceNameList)) {
                     String deviceName = deviceNameList.get(position).deviceName;
                     SPUtils.getInstance().put(ParamConstants.DEVICE_NAME, deviceName);
@@ -161,6 +157,9 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 switch (view.getId()) {
                     case R.id.btn_close:
                         dialog.cancel();
+                        WookongBioManager.getInstance().freeContext(contextHandle);
+                        BluetoothConnectKeepJob.removeJob();
+                        finish();
                         break;
                     case R.id.btn_create_wallet:
                         dialog.cancel();
@@ -170,9 +169,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
                         UISkipMananger.skipBluetoothConfigWookongBioActivity(BluetoothScanResultDialogActivity.this,
                                 bd);
-                        //开启连接请求轮询
-                        WookongBioManager.getInstance().startHeartBeat(contextHandle, 0);
-                        //BluetoothConnectKeepJob.startConnectPolling(contextHandle, mHandler, updatePosition);
                         finish();
                         break;
                     case R.id.btn_import_mne:
@@ -264,7 +260,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                             showConnectBioFailDialog();
                         }
 
-                        if (mHandler != null){
+                        if (mHandler != null) {
                             WookongBioManager.getInstance().freeThread();
                         }
 
@@ -274,6 +270,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 case BlueToothWrapper.MSG_INIT_CONTEXT_START:
                     break;
                 case BlueToothWrapper.MSG_INIT_CONTEXT_FINISH:
+                    //连接完成
                     BlueToothWrapper.InitContextReturnValue returnValue = (BlueToothWrapper.InitContextReturnValue) msg.obj;
                     if ((returnValue != null) && (returnValue.getReturnValue()
                             == MiddlewareInterface.PAEW_RET_SUCCESS)) {
@@ -287,14 +284,15 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         ContextHandleEvent event = new ContextHandleEvent();
                         event.setContextHanle(contextHandle);
                         EventBusProvider.postSticky(event);
+                        //连接完成后开启心跳保持连接
+                        BluetoothConnectKeepJob.startConnectPolling(contextHandle, mHandler, 0);
 
-
-                        if (mHandler != null){
+                        if (mHandler != null) {
                             WookongBioManager.getInstance().getDeviceInfo(contextHandle, 0);
                         }
                     }
 
-                    if (mHandler != null){
+                    if (mHandler != null) {
                         WookongBioManager.getInstance().freeThread();
                     }
                     break;
