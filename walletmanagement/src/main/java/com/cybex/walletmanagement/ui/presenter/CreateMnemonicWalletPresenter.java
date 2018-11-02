@@ -13,6 +13,7 @@ import com.cybex.componentservice.event.CloseInitialPageEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.walletmanagement.BuildConfig;
 import com.cybex.walletmanagement.ui.activity.CreateMnemonicWalletActivity;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
@@ -170,10 +171,12 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
                 DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntity(multiWalletEntity, new DBCallback() {
                     @Override
                     public void onSucceed() {
-                        List<MultiWalletEntity> list =
-                                SQLite.select().from(MultiWalletEntity.class)
-                                        .queryList();
-                        LoggerManager.d("list=" + list);
+                        if(BuildConfig.DEBUG){
+                            List<MultiWalletEntity> list =
+                                    SQLite.select().from(MultiWalletEntity.class)
+                                            .queryList();
+                            LoggerManager.d("list=" + list);
+                        }
                         emitter.onNext(mnemonic);
                         emitter.onComplete();
                     }

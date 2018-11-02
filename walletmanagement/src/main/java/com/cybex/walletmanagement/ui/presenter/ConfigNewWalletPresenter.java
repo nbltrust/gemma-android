@@ -14,6 +14,7 @@ import com.cybex.componentservice.event.CloseInitialPageEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.walletmanagement.BuildConfig;
 import com.cybex.walletmanagement.ui.activity.ConfigNewWalletActivity;
 import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
@@ -150,10 +151,12 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                 DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntity(multiWalletEntity, new DBCallback() {
                     @Override
                     public void onSucceed() {
-                        List<MultiWalletEntity> list =
-                                SQLite.select().from(MultiWalletEntity.class)
-                                        .queryList();
-                        LoggerManager.d("list=" + list);
+                        if(BuildConfig.DEBUG) {
+                            List<MultiWalletEntity> list =
+                                    SQLite.select().from(MultiWalletEntity.class)
+                                            .queryList();
+                            LoggerManager.d("list=" + list);
+                        }
                         emitter.onNext(new Object());
                         emitter.onComplete();
                     }
