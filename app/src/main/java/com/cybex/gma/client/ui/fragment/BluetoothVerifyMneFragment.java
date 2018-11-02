@@ -352,9 +352,12 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceivePollevent(AccountRegisterEvent event) {
         if (EmptyUtils.isNotEmpty(event)) {
+            /*
             getP().doAccountRegisterRequest(infoVo.getAccountName(),
                     SN, SN_sign, public_key, public_key_hex, public_key_sign, infoVo.getPassword(),
                     infoVo.getPasswordTip(), bd);
+            */
+            UISkipMananger.launchHome(getActivity());
         }
     }
 

@@ -19,6 +19,8 @@ import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.activity.ActivateAccountMethodActivity;
+import com.cybex.gma.client.ui.activity.CreateEosAccountActivity;
 import com.cybex.gma.client.ui.fragment.ActivateByRMBFragment;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
 import com.cybex.gma.client.ui.model.request.WXPayInitialOrderReqParams;
@@ -36,6 +38,7 @@ import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.NetworkUtils;
 import com.hxlx.core.lib.utils.android.SysUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
@@ -207,9 +210,9 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                 if (registerResult != null) {
                                     String txId = registerResult.txId;
                                     updateWallet(eos_username, txId, orderId);
-                                    //saveAccount(public_key, private_key, password, eos_username, passwordTip, txId,
-                                            //orderId);
                                     TimeStampValidateJob.executedCreateLogic(eos_username, public_key);
+                                    AppManager.getAppManager().finishActivity(ActivateAccountMethodActivity.class);
+                                    AppManager.getAppManager().finishActivity(CreateEosAccountActivity.class);
                                     UISkipMananger.launchEOSHome(getV().getActivity());
                                 }
                             } else {
@@ -305,6 +308,8 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
         walletEntity.setTxId(txId);
         //设置邀请码
         walletEntity.setInvCode(invCode);
+        //设置EOS钱包状态为正在创建
+        walletEntity.setIsConfirmLib(ParamConstants.EOSNAME_CONFIRMING);
 
         //更新钱包
         eosWalletEntities.remove(0);

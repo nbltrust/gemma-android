@@ -5,15 +5,21 @@ import android.support.annotation.NonNull;
 
 import com.cybex.componentservice.api.callback.CustomRequestCallback;
 import com.cybex.componentservice.api.data.response.CustomData;
-import com.cybex.componentservice.db.entity.WalletEntity;
-import com.cybex.gma.client.R;
+import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.EthWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.job.TimeStampValidateJob;
-import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.BluetoothVerifyMneFragment;
 import com.cybex.gma.client.ui.model.request.BluetoothCreateAccountReqParams;
 import com.cybex.gma.client.ui.model.response.UserRegisterResult;
@@ -21,12 +27,21 @@ import com.cybex.gma.client.ui.request.BluetoothAccountRegisterRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
+import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import seed39.Seed39;
 
 /**
  * Created by wanglin on 2018/9/18.
@@ -78,18 +93,18 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
 
                     @Override
                     public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
-                        if (getV() != null){
+                        if (getV() != null) {
                             getV().dissmisProgressDialog();
 
                             if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
                                 UserRegisterResult registerResult = data.result;
                                 if (registerResult != null) {
                                     String txId = registerResult.txId;
-                                    saveAccount(public_key, public_key_sig, password, account_name, password_tip, txId, SN);
+                                    saveAccount(public_key, public_key_sig, password, account_name, password_tip,
+                                     txId, SN);
                                     TimeStampValidateJob.executedCreateLogic(account_name, public_key);
                                     AppManager.getAppManager().finishAllActivity();
                                     UISkipMananger.skipBluetoothSettingFPActivity(getV().getActivity(), bd);
-                                    //LibValidateJob.startPolling(10000);
                                 }
                             } else {
                                 showOnErrorInfo(data.code);
@@ -172,6 +187,9 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
         //最后执行存入操作，此前包此时为当前钱包
         DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
     }
+
+
+
 
 
     /**

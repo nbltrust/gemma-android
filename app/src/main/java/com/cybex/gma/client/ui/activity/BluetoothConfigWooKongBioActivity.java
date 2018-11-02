@@ -20,18 +20,24 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.DeviceInfoEvent;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.manager.WookongBioManager;
 import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
+import com.cybex.gma.client.ui.presenter.BluetoothConfigWookongBioPresenter;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
+import com.extropies.common.MiddlewareInterface;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -54,7 +60,8 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 /**
  * 配置WooKong Bio页面
  */
-public class BluetoothConfigWooKongBioActivity extends XActivity implements Validator.ValidationListener {
+public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfigWookongBioPresenter> implements Validator
+        .ValidationListener {
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
@@ -341,8 +348,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public BluetoothConfigWookongBioPresenter newP() {
+        return new BluetoothConfigWookongBioPresenter();
     }
 
     @Override
@@ -537,7 +544,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
                     break;
                 case BlueToothWrapper.MSG_INIT_PIN_FINISH:
                     //已完成设置PIN
-                    dissmisProgressDialog();
+
                     //跳转到创建账户名界面
                     String password = String.valueOf(edtSetPass.getText());
                     String pwdTip = String.valueOf(edtPassHint.getText());
@@ -549,8 +556,33 @@ public class BluetoothConfigWooKongBioActivity extends XActivity implements Vali
                         bd.putParcelable(ParamConstants.KEY_BLUETOOTH_ACCOUNT_INFO, vo);
                     }
 
-                    UISkipMananger.skipCreateBluetoothWalletActivity(BluetoothConfigWooKongBioActivity.this, bd);
-                    finish();
+                    WookongBioManager.getInstance().getAddress(contextHandle, 0, MiddlewareInterface
+                            .PAEW_COIN_TYPE_EOS, CacheConstants.EOS_DERIVE_PATH);
+
+                    break;
+                case BlueToothWrapper.MSG_GET_ADDRESS_FINISH:
+                    BlueToothWrapper.GetAddressReturnValue returnValueAddress = (BlueToothWrapper
+                            .GetAddressReturnValue) msg.obj;
+                    if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
+
+                            String[] strArr = returnValueAddress.getAddress().split("####");
+                            String publicKey = strArr[0];
+
+                            DeviceInfoEvent event = new DeviceInfoEvent();
+                            event.setEosPublicKey(publicKey);
+                            EventBusProvider.postSticky(event);
+
+                            final String deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
+                            if (deviceName != null)getP().creatBluetoothWallet(deviceName, publicKey);
+                            UISkipMananger.skipBackupMneGuideActivity(BluetoothConfigWooKongBioActivity.this, bd);
+                            finish();
+
+                        }else {
+                            GemmaToastUtils.showLongToast("Bio Communication Error");
+                        }
+                    }
+                    dissmisProgressDialog();
 
                     break;
 

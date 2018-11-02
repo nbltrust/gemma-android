@@ -152,6 +152,7 @@ public class BluetoothSettingFPActivity extends XActivity {
                 });
             }
         });
+
         /*
         if (bezierAnimator != null && bezierAnimator.isRunning()) {
             return;
@@ -164,6 +165,7 @@ public class BluetoothSettingFPActivity extends XActivity {
 
         stage++;
         */
+
     }
 
     @Override
@@ -189,7 +191,7 @@ public class BluetoothSettingFPActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getString(R.string.eos_title_setting_fp), false);
-        mTitleBar.setActionTextColor(Color.WHITE);
+        mTitleBar.setActionTextColor(Color.BLACK);
         mTitleBar.setActionTextSize(18);
         mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.eos_btn_title_skip)) {
             @Override

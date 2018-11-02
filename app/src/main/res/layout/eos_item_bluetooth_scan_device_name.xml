@@ -41,7 +41,7 @@
             android:textColor="@color/red_f3323b"
             android:textSize="@dimen/font_3.5"
             android:visibility="visible"
-            tools:text="未初始化z"/>
+            tools:text="未初始化"/>
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/view_progress"

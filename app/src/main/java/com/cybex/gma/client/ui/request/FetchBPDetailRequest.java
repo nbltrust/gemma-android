@@ -18,16 +18,8 @@ public class FetchBPDetailRequest extends GMAHttpRequest {
         setMethod(ApiPath.HOST_CENTER_SERVER + ApiMethod.API_FETCH_BP_DETAILS + number);
     }
 
-    /*
-    public FetchBPDetailRequest setJsonParams(String jsonParams) {
-        super.setJsonParams(jsonParams);
-        return this;
-    }
-    */
-
     public FetchBPDetailRequest FetchBPDetailRequest(JsonCallback<FetchBPDetailsResult> callback) {
         getJsonNoRxRequest(TAG, callback);
-        //postJsonNoRxRequest(TAG, callback);
         return this;
     }
 }

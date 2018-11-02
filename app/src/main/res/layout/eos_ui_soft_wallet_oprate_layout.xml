@@ -82,8 +82,6 @@
 
         </LinearLayout>
 
-
-
     </android.support.constraint.ConstraintLayout>
 
     <View
@@ -93,50 +91,17 @@
         style="@style/common_divider">
     </View>
 
-    <!--
 
-    <com.allen.library.SuperTextView
-        android:id="@+id/superTextView_card_record"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="@dimen/dimen_20"
-        android:layout_marginStart="@dimen/dimen_20"
-       android:layout_marginTop="10dp"
-        android:elevation="@dimen/dimen_1"
+    <android.support.v7.widget.RecyclerView
         title:layout_constraintTop_toBottomOf="@id/view_resource_manage"
-        title:layout_constraintEnd_toEndOf="parent"
         title:layout_constraintStart_toStartOf="parent"
-        title:sLeftTextColor="@color/darkSlateBlue"
-        title:sLeftTextSize="@dimen/font_3.5"
-        title:sLeftTextString="@string/eos_transfer_records"
-        title:sRightTvDrawableRight="@drawable/ic_arrow"
-        title:sShapeCornersRadius="6dp"
-        title:sShapeSelectorPressedColor="@color/item_pressed"
-        title:sUseShape="true">
-
-    </com.allen.library.SuperTextView>
-
-    <com.allen.library.SuperTextView
-        android:id="@+id/superTextView_card_vote"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="@dimen/dimen_20"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:elevation="@dimen/dimen_1"
         title:layout_constraintEnd_toEndOf="parent"
-        title:layout_constraintStart_toStartOf="parent"
-        title:layout_constraintTop_toBottomOf="@id/superTextView_card_record"
-        title:sLeftTextColor="@color/darkSlateBlue"
-        title:sLeftTextSize="@dimen/font_3.5"
-        title:sLeftTextString="@string/eos_tip_vote"
-        title:sRightTvDrawableRight="@drawable/ic_arrow"
-        title:sShapeCornersRadius="6dp"
-        title:sShapeSelectorPressedColor="@color/item_pressed"
-        title:sUseShape="true">
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/recycler_token_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    </com.allen.library.SuperTextView>
-
-    -->
+    </android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>

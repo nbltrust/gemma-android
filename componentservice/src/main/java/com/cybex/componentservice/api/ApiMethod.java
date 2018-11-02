@@ -37,6 +37,11 @@ public interface ApiMethod {
      */
     String API_BLUETOOTH_REGISTER_ACCOUNT = "/api/v1/account/new";
 
+    /**
+     * 获取EOS糖果接口
+     */
+    String API_GET_EOS_TOKENS = "/api/v1/account/tokens/";
+
 
     /*----------------链上服务器API Mehtod-----------------------*/
 

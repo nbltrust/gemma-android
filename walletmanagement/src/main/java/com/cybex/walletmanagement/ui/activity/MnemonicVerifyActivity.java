@@ -77,7 +77,7 @@ public class MnemonicVerifyActivity extends XActivity {
             answerLabels.addAll(tempLabels);
 
             //打乱顺序
-            Collections.shuffle(tempLabels);
+            //Collections.shuffle(tempLabels);
 
 
             viewShowMne.setLabels(tempLabels);
