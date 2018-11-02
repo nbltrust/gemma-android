@@ -12,6 +12,7 @@ import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.event.CloseInitialPageEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.FormatValidateUtils;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.walletmanagement.BuildConfig;
 import com.cybex.walletmanagement.ui.activity.CreateMnemonicWalletActivity;
@@ -214,7 +215,7 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
     }
 
     public boolean isPasswordValid() {
-        return getV().getPassword().length() >= 8;
+        return FormatValidateUtils.isPasswordValid(getV().getPassword());
     }
 
     @Override

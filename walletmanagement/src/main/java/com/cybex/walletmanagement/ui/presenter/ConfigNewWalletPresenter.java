@@ -13,6 +13,7 @@ import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.event.CloseInitialPageEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.FormatValidateUtils;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.walletmanagement.BuildConfig;
 import com.cybex.walletmanagement.ui.activity.ConfigNewWalletActivity;
@@ -21,8 +22,10 @@ import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -195,7 +198,7 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
 
 
     public boolean isPasswordValid() {
-        return getV().getPassword().length() >= 8;
+        return FormatValidateUtils.isPasswordValid(getV().getPassword());
     }
 
     @Override

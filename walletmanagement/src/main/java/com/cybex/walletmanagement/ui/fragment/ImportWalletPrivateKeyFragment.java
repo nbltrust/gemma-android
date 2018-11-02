@@ -16,6 +16,7 @@ import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.FormatValidateUtils;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.walletmanagement.R;
@@ -160,14 +161,7 @@ public class ImportWalletPrivateKeyFragment extends XFragment {
                 isValid=false;
             }
         }else if(currentCoinType==CoinType.ETH){
-//            String seed = Seed39.seedByMnemonic("asdfas sdfsf");
-//            LoggerManager.e("seed="+seed);
-//
-//            String publickey2 = Seed39.getEthereumPublicKeyFromPrivateKey("12323sadfasdf");
-//            LoggerManager.e("publickey2="+publickey2);
-//
-//            isValid=false;
-
+            isValid = FormatValidateUtils.isEthPriKeyValid(priKey);
         }
         if(!isValid){
             GemmaToastUtils.showShortToast(getString(R.string.walletmanage_import_pri_key_invalid));

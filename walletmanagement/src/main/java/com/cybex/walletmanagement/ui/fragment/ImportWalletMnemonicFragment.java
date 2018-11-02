@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.utils.FormatValidateUtils;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.config.WalletManageConst;
 import com.cybex.walletmanagement.event.BarcodeScanEvent;
@@ -16,6 +17,7 @@ import com.cybex.walletmanagement.ui.activity.ConfigNewWalletActivity;
 import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -85,18 +87,9 @@ public class ImportWalletMnemonicFragment extends XFragment {
     }
 
     public void goConfigWallet() {
-//        final String inputKey = edtShowMnemonic.getText().toString().trim();
-//        final String key = JNIUtil.get_public_key(inputKey);
-
-//        if (key.equals("invalid priv string!")) {
-//            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_prikey_format_invalid));
-//        } else {
-//            start(ImportWalletConfigFragment.newInstance(inputKey));
-//        }
-
         //check mnemonic
         final String mnemonic = edtShowMnemonic.getText().toString().trim();
-        if(isMnemonicValid(mnemonic)){
+        if(FormatValidateUtils.isMnemonicValid(mnemonic)){
             //jump to config page
             ImportWalletConfigBean config = new ImportWalletConfigBean();
             config.setWalletType(MultiWalletEntity.WALLET_TYPE_IMPORT_MNEMONIC);
@@ -106,17 +99,13 @@ public class ImportWalletMnemonicFragment extends XFragment {
             intent.putExtra(WalletManageConst.KEY_IMPORT_WALLET_CONFIG,config);
             startActivity(intent);
             getActivity().finish();
-
-
         }else{
-//            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_prikey_format_invalid));
+            GemmaToastUtils.showShortToast(getResources().getString(R.string.walletmanage_import_mnemonic_invalid));
 
         }
     }
 
-    private boolean isMnemonicValid(String mnemonic) {
-        return true;
-    }
+
 
     @Override
     public void initData(Bundle savedInstanceState) {
