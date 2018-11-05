@@ -68,7 +68,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                 }else if (wallet_type == BaseConst.WALLET_TYPE_MNE_CREATE){
 
                                 }else if (wallet_type == BaseConst.WALLET_TYPE_MNE_IMPORT){
-
+                                    updateEOSWallet(account_names);
                                 }
 
 

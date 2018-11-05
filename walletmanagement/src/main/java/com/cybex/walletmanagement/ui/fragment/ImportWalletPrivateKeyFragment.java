@@ -7,8 +7,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.base.view.LabelLayout;
 import com.cybex.componentservice.bean.CoinType;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
@@ -27,6 +29,7 @@ import com.cybex.walletmanagement.ui.activity.SelectWalletCoinTypeActivity;
 import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -199,7 +202,10 @@ public class ImportWalletPrivateKeyFragment extends XFragment {
                                     @Override
                                     public void onSucceed() {
                                         GemmaToastUtils.showShortToast(getString(R.string.walletmanage_import_success));
-                                        getActivity().finish();
+                                        //if (getActivity() != null)getActivity().finish();
+                                        AppManager.getAppManager().finishAllActivity();
+                                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+                                                .navigation();
                                     }
 
                                     @Override

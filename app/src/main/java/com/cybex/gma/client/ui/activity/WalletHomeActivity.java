@@ -18,6 +18,7 @@ import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.event.ChangeSelectedWalletEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.SizeUtil;
@@ -60,6 +61,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     private EosWalletEntity curEosWallet;
     private EthWalletEntity curEthWallet;
 
+    private boolean isBioConnected;
+
     @BindView(R.id.rootview)
     LinearLayout rootview;
     @BindView(R.id.view_wookong_status)
@@ -93,6 +96,17 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onChangeWalletEventReceived(ChangeSelectedWalletEvent event){
+        if (event != null){
+            curWallet = event.getCurrentWallet();
+            if (curWallet != null && curWallet.getEosWalletEntities().size() > 0){
+                curEosWallet = curWallet.getEosWalletEntities().get(0);
+                updateEosCardView();
+            }
+        }
+    }
+
 
     @OnClick({R.id.iv_wallet_manage, R.id.iv_settings})
     public void onWalletManageIconClick(View view){
@@ -119,7 +133,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 break;
         }
     }
-
 
     @Override
     public void bindUI(View rootView) {
@@ -205,23 +218,48 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 //蓝牙钱包
                 //todo 需要使用TimeStamp验证流程来确保创建即导入的安全性
                 mViewWookongStatus.setVisibility(View.VISIBLE);
+                if (isBioConnected){
+                    //蓝牙已连接
+                    mIvWookongLogo.setImageResource(R.drawable.ic_wookong_bio_logo);
+                    //todo 计算电量
+                    mTvWookongStatus.setText(String.format(getString(R.string.power_level), "60"));
+                    
+                }else {
+                    //蓝牙未连接
+                    mIvWookongLogo.setImageResource(R.drawable.ic_wookong_bio_not_connected);
+                    mTvWookongStatus.setText(getString(R.string.eos_status_not_connected));
+                }
+
+
+
             }else if (walletType == BaseConst.WALLET_TYPE_MNE_CREATE){
-                //助记词多币种钱包
+                //创建的助记词多币种钱包
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
+                updateEosCardView();
             }else if (walletType == BaseConst.WALLET_TYPE_MNE_IMPORT){
-                //助记词钱包
+                //导入的助记词钱包
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
+                //核验EOS账户的状态
+                updateEosCardView();
+                if (curWallet.getEosWalletEntities().size() > 0){
+                    //如果有EOS账户
+                    String eos_public_key = curEosWallet.getPublicKey();
+                    getP().getKeyAccounts(eos_public_key);
+                }
+                //todo 判断ETH钱包状态
+
             }else if (walletType == BaseConst.WALLET_TYPE_PRIKEY_IMPORT){
                 //单币种钱包
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
                 //判断是EOS还是ETH钱包
                 if (EmptyUtils.isNotEmpty(curEosWallet) && EmptyUtils.isNotEmpty(curEthWallet)){
-                    // ETH/EOS钱包都不为空
+                    //todo ETH/EOS钱包都不为空
                     LoggerManager.d("case eth+eos");
-
+                    String eos_public_key = curEosWallet.getPublicKey();
+                    getP().getKeyAccounts(eos_public_key);
 
                 }else if (EmptyUtils.isNotEmpty(curEthWallet) && EmptyUtils.isEmpty(curEosWallet)){
-                    //只有ETH钱包
+                    //todo 只有ETH钱包
                     LoggerManager.d("case eth");
                 }else if (EmptyUtils.isNotEmpty(curEosWallet) && EmptyUtils.isEmpty(curEthWallet)){
                     //只有EOS钱包
@@ -229,15 +267,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     String eos_public_key = curEosWallet.getPublicKey();
                     getP().getKeyAccounts(eos_public_key);
                 }
-
-
-
-
-
-
             }
         }
-
     }
 
     @Override
@@ -313,5 +344,22 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
 
+        if (curWallet != null){
+            String walletName = curWallet.getWalletName();
+            if (walletName != null){
+                mTvWalletName.setText(walletName);
+            }
+
+            String eosAccount = curEosWallet.getCurrentEosName();
+            if (eosAccount != null){
+                //LoggerManager.d("eos_account", eosAccount);
+                mEosCardView.setAccountName(eosAccount);
+            }
+        }
+    }
 }

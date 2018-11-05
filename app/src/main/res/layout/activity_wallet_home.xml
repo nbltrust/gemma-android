@@ -72,18 +72,6 @@
 
     </RelativeLayout>
 
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/recycler_tokens"-->
-        <!--android:layout_marginStart="20dp"-->
-        <!--android:layout_marginEnd="20dp"-->
-        <!--android:layout_marginTop="40dp"-->
-        <!--android:layout_marginBottom="60dp"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-
-    <!--</android.support.v7.widget.RecyclerView>-->
-
     <com.cybex.gma.client.widget.EosCardView
         android:id="@+id/eos_card"
         android:layout_width="match_parent"
