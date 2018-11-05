@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@color/whiteTwo"
               android:orientation="vertical">
 
     <ImageView
@@ -43,7 +44,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
-                android:textColor="@color/darkSlateBlue"
+                android:textColor="@color/black_context"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 tools:text="\ufeff@lhy546802341"/>
@@ -77,7 +78,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
                 android:textStyle="bold"
-                android:textColor="@color/darkSlateBlue"
+                android:textColor="@color/black_context"
                 tools:text="2.2345 EOS"/>
         </RelativeLayout>
 
@@ -114,7 +115,7 @@
                 android:textAlignment="viewEnd"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="@color/dusk"
+                android:textColor="@color/black_context"
                 tools:text="@string/eos_default_memo"/>
 
         </RelativeLayout>
@@ -151,7 +152,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
-            android:textColor="@color/darkSlateBlue"
+            android:textColor="@color/black_context"
             android:textStyle="bold"
             android:textSize="16sp"
             tools:text="\ufeff@lhy546802341"/>

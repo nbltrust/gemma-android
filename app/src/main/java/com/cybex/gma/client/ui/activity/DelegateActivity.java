@@ -537,6 +537,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                 }
                                 break;
                             case OPERATION_UNDELEGATE:
+                                //解除抵押操作
                                 if (EmptyUtils.isNotEmpty(curWallet)) {
                                     EditText mPass = dialog.findViewById(R.id.et_password);
                                     ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
@@ -563,16 +564,19 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 String net_quantity;
                                                 if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty
                                                         (getunDelegateNet())) {
-                                                    //抵押CPU和NET输入都不为空
+                                                    //解除抵押CPU和NET输入都不为空
                                                     cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
                                                     net_quantity = AmountUtil.round(getunDelegateNet(), 4);
                                                 } else if (EmptyUtils.isEmpty(getDelegateCpu())) {
-                                                    //抵押CPU输入为空
+                                                    //解除抵押CPU输入为空
                                                     cpu_quantity = "0.0000";
                                                     net_quantity = AmountUtil.round(getunDelegateNet(), 4);
-                                                } else {
-                                                    //抵押NET输入为空
+                                                } else if (EmptyUtils.isEmpty(getunDelegateNet())){
+                                                    //解除抵押NET输入为空
                                                     cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
+                                                    net_quantity = "0.0000";
+                                                }else {
+                                                    cpu_quantity = "0.0000";
                                                     net_quantity = "0.0000";
                                                 }
 
@@ -582,6 +586,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 getP().executeUndelegateLogic(curEOSName, curEOSName,
                                                         unstake_net_quantity,
                                                         unstake_cpu_quantity, private_key);
+
                                             } catch (NumberFormatException e) {
                                                 e.printStackTrace();
                                             }

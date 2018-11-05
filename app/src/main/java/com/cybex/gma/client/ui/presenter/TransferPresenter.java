@@ -460,7 +460,8 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                 String jsonStr = response.body();
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
                                 //if (getV().getActivity() != null)getV().getActivity().finish();
-                                UISkipMananger.launchTransferRecord(getV().getActivity());
+
+                                UISkipMananger.launchEOSHome(getV().getActivity());
                                 getV().clearData();
                             }
                         }

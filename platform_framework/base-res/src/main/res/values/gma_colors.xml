@@ -105,7 +105,7 @@
     <!--主页tab文字选中颜色-->
     <color name="colorTabTextSelect">#333333</color>
     <!--Tab indicator 颜色 -->
-    <color name="colorTabIndicator">#212c67</color>
+    <color name="colorTabIndicator">#333333</color>
 
     <!-- ===========================V0.5============================== -->
     

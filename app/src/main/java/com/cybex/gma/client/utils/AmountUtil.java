@@ -227,7 +227,7 @@ public class AmountUtil {
         if (scale < 0) {
             throw new IllegalArgumentException("保留的小数位数必须大于零");
         }
-        BigDecimal b = new BigDecimal(v);
+        BigDecimal b = new BigDecimal(v.trim());
         return b.setScale(scale, BigDecimal.ROUND_HALF_UP).toString();
     }
 

@@ -357,9 +357,11 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount) && collectionAccount.length() ==
                 ParamConstants.VALID_EOSNAME_LENGTH) {
             btnTransferNextStep.setEnabled(true);
+            btnTransferNextStep.setBackground(getActivity().getDrawable(R.drawable.shape_corner_button));
 
         } else {
             btnTransferNextStep.setEnabled(false);
+            btnTransferNextStep.setBackground(getActivity().getDrawable(R.drawable.shape_corner_button_unclickable));
 
         }
 
@@ -452,6 +454,12 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                             break;
                         case R.id.btn_transfer_nextStep:
                             switch (walletType) {
+                                case CacheConstants.WALLET_TYPE_MNE_IMPORT:
+                                    showConfirmAuthoriDialog();
+                                    break;
+                                case CacheConstants.WALLET_TYPE_PRIKEY_IMPORT:
+                                    showConfirmAuthoriDialog();
+                                    break;
                                 case CacheConstants.WALLET_TYPE_MNE_CREATE:
                                     //软钱包转账
                                     showConfirmAuthoriDialog();
@@ -504,7 +512,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                 memo = String.valueOf(etNote.getText());
             }
             tv_note.setText(memo);
-            tv_note.setTextColor(getResources().getColor(R.color.darkSlateBlue));
+            tv_note.setTextColor(getResources().getColor(R.color.black_context));
         }
     }
 
@@ -526,12 +534,13 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         getP().executeTransferLogic(wallet.getEosWalletEntities().get(0)
                                         .getCurrentEosName(),
                                 collectionAccount, amount, memo, privateKey);
-                        dialog.cancel();
+                        //dialog.cancel();
                     }
 
                     @Override
                     public void onValidateFail(int failedCount) {
-                        showPasswordHintDialog();
+                        LoggerManager.d("validate fail");
+                        //showPasswordHintDialog();
                     }
                 });
 

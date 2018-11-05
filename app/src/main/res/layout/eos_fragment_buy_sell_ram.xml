@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="可用 -- "
-                    android:textColor="@color/darkSlateBlueTwo"
+                    android:textColor="@color/black_context"
                     android:textSize="@dimen/font_3"/>
             </LinearLayout>
 
@@ -119,10 +119,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="@dimen/dimen_10"
-                title:sLeftTextColor="@color/steel"
+                title:sLeftTextColor="@color/black_title"
                 title:sLeftTextSize="@dimen/font_3.5"
                 title:sLeftTextString="@string/eos_price"
-                title:sRightTextColor="@color/darkSlateBlueTwo"
+                title:sRightTextColor="@color/black_context"
                 title:sRightTextSize="@dimen/font_3"
                 title:sRightTextString="≈ -- EOS/KB"
                 title:sUseShape="true"

@@ -45,7 +45,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
-                android:textColor="@color/darkSlateBlue"
+                android:textColor="@color/black_context"
                 android:textSize="16sp"
                 tools:text="0.0001 EOS"/>
         </RelativeLayout>
@@ -81,7 +81,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
                 android:textSize="@dimen/font_4"
-                android:textColor="@color/darkSlateBlue"
+                android:textColor="@color/black_context"
                 tools:text="2.2345 EOS"/>
         </RelativeLayout>
 
@@ -121,7 +121,7 @@
                 android:textAlignment="viewEnd"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:textColor="@color/darkSlateBlue"
+                android:textColor="@color/black_context"
                 tools:text="\ufeff@gemma12345资金用途描述不超过50个字，资金用途资金用途描述不超过50个字，资金用途"/>
 
         </RelativeLayout>

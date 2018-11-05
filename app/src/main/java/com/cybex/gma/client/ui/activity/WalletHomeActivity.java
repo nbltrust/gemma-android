@@ -16,8 +16,10 @@ import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -26,6 +28,7 @@ import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletHomePresenter;
 import com.cybex.gma.client.widget.EosCardView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.SPUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -55,6 +58,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     private MultiWalletEntity curWallet;
     private EosWalletEntity curEosWallet;
+    private EthWalletEntity curEthWallet;
 
     @BindView(R.id.rootview)
     LinearLayout rootview;
@@ -175,30 +179,54 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         if (curWallet != null){
-            curEosWallet = curWallet.getEosWalletEntities().get(0);
-            //1.判断是否为蓝牙钱包
-            //todo 蓝牙连接状态判断
-            if (curWallet.getWalletType() == BaseConst.WALLET_TYPE_BLUETOOTH){
-                if (curEosWallet != null){
-                    getP().getKeyAccounts(curEosWallet.getPublicKey());
+            if (curWallet.getEosWalletEntities() != null && curWallet.getEosWalletEntities().size() > 0){
+                curEosWallet = curWallet.getEosWalletEntities().get(0);
+            }
+
+            if (curWallet.getEthWalletEntities() != null && curWallet.getEthWalletEntities().size() > 0){
+                curEthWallet = curWallet.getEthWalletEntities().get(0);
+            }
+
+            int walletType = curWallet.getWalletType();
+            //LoggerManager.d("walletType", walletType);
+
+            if (walletType == BaseConst.WALLET_TYPE_BLUETOOTH){
+                //蓝牙钱包
+                //todo 需要使用TimeStamp验证流程来确保创建即导入的安全性
+                mViewWookongStatus.setVisibility(View.VISIBLE);
+            }else if (walletType == BaseConst.WALLET_TYPE_MNE_CREATE){
+                //助记词多币种钱包
+                mViewWookongStatus.setVisibility(View.INVISIBLE);
+            }else if (walletType == BaseConst.WALLET_TYPE_MNE_IMPORT){
+                //助记词钱包
+                mViewWookongStatus.setVisibility(View.INVISIBLE);
+            }else if (walletType == BaseConst.WALLET_TYPE_PRIKEY_IMPORT){
+                //单币种钱包
+                mViewWookongStatus.setVisibility(View.INVISIBLE);
+                //判断是EOS还是ETH钱包
+                if (EmptyUtils.isNotEmpty(curEosWallet) && EmptyUtils.isNotEmpty(curEthWallet)){
+                    // ETH/EOS钱包都不为空
+                    LoggerManager.d("case eth+eos");
+
+
+                }else if (EmptyUtils.isNotEmpty(curEthWallet) && EmptyUtils.isEmpty(curEosWallet)){
+                    //只有ETH钱包
+                    LoggerManager.d("case eth");
+                }else if (EmptyUtils.isNotEmpty(curEosWallet) && EmptyUtils.isEmpty(curEthWallet)){
+                    //只有EOS钱包
+                    LoggerManager.d("case eos");
+                    String eos_public_key = curEosWallet.getPublicKey();
+                    getP().getKeyAccounts(eos_public_key);
+                }else{
+                    //都为空，未知错误
                 }
 
-                //蓝牙钱包显示状态
-                mViewWookongStatus.setVisibility(View.VISIBLE);
 
-                int bluetooth_status = SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS);
-                setBluetoothUI(bluetooth_status);
-
-            }else {
-                //非蓝牙钱包隐藏蓝牙状态
-                mViewWookongStatus.setVisibility(View.INVISIBLE);
             }
-            //2.核验EOS账户是否被激活
-            updateEosCardView();
         }
+
     }
 
     @Override
@@ -237,6 +265,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
         if (curEosWallet != null){
             final int eosStatus = curEosWallet.getIsConfirmLib();
+            //LoggerManager.d("eosStatus", eosStatus);
 
             if (eosStatus == ParamConstants.EOSNAME_ACTIVATED){
                 //账户已被激活
