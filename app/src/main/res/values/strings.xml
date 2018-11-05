@@ -56,8 +56,7 @@
     <string name="eos_title_memo_optional">备注（可选）</string>
     <string name="eos_btn_confirm_transfer">确认转账</string>
     <string name="eos_at_char">\ufeff@</string>
-    <string name="transfer_from">From:</string>
-    <string name="transfer_to">To:</string>
+
     <string name="eos_title_transfer">转账</string>
     <string name="eos_tip_transfer_trade_ing">转账处理中...</string>
     <string name="eos_tip_transfer_oprate_failed">转账失败</string>
@@ -801,6 +800,6 @@
     <!--eos home card-->
     <string name="card_eos_creating_progress">账户创建中...%1$d%%</string>
     <string name="card_eos_wait_notify">待激活</string>
-    <string name="eth_eth">ETH</string>
+
 
 </resources>

@@ -1,4 +1,4 @@
-package com.cybex.gma.client.widget;
+package com.cybex.componentservice.widget;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -12,9 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cybex.componentservice.R;
 import com.cybex.componentservice.bean.TokenBean;
-import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.adapter.TokenIconAdapter;
+import com.cybex.componentservice.ui.adapter.TokenIconAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +69,7 @@ public class EthCardView extends CardView{
 
 
     public void init(Context context, AttributeSet attrs){
-        rootview = LayoutInflater.from(context).inflate(R.layout.item_eth_card, this);
+        rootview = LayoutInflater.from(context).inflate(R.layout.baseservice_item_eth_card, this);
 //        addView(rootview);
         assignViews();
 
@@ -127,6 +127,15 @@ public class EthCardView extends CardView{
         this.tokenList.addAll(tokenList);
         adapter.notifyDataSetChanged();
         updateTokenView();
+    }
+
+    public void setTokenListVisibility(boolean isVisibility){
+
+        if(isVisibility){
+            mRvTokenIcons.setVisibility(View.VISIBLE);
+        }else{
+            mRvTokenIcons.setVisibility(View.GONE);
+        }
     }
 
 

@@ -122,6 +122,9 @@
     <string name="cancel_cn">取消</string>
 
     <string name="save">保存</string>
+    <string name="eth_eth">ETH</string>
+    <string name="transfer_from">From:</string>
+    <string name="transfer_to">To:</string>
 
 
 </resources>

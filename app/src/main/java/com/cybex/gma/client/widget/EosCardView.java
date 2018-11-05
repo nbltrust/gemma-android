@@ -1,7 +1,6 @@
 package com.cybex.gma.client.widget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.ui.adapter.TokenIconAdapter;
+import com.cybex.componentservice.ui.adapter.TokenIconAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

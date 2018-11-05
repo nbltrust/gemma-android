@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_asset_top"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp">
+
+    <ImageView
+        android:id="@+id/iv_logo_eth_asset"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/eth_ic_asset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_eth_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="0.0000"
+        android:textColor="@color/black_title"
+        android:textSize="@dimen/font_6"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_logo_eth_asset"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="20dp"
+        android:text="ETH"
+        android:textColor="@color/black_context"
+        android:textSize="@dimen/font_3.5"
+        app:layout_constraintStart_toEndOf="@id/tv_eth_amount"
+        app:layout_constraintTop_toBottomOf="@id/iv_logo_eth_asset"/>
+
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@id/tv_eth_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/view_asset_value"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_currency_type"
+            android:text="≈ ¥ "
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_3.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_rmb_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text=" 0.00"
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_3.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_eth_amount"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_asset_buttons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_asset_value">
+
+        <Button
+            android:id="@+id/btn_go_transfer"
+            style="@style/common_button_clickable"
+            android:layout_weight="1"
+            android:text="转账"/>
+
+        <Button
+            android:id="@+id/btn_collect"
+            style="@style/common_button_clickable_white"
+            android:layout_marginStart="30dp"
+            android:layout_weight="1"
+            android:text="@string/income"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

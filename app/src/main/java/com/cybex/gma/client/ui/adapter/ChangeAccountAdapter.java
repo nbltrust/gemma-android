@@ -30,6 +30,5 @@ public class ChangeAccountAdapter extends BaseQuickAdapter<EOSNameVO, BaseViewHo
             tv.setText(item.getEosName());
             tv.setChecked(item.isChecked);
         }
-
     }
 }

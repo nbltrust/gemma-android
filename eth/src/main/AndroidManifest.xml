@@ -1,0 +1,25 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cybex.eth" >
+    <application
+        android:allowBackup="true"
+        android:label="@string/eth_app_name"
+        android:supportsRtl="true"
+        tools:replace="android:label"
+        >
+
+        <activity android:name=".ui.activity.EthHomeActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.EthAssetDetailActivity">
+
+        </activity>
+
+        <activity android:name=".ui.activity.EthCollectActivity">
+
+        </activity>
+
+    </application>
+
+</manifest>

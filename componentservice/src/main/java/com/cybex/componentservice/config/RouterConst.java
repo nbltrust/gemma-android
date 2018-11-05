@@ -17,7 +17,8 @@ public class RouterConst {
     public static final String PATH_TO_WALLET_MANAGE_PAGE="/walletmanage/walletmanage";
 
 
-
+    //eth
+    public static final String PATH_TO_ETH_HOME="/eth/home";
 
 
 }

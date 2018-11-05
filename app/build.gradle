@@ -214,15 +214,10 @@ dependencies {
 
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation deps.support.appcompatV7
-    implementation deps.support.constraint
-    implementation deps.support.design
-    implementation deps.support.recyclerviewV7
-    implementation deps.support.cardviewV7
-    implementation deps.support.supportV4
+
 
     implementation deps.butterknife.core
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+//    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     annotationProcessor deps.butterknife.compiler
 
 //    implementation deps.gma.zxing

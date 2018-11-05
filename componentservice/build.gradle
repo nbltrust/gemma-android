@@ -85,6 +85,11 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
     api deps.support.appcompatV7
+    api deps.support.constraint
+    api deps.support.design
+    api deps.support.recyclerviewV7
+    api deps.support.cardviewV7
+    api deps.support.supportV4
 
     api project(':platform_framework:base-res')
     api project(':platform_framework:basiclib')

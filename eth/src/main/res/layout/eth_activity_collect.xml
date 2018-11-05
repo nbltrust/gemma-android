@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteTwo"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/ui_navibar">
+
+    </include>
+
+    <ImageView
+        android:id="@+id/iv_account_QR"
+        android:layout_width="173dp"
+        android:layout_height="173dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="28.8dp"
+        tools:src="@drawable/ic_login_logo"/>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_token_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/eth_ic_asset"/>
+
+        <TextView
+            android:id="@+id/tv_token_name"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/font_4"
+            android:text="@string/eth_eth"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/shape_corner_with_stroke"
+        android:padding="14.6dp"
+        android:layout_marginTop="38dp"
+        style="@style/common_horizontal_padding"
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_cur_address"
+            android:textSize="@dimen/font_4"
+            android:textColor="@color/black_content"
+            android:textStyle="bold"
+            tools:text="0xasfsalfjslfj23jl4jrldkjflskjflsdfdbf3t4g4th4y455gsjdfljks"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/tv_copy_address"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.6dp"
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_3.5"
+            android:text="@string/eth_click_to_copy"
+           />
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

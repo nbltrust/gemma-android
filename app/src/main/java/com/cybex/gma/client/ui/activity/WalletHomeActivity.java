@@ -107,6 +107,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
                 break;
             case R.id.eth_card:
+                ARouter.getInstance().build(RouterConst.PATH_TO_ETH_HOME).navigation();
                 break;
         }
     }

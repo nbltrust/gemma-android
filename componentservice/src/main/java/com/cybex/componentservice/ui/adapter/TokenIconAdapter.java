@@ -1,4 +1,4 @@
-package com.cybex.gma.client.ui.adapter;
+package com.cybex.componentservice.ui.adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -11,18 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.allen.library.CircleImageView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
+import com.cybex.componentservice.R;
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.utils.SizeUtil;
-import com.cybex.gma.client.R;
 
 import java.security.MessageDigest;
 import java.util.List;
@@ -45,7 +42,7 @@ public class TokenIconAdapter extends RecyclerView.Adapter<TokenIconAdapter.Toke
 
     @Override
     public TokenHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_token_icon, parent,false);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.baseservice_item_token_icon, parent,false);
         return new TokenHolder(item);
     }
 
