@@ -135,7 +135,7 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
                 mFragments[TAB_WALLET] = WalletFragment.newInstance();
             }
             mFragments[TAB_TRANSFER] = TransferFragment.newInstance();
-            mFragments[TAB_MINE] = MineFragment.newInstance();
+            mFragments[TAB_MINE] = SettingsFragment.newInstance();
 
             loadMultipleRootFragment(R.id.fl_tab_container, TAB_WALLET,
                     mFragments[TAB_WALLET],
@@ -144,7 +144,7 @@ public class MainTabFragment extends XFragment<MainTabPresenter> {
         } else {
             mFragments[TAB_WALLET] = firstFragment;
             mFragments[TAB_TRANSFER] = findChildFragment(TransferFragment.class);
-            mFragments[TAB_MINE] = findChildFragment(MineFragment.class);
+            mFragments[TAB_MINE] = findChildFragment(SettingsFragment.class);
         }
 
     }

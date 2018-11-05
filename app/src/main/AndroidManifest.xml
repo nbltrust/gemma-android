@@ -69,11 +69,18 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <!-- 钱包 首页 页面 -->
         <activity
             android:name=".ui.activity.WalletHomeActivity"
             android:configChanges="layoutDirection|locale"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
+        </activity>
+        <!-- 设置 界面 -->
+        <activity android:name=".ui.activity.SettingsActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
+
         </activity>
 
         <!-- EOS Home 界面 -->

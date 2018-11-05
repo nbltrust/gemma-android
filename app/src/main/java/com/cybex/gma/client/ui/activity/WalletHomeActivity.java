@@ -94,10 +94,18 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     }
 
 
-    @OnClick(R.id.iv_wallet_manage)
+    @OnClick({R.id.iv_wallet_manage, R.id.iv_settings})
     public void onWalletManageIconClick(View view){
-        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_MANAGE_PAGE)
-                .navigation();
+        switch (view.getId()){
+            case R.id.iv_wallet_manage:
+                ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_MANAGE_PAGE)
+                        .navigation();
+                break;
+            case R.id.iv_settings:
+                UISkipMananger.launchSettings(WalletHomeActivity.this);
+                break;
+        }
+
     }
 
     @OnClick({R.id.eos_card, R.id.eth_card})
@@ -220,9 +228,11 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     LoggerManager.d("case eos");
                     String eos_public_key = curEosWallet.getPublicKey();
                     getP().getKeyAccounts(eos_public_key);
-                }else{
-                    //都为空，未知错误
                 }
+
+
+
+
 
 
             }

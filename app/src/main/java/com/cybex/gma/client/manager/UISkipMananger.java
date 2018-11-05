@@ -41,6 +41,7 @@ import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.activity.ManageWalletActivity;
 import com.cybex.gma.client.ui.activity.ResourceDetailActivity;
 import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
+import com.cybex.gma.client.ui.activity.SettingsActivity;
 import com.cybex.gma.client.ui.activity.TransferActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
 import com.cybex.gma.client.ui.activity.VerifyPriKeyActivity;
@@ -111,6 +112,15 @@ public final class UISkipMananger {
      */
     public static void launchCreateEosAccount(Context context) {
         startActivity(context, CreateEosAccountActivity.class);
+    }
+
+    /**
+     * 跳转到设置页面
+     *
+     * @param context
+     */
+    public static void launchSettings(Context context) {
+        startActivity(context, SettingsActivity.class);
     }
 
     /**
