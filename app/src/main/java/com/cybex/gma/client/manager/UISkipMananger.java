@@ -44,6 +44,7 @@ import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
 import com.cybex.gma.client.ui.activity.SettingsActivity;
 import com.cybex.gma.client.ui.activity.TransferActivity;
 import com.cybex.gma.client.ui.activity.TransferRecordActivity;
+import com.cybex.gma.client.ui.activity.TransferRecordDetailActivity;
 import com.cybex.gma.client.ui.activity.VerifyPriKeyActivity;
 import com.cybex.gma.client.ui.activity.VoteActivity;
 import com.cybex.gma.client.ui.activity.WalletDetailActivity;
@@ -216,6 +217,15 @@ public final class UISkipMananger {
     public static void launchTransferRecord(Activity mContext) {
         launchIntent(mContext, TransferRecordActivity.class);
 
+    }
+
+    /**
+     * 跳转到转账详情界面
+     *
+     * @param mContext
+     */
+    public static void launchTransferRecordDetail(Activity mContext, Bundle bundle) {
+        launchIntent(mContext, TransferRecordDetailActivity.class, bundle);
     }
 
     /**

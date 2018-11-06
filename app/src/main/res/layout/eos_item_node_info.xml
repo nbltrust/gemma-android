@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/darkSlateBlue"
+                    android:textColor="@color/black_title"
                     android:textSize="@dimen/font_4"
                     android:textStyle="bold"
                     tools:text="EOS Cannon"/>
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_3.5"
-                    android:textColor="@color/cornflowerBlue"
+                    android:textColor="@color/black_context"
                     tools:text="11.33%"/>
 
                 <TextView
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     tools:text="#4"
                     android:textSize="@dimen/font_3.5"
-                    android:textColor="@color/cornflowerBlue"
+                    android:textColor="@color/black_context"
                     android:textStyle="bold"
                     android:layout_marginStart="@dimen/dimen_10"
                     />
@@ -80,7 +80,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/blueyGrey"
+                android:textColor="@color/black_context"
                 android:textSize="@dimen/font_3"
                 tools:text="eoscannonchn"
                 />
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_3"
-                android:textColor="@color/darkSlateBlue"
+                android:textColor="@color/black_context"
                 tools:text="IN EOS WE TRUST CANNON"
                 />
 

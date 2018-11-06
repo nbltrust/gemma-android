@@ -370,7 +370,7 @@
     <string name="eos_prikey_format_invalid">私钥格式错误，请检查私钥</string>
     <string name="eos_loading_pretransfer_info">加载账户信息</string>
     <string name="eos_dont_import_same_wallet">Gemma中已有此钱包</string>
-    <string name="eos_default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://xxxx</string>
+    <string name="eos_default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://wooko.ng</string>
 
     <string name="eos_tab_title_private_key">私钥</string>
     <string name="eos_tab_title_qr_code">二维码</string>

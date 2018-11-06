@@ -119,7 +119,7 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
                     Bundle bundle = new Bundle();
                     TransferHistory curTransfer = mAdapter.getData().get(position);
                     bundle.putParcelable(ParamConstants.KEY_CUR_TRANSFER, curTransfer);
-                    start(TransferRecordDetailFragment.newInstance(bundle));
+                    UISkipMananger.launchTransferRecordDetail(AssetDetailActivity.this, bundle);
                 }
 
             }

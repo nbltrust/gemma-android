@@ -103,6 +103,12 @@
             android:configChanges="layoutDirection|locale"
             android:screenOrientation="portrait">
         </activity>
+        <!-- EOS 转账详情页面 -->
+        <activity android:name=".ui.activity.TransferRecordDetailActivity"
+                  android:configChanges="layoutDirection|locale"
+                  android:screenOrientation="portrait">
+
+        </activity>
 
         <!-- 收款页面 -->
         <activity

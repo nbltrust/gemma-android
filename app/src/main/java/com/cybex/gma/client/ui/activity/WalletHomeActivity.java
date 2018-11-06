@@ -231,7 +231,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 }
 
 
-
             }else if (walletType == BaseConst.WALLET_TYPE_MNE_CREATE){
                 //创建的助记词多币种钱包
                 mViewWookongStatus.setVisibility(View.INVISIBLE);

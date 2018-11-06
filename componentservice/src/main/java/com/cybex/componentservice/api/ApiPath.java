@@ -100,4 +100,9 @@ public class ApiPath {
     }
 
     /**------------节点 地址配置---------------*/
+
+    /**------------其他 地址配置---------------*/
+
+    //收支详情页面使用默认memo时使用的推荐下载连接
+    public static final String WOOKONG_HOME_PAGE = "https://wooko.ng";
 }

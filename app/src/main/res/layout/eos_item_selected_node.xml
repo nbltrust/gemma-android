@@ -50,7 +50,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/darkSlateBlue"
+                    android:textColor="@color/black_title"
                     android:textSize="@dimen/font_4"
                     android:textStyle="bold"
                     tools:text="EOS Cannon"/>
@@ -62,7 +62,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/blueyGrey"
+                android:textColor="@color/black_context"
                 android:textSize="@dimen/font_3"
                 tools:text="eoscannonchn"
                 />

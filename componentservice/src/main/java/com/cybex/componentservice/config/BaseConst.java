@@ -32,6 +32,8 @@ public class BaseConst {
     public static final String CN = "中文";
     public static final String EN = "English";
 
+    public static final String BLUETOOTH_CONNECTION_STATE = "isBioConnected";
+
 
 
 

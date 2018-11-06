@@ -102,25 +102,25 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     if (selectedNodes.size() != 0) {
                         //已选节点数不为0
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable
-                                .eos_btn_vote_left_deep));
+                                .eos_btn_vote_left_enable));
                         LoggerManager.d("hasDelegateRes", hasDelegateRes);
                         if (hasDelegateRes) {
                             //如果有抵押的资源
                             tvExecVote.setClickable(true);
                             tvExecVote.setText(getResources().getString(R.string.eos_title_vote));
-                            tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_deep));
+                            tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_enable));
                         } else {
                             //没有被抵押的资源
                             tvExecVote.setClickable(false);
                             tvExecVote.setText(getResources().getString(R.string.eos_tip_no_avail_votes));
-                            tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_light));
+                            tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_disable));
                         }
                     } else {
                         //已选节点数为0
-                        tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_left_light));
+                        tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_left_disable));
                         tvExecVote.setClickable(false);
                         tvExecVote.setText(getResources().getString(R.string.eos_title_vote));
-                        tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_light));
+                        tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_disable));
                     }
                     break;
                 case EVENT_DOWN:
@@ -135,8 +135,8 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     if (selectedNodes.size() == 0) {
                         //从下级页面回退时把所有节点取消了
                         tvExecVote.setClickable(false);
-                        tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_light));
-                        tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_left_light));
+                        tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_disable));
+                        tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_left_disable));
                     }
                     break;
             }

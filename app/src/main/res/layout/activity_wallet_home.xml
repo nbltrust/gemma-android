@@ -46,10 +46,13 @@
             android:layout_marginStart="@dimen/common_page_content_padding"
             android:id="@+id/tv_wallet_name"
             android:text="我的钱包"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_title"
+            android:layout_marginEnd="100dp"
             android:textSize="@dimen/font_7"
             />
 

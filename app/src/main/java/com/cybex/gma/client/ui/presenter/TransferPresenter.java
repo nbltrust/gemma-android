@@ -1,22 +1,19 @@
 package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.entity.WalletEntity;
-import com.cybex.gma.client.R;
-import com.cybex.componentservice.config.CacheConstants;
-import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.TransferFragment;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
-
-import com.cybex.gma.client.ui.model.response.EOSErrorInfo;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionTmpVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
@@ -70,18 +67,19 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                 .getCurrencyBalance(new StringCallback() {
                     @Override
                     public void onStart(Request<String, ? extends Request> request) {
-                        getV().showProgressDialog(getV().getResources().getString(R.string.eos_loading_pretransfer_info));
+                        getV().showProgressDialog(
+                                getV().getResources().getString(R.string.eos_loading_pretransfer_info));
                         super.onStart(request);
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        if (EmptyUtils.isNotEmpty(getV())){
+                        if (EmptyUtils.isNotEmpty(getV())) {
                             getV().dissmisProgressDialog();
 
                             try {
-                                if (response.body() != null && response.getRawResponse().body() != null){
+                                if (response.body() != null && response.getRawResponse().body() != null) {
                                     String err_info_string = response.getRawResponse().body().string();
                                     try {
                                         JSONObject obj = new JSONObject(err_info_string);
@@ -89,7 +87,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                         String err_code = error.optString("code");
                                         handleEosErrorCode(err_code);
 
-                                    }catch (JSONException ee){
+                                    } catch (JSONException ee) {
                                         ee.printStackTrace();
                                     }
                                 }
@@ -101,21 +99,23 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        String jsonStr = response.body();
-                        String banlance = "0.0000";
-                        LoggerManager.d("json:" + jsonStr);
-                        try {
-                            JSONArray array = new JSONArray(jsonStr);
-                            if (array != null && array.length() > 0) {
-                                banlance = array.optString(0);
-                                getV().showInitData(banlance, currentEOSName);
-                            } else {
-                                getV().showInitData(banlance, currentEOSName);
+                        if (getV() != null) {
+                            String jsonStr = response.body();
+                            String banlance = "0.0000";
+                            LoggerManager.d("json:" + jsonStr);
+                            try {
+                                JSONArray array = new JSONArray(jsonStr);
+                                if (array != null && array.length() > 0) {
+                                    banlance = array.optString(0);
+                                    getV().showInitData(banlance, currentEOSName);
+                                } else {
+                                    getV().showInitData(banlance, currentEOSName);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            getV().dissmisProgressDialog();
                         }
-                        getV().dissmisProgressDialog();
                     }
                 });
     }
@@ -147,7 +147,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        if (EmptyUtils.isNotEmpty(getV())){
+                        if (EmptyUtils.isNotEmpty(getV())) {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                             getV().dissmisProgressDialog();
 
@@ -159,7 +159,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                     String err_code = error.optString("code");
                                     handleEosErrorCode(err_code);
 
-                                }catch (JSONException ee){
+                                } catch (JSONException ee) {
                                     ee.printStackTrace();
                                 }
                             } catch (IOException e) {
@@ -201,7 +201,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     public void onError(Response<String> response) {
                         super.onError(response);
 
-                        if (EmptyUtils.isNotEmpty(getV())){
+                        if (EmptyUtils.isNotEmpty(getV())) {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                             getV().dissmisProgressDialog();
 
@@ -213,7 +213,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                     String err_code = error.optString("code");
                                     handleEosErrorCode(err_code);
 
-                                }catch (JSONException ee){
+                                } catch (JSONException ee) {
                                     ee.printStackTrace();
                                 }
                             } catch (IOException e) {
@@ -224,7 +224,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        if (getV() != null){
+                        if (getV() != null) {
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                                 //软钱包流程
                                 String infostr = response.body();
@@ -257,8 +257,11 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                             } else {
                                 //错误
-                                GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
-                                getV().dissmisProgressDialog();
+                                if (getV() != null) {
+                                    GemmaToastUtils.showShortToast(
+                                            getV().getString(R.string.eos_tip_transfer_oprate_failed));
+                                    getV().dissmisProgressDialog();
+                                }
                             }
                         }
                     }
@@ -291,7 +294,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onError(Response<AbiJsonToBeanResult> response) {
                         super.onError(response);
-                        if (EmptyUtils.isNotEmpty(getV())){
+                        if (EmptyUtils.isNotEmpty(getV())) {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                             getV().dissmisProgressDialog();
 
@@ -303,7 +306,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                     String err_code = error.optString("code");
                                     handleEosErrorCode(err_code);
 
-                                }catch (JSONException ee){
+                                } catch (JSONException ee) {
                                     ee.printStackTrace();
                                 }
                             } catch (IOException e) {
@@ -343,7 +346,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     public void onError(Response<String> response) {
                         super.onError(response);
 
-                        if (EmptyUtils.isNotEmpty(getV())){
+                        if (EmptyUtils.isNotEmpty(getV())) {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
                             getV().dissmisProgressDialog();
 
@@ -355,7 +358,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                     String err_code = error.optString("code");
                                     handleEosErrorCode(err_code);
 
-                                }catch (JSONException ee){
+                                } catch (JSONException ee) {
                                     ee.printStackTrace();
                                 }
                             } catch (IOException e) {
@@ -366,7 +369,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        if (getV() != null){
+                        if (getV() != null) {
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                                 //蓝牙钱包流程
                                 String infostr = response.body();
@@ -377,7 +380,8 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                     LoggerManager.d("chain_id", chain_id);
                                     getV().setChain_id(chain_id);
 
-                                }catch (JSONException e){
+
+                                } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
 
@@ -396,7 +400,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                 TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
                                         TransferTransactionVO.class);
                                 getV().setTransactionVO(vo);
-                                if (vo != null){
+                                if (vo != null) {
                                     //转换临时VO，让硬件可以签名
                                     TransferTransactionTmpVO tmpVO = switchVO(vo);
                                     String tmpJson = GsonUtils.objectToJson(tmpVO);
@@ -406,8 +410,12 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                 getV().dissmisProgressDialog();
                             } else {
                                 //错误
-                                GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
-                                getV().dissmisProgressDialog();
+                                if (getV() != null) {
+                                    GemmaToastUtils.showShortToast(
+                                            getV().getString(R.string.eos_tip_transfer_oprate_failed));
+                                    getV().dissmisProgressDialog();
+                                }
+
                             }
                         }
                     }
@@ -424,7 +432,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onStart(Request<String, ? extends Request> request) {
                         super.onStart(request);
-                        if (getV() != null){
+                        if (getV() != null) {
                             getV().showProgressDialog(getV().getString(R.string.eos_tip_transfer_trade_ing));
                         }
                     }
@@ -432,7 +440,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        if (EmptyUtils.isNotEmpty(getV())){
+                        if (EmptyUtils.isNotEmpty(getV())) {
                             getV().dissmisProgressDialog();
 
                             try {
@@ -443,7 +451,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                     String err_code = error.optString("code");
                                     handleEosErrorCode(err_code);
 
-                                }catch (JSONException ee){
+                                } catch (JSONException ee) {
                                     ee.printStackTrace();
                                 }
                             } catch (IOException e) {
@@ -454,7 +462,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        if (EmptyUtils.isNotEmpty(getV())){
+                        if (EmptyUtils.isNotEmpty(getV())) {
                             getV().dissmisProgressDialog();
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                                 String jsonStr = response.body();
@@ -472,14 +480,15 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
     /**
      * 反射机制处理EOS错误码
+     *
      * @param err_code
      */
-    private void handleEosErrorCode(String err_code){
+    private void handleEosErrorCode(String err_code) {
         String code = ParamConstants.EOS_ERR_CODE_PREFIX + err_code;
-        if (EmptyUtils.isNotEmpty(getV()) && EmptyUtils.isNotEmpty(getV().getActivity())){
+        if (EmptyUtils.isNotEmpty(getV()) && EmptyUtils.isNotEmpty(getV().getActivity())) {
             String package_name = getV().getActivity().getPackageName();
             int resId = getV().getResources().getIdentifier(code, "string", package_name);
-            String err_info =  getV().getResources().getString(resId);
+            String err_info = getV().getResources().getString(resId);
 
             Alerter.create(getV().getActivity())
                     .setText(err_info)
@@ -494,10 +503,11 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     /**
      * 转换VO类型
      * 目的是转换字段的基础数据类型以让硬件SDK可以处理
+     *
      * @param oldVO
      * @return
      */
-    private TransferTransactionTmpVO switchVO(TransferTransactionVO oldVO){
+    private TransferTransactionTmpVO switchVO(TransferTransactionVO oldVO) {
         TransferTransactionTmpVO newVO = new TransferTransactionTmpVO();
         /*
         for (TransferTransactionVO.ActionsBean action : oldVO.getActions()){
@@ -522,12 +532,13 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
     /**
      * 合并两字节数组
+     *
      * @param bt1
      * @param bt2
      * @return
      */
-    public byte[] byteMerger(byte[] bt1, byte[] bt2){
-        byte[] bt3 = new byte[bt1.length+bt2.length];
+    public byte[] byteMerger(byte[] bt1, byte[] bt2) {
+        byte[] bt3 = new byte[bt1.length + bt2.length];
         System.arraycopy(bt1, 0, bt3, 0, bt1.length);
         System.arraycopy(bt2, 0, bt3, bt1.length, bt2.length);
         return bt3;
@@ -535,10 +546,11 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
 
     /**
      * hex String转byte数组
+     *
      * @param hex
      * @return
      */
-    public byte[] hexToByte(String hex){
+    public byte[] hexToByte(String hex) {
         int m = 0, n = 0;
         int byteLen = hex.length() / 2; // 每两个字符描述一个字节
         byte[] ret = new byte[byteLen];
@@ -546,7 +558,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
             m = i * 2 + 1;
             n = m + 1;
             int intVal = Integer.decode("0x" + hex.substring(i * 2, m) + hex.substring(m, n));
-            ret[i] = Byte.valueOf((byte)intVal);
+            ret[i] = Byte.valueOf((byte) intVal);
         }
         return ret;
     }
@@ -572,9 +584,10 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
     /**
      * 构建硬件能够识别的HEX字符串
      * 序列化结果前面加32字节chain_id，后面加32字节0
+     *
      * @param serializedStr
      */
-    public byte[] buildSignStr(String serializedStr, String chain_id){
+    public byte[] buildSignStr(String serializedStr, String chain_id) {
         //把数据转成HEX数组
         String prefix = chain_id.toUpperCase();//chain_id已经是HEX
         LoggerManager.d("prefix_hex", prefix);
@@ -582,14 +595,14 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
         LoggerManager.d("serializedStr_hex", serializedStr);
 
         byte[] suffix_bytes = {
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00};//32字节的0
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};//32字节的0
 
         LoggerManager.d("suffix_hex", suffix_bytes);
 

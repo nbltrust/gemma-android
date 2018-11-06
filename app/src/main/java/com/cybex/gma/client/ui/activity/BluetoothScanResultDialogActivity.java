@@ -92,6 +92,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                WookongBioManager.getInstance().freeContext(contextHandle);
             }
         });
 
