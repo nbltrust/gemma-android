@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * 投票界面列表adapter
  *
- * Created by wanglin on 2018/8/14.
  */
 public class VoteNodeListAdapter extends BaseQuickAdapter<VoteNodeVO, BaseViewHolder> {
 

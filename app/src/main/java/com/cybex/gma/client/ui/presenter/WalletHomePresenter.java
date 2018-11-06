@@ -175,6 +175,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     GetEosTokensResult.ResultBean resultBean = response.getResult();
                                     List<TokenBean> tokens = resultBean.getTokens();
                                     //更新UI
+                                    getV().setEosTokens(tokens);
                                     getV().updateEosTokensUI(tokens);
 
 

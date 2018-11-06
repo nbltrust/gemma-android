@@ -14,13 +14,14 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.api.ApiPath;
+import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
-import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.ClipboardUtils;
@@ -28,13 +29,14 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ChangeAccountEvent;
 import com.cybex.gma.client.event.PollEvent;
-import com.cybex.gma.client.event.TabSelectedEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.ChangeAccountAdapter;
+import com.cybex.gma.client.ui.adapter.EosTokensAdapter;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
 import com.cybex.gma.client.ui.model.response.AccountRefoundRequest;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
+import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.presenter.EosHomePresenter;
@@ -57,12 +59,12 @@ import com.tapadoo.alerter.Alerter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import io.hypertrack.smart_scheduler.SmartScheduler;
 
 public class EosHomeActivity extends XActivity<EosHomePresenter> {
@@ -84,6 +86,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     @BindView(R.id.view_top_navigation) ConstraintLayout viewTopNavigation;
     @BindView(R.id.show_cpu) LinearLayout showCpu;
     @BindView(R.id.tv_assets) TextView tvAssets;
+    @BindView(R.id.recycler_token_list) RecyclerView recyclerTokenList;
     private EosWalletEntity curEosWallet;
     private int walletID;
     private String curEosUsername;
@@ -106,12 +109,13 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     private ResourceInfoVO resourceInfoVO;
     private String curUSDTPrice;
     private int savedCurrency;
+    private EosTokensAdapter mAdapter;
 
     @OnClick(R.id.view_resource_manage)
     public void goResourceDetail() {
         bundle.putString(ParamConstants.EOS_ALL_ASSET_VALUE, getAssetsValue());
         bundle.putString(ParamConstants.EOS_AMOUNT, getEosAmount());
-        LoggerManager.d("assetsValue",  getAssetsValue());
+        LoggerManager.d("assetsValue", getAssetsValue());
         UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
     }
 
@@ -131,13 +135,13 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     }
 
     @OnClick({R.id.iv_copy, R.id.iv_back})
-    public void onNavigationBarClicked(View v){
-        switch (v.getId()){
+    public void onNavigationBarClicked(View v) {
+        switch (v.getId()) {
             case R.id.iv_copy:
                 //复制账户名
 
-                    ClipboardUtils.copyText(this, getAccountName());
-                    GemmaToastUtils.showLongToast(getString(R.string.eos_copy_success));
+                ClipboardUtils.copyText(this, getAccountName());
+                GemmaToastUtils.showLongToast(getString(R.string.eos_copy_success));
 
                 break;
             case R.id.iv_back:
@@ -146,7 +150,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         }
     }
 
-    public String getAccountName(){
+    public String getAccountName() {
         return tvAccountName.getText().toString().trim();
     }
 
@@ -412,12 +416,14 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     @Override
     public void bindUI(View rootView) {
-      ButterKnife.bind(this);
+        ButterKnife.bind(this);
         //OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        showTokens(getTestData());
+
         getP().requestHomeCombineDataVO();
         bundle = new Bundle();
         //初始化当前节点
@@ -511,22 +517,22 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
-                    float dpY = px2dp(EosHomeActivity.this, scrollY);
-                    if (dpY > 14) {
-                        if (curEosWallet != null) {
-                            curEosUsername = curEosWallet.getCurrentEosName();
-                            mTitleBar.setTitle(curEosUsername);
-                            TextView title = mTitleBar.getmCenterText();
-                            float alpha = (dpY * (float) 1.29 + (float) 1.94) / 100;
-                            title.setAlpha(alpha);
-                        }
-
-
-                    } else {
+                float dpY = px2dp(EosHomeActivity.this, scrollY);
+                if (dpY > 14) {
+                    if (curEosWallet != null) {
+                        curEosUsername = curEosWallet.getCurrentEosName();
+                        mTitleBar.setTitle(curEosUsername);
                         TextView title = mTitleBar.getmCenterText();
-                        title.setAlpha(1);
-                        mTitleBar.setTitle(getString(R.string.eos_app_name));
+                        float alpha = (dpY * (float) 1.29 + (float) 1.94) / 100;
+                        title.setAlpha(alpha);
                     }
+
+
+                } else {
+                    TextView title = mTitleBar.getmCenterText();
+                    title.setAlpha(1);
+                    mTitleBar.setTitle(getString(R.string.eos_app_name));
+                }
 
             }
         });
@@ -587,15 +593,15 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     }
 
-    public void getCurrentEosWallet(){
+    public void getCurrentEosWallet() {
 
     }
 
-    public String getAssetsValue(){
+    public String getAssetsValue() {
         return totalCNYAmount.getText().toString().trim();
     }
 
-    public String getEosAmount(){
+    public String getEosAmount() {
         return tvEosAmount.getText().toString().trim();
     }
 
@@ -654,5 +660,45 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
             }
         });
 
+    }
+
+    /**
+     * 展示Tokens
+     */
+    private void showTokens(List<EosTokenVO> eosTokens) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager
+                .VERTICAL, false);
+        recyclerTokenList.setLayoutManager(layoutManager);
+        mAdapter = new EosTokensAdapter(eosTokens);
+        recyclerTokenList.setAdapter(mAdapter);
+        //点击事件
+        recyclerTokenList.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
+    }
+
+    public List<EosTokenVO> getTestData(){
+        List<EosTokenVO> testTokens = new ArrayList<>();
+
+        EosTokenVO testToken1 = new EosTokenVO();
+        testToken1.setTokenName("EETH");
+        testToken1.setQuantity(100);
+
+        EosTokenVO testToken2 = new EosTokenVO();
+        testToken2.setTokenName("EBTC");
+        testToken2.setQuantity(200);
+
+        EosTokenVO testToken3 = new EosTokenVO();
+        testToken3.setTokenName("EXRP");
+        testToken3.setQuantity(300);
+
+        testTokens.add(testToken1);
+        testTokens.add(testToken2);
+        testTokens.add(testToken3);
+
+        return testTokens;
     }
 }

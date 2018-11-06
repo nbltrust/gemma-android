@@ -75,12 +75,13 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     private EosWalletEntity curEosWallet;
     private EthWalletEntity curEthWallet;
     private boolean isBioConnected;//蓝牙卡是否连接
-    private int eosTokenCount;//Eos链上Token总数
-    private Unbinder unbinder;
 
-    public void setEosTokenCount(int eosTokenCount) {
-        this.eosTokenCount = eosTokenCount;
+    public void setEosTokens(List<TokenBean> eosTokens) {
+        this.eosTokens = eosTokens;
     }
+
+    private List<TokenBean> eosTokens;
+    private Unbinder unbinder;
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onValidateResultReceived(ValidateResultEvent event) {

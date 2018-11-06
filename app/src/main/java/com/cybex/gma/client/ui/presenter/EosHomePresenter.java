@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.dao.WalletEntityDao;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
@@ -13,11 +14,14 @@ import com.cybex.gma.client.ui.activity.EosHomeActivity;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
+import com.cybex.gma.client.ui.model.response.GetEosTokensResult;
 import com.cybex.gma.client.ui.model.response.UnitPrice;
 import com.cybex.gma.client.ui.model.vo.EOSNameVO;
+import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
 import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
+import com.cybex.gma.client.ui.request.GetEosTokensRequest;
 import com.cybex.gma.client.ui.request.UnitPriceRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -97,6 +101,46 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
         }
     }
 
+
+    /**
+     * 从中心化服务器调取Tokens
+     */
+    public void getEosTokens(String account_name){
+        GetEosTokensRequest request = new GetEosTokensRequest(GetEosTokensResult.class, account_name)
+                .getEosTokens(new JsonCallback<GetEosTokensResult>() {
+                    @Override
+                    public void onStart(Request<GetEosTokensResult, ? extends Request> request) {
+                        super.onStart(request);
+                    }
+
+                    @Override
+                    public void onSuccess(Response<GetEosTokensResult> data) {
+                        if (getV() != null){
+                            if (data != null){
+                                GetEosTokensResult response = data.body();
+                                if (response.getResult() != null){
+                                    GetEosTokensResult.ResultBean resultBean = response.getResult();
+                                    List<TokenBean> tokens = resultBean.getTokens();
+                                    //更新UI
+
+                                }
+                            }
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
+                            getV().dissmisProgressDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<GetEosTokensResult> response) {
+                        if (getV() != null){
+                            super.onError(response);
+                            getV().dissmisProgressDialog();
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                        }
+                    }
+                });
+
+    }
 
     /**
      * 获取首页聚合数据
@@ -408,4 +452,20 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
         }
         return null;
     }
+
+    /**
+     * 将List<TokenBean> 转化成为 List<EosTokensVO>
+     */
+    public List<EosTokenVO> converTokenBeanToVO(List<TokenBean> tokenBeanList){
+        List<EosTokenVO> voList = new ArrayList<>();
+        for (TokenBean curToken : tokenBeanList){
+            EosTokenVO curTokenVO = new EosTokenVO();
+            curTokenVO.setLogo_url(curToken.getLogo_url());
+            curTokenVO.setQuantity(curToken.getBalance());
+            curTokenVO.setTokenName(curToken.getContract());
+            voList.add(curTokenVO);
+        }
+        return voList;
+    }
+
 }
