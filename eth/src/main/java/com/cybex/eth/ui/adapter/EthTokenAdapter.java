@@ -24,7 +24,7 @@ public class EthTokenAdapter extends BaseQuickAdapter<TokenBean, BaseViewHolder>
         ImageView ivTokenLogo = helper.getView(R.id.iv_token_logo);
         TextView tvTokenName = helper.getView(R.id.tv_token_name);
         TextView tvTokenAmount = helper.getView(R.id.tv_token_amount);
-        tvTokenName.setText(item.getName());
+        tvTokenName.setText(item.getContract());
 
     }
 }

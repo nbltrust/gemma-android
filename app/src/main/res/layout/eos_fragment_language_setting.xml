@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!--
             <RadioButton
                 android:id="@+id/radioButton_follow_system"
                 style="@style/mRadioButton"
@@ -35,6 +36,7 @@
                 android:layout_marginStart="@dimen/dimen_10"
                 style="@style/common_divider">
             </View>
+            -->
 
             <RadioButton
                 android:id="@+id/radioButton_simC"

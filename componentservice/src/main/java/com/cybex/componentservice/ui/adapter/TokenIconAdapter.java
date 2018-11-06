@@ -19,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.cybex.componentservice.R;
 import com.cybex.componentservice.bean.TokenBean;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.SizeUtil;
 
 import java.security.MessageDigest;
@@ -73,8 +74,9 @@ public class TokenIconAdapter extends RecyclerView.Adapter<TokenIconAdapter.Toke
 
         TokenBean tokenBean = tokens.get(position);
 
+        LoggerManager.d("default_logo_url", tokenBean.getLogo_url());
         Glide.with(holder.ivToken.getContext())
-                .load(tokenBean.getIconUrl())
+                .load(tokenBean.getLogo_url())
                 .apply(new RequestOptions()
                         .error(R.drawable.eos_ic_asset)
                         .placeholder(R.drawable.eos_ic_asset)

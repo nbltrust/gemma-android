@@ -23,7 +23,7 @@ import butterknife.Unbinder;
 public class LanguageSettingFragment extends XFragment {
 
     Unbinder unbinder;
-    @BindView(R.id.radioButton_follow_system) RadioButton radioButtonFollowSystem;
+    //@BindView(R.id.radioButton_follow_system) RadioButton radioButtonFollowSystem;
     @BindView(R.id.radioButton_simC) RadioButton radioButtonSimC;
     @BindView(R.id.radioButton_EN) RadioButton radioButtonEN;
 
@@ -58,13 +58,15 @@ public class LanguageSettingFragment extends XFragment {
     }
 
 
-    @OnClick({R.id.radioButton_follow_system, R.id.radioButton_simC, R.id.radioButton_EN})
+    @OnClick({R.id.radioButton_simC, R.id.radioButton_EN})
     public void setLanguageListener(View v) {
         int selectedLanguage = -1;
         switch (v.getId()) {
+            /*
             case R.id.radioButton_follow_system:
                 selectedLanguage = LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM;
                 break;
+                */
             case R.id.radioButton_simC:
                 selectedLanguage = LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED;
                 break;
@@ -83,10 +85,12 @@ public class LanguageSettingFragment extends XFragment {
 
     private void showCheckedLanguage() {
         switch (savedLanguageType) {
+            /*
             case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
                 //跟随系统
                 showCheckedLogic(true, false, false);
                 break;
+                */
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
                 //简体中文
                 showCheckedLogic(false, true, false);
@@ -112,7 +116,7 @@ public class LanguageSettingFragment extends XFragment {
      * @return
      */
     private void showCheckedLogic(boolean followSystem, boolean chineseSimolified, boolean languageEn) {
-        radioButtonFollowSystem.setChecked(followSystem);
+        //radioButtonFollowSystem.setChecked(followSystem);
         radioButtonSimC.setChecked(chineseSimolified);
         radioButtonEN.setChecked(languageEn);
     }

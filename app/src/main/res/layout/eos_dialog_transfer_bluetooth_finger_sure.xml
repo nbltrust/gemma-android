@@ -50,7 +50,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="@dimen/dimen_20"
-        android:src="@drawable/wookong_bio_fingerprint"/>
+        android:src="@drawable/wookong_bio_card_fingerprint"/>
 
 
 </LinearLayout>
