@@ -1,35 +1,20 @@
 package com.cybex.gma.client.ui.presenter;
 
-import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.ResourceDetailActivity;
-import com.cybex.gma.client.ui.fragment.BuySellRamFragment;
 import com.cybex.gma.client.ui.model.request.GetRamMarketReqParams;
-import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
-import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
 import com.cybex.gma.client.ui.model.response.GetRamMarketResult;
 import com.cybex.gma.client.ui.model.response.RamMarketBase;
 import com.cybex.gma.client.ui.model.response.RamMarketRows;
-import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
-import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
-import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetRamMarketRequest;
-import com.cybex.gma.client.ui.request.PushTransactionRequest;
-import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
-import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
-import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
-import com.tapadoo.alerter.Alert;
-import com.tapadoo.alerter.Alerter;
 
 import java.util.List;
 

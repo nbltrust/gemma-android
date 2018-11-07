@@ -2,4 +2,27 @@
     <string name="eth_app_name">eth</string>
     <string name="eth_copy_success">复制成功</string>
     <string name="eth_click_to_copy">点击复制</string>
+
+    <!-- Transfer-->
+    <string name="eth_account_name_hint">请输入收款人地址</string>
+    <string name="eth_remain_balance_zero">余额： 0.0000 EOS</string>
+    <string name="eth_tip_transfer">输入转账金额，最多四位小数</string>
+    <string name="eth_input_transfer_hint">输入转账备注</string>
+    <string name="eth_show_remain_balance">余额： </string>
+    <string name="eth_tip_cant_transfer_to_yourself">不能给自己的账户转账</string>
+    <string name="eth_tip_balance_not_enough">可用余额不足</string>
+    <string name="eth_title_transfer_record">收支记录</string>
+    <string name="eth_title_transfer_detail">收支详情</string>
+    <string name="eth_transfer_tip">备注（可选）</string>
+    <string name="eth_title_receiver">收款人</string>
+    <string name="eth_tip_account_name_err">地址格式不正确</string>
+    <string name="eth_title_payer_account">付款账户</string>
+    <string name="eth_title_fund">金额</string>
+
+    <!--Transfer advanced mine setting-->
+    <string name="eth_mine_setting_title">高级选项</string>
+    <string name="eth_gas">Gas</string>
+    <string name="eth_gasprice">Gas Price</string>
+    <string name="eth_gas_set_hint">自定义 Gas</string>
+    <string name="eth_gasprice_set_hint">自定义 Gas Price</string>
 </resources>

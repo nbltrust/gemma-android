@@ -127,7 +127,7 @@ public class EthAssetDetailActivity extends XActivity<EthAssetDetailPresenter> {
         btnGoTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                UISkipMananger.launchTransfer(AssetDetailActivity.this);
+                startActivity(new Intent(context,EthTransferActivity.class));
             }
         });
 

@@ -275,6 +275,16 @@
 
     </style>
 
+    <!-- 公共button -->
+    <style name="common_button">
+        <item name="android:textSize">@dimen/font_4</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/selector_common_button</item>
+    </style>
+
     <!-- 公共button不可点击样式 -->
     <style name="common_button_unClickable">
         <item name="android:textSize">@dimen/font_4</item>

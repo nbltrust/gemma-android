@@ -1,11 +1,11 @@
-package com.cybex.gma.client.utils.listener;
+package com.cybex.componentservice.utils.listener;
 
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import java.util.regex.Pattern;

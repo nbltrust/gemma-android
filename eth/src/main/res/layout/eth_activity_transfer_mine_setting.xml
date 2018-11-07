@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/ui_navibar" />
+
+
+    <LinearLayout
+        style="@style/common_horizontal_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="82dp">
+
+            <TextView
+                android:id="@+id/tv_gas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19.6dp"
+                android:text="@string/eth_gas"
+                android:textColor="@color/black_context"
+                android:textSize="@dimen/font_3.5" />
+
+            <LinearLayout
+                android:id="@+id/view_gas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_gas"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_gas"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/eth_gas_set_hint"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:textColor="@color/black_content"
+                    android:textColorHint="@color/grey_content"
+                    android:textCursorDrawable="@drawable/cursor_custom"
+                    android:textSize="@dimen/font_4" />
+
+                <ImageView
+                    android:id="@+id/iv_gas_clear"
+                    style="@style/clear_icon_common" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View style="@style/common_divider" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="82dp">
+
+            <TextView
+                android:id="@+id/tv_gasprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19.6dp"
+                android:text="@string/eth_gasprice"
+                android:textColor="@color/black_context"
+                android:textSize="@dimen/font_3.5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_gasprice"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_gasprice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/eth_gasprice_set_hint"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:textColor="@color/black_content"
+                    android:textColorHint="@color/grey_content"
+                    android:textCursorDrawable="@drawable/cursor_custom"
+                    android:textSize="@dimen/font_4" />
+
+                <ImageView
+                    android:id="@+id/iv_gasprice_clear"
+                    style="@style/clear_icon_common" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <View style="@style/common_divider" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

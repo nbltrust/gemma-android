@@ -40,7 +40,7 @@ import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.presenter.EosHomePresenter;
-import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;

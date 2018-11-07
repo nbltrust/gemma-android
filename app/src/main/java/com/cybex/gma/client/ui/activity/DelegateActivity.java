@@ -25,7 +25,7 @@ import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
 import com.cybex.gma.client.ui.presenter.DelegatePresenter;
-import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;

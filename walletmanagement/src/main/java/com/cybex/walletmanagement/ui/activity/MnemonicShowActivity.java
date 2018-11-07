@@ -11,6 +11,7 @@ import com.cybex.base.view.flowlayout.FlowLayout;
 import com.cybex.base.view.flowlayout.TagAdapter;
 import com.cybex.base.view.flowlayout.TagFlowLayout;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.siberiadante.customdialoglib.CustomDialog;
@@ -44,6 +45,7 @@ public class MnemonicShowActivity extends XActivity {
 
         if(getIntent()!=null){
             String mnemonicStr = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
+            LoggerManager.d("mnemonic="+mnemonicStr);
             mnemonic = mnemonicStr.split(" ");
             if(mnemonic!=null){
                 mFlowLayout.setAdapter(new TagAdapter<String>(mnemonic) {

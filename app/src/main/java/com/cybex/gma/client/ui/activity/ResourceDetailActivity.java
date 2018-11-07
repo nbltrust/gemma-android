@@ -11,7 +11,7 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.presenter.ResourceDetailPresenter;
-import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 

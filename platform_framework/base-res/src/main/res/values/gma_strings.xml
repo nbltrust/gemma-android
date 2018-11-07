@@ -113,6 +113,7 @@
     <item name="tag_key_data" type="id"/>
     <item name="tag_key_position" type="id"/>
     <string name="collect">收款</string>
+    <string name="transfer">转账</string>
 
     <string name="reconnect">重试连接</string>
     <string name="btn_connect">连接</string>

@@ -16,7 +16,7 @@ import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetRamMarketRequest;
 import com.cybex.gma.client.ui.request.PushTransactionRequest;
-import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;

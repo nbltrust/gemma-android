@@ -27,32 +27,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="20dp"
+                style="@style/common_horizontal_padding"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="82dp"
                     >
 
                     <TextView
                         android:id="@+id/tv_title_receiver"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:text="@string/eos_title_receiver"
-                        android:textColor="#8e8e93"
-                        android:textSize="16sp"
+                        android:layout_marginTop="19.6dp"
+                        android:text="@string/eth_title_receiver"
+                        android:textColor="@color/black_context"
+                        android:textSize="@dimen/font_3.5"
                         />
 
                     <LinearLayout
                         android:orientation="horizontal"
                         android:id="@+id/view_receiver_account"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/tv_title_receiver"
                         android:layout_marginTop="14dp">
 
@@ -61,14 +59,13 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginStart="15dp"
                             android:background="@null"
-                            android:hint="@string/eos_account_name"
+                            android:hint="@string/eth_account_name_hint"
                             android:singleLine="true"
-                            android:textColor="@color/darkSlateBlue"
-                            android:textColorHint="#c6cade"
-                            android:textCursorDrawable="@drawable/eos_cursor_custom"
-                            android:textSize="16sp"/>
+                            android:textColor="@color/black_content"
+                            android:textColorHint="@color/grey_content"
+                            android:textCursorDrawable="@drawable/cursor_custom"
+                            android:textSize="@dimen/font_4"/>
 
                         <ImageView
                             android:id="@+id/iv_transfer_account_clear"
@@ -79,27 +76,22 @@
                 </RelativeLayout>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="14dp"
-                    android:background="@color/eos_horiontal_line"/>
+                    style="@style/common_divider"/>
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="82dp"
                     >
 
                     <TextView
                         android:id="@+id/tv_title_pay_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:text="@string/eos_title_payer_account"
-                        android:textColor="#8e8e93"
-                        android:textSize="16sp"
+                        android:layout_marginTop="19.6dp"
+                        android:text="@string/eth_title_payer_account"
+                        android:textColor="@color/black_context"
+                        android:textSize="@dimen/font_3.5"
                         />
 
                     <RelativeLayout
@@ -123,50 +115,37 @@
                             android:id="@+id/tv_pay_account"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_15"
                             android:layout_toEndOf="@+id/imv_wookong_logo"
                             android:singleLine="true"
-                            android:textColor="@color/darkSlateBlue"
-                            android:textSize="16sp"
+                            android:textColor="@color/black_content"
+                            android:textSize="@dimen/font_4"
                             android:textStyle="bold"
-                            tools:text="账户1"
+                            android:ellipsize="middle"
+                            tools:text="0xASDF4HJK34HKJH43JKH43fsdfsdfsdfsdHIK3XSDFDASJL"
                             />
 
-                        <ImageView
-                            android:id="@+id/imv_arrow_change_account"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="15dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_tab_drop_light_blue"
-                            android:visibility="gone"/>
+
 
                     </RelativeLayout>
 
                 </RelativeLayout>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="14dp"
-                    android:background="@color/eos_horiontal_line"/>
+                    style="@style/common_divider"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="82dp"
                     >
 
                     <TextView
                         android:id="@+id/tv_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:text="@string/eos_title_fund"
-                        android:textColor="#8e8e93"
-                        android:textSize="16sp"
+                        android:text="@string/eth_title_fund"
+                        android:layout_marginTop="19.6dp"
+                        android:textColor="@color/black_context"
+                        android:textSize="@dimen/font_3.5"
                         />
 
                     <TextView
@@ -174,22 +153,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="19.6dp"
                         android:singleLine="true"
-                        android:text="@string/eos_remain_balance_zero"
-                        android:textColor="#535c8a"
-                        android:textSize="14sp"
+                        android:text="@string/eth_remain_balance_zero"
+                        android:textColor="@color/black_context"
+                        android:textSize="@dimen/font_3.5"
                         />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_amount"
-                        android:layout_marginBottom="12dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:layout_marginTop="14dp"
                         android:orientation="horizontal">
 
@@ -199,13 +173,13 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@null"
-                            android:hint="@string/eos_tip_transfer"
+                            android:hint="@string/eth_tip_transfer"
                             android:inputType="numberDecimal"
                             android:singleLine="true"
-                            android:textColor="@color/darkSlateBlue"
-                            android:textColorHint="#c6cade"
-                            android:textCursorDrawable="@drawable/eos_cursor_custom"
-                            android:textSize="16sp"/>
+                            android:textColor="@color/black_content"
+                            android:textColorHint="@color/grey_content"
+                            android:textCursorDrawable="@drawable/cursor_custom"
+                            android:textSize="@dimen/font_4"/>
 
                         <ImageView
                             android:id="@+id/iv_transfer_amount_clear"
@@ -217,35 +191,27 @@
                 </RelativeLayout>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="14dp"
-                    android:background="@color/eos_horiontal_line"/>
+                    style="@style/common_divider"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-
+                    android:layout_height="82dp"
                     >
 
                     <TextView
                         android:id="@+id/tv_note"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:text="@string/eos_title_memo_optional"
-                        android:textColor="#8e8e93"
-                        android:textSize="16sp"
+                        android:text="@string/eth_transfer_tip"
+                        android:layout_marginTop="19.6dp"
+                        android:textColor="@color/black_context"
+                        android:textSize="@dimen/font_3.5"
                         />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_note"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:orientation="horizontal">
 
 
@@ -255,16 +221,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@null"
-                            android:hint="@string/eos_input_transfer_hint"
+                            android:hint="@string/eth_input_transfer_hint"
                             android:maxLines="3"
                             android:minHeight="50dp"
-                            android:textColor="@color/darkSlateBlue"
-                            android:textColorHint="#c6cade"
-                            android:textCursorDrawable="@drawable/eos_cursor_custom"
-                            android:textSize="16sp"/>
+                            android:textColor="@color/black_content"
+                            android:textColorHint="@color/grey_content"
+                            android:textCursorDrawable="@drawable/cursor_custom"
+                            android:textSize="@dimen/font_4"/>
 
                         <ImageView
-                            android:id="@+id/iv_transfer_memo_clear"
+                            android:id="@+id/iv_transfer_note_clear"
                             style="@style/clear_icon_common"/>
 
                     </LinearLayout>
@@ -273,27 +239,29 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="14dp"
-                    android:layout_marginBottom="18dp"
-                    android:background="@color/eos_horiontal_line"/>
+                    style="@style/common_divider"
+                   />
+                
+                <com.cybex.base.view.LabelLayout
+                    android:id="@+id/label_mine"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    app:text_left="矿工费"
+                    app:text_right="0.002 ETH"/>
 
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_transfer_nextStep"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="24dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginTop="40dp"
-                style="@style/common_button_unClickable"
+                android:layout_marginTop="38dp"
+                android:layout_marginLeft="@dimen/common_view_margin"
+                android:layout_marginRight="@dimen/common_view_margin"
+                style="@style/common_button"
                 android:enabled="false"
                 android:text="@string/next_step"
                 android:textColor="@color/white"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/font_4"/>
 
         </LinearLayout>
 

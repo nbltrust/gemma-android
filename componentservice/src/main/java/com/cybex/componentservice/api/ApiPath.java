@@ -47,6 +47,16 @@ public class ApiPath {
 
     /**------------EOS 项目情况配置---------------*/
 
+    /**
+     * ------------ETH 项目情况配置---------------
+     */
+
+    //gas price host
+    public static final String HOST_GAS_STATION = "https://ethgasstation.info/json/ethgasAPI.json";
+
+
+    /**------------ETH 项目情况配置---------------*/
+
 
     /**------------URL 地址配置---------------*/
     //服务协议

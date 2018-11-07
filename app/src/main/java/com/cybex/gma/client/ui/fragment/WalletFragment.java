@@ -1,7 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -38,7 +37,7 @@ import com.cybex.gma.client.ui.model.vo.EOSNameVO;
 import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.presenter.WalletPresenter;
-import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
@@ -53,7 +52,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.tapadoo.alerter.Alerter;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

@@ -27,6 +27,14 @@ public class FormatValidateUtils {
         return matcher.matches();
     }
 
+    public static boolean isEthAddressValid(String address){
+        if(TextUtils.isEmpty(address))return false;
+        String regEx = "^0x[0-9a-fA-F]{40}$";
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher matcher = pattern.matcher(address);
+        return matcher.matches();
+    }
+
     public static boolean isMnemonicValid(String mnemonic) {
         if(TextUtils.isEmpty(mnemonic))return false;
         String[] split = mnemonic.split(" ");

@@ -23,7 +23,7 @@ import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
-import com.cybex.gma.client.utils.AmountUtil;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
