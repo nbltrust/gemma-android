@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/whiteTwo"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/ui_navibar">
+
+        </include>
+
+        <com.cybex.base.view.refresh.CommonRefreshLayout
+            android:id="@+id/view_refresh_asset"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            å
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/eos_ui_asset_detail_top">
+
+                </include>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.cybex.base.view.statusview.MultipleStatusView
+                        android:background="@color/whiteTwo"
+                        android:id="@+id/list_multiple_status_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/btn_navibar"
+                        app:contentView="@layout/eos_content_recycler_view"
+                        app:emptyView="@layout/empty_view"
+                        app:errorView="@layout/error_view"
+                        app:loadingView="@layout/loading_view"
+                        app:noNetworkView="@layout/no_network_view"
+                        >
+                    </com.cybex.base.view.statusview.MultipleStatusView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.cybex.base.view.refresh.CommonRefreshLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

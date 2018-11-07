@@ -2,7 +2,7 @@ package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.gma.client.config.HttpConst;
-import com.cybex.gma.client.ui.activity.AssetDetailActivity;
+import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.model.response.TransferHistoryList;
 import com.cybex.gma.client.ui.model.response.TransferHistoryListData;
@@ -15,7 +15,7 @@ import com.lzy.okgo.request.base.Request;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssetDetailPresenter extends XPresenter<AssetDetailActivity> {
+public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
     public TransferHistoryList requestHistory(final String account_name, final int last_pos, boolean isFirstLoad) {
         TransferHistoryList historyList = null;

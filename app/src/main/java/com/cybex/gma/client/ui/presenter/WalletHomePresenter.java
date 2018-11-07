@@ -144,7 +144,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
             EosWalletEntity curEosWallet = eosList.get(0);
             if (curEosWallet != null) {
                 curEosWallet.setIsConfirmLib(ParamConstants.EOSNAME_ACTIVATED);
-                String curEosName = account_names.get(0);
+                String curEosName = getCurEosname();
                 curEosWallet.setCurrentEosName(curEosName);
                 String eosNameJson = GsonUtils.objectToJson(account_names);
                 curEosWallet.setEosNameJson(eosNameJson);

@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.activity.AboutActivity;
 import com.cybex.gma.client.ui.activity.ActivateAccountMethodActivity;
-import com.cybex.gma.client.ui.activity.AssetDetailActivity;
+import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.activity.BackUpPrivatekeyActivity;
 import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
@@ -27,7 +27,6 @@ import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
 import com.cybex.gma.client.ui.activity.CollectActivity;
 import com.cybex.gma.client.ui.activity.CreateEosAccountActivity;
 import com.cybex.gma.client.ui.activity.CreateManageActivity;
-import com.cybex.gma.client.ui.activity.CreateMethodActivity;
 import com.cybex.gma.client.ui.activity.CreateWalletActivity;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
 import com.cybex.gma.client.ui.activity.EosHomeActivity;
@@ -37,7 +36,6 @@ import com.cybex.gma.client.ui.activity.GestureCreateActivity;
 import com.cybex.gma.client.ui.activity.GestureVerifyActivity;
 import com.cybex.gma.client.ui.activity.ImportWalletActivity;
 import com.cybex.gma.client.ui.activity.InitialActivity;
-import com.cybex.gma.client.ui.activity.MainTabActivity;
 import com.cybex.gma.client.ui.activity.ManageWalletActivity;
 import com.cybex.gma.client.ui.activity.ResourceDetailActivity;
 import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
@@ -146,7 +144,7 @@ public final class UISkipMananger {
      * @param context
      */
     public static void launchAssetDetail(Activity context, Bundle bundle) {
-        launchIntent(context, AssetDetailActivity.class, bundle);
+        launchIntent(context, EosAssetDetailActivity.class, bundle);
     }
 
     /**

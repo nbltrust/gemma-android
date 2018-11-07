@@ -3,7 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="#f9f9f9"
+              android:background="#ffffff"
               android:orientation="vertical">
 
     <CheckedTextView
@@ -17,7 +17,7 @@
         android:checked="false"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
-        android:textColor="@color/eos_account_change_color_selector"
+        android:textColor="@color/black_context"
         android:textSize="16sp"
         tools:text="gemma001"/>
 

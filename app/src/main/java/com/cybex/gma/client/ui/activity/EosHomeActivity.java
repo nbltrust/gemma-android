@@ -179,6 +179,11 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     public void onChangeAccountEvent(ChangeAccountEvent event) {
         if (EmptyUtils.isNotEmpty(event)) {
             LoggerManager.d("---changeAccount event---");
+
+//            String curEosName = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+//                    .getEosWalletEntities().get(0).getCurrentEosName();
+//            LoggerManager.d("curEosName", curEosName);
+
             getP().requestHomeCombineDataVO();
         }
     }
@@ -422,9 +427,17 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        showTokens(getTestData());
+        //showTokens(getTestData());
+
+        String curEosName1 = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                .getEosWalletEntities().get(0).getCurrentEosName();
+        LoggerManager.d("curEosName1", curEosName1);
 
         getP().requestHomeCombineDataVO();
+
+        String curEosName2 = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                .getEosWalletEntities().get(0).getCurrentEosName();
+        LoggerManager.d("curEosName2", curEosName2);
         bundle = new Bundle();
         //初始化当前节点
         if (SPUtils.getInstance().getString("curNode") != null) {
@@ -452,48 +465,28 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
         if (EmptyUtils.isNotEmpty(curEosWallet)) {
             curEosUsername = curEosWallet.getCurrentEosName();
-            //textViewUsername.setText(curWallet.getCurrentEosName());
             tvAccountName.setText(curEosWallet.getCurrentEosName());
             tvCurrentAccount.setText(curEosWallet.getCurrentEosName());
-            //生成头像
-            //generatePortrait(curWallet.getCurrentEosName());
-            //设置Alert
-            if (curEosWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED)) {
-                if (Alerter.isShowing()) {
-                    Alerter.create(this)
-                            .setText(getResources().getString(R.string.eos_please_confirm_alert))
-                            .setBackgroundColorRes(R.color.scarlet)
-                            .enableInfiniteDuration(true)
-                            .setTextAppearance(R.style.myAlert)
-                            .show();
-                }
-            }
+
             //多账户切换
             String json = curEosWallet.getEosNameJson();
             List<String> eosNamelist = GsonUtils.parseString2List(json, String.class);
             if (EmptyUtils.isNotEmpty(eosNamelist) && eosNamelist.size() > 1) {
                 //如果当前有多个eos账户
-
-                /*
-                Drawable drawable = getResources().getDrawable(
-                        R.drawable.ic_common_drop_white);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-                        drawable.getMinimumHeight());
-                textViewUsername.setCompoundDrawables(null, null, drawable, null);
-
-                textViewUsername.setClickable(true);
-                */
+                ivChangeAccount.setVisibility(View.VISIBLE);
+                ivChangeAccount.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showChangeEOSNameDialog();
+                    }
+                });
             } else {
                 //只有一个eos账户
-                //textViewUsername.setCompoundDrawables(null, null, null, null);
-                //textViewUsername.setClickable(false);
-
+                ivChangeAccount.setVisibility(View.GONE);
             }
 
         } else {
-            //textViewUsername.setCompoundDrawables(null, null, null, null);
-
-            //textViewUsername.setClickable(false);
+            ivChangeAccount.setVisibility(View.GONE);
         }
 
 
@@ -511,31 +504,6 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                 tvCurrencyType.setText("≈ ¥ ");
                 totalCNYAmount.setText(" -- ");
         }
-
-        //滑动监听,设置上滑文字渐显效果
-        mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-                float dpY = px2dp(EosHomeActivity.this, scrollY);
-                if (dpY > 14) {
-                    if (curEosWallet != null) {
-                        curEosUsername = curEosWallet.getCurrentEosName();
-                        mTitleBar.setTitle(curEosUsername);
-                        TextView title = mTitleBar.getmCenterText();
-                        float alpha = (dpY * (float) 1.29 + (float) 1.94) / 100;
-                        title.setAlpha(alpha);
-                    }
-
-
-                } else {
-                    TextView title = mTitleBar.getmCenterText();
-                    title.setAlpha(1);
-                    mTitleBar.setTitle(getString(R.string.eos_app_name));
-                }
-
-            }
-        });
     }
 
     @Override
@@ -649,10 +617,8 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                     adapter.notifyDataSetChanged();
                     getP().saveNewEntity(voList.get(position).getEosName());
                     tvAccountName.setText(voList.get(position).getEosName());
-                    //generatePortrait(voList.get(position).getEosName());
-
+                    tvCurrentAccount.setText(voList.get(position).getEosName());
                     EventBusProvider.postSticky(new ChangeAccountEvent());
-
 
                     dialog.cancel();
 
@@ -684,7 +650,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         List<EosTokenVO> testTokens = new ArrayList<>();
 
         EosTokenVO testToken1 = new EosTokenVO();
-        testToken1.setTokenName("EETH");
+        testToken1.setTokenName("EOS");
         testToken1.setQuantity(100);
 
         EosTokenVO testToken2 = new EosTokenVO();

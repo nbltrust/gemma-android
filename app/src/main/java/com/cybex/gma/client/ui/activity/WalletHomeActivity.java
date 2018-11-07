@@ -273,6 +273,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     //只有EOS钱包
                     LoggerManager.d("case eos");
                     String eos_public_key = curEosWallet.getPublicKey();
+                    //LoggerManager.d("eos_pub_key", eos_public_key);
                     getP().getKeyAccounts(eos_public_key);
                 }
             }
@@ -348,18 +349,23 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         super.onStart();
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
 
-        if (curWallet != null) {
-            String walletName = curWallet.getWalletName();
-            if (walletName != null) {
-                mTvWalletName.setText(walletName);
-            }
+            if (curWallet != null) {
+                String walletName = curWallet.getWalletName();
+                if (walletName != null) {
+                    mTvWalletName.setText(walletName);
+                }
 
-            String eosAccount = curEosWallet.getCurrentEosName();
-            if (eosAccount != null) {
-                //LoggerManager.d("eos_account", eosAccount);
-                mEosCardView.setAccountName(eosAccount);
+                if (curWallet.getEosWalletEntities().size() > 0){
+                    curEosWallet = curWallet.getEosWalletEntities().get(0);
+                    String eosAccount = curEosWallet.getCurrentEosName();
+                    String eosPublicKey = curEosWallet.getPublicKey();
+                    if (eosAccount != null) {
+                        //LoggerManager.d("eos_account", eosAccount);
+                        mEosCardView.setAccountName(eosAccount);
+                        getP().getKeyAccounts(eosPublicKey);
+                    }
+                }
             }
-        }
     }
 
     public void updateEosTokensUI(List<TokenBean> tokens){

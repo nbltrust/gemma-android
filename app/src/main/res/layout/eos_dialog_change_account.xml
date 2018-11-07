@@ -2,26 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="0dp"
-              android:background="#f9f9f9"
+              android:background="#ffffff"
               android:orientation="vertical">
-
 
     <ImageView
         android:id="@+id/imv_close"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:clickable="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/ic_close_blue"/>
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_mask_close"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
-        android:textColor="#212c67"
-        android:textSize="14sp"
+        android:textColor="@color/black_context"
+        android:textSize="@dimen/font_3.5"
         android:text="@string/eos_switch_account"/>
 
 
@@ -31,7 +30,7 @@
         android:layout_height="240dp"
         android:clipToPadding="false"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="16dp"
        />
 

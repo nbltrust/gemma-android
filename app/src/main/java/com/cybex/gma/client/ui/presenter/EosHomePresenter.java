@@ -68,7 +68,7 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
         List<EOSNameVO> voList = new ArrayList<>();
         MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
-        if (entity != null && eosEntity != null) {
+        if (entity.getEosWalletEntities().size() > 0 && eosEntity != null) {
             List<String> eosNameList = GsonUtils.parseString2List(eosEntity.getEosNameJson(), String.class);
 
             if (EmptyUtils.isNotEmpty(eosNameList) && eosNameList.size() > 1) {
@@ -91,13 +91,15 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
     public void saveNewEntity(String currentEOSName) {
         MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
         MultiWalletEntity entity = dao.getCurrentMultiWalletEntity();
-        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
-        if (eosEntity != null) {
-            eosEntity.setCurrentEosName(currentEOSName);
-            List<EosWalletEntity> list = entity.getEosWalletEntities();
-            list.remove(0);
-            list.add(eosEntity);
-            dao.saveOrUpateEntitySync(entity);
+        if (entity.getEosWalletEntities().size() > 0){
+            EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+            if (eosEntity != null) {
+                eosEntity.setCurrentEosName(currentEOSName);
+                List<EosWalletEntity> list = entity.getEosWalletEntities();
+                list.remove(0);
+                list.add(eosEntity);
+                dao.saveOrUpateEntitySync(entity);
+            }
         }
     }
 
@@ -340,7 +342,7 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
 
                         if (response != null) {
                             String jsonStr = response.body();
-                            LoggerManager.d("response json:" + jsonStr);
+                            //LoggerManager.d("response json:" + jsonStr);
 
                             JSONArray array = new JSONArray(jsonStr);
                             if (array != null && array.length() > 0) {

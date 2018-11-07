@@ -16,14 +16,12 @@ import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
-import com.cybex.gma.client.ui.fragment.TransferRecordDetailFragment;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.presenter.AssetDetailPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -41,7 +39,7 @@ import butterknife.ButterKnife;
 /**
  * 资产详情页面
  */
-public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
+public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     private TransferRecordListAdapter mAdapter;
     private boolean isFirstLoad = true;
@@ -119,7 +117,7 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
                     Bundle bundle = new Bundle();
                     TransferHistory curTransfer = mAdapter.getData().get(position);
                     bundle.putParcelable(ParamConstants.KEY_CUR_TRANSFER, curTransfer);
-                    UISkipMananger.launchTransferRecordDetail(AssetDetailActivity.this, bundle);
+                    UISkipMananger.launchTransferRecordDetail(EosAssetDetailActivity.this, bundle);
                 }
 
             }
@@ -128,7 +126,7 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
         tvResourceManage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               UISkipMananger.launchResourceDetail(AssetDetailActivity.this, bundle);
+               UISkipMananger.launchResourceDetail(EosAssetDetailActivity.this, bundle);
             }
         });
 
@@ -139,7 +137,7 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
                 if (EmptyUtils.isNotEmpty(curWallet)) {
                     bundle.putString("cur_eos_name", curEosWallet.getCurrentEosName());
-                    UISkipMananger.launchVote(AssetDetailActivity.this, bundle);
+                    UISkipMananger.launchVote(EosAssetDetailActivity.this, bundle);
                 }
             }
         });
@@ -147,14 +145,14 @@ public class AssetDetailActivity extends XActivity<AssetDetailPresenter> {
         btnGoTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UISkipMananger.launchTransfer(AssetDetailActivity.this);
+                UISkipMananger.launchTransfer(EosAssetDetailActivity.this);
             }
         });
 
         btnCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UISkipMananger.launchCollect(AssetDetailActivity.this);
+                UISkipMananger.launchCollect(EosAssetDetailActivity.this);
             }
         });
     }

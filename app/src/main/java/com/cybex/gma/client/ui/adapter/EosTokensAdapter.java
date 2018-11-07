@@ -24,12 +24,12 @@ public class EosTokensAdapter extends BaseQuickAdapter<EosTokenVO, BaseViewHolde
         tv_token_name.setText(item.getTokenName());
         tv_token_quantity.setText(String.valueOf(item.getQuantity()));
         //todo 用Glide加载指定url图片进入ImageView
-        //iv_token_logo.setImageResource(R.drawable.eos_ic_asset);
+        iv_token_logo.setImageResource(R.drawable.eos_ic_asset);
 
     }
 
     public EosTokensAdapter(@Nullable List<EosTokenVO> data) {
-        super(R.layout.eos_item_token, data);
+        super(R.layout.item_single_token, data);
     }
 
     @Override

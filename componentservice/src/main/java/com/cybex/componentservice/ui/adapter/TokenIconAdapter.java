@@ -74,7 +74,6 @@ public class TokenIconAdapter extends RecyclerView.Adapter<TokenIconAdapter.Toke
 
         TokenBean tokenBean = tokens.get(position);
 
-        LoggerManager.d("default_logo_url", tokenBean.getLogo_url());
         Glide.with(holder.ivToken.getContext())
                 .load(tokenBean.getLogo_url())
                 .apply(new RequestOptions()
