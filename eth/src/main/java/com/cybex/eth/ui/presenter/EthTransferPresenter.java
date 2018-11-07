@@ -1,37 +1,18 @@
 package com.cybex.eth.ui.presenter;
 
-import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.bean.TokenBean;
-import com.cybex.componentservice.config.BaseConst;
-import com.cybex.componentservice.config.CacheConstants;
-import com.cybex.componentservice.config.RouterConst;
-import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
-import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.util.DBCallback;
-import com.cybex.componentservice.event.CloseInitialPageEvent;
-import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.eth.ui.activity.EthTransferActivity;
 import com.cybex.eth.ui.model.reponse.GetGasPriceResult;
 import com.cybex.eth.ui.request.GetGasPriceRequest;
-import com.cybex.gma.client.ui.JNIUtil;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
-import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
-import com.hxlx.core.lib.utils.common.utils.HexUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.spongycastle.util.encoders.Hex;
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.FunctionReturnDecoder;
 import org.web3j.abi.TypeReference;
@@ -40,12 +21,9 @@ import org.web3j.abi.datatypes.Bool;
 import org.web3j.abi.datatypes.Function;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Uint256;
-import org.web3j.crypto.CipherException;
 import org.web3j.crypto.Credentials;
-import org.web3j.crypto.ECKeyPair;
 import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.TransactionEncoder;
-import org.web3j.crypto.Wallet;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.Web3jFactory;
 import org.web3j.protocol.core.DefaultBlockParameterName;
@@ -58,9 +36,7 @@ import org.web3j.utils.Numeric;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -84,7 +60,7 @@ public class EthTransferPresenter extends XPresenter<EthTransferActivity> {
         Disposable subscribe = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
-                if (tokenBean.getName().equalsIgnoreCase("eth")) {
+                if (tokenBean.getSymbol().equalsIgnoreCase("eth")) {
                     try {
                         //单位是Wei
                         BigInteger balance = mWeb3j.ethGetBalance(getV().getCurrentEthWallet().getAddress(), DefaultBlockParameterName.LATEST).send().getBalance();
@@ -162,7 +138,7 @@ public class EthTransferPresenter extends XPresenter<EthTransferActivity> {
         Disposable subscribe = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
-                if (tokenBean.getName().equalsIgnoreCase("eth")) {
+                if (tokenBean.getSymbol().equalsIgnoreCase("eth")) {
                     try {
 
                         BigInteger nonce = mWeb3j.ethGetTransactionCount(address, DefaultBlockParameterName.LATEST).send().getTransactionCount();

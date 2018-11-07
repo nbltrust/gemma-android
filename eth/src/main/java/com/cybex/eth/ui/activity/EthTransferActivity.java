@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +31,9 @@ import com.cybex.eth.event.GasSettingEvent;
 import com.cybex.eth.ui.presenter.EthTransferPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 
 
 import org.greenrobot.eventbus.Subscribe;
@@ -294,7 +297,6 @@ public class EthTransferActivity extends XActivity<EthTransferPresenter> {
         tokenBean = new TokenBean("eth2", "");
 
         getP().getBalance(tokenBean);
-
         getP().getGasPrice();
 
 
@@ -333,6 +335,15 @@ public class EthTransferActivity extends XActivity<EthTransferPresenter> {
             return;
         }
 
+        showConfirmTransferDialog();
+
+
+
+    }
+
+    private void doTransfer(){
+        final String receiveAccount = etReceiverAccount.getText().toString().trim();
+        final String sendAmount = etAmount.getText().toString().trim();
         final String note = etNote.getText().toString().trim();
 
         PasswordValidateHelper helper = new PasswordValidateHelper(currentWallet, context);
@@ -383,7 +394,7 @@ public class EthTransferActivity extends XActivity<EthTransferPresenter> {
             }
         });
         this.balance = new BigDecimal(balance);
-        tvBanlance.setText("余额：" + balance + tokenBean.getName());
+        tvBanlance.setText("余额：" + balance + tokenBean.getSymbol());
     }
 
     public EthWalletEntity getCurrentEthWallet() {
@@ -414,6 +425,74 @@ public class EthTransferActivity extends XActivity<EthTransferPresenter> {
         gasPrice=new BigInteger(event.gasPrice+"");
         gasLimit=event.gas;
         updateCurrentGasUsed();
+    }
+
+
+
+    /**
+     * 确认转账dialog
+     */
+    private void showConfirmTransferDialog() {
+        int[] listenedItems = {R.id.btn_close, R.id.btn_transfer_nextStep};
+        CustomFullDialog dialog = new CustomFullDialog(context,
+                R.layout.eth_dialog_transfer_confirm, listenedItems, false, Gravity.BOTTOM);
+
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                MultiWalletEntity curWallet = DBManager.getInstance()
+                        .getMultiWalletEntityDao()
+                        .getCurrentMultiWalletEntity();
+                if (curWallet != null) {
+                    int walletType = curWallet.getWalletType();
+                        if(R.id.btn_close==view.getId()){
+                            dialog.cancel();
+                        }else if(R.id.btn_transfer_nextStep==view.getId()){
+                            switch (walletType) {
+                                case CacheConstants.WALLET_TYPE_MNE_IMPORT:
+                                case CacheConstants.WALLET_TYPE_PRIKEY_IMPORT:
+                                case CacheConstants.WALLET_TYPE_MNE_CREATE:
+                                    dialog.cancel();
+                                    doTransfer();
+                                    break;
+                                case CacheConstants.WALLET_TYPE_BLUETOOTH:
+                                    //蓝牙钱包转账
+//                                    int status = SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS);
+//                                    if (status == CacheConstants.STATUS_BLUETOOTH_DISCONNCETED) {
+//                                        //蓝牙卡未连接
+//                                        startConnect();
+//                                    } else {
+//                                        //蓝牙卡已连接
+//                                        getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+//                                                getAmount() + " EOS", getNote());
+//                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+        });
+        dialog.show();
+
+        TextView tv_payee = dialog.findViewById(R.id.tv_payee); //收款人
+        TextView tv_amount = dialog.findViewById(R.id.tv_amount); //金额
+        TextView tv_amount_unit = dialog.findViewById(R.id.tv_amount_unit); //金额
+        TextView tv_note = dialog.findViewById(R.id.tv_note); //备注
+        TextView tv_payment_account = dialog.findViewById(R.id.tv_payment_account);//付款账户
+
+        String collectionAccount = String.valueOf(etReceiverAccount.getText());
+        String amount = String.valueOf(etAmount.getText());
+
+        if (EmptyUtils.isNotEmpty(collectionAccount)) {
+            tv_payee.setText(collectionAccount);
+        }
+        if (EmptyUtils.isNotEmpty(amount)) {
+            tv_amount.setText(amount);
+        }
+        tv_amount_unit.setText(tokenBean.getSymbol());
+        tv_payment_account.setText(currentEthWallet.getAddress());
+        String memo = String.valueOf(etNote.getText());
+        tv_note.setText(memo);
     }
 
 

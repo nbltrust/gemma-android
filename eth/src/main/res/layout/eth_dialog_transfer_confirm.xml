@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/whiteTwo"
+              android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="60dp"
+        android:layout_height="48dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_mask_close"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        style="@style/common_horizontal_padding"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_receiver_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/eth_title_receiver"
+                android:textColor="@color/eth_font_title"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_payee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_receiver_title"
+                android:layout_marginLeft="20dp"
+                android:singleLine="true"
+                android:gravity="end"
+                android:ellipsize="middle"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/black_content"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                tools:text="\ufeff@lhy5468sdfasdfsadfasdfsafsadfasfs02341"/>
+        </RelativeLayout>
+
+        <View
+            style="@style/common_divider"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/eth_title_fund"
+                android:textColor="@color/eth_font_title"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/tv_amount_unit"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:textSize="@dimen/font_4"
+                android:textStyle="bold"
+                android:textColor="@color/black_content"
+                tools:text="2.2345"/>
+
+
+            <TextView
+                android:id="@+id/tv_amount_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@+id/tv_amount"
+                android:layout_marginRight="16dp"
+                android:textSize="@dimen/font_3"
+                android:textColor="@color/black_context"
+                tools:text="EOS"/>
+        </RelativeLayout>
+
+        <View
+            style="@style/common_divider"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_note_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/eth_title_memo"
+                android:textColor="@color/eth_font_title"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="16dp"
+                android:layout_toEndOf="@id/tv_note_title"
+                android:layout_alignParentRight="true"
+                android:textAlignment="viewEnd"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/black_context"
+                tools:text="transfer"/>
+
+        </RelativeLayout>
+
+        <View
+            style="@style/common_divider"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        style="@style/common_horizontal_padding"
+        >
+
+        <TextView
+            android:id="@+id/tv_payment_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/eth_title_payer_account"
+            android:textColor="@color/eth_font_title"
+            android:textSize="14sp"/>
+
+
+        <TextView
+            android:id="@+id/tv_payment_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_payment_title"
+            android:layout_marginLeft="20dp"
+            android:singleLine="true"
+            android:gravity="end"
+            android:ellipsize="middle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/black_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            tools:text="\ufeff@lhy5468023sdfsdfsdfsdfsdfsdfsdfsdfsfd41"/>
+    </RelativeLayout>
+
+    <View
+        style="@style/common_divider_withpadding"/>
+
+    <Button
+        android:id="@+id/btn_transfer_nextStep"
+        android:layout_marginLeft="@dimen/common_view_margin"
+        android:layout_marginRight="@dimen/common_view_margin"
+        android:layout_marginTop="38dp"
+        android:layout_marginBottom="38dp"
+        android:text="@string/eth_btn_confirm_transfer"
+        style="@style/bt_long_in_linearLayout"
+        />
+
+</LinearLayout>

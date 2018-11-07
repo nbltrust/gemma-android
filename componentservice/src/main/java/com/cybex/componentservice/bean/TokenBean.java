@@ -21,7 +21,7 @@ public class TokenBean {
     private String logo_url;
 
     public TokenBean(String name, String iconUrl) {
-        this.contract = name;
+        this.symbol = name;
         this.logo_url = iconUrl;
     }
     public TokenBean() {
