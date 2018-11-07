@@ -63,7 +63,7 @@ public class ResourceDetailPresenter extends XPresenter<ResourceDetailActivity> 
 
                                                      String ramRatio = AmountUtil.div(quote_balance[0], base_balance[0], 8);
                                                      String ramUnitPrice = AmountUtil.mul(ramRatio, quote_weight, 8);
-                                                     String ramUnitPriceKB = AmountUtil.mul(ramUnitPrice, "1024",
+                                                     String ramUnitPriceKB = AmountUtil.mul(ramRatio, "1024",
                                                              4);//  eos per kb
                                                      getV().setRamUnitPrice(ramUnitPriceKB);
                                                      getV().setRamUnitPriceKB(ramUnitPriceKB);

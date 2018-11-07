@@ -114,7 +114,7 @@ public class WalletFragment extends XFragment<WalletPresenter> {
 
     @OnClick(R.id.view_resource_manage)
     public void goResourceDetail() {
-        bundle.putString(ParamConstants.EOS_ALL_ASSET_VALUE, getAssetsValue());
+        bundle.putString(ParamConstants.EOS_ASSET_VALUE, getAssetsValue());
         bundle.putString(ParamConstants.EOS_AMOUNT, getEosAmount());
         LoggerManager.d("assetsValue",  getAssetsValue());
         UISkipMananger.launchAssetDetail(getActivity(), bundle);

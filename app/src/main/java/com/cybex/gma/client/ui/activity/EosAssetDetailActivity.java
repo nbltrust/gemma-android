@@ -17,12 +17,12 @@ import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
+import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.presenter.AssetDetailPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -41,11 +41,16 @@ import butterknife.ButterKnife;
  */
 public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
+    @BindView(R.id.tv_currency_type) TextView tvCurrencyType;
+    @BindView(R.id.view_asset_value) LinearLayout viewAssetValue;
+    @BindView(R.id.tv_token_name) TextView tvTokenName;
+    @BindView(R.id.view_asset_detail_bot) LinearLayout viewAssetDetailBot;
     private TransferRecordListAdapter mAdapter;
     private boolean isFirstLoad = true;
     private int currentLastPos = -1;
     private String currentEosName = "";
     private Bundle bundle;
+    private EosTokenVO curToken;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.iv_logo_eos_asset) ImageView ivLogoEosAsset;
     @BindView(R.id.tv_eos_amount) TextView tvEosAmount;
@@ -56,8 +61,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @BindView(R.id.view_asset_top) ConstraintLayout viewAssetTop;
     @BindView(R.id.list_multiple_status_view) MultipleStatusView listMultipleStatusView;
     @BindView(R.id.rv_list) RecyclerView mRecyclerView;
-    //@BindView(R.id.view_scroll) NestedScrollView viewScroll;
-    @BindView(R.id.view_refresh_asset) CommonRefreshLayout viewRefresh;
+    @BindView(R.id.view_refresh_token_asset) CommonRefreshLayout viewRefresh;
     @BindView(R.id.tv_vote) TextView tvVote;
     @BindView(R.id.tv_resource_manage) TextView tvResourceManage;
 
@@ -78,12 +82,79 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getString(R.string.title_asset_detail), true);
         bundle = getIntent().getExtras();
-        if (bundle != null){
-            String assetsValue = bundle.getString(ParamConstants.EOS_ALL_ASSET_VALUE);
-            tvRmbAmount.setText(assetsValue);
-            LoggerManager.d("assetsValue received", assetsValue);
-            String eosAmount = bundle.getString(ParamConstants.EOS_AMOUNT);
-            tvEosAmount.setText(eosAmount);
+        if (bundle != null) {
+            int asset_type = bundle.getInt(ParamConstants.COIN_TYPE);
+            if (asset_type == ParamConstants.COIN_TYPE_EOS) {
+                //EOS资产
+                String assetsValue = bundle.getString(ParamConstants.EOS_ASSET_VALUE);
+                tvRmbAmount.setText(assetsValue);
+                String eosAmount = bundle.getString(ParamConstants.EOS_AMOUNT);
+                tvEosAmount.setText(eosAmount);
+
+                tvResourceManage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UISkipMananger.launchResourceDetail(EosAssetDetailActivity.this, bundle);
+                    }
+                });
+
+                tvVote.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MultiWalletEntity curWallet = DBManager.getInstance()
+                                .getMultiWalletEntityDao()
+                                .getCurrentMultiWalletEntity();
+                        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+                        if (EmptyUtils.isNotEmpty(curWallet)) {
+                            bundle.putString("cur_eos_name", curEosWallet.getCurrentEosName());
+                            UISkipMananger.launchVote(EosAssetDetailActivity.this, bundle);
+                        }
+                    }
+                });
+
+                btnGoTransfer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UISkipMananger.launchTransfer(EosAssetDetailActivity.this);
+                    }
+                });
+
+                btnCollect.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UISkipMananger.launchCollect(EosAssetDetailActivity.this);
+                    }
+                });
+
+            } else {
+                //EOS Tokens 资产
+                curToken = bundle.getParcelable(ParamConstants.EOS_TOKENS);
+                tvRmbAmount.setVisibility(View.GONE);
+                tvCurrencyType.setVisibility(View.GONE);
+                viewAssetDetailBot.setVisibility(View.GONE);
+                if (curToken != null) {
+                    tvTokenName.setText(curToken.getTokenSymbol());
+                    tvEosAmount.setText(String.valueOf(curToken.getQuantity()));
+                }
+
+                btnGoTransfer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UISkipMananger.launchTransfer(EosAssetDetailActivity.this);
+                    }
+                });
+
+                btnCollect.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bd = new Bundle();
+                        bd.putParcelable(ParamConstants.EOS_TOKENS, curToken);
+                        UISkipMananger.launchCollectWithBundle(EosAssetDetailActivity.this, bd);
+                    }
+                });
+            }
+
+
         }
         viewRefresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
@@ -123,38 +194,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
             }
         });
 
-        tvResourceManage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               UISkipMananger.launchResourceDetail(EosAssetDetailActivity.this, bundle);
-            }
-        });
 
-        tvVote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-                EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
-                if (EmptyUtils.isNotEmpty(curWallet)) {
-                    bundle.putString("cur_eos_name", curEosWallet.getCurrentEosName());
-                    UISkipMananger.launchVote(EosAssetDetailActivity.this, bundle);
-                }
-            }
-        });
-
-        btnGoTransfer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UISkipMananger.launchTransfer(EosAssetDetailActivity.this);
-            }
-        });
-
-        btnCollect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UISkipMananger.launchCollect(EosAssetDetailActivity.this);
-            }
-        });
     }
 
     @Override

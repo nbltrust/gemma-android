@@ -17,32 +17,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
-        android:id="@+id/tv_eos_amount"
+    <LinearLayout
+        android:id="@+id/view_token_quantity"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="0.0000"
-        android:textColor="@color/black_title"
-        android:textSize="@dimen/font_6"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_logo_eos_asset"/>
+        app:layout_constraintTop_toBottomOf="@id/iv_logo_eos_asset"
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/eos_eos"
-        android:textColor="@color/black_context"
-        android:textSize="@dimen/font_3.5"
-        app:layout_constraintStart_toEndOf="@id/tv_eos_amount"
-        app:layout_constraintTop_toBottomOf="@id/iv_logo_eos_asset"/>
+        <TextView
+            android:id="@+id/tv_eos_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.0000"
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/font_6"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tv_token_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/eos_eos"
+            android:textColor="@color/black_context"
+            android:textSize="@dimen/font_3.5"
+            app:layout_constraintStart_toEndOf="@id/tv_eos_amount"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo_eos_asset"/>
+
+    </LinearLayout>
+
+
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@id/tv_eos_amount"
+        app:layout_constraintTop_toBottomOf="@id/view_token_quantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/view_asset_value"
@@ -63,7 +74,6 @@
             android:id="@+id/tv_rmb_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text=" 0.00"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_3.5"

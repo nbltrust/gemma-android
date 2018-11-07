@@ -7,14 +7,16 @@ import android.widget.TextView;
 
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.ClipboardUtils;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.qrcode.zxing.QRCodeEncoder;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +29,9 @@ public class CollectActivity extends XActivity {
     @BindView(R.id.tv_cur_eosName) TextView tvCurEosName;
     @BindView(R.id.iv_eosName_QR) ImageView ivEosNameQR;
     @BindView(R.id.tv_copy_eosName) TextView tvCopyEosName;
+    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
+    @BindView(R.id.iv_token_logo_collect) ImageView ivTokenLogoCollect;
+    @BindView(R.id.iv_token_name_collect) TextView ivTokenNameCollect;
 
     @Override
     public void bindUI(View rootView) {
@@ -36,9 +41,22 @@ public class CollectActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getString(R.string.collect), true);
-        MultiWalletEntity walletEntity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+
+        Bundle bd = getIntent().getExtras();
+        if (bd != null) {//bd为空，则为EOS资产
+            //token资产
+            EosTokenVO curToken = bd.getParcelable(ParamConstants.EOS_TOKENS);
+            if (curToken != null){
+                //ivTokenLogoCollect.setImageResource(R.drawable.eos_ic_asset);
+                ivTokenNameCollect.setText(curToken.getTokenSymbol());
+            }
+        }
+
+        MultiWalletEntity walletEntity = DBManager.getInstance()
+                .getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
         EosWalletEntity eosWallet = walletEntity.getEosWalletEntities().get(0);
-        if (walletEntity != null && eosWallet != null){
+        if (eosWallet != null && walletEntity.getEosWalletEntities().size() > 0) {
             tvCurEosName.setText(eosWallet.getCurrentEosName());
             showQRCode(getCurEosName());
         }
@@ -52,7 +70,7 @@ public class CollectActivity extends XActivity {
         });
     }
 
-    public String getCurEosName(){
+    public String getCurEosName() {
         return tvCurEosName.getText().toString().trim();
     }
 

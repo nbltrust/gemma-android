@@ -18,10 +18,10 @@
         </include>
 
         <com.cybex.base.view.refresh.CommonRefreshLayout
-            android:id="@+id/view_refresh_asset"
+            android:id="@+id/view_refresh_token_asset"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-å
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

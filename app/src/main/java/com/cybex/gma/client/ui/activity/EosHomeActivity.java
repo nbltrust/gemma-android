@@ -15,11 +15,9 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.api.ApiPath;
-import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
@@ -113,9 +111,10 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     @OnClick(R.id.view_resource_manage)
     public void goResourceDetail() {
-        bundle.putString(ParamConstants.EOS_ALL_ASSET_VALUE, getAssetsValue());
+        bundle.putString(ParamConstants.EOS_ASSET_VALUE, getAssetsValue());
         bundle.putString(ParamConstants.EOS_AMOUNT, getEosAmount());
-        LoggerManager.d("assetsValue", getAssetsValue());
+        bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
+        //LoggerManager.d("assetsValue", getAssetsValue());
         UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
     }
 
@@ -427,17 +426,6 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        //showTokens(getTestData());
-
-        String curEosName1 = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
-                .getEosWalletEntities().get(0).getCurrentEosName();
-        LoggerManager.d("curEosName1", curEosName1);
-
-        getP().requestHomeCombineDataVO();
-
-        String curEosName2 = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
-                .getEosWalletEntities().get(0).getCurrentEosName();
-        LoggerManager.d("curEosName2", curEosName2);
         bundle = new Bundle();
         //初始化当前节点
         if (SPUtils.getInstance().getString("curNode") != null) {
@@ -465,8 +453,9 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
         if (EmptyUtils.isNotEmpty(curEosWallet)) {
             curEosUsername = curEosWallet.getCurrentEosName();
-            tvAccountName.setText(curEosWallet.getCurrentEosName());
-            tvCurrentAccount.setText(curEosWallet.getCurrentEosName());
+            LoggerManager.d("curEosUsername", curEosUsername);
+            tvAccountName.setText(curEosUsername);
+            tvCurrentAccount.setText(curEosUsername);
 
             //多账户切换
             String json = curEosWallet.getEosNameJson();
@@ -561,10 +550,6 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     }
 
-    public void getCurrentEosWallet() {
-
-    }
-
     public String getAssetsValue() {
         return totalCNYAmount.getText().toString().trim();
     }
@@ -631,7 +616,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     /**
      * 展示Tokens
      */
-    private void showTokens(List<EosTokenVO> eosTokens) {
+    public void showTokens(List<EosTokenVO> eosTokens) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager
                 .VERTICAL, false);
         recyclerTokenList.setLayoutManager(layoutManager);
@@ -641,30 +626,14 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         recyclerTokenList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                EosTokenVO curToken = eosTokens.get(position);
 
+                Bundle bundle = new Bundle();
+                bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_TOKENS);
+                bundle.putParcelable(ParamConstants.EOS_TOKENS, curToken);
+
+                UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
             }
         });
-    }
-
-    public List<EosTokenVO> getTestData(){
-        List<EosTokenVO> testTokens = new ArrayList<>();
-
-        EosTokenVO testToken1 = new EosTokenVO();
-        testToken1.setTokenName("EOS");
-        testToken1.setQuantity(100);
-
-        EosTokenVO testToken2 = new EosTokenVO();
-        testToken2.setTokenName("EBTC");
-        testToken2.setQuantity(200);
-
-        EosTokenVO testToken3 = new EosTokenVO();
-        testToken3.setTokenName("EXRP");
-        testToken3.setQuantity(300);
-
-        testTokens.add(testToken1);
-        testTokens.add(testToken2);
-        testTokens.add(testToken3);
-
-        return testTokens;
     }
 }

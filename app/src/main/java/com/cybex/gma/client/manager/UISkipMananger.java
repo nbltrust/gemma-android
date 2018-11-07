@@ -156,6 +156,15 @@ public final class UISkipMananger {
         startActivity(context, CollectActivity.class);
     }
 
+    /**
+     * 跳转到Token收款页面
+     *
+     * @param context
+     */
+    public static void launchCollectWithBundle(Context context, Bundle bundle) {
+        startActivity(context, CollectActivity.class, bundle);
+    }
+
 
     /**
      * 跳转到选择创建方式页面

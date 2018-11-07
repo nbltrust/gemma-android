@@ -124,7 +124,8 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
                                     GetEosTokensResult.ResultBean resultBean = response.getResult();
                                     List<TokenBean> tokens = resultBean.getTokens();
                                     //更新UI
-
+                                    List<EosTokenVO> tokenVOList = converTokenBeanToVO(tokens);
+                                    getV().showTokens(tokenVOList);
                                 }
                             }
                             GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
@@ -168,8 +169,9 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
                     public void accept(HomeCombineDataVO vo) {
                         if (EmptyUtils.isNotEmpty(getV())){
                             getV().showMainInfo(vo);
-                            getV().dissmisProgressDialog();
-                            GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
+                            //getV().dissmisProgressDialog();
+                            //GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
+                            getEosTokens(vo.getAccountInfo().getAccount_name());
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -177,6 +179,7 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
                     public void accept(Throwable throwable) {
                         if (EmptyUtils.isNotEmpty(getV())){
                             getV().dissmisProgressDialog();
+                            GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
                         }
                     }
                 });
@@ -465,6 +468,7 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
             curTokenVO.setLogo_url(curToken.getLogo_url());
             curTokenVO.setQuantity(curToken.getBalance());
             curTokenVO.setTokenName(curToken.getContract());
+            curTokenVO.setTokenSymbol(curToken.getSymbol());
             voList.add(curTokenVO);
         }
         return voList;

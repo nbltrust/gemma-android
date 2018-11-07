@@ -16,6 +16,7 @@ import com.cybex.gma.client.ui.model.response.GetKeyAccountsResult;
 import com.cybex.gma.client.ui.request.GetEosTokensRequest;
 import com.cybex.gma.client.ui.request.GetKeyAccountsRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
@@ -144,7 +145,12 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
             EosWalletEntity curEosWallet = eosList.get(0);
             if (curEosWallet != null) {
                 curEosWallet.setIsConfirmLib(ParamConstants.EOSNAME_ACTIVATED);
-                String curEosName = getCurEosname();
+                String curEosName = "";
+                if (EmptyUtils.isEmpty(getCurEosname())){
+                     curEosName = account_names.get(0);
+                }else {
+                     curEosName = getCurEosname();
+                }
                 curEosWallet.setCurrentEosName(curEosName);
                 String eosNameJson = GsonUtils.objectToJson(account_names);
                 curEosWallet.setEosNameJson(eosNameJson);

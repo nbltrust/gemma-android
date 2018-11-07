@@ -21,7 +21,7 @@ public class EosTokensAdapter extends BaseQuickAdapter<EosTokenVO, BaseViewHolde
         TextView tv_token_quantity = helper.getView(R.id.tv_token_quantity);
         ImageView iv_token_logo = helper.getView(R.id.iv_token_logo);
 
-        tv_token_name.setText(item.getTokenName());
+        tv_token_name.setText(item.getTokenSymbol());
         tv_token_quantity.setText(String.valueOf(item.getQuantity()));
         //todo 用Glide加载指定url图片进入ImageView
         iv_token_logo.setImageResource(R.drawable.eos_ic_asset);

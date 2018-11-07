@@ -103,11 +103,18 @@ public interface ParamConstants {
     int FINGER_SUCCESS = 0;
 
     String RAM_UNIT_PRICE = "ramUnitPrice";
-    String EOS_ALL_ASSET_VALUE = "eosAssetsValue";
+    String EOS_ASSET_VALUE = "eosAssetsValue";
     String EOS_AMOUNT = "eosAmount";
+
+    String EOS_TOKENS = "eosTokens";
 
     String EOS_USERNAME = "account_name";
     String EOS_PUBLIC_KEY = "eos_pub_key";
+
+    String COIN_TYPE = "coinType";
+
+    int COIN_TYPE_EOS = 5;
+    int COIN_TYPE_TOKENS = 6;
 
     //EOS用户名状态
     int EOSNAME_NOT_ACTIVATED = 0;
