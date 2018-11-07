@@ -117,8 +117,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     private String memo = "";
     private String chain_id = "";
     private String deviceName;
-    //private String deviceName = "WOOKONG BIO####ED:C1:FF:D5:9C:FA";
-    //private String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
     private long mContextHandle = 0;
     private int mDevIndex = 0;
     private BlueToothWrapper serializedThread;
@@ -366,19 +364,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         }
 
     }
-
-    /*
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onTabSelctedEvent(TabSelectedEvent event) {
-        if (event != null && event.getPosition() == 1) {
-            etReceiverAccount.setText("");
-            etAmount.setText("");
-            etNote.setText("");
-            LoggerManager.d("tab transfer selected");
-            getP().requestBanlanceInfo();
-        }
-    }
-    */
 
     @OnClick({R.id.et_note})
     public void onClickEvent(EditText v) {
