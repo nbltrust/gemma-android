@@ -118,8 +118,8 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
                     List<TransferHistory> historyList = mAdapter.getData();
                     if (!EmptyUtils.isEmpty(historyList)) {
                         TransferHistory history = historyList.get(historyList.size() - 1);
-                        currentLastPos = history.last_pos;
-                        doRequest(currentLastPos);
+                        //currentLastPos = history.last_pos;
+                        //doRequest(currentLastPos);
                     }
                 }
 
@@ -144,7 +144,7 @@ public class TransferRecordListFragment extends XFragment<TransferRecordListPres
                     Bundle bundle = new Bundle();
                     TransferHistory curTransfer = mAdapter.getData().get(position);
                     bundle.putParcelable(ParamConstants. KEY_CUR_TRANSFER, curTransfer);
-                    start(TransferRecordDetailFragment.newInstance(bundle));
+                    //start(TransferRecordDetailFragment.newInstance(bundle));
                 }
 
             }

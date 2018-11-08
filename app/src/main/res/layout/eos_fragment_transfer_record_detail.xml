@@ -255,6 +255,7 @@
                     android:layout_marginRight="10dp"
                     android:background="#e7e9f8"/>
 
+                <!--
                 <com.allen.library.SuperTextView
                     android:id="@+id/superTextView_blockId"
                     android:layout_width="match_parent"
@@ -268,6 +269,7 @@
                     title:sUseShape="true">
 
                 </com.allen.library.SuperTextView>
+                -->
 
             </LinearLayout>
 

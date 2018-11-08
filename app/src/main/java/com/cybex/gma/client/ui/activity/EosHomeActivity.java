@@ -431,13 +431,13 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         //初始化当前节点
         if (SPUtils.getInstance().getString("curNode") != null) {
             String curHost = SPUtils.getInstance().getString("curNode");
-            LoggerManager.d("curNode", curHost);
+            //LoggerManager.d("curNode", curHost);
             //ApiPath.setHOST_ON_CHAIN(curHost);
         } else {
             SPUtils.getInstance().put("curNode", ApiPath.EOS_CYBEX);
         }
 
-        LoggerManager.d("host", ApiPath.getHOST_ON_CHAIN());
+        //LoggerManager.d("host", ApiPath.getHOST_ON_CHAIN());
         AppManager.getAppManager().finishActivity(CreateManageActivity.class);
         //下拉刷新
         refreshLayout.setEnableLoadmore(false);

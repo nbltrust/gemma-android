@@ -75,7 +75,7 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
 
             //time header
             TextView tvHeaderDate = helper.getView(R.id.tv_header_date);
-            Date date = DateUtil.strToDate(item.time, DateUtil.Format.EOS_DATE_FORMAT);
+            Date date = DateUtil.strToDate(item.timestamp, DateUtil.Format.EOS_DATE_FORMAT);
             tvHeaderDate.setText(DateUtil.date2str(date,DateUtil.Format.TRANSFER_ITEM_DATE));
             int adapterPosition = helper.getAdapterPosition();
             if(adapterPosition==0){
@@ -83,18 +83,18 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
             }else {
                 List<TransferHistory> data = getData();
                 TransferHistory lastItem = data.get(adapterPosition - 1);
-                boolean sameDay = DateUtil.isSameDay(item.time, lastItem.time, DateUtil.Format.EOS_DATE_FORMAT);
+                boolean sameDay = DateUtil.isSameDay(item.timestamp, lastItem.timestamp, DateUtil.Format.EOS_DATE_FORMAT);
                 tvHeaderDate.setVisibility(sameDay?View.GONE:View.VISIBLE);
             }
 
             ImageView iconArrow = helper.getView(R.id.imv_arrow);
             String account = "";
             if (!TextUtils.isEmpty(currentEosName)) {
-                if (item.from.equals(currentEosName)||adapterPosition%2==0) {
+                if (item.sender.equals(currentEosName)||adapterPosition%2==0) {
                     //转出 -
-                    account = item.to;
+                    account = item.receiver;
                     iconArrow.setImageResource(R.drawable.ic_tab_pay);
-                    helper.setText(R.id.tv_transfer_amount, "-" + item.value);
+                    helper.setText(R.id.tv_transfer_amount, "-" + item.quantity);
                     helper.setTextColor(R.id.tv_transfer_amount, Color.parseColor("#ff3b30"));
 
                     helper.setText(R.id.tv_transfer_account,
@@ -103,9 +103,9 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
 
                 } else {
                     //转入 +
-                    account = item.from;
+                    account = item.sender;
                     iconArrow.setImageResource(R.drawable.ic_tab_income);
-                    helper.setText(R.id.tv_transfer_amount, "+" + item.value);
+                    helper.setText(R.id.tv_transfer_amount, "+" + item.quantity);
                     helper.setTextColor(R.id.tv_transfer_amount, Color.parseColor("#4cd964"));
 
                     helper.setText(R.id.tv_transfer_account,
@@ -113,9 +113,7 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
                                     .getString(R.string.transfer_from) + account);
                 }
             }
-            helper.setText(R.id.tv_transfer_status, getCurrentStatus(item.status));
+            helper.setText(R.id.tv_transfer_status, item.status);
         }
-
-
     }
 }

@@ -33,61 +33,61 @@ public class TransferRecordListPresenter extends XPresenter<TransferRecordListFr
         String json = GsonUtils.objectToJson(params);
         */
 
-        new TransferHistoryListRequest(TransferHistoryListData.class, account_name, last_pos, HttpConst.PAGE_NUM)
-                //.setJsonParams(json)
-                .getTransferHistory(new JsonCallback<TransferHistoryListData>() {
-                    @Override
-                    public void onStart(Request<TransferHistoryListData, ? extends Request> request) {
-                        super.onStart(request);
-                        if (isFirstLoad) {
-                            getV().showLoading();
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Response<TransferHistoryListData> response) {
-                        super.onError(response);
-                        getV().showError();
-                    }
-
-                    @Override
-                    public void onSuccess(Response<TransferHistoryListData> response) {
-                        getV().setFirstLoad(false);
-                        if (response != null && response.body() != null) {
-                            TransferHistoryListData data = response.body();
-                            if (data != null && data.code == HttpConst.CODE_RESULT_SUCCESS) {
-                                if (data != null && data.result != null) {
-                                    TransferHistoryList transferHistoryList = data.result;
-                                    int lastPos = transferHistoryList.last_pos;
-                                    List<TransferHistory> historyList = transferHistoryList.transactions;
-                                    List<TransferHistory> newList = buildNewData(lastPos, historyList);
-                                    getV().showContent();
-                                    if (last_pos == HttpConst.ACTION_REFRESH) {
-                                        //刷新数据
-                                        getV().refreshData(newList);
-                                    } else {
-                                        //加载更多数据
-                                        if(EmptyUtils.isNotEmpty(newList)){
-                                            getV().loadMoreData(newList);
-                                        }else{
-                                            getV().showEmptyOrFinish();
-                                        }
-
-                                    }
-                                } else {
-                                    getV().showEmptyOrFinish();
-
-                                }
-
-                            } else {
-                                getV().showEmptyOrFinish();
-                            }
-                        } else {
-                            getV().showEmptyOrFinish();
-                        }
-                    }
-                });
+//        new TransferHistoryListRequest(TransferHistoryListData.class, account_name, last_pos, HttpConst.PAGE_NUM)
+//                //.setJsonParams(json)
+//                .getTransferHistory(new JsonCallback<TransferHistoryListData>() {
+//                    @Override
+//                    public void onStart(Request<TransferHistoryListData, ? extends Request> request) {
+//                        super.onStart(request);
+//                        if (isFirstLoad) {
+//                            getV().showLoading();
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Response<TransferHistoryListData> response) {
+//                        super.onError(response);
+//                        getV().showError();
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(Response<TransferHistoryListData> response) {
+//                        getV().setFirstLoad(false);
+//                        if (response != null && response.body() != null) {
+//                            TransferHistoryListData data = response.body();
+//                            if (data != null && data.code == HttpConst.CODE_RESULT_SUCCESS) {
+//                                if (data != null && data.result != null) {
+//                                    TransferHistoryList transferHistoryList = data.result;
+//                                    int lastPos = transferHistoryList.last_pos;
+//                                    List<TransferHistory> historyList = transferHistoryList.transactions;
+//                                    List<TransferHistory> newList = buildNewData(lastPos, historyList);
+//                                    getV().showContent();
+//                                    if (last_pos == HttpConst.ACTION_REFRESH) {
+//                                        //刷新数据
+//                                        getV().refreshData(newList);
+//                                    } else {
+//                                        //加载更多数据
+//                                        if(EmptyUtils.isNotEmpty(newList)){
+//                                            getV().loadMoreData(newList);
+//                                        }else{
+//                                            getV().showEmptyOrFinish();
+//                                        }
+//
+//                                    }
+//                                } else {
+//                                    getV().showEmptyOrFinish();
+//
+//                                }
+//
+//                            } else {
+//                                getV().showEmptyOrFinish();
+//                            }
+//                        } else {
+//                            getV().showEmptyOrFinish();
+//                        }
+//                    }
+//                });
 
         return historyList;
     }
@@ -102,16 +102,16 @@ public class TransferRecordListPresenter extends XPresenter<TransferRecordListFr
     private List<TransferHistory> buildNewData(int lastPos, List<TransferHistory> historyList) {
         List<TransferHistory> newList = new ArrayList<>();
 
-        if (EmptyUtils.isEmpty(historyList)) {
-            return newList;
-        }
-
-        for (int i = 0; i < historyList.size(); i++) {
-            TransferHistory history = historyList.get(i);
-            history.last_pos = lastPos;
-
-            newList.add(history);
-        }
+//        if (EmptyUtils.isEmpty(historyList)) {
+//            return newList;
+//        }
+//
+//        for (int i = 0; i < historyList.size(); i++) {
+//            TransferHistory history = historyList.get(i);
+//            history.last_pos = lastPos;
+//
+//            newList.add(history);
+//        }
 
         return newList;
     }

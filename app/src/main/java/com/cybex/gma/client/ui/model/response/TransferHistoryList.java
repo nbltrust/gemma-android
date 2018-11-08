@@ -9,8 +9,10 @@ import java.util.List;
  */
 public class TransferHistoryList {
 
-    public int last_pos;
+    //public int last_pos;
 
-    public List<TransferHistory> transactions;
+    public int trace_count;//账户对应该代币总共多少action
+
+    public List<TransferHistory> trace_list;
 
 }

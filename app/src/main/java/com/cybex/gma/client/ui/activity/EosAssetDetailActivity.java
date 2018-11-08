@@ -17,6 +17,7 @@ import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -46,11 +47,12 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @BindView(R.id.tv_token_name) TextView tvTokenName;
     @BindView(R.id.view_asset_detail_bot) LinearLayout viewAssetDetailBot;
     private TransferRecordListAdapter mAdapter;
-    private boolean isFirstLoad = true;
-    private int currentLastPos = -1;
+
     private String currentEosName = "";
     private Bundle bundle;
     private EosTokenVO curToken;
+    private int asset_type;
+    private int curPage;//交易记录当前页数
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.iv_logo_eos_asset) ImageView ivLogoEosAsset;
     @BindView(R.id.tv_eos_amount) TextView tvEosAmount;
@@ -80,10 +82,11 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        curPage = 1;
         setNavibarTitle(getString(R.string.title_asset_detail), true);
         bundle = getIntent().getExtras();
         if (bundle != null) {
-            int asset_type = bundle.getInt(ParamConstants.COIN_TYPE);
+             asset_type = bundle.getInt(ParamConstants.COIN_TYPE);
             if (asset_type == ParamConstants.COIN_TYPE_EOS) {
                 //EOS资产
                 String assetsValue = bundle.getString(ParamConstants.EOS_ASSET_VALUE);
@@ -159,26 +162,28 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         viewRefresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                if (mAdapter != null) {
-                    List<TransferHistory> historyList = mAdapter.getData();
-                    if (!EmptyUtils.isEmpty(historyList)) {
-                        TransferHistory history = historyList.get(historyList.size() - 1);
-                        currentLastPos = history.last_pos;
-                        doRequest(currentLastPos);
-                    }
-                }
+                doRequest(++curPage);
+//                if (mAdapter != null) {
+//                    List<TransferHistory> historyList = mAdapter.getData();
+//                    if (!EmptyUtils.isEmpty(historyList)) {
+//                        TransferHistory history = historyList.get(historyList.size() - 1);
+//                        currentLastPos = history.last_pos;
+//                        doRequest(currentLastPos);
+//                    }
+//                }
 
             }
 
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                currentLastPos = -1;
-                doRequest(currentLastPos);
+                curPage = 1;
+                doRequest(curPage);
+                viewRefresh.finishLoadmore();
             }
         });
 
         //第一次请求数据
-        doRequest(-1);
+        doRequest(curPage);
 
         //设置点击事件
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
@@ -228,12 +233,14 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
      * 显示加载更多完成和空数据界面逻辑
      */
     public void showEmptyOrFinish() {
+
         if (mAdapter != null) {
             List<TransferHistory> historyList = mAdapter.getData();
             if (EmptyUtils.isEmpty(historyList)) {
                 listMultipleStatusView.showEmpty();
             } else {
                 listMultipleStatusView.showContent();
+
                 viewRefresh.finishLoadmore();
                 viewRefresh.setLoadmoreFinished(true);
 
@@ -242,16 +249,36 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         } else {
             listMultipleStatusView.showEmpty();
         }
+        viewRefresh.finishRefresh();
 
     }
 
-    public void doRequest(int currentLastPos) {
-        getP().requestHistory(currentEosName, currentLastPos, isFirstLoad);
+    public void doRequest(int page) {
 
-    }
+        LoggerManager.d("curPage", page);
 
-    public void setFirstLoad(boolean firstLoad) {
-        isFirstLoad = firstLoad;
+        if (bundle != null) {
+
+            if (asset_type == ParamConstants.COIN_TYPE_EOS) {
+                //查询EOS交易记录
+                getP().requestHistory(
+                        currentEosName,
+                        page,
+                        ParamConstants.TRANSFER_HISTORY_SIZE,
+                        ParamConstants.SYMBOL_EOS,
+                        ParamConstants.CONTRACT_EOS);
+
+            }else{
+                //查询EOS糖果交易记录
+                String symbol = curToken.getTokenSymbol();
+                String contract = curToken.getTokenName();
+                getP().requestHistory(currentEosName,
+                        page,
+                        ParamConstants.TRANSFER_HISTORY_SIZE,
+                        symbol,
+                        contract);
+            }
+        }
     }
 
     public void loadMoreData(List<TransferHistory> dataList) {
@@ -269,6 +296,10 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
             viewRefresh.finishLoadmore();
         }
 
+    }
+
+    public void finishRefresh(){
+        viewRefresh.finishRefresh();
     }
 
     public void refreshData(List<TransferHistory> dataList) {

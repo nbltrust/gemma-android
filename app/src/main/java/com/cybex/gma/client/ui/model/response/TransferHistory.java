@@ -6,54 +6,47 @@ import android.os.Parcelable;
 /**
  * 交易记录对象
  *
- * Created by wanglin on 2018/7/12.
  */
 public class TransferHistory implements Parcelable {
 
-    public int action_seq;
-    public String from;
-    public String to;
-    public String value;//交易金额
+    public String trx_id;//交易哈希 txid
+    public String timestamp;//交易时间戳
+    public String receiver;
+    public String sender;
+    public String code;//代币合约
+    public String quantity;//交易金额
     public String memo;
-    public String time;//交易时间
-    public String hash;//交易哈希 txid
-    public int block;//交易区块号
-    /**
-     * 交易状态：1：未确认 2：正在确认 3：已确认 4: 交易失败
-     */
-    public int status;
-    public int last_pos;
+    public String symbol;//代币名称
+    public String status;
 
     @Override
     public int describeContents() { return 0; }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.action_seq);
-        dest.writeString(this.from);
-        dest.writeString(this.to);
-        dest.writeString(this.value);
+        dest.writeString(this.trx_id);
+        dest.writeString(this.timestamp);
+        dest.writeString(this.receiver);
+        dest.writeString(this.sender);
+        dest.writeString(this.code);
+        dest.writeString(this.quantity);
         dest.writeString(this.memo);
-        dest.writeString(this.time);
-        dest.writeString(this.hash);
-        dest.writeInt(this.block);
-        dest.writeInt(this.status);
-        dest.writeInt(this.last_pos);
+        dest.writeString(this.symbol);
+        dest.writeString(this.status);
     }
 
     public TransferHistory() {}
 
     protected TransferHistory(Parcel in) {
-        this.action_seq = in.readInt();
-        this.from = in.readString();
-        this.to = in.readString();
-        this.value = in.readString();
+        this.trx_id = in.readString();
+        this.timestamp = in.readString();
+        this.receiver = in.readString();
+        this.sender = in.readString();
+        this.code = in.readString();
+        this.quantity = in.readString();
         this.memo = in.readString();
-        this.time = in.readString();
-        this.hash = in.readString();
-        this.block = in.readInt();
-        this.status = in.readInt();
-        this.last_pos = in.readInt();
+        this.symbol = in.readString();
+        this.status = in.readString();
     }
 
     public static final Parcelable.Creator<TransferHistory> CREATOR = new Parcelable.Creator<TransferHistory>() {

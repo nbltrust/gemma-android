@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 
@@ -22,7 +23,8 @@ public class EosTokensAdapter extends BaseQuickAdapter<EosTokenVO, BaseViewHolde
         ImageView iv_token_logo = helper.getView(R.id.iv_token_logo);
 
         tv_token_name.setText(item.getTokenSymbol());
-        tv_token_quantity.setText(String.valueOf(item.getQuantity()));
+        String quantity = String.valueOf(item.getQuantity());
+        tv_token_quantity.setText(AmountUtil.round(quantity, 4));
         //todo 用Glide加载指定url图片进入ImageView
         iv_token_logo.setImageResource(R.drawable.eos_ic_asset);
 

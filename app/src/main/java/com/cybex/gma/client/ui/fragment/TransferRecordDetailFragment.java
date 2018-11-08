@@ -34,6 +34,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 public class TransferRecordDetailFragment extends XFragment {
 
+
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_show_transfer_id) TextView tvShowTransferId;
     @BindView(R.id.tv_memo) TextView tvMemo;
@@ -52,7 +53,7 @@ public class TransferRecordDetailFragment extends XFragment {
     @BindView(R.id.superTextView_transfer_status) SuperTextView superTextViewTransferStatus;
 
     @BindView(R.id.layout_detail_1) LinearLayout layoutDetail1;
-    @BindView(R.id.superTextView_blockId) SuperTextView superTextViewBlockId;
+    //@BindView(R.id.superTextView_blockId) SuperTextView superTextViewBlockId;
     @BindView(R.id.layout_detail_2) LinearLayout layoutDetail2;
     @BindView(R.id.tv_see_in_explorer) TextView tvSeeInExplorer;
     @BindView(R.id.view_scroll) ScrollView mScrollView;
@@ -61,7 +62,7 @@ public class TransferRecordDetailFragment extends XFragment {
     @OnClick(R.id.tv_see_in_explorer)
     public void seeInExplorer(){
         if (EmptyUtils.isNotEmpty(curTransfer)){
-            final String url = ApiPath.URL_BLOCK_CHAIN_BROWSER + curTransfer.hash;
+            final String url = ApiPath.URL_BLOCK_CHAIN_BROWSER + curTransfer.trx_id;
             CommonWebViewActivity.startWebView(getActivity(), url, getString(R.string.eos_tip_transfer_detail));
         }
     }
@@ -102,28 +103,28 @@ public class TransferRecordDetailFragment extends XFragment {
                 if (!EmptyUtils.isEmpty(curWallet) && EmptyUtils.isNotEmpty(curEosWallet)) {
                     curEosName = curEosWallet.getCurrentEosName();
                     //设置收入&支出页面不同的值(箭头，加减号，收入/支出)
-                    if (curTransfer.from.equals(curEosName)) {
+                    if (curTransfer.sender.equals(curEosName)) {
                         //转出操作
                         arrow.setImageResource(R.drawable.ic_tab_pay);
                         tvAmount.setText(
                                 String.format(getResources().getString(R.string.eos_amount_outcome), curTransfer
-                                        .value.split(" ")[0]));
+                                        .quantity.split(" ")[0]));
                         tvIncomeOrOut.setText(getResources().getString(R.string.eos_tip_payment));
                         superTextViewReceiver.setLeftString(getResources().getString(R.string.eos_title_receiver));
-                        superTextViewReceiver.setRightString(curTransfer.to);
+                        superTextViewReceiver.setRightString(curTransfer.receiver);
                     } else {
                         //收入操作
                         tvAmount.setText(
-                                String.format(getResources().getString(R.string.eos_amount_income), curTransfer.value
+                                String.format(getResources().getString(R.string.eos_amount_income), curTransfer.quantity
                                         .split(" ")[0]));
                         tvIncomeOrOut.setText(getResources().getString(R.string.eos_tip_income));
                         arrow.setImageResource(R.drawable.ic_tab_income);
                         superTextViewReceiver.setLeftString(getResources().getString(R.string.eos_title_payer));
-                        superTextViewReceiver.setRightString(curTransfer.from);
+                        superTextViewReceiver.setRightString(curTransfer.sender);
 
                     }
                     //设置固定的值
-                    String time_arr[] = curTransfer.time.split("T");
+                    String time_arr[] = curTransfer.timestamp.split("T");
                     String transferTime = time_arr[0] + " " + time_arr[1].substring(0,8);
                     superTextViewBlockTime.setRightString(transferTime);
 
@@ -141,9 +142,9 @@ public class TransferRecordDetailFragment extends XFragment {
                                     tvShowMemo.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                                 }
                             });
-                    superTextViewBlockId.setRightString(String.valueOf(curTransfer.block));
-                    setTransferStatus(curTransfer.status);
-                    tvShowTransferId.setText(curTransfer.hash);
+                    //superTextViewBlockId.setRightString(String.valueOf(curTransfer.block));
+                    superTextViewTransferStatus.setRightString(curTransfer.status);
+                    tvShowTransferId.setText(curTransfer.trx_id);
 
                     //其他样式
                     tvSeeInExplorer.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG);

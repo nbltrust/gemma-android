@@ -20,7 +20,7 @@ public interface ApiMethod {
     /**
      * 交易历史
      */
-    String API_GET_TRANSACTION_HISTORY = "/api/v1/account/history/";
+    String API_GET_TRANSACTION_HISTORY = "/api/v1/account/history";
 
     /**
      * 验证账户名
