@@ -132,6 +132,15 @@ public final class UISkipMananger {
     }
 
     /**
+     * 跳转到转账页面
+     *
+     * @param context
+     */
+    public static void launchTransferWithBundle(Context context, Bundle bundle) {
+        startActivity(context, TransferActivity.class, bundle);
+    }
+
+    /**
      * 跳转到投票页面
      * @param context
      */

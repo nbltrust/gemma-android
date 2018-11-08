@@ -1,16 +1,10 @@
 package com.cybex.gma.client.ui.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,47 +12,28 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
+import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
+import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.event.ChangeAccountEvent;
-import com.cybex.gma.client.event.ContextHandleEvent;
-import com.cybex.gma.client.event.DeviceInfoEvent;
-import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
+import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.EosTokenTransferPresenter;
-import com.cybex.gma.client.ui.presenter.TransferPresenter;
-import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
-import com.cybex.gma.client.utils.listener.DecimalInputTextWatcher;
-import com.cybex.gma.client.widget.EditTextWithScrollView;
-import com.extropies.common.CommonUtility;
-import com.extropies.common.MiddlewareInterface;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.GsonUtils;
-import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -92,6 +67,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     @BindView(R.id.root_scrollview) ScrollView rootScrollview;
     Unbinder unbinder;
     CustomFullDialog dialog = null;
+    EosTokenVO curToken;
 
     private TransferTransactionVO transactionVO;
     private String maxValue = "";
@@ -218,77 +194,91 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         etReceiverAccount.setText("");
         etAmount.setText("");
         etNote.setText("");
-        //getP().requestBanlanceInfo();
 
-        MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
-        MultiWalletEntity entity = dao.getCurrentMultiWalletEntity();
-        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+        if (getArguments() != null) {
+            curToken = getArguments().getParcelable(ParamConstants.EOS_TOKENS);
+            if (curToken != null) {
+                String balance = String.valueOf(curToken.getQuantity());
 
-        etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    if (EmptyUtils.isEmpty(getCollectionAccount())) {
-                        tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
-                    } else {
-                        ivTransferAccountClear.setVisibility(View.VISIBLE);
+                MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
+                MultiWalletEntity entity = dao.getCurrentMultiWalletEntity();
+                EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+
+                currentEOSName = eosEntity.getCurrentEosName();
+
+                showInitData(balance, currentEOSName);
+                etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus) {
+                            if (EmptyUtils.isEmpty(getCollectionAccount())) {
+                                tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
+                                tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                            } else {
+                                ivTransferAccountClear.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            ivTransferAccountClear.setVisibility(View.GONE);
+                            validateButton();
+                            if (EmptyUtils.isEmpty(getCollectionAccount())) {
+                                tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
+                                tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                            }
+                            if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
+                                    etReceiverAccount.getText().toString().trim())) {
+                                //显示alert样式
+                                tvTitleReceiver.setText(getString(R.string.eos_tip_account_name_err));
+                                tvTitleReceiver.setTextColor(getResources().getColor(R.color.scarlet));
+                            } else {
+                                //显示默认样式
+                                tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
+                                tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                            }
+                        }
                     }
-                } else {
-                    ivTransferAccountClear.setVisibility(View.GONE);
-                    validateButton();
-                    if (EmptyUtils.isEmpty(getCollectionAccount())) {
-                        tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
+                });
+
+                etReceiverAccount.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
                     }
-                    if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
-                            etReceiverAccount.getText().toString().trim())) {
-                        //显示alert样式
-                        tvTitleReceiver.setText(getString(R.string.eos_tip_account_name_err));
-                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.scarlet));
-                    } else {
-                        //显示默认样式
-                        tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                     }
-                }
-            }
-        });
 
-        etReceiverAccount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (EmptyUtils.isNotEmpty(getCollectionAccount())) {
-                    ivTransferAccountClear.setVisibility(View.VISIBLE);
-                } else {
-                    ivTransferAccountClear.setVisibility(View.GONE);
-                }
-                validateButton();
-            }
-        });
-
-        etNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    if (EmptyUtils.isNotEmpty(getNote())) {
-                        ivTransferMemoClear.setVisibility(View.VISIBLE);
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if (EmptyUtils.isNotEmpty(getCollectionAccount())) {
+                            ivTransferAccountClear.setVisibility(View.VISIBLE);
+                        } else {
+                            ivTransferAccountClear.setVisibility(View.GONE);
+                        }
+                        validateButton();
                     }
-                } else {
-                    ivTransferMemoClear.setVisibility(View.GONE);
-                }
+                });
+
+                etNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus) {
+                            if (EmptyUtils.isNotEmpty(getNote())) {
+                                ivTransferMemoClear.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            ivTransferMemoClear.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+
             }
-        });
+        }
+
+
+
 
     }
 
@@ -389,6 +379,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                             dialog.cancel();
                             break;
                         case R.id.btn_transfer_nextStep:
+                            showConfirmAuthoriDialog();
                             break;
                         default:
                             break;
@@ -442,17 +433,18 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     public void onValidateSuccess(String password) {
                         //密码正确，执行转账逻辑
                         String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
-                        String privateKey  = Seed39.keyDecrypt(password, saved_pri_key);
-//                        getP().executeTransferLogic(wallet.getEosWalletEntities().get(0)
-//                                        .getCurrentEosName(),
-//                                collectionAccount, amount, memo, privateKey);
+                        String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
+                        String tokenContract = curToken.getTokenName();
+                        getP().executeTokenTransferLogic(
+                                wallet.getEosWalletEntities().get(0).getCurrentEosName(),
+                                collectionAccount, amount, memo, privateKey, tokenContract );
                         //dialog.cancel();
                     }
 
                     @Override
                     public void onValidateFail(int failedCount) {
                         LoggerManager.d("validate fail");
-                        //showPasswordHintDialog();
+                        showPasswordHintDialog();
                     }
                 });
 

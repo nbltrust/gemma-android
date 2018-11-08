@@ -122,8 +122,13 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
      * @param memo
      * @param privateKey
      */
-    public void executeTransferLogic(String from, String to, String quantity, String memo, String privateKey, String
-            tokenContract) {
+    public void executeTokenTransferLogic(
+            String from,
+            String to,
+            String quantity,
+            String memo,
+            String privateKey,
+            String tokenContract) {
         //通过c++获取 abi json操作体
         String abijson = JNIUtil.create_abi_req_transfer(VALUE_CODE, VALUE_ACTION,
                 from, to, quantity, memo);

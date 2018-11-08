@@ -140,7 +140,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 btnGoTransfer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        UISkipMananger.launchTransfer(EosAssetDetailActivity.this);
+                        UISkipMananger.launchTransferWithBundle(EosAssetDetailActivity.this, bundle);
                     }
                 });
 

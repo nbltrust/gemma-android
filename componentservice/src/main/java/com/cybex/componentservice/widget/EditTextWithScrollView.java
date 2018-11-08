@@ -1,6 +1,7 @@
 package com.cybex.componentservice.widget;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.EditText;
@@ -8,7 +9,7 @@ import android.widget.EditText;
 /**
  * 用于解决嵌套Scrollview的时候由于多行而产生的滑动冲突问题
  */
-public class EditTextWithScrollView extends EditText {
+public class EditTextWithScrollView extends AppCompatEditText {
 
     //滑动距离的最大边界
     private int mOffsetHeight;

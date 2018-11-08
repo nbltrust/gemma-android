@@ -427,6 +427,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         bundle = new Bundle();
+        getP().requestHomeCombineDataVO();
         //初始化当前节点
         if (SPUtils.getInstance().getString("curNode") != null) {
             String curHost = SPUtils.getInstance().getString("curNode");

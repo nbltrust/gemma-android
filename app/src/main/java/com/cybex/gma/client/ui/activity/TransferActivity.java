@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.ui.fragment.EosTokenTransferFragment;
 import com.cybex.gma.client.ui.fragment.TransferFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
@@ -15,8 +16,15 @@ public class TransferActivity extends XActivity {
 
     @Override
     public void bindUI(View view) {
-        if (findFragment(TransferFragment.class) == null) {
-            loadRootFragment(R.id.fl_container_transfer, TransferFragment.newInstance());
+        Bundle bd = getIntent().getExtras();
+        if (bd != null){
+            if (findFragment(EosTokenTransferFragment.class) == null) {
+                loadRootFragment(R.id.fl_container_transfer, EosTokenTransferFragment.newInstance(bd));
+            }
+        }else {
+            if (findFragment(TransferFragment.class) == null) {
+                loadRootFragment(R.id.fl_container_transfer, TransferFragment.newInstance());
+            }
         }
 
         //让布局向上移来显示软键盘
