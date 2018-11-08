@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.base.view.LabelLayout;
 import com.cybex.componentservice.bean.CoinType;
+import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;

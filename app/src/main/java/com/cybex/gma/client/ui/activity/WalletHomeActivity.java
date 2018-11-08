@@ -212,6 +212,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     public void initData(Bundle savedInstanceState) {
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         if (curWallet != null) {
+            mTvWalletName.setText(curWallet.getWalletName());
             if (curWallet.getEosWalletEntities() != null && curWallet.getEosWalletEntities().size() > 0) {
                 curEosWallet = curWallet.getEosWalletEntities().get(0);
             }
@@ -221,7 +222,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             }
 
             int walletType = curWallet.getWalletType();
-            //LoggerManager.d("walletType", walletType);
+            LoggerManager.d("walletType", walletType);
 
             if (walletType == BaseConst.WALLET_TYPE_BLUETOOTH) {
                 //蓝牙钱包
@@ -271,7 +272,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     LoggerManager.d("case eth");
                 } else if (EmptyUtils.isNotEmpty(curEosWallet) && EmptyUtils.isEmpty(curEthWallet)) {
                     //只有EOS钱包
-                    //LoggerManager.d("case eos");
+                    LoggerManager.d("case eos");
                     String eos_public_key = curEosWallet.getPublicKey();
                     //LoggerManager.d("eos_pub_key", eos_public_key);
                     getP().getKeyAccounts(eos_public_key);

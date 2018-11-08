@@ -151,6 +151,7 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                         currentMultiWalletEntity.save();
                     }
                 }
+
                 DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntity(multiWalletEntity, new DBCallback() {
                     @Override
                     public void onSucceed() {

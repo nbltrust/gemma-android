@@ -6,6 +6,7 @@ import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
@@ -43,7 +44,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                     public void onStart(Request<GetKeyAccountsResult, ? extends Request> request) {
                         if (getV() != null) {
                             super.onStart(request);
-                            getV().showProgressDialog("正在核验EOS账户");
+                            getV().showProgressDialog("正在核验账户");
                         }
                     }
 
@@ -59,6 +60,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                 List<String> account_names = result.account_names;
                                 if (account_names.size() > 0) {
                                     final String firstEosName = account_names.get(0);
+                                    LoggerManager.d("firstEosname", firstEosName);
 
                                     int wallet_type = DBManager.getInstance().getMultiWalletEntityDao()
                                             .getCurrentMultiWalletEntity().getWalletType();
@@ -67,27 +69,27 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     if (wallet_type == BaseConst.WALLET_TYPE_BLUETOOTH) {
                                         updateBluetoothWallet(firstEosName, account_names);
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_PRIKEY_IMPORT) {
-                                        //LoggerManager.d("case 3");
                                         updateEOSWallet(account_names);
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_CREATE) {
-
+                                        updateEOSWallet(account_names);
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_IMPORT) {
                                         updateEOSWallet(account_names);
                                     }
 
                                     getV().updateEosCardView();
-                                    //
                                     String curEosName = getCurEosname();
                                     getEosTokens(curEosName);
 
                                 } else{
                                     //todo account_names为空
+                                    LoggerManager.d("account_names empty");
                                     GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
                                 }
 
                             }else if (response.body() != null && response.code() == HttpConst
                                     .SERVER_INTERNAL_ERR) {
                                 //未找到此账号
+                                LoggerManager.d("account not found");
                                 GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
                             }
 
@@ -141,7 +143,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                 .getCurrentMultiWalletEntity();
         List<EosWalletEntity> eosList = curMultiWallet.getEosWalletEntities();
 
-        if (curMultiWallet != null && eosList.size() > 0) {
+        if (eosList.size() > 0) {
             EosWalletEntity curEosWallet = eosList.get(0);
             if (curEosWallet != null) {
                 curEosWallet.setIsConfirmLib(ParamConstants.EOSNAME_ACTIVATED);

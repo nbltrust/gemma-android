@@ -24,7 +24,9 @@
             android:checked="false"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
-            android:paddingRight="10dp"
+            android:layout_toLeftOf="@id/view_progress"
+            android:maxLines="1"
+            android:layout_alignParentStart="true"
             android:textColor="@color/eos_account_change_color_selector"
             android:textSize="@dimen/font_4"
             tools:text="WOOKONG-XXXXXXX"/>
@@ -52,7 +54,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="6dp"
             android:layout_marginRight="5dp"
             android:visibility="gone"
             app:SpinKit_Color="@color/black_context"/>

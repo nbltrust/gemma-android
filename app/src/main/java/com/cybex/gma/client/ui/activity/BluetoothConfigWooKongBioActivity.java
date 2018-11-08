@@ -509,7 +509,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
         String password = String.valueOf(edtSetPass.getText());
 
         LoggerManager.d("contextHandle", contextHandle);
-        WookongBioManager.getInstance().initPIN(0, 0, password);
+        WookongBioManager.getInstance().initPIN(contextHandle, 0, password);
     }
 
     /**
@@ -539,10 +539,12 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case BlueToothWrapper.MSG_INIT_PIN_START:
+                    LoggerManager.d("MSG_INIT_PIN_START");
                     //设置PIN
                     showProgressDialog(getString(R.string.eos_progress_set_pin));
                     break;
                 case BlueToothWrapper.MSG_INIT_PIN_FINISH:
+                    LoggerManager.d("MSG_INIT_PIN_FINISH");
                     //已完成设置PIN
 
                     //跳转到创建账户名界面
@@ -561,6 +563,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
 
                     break;
                 case BlueToothWrapper.MSG_GET_ADDRESS_FINISH:
+                    LoggerManager.d("MSG_GET_ADDRESS_FINISH");
                     BlueToothWrapper.GetAddressReturnValue returnValueAddress = (BlueToothWrapper
                             .GetAddressReturnValue) msg.obj;
                     if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {

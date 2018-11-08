@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
@@ -12,6 +13,7 @@ import com.cybex.gma.client.ui.request.TransferHistoryListRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
@@ -27,7 +29,8 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
             final String symbol,
             final String contract) {
 
-        new TransferHistoryListRequest(TransferHistoryListData.class, account_name, page, 1, symbol, contract)
+        new TransferHistoryListRequest(TransferHistoryListData.class, account_name, page, ParamConstants.TRANSFER_HISTORY_SIZE, symbol,
+                contract)
                 .getTransferHistory(new JsonCallback<TransferHistoryListData>() {
                     @Override
                     public void onStart(Request<TransferHistoryListData, ? extends Request> request) {
@@ -58,11 +61,16 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                         //int trace_count = transferHistoryList.trace_count;
                                         List<TransferHistory> historyList = transferHistoryList.trace_list;
 
-                                        if (historyList == null){
-                                            //没有更多数据
-                                            getV().showEmptyOrFinish();
+                                        if (page == 1){
+                                            getV().refreshData(historyList);
                                         }else {
-                                            getV().loadMoreData(historyList);
+                                            if (historyList == null){
+                                                //没有更多数据
+                                                getV().showEmptyOrFinish();
+                                                GemmaToastUtils.showShortToast(getV().getString(R.string.no_more_data));
+                                            }else {
+                                                getV().loadMoreData(historyList);
+                                            }
                                         }
 
                                         getV().showContent();

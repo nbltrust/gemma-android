@@ -5,7 +5,6 @@ import com.cybex.componentservice.api.ApiPath;
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.api.request.GMAHttpRequest;
 import com.cybex.gma.client.ui.model.response.WXPayBillResult;
-import com.cybex.gma.client.ui.model.response.WXPayQueryOrderInfoResult;
 
 /**
  * 向中心化服务器请求创建账户法币支付账单明细

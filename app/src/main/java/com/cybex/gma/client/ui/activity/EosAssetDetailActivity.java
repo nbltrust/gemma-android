@@ -27,6 +27,7 @@ import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.presenter.AssetDetailPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -240,7 +241,6 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 listMultipleStatusView.showEmpty();
             } else {
                 listMultipleStatusView.showContent();
-
                 viewRefresh.finishLoadmore();
                 viewRefresh.setLoadmoreFinished(true);
 
@@ -317,6 +317,10 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         viewRefresh.finishRefresh();
         viewRefresh.setLoadmoreFinished(false);
 
+    }
+
+    public void setLoadMoreFinish(){
+        viewRefresh.setLoadmoreFinished(true);
     }
 
 }
