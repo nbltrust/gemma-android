@@ -3,6 +3,7 @@ package com.cybex.walletmanagement.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -13,6 +14,7 @@ import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.event.ChangeSelectedWalletEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
@@ -31,14 +33,26 @@ public class WalletManageActivity extends XActivity {
     private LabelLayout labelCreateWallet;
     private RelativeLayout containerWookong;
     private MultiWalletEntity currentWallet;
+    private ImageView ivClose;
 
 
     @Override
     public void bindUI(View view) {
+
+        getWindow().getDecorView().setPaddingRelative(0, SizeUtil.getStatusBarHeight(), 0, 0);
+
+        ivClose = (ImageView) findViewById(R.id.iv_close);
         labelCurrentWallet = (LabelLayout) findViewById(R.id.label_current_wallet);
         labelImportWallet = (LabelLayout) findViewById(R.id.label_import_wallet);
         labelCreateWallet = (LabelLayout) findViewById(R.id.label_create_wallet);
         containerWookong = (RelativeLayout) findViewById(R.id.container_wookong);
+
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         containerWookong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +83,6 @@ public class WalletManageActivity extends XActivity {
                 startActivity(intent);
             }
         });
-        setNavibarTitle(getResources().getString(R.string.walletmanage_manage_wallet_title), true);
 
 
         currentWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();

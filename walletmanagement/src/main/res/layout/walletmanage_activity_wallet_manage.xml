@@ -6,26 +6,44 @@
     android:background="@color/whiteTwo"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/ui_navibar">
-    </include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="钱包"
-        android:textStyle="bold"
-        android:textSize="@dimen/font_6"
-        android:textColor="@color/black_content"
-        android:layout_marginLeft="@dimen/common_page_content_padding"
-        android:layout_marginRight="@dimen/common_page_content_padding"
-        android:layout_marginTop="20dp"
-        />
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mask_close"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/common_page_content_padding"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/walletmanage_wallet"
+            android:textStyle="bold"
+            android:textSize="@dimen/font_6"
+            android:textColor="@color/black_content"
+            android:layout_marginLeft="@dimen/common_page_content_padding"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
 
     <com.cybex.base.view.LabelLayout
         android:id="@+id/label_current_wallet"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="54dp"
         app:text_left="当前钱包"
         app:text_right="主钱包"
         app:text_right_isShow="true"
@@ -43,7 +61,7 @@
         android:text="钱包管理"
         android:textSize="@dimen/font_3.5"
         android:textColor="@color/black_context"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:layout_marginLeft="@dimen/common_page_content_padding"
         android:layout_marginRight="@dimen/common_page_content_padding"
         />
@@ -51,8 +69,8 @@
     <com.cybex.base.view.LabelLayout
         android:id="@+id/label_import_wallet"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:text_left="导入钱包"
+        android:layout_height="54dp"
+        app:text_left="@string/walletmanage_import_wallet"
         app:text_right_isShow="false"
         android:layout_marginLeft="@dimen/common_page_content_padding"
         android:layout_marginRight="@dimen/common_page_content_padding"
@@ -61,8 +79,8 @@
     <com.cybex.base.view.LabelLayout
         android:id="@+id/label_create_wallet"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:text_left="创建钱包"
+        android:layout_height="54dp"
+        app:text_left="@string/walletmanage_create_wallet"
         app:text_right_isShow="false"
         android:layout_marginLeft="@dimen/common_page_content_padding"
         android:layout_marginRight="@dimen/common_page_content_padding"
@@ -71,7 +89,7 @@
     <RelativeLayout
         android:id="@+id/container_wookong"
         android:layout_width="match_parent"
-        android:layout_height="100.8dp"
+        android:layout_height="123dp"
         android:layout_marginLeft="@dimen/common_page_content_padding"
         android:layout_marginRight="@dimen/common_page_content_padding"
         >
@@ -79,12 +97,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="配对 WOOKONG Bio"
+            android:text="@string/walletmanage_connect_wookong_bio"
             android:textColor="@color/black_content"
             android:textSize="@dimen/font_4"
-            android:layout_marginTop="20dp"/>
-
-
+            android:layout_marginTop="18dp"/>
 
 
         <ImageView
@@ -93,15 +109,15 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="11.4dp"
             android:src="@drawable/ic_wookong_bio_logo"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="18dp"/>
 
 
-        <TextView
-            android:layout_width="wrap_content"
+        <me.codeboy.android.aligntextview.AlignTextView
+            android:layout_width="256dp"
             android:layout_height="wrap_content"
             android:text="@string/walletmanage_wookong_bio_description"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="35dp"
+            android:layout_marginTop="44dp"
+            android:lineSpacingExtra="3dp"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_3.5"
            />

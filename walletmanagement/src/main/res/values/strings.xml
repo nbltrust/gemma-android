@@ -260,7 +260,7 @@
     <string name="walletmanage_wallet_type_hardware">多币种硬件钱包</string>
     <!--manage wallet-->
     <string name="walletmanage_manage_wallet_title">管理钱包</string>
-    <string name="walletmanage_wookong_bio_description">WOOKONG Bio 是一款面向个人用户使用\n的便携式蓝牙硬件钱包，为数字资产提供更\n安全的保护。</string>
+    <string name="walletmanage_wookong_bio_description">WOOKONG Bio 是一款面向个人用户使用的便携式蓝牙硬件钱包，为数字资产提供更安全的保护。</string>
     <!--change wallet name-->
     <string name="walletmanage_change_wallet_name_title">修改钱包名称</string>
     <string name="walletmanage_change_wallet_name_hint">请输入新的钱包名称</string>
@@ -285,4 +285,9 @@
     <string name="walletmanage_tip_encrypto_save">加密存储</string>
     <string name="walletmanage_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
     <string name="walletmanage_key_saved">我已安全备份私钥</string>
+    <string name="walletmanage_wallet">钱包</string>
+
+    <!--wallet manage home -->
+    <string name="walletmanage_create_wallet">创建钱包</string>
+    <string name="walletmanage_connect_wookong_bio">配对 WOOKONG Bio</string>
 </resources>
