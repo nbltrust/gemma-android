@@ -110,9 +110,11 @@ public class WalletManageInnerActivity extends XActivity {
                 if(wallet.getEosWalletEntities().size()>0&&wallet.getEthWalletEntities().size()>0){
                     tvWalletType.setText(R.string.walletmanage_wallet_type_multi);
                 }else if(wallet.getEosWalletEntities().size()>0){
-                    tvWalletType.setText(R.string.walletmanage_wallet_type_eos);
+//                    tvWalletType.setText(R.string.walletmanage_wallet_type_eos);
+                    tvWalletType.setText(wallet.getEosWalletEntities().get(0).getPublicKey());
                 }else{
-                    tvWalletType.setText(R.string.walletmanage_wallet_type_eth);
+//                    tvWalletType.setText(R.string.walletmanage_wallet_type_eth);
+                    tvWalletType.setText(wallet.getEthWalletEntities().get(0).getAddress());
                 }
             }
 
