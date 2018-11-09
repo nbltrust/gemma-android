@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.CollectionUtils;
 import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.componentservice.utils.TSnackbarUtil;
@@ -18,6 +19,7 @@ import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.widget.LabelsView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.common.utils.HandlerUtil;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.trycatch.mysnackbar.Prompt;
 
@@ -44,6 +46,8 @@ public class MnemonicVerifyActivity extends XActivity {
     private List<String> answerLabels = new ArrayList<>();
 
     private String[] mnes;
+
+    private boolean isOver;
 
     @Override
     public void bindUI(View view) {
@@ -77,7 +81,7 @@ public class MnemonicVerifyActivity extends XActivity {
             answerLabels.addAll(tempLabels);
 
             //打乱顺序
-            //Collections.shuffle(tempLabels);
+            Collections.shuffle(tempLabels);
 
 
             viewShowMne.setLabels(tempLabels);
@@ -89,6 +93,7 @@ public class MnemonicVerifyActivity extends XActivity {
         viewClickToShowMne.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
             @Override
             public void onLabelClick(TextView label, Object data, int position) {
+                if(isOver)return;
                 String remove = selectedLabels.remove(position);
                 unSelectedLabels.add(remove);
                 if(selectedLabels.size()==0){
@@ -103,6 +108,7 @@ public class MnemonicVerifyActivity extends XActivity {
         viewShowMne.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
             @Override
             public void onLabelClick(TextView label, Object data, int position) {
+                if(isOver)return;
                 if (isInit) {
                     setAboveLabelView();
                 }
@@ -124,14 +130,19 @@ public class MnemonicVerifyActivity extends XActivity {
         if (EmptyUtils.isEmpty(unSelectedLabels)) {
             if (EmptyUtils.isNotEmpty(selectedLabels) && EmptyUtils.isNotEmpty(answerLabels)) {
                 if (CollectionUtils.isEqualListWithSequence(selectedLabels, answerLabels)) {
-                    TSnackbarUtil.showTip(viewRoot, getString(R.string.walletmanage_mnemonic_validate_success),
-                            Prompt.SUCCESS);
+                    AlertUtil.showShortSuccessAlert(context,getString(R.string.walletmanage_mnemonic_validate_success));
 //                    ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
 //                            .navigation();
-                    finish();
+//                    finish();
+                    isOver=true;
+                    HandlerUtil.runOnUiThreadDelay(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    },1500);
                 } else {
-                    TSnackbarUtil.showTip(viewRoot, getString(R.string.walletmanage_mnemonic_validate_error),
-                            Prompt.ERROR);
+                    AlertUtil.showLongUrgeAlert(context,getString(R.string.walletmanage_mnemonic_validate_error));
                 }
             }
 

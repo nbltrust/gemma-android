@@ -46,14 +46,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
+            <me.codeboy.android.aligntextview.AlignTextView
             android:id="@+id/tv_backup_hint"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="14.61dp"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"
-            android:text="@string/walletmanage_pri_key_backup_hint"
+            android:text="@string/walletmanage_backup_hint"
             app:layout_constraintStart_toEndOf="@id/iv_dot_zero"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -61,18 +61,19 @@
             android:id="@+id/iv_dot_one"
             android:layout_width="@dimen/dimen_10"
             android:layout_height="@dimen/dimen_10"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/walletmanage_ic_dot_red"
             android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_backup_hint"/>
 
-        <TextView
+        <me.codeboy.android.aligntextview.AlignTextView
             android:id="@+id/tv_look_around_hint"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="14.61dp"
-            android:text="@string/walletmanage_pri_key_lookAround"
+            android:layout_marginTop="10dp"
+            android:text="@string/walletmanage_lookAround"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"
             app:layout_constraintStart_toEndOf="@id/iv_dot_one"
@@ -88,13 +89,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_look_around_hint"/>
 
-        <TextView
+        <me.codeboy.android.aligntextview.AlignTextView
             android:id="@+id/tv_look_around_hint_two"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginStart="14.61dp"
-            android:text="@string/walletmanage_pri_key_backup_safely"
+            android:text="@string/walletmanage_backupSafely"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"
             app:layout_constraintTop_toBottomOf="@id/tv_look_around_hint"

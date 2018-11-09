@@ -30,6 +30,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     private boolean mIsDismiss = true;//是否默认所有按钮点击后取消dialog显示，false时需要在点击事件后手动调用dismiss
     private boolean mIsDismissTouchOut = true;//是否允许触摸dialog外部区域取消显示dialog
     private int mPosition = 0; //Dialog 相对页面显示的位置
+    private int mWidth = 0; //Dialog 相对页面显示的位置
     private List<View> mViews = new ArrayList<>();//监听的View的集合
 
     public void setOnDialogItemClickListener(OnCustomDialogItemClickListener listener) {
@@ -117,6 +118,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
 
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,7 +138,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
         WindowManager windowManager = ((Activity) context).getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.width = display.getWidth() * 4 / 5; // 设置dialog宽度为屏幕的4/5
+        lp.width = mWidth>0?mWidth:display.getWidth() * 4 / 5; // 设置dialog宽度为屏幕的4/5
         getWindow().setAttributes(lp);
         setCanceledOnTouchOutside(mIsDismissTouchOut);
         //遍历控件id,添加点击事件，添加资源到集合
@@ -174,5 +176,9 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
             dismiss();
         }
         listener.OnCustomDialogItemClick(this, view);
+    }
+
+    public void setmWidth(int mWidth) {
+        this.mWidth = mWidth;
     }
 }

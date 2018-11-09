@@ -11,6 +11,7 @@ import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.manager.TabLayoutManager;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.ui.fragment.BackUpPriKeyFragment;
 import com.cybex.walletmanagement.ui.fragment.BackUpPriKeyQRFragment;
@@ -91,6 +92,7 @@ public class PriKeyShowActivity extends XActivity {
         int[] listenedItems = {R.id.tv_understand};
         CustomDialog dialog = new CustomDialog(this,
                 R.layout.walletmanage_dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);
+        dialog.setmWidth(SizeUtil.dp2px(259));
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override

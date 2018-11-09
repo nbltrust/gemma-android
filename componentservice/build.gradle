@@ -131,6 +131,6 @@ dependencies {
     api deps.gma.agentweb
 
     api (name: 'bluetoothlib-release', ext: 'aar')
-
+    api 'me.codeboy.android:align-text-view:2.3.2'
 
 }

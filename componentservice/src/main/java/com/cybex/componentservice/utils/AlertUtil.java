@@ -35,6 +35,34 @@ public class AlertUtil {
                 .show();
     }
 
+
+    /**
+     * 显示标准（绿底）alert
+     * @param context
+     * @param info
+     */
+    public static void showShortSuccessAlert(Activity context, String info){
+        Alerter.create(context)
+                .setText(info)
+                .showIcon(false)
+                .setDuration(1500)
+                .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
+                .setBackgroundColorRes(R.color.successGreen)
+                .setDismissable(true)
+                .show();
+    }
+
+    public static void showLongSuccessAlert(Activity context, String info){
+        Alerter.create(context)
+                .setText(info)
+                .showIcon(false)
+                .setDuration(3000)
+                .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
+                .setBackgroundColorRes(R.color.successGreen)
+                .setDismissable(true)
+                .show();
+    }
+
     /**
      * 显示紧急（红底）alert
      * @param context
