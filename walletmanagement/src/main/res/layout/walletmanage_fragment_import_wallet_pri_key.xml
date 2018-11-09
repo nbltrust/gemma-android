@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <TextView
+    <me.codeboy.android.aligntextview.AlignTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/walletmanage_tip_input_pri_key"
