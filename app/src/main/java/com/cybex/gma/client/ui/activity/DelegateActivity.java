@@ -494,7 +494,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                     });
                                     //验证密码
 
-                                    String inputPass = mPass.getText().toString().trim();
+                                    String inputPass = mPass.getText().toString();
                                     final String cypher = curWallet.getCypher();
                                     final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
                                             .TYPE_SHA256);
@@ -531,19 +531,19 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 e.printStackTrace();
                                             }
                                             dialog.cancel();
+                                        }else {
+                                            //密码错误
+                                            iv_clear.setVisibility(View.VISIBLE);
+                                            GemmaToastUtils.showLongToast(
+                                                    getResources().getString(R.string.eos_tip_wrong_password));
+
+                                            inputCount++;
+                                            if (inputCount > 3) {
+                                                dialog.cancel();
+                                                showPasswordHintDialog(OPERATION_DELEGATE);
+                                            }
                                         }
 
-                                    } else {
-                                        //密码错误
-                                        iv_clear.setVisibility(View.VISIBLE);
-                                        GemmaToastUtils.showLongToast(
-                                                getResources().getString(R.string.eos_tip_wrong_password));
-
-                                        inputCount++;
-                                        if (inputCount > 3) {
-                                            dialog.cancel();
-                                            showPasswordHintDialog(OPERATION_DELEGATE);
-                                        }
                                     }
                                 }
                                 break;
@@ -560,7 +560,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                     });
                                     //验证密码
 
-                                    String inputPass = mPass.getText().toString().trim();
+                                    String inputPass = mPass.getText().toString();
                                     final String cypher = curWallet.getCypher();
                                     final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
                                             .TYPE_SHA256);
@@ -602,19 +602,19 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 e.printStackTrace();
                                             }
                                             dialog.cancel();
+                                        }else {
+                                            //密码错误
+                                            iv_clear.setVisibility(View.VISIBLE);
+                                            GemmaToastUtils.showLongToast(
+                                                    getResources().getString(R.string.eos_tip_wrong_password));
+
+                                            inputCount++;
+                                            if (inputCount > 3) {
+                                                dialog.cancel();
+                                                showPasswordHintDialog(OPERATION_UNDELEGATE);
+                                            }
                                         }
 
-                                    } else {
-                                        //密码错误
-                                        iv_clear.setVisibility(View.VISIBLE);
-                                        GemmaToastUtils.showLongToast(
-                                                getResources().getString(R.string.eos_tip_wrong_password));
-
-                                        inputCount++;
-                                        if (inputCount > 3) {
-                                            dialog.cancel();
-                                            showPasswordHintDialog(OPERATION_UNDELEGATE);
-                                        }
                                     }
                                 }
                         }

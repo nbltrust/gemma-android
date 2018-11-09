@@ -432,7 +432,7 @@ public class DelegateFragment extends XFragment {
                                             mPass.setText("");
                                         }
                                     });
-                                    String inputPass = mPass.getText().toString().trim();
+                                    String inputPass = mPass.getText().toString();
                                     final String cypher = curWallet.getCypher();
                                     if (EmptyUtils.isNotEmpty(inputPass)){
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);
@@ -473,7 +473,7 @@ public class DelegateFragment extends XFragment {
                                             mPass.setText("");
                                         }
                                     });
-                                    String inputPass = mPass.getText().toString().trim();
+                                    String inputPass = mPass.getText().toString();
                                     if (EmptyUtils.isNotEmpty(inputPass)){
                                         final String cypher = curWallet.getCypher();
                                         final String key = JNIUtil.get_private_key(cypher, inputPass);

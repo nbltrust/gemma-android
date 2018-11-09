@@ -1,6 +1,7 @@
 package com.cybex.componentservice.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,10 @@ public class PasswordValidateHelper {
     private Context context;
 
     private String hintStr;
+
+
+
+    private String etHintStr;
     private String confirmStr;
     private int iconRes;
 
@@ -46,6 +51,10 @@ public class PasswordValidateHelper {
 
     public void setIconRes(int iconRes) {
         this.iconRes = iconRes;
+    }
+
+    public void setEtHintStr(String etHintStr) {
+        this.etHintStr = etHintStr;
     }
 
 
@@ -92,7 +101,12 @@ public class PasswordValidateHelper {
         ImageView ivCancel = dialog.findViewById(R.id.baseservice_passwordvalidate_cancel_icon);
         Button  btnConfirm= dialog.findViewById(R.id.baseservice_passwordvalidate_confirm);
         TextView  tvHint= dialog.findViewById(R.id.baseservice_passwordvalidate_hint);
-        etPasword.setHint(String.format(context.getString(R.string.baseservice_pass_validate_et_hint),walletEntity.getWalletName()));
+
+        if(TextUtils.isEmpty(etHintStr)){
+            etPasword.setHint(String.format(context.getString(R.string.baseservice_pass_validate_et_hint),walletEntity.getWalletName()));
+        }else{
+            etPasword.setHint(etHintStr);
+        }
         tvHint.setText(hintStr);
         btnConfirm.setText(confirmStr);
         ivCancel.setImageResource(iconRes);

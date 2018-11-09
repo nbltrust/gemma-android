@@ -402,7 +402,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                     });
 
                                     //验证密码
-                                    String inputPass = mPass.getText().toString().trim();
+                                    String inputPass = mPass.getText().toString();
                                     final String cypher = curWallet.getCypher();
                                     final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
                                             .TYPE_SHA256);
@@ -446,7 +446,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             mPass.setText("");
                                         }
                                     });
-                                    String inputPass = mPass.getText().toString().trim();
+                                    String inputPass = mPass.getText().toString();
                                     final String cypher = curWallet.getCypher();
                                     final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
                                             .TYPE_SHA256);

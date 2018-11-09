@@ -26,7 +26,7 @@
     <string name="baseservice_cancel">Cancel</string>
 
     <!--password validate-->
-    <string name="baseservice_pass_validate_hint">Gemma不曾知晓钱包密码，每次操作需要输入密码以\n授权</string>
+    <string name="baseservice_pass_validate_hint">Gemma不曾知晓钱包密码，每次操作需要输入密码以授权</string>
     <string name="baseservice_pass_validate_next">下一步</string>
     <string name="baseservice_pass_validate_confirm">确认已授权</string>
     <string name="baseservice_pass_validate_tip_please_input_pass">请输入密码</string>
