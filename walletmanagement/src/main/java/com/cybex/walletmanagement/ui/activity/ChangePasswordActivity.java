@@ -398,11 +398,11 @@ public class ChangePasswordActivity extends XActivity<ChangePasswordPresenter> {
     }
 
     public String getPassword() {
-        return edtSetPass.getText().toString().trim();
+        return edtSetPass.getText().toString();
     }
 
     public String getRepeatPassword() {
-        return edtRepeatPass.getText().toString().trim();
+        return edtRepeatPass.getText().toString();
     }
 
     public String getPassHint() {

@@ -67,7 +67,7 @@
     <!-- Annotation -->
     <string name="walletmanage_name_not_empty">钱包名称不能为空</string>
     <string name="walletmanage_pass_not_empty">密码不能为空</string>
-    <string name="walletmanage_pass_lenth_invalid">密码请至少输入8位</string>
+    <string name="walletmanage_pass_lenth_invalid">密码不符合规则</string>
     <string name="walletmanage_password_no_match">两次输入的密码不匹配，请重新输入</string>
     <string name="walletmanage_repeat_input_pass">请再次输入您的密码</string>
     <string name="walletmanage_check_agreement">请同意我们的服务协议</string>

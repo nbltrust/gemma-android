@@ -10,6 +10,7 @@ import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.event.RefreshCurrentWalletEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.FormatValidateUtils;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.ui.activity.ChangePasswordActivity;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
@@ -127,7 +128,7 @@ public class ChangePasswordPresenter extends XPresenter<ChangePasswordActivity> 
     }
 
     public boolean isPasswordValid() {
-        return getV().getPassword().length() >= 8;
+        return FormatValidateUtils.isPasswordValid(getV().getPassword());
     }
 
     @Override
