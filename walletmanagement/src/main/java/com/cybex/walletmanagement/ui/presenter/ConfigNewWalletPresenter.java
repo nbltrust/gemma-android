@@ -61,7 +61,7 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
 
         getV().showProgressDialog("");
         final ImportWalletConfigBean configBean = getV().getConfigBean();
-        LoggerManager.d("configBean=" + configBean);
+        //LoggerManager.d("configBean=" + configBean);
 
         Disposable subscribe = Observable.create(new ObservableOnSubscribe<Object>() {
             @Override
@@ -159,7 +159,7 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                             List<MultiWalletEntity> list =
                                     SQLite.select().from(MultiWalletEntity.class)
                                             .queryList();
-                            LoggerManager.d("list=" + list);
+                            //LoggerManager.d("list=" + list);
                         }
                         emitter.onNext(new Object());
                         emitter.onComplete();

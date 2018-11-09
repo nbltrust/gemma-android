@@ -35,7 +35,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_receiver"
                 android:textColor="@color/eos_font_title"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font_4"/>
 
             <TextView
                 android:id="@+id/tv_payee"
@@ -44,7 +44,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
-                android:textColor="@color/black_context"
+                android:textColor="@color/black_title"
+                android:textStyle="bold"
                 android:textSize="16sp"
                 tools:text="\ufeff@lhy546802341"/>
         </RelativeLayout>
@@ -67,18 +68,30 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_fund"
                 android:textColor="@color/eos_font_title"
-                android:textSize="14sp"/>
-
+                android:textSize="@dimen/font_4"/>
 
             <TextView
                 android:id="@+id/tv_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_toStartOf="@id/tv_dialog_delegate_amount"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="16dp"
+                android:textStyle="bold"
                 android:textColor="@color/black_context"
-                tools:text="2.2345 EOS"/>
+                android:textSize="@dimen/font_4"
+                tools:text="2.2345"/>
+
+            <TextView
+                android:id="@+id/tv_dialog_delegate_amount"
+                android:textSize="@dimen/font_4"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="16dp"
+                android:text=" EOS"
+                android:layout_height="wrap_content"/>
+
+
         </RelativeLayout>
 
         <View
@@ -100,7 +113,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_memo"
                 android:textColor="@color/eos_font_title"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font_4"/>
 
             <TextView
                 android:id="@+id/tv_note"
@@ -115,6 +128,7 @@
                 android:layout_alignParentEnd="true"
                 android:textAlignment="viewEnd"
                 android:ellipsize="end"
+                android:textSize="@dimen/font_4"
                 android:maxLines="2"
                 android:textColor="@color/black_context"
                 tools:text="Delegate 0.01 EOS for CPU,

@@ -10,6 +10,7 @@ import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.ui.activity.EosHomeActivity;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
@@ -288,6 +289,8 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
                                             if (bean != null){
                                                 if (bean.getName().equals(VALUE_SYMBOL_EOS)){
                                                     str[1] = String.valueOf(bean.getValue());
+                                                    CybexPriceEvent event = new CybexPriceEvent();
+                                                    event.setEosPrice(String.valueOf(bean.getValue()));
                                                 }
                                                 if (bean.getName().equals(VALUE_SYMBOL_USDT)){
                                                     str[0] = String.valueOf(bean.getValue());

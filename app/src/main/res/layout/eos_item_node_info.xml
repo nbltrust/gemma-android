@@ -63,6 +63,7 @@
                     tools:text="11.33%"/>
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tv_node_ranking"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black_context"
-                android:textSize="@dimen/font_3"
+                android:textSize="@dimen/font_3.5"
                 tools:text="eoscannonchn"
                 />
 
@@ -90,7 +91,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/font_3"
+                android:textSize="@dimen/font_3.5"
                 android:textColor="@color/black_context"
                 tools:text="IN EOS WE TRUST CANNON"
                 />

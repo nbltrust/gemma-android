@@ -103,6 +103,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                         //已选节点数不为0
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable
                                 .eos_btn_vote_left_enable));
+                        tvVoteNumber.setClickable(true);
                         LoggerManager.d("hasDelegateRes", hasDelegateRes);
                         if (hasDelegateRes) {
                             //如果有抵押的资源
@@ -118,6 +119,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     } else {
                         //已选节点数为0
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_left_disable));
+                        tvVoteNumber.setClickable(false);
                         tvExecVote.setClickable(false);
                         tvExecVote.setText(getResources().getString(R.string.eos_title_vote));
                         tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_disable));
@@ -135,6 +137,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                     if (selectedNodes.size() == 0) {
                         //从下级页面回退时把所有节点取消了
                         tvExecVote.setClickable(false);
+                        tvVoteNumber.setClickable(false);
                         tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_disable));
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_left_disable));
                     }
@@ -152,7 +155,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(VoteFragment.this, rootView);
-        setNavibarTitle(getResources().getString(R.string.eos_tip_vote), true, true);
+        setNavibarTitle(getResources().getString(R.string.eos_title_vote), true, true);
     }
 
     @Override

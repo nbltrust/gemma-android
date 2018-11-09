@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.fragment;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.Gravity;
@@ -69,6 +70,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
     private int inputCount;
     private String maxValue;
     private String maxRamValue;
+
+    private CustomFullDialog confirmDialog;
+    private CustomFullDialog confirmAuthorDialog;
 
     public static BuySellRamFragment newInstance(Bundle args) {
         BuySellRamFragment fragment = new BuySellRamFragment();
@@ -298,10 +302,10 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
      */
     private void showConfirmBuyRamDialog() {
         int[] listenedItems = {R.id.btn_confirm_buy_ram, R.id.btn_close};
-        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+        confirmDialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_confirm_buy, listenedItems, false, Gravity.BOTTOM);
 
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
@@ -317,11 +321,11 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                 }
             }
         });
-        dialog.show();
-        TextView amount = dialog.findViewById(R.id.tv_ram_amount);
-        String showAmount = AmountUtil.round(getEOSAmount(), 4) + " EOS";
+        confirmDialog.show();
+        TextView amount = confirmDialog.findViewById(R.id.tv_ram_amount);
+        String showAmount = AmountUtil.round(getEOSAmount(), 4);
         amount.setText(showAmount);
-        TextView memo = dialog.findViewById(R.id.tv_explanation);
+        TextView memo = confirmDialog.findViewById(R.id.tv_explanation);
         memo.setText(getResources().getString(R.string.eos_tip_buy_ram));
     }
 
@@ -330,9 +334,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
      */
     private void showConfirmSellRamDialog() {
         int[] listenedItems = {R.id.btn_confirm_sell_ram, R.id.btn_close};
-        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+        confirmDialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_confirm_sell, listenedItems, false, Gravity.BOTTOM);
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
@@ -348,12 +352,12 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                 }
             }
         });
-        dialog.show();
+        confirmDialog.show();
 
-        TextView amount = dialog.findViewById(R.id.tv_ram_amount);
-        String showRamAmount = getRamAmount() + " KB";
+        TextView amount = confirmDialog.findViewById(R.id.tv_ram_amount);
+        String showRamAmount = getRamAmount();
         amount.setText(showRamAmount);
-        TextView memo = dialog.findViewById(R.id.tv_explanation);
+        TextView memo = confirmDialog.findViewById(R.id.tv_explanation);
         memo.setText(getResources().getString(R.string.eos_tip_sell_ram));
     }
 
@@ -362,10 +366,10 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
      */
     private void showConfirmAuthorDialog(int operation_type) {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-        CustomFullDialog dialog = new CustomFullDialog(getContext(),
+        confirmAuthorDialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
 
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        confirmAuthorDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
@@ -488,8 +492,17 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                 }
             }
         });
-        dialog.show();
-        EditText inputPass = dialog.findViewById(R.id.et_password);
+
+        confirmAuthorDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (confirmDialog != null && !confirmDialog.isShowing()){
+                    confirmDialog.show();
+                }
+            }
+        });
+        confirmAuthorDialog.show();
+        EditText inputPass = confirmAuthorDialog.findViewById(R.id.et_password);
         MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
         if (EmptyUtils.isNotEmpty(curWallet) && curEosWallet != null) {

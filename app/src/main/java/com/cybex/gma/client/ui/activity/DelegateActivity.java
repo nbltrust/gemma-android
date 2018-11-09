@@ -1,9 +1,11 @@
 package com.cybex.gma.client.ui.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -58,6 +60,10 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     private final int STATUS_EXCEED = 4;
     private final int STATUS_VALID = 5;
     private final int STATUS_UNKNOW_ERR = 6;
+
+    private CustomFullDialog confirmDialog;
+    private CustomFullDialog confirmAuthorDialog;
+
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.STL_delegate) CommonTabLayout mTab;
     @BindView(R.id.tv_delegate_cpu) TextView tvDelegateCpu;
@@ -218,6 +224,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             @Override
             public void onTabSelect(int position) {
                 if (position == 0) {
+
                     showDelegateTab();
                 } else if (position == 1) {
                     showRefundTab();
@@ -257,6 +264,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
 
     private void showDelegateTab() {
+        edtDelegateCpu.setText("");
+        edtDelegateNet.setText("");
         tab_delegate.setVisibility(View.VISIBLE);
         tab_undelegate.setVisibility(View.GONE);
         btDelegateCpuNet.setVisibility(View.VISIBLE);
@@ -275,6 +284,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     }
 
     private void showRefundTab() {
+        edtUndelegateNet.setText("");
+        edtUndelegateCpu.setText("");
         tab_delegate.setVisibility(View.GONE);
         tab_undelegate.setVisibility(View.VISIBLE);
         btDelegateCpuNet.setVisibility(View.GONE);
@@ -313,9 +324,9 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
      */
     private void showConfirmDelegateiDialog() {
         int[] listenedItems = {R.id.btn_delegate, R.id.btn_close};
-        CustomFullDialog dialog = new CustomFullDialog(this,
+         confirmDialog  = new CustomFullDialog(this,
                 R.layout.eos_dialog_delegate_confirm, listenedItems, false, Gravity.BOTTOM);
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
@@ -331,15 +342,15 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 }
             }
         });
-        dialog.show();
+        confirmDialog.show();
 
         //给dialog各个TextView设置值
         EosWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
                 .getEosWalletEntities().get(0);
         if (EmptyUtils.isNotEmpty(curWallet)) {
-            TextView tv_payee = dialog.findViewById(R.id.tv_payee);
-            TextView tv_amount = dialog.findViewById(R.id.tv_amount);
-            TextView tv_note = dialog.findViewById(R.id.tv_note);
+            TextView tv_payee = confirmDialog.findViewById(R.id.tv_payee);
+            TextView tv_amount = confirmDialog.findViewById(R.id.tv_amount);
+            TextView tv_note = confirmDialog.findViewById(R.id.tv_note);
             tv_payee.setText(curWallet.getCurrentEosName());
             try {
                 String totalAmount;
@@ -365,7 +376,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                     //两者输入都为空
                     totalAmount = "0.0000";
                 }
-                String showAmount = totalAmount + " EOS";
+                String showAmount = totalAmount;
                 tv_amount.setText(showAmount);
 
             } catch (NumberFormatException e) {
@@ -380,9 +391,9 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
      */
     private void showConfirmUndelegateiDialog() {
         int[] listenedItems = {R.id.btn_confirm_refund, R.id.btn_close};
-        CustomFullDialog dialog = new CustomFullDialog(this,
+        confirmDialog = new CustomFullDialog(this,
                 R.layout.eos_dialog_undelegate_confirm, listenedItems, false, Gravity.BOTTOM);
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
@@ -398,15 +409,15 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 }
             }
         });
-        dialog.show();
+        confirmDialog.show();
 
         //给dialog各个TextView设置值
         EosWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
                 .getEosWalletEntities().get(0);
         if (EmptyUtils.isNotEmpty(curWallet)) {
-            TextView tv_receiver = dialog.findViewById(R.id.tv_undelegate_account);
-            TextView tv_fund_amount = dialog.findViewById(R.id.tv_undelegate_amount);
-            TextView tv_memo = dialog.findViewById(R.id.tv_undelegate_memo);
+            TextView tv_receiver = confirmDialog.findViewById(R.id.tv_undelegate_account);
+            TextView tv_fund_amount = confirmDialog.findViewById(R.id.tv_undelegate_amount);
+            TextView tv_memo = confirmDialog.findViewById(R.id.tv_undelegate_memo);
 
             tv_receiver.setText(curWallet.getCurrentEosName());
             try {
@@ -434,7 +445,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                     totalAmount = "0.0000";
                 }
 
-                String showAmount = totalAmount + " EOS";
+                String showAmount = totalAmount;
                 tv_fund_amount.setText(showAmount);
 
             } catch (NumberFormatException e) {
@@ -448,9 +459,9 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
      */
     private void showConfirmAuthoriDialog(int operation_type) {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-        CustomFullDialog dialog = new CustomFullDialog(this,
+        confirmAuthorDialog = new CustomFullDialog(this,
                 R.layout.eos_dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        confirmAuthorDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
@@ -613,8 +624,16 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 }
             }
         });
-        dialog.show();
-        EditText inputPass = dialog.findViewById(R.id.et_password);
+        confirmAuthorDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (confirmDialog != null && !confirmDialog.isShowing()){
+                    confirmDialog.show();
+                }
+            }
+        });
+        confirmAuthorDialog.show();
+        EditText inputPass = confirmAuthorDialog.findViewById(R.id.et_password);
         EosWalletEntity curEosWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
                 .getEosWalletEntities().get(0);
         if (EmptyUtils.isNotEmpty(curEosWallet)) {
@@ -693,4 +712,6 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         }
         return STATUS_UNKNOW_ERR;
     }
+
+
 }

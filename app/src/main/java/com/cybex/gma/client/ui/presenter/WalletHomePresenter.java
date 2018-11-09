@@ -84,6 +84,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     //todo account_names为空
                                     LoggerManager.d("account_names empty");
                                     GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                                    getV().dissmisProgressDialog();
                                 }
 
                             }else if (response.body() != null && response.code() == HttpConst
@@ -91,11 +92,9 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                 //未找到此账号
                                 LoggerManager.d("account not found");
                                 GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                                getV().dissmisProgressDialog();
                             }
-
-                            getV().dissmisProgressDialog();
                         }
-
                     }
 
                     @Override
@@ -185,7 +184,6 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     //更新UI
                                     getV().setEosTokens(tokens);
                                     getV().updateEosTokensUI(tokens);
-
 
                                 }
                             }

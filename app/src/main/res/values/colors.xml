@@ -31,10 +31,10 @@
     <color name="eos_tab_normal">#4169d1</color>
 
     <color name="eos_font_dark_state_blue">#212c67</color>
-    <color name="eos_font_title">#8e8e93</color>
+    <color name="eos_font_title">#333333</color>
     <color name="eos_vertical_line">#f5f6f8</color>
     <color name="eos_horiontal_line">#e7e9f8</color>
-    <color name="eos_color_et_hint">#c6cade</color>
+    <color name="eos_color_et_hint">#cccccc</color>
     <color name="eos_btn_disabled">#ababab</color>
     <color name="eos_btn_enabled">#333333</color>
 

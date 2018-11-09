@@ -311,7 +311,7 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
             String err_info =  getV().getResources().getString(resId);
 
             Alerter.create(getV())
-                    .setText(err_code + err_info)
+                    .setText(err_info)
                     .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
                     .showIcon(false)
                     .setDuration(3000)

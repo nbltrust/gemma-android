@@ -14,7 +14,6 @@
         android:src="@drawable/ic_mask_close"/>
 
     <LinearLayout
-        android:background="@drawable/eos_bg_shape_white"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginLeft="16dp"
@@ -35,7 +34,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_refund_username"
                 android:textColor="@color/eos_font_title"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font_4"/>
 
 
             <TextView
@@ -51,11 +50,9 @@
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
+            style="@style/common_divider"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:background="@color/eos_horiontal_line"/>
+            android:layout_marginRight="16dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -70,27 +67,38 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_fund"
                 android:textColor="@color/eos_font_title"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font_4"/>
 
 
             <TextView
                 android:id="@+id/tv_undelegate_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_toStartOf="@id/tv_dialog_unDelegate_amount"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="16dp"
-                android:textSize="@dimen/font_4"
+                android:textStyle="bold"
                 android:textColor="@color/black_context"
-                tools:text="2.2345 EOS"/>
+                android:textSize="@dimen/font_4"
+                tools:text="2.2345"/>
+
+            <TextView
+                android:id="@+id/tv_dialog_unDelegate_amount"
+                android:textSize="@dimen/font_4"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="16dp"
+                android:text=" EOS"
+                android:layout_height="wrap_content"/>
+
+
+
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
+            style="@style/common_divider"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:background="@color/eos_horiontal_line"/>
+            android:layout_marginRight="16dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -106,7 +114,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_memo"
                 android:textColor="@color/eos_font_title"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font_4"/>
 
 
             <TextView
@@ -125,6 +133,11 @@
                 tools:text="\ufeff@gemma12345资金用途描述不超过50个字，资金用途资金用途描述不超过50个字，资金用途"/>
 
         </RelativeLayout>
+
+        <View
+            style="@style/common_divider"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
     </LinearLayout>
 

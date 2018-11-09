@@ -91,11 +91,12 @@ public class NodeSelectedFragment extends XFragment {
     protected void setNavibarTitle(String title, boolean isShowBack, boolean isOnBackFinishActivity) {
         mTitleBar = btnNavibar;
         mTitleBar.setTitle(title);
-        mTitleBar.setTitleColor(com.hxlx.core.lib.R.color.ffffff_white_1000);
+        mTitleBar.setTitleColor(com.hxlx.core.lib.R.color.black_title);
+        mTitleBar.setTitleBold(true);
         mTitleBar.setTitleSize(20);
         mTitleBar.setImmersive(true);
         if (isShowBack) {
-            mTitleBar.setLeftImageResource(com.hxlx.core.lib.R.drawable.ic_btn_back);
+            mTitleBar.setLeftImageResource(com.hxlx.core.lib.R.drawable.ic_notify_back);
             mTitleBar.setLeftClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

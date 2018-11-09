@@ -88,7 +88,7 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
     public void bindUI(View view) {
 
         configBean = (ImportWalletConfigBean) getIntent().getSerializableExtra(WalletManageConst.KEY_IMPORT_WALLET_CONFIG);
-        LoggerManager.d("configBean="+configBean);
+        //LoggerManager.d("configBean="+configBean);
 
         scrollViewCreateWallet = (ScrollView) findViewById(R.id.scroll_create_wallet);
         tvWalletName = (TextView) findViewById(R.id.tv_wallet_name);

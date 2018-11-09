@@ -177,8 +177,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        clearData();
         unbinder.unbind();
+        super.onDestroyView();
+
     }
 
     public void showInitData(String banlance, String eosName) {
@@ -352,7 +354,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         String collectionAccount = String.valueOf(etReceiverAccount.getText());
         String amount = String.valueOf(etAmount.getText());
 
-        if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount) && collectionAccount.length() ==
+        if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount) && collectionAccount.length() <=
                 ParamConstants.VALID_EOSNAME_LENGTH) {
             btnTransferNextStep.setEnabled(true);
             btnTransferNextStep.setBackground(getActivity().getDrawable(R.drawable.shape_corner_button));
@@ -691,6 +693,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         if (dialog != null) {
             dialog.cancel();
         }
+
+        etReceiverAccount.setOnFocusChangeListener(null);
+        etAmount.setOnFocusChangeListener(null);
+        etNote.setOnFocusChangeListener(null);
 
         etReceiverAccount.setText("");
         etAmount.setText("");

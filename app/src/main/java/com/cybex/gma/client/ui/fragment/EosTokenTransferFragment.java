@@ -128,8 +128,9 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        clearData();
         unbinder.unbind();
+        super.onDestroyView();
     }
 
     public void showInitData(String balance, String eosName) {
@@ -296,7 +297,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         String collectionAccount = String.valueOf(etReceiverAccount.getText());
         String amount = String.valueOf(etAmount.getText());
 
-        if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount) && collectionAccount.length() ==
+        if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount) && collectionAccount.length() <=
                 ParamConstants.VALID_EOSNAME_LENGTH) {
             btnTransferNextStep.setEnabled(true);
             btnTransferNextStep.setBackground(getActivity().getDrawable(R.drawable.shape_corner_button));
@@ -486,6 +487,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         if (dialog != null) {
             dialog.cancel();
         }
+
+        etReceiverAccount.setOnFocusChangeListener(null);
+        etAmount.setOnFocusChangeListener(null);
+        etNote.setOnFocusChangeListener(null);
 
         etReceiverAccount.setText("");
         etAmount.setText("");

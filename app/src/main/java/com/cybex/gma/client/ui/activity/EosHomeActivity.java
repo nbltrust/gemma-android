@@ -378,8 +378,8 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         }
 
 
-        String totalCNY = AmountUtil.mul(unitPrice, totalPrice, 4);
-        String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 4);
+        String totalCNY = AmountUtil.mul(unitPrice, totalPrice, 2);
+        String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 2);
         totalEOSAmount.setText(totalPrice);
         tvEosAmount.setText(totalPrice);
         savedCurrency = SPUtils.getInstance().getInt("currency_unit");
@@ -524,16 +524,6 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                 .getEosWalletEntities().get(0);
         if (EmptyUtils.isNotEmpty(curEosWallet)) {
             tvAccountName.setText(curEosWallet.getCurrentEosName());
-            //generatePortrait(curWallet.getCurrentEosName());
-            if (curEosWallet.getIsConfirmLib().equals(CacheConstants.NOT_CONFIRMED)) {
-                Alerter.create(this)
-                        .setText(getResources().getString(R.string.eos_please_confirm_alert))
-                        .setBackgroundColorRes(R.color.scarlet)
-                        .enableSwipeToDismiss()
-                        .enableInfiniteDuration(true)
-                        .setTextAppearance(R.style.myAlert)
-                        .show();
-            }
         }
     }
 

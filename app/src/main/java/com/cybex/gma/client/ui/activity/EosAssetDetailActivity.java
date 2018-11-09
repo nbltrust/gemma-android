@@ -18,8 +18,10 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
@@ -31,6 +33,9 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +59,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     private EosTokenVO curToken;
     private int asset_type;
     private int curPage;//交易记录当前页数
+    private String curEosPrice;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.iv_logo_eos_asset) ImageView ivLogoEosAsset;
     @BindView(R.id.tv_eos_amount) TextView tvEosAmount;
@@ -218,7 +224,13 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         return true;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void getCybexPrice(CybexPriceEvent event){
+        curEosPrice = event.getEosPrice();
+    }
+
     public void showLoading() {
+        viewAssetTop.setVisibility(View.GONE);
         listMultipleStatusView.showLoading();
     }
 
@@ -227,6 +239,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     }
 
     public void showContent() {
+        viewAssetTop.setVisibility(View.VISIBLE);
         listMultipleStatusView.showContent();
     }
 
@@ -264,9 +277,10 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 getP().requestHistory(
                         currentEosName,
                         page,
-                        ParamConstants.TRANSFER_HISTORY_SIZE,
+                        ParamConstants.TRANSFER_HISTORY_SIZE,//20
                         ParamConstants.SYMBOL_EOS,
-                        ParamConstants.CONTRACT_EOS);
+                        ParamConstants.CONTRACT_EOS,
+                        true);
 
             }else{
                 //查询EOS糖果交易记录
@@ -276,7 +290,8 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                         page,
                         ParamConstants.TRANSFER_HISTORY_SIZE,
                         symbol,
-                        contract);
+                        contract,
+                        false);
             }
         }
     }
@@ -321,6 +336,14 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     public void setLoadMoreFinish(){
         viewRefresh.setLoadmoreFinished(true);
+    }
+
+    public void showBalance(String balance){
+        tvEosAmount.setText(balance.split(" ")[0]);
+        if (curEosPrice != null){
+            String eosValue = AmountUtil.mul(balance, curEosPrice,2);
+            tvRmbAmount.setText(eosValue);
+        }
     }
 
 }

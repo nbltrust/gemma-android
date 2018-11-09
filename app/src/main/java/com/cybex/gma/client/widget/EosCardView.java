@@ -92,13 +92,13 @@ public class EosCardView extends CardView{
                 .HORIZONTAL, false);
         mRvTokenIcons.setLayoutManager(layoutManager);
 
-        tokenList.add(new TokenBean());
-        tokenList.add(new TokenBean());
-        tokenList.add(new TokenBean());
-        tokenList.add(new TokenBean());
-        tokenList.add(new TokenBean());
-        tokenList.add(new TokenBean());
-        tokenList.add(new TokenBean());
+//        tokenList.add(new TokenBean());
+//        tokenList.add(new TokenBean());
+//        tokenList.add(new TokenBean());
+//        tokenList.add(new TokenBean());
+//        tokenList.add(new TokenBean());
+//        tokenList.add(new TokenBean());
+//        tokenList.add(new TokenBean());
 
         adapter = new TokenIconAdapter(tokenList);
 
