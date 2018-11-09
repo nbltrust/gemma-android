@@ -21,17 +21,24 @@
         android:layout_marginRight="@dimen/common_page_content_padding"
         app:tl_indicator_color="@color/black_content"
         app:tl_indicator_gravity="BOTTOM"
-        app:tl_indicator_height="1dp"
-        app:tl_indicator_width="161dp"
+        app:tl_indicator_height="1.1dp"
+        app:tl_indicator_width="160dp"
         app:tl_indicator_style="NORMAL"
         app:tl_underline_color="@color/black_content"
         app:tl_indicator_width_equal_title="false"
         app:tl_tab_padding="0dp"
         app:tl_tab_space_equal="true"
-        app:tl_textBold="SELECT"
+        app:tl_textBold="BOTH"
         app:tl_textSelectColor="@color/black_content"
         app:tl_textUnselectColor="@color/black_grey"
         app:tl_textsize="@dimen/font_4.5"/>
+
+    <View
+        style="@style/common_divider"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
 
 
     <android.support.v4.view.ViewPager

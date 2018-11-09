@@ -280,9 +280,9 @@
 
     <string name="walletmanage_safety_first">安全第一</string>
     <string name="walletmanage_tip_safety_first">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
-    <string name="walletmanage_save_offline">离线储存</string>
-    <string name="walletmanage_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
-    <string name="walletmanage_tip_encrypto_save">加密储存</string>
+    <string name="walletmanage_save_offline">离线存储</string>
+    <string name="walletmanage_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码获取私钥并存储。</string>
+    <string name="walletmanage_tip_encrypto_save">加密存储</string>
     <string name="walletmanage_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
-    <string name="walletmanage_key_saved">我已安全储存私钥</string>
+    <string name="walletmanage_key_saved">我已安全备份私钥</string>
 </resources>
