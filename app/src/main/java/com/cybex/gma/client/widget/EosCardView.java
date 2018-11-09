@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cybex.componentservice.bean.TokenBean;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.ui.adapter.TokenIconAdapter;
 
@@ -125,7 +126,7 @@ public class EosCardView extends CardView{
 
     public void setEosNumber(float eosNumber) {
         this.eosNumber = eosNumber;
-        mTotalEosAmount.setText(Float.toString(eosNumber));
+        mTotalEosAmount.setText(AmountUtil.round(Float.toString(eosNumber), 4));
     }
 
     public float getTotlePrice() {

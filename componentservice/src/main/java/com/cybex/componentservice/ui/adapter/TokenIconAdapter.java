@@ -77,8 +77,8 @@ public class TokenIconAdapter extends RecyclerView.Adapter<TokenIconAdapter.Toke
         Glide.with(holder.ivToken.getContext())
                 .load(tokenBean.getLogo_url())
                 .apply(new RequestOptions()
-                        .error(R.drawable.eos_ic_asset)
-                        .placeholder(R.drawable.eos_ic_asset)
+                        .error(R.drawable.ic_token_unknown)
+                        .placeholder(R.drawable.ic_token_unknown)
                         .dontAnimate()
                         .bitmapTransform(new BitmapTransformation() {
                             @Override

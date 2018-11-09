@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cybex.componentservice.utils.AmountUtil;
@@ -26,7 +27,14 @@ public class EosTokensAdapter extends BaseQuickAdapter<EosTokenVO, BaseViewHolde
         String quantity = String.valueOf(item.getQuantity());
         tv_token_quantity.setText(AmountUtil.round(quantity, 4));
         //todo 用Glide加载指定url图片进入ImageView
-        iv_token_logo.setImageResource(R.drawable.eos_ic_asset);
+        String url = item.getLogo_url();
+        if (url == null || url.equals("")){
+            iv_token_logo.setImageResource(R.drawable.ic_token_unknown);
+        }else {
+            Glide.with(iv_token_logo.getContext())
+                    .load(url)
+                    .into(iv_token_logo);
+        }
 
     }
 

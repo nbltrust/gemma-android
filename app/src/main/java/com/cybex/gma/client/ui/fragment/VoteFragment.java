@@ -121,7 +121,12 @@ public class VoteFragment extends XFragment<VotePresenter> {
                         tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_left_disable));
                         tvVoteNumber.setClickable(false);
                         tvExecVote.setClickable(false);
-                        tvExecVote.setText(getResources().getString(R.string.eos_title_vote));
+                        if (hasDelegateRes){
+                            tvExecVote.setText(getResources().getString(R.string.eos_title_vote));
+                        }else {
+                            tvExecVote.setText(getResources().getString(R.string.eos_tip_no_avail_votes));
+                        }
+
                         tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_disable));
                     }
                     break;

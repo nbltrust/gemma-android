@@ -376,4 +376,9 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     public void updateEosTokensUI(List<TokenBean> tokens){
         mEosCardView.setTokenList(tokens);
     }
+
+    public void showEosBalance(String rawBalance){
+        String balance = rawBalance.split(" ")[0];
+        mEosCardView.setEosNumber(Float.valueOf(balance));
+    }
 }

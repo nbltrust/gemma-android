@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
@@ -143,8 +144,17 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 tvCurrencyType.setVisibility(View.GONE);
                 viewAssetDetailBot.setVisibility(View.GONE);
                 if (curToken != null) {
+                    //设置Token相关UI
                     tvTokenName.setText(curToken.getTokenSymbol());
                     tvEosAmount.setText(String.valueOf(curToken.getQuantity()));
+                    String tokenUrl = curToken.getLogo_url();
+                    if (tokenUrl == null || tokenUrl.equals("")){
+                        ivLogoEosAsset.setImageResource(R.drawable.ic_token_unknown);
+                    }else {
+                        Glide.with(ivLogoEosAsset.getContext())
+                                .load(tokenUrl)
+                                .into(ivLogoEosAsset);
+                    }
                 }
 
                 btnGoTransfer.setOnClickListener(new View.OnClickListener() {

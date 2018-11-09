@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
@@ -49,6 +50,15 @@ public class CollectActivity extends XActivity {
             if (curToken != null){
                 //ivTokenLogoCollect.setImageResource(R.drawable.eos_ic_asset);
                 ivTokenNameCollect.setText(curToken.getTokenSymbol());
+
+                String tokenUrl = curToken.getLogo_url();
+                if (tokenUrl == null || tokenUrl.equals("")){
+                    ivTokenLogoCollect.setImageResource(R.drawable.ic_token_unknown);
+                }else {
+                    Glide.with(ivTokenLogoCollect.getContext())
+                            .load(tokenUrl)
+                            .into(ivTokenLogoCollect);
+                }
             }
         }
 
