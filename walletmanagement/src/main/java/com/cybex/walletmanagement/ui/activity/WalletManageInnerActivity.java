@@ -9,15 +9,11 @@ import android.widget.TextView;
 import com.cybex.base.view.LabelLayout;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.event.RefreshCurrentWalletEvent;
+import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.walletmanagement.R;
-import com.cybex.walletmanagement.event.BarcodeScanEvent;
-import com.cybex.walletmanagement.event.QrResultEvent;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.hxlx.core.lib.utils.EmptyUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -155,7 +151,7 @@ public class WalletManageInnerActivity extends XActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void refreshWallet(RefreshCurrentWalletEvent event) {
+    public void refreshWallet(RefreshWalletPswEvent event) {
         if (event.getCurrentWallet().getId()==wallet.getId()) {
             wallet=event.getCurrentWallet();
         }

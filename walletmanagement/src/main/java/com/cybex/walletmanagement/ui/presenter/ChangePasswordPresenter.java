@@ -7,7 +7,7 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
-import com.cybex.componentservice.event.RefreshCurrentWalletEvent;
+import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.FormatValidateUtils;
@@ -108,7 +108,7 @@ public class ChangePasswordPresenter extends XPresenter<ChangePasswordActivity> 
                     @Override
                     public void accept(MultiWalletEntity walletEntity) {
                         getV().dissmisProgressDialog();
-                        EventBusProvider.post(new RefreshCurrentWalletEvent(walletEntity));
+                        EventBusProvider.post(new RefreshWalletPswEvent(walletEntity));
                         GemmaToastUtils.showShortToast(
                                 getV().getResources().getString(R.string.walletmanage_psw_change_success));
                         getV().finish();

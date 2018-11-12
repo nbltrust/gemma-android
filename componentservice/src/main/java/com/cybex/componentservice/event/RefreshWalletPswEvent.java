@@ -3,18 +3,18 @@ package com.cybex.componentservice.event;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 
 /**
- * 刷新某个钱包的数据
+ * 刷新钱包密码的数据
  */
-public class RefreshCurrentWalletEvent {
+public class RefreshWalletPswEvent {
     private MultiWalletEntity currentWallet;
 
 
 
-    public RefreshCurrentWalletEvent() {
+    public RefreshWalletPswEvent() {
 
     }
 
-    public RefreshCurrentWalletEvent(MultiWalletEntity currentWallet) {
+    public RefreshWalletPswEvent(MultiWalletEntity currentWallet) {
 
         this.currentWallet = currentWallet;
     }
