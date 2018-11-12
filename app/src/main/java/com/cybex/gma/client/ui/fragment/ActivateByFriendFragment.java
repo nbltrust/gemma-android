@@ -68,16 +68,16 @@ public class ActivateByFriendFragment extends XFragment {
         //初始化各个textView
         tvHintActivateByFriendBot.setText(
                 Html.fromHtml(getResources().getString(R.string.eos_tip_use_eos_to_activate)));
-        tvTipMidFriendPartOne.setText(getString(R.string.eos_tip_activate_by_exchange_part_one));
-        tvTipMidFriendPartTwo.setText(getString(R.string.eos_tip_activate_by_exchange_part_two));
+        tvTipMidFriendPartOne.setText(getString(R.string.eos_tip_activate_by_friend_part_one));
+        tvTipMidFriendPartTwo.setText(getString(R.string.eos_tip_activate_by_friend_part_two));
         tvTipMidFriendPartTwo.setTextColor(getResources().getColor(R.color.highlight));
         tvTipMidFriendPartTwo.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-        tvTipMidFriendPartThree.setText(Html.fromHtml(getString(R.string.eos_tip_activate_by_exchange_part_three)));
+        tvTipMidFriendPartThree.setText(Html.fromHtml(getString(R.string.eos_tip_activate_by_friend_part_three)));
 
         if (getArguments() != null) {
             String account_name = getArguments().getString("account_name");
 
-            String memo = account_name + getCurEosPublickey();
+            String memo = account_name + "-" + getCurEosPublickey();
             tvShowMemoArea.setText(memo);
         }
 

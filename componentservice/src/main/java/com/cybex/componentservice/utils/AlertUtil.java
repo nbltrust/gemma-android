@@ -19,7 +19,7 @@ public class AlertUtil {
                 .showIcon(false)
                 .setDuration(1500)
                 .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
-                .setBackgroundColorRes(R.color.cornflowerBlue)
+                .setBackgroundColorRes(R.color.color_success)
                 .setDismissable(true)
                 .show();
     }
@@ -30,7 +30,7 @@ public class AlertUtil {
                 .showIcon(false)
                 .setDuration(3000)
                 .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
-                .setBackgroundColorRes(R.color.cornflowerBlue)
+                .setBackgroundColorRes(R.color.color_success)
                 .setDismissable(true)
                 .show();
     }

@@ -53,7 +53,7 @@ public class SoftHideKeyBoardUtil {
             //5､高度差大于屏幕1/4时，说明键盘弹出
             if (heightDifference > (usableHeightSansKeyboard/4)) {
                 // 6､键盘弹出了，Activity的xml布局高度应当减去键盘高度
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                if (Build.VERSION.SDK_INT >= 22){
                     frameLayoutParams.height = usableHeightSansKeyboard - heightDifference + statusBarHeight;
                 } else {
                     frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;

@@ -79,6 +79,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     if (wallet_type == BaseConst.WALLET_TYPE_BLUETOOTH) {
                                         updateBluetoothWallet(firstEosName, account_names);
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_PRIKEY_IMPORT) {
+                                        LoggerManager.d("case pri key import");
                                         updateEOSWallet(account_names);
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_CREATE) {
                                         updateEOSWallet(account_names);

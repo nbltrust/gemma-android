@@ -314,7 +314,7 @@
     <string name="eos_tip_backup_prikey_friend">请务必备份私钥，待好友转账激活后，须将私钥再次导入钱包以使用EOS账户。私钥若丢失，账户将不可恢复。</string>
     <string name="eos_tip_backup_prikey_exchange">请务必备份私钥，待交易所提现激活后，须将私钥再次导入钱包以使用EOS账户。私钥若丢失，账户将不可恢复。</string>
     <string name="eos_tip_activate_by_friend">请持有EOS的好友向智能合约signupeoseos转账并将以下文字作为备注(memo)，即可完成账户创建。</string>
-    <string name="eos_tip_activate_by_exchange_part_one">请从支持memo功能的交易所向智能合约 </string>
+    <string name="eos_tip_activate_by_exchange_part_one">请从支持memo的交易所向智能合约 </string>
     <string name="eos_tip_activate_by_exchange_part_two">signupeoseos </string>
     <string name="eos_tip_activate_by_exchange_part_three"><Data><![CDATA[转账<font color = "#ff5500">并将以下文字作为备注(memo)
     </font>]]></Data>，即可完成账户创建。</string>

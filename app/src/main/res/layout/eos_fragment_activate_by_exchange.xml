@@ -64,10 +64,11 @@ fb99aa426ef9656e16889012b"
             />
 
         <Button
+            android:layout_margin="5dp"
             android:id="@+id/bt_click_to_copy_memo"
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_20"
-            android:background="@drawable/shape_corner_button_white"
+            android:background="@null"
             android:text="@string/eos_click_to_copy"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"

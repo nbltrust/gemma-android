@@ -26,7 +26,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_14"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="14dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:orientation="vertical"
                 >
 

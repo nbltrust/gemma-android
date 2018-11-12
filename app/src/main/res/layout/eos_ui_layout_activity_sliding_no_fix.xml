@@ -3,7 +3,11 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:background="@color/whiteTwo"
+              android:paddingEnd="10dp"
+              android:paddingStart="10dp"
+    >
 
     <com.cybex.base.view.tablayout.SlidingTabLayout
         android:id="@+id/view_sliding_tab"
@@ -14,15 +18,18 @@
         app:tl_indicator_color="@color/black_title"
         app:tl_indicator_gravity="BOTTOM"
         app:tl_indicator_height="1dp"
-        app:tl_indicator_width="130dp"
         app:tl_indicator_style="NORMAL"
-        app:tl_underline_color="@color/black_context"
         app:tl_indicator_width_equal_title="true"
-        app:tl_tab_padding="6dp"
-        app:tl_tab_space_equal="true"
-        app:tl_tab_width="140dp"
+        app:tl_tab_padding="10dp"
+        app:tl_tab_space_equal="false"
         app:tl_textBold="SELECT"
         app:tl_textSelectColor="@color/colorTabTextSelect"
         app:tl_textUnselectColor="@color/colorTabTextUnSelect"
-        app:tl_textsize="16dp"/>
+        app:tl_textsize="16dp"
+        app:tl_underline_color="@color/black_context"/>
+    <!--
+    app:tl_textBold="SELECT"
+    app:tl_tab_width="140dp"
+    app:tl_indicator_width="130dp"
+     -->
 </LinearLayout>

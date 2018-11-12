@@ -44,7 +44,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import seed39.Seed39;
 
 public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 
@@ -53,9 +52,9 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     EosWalletEntity curEosWallet;
     @BindView(R.id.iv_dot_one) ImageView ivDotOne;
     @BindView(R.id.tv_look_around_hint) TextView tvLookAroundHint;
-    @BindView(R.id.tv_CPU) SuperTextView tvCPU;
-    @BindView(R.id.tv_NET) SuperTextView tvNET;
-    @BindView(R.id.tv_RAM) SuperTextView tvRAM;
+    @BindView(R.id.tv_CPU) TextView tvCPU;
+    @BindView(R.id.tv_NET) TextView tvNET;
+    @BindView(R.id.tv_RAM) TextView tvRAM;
     @BindView(R.id.tv_rmb_amount) TextView tvRmbAmount;
     @BindView(R.id.bt_wechat_pay) Button btWechatPay;
 
@@ -230,9 +229,9 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     public void setFee(WXPayBillResult.ResultBean result){
         tvRmbAmount.setText(String.format(getString(R.string.eos_rmb_fee), result.getRmbPrice()));
         newPrice = result.getRmbPrice();
-        tvCPU.setRightString(result.getCpu() + " EOS");
-        tvNET.setRightString(result.getNet() + " EOS");
-        tvRAM.setRightString(result.getRam() + " EOS");
+        tvCPU.setText(result.getCpu());
+        tvNET.setText(result.getNet());
+        tvRAM.setText(result.getRam());
     }
 
     @Override

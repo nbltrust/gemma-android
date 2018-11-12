@@ -52,29 +52,6 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
         getP().createAccount(account_name, public_key, getInvCode());
     }
 
-    /**
-     * 时间戳比较验证状态判断
-     */
-//    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-//    public void onCreateStatusReceieved(ValidateResultEvent event){
-//        if (event != null){
-//            dissmisProgressDialog();
-//            if(event.isSuccess()){
-//                //创建成功
-//                //跳转到EOS主界面
-//                AppManager.getAppManager().finishActivity(CreateEosAccountActivity.class);
-//                AppManager.getAppManager().finishActivity(ActivateAccountMethodActivity.class);
-//                UISkipMananger.launchHome(getActivity());
-//
-//            }else {
-//                //创建失败,弹框，删除当前钱包，判断是否还有钱包，跳转
-//                List<MultiWalletEntity> multiWalletEntities = DBManager.getInstance().getMultiWalletEntityDao()
-//                        .getMultiWalletEntityList();
-//                showFailDialog(EmptyUtils.isEmpty(multiWalletEntities));
-//            }
-//
-//        }
-//    }
 
     public static ActivateByInvCodeFragment newInstance(Bundle args) {
         ActivateByInvCodeFragment fragment = new ActivateByInvCodeFragment();
@@ -110,56 +87,6 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
 
     public String getInvCode(){
         return edtInvCode.getText().toString().trim();
-    }
-
-    /**
-     * 显示创建失败Dialog
-     */
-    private void showFailDialog(boolean isWalletListEmpty) {
-        int[] listenedItems = {R.id.tv_i_understand};
-        CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.eos_dialog_create_fail, listenedItems, false, Gravity.CENTER);
-        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
-
-            @Override
-            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.tv_i_understand:
-                        if (isWalletListEmpty){
-                            //如果没有钱包了
-                            UISkipMananger.launchGuide(getActivity());
-                        }else {
-                            //如果有钱包
-                            //更新当前钱包为最后一个钱包，跳转主页面
-//                            List<MultiWalletEntity> multiWalletEntities = DBManager.getInstance()
-//                                    .getMultiWalletEntityDao().getMultiWalletEntityList();
-//                            MultiWalletEntity newCurWallet = multiWalletEntities.get(multiWalletEntities.size() - 1);
-//                            newCurWallet.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-//                            DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntity(newCurWallet,
-//                                    new DBCallback() {
-//                                        @Override
-//                                        public void onSucceed() {
-//
-//                                        }
-//
-//                                        @Override
-//                                        public void onFailed(Throwable error) {
-//
-//                                        }
-//                                    });
-                            AppManager.getAppManager().finishActivity(CreateEosAccountActivity.class);
-                            AppManager.getAppManager().finishActivity(ActivateAccountMethodActivity.class);
-                            //UISkipMananger.launchHome(getActivity());
-                        }
-
-                        dialog.cancel();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        dialog.show();
     }
 
     /**

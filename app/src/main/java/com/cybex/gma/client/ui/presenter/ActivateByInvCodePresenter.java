@@ -9,6 +9,8 @@ import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.utils.AlertUtil;
+import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.job.TimeStampValidateJob;
@@ -22,6 +24,7 @@ import com.cybex.gma.client.ui.model.response.UserRegisterResult;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.tapadoo.alerter.Alert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +53,7 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                     @Override
                     public void onBeforeRequest(@NonNull Disposable disposable) {
                         if (getV() != null){
-                            getV().showProgressDialog("");
+                            getV().showProgressDialog(getV().getString(R.string.eos_title_create_eos_account));
                         }
                     }
 
@@ -65,7 +68,7 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                                     String txId = registerResult.txId;
                                     updateWallet(eos_username, txId, invCode);
                                     TimeStampValidateJob.executedCreateLogic(eos_username, public_key);
-                                    UISkipMananger.launchEOSHome(getV().getActivity());
+                                    UISkipMananger.launchHome(getV().getActivity());
                                 }
                             } else {
                                 LoggerManager.d("err");
@@ -77,15 +80,14 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                     @Override
                     public void onError(@NonNull Throwable e) {
                         if (getV() != null){
-                            //getV().dissmisProgressDialog();
+                            AlertUtil.showShortUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_create_fail));
+                            getV().dissmisProgressDialog();
                         }
                     }
 
                     @Override
                     public void onComplete() {
-                        if (getV() != null){
-                            //getV().dissmisProgressDialog();
-                        }
+
                     }
                 });
     }
@@ -119,37 +121,6 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
         multiWalletEntity.setEosWalletEntities(eosWalletEntities);
 
         DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(multiWalletEntity);
-
-
-        //获取当前数据库中已存入的钱包个数
-        //int walletNum = walletEntityList.size();
-        //int index = walletNum + 1;
-        //以默认钱包名称存入
-        //walletEntity.setWalletName(CacheConstants.DEFAULT_WALLETNAME_PREFIX + String.valueOf(index));
-        //设置公钥
-        //walletEntity.setPublicKey(publicKey);
-        //设置摘要
-        //final String cypher = JNIUtil.get_cypher(password, privateKey);
-        //walletEntity.setCypher(cypher);
-
-        //设置是否为当前钱包，默认新建钱包为当前钱包
-        //walletEntity.setIsCurrentWallet(CacheConstants.IS_CURRENT_WALLET);
-        //设置密码提示
-        //walletEntity.setPasswordTip(passwordTip);
-        //walletEntity.setWalletType(0);
-        //设置为未备份
-        //walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
-        //设置被链上确认状态位未被确认
-        //walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
-
-        //执行存入操作之前需要把其他钱包设置为非当前钱包
-//        if (walletNum > 0) {
-//            WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-//            curWallet.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
-//            DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(curWallet);
-//        }
-        //最后执行存入操作，此前包此时为当前钱包
-        //DBManager.getInstance().getWalletEntityDao().saveOrUpateEntity(walletEntity);
 
     }
 }

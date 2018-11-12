@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cybex.componentservice.api.ApiPath;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.ui.activity.CommonWebViewActivity;
@@ -76,7 +79,7 @@ public class ActivateByExchangeFragment extends XFragment {
 
         if (getArguments() != null) {
             String account_name = getArguments().getString("account_name");
-            String memo = account_name + ParamConstants.SIGNEOS_MEMO_SUFFIX;
+            String memo = account_name + "-" + getCurEosPublickey();
             tvShowMemoArea.setText(memo);
         }
     }
@@ -102,5 +105,16 @@ public class ActivateByExchangeFragment extends XFragment {
             i += 3;
         }
         return res;
+    }
+
+    public String getCurEosPublickey(){
+        MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        if (entity != null && entity.getEosWalletEntities().size() > 0){
+            EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+            if (eosEntity != null){
+                return eosEntity.getPublicKey();
+            }
+        }
+        return "";
     }
 }

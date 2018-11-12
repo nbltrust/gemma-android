@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.presenter.CreateEosAccountPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
 /**
  * 普通多币种钱包创建EOS账户页面
  */
-public class CreateEosAccountActivity extends XActivity implements Validator.ValidationListener {
+public class CreateEosAccountActivity extends XActivity<CreateEosAccountPresenter> implements Validator.ValidationListener {
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @NotEmpty(messageResId = R.string.eos_name_not_empty)
@@ -94,11 +95,11 @@ public class CreateEosAccountActivity extends XActivity implements Validator.Val
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public CreateEosAccountPresenter newP() {
+        return new CreateEosAccountPresenter();
     }
 
-    private String getEOSUsername(){
+    public String getEOSUsername(){
         return edtEosName.getText().toString().trim();
     }
 
@@ -123,8 +124,9 @@ public class CreateEosAccountActivity extends XActivity implements Validator.Val
     @Override
     public void onValidationSucceeded() {
         if (isUserNameValid()){
-            bd.putString(ParamConstants.EOS_USERNAME,  getEOSUsername());
-            UISkipMananger.launchChooseActivateMethod(CreateEosAccountActivity.this, bd);
+            getP().verifyAccount(getEOSUsername());
+//            bd.putString(ParamConstants.EOS_USERNAME,  getEOSUsername());
+//            UISkipMananger.launchChooseActivateMethod(CreateEosAccountActivity.this, bd);
         }else {
             GemmaToastUtils.showLongToast(getString(R.string.eos_invalid_eos_username));
         }

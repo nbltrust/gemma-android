@@ -27,9 +27,10 @@
             android:id="@+id/tv_tip_mid_friend_part_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             tools:text="@string/eos_tip_activate_by_friend_part_two"
             android:textColor="@color/highlight"
-            android:textSize="@dimen/font_3"/>
+            android:textSize="@dimen/font_4"/>
 
     </LinearLayout>
 
@@ -64,10 +65,11 @@ fb99aa426ef9656e16889012b"
             />
 
         <Button
+            android:layout_margin="5dp"
             android:id="@+id/bt_click_to_copy_memo"
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_20"
-            android:background="@drawable/shape_corner_button_white"
+            android:background="@null"
             android:text="@string/eos_click_to_copy"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"
