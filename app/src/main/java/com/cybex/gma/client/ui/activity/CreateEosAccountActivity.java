@@ -126,7 +126,7 @@ public class CreateEosAccountActivity extends XActivity implements Validator.Val
             bd.putString(ParamConstants.EOS_USERNAME,  getEOSUsername());
             UISkipMananger.launchChooseActivateMethod(CreateEosAccountActivity.this, bd);
         }else {
-            GemmaToastUtils.showLongToast(getString(R.string.eos_tip_username_valid));
+            GemmaToastUtils.showLongToast(getString(R.string.eos_invalid_eos_username));
         }
 
     }

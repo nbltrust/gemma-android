@@ -73,38 +73,45 @@ public class TokenIconAdapter extends RecyclerView.Adapter<TokenIconAdapter.Toke
         }
 
         TokenBean tokenBean = tokens.get(position);
+        String tokenUrl = tokenBean.getLogo_url();
 
-        Glide.with(holder.ivToken.getContext())
-                .load(tokenBean.getLogo_url())
-                .apply(new RequestOptions()
-                        .error(R.drawable.ic_token_unknown)
-                        .placeholder(R.drawable.ic_token_unknown)
-                        .dontAnimate()
-                        .bitmapTransform(new BitmapTransformation() {
-                            @Override
-                            public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
-                            }
-                            @Override
-                            protected Bitmap transform(BitmapPool pool, Bitmap source, int outWidth, int outHeight) {
-                                if (source == null) return null;
-                                int inHeight = source.getHeight();
-                                int inWidth = source.getWidth();
-                                if (inHeight >= height)return source;
-                                float fraction= height *1f/inHeight;
-                                Bitmap result = pool.get((int) (inWidth*fraction), (int) (fraction*inHeight), Bitmap.Config.ARGB_8888);
-                                if (result == null) {
-                                    result = Bitmap.createBitmap((int) (inWidth*fraction), (int) (fraction*inHeight), Bitmap.Config.ARGB_8888);
+        if (tokenUrl == null || tokenUrl.equals("")){
+            Glide.with(holder.ivToken.getContext())
+                    .load(R.drawable.ic_token_unknown)
+                    .into(holder.ivToken);
+        }else {
+            Glide.with(holder.ivToken.getContext())
+                    .load(tokenBean.getLogo_url())
+                    .apply(new RequestOptions()
+                            .error(R.drawable.ic_token_unknown)
+                            .placeholder(R.drawable.ic_token_unknown)
+                            .dontAnimate()
+                            .bitmapTransform(new BitmapTransformation() {
+                                @Override
+                                public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
                                 }
-                                Canvas canvas = new Canvas(result);
-                                Matrix matrix = new Matrix();
-                                matrix.setScale(fraction,fraction);
-                                Paint paint = new Paint();
-                                paint.setAntiAlias(true);
-                                canvas.drawBitmap(source,matrix,paint);
-                                return result;
-                            }
-                        }))
-                .into(holder.ivToken);
+                                @Override
+                                protected Bitmap transform(BitmapPool pool, Bitmap source, int outWidth, int outHeight) {
+                                    if (source == null) return null;
+                                    int inHeight = source.getHeight();
+                                    int inWidth = source.getWidth();
+                                    if (inHeight >= height)return source;
+                                    float fraction= height *1f/inHeight;
+                                    Bitmap result = pool.get((int) (inWidth*fraction), (int) (fraction*inHeight), Bitmap.Config.ARGB_8888);
+                                    if (result == null) {
+                                        result = Bitmap.createBitmap((int) (inWidth*fraction), (int) (fraction*inHeight), Bitmap.Config.ARGB_8888);
+                                    }
+                                    Canvas canvas = new Canvas(result);
+                                    Matrix matrix = new Matrix();
+                                    matrix.setScale(fraction,fraction);
+                                    Paint paint = new Paint();
+                                    paint.setAntiAlias(true);
+                                    canvas.drawBitmap(source,matrix,paint);
+                                    return result;
+                                }
+                            }))
+                    .into(holder.ivToken);
+        }
     }
 
 

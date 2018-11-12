@@ -64,6 +64,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import seed39.Seed39;
 
 /**
@@ -258,6 +259,8 @@ public class TransferFragment extends XFragment<TransferPresenter> {
         etAmount.setText("");
         etNote.setText("");
         getP().requestBanlanceInfo();
+
+        OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
 
         deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
         m_uiLock = new ReentrantLock();

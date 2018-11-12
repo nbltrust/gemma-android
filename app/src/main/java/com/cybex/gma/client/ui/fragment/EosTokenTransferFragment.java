@@ -42,6 +42,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import seed39.Seed39;
 
 public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresenter> {
@@ -64,7 +65,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     @BindView(R.id.et_note) EditTextWithScrollView etNote;
     @BindView(R.id.iv_transfer_memo_clear) ImageView ivTransferMemoClear;
     @BindView(R.id.btn_transfer_nextStep) Button btnTransferNextStep;
-    @BindView(R.id.root_scrollview) ScrollView rootScrollview;
+    @BindView(R.id.root_scrollview_token) ScrollView rootScrollview;
     Unbinder unbinder;
     CustomFullDialog dialog = null;
     EosTokenVO curToken;
@@ -195,6 +196,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         etReceiverAccount.setText("");
         etAmount.setText("");
         etNote.setText("");
+
+        OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
 
         if (getArguments() != null) {
             curToken = getArguments().getParcelable(ParamConstants.EOS_TOKENS);
