@@ -1,5 +1,7 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.os.Bundle;
+
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -294,10 +296,9 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
 
                             //页面跳转至收支记录
                             AppManager.getAppManager().finishActivity();
-                            UISkipMananger.launchTransferRecord(getV());
+                            UISkipMananger.launchEOSHome(getV());
 
                         }
-
                     }
                 });
 

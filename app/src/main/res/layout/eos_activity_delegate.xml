@@ -54,8 +54,8 @@
                         title:tl_textBold="SELECT"
                         title:tl_textSelectColor="@color/colorTabTextSelect"
                         title:tl_textUnselectColor="@color/colorTabTextUnSelect"
-                        title:tl_textsize="16dp"
-                        title:tl_underline_color="#E7E9F8"
+                        title:tl_textsize="16sp"
+                        title:tl_underline_color="@color/black_title"
                         >
 
                     </com.cybex.base.view.tablayout.CommonTabLayout>

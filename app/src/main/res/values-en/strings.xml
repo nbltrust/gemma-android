@@ -99,7 +99,7 @@
     <string name="eos_amount_eos_approxi">Estimated %1$s EOS</string>
     <string name="eos_amount_available_eos">available %1$s</string>
     <string name="eos_amount_available_ram">available %1$s KB</string>
-    <string name="eos_amount_ram">≈ %1$s EOS</string>
+    <string name="eos_amount_ram">≈ %1$s</string>
     <string name="eos_amount_ram_unit_price">≈ %1$s EOS/KB</string>
     <string name="eos_tip_quantity_approxi">Estimated</string>
 

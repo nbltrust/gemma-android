@@ -40,6 +40,40 @@
             android:translationZ="@dimen/dimen_3"
             >
 
+            <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="CPU"
+                    android:textSize="@dimen/font_3.5"
+                    android:textColor="@color/black_context"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_cpu_amount"
+                    android:text="--"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_3"
+                    android:textColor="@color/black_context"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:textColor="@color/black_context"
+                    android:textSize="@dimen/font_3"
+                    android:text=" EOS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <!--
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_cpu_amount"
                 android:layout_width="match_parent"
@@ -49,20 +83,21 @@
                 title:sLeftTextString="@string/eos_CPU"
                 title:sRightTextColor="@color/black_context"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="-- EOS"
+                title:sRightTextString=" EOS"
                 title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
                 title:sShapeCornersTopRightRadius="@dimen/dimen_6"
                 title:sUseShape="true"
                 >
 
             </com.allen.library.SuperTextView>
+            -->
 
             <com.cybex.base.view.progress.RoundCornerProgressBar
                 android:id="@+id/progressbar_cpu"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_4"
                 android:layout_margin="@dimen/dimen_10"
-                title:rcBackgroundColor="@color/cloudyBlue"
+                title:rcBackgroundColor="@color/very_light_pink"
                 title:rcBackgroundPadding="0dp"
                 title:rcMax="100"
                 title:rcProgress="30"
@@ -72,6 +107,7 @@
 
 
             </com.cybex.base.view.progress.RoundCornerProgressBar>
+
 
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_cpu_status"
@@ -96,6 +132,41 @@
                 android:layout_margin="10dp"
                 />
 
+            <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="NET"
+                    android:textSize="@dimen/font_3.5"
+                    android:textColor="@color/black_context"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_net_amount"
+                    android:text="--"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_3"
+                    android:textColor="@color/black_context"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:textColor="@color/black_context"
+                    android:textSize="@dimen/font_3"
+                    android:text=" EOS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+           <!--
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_net_amount"
                 android:layout_width="match_parent"
@@ -105,20 +176,20 @@
                 title:sLeftTextString="@string/eos_NET"
                 title:sRightTextColor="@color/black_context"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="-- EOS"
+                title:sRightTextString="- EOS"
                 title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
                 title:sShapeCornersTopRightRadius="@dimen/dimen_6"
                 title:sUseShape="true"
                 >
 
             </com.allen.library.SuperTextView>
-
+            -->
             <com.cybex.base.view.progress.RoundCornerProgressBar
                 android:id="@+id/progressbar_net"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_4"
                 android:layout_margin="@dimen/dimen_10"
-                title:rcBackgroundColor="@color/cloudyBlue"
+                title:rcBackgroundColor="@color/very_light_pink"
                 title:rcBackgroundPadding="0dp"
                 title:rcMax="100"
                 title:rcProgress="10"
@@ -152,6 +223,41 @@
                 android:layout_margin="10dp"
                 />
 
+            <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="RAM"
+                    android:textSize="@dimen/font_3.5"
+                    android:textColor="@color/black_context"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_ram_amount"
+                    android:text="--"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_3"
+                    android:textColor="@color/black_context"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:textColor="@color/black_context"
+                    android:textSize="@dimen/font_3"
+                    android:text=" EOS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!--
             <com.allen.library.SuperTextView
                 android:id="@+id/superTextView_ram_amount"
                 android:layout_width="match_parent"
@@ -161,20 +267,20 @@
                 title:sLeftTextString="@string/eos_RAM"
                 title:sRightTextColor="@color/black_context"
                 title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="--- EOS"
+                title:sRightTextString="- EOS"
                 title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
                 title:sShapeCornersTopRightRadius="@dimen/dimen_6"
                 title:sUseShape="true"
                 >
 
             </com.allen.library.SuperTextView>
-
+            -->
             <com.cybex.base.view.progress.RoundCornerProgressBar
                 android:id="@+id/progressbar_ram"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_4"
                 android:layout_margin="@dimen/dimen_10"
-                title:rcBackgroundColor="@color/cloudyBlue"
+                title:rcBackgroundColor="@color/very_light_pink"
                 title:rcBackgroundPadding="0dp"
                 title:rcMax="100"
                 title:rcProgress="30"

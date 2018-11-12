@@ -24,6 +24,7 @@ import com.cybex.gma.client.ui.model.response.UserRegisterResult;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.tapadoo.alerter.Alert;
 
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                                     String txId = registerResult.txId;
                                     updateWallet(eos_username, txId, invCode);
                                     TimeStampValidateJob.executedCreateLogic(eos_username, public_key);
+                                    AppManager.getAppManager().finishAllActivity();
                                     UISkipMananger.launchHome(getV().getActivity());
                                 }
                             } else {

@@ -300,8 +300,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         String collectionAccount = String.valueOf(etReceiverAccount.getText());
         String amount = String.valueOf(etAmount.getText());
 
-        if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount) && collectionAccount.length() <=
-                ParamConstants.VALID_EOSNAME_LENGTH) {
+        if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount) && isAccountNameValid()) {
             btnTransferNextStep.setEnabled(true);
             btnTransferNextStep.setBackground(getActivity().getDrawable(R.drawable.shape_corner_button));
 
@@ -342,7 +341,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     public boolean isAccountNameValid() {
         String eosUsername = etReceiverAccount.getText().toString().trim();
-        String regEx = "^[a-z1-5]{12}$";
+        String regEx = "^[a-z1-5.]{1,13}$";
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher((eosUsername));
         boolean res = matcher.matches();

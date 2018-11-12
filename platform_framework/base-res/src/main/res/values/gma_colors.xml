@@ -101,7 +101,7 @@
     <!--主页tab背景色-->
     <color name="colorTabBackground">#ffffff</color>
     <!--主页上划线颜色-->
-    <color name="colorTabUnderline">#e7e9f8</color>
+    <color name="colorTabUnderline">#333333</color>
     <!--主页tab文字默认颜色-->
     <color name="colorTabTextUnSelect">#999999</color>
     <!--主页tab文字选中颜色-->

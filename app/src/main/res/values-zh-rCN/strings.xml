@@ -79,7 +79,7 @@
     <string name="eos_amount_cpu_total">总量 %1$s ms</string>
     <string name="eos_amount_net_used">已用 %1$s KB</string>
     <string name="eos_amount_net_total">总量 %1$s KB</string>
-    <string name="eos_amount_balance">%1$s 可用</string>
+    <string name="eos_amount_balance">%1$s EOS 可用</string>
 
 
     <string name="eos_tip_balance_default">余额： -- EOS</string>
@@ -103,7 +103,7 @@
     <string name="eos_amount_eos_approxi">预估可兑换 %1$s EOS</string>
     <string name="eos_amount_available_eos">可用 %1$s</string>
     <string name="eos_amount_available_ram">可用 %1$s KB</string>
-    <string name="eos_amount_ram">≈ %1$s EOS</string>
+    <string name="eos_amount_ram">≈ %1$s</string>
     <string name="eos_amount_ram_unit_price">≈ %1$s EOS/KB</string>
     <string name="eos_tip_quantity_approxi">预估可兑换</string>
 
@@ -341,7 +341,7 @@
     <string name="eos_tip_verify_prikey">请输入备份的私钥，已验证是否正确</string>
     <string name="eos_rmb_fee">%1$s RMB</string>
 
-    <string name="eos_tip_eos_amount_format_invalid">请最多输入四位小数点位数</string>
+    <string name="eos_tip_eos_amount_format_invalid">请最多输入四位小数</string>
     <string name="eos_memo_copied">备注已复制</string>
     <string name="eos_verifying_account">正在验证账户名是否可用</string>
     <string name="eos_tip_check_network">创建失败，请检查网络，已登陆用户请切换节点</string>
@@ -375,8 +375,8 @@
     <string name="eos_tab_title_private_key">私钥</string>
     <string name="eos_tab_title_qr_code">二维码</string>
 
-    <string name="eos_tab_title_delegate">抵押资源</string>
-    <string name="eos_tab_title_un_delegate">解除抵押</string>
+    <string name="eos_tab_title_delegate">抵押</string>
+    <string name="eos_tab_title_un_delegate">赎回</string>
 
     <string name="eos_tab_title_buy">买入</string>
     <string name="eos_tab_title_sell">卖出</string>

@@ -191,8 +191,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                             String infostr = response.body();
                             LoggerManager.d("config info:" + infostr);
                             //C++库获取Transaction交易体
-                            String transactionStr = JNIUtil.signTransaction_voteproducer(privateKey, VALUE_CONTRACT,
-                                    from, infostr, abiStr, 0, 0, 120);
+                            String transactionStr = JNIUtil.signTransaction_voteproducer(privateKey, VALUE_CONTRACT, from, infostr, abiStr, 0, 0, 120);
                             LoggerManager.d("transactionJson:" + transactionStr);
 
                             TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,

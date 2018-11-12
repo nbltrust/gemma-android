@@ -16,13 +16,14 @@
             android:id="@+id/tv_delegate_cpu"
             android:layout_width="match_parent"
             android:textSize="@dimen/font_3.5"
-            android:textColor="@color/steel"
+            android:textColor="@color/black_context"
             android:layout_height="wrap_content"
             android:text="@string/eos_title_delegate_cpu"
             android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/tv_balance_cpu"
+            android:textColor="@color/black_context"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="0.1 EOS 可用"/>
@@ -37,7 +38,7 @@
         android:textSize="@dimen/font_4"
         android:inputType="numberDecimal"
         android:hint="@string/eos_amount_delegate"
-        android:textColorHint="@color/cloudyBlue"
+        android:textColorHint="@color/very_light_pink"
         style="@style/eos_editText_config_wallet"
         android:paddingStart="0dp"
         android:textCursorDrawable="@drawable/eos_cursor_custom"/>
@@ -60,12 +61,13 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:textSize="@dimen/font_3.5"
-            android:textColor="@color/steel"
+            android:textColor="@color/black_context"
             android:layout_height="wrap_content"
             android:text="@string/eos_title_delegate_net"/>
 
         <TextView
             android:id="@+id/tv_balance_net"
+            android:textColor="@color/black_context"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="0.1 EOS 可用"/>
@@ -80,7 +82,7 @@
         android:inputType="numberDecimal"
         android:textSize="@dimen/font_4"
         android:hint="@string/eos_amount_delegate"
-        android:textColorHint="@color/cloudyBlue"
+        android:textColorHint="@color/very_light_pink"
         style="@style/eos_editText_config_wallet"
         android:textCursorDrawable="@drawable/eos_cursor_custom"
         android:background="@null"/>
