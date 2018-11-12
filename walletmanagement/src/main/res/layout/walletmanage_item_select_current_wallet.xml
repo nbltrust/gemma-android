@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootview_wallet"
     android:layout_width="match_parent"
     android:layout_height="80dp">
@@ -14,11 +15,13 @@
 
     <TextView
         android:id="@+id/tv_wallet_name"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:ellipsize="middle"
+        android:singleLine="true"
         android:layout_marginLeft="56dp"
         android:layout_marginTop="21dp"
-        android:text="主钱包"
+        tools:text="主钱包主钱包主钱包主钱包主钱包主钱包主钱包主钱包主钱包"
         android:textColor="@color/black_content"
         android:textSize="@dimen/font_4"
         android:textStyle="bold" />
@@ -43,7 +46,7 @@
             android:id="@+id/tv_wallet_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="多币种钱包"
+            tools:text="多币种钱包"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_3.5" />
     </LinearLayout>
