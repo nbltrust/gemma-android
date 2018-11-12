@@ -10,6 +10,7 @@ public class BaseConst {
     public static final String KEY_PASSWORD="key_password";
 
 
+
     public static final String MNEMONIC_PATH_ETH="m/44'/60'/0'/0/";
     public static final String MNEMONIC_PATH_EOS="m/44'/194'/0'/0/";
 
@@ -26,7 +27,10 @@ public class BaseConst {
     public static final int WALLET_TYPE_BLUETOOTH = 2;
     public static final int WALLET_TYPE_PRIKEY_IMPORT = 3;
 
-    public static final String INITIAL_WALLET_NAME="Unnamed Wallet 1";
+    public static final String INITIAL_WALLET_NAME="WOOKONG Wallet";
+    public static final String INITIAL_WALLET_NAME_PREFIX="WOOKONG Wallet ";
+    public static final String INITIAL_WALLET_INDEX_KEY="initial_wallet_index_key";
+    public static final int INITIAL_WALLET_INDEX=1;
 
 
     public static final String CN = "中文";

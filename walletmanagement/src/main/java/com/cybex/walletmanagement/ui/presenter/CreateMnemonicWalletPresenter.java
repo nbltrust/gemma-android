@@ -18,6 +18,7 @@ import com.cybex.walletmanagement.BuildConfig;
 import com.cybex.walletmanagement.ui.activity.CreateMnemonicWalletActivity;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -178,6 +179,11 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
                                             .queryList();
                             LoggerManager.d("list=" + list);
                         }
+                        int currentIndex = SPUtils.getInstance().getInt(BaseConst.INITIAL_WALLET_INDEX_KEY, 1);
+                        if((BaseConst.INITIAL_WALLET_NAME_PREFIX+currentIndex).equals(walletName)){
+                            SPUtils.getInstance().put(BaseConst.INITIAL_WALLET_INDEX_KEY,++currentIndex);
+                        }
+
                         emitter.onNext(mnemonic);
                         emitter.onComplete();
                     }

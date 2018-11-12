@@ -36,6 +36,7 @@ import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 
@@ -238,7 +239,9 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
 
         List<MultiWalletEntity> multiWalletEntityList = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
         if(multiWalletEntityList.size()>0){
-
+            int currentIndex = SPUtils.getInstance().getInt(BaseConst.INITIAL_WALLET_INDEX_KEY, 1);
+            edtWalletName.setText(BaseConst.INITIAL_WALLET_NAME_PREFIX+currentIndex);
+            edtWalletName.setTypeface(Typeface.DEFAULT_BOLD);
         }else{
             isInitial = true;
             edtWalletName.setText(BaseConst.INITIAL_WALLET_NAME);

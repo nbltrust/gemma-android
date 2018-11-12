@@ -36,6 +36,7 @@ import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.LanguageManager;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
 import java.util.List;
@@ -352,7 +353,10 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
         if(wallets.size()==0){
             isInitial = true;
             edtWalletName.setText(BaseConst.INITIAL_WALLET_NAME);
-            edtWalletName.setFocusable(false);
+            edtWalletName.setTypeface(Typeface.DEFAULT_BOLD);
+        }else{
+            int currentIndex = SPUtils.getInstance().getInt(BaseConst.INITIAL_WALLET_INDEX_KEY, 1);
+            edtWalletName.setText(BaseConst.INITIAL_WALLET_NAME_PREFIX+currentIndex);
             edtWalletName.setTypeface(Typeface.DEFAULT_BOLD);
         }
     }
@@ -416,7 +420,7 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
                 if (hasFocus) {
                     setDividerFocusStyle(viewDividerEosName);
                     edtWalletName.setTypeface(Typeface.DEFAULT_BOLD);
-                    if (EmptyUtils.isNotEmpty(getWalletName())&&!isInitial){
+                    if (EmptyUtils.isNotEmpty(getWalletName())){
                         ivWalletNameClear.setVisibility(View.VISIBLE);
                     }
 

@@ -39,21 +39,24 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:gravity="center_vertical"
         >
 
         <TextView
             android:layout_marginStart="@dimen/common_page_content_padding"
             android:id="@+id/tv_wallet_name"
-            android:text="我的钱包"
+            tools:text="WOOKONG Wallet 1"
+            android:gravity="center_vertical"
             android:maxLines="1"
-            android:ellipsize="end"
             android:textStyle="bold"
-            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black_title"
-            android:layout_marginEnd="100dp"
             android:textSize="@dimen/font_7"
+            android:autoSizeTextType="uniform"
+            android:autoSizeStepGranularity="2dp"
+            android:autoSizeMaxTextSize="@dimen/font_7"
+            android:autoSizeMinTextSize="@dimen/font_4.7"
             />
 
         <ImageView
@@ -61,6 +64,7 @@
             android:id="@+id/iv_wallet_manage"
             android:layout_toLeftOf="@+id/iv_settings"
             android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -68,6 +72,7 @@
             android:src="@drawable/ic_settings"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/common_page_content_padding"
+            android:layout_centerVertical="true"
             android:id="@+id/iv_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

@@ -20,6 +20,7 @@ import com.cybex.walletmanagement.ui.activity.ConfigNewWalletActivity;
 import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -159,8 +160,14 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                             List<MultiWalletEntity> list =
                                     SQLite.select().from(MultiWalletEntity.class)
                                             .queryList();
-                            //LoggerManager.d("list=" + list);
+                            LoggerManager.d("list=" + list);
                         }
+
+                        int currentIndex = SPUtils.getInstance().getInt(BaseConst.INITIAL_WALLET_INDEX_KEY, 1);
+                        if((BaseConst.INITIAL_WALLET_NAME_PREFIX+currentIndex).equals(walletName)){
+                            SPUtils.getInstance().put(BaseConst.INITIAL_WALLET_INDEX_KEY,++currentIndex);
+                        }
+
                         emitter.onNext(new Object());
                         emitter.onComplete();
                     }
@@ -179,6 +186,9 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
                     @Override
                     public void accept(Object mnemonic) {
                         getV().dissmisProgressDialog();
+
+
+
                         ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
                                 .navigation();
                         if(getV().isInitial()){
