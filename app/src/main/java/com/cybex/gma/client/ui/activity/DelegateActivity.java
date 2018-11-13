@@ -206,7 +206,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 && !getUndelegateCpu().equals(".") && !getunDelegateNet().equals(".")) {
 
             //动态计算可赎回EOS的值
-            if (EmptyUtils.isNotEmpty(getUndelegateCpu())){
+            if (EmptyUtils.isNotEmpty(getUndelegateCpu())) {
                 totalUsedEos = getUndelegateCpu();
                 String curAvailableEos = AmountUtil.sub(totalRefundableCpu, totalUsedEos, 4);
                 if (Float.valueOf(curAvailableEos) > 0) {
@@ -214,7 +214,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 } else {
                     AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
                 }
-            }else {
+            } else {
                 tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
             }
 
@@ -245,7 +245,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
             //动态计算可用EOS的值
 
-            if (EmptyUtils.isNotEmpty(getunDelegateNet())){
+            if (EmptyUtils.isNotEmpty(getunDelegateNet())) {
                 totalUsedEos = getunDelegateNet();
                 String curAvailableEos = AmountUtil.sub(totalRefundableNet, totalUsedEos, 4);
                 if (Float.valueOf(curAvailableEos) > 0) {
@@ -253,7 +253,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 } else {
                     AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
                 }
-            }else {
+            } else {
                 tvBalanceNetUndelegate.setText(totalRefundableNet + " EOS");
             }
 
@@ -802,23 +802,23 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         tvBalanceCpuUndelegate.setText(refundableCpu + "EOS");
     }
 
-    public void dismissDialog(){
-        if (confirmDialog != null)confirmDialog.dismiss();
-        if (confirmAuthorDialog != null)confirmAuthorDialog.dismiss();
+
+    public void dismissDialog() {
+        if (confirmDialog != null) { confirmDialog.dismiss(); }
+        if (confirmAuthorDialog != null) { confirmAuthorDialog.dismiss(); }
     }
 
     @Override
     protected void onDestroy() {
-        if (confirmDialog != null){
+        if (confirmDialog != null) {
             confirmDialog.dismiss();
             confirmDialog = null;
         }
 
-        if (confirmAuthorDialog != null){
+        if (confirmAuthorDialog != null) {
             confirmAuthorDialog.dismiss();
             confirmAuthorDialog = null;
         }
-
         super.onDestroy();
     }
 }
