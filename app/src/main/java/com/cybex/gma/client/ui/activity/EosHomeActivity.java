@@ -57,7 +57,6 @@ import com.tapadoo.alerter.Alerter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -220,7 +219,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                     //显示cpu，net，ram进度
                     showResourceInfo(banlance, info);
                     //显示赎回信息
-                    showRefoundInfo(info);
+                    showRefundInfo(info);
                 }
             }
         });
@@ -233,7 +232,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
      *
      * 上一次请求时间 需要加上72小时跟本地时间对比
      */
-    private void showRefoundInfo(AccountInfo info) {
+    private void showRefundInfo(AccountInfo info) {
         if (info != null) {
             AccountRefoundRequest request = info.getRefund_request();
             if (request != null) {
@@ -242,7 +241,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                     long requestOldMills = DateUtil.getMills(requestTime, DateUtil.Format.EOS_DATE_FORMAT);
                     requestOldMills = requestOldMills + 72 * 60 * 60 * 1000;
                     LoggerManager.d("newRequestOldMills", requestOldMills);
-                    String refoundTime = getP().dateDistance2now(requestOldMills,
+                    String refundTime = getP().dateDistance2now(requestOldMills,
                             DateUtil.Format.EOS_DATE_FORMAT_WITH_MILLI);
 
                     String netAmount = request.net_amount;
@@ -266,12 +265,12 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                     String totalNum = AmountUtil.add(netNum, cpuNum, 4);
 
                     if (Double.parseDouble(totalNum) > 0) {
-                        String totalRefound = totalNum + " EOS";
-                        tvRedeem.setRightString(totalRefound);
+                        String totalRefund = totalNum + " EOS";
+                        tvRedeem.setRightString(totalRefund);
                     }
 
-                    if (EmptyUtils.isNotEmpty(refoundTime)) {
-                        tvRedeem.setRightBottomString(refoundTime);
+                    if (EmptyUtils.isNotEmpty(refundTime)) {
+                        tvRedeem.setRightBottomString(refundTime);
 
                     }
 
@@ -349,20 +348,20 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         }
     }
 
-    private void showTotalPriceInfo(String banlance, String unitPrice, AccountInfo info) {
-        String banlanceNumber = "0";
+    private void showTotalPriceInfo(String balance, String unitPrice, AccountInfo info) {
+        String balanceNumber = "0";
         String netNumber;
         String cpuNumber;
         String totalPrice = "0";
-        String[] banlanceNumberArr = banlance.split(" ");
+        String[] banlanceNumberArr = balance.split(" ");
         if (EmptyUtils.isNotEmpty(banlanceNumberArr)) {
-            banlanceNumber = banlanceNumberArr[0];
+            balanceNumber = banlanceNumberArr[0];
         }
         if (info != null) {
             AccountInfo.SelfDelegatedBandwidthBean selfDelegatedBandwidth = info.getSelf_delegated_bandwidth();
             if (selfDelegatedBandwidth == null) {
                 //没有自己给自己抵押的资源,总资产为可用余额
-                totalPrice = banlanceNumber;
+                totalPrice = balanceNumber;
             } else {
                 //有抵押资源，总资产为可用余额加上抵押资源
                 String[] cpuNumber_arr = selfDelegatedBandwidth.getCpu_weightX().split(" ");
@@ -372,7 +371,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                 netNumber = netNumber_arr[0];
 
                 String totalResource = AmountUtil.add(cpuNumber, netNumber, 4);
-                totalPrice = AmountUtil.add(totalResource, banlanceNumber, 4);
+                totalPrice = AmountUtil.add(totalResource, balanceNumber, 4);
             }
 
         }
@@ -408,7 +407,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
      *
      * @param banlance
      */
-    public void showBanlance(String banlance) {
+    public void showBalance(String banlance) {
         TaskManager.runOnUIThread(new Runnable() {
             @Override
             public void run() {

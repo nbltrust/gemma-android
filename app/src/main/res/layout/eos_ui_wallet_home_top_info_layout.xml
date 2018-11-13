@@ -207,7 +207,7 @@
             title:sLeftTextColor="@color/black_context"
             title:sLeftTextSize="@dimen/font_3"
             title:sLeftTextString="@string/eos_tip_redeem_ing"
-            title:sRightBottomTextColor="#3381e0"
+            title:sRightBottomTextColor="@color/black_context"
             title:sRightBottomTextSize="12sp"
             title:sRightTextColor="@color/black_context"
             title:sRightTextGravity="right"

@@ -3,17 +3,24 @@ package com.cybex.gma.client.ui.presenter;
 import android.os.Bundle;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
+import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
+import com.cybex.gma.client.ui.model.response.AccountInfo;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
+import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
 import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -30,6 +37,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
+import io.reactivex.exceptions.Exceptions;
 
 public class DelegatePresenter extends XPresenter<DelegateActivity> {
 
@@ -318,6 +327,63 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
                     .setDuration(3000)
                     .setBackgroundColorRes(R.color.scarlet)
                     .show();
+        }
+    }
+
+    /**
+     * 获取当前账号下可赎回EOS数量
+     */
+    public void getRefundQuantity(){
+        try {
+            MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+            EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+
+            String account_name = eosEntity.getCurrentEosName();
+
+            GetAccountInfoReqParams params = new GetAccountInfoReqParams();
+            params.setAccount_name(account_name);
+
+            String jsonParams = GsonUtils.objectToJson(params);
+            new GetAccountinfoRequest(AccountInfo.class)
+                    .setJsonParams(jsonParams)
+                    .getAccountInfo(new JsonCallback<AccountInfo>() {
+                        @Override
+                        public void onStart(Request<AccountInfo, ? extends Request> request) {
+                            if (getV() != null){
+                                super.onStart(request);
+                                getV().showProgressDialog(getV().getResources().getString(R.string.eos_loading_account_info));
+                            }
+                        }
+
+                        @Override
+                        public void onError(Response<AccountInfo> response) {
+                            if (getV() != null){
+                                getV().dissmisProgressDialog();
+                                GemmaToastUtils.showLongToast(getV().getString(R.string
+                                        .eos_load_account_info_fail));
+                            }
+                        }
+
+                        @Override
+                        public void onSuccess(Response<AccountInfo> response) {
+                            if (getV() != null){
+                                if (response != null && response.body() != null) {
+                                    AccountInfo info = response.body();
+                                    AccountInfo.SelfDelegatedBandwidthBean selfDelegatedBandwidth = info
+                                            .getSelf_delegated_bandwidth();
+
+                                    if (selfDelegatedBandwidth != null){
+                                        String delegatedCpu = selfDelegatedBandwidth.getCpu_weightX().split(" ")[0];
+                                        String delegatedNet = selfDelegatedBandwidth.getNet_weightX().split(" ")[0];
+                                        getV().updateRefundaleQuantity(delegatedCpu, delegatedNet);
+                                    }
+                                }
+                                getV().dissmisProgressDialog();
+                            }
+                        }
+                    });
+        } catch (Throwable t) {
+            throw Exceptions.propagate(t);
         }
     }
 

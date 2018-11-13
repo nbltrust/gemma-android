@@ -3,12 +3,9 @@ package com.cybex.gma.client.ui.presenter;
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
-import com.cybex.componentservice.db.dao.WalletEntityDao;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.ui.activity.EosHomeActivity;
@@ -150,14 +147,14 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
      * 获取首页聚合数据
      */
     public void requestHomeCombineDataVO() {
-        Observable.combineLatest(getAccountObserver, unitPriceObserver, banlanceObserver,
+        Observable.combineLatest(getAccountObserver, unitPriceObserver, balanceObserver,
                 new Function3<AccountInfo, String[], String, HomeCombineDataVO>() {
                     @Override
-                    public HomeCombineDataVO apply(AccountInfo accountInfo, String[] unitPrice, String banlance) {
+                    public HomeCombineDataVO apply(AccountInfo accountInfo, String[] unitPrice, String balance) {
 
                         HomeCombineDataVO vo = new HomeCombineDataVO();
                         vo.setAccountInfo(accountInfo);
-                        vo.setBanlance(banlance);
+                        vo.setBanlance(balance);
                         vo.setUnitPrice(unitPrice[1]);
                         vo.setUnitPriceUSDT(unitPrice[0]);
 
@@ -315,12 +312,12 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
         }
     }).subscribeOn(Schedulers.io());
 
-    Observable<String> banlanceObserver = Observable.create(new ObservableOnSubscribe<String>() {
+    Observable<String> balanceObserver = Observable.create(new ObservableOnSubscribe<String>() {
         @Override
         public void subscribe(ObservableEmitter<String> emitter) {
             requestBanlanceInfo(new StringCallback() {
 
-                String banlance = "0.0000";
+                String balance = "0.0000";
 
                 @Override
                 public void onStart(Request<String, ? extends Request> request) {
@@ -336,7 +333,7 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
                         super.onError(response);
                         getV().dissmisProgressDialog();
                         GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
-                        emitter.onNext(banlance);
+                        emitter.onNext(balance);
                         emitter.onComplete();
                     }
                 }
@@ -351,14 +348,14 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
                             //LoggerManager.d("response json:" + jsonStr);
 
                             JSONArray array = new JSONArray(jsonStr);
-                            if (array != null && array.length() > 0) {
-                                banlance = array.optString(0);
-                                if (EmptyUtils.isNotEmpty(banlance) && EmptyUtils.isNotEmpty(getV())){
-                                    getV().showBanlance(banlance);
+                            if (array.length() > 0) {
+                                balance = array.optString(0);
+                                if (EmptyUtils.isNotEmpty(balance) && EmptyUtils.isNotEmpty(getV())){
+                                    getV().showBalance(balance);
                                 }
                             }
 
-                            emitter.onNext(banlance);
+                            emitter.onNext(balance);
                             emitter.onComplete();
                         }
 
