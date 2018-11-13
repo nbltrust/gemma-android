@@ -605,6 +605,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
                                                 String stake_net_quantity = net_quantity + " EOS";
                                                 String stake_cpu_quantity = cpu_quantity + " EOS";
+
                                                 getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
                                                         stake_cpu_quantity, private_key);
 
@@ -801,10 +802,23 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         tvBalanceCpuUndelegate.setText(refundableCpu + "EOS");
     }
 
+    public void dismissDialog(){
+        if (confirmDialog != null)confirmDialog.dismiss();
+        if (confirmAuthorDialog != null)confirmAuthorDialog.dismiss();
+    }
+
     @Override
     protected void onDestroy() {
-        if (confirmDialog.isShowing())confirmDialog.dismiss();
-        if (confirmAuthorDialog.isShowing())confirmAuthorDialog.dismiss();
+        if (confirmDialog != null){
+            confirmDialog.dismiss();
+            confirmDialog = null;
+        }
+
+        if (confirmAuthorDialog != null){
+            confirmAuthorDialog.dismiss();
+            confirmAuthorDialog = null;
+        }
+
         super.onDestroy();
     }
 }

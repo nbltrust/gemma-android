@@ -397,12 +397,12 @@
     <string name="eos_tip_backup_prikey_exchange">Please make sure to back up your private key, when your finish the transfer at any exchange that support memo, you
     will need to import the private key into Gemma once again to use your account. Account can not be restored if the private key was lost.</string>
 
-    <string name="eos_tip_activate_by_exchange_part_one">Please transfer in any exchange that support memo into smart contract </string>
+    <string name="eos_tip_activate_by_exchange_part_one">Please transfer in any exchange that support memo into smart code </string>
     <string name="eos_tip_activate_by_exchange_part_two">signupeoseos </string>
     <string name="eos_tip_activate_by_exchange_part_three"><Data><![CDATA[and<font color = "#ff5500">use words followed as memo
     </font>]]></Data>，to finish creating.</string>
 
-    <string name="eos_tip_activate_by_friend_part_one">Please let your friend transfer into smart contract </string>
+    <string name="eos_tip_activate_by_friend_part_one">Please let your friend transfer into smart code </string>
     <string name="eos_tip_activate_by_friend_part_two">signupeoseos </string>
     <string
         name="eos_tip_activate_by_friend_part_three"><Data><![CDATA[and<font color = "#ff5500">use words followed as memo
@@ -562,7 +562,7 @@
     <string name="eos_err_code_3120010">Wallet exception: 3120010. Please try again later.</string>
     <string name="eos_err_code_3120011">Wallet exception: 3120011. Please try again later.</string>
     <string name="eos_err_code_3120012">Wallet exception: 3120012. Please try again later.</string>
-    <string name="eos_err_code_3130000">Actor or contract whitelist/blacklist exception</string>
+    <string name="eos_err_code_3130000">Actor or code whitelist/blacklist exception</string>
     <string name="eos_err_code_3130001">Authorizing actor of transaction is not on the whitelist</string>
     <string name="eos_err_code_3130002">Authorizing actor of transaction is on the blacklist</string>
     <string name="eos_err_code_3130003">Contract to execute is not on the whitelist</string>

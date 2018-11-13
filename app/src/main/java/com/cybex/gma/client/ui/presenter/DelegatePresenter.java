@@ -62,6 +62,8 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
     public void executeDelegateLogic(
             String from, String to, String stake_net_quantity, String stake_cpu_quantity,
             String privateKey) {
+
+
         //通过C++获取abi操作体
         String abijson = JNIUtil.create_abi_req_delegatebw(VALUE_CODE, VALUE_ACTION_DELEGATE, from, to,
                 stake_net_quantity, stake_cpu_quantity);
@@ -72,8 +74,11 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
                 .getAbiJsonToBean(new JsonCallback<AbiJsonToBeanResult>() {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
+                        if (getV() != null)
                         super.onStart(request);
+                        getV().dismissDialog();
                         getV().showProgressDialog(getV().getResources().getString(R.string.operate_deal_ing));
+
                     }
 
                     @Override
@@ -123,7 +128,7 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
     public void executeUndelegateLogic(
             String from, String to, String unstake_net_quantity, String unstake_cpu_quantity,
             String privateKey) {
-
+        if (getV() != null)getV().dismissDialog();
         //通过C++获取abi操作体
         String abijson = JNIUtil.create_abi_req_undelegatebw(VALUE_CODE, VALUE_ACTION_UNDELEGATE, from, to,
                 unstake_net_quantity, unstake_cpu_quantity);
@@ -134,8 +139,11 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
                 .getAbiJsonToBean(new JsonCallback<AbiJsonToBeanResult>() {
                     @Override
                     public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
-                        super.onStart(request);
-                        getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
+                        if (getV() != null){
+                            super.onStart(request);
+                            getV().dismissDialog();
+                            getV().showProgressDialog(getV().getString(R.string.operate_deal_ing));
+                        }
                     }
 
                     @Override

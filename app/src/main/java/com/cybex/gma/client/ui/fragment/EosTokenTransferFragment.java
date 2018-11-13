@@ -134,7 +134,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         super.onDestroyView();
     }
 
-    public void showInitData(String balance, String eosName) {
+    public void showInitData(String balance, String eosName, String tokenName) {
         currentEOSName = eosName;
         tvPayAccount.setText(currentEOSName);
 
@@ -149,7 +149,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
         maxValue = spiltBanlance[0].trim();
         LoggerManager.d("maxValue", maxValue);
-        tvBanlance.setText(getString(R.string.eos_show_remain_balance) + balance);
+        tvBanlance.setText(getString(R.string.eos_show_remain_balance) + balance + " " + tokenName);
 
         etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
                 .Type.decimal, 4, maxValue) {
@@ -209,8 +209,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
 
                 currentEOSName = eosEntity.getCurrentEosName();
-
-                showInitData(balance, currentEOSName);
+                String tokenSymbol = curToken.getTokenSymbol();
+                showInitData(balance, currentEOSName, tokenSymbol);
                 etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {

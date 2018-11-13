@@ -5,7 +5,6 @@ import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
@@ -14,7 +13,6 @@ import com.cybex.gma.client.ui.model.response.GetEosTokensResult;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.model.response.TransferHistoryList;
 import com.cybex.gma.client.ui.model.response.TransferHistoryListData;
-import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
 import com.cybex.gma.client.ui.request.GetEosTokensRequest;
 import com.cybex.gma.client.ui.request.TransferHistoryListRequest;
@@ -210,7 +208,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                     //更新UI
                                     for (TokenBean token : tokens){
                                         if (token.getSymbol().equals(token_symbol)
-                                                && token.getContract().equals(token_contract)){
+                                                && token.getCode().equals(token_contract)){
                                             String tokenBalance = String.valueOf(token.getBalance());
                                             getV().showBalance(tokenBalance);
                                             getV().showContent();
