@@ -19,7 +19,7 @@
         android:visibility="gone"
         android:layout_width="27dp"
         android:layout_height="27dp"
-        android:background="#66000000"
+        android:background="@drawable/shape_circle_token_icon_bg"
         android:text="+6"
         android:gravity="center"/>
 

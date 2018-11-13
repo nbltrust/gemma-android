@@ -13,7 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cybex.componentservice.bean.TokenBean;
+import com.cybex.componentservice.ui.adapter.decoration.LeftSpaceItemDecoration;
 import com.cybex.componentservice.utils.AmountUtil;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.ui.adapter.TokenIconAdapter;
 
@@ -93,6 +95,7 @@ public class EosCardView extends CardView{
                 .HORIZONTAL, false);
         mRvTokenIcons.setLayoutManager(layoutManager);
 
+
 //        tokenList.add(new TokenBean());
 //        tokenList.add(new TokenBean());
 //        tokenList.add(new TokenBean());
@@ -104,6 +107,8 @@ public class EosCardView extends CardView{
         adapter = new TokenIconAdapter(tokenList);
 
         mRvTokenIcons.setAdapter(adapter);
+
+        mRvTokenIcons.addItemDecoration(new LeftSpaceItemDecoration(SizeUtil.dp2px(-12)));
 
 
         updateTokenView();

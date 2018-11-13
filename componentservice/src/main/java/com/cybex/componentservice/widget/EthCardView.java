@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.cybex.componentservice.R;
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.ui.adapter.TokenIconAdapter;
+import com.cybex.componentservice.ui.adapter.decoration.LeftSpaceItemDecoration;
+import com.cybex.componentservice.utils.SizeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +86,8 @@ public class EthCardView extends CardView{
         adapter = new TokenIconAdapter(tokenList);
 
         mRvTokenIcons.setAdapter(adapter);
+
+        mRvTokenIcons.addItemDecoration(new LeftSpaceItemDecoration(SizeUtil.dp2px(-12)));
 
         updateTokenView();
 
