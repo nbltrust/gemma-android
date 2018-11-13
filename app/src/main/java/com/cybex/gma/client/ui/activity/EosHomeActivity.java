@@ -268,11 +268,6 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                         String totalRefund = totalNum + " EOS";
                         tvRedeem.setRightString(totalRefund);
                     }
-
-//                    if (EmptyUtils.isNotEmpty(refundTime)) {
-//                        tvRedeem.setRightBottomString(refundTime);
-//
-//                    }
                 }
             }
         }
