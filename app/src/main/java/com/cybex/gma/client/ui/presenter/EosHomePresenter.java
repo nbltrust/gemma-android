@@ -467,7 +467,7 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
             EosTokenVO curTokenVO = new EosTokenVO();
             curTokenVO.setLogo_url(curToken.getLogo_url());
             curTokenVO.setQuantity(curToken.getBalance());
-            curTokenVO.setTokenName(curToken.getContract());
+            curTokenVO.setTokenName(curToken.getCode());
             curTokenVO.setTokenSymbol(curToken.getSymbol());
             voList.add(curTokenVO);
         }

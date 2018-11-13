@@ -683,10 +683,12 @@
     <string name="eos_err_code_3230001">EOS链异常：3230001</string>
     <string name="eos_err_code_3230002">EOS链异常：3230002</string>
     <string name="eos_err_code_3230003">EOS链异常：3230003</string>
-    =======
+
+    <!-- =============== -->
+      <string name="eos_activate_your_account">在使用EOS功能前请先激活您的EOS账户</string>
 
 
-    <!-- ============================我是 EOS模块和非EOS模块不严谨的分割线============================ -->
+      <!-- ============================我是 EOS模块和非EOS模块不严谨的分割线============================ -->
 
     <!-- Me/General/About -->
     <string name="title_me">我的</string>
@@ -802,6 +804,7 @@
     <!--eos home card-->
     <string name="card_eos_creating_progress">账户创建中...%1$d%%</string>
     <string name="card_eos_wait_notify">待激活</string>
+
 
 
 </resources>

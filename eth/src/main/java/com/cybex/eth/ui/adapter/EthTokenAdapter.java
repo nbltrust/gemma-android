@@ -1,7 +1,6 @@
 package com.cybex.eth.ui.adapter;
 
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +23,7 @@ public class EthTokenAdapter extends BaseQuickAdapter<TokenBean, BaseViewHolder>
         ImageView ivTokenLogo = helper.getView(R.id.iv_token_logo);
         TextView tvTokenName = helper.getView(R.id.tv_token_name);
         TextView tvTokenAmount = helper.getView(R.id.tv_token_amount);
-        tvTokenName.setText(item.getContract());
+        tvTokenName.setText(item.getCode());
 
     }
 }

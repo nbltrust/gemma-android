@@ -4,7 +4,7 @@ public class TokenBean {
 
     /**
      * owner : rngsbrngsb22
-     * contract : ebtc
+     * code : ebtc
      * symbol : EBTC
      * balance : 50
      * price : 0.00383902743934
@@ -13,7 +13,7 @@ public class TokenBean {
      */
 
     private String owner;
-    private String contract;
+    private String code;
     private String symbol;
     private int balance;
     private double price;
@@ -34,9 +34,9 @@ public class TokenBean {
 
     public void setOwner(String owner) { this.owner = owner;}
 
-    public String getContract() { return contract;}
+    public String getCode() { return code;}
 
-    public void setContract(String contract) { this.contract = contract;}
+    public void setCode(String code) { this.code = code;}
 
     public String getSymbol() { return symbol;}
 

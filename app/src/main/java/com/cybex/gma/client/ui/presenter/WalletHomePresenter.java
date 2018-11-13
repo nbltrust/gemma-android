@@ -94,7 +94,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                 } else{
                                     //todo account_names为空
                                     LoggerManager.d("account_names empty");
-                                    GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                                    GemmaToastUtils.showLongToast(getV().getString(R.string.eos_activate_your_account));
                                     getV().dissmisProgressDialog();
                                 }
 

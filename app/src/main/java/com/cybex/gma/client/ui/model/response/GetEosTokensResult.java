@@ -57,9 +57,9 @@ public class GetEosTokensResult {
 //
 //            public void setOwner(String owner) { this.owner = owner;}
 //
-//            public String getContract() { return contract;}
+//            public String getCode() { return contract;}
 //
-//            public void setContract(String contract) { this.contract = contract;}
+//            public void setCode(String contract) { this.contract = contract;}
 //
 //            public String getSymbol() { return symbol;}
 //
