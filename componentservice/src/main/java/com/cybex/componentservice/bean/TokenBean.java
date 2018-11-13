@@ -25,7 +25,8 @@ public class TokenBean {
         this.logo_url = iconUrl;
     }
     public TokenBean() {
-        logo_url = "http://img3.imgtn.bdimg.com/it/u=3853852840,331334549&fm=26&gp=0.jpg";
+//        logo_url = "http://img3.imgtn.bdimg.com/it/u=3853852840,331334549&fm=26&gp=0.jpg";
+        logo_url = "";
     }
 
 

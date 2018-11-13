@@ -53,23 +53,23 @@ public class TokenIconAdapter extends RecyclerView.Adapter<TokenIconAdapter.Toke
             holder.tvNumber.setText("+"+tokens.size());
             holder.tvNumber.setVisibility(View.VISIBLE);
 
-            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) holder.ivToken.getLayoutParams();
-            lp.width = width;
-            lp.height = height;
-            holder.ivToken.setLayoutParams(lp);
+//            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) holder.ivToken.getLayoutParams();
+//            lp.width = width;
+//            lp.height = height;
+//            holder.ivToken.setLayoutParams(lp);
         }else if(tokens.size()<=5&&position==tokens.size()-1){
             holder.tvNumber.setVisibility(View.GONE);
-            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) holder.ivToken.getLayoutParams();
-            lp.width = width;
-            lp.height = height;
-            holder.ivToken.setLayoutParams(lp);
+//            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) holder.ivToken.getLayoutParams();
+//            lp.width = width;
+//            lp.height = height;
+//            holder.ivToken.setLayoutParams(lp);
         }else{
             holder.tvNumber.setVisibility(View.GONE);
 
-            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) holder.ivToken.getLayoutParams();
-            lp.width = miniWidth;
-            lp.height = height;
-            holder.ivToken.setLayoutParams(lp);
+//            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) holder.ivToken.getLayoutParams();
+//            lp.width = miniWidth;
+//            lp.height = height;
+//            holder.ivToken.setLayoutParams(lp);
         }
 
         TokenBean tokenBean = tokens.get(position);
