@@ -11,7 +11,7 @@
     android:background="@drawable/shape_corner_with_stroke"
     android:padding="@dimen/dimen_10">
 
-    <me.codeboy.android.aligntextview.AlignTextView
+    <com.cybex.base.view.AlignTextView
         android:id="@+id/tv_show_priKey_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

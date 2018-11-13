@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,7 +17,7 @@
             style="@style/walletmanage_text_title"
             android:text="@string/walletmanage_look_around" />
 
-        <me.codeboy.android.aligntextview.AlignTextView
+        <com.cybex.base.view.AlignTextView
             style="@style/walletmanage_text_body"
             android:text="@string/walletmanage_tip_look_around_hint" />
 
@@ -24,7 +25,7 @@
             style="@style/walletmanage_text_title"
             android:text="@string/walletmanage_tip_no_screenshot" />
 
-        <me.codeboy.android.aligntextview.AlignTextView
+        <com.cybex.base.view.AlignTextView
             style="@style/walletmanage_text_body"
             android:text="@string/walletmanage_tip_no_screenshot_part2" />
 
