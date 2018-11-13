@@ -285,6 +285,7 @@
     <string name="walletmanage_tip_encrypto_save">加密存储</string>
     <string name="walletmanage_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
     <string name="walletmanage_key_saved">我已安全备份私钥</string>
+    <string name="walletmanage_key_saved_qr">我已安全存储私钥</string>
     <string name="walletmanage_wallet">钱包</string>
 
     <!--wallet manage home -->

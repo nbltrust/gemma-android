@@ -16,7 +16,7 @@
             style="@style/walletmanage_text_title"
             android:text="@string/walletmanage_look_around" />
 
-        <TextView
+        <me.codeboy.android.aligntextview.AlignTextView
             style="@style/walletmanage_text_body"
             android:text="@string/walletmanage_tip_look_around_hint" />
 
@@ -24,7 +24,7 @@
             style="@style/walletmanage_text_title"
             android:text="@string/walletmanage_tip_no_screenshot" />
 
-        <TextView
+        <me.codeboy.android.aligntextview.AlignTextView
             style="@style/walletmanage_text_body"
             android:text="@string/walletmanage_tip_no_screenshot_part2" />
 
@@ -62,7 +62,7 @@
         android:layout_marginEnd="@dimen/common_view_margin"
         android:layout_marginStart="@dimen/common_view_margin"
         android:layout_marginTop="38dp"
-        android:text="@string/walletmanage_key_saved"
+        android:text="@string/walletmanage_key_saved_qr"
         android:visibility="gone" />
 
 </LinearLayout>
