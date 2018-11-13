@@ -103,15 +103,15 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                     public void onSuccess(Response<String> response) {
                         if (getV() != null) {
                             String jsonStr = response.body();
-                            String banlance = "0.0000";
+                            String balance = "0.0000";
                             LoggerManager.d("json:" + jsonStr);
                             try {
                                 JSONArray array = new JSONArray(jsonStr);
                                 if (array != null && array.length() > 0) {
-                                    banlance = array.optString(0);
-                                    getV().showInitData(banlance, currentEOSName);
+                                    balance = array.optString(0);
+                                    getV().showInitData(balance, currentEOSName);
                                 } else {
-                                    getV().showInitData(banlance, currentEOSName);
+                                    getV().showInitData(balance, currentEOSName);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

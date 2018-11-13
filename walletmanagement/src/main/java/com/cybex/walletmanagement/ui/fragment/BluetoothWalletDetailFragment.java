@@ -1,4 +1,4 @@
-package com.cybex.walletmanagement.ui.activity;
+package com.cybex.walletmanagement.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +17,7 @@ import com.cybex.walletmanagement.config.WalletManageConst;
 import com.cybex.walletmanagement.event.ContextHandleEvent;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
-import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
@@ -26,17 +26,13 @@ import com.siberiadante.customdialoglib.CustomFullDialog;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-
-/**
- * 蓝牙钱包详情页
- */
-public class BluetoothWalletDetailActivity extends XActivity {
+public class BluetoothWalletDetailFragment extends XFragment {
 
     TitleBar btnNavibar;
     SuperTextView superTextViewBWalletName;
     SuperTextView superTextViewBatteryLife;
     Button btToConnect;
-    Button btCancelPair;
+    //Button btCancelPair;
     Button btFormat;
 
     private long contextHandle;
@@ -49,16 +45,25 @@ public class BluetoothWalletDetailActivity extends XActivity {
     private String deviceName;
     //private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
+    public static BluetoothWalletDetailFragment newInstance() {
+        Bundle args = new Bundle();
+        BluetoothWalletDetailFragment fragment = new BluetoothWalletDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void bindUI(View rootView) {
         setNavibarTitle(getString(R.string.walletmanage_title_wooKong_bio), true);
 
-        btnNavibar = findViewById(R.id.btn_navibar);
-        superTextViewBWalletName = findViewById(R.id.superTextView_bWallet_name);
-        superTextViewBatteryLife = findViewById(R.id.superTextView_battery_life);
-        btToConnect = findViewById(R.id.bt_to_connect);
-        btCancelPair = findViewById(R.id.bt_cancel_pair);
-        btFormat = findViewById(R.id.bt_format);
+        if (getActivity() != null) {
+            btnNavibar = getActivity().findViewById(R.id.btn_navibar);
+            superTextViewBWalletName = getActivity().findViewById(R.id.superTextView_bWallet_name);
+            superTextViewBatteryLife = getActivity().findViewById(R.id.superTextView_battery_life);
+            btToConnect = getActivity().findViewById(R.id.bt_to_connect);
+            //btCancelPair = getActivity().findViewById(R.id.bt_cancel_pair);
+            btFormat = getActivity().findViewById(R.id.bt_format);
+        }
     }
 
     @Override
@@ -75,19 +80,21 @@ public class BluetoothWalletDetailActivity extends XActivity {
                 showProgressDialog("connecting");
                 if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
                     connectThread = new BlueToothWrapper(mConnectHandler);
-                    connectThread.setInitContextWithDevNameWrapper(BluetoothWalletDetailActivity.this,
+                    connectThread.setInitContextWithDevNameWrapper(getActivity(),
                             deviceName);
                     connectThread.start();
                 }
             }
         });
+
         //取消配对
+        /*
         btCancelPair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });
+        }); */
         //格式化
         btFormat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +103,15 @@ public class BluetoothWalletDetailActivity extends XActivity {
             }
         });
 
+        //修改钱包名称
+        superTextViewBWalletName.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
+            @Override
+            public void onClickListener(SuperTextView superTextView) {
+
+            }
+        });
     }
+
 
     @Override
     public int getLayoutId() {
@@ -113,10 +128,6 @@ public class BluetoothWalletDetailActivity extends XActivity {
         return true;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void getContextHandle(ContextHandleEvent event) {
@@ -168,13 +179,13 @@ public class BluetoothWalletDetailActivity extends XActivity {
     }
 
     public void showConnectedLayout() {
-        btCancelPair.setVisibility(View.VISIBLE);
+        //btCancelPair.setVisibility(View.VISIBLE);
         btToConnect.setVisibility(View.GONE);
         btFormat.setVisibility(View.VISIBLE);
     }
 
     public void showDisconnectedLayout() {
-        btCancelPair.setVisibility(View.GONE);
+        //btCancelPair.setVisibility(View.GONE);
         btToConnect.setVisibility(View.VISIBLE);
         btFormat.setVisibility(View.GONE);
     }
@@ -185,7 +196,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
      */
     private void showConfirmFormatDialog() {
         int[] listenedItems = {R.id.tv_ok, R.id.tv_cancel};
-        CustomDialog dialog = new CustomDialog(this,
+        CustomDialog dialog = new CustomDialog(getActivity(),
                 R.layout.walletmanage_dialog_bluetooth_format_confirm, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
@@ -202,11 +213,30 @@ public class BluetoothWalletDetailActivity extends XActivity {
     }
 
     /**
+     * 显示按电源键确认格式化Dialog
+     */
+    private void showConfirmFormatonCardDialog() {
+        int[] listenedItems = {R.id.imv_back};
+        CustomDialog dialog = new CustomDialog(getActivity(),
+                R.layout.walletmanage_dialog_bluetooth_power_confirm, listenedItems, false, Gravity.CENTER);
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(final CustomDialog dialog, View view) {
+                if (view.getId() == R.id.imv_back) {
+                    dialog.cancel();
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    /**
      * 显示确认格式化Dialog
      */
     private void showFormatDoneDialog() {
         int[] listenedItems = {R.id.tv_cancel, R.id.tv_init};
-        CustomDialog dialog = new CustomDialog(this,
+        CustomDialog dialog = new CustomDialog(getActivity(),
                 R.layout.walletmanage_dialog_bluetooth_format_done, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
@@ -218,7 +248,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
                     dialog.cancel();
                 } else if (view.getId() == R.id.tv_init) {
                     dialog.cancel();
-                    //UISkipMananger.skipBluetoothPaireActivity(BluetoothWalletDetailActivity.this, new Bundle());
+                    //UISkipMananger.skipBluetoothPaireActivity(getActivity(), new Bundle());
                 }
             }
         });
@@ -268,13 +298,13 @@ public class BluetoothWalletDetailActivity extends XActivity {
                         EventBusProvider.postSticky(event);
 
                         showConnectedLayout();
-                        AlertUtil.showShortCommonAlert(BluetoothWalletDetailActivity.this, "Bio Connected");
+                        AlertUtil.showShortCommonAlert(getActivity(), "Bio Connected");
 
                     } else {
                         //连接失败
                         SPUtils.getInstance()
                                 .put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
-                        AlertUtil.showShortUrgeAlert(BluetoothWalletDetailActivity.this, "Bio Connect Fail");
+                        AlertUtil.showShortUrgeAlert(getActivity(), "Bio Connect Fail");
                         showDisconnectedLayout();
                     }
 
@@ -300,7 +330,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
                     //BluetoothConnectKeepJob.removeJob();
                     SPUtils.getInstance()
                             .put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
-                    AlertUtil.showShortUrgeAlert(BluetoothWalletDetailActivity.this, "Bio Disconnected");
+                    AlertUtil.showShortUrgeAlert(getActivity(), "Bio Disconnected");
                     showDisconnectedLayout();
 
                     break;
@@ -335,7 +365,7 @@ public class BluetoothWalletDetailActivity extends XActivity {
      */
     private void showVerifyFPDialog() {
         int[] listenedItems = {R.id.imv_back};
-        dialog = new CustomFullDialog(this,
+        dialog = new CustomFullDialog(getActivity(),
                 R.layout.walletmanage_dialog_bluetooth_finger_authorize, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
@@ -348,6 +378,5 @@ public class BluetoothWalletDetailActivity extends XActivity {
         });
         dialog.show();
     }
-
 
 }

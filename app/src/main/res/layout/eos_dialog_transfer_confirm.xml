@@ -10,6 +10,7 @@
         android:id="@+id/btn_close"
         android:layout_width="60dp"
         android:layout_height="48dp"
+        android:layout_marginStart="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_mask_close"/>
 
@@ -19,7 +20,6 @@
         android:layout_height="150dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -35,7 +35,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_receiver"
                 android:textColor="@color/eos_font_title"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font_4"/>
 
             <TextView
                 android:id="@+id/tv_payee"
@@ -68,7 +68,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_fund"
                 android:textColor="@color/eos_font_title"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font_4"/>
 
             <TextView
                 android:id="@+id/tv_amount"
@@ -101,7 +101,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_memo"
                 android:textColor="@color/eos_font_title"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font_4"/>
 
             <TextView
                 android:id="@+id/tv_note"
@@ -142,7 +142,7 @@
             android:layout_marginLeft="16dp"
             android:text="@string/eos_title_payer_account"
             android:textColor="@color/eos_font_title"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/font_4"/>
 
 
         <TextView

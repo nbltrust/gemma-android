@@ -235,6 +235,8 @@
     <string name="walletmanage_tip_to_init">是否重新初始化WOOKONG Bio？</string>
     <string name="walletmanage_tip_bluetooth_transfer">若未找到，请检查手机蓝牙和设备电源。</string>
     <string name="walletmanage_connecting_bio">正在连接WOOKONG Bio</string>
+    <string name="walletmanage_tip_confirm_format">请在WOOKONG Bio上按键以确认格式化，一旦格式化，WOOKONG Bio将清除私钥，请在格式化前转移资产。</string>
+
 
     <string name="walletmanage_tip_manage_resource_wookong">WOOKONG Bio 暂不支持资源抵押或买卖RAM，若要进行此类操作请使用其他账户为该账户抵押资源或买卖RAM。</string>
 
@@ -291,4 +293,6 @@
     <!--wallet manage home -->
     <string name="walletmanage_create_wallet">创建钱包</string>
     <string name="walletmanage_connect_wookong_bio">配对 WOOKONG Bio</string>
+
+
 </resources>

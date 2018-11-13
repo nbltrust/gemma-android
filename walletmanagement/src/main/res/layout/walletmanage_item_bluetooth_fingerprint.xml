@@ -7,7 +7,7 @@
     android:layout_height="@dimen/dimen_48"
     app:sLeftTextString="指纹一"
     app:sLeftTextSize="@dimen/font_3.5"
-    app:sLeftTextColor="@color/darkSlateBlue"
+    app:sLeftTextColor="@color/black_title"
     app:sRightTvDrawableRight="@drawable/ic_arrow"
     app:sUseShape="true"
     app:sShapeCornersTopLeftRadius="@dimen/dimen_6"

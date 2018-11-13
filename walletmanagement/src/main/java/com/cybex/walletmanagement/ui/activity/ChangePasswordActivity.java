@@ -35,7 +35,6 @@ import me.framework.fragmentation.anim.FragmentAnimator;
 
 public class ChangePasswordActivity extends XActivity<ChangePasswordPresenter> {
 
-
     private ImageView ivSetPassMask;
     private ImageView ivRepeatPassMask;
     private View viewDividerSetPass;

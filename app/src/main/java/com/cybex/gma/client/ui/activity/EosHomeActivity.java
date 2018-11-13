@@ -274,12 +274,9 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                         tvRedeem.setRightBottomString(refoundTime);
 
                     }
-
                 }
             }
-
         }
-
     }
 
     private void showResourceInfo(String banlance, AccountInfo info) {
@@ -465,6 +462,12 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                 //如果当前有多个eos账户
                 ivChangeAccount.setVisibility(View.VISIBLE);
                 ivChangeAccount.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showChangeEOSNameDialog();
+                    }
+                });
+                tvCurrentAccount.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showChangeEOSNameDialog();

@@ -1,24 +1,17 @@
 package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
-import com.cybex.componentservice.config.CacheConstants;
-import com.cybex.componentservice.db.entity.EosWalletEntity;
-import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.EosTokenTransferFragment;
-import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
-import com.cybex.gma.client.ui.model.vo.TransferTransactionTmpVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
-import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
 import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -30,88 +23,14 @@ import com.lzy.okgo.request.base.Request;
 import com.tapadoo.alerter.Alert;
 import com.tapadoo.alerter.Alerter;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragment> {
-    private static final String VALUE_CODE = "eosio.token";
     private static final String VALUE_ACTION = "transfer";
     private static final String VALUE_COMPRESSION = "none";
-    private static final String VALUE_SYMBOL = "EOS";
-
-//    public void requestBanlanceInfo() {
-//        MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-//        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
-//        if (entity == null && eosEntity != null) { return; }
-//
-//        String currentEOSName = eosEntity.getCurrentEosName();
-//        GetCurrencyBalanceReqParams params = new GetCurrencyBalanceReqParams();
-//        params.setAccount(currentEOSName);
-//        params.setCode(VALUE_CODE);
-//        params.setSymbol(VALUE_SYMBOL);
-//        String jsonParams = GsonUtils.objectToJson(params);
-//
-//        new GetCurrencyBalanceRequest(String.class)
-//                .setJsonParams(jsonParams)
-//                .getCurrencyBalance(new StringCallback() {
-//                    @Override
-//                    public void onStart(Request<String, ? extends Request> request) {
-//                        getV().showProgressDialog(
-//                                getV().getResources().getString(R.string.eos_loading_pretransfer_info));
-//                        super.onStart(request);
-//                    }
-//
-//                    @Override
-//                    public void onError(Response<String> response) {
-//                        super.onError(response);
-//                        if (EmptyUtils.isNotEmpty(getV())) {
-//                            getV().dissmisProgressDialog();
-//
-//                            try {
-//                                if (response.body() != null && response.getRawResponse().body() != null) {
-//                                    String err_info_string = response.getRawResponse().body().string();
-//                                    try {
-//                                        JSONObject obj = new JSONObject(err_info_string);
-//                                        JSONObject error = obj.optJSONObject("error");
-//                                        String err_code = error.optString("code");
-//                                        handleEosErrorCode(err_code);
-//
-//                                    } catch (JSONException ee) {
-//                                        ee.printStackTrace();
-//                                    }
-//                                }
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(Response<String> response) {
-//                        if (getV() != null) {
-//                            String jsonStr = response.body();
-//                            String banlance = "0.0000";
-//                            LoggerManager.d("json:" + jsonStr);
-//                            try {
-//                                JSONArray array = new JSONArray(jsonStr);
-//                                if (array != null && array.length() > 0) {
-//                                    banlance = array.optString(0);
-//                                    getV().showInitData(banlance, currentEOSName);
-//                                } else {
-//                                    getV().showInitData(banlance, currentEOSName);
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                            getV().dissmisProgressDialog();
-//                        }
-//                    }
-//                });
-//    }
 
     /**
      * 执行软件钱包转账逻辑
@@ -130,7 +49,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
             String privateKey,
             String tokenContract) {
         //通过c++获取 abi json操作体
-        String abijson = JNIUtil.create_abi_req_transfer(VALUE_CODE, VALUE_ACTION,
+        String abijson = JNIUtil.create_abi_req_transfer(tokenContract, VALUE_ACTION,
                 from, to, quantity, memo);
 
         //链上接口请求 abi_json_to_bin
@@ -175,7 +94,6 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                             LoggerManager.d("abiStr: " + binargs);
 
                             getInfo(from, privateKey, binargs, tokenContract);
-
 
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
