@@ -1,6 +1,6 @@
 package com.cybex.componentservice.utils.bluetooth;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcel;
@@ -165,7 +165,7 @@ public class BlueToothWrapper extends Thread {
     private int m_wrapperType;
     private Handler m_mainHandler;
     private static Handler m_heartBeatHandler = null;
-    private Activity m_activity = null; //for INIT_WRAPPER
+    private Context mContext = null; //for INIT_WRAPPER
     private String m_strFilter = null; //for ENUM_WRAPPER
     private String m_strDevName = null; //for CONNECT_WRAPPER
     private long m_devHandle = 0; // for SEND_CMD_WRAPPER
@@ -740,13 +740,13 @@ public class BlueToothWrapper extends Thread {
         m_bAborting = false;
     }
 
-    public boolean setInitWrapper(Activity activity) {
+    public boolean setInitWrapper(Context context) {
         m_wrapperType = INIT_WRAPPER;
-        m_activity = activity;
+        mContext = context;
         return true;
     }
 
-    public boolean setEnumWrapper(Activity activity, String strFilter) {
+    public boolean setEnumWrapper(Context context, String strFilter) {
         m_wrapperType = ENUM_WRAPPER;
         if (strFilter == null) {
             m_strFilter = "";
@@ -754,18 +754,18 @@ public class BlueToothWrapper extends Thread {
             m_strFilter = strFilter;
         }
 
-        m_activity = activity;
+        mContext = context;
 
         return true;
     }
 
-    public boolean setConnectWrapper(Activity activity, String strDevName) {
+    public boolean setConnectWrapper(Context context, String strDevName) {
         m_wrapperType = CONNECT_WRAPPER;
         if (strDevName == null) {
             return false;
         }
 
-        m_activity = activity;
+        mContext = context;
 
         m_objCommLock = m_listCommLock.get(strDevName);
         if (m_objCommLock == null) {
@@ -929,7 +929,7 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
-    public boolean setInitContextWrapper(Activity activity, String strFilter) {
+    public boolean setInitContextWrapper(Context context, String strFilter) {
         m_wrapperType = INIT_CONTEXT_WRAPPER;
 
         if (strFilter == null) {
@@ -938,19 +938,19 @@ public class BlueToothWrapper extends Thread {
             m_strFilter = strFilter;
         }
 
-        m_activity = activity;
+        mContext = context;
 
         return true;
     }
 
-    public boolean setInitContextWithDevNameWrapper(Activity activity, String strDevName) {
+    public boolean setInitContextWithDevNameWrapper(Context context, String strDevName) {
         m_wrapperType = INIT_CONTEXT_WITH_DEVNAME_WRAPPER;
 
         if (strDevName == null) {
             return false;
         }
 
-        m_activity = activity;
+        mContext = context;
         m_strDevName = strDevName;
 
         return true;
@@ -1171,7 +1171,7 @@ public class BlueToothWrapper extends Thread {
         return true;
     }
 
-    public boolean setGetDevListWrapper(Activity activity, String strFilter) {
+    public boolean setGetDevListWrapper(Context context, String strFilter) {
         m_wrapperType = GET_DEV_LIST_WRAPPER;
         if (strFilter == null) {
             m_strFilter = "";
@@ -1179,7 +1179,7 @@ public class BlueToothWrapper extends Thread {
             m_strFilter = strFilter;
         }
 
-        m_activity = activity;
+        mContext = context;
 
         return true;
     }
@@ -1374,7 +1374,7 @@ public class BlueToothWrapper extends Thread {
                 msg.what = MSG_INIT_START;
                 msg.sendToTarget();
 
-                //m_btUtility.initUtility(m_activity);
+                //m_btUtility.initUtility(mContext);
 
                 msg = m_mainHandler.obtainMessage();
                 msg.what = MSG_INIT_FINISH;
@@ -1419,7 +1419,7 @@ public class BlueToothWrapper extends Thread {
 
                 devCount = new int[1];
                 String[] strMaxDeviceNames = new String[16];
-                iRtn = MiddlewareInterface.enumDevice(m_activity, m_strFilter, m_enumCallback, strMaxDeviceNames,
+                iRtn = MiddlewareInterface.enumDevice(mContext, m_strFilter, m_enumCallback, strMaxDeviceNames,
                         devCount);
                 if ((iRtn == CommonUtility.DEVICEIO_RET_OK) && (devCount[0] > 0)) {
                     strDeviceNames = new String[devCount[0]];
@@ -1440,7 +1440,7 @@ public class BlueToothWrapper extends Thread {
                     msg.sendToTarget();
 
                     long[] devHandle = new long[1];
-                    iRtn = MiddlewareInterface.connectDevice(m_activity, m_strDevName, devHandle);
+                    iRtn = MiddlewareInterface.connectDevice(mContext, m_strDevName, devHandle);
 
                     msg = m_mainHandler.obtainMessage();
                     msg.what = MSG_CONNECT_FINISH;
@@ -1510,7 +1510,7 @@ public class BlueToothWrapper extends Thread {
 
                 contextHandles = new long[1];
                 devCount = new int[1];
-                iRtn = MiddlewareInterface.initContext(m_activity, m_strFilter, 4000, m_enumCallback, devCount,
+                iRtn = MiddlewareInterface.initContext(mContext, m_strFilter, 4000, m_enumCallback, devCount,
                         contextHandles);
 
                 msg = m_mainHandler.obtainMessage();
@@ -1524,7 +1524,7 @@ public class BlueToothWrapper extends Thread {
                 msg.sendToTarget();
 
                 contextHandles = new long[1];
-                iRtn = MiddlewareInterface.initContextWithDevName(m_activity, m_strDevName, m_heartBeatCallback,
+                iRtn = MiddlewareInterface.initContextWithDevName(mContext, m_strDevName, m_heartBeatCallback,
                         contextHandles);
 
                 msg = m_mainHandler.obtainMessage();
@@ -1995,7 +1995,7 @@ public class BlueToothWrapper extends Thread {
                 devCount[0] = MiddlewareInterface.PAEW_MAX_DEV_COUNT;
                 strDeviceNames = new String[MiddlewareInterface.PAEW_MAX_DEV_COUNT];
                 m_commonLock.lock();
-                iRtn = MiddlewareInterface.getDeviceList(m_activity, m_strFilter, 4000, m_enumCallback, strDeviceNames,
+                iRtn = MiddlewareInterface.getDeviceList(mContext, m_strFilter, 4000, m_enumCallback, strDeviceNames,
                         devCount);
                 m_commonLock.unlock();
 
