@@ -11,7 +11,7 @@
         <!--layout="@layout/ui_navibar">-->
     <!--</include>-->
 
-    <me.codeboy.android.aligntextview.AlignTextView
+    <com.cybex.base.view.AlignTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/walletmanage_tip_input_mnemonic"
