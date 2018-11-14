@@ -24,10 +24,12 @@ import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.componentservice.widget.EthCardView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.WalletHomePresenter;
@@ -79,6 +81,13 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     private EosWalletEntity curEosWallet;
     private EthWalletEntity curEthWallet;
     private boolean isBioConnected;//蓝牙卡是否连接
+    private String eosUnitPriceRMB;
+
+    public void setDelegatedResourceQuantity(String delegatedResourceQuantity) {
+        this.delegatedResourceQuantity = delegatedResourceQuantity;
+    }
+
+    private String delegatedResourceQuantity;
 
     public void setEosTokens(List<TokenBean> eosTokens) {
         this.eosTokens = eosTokens;
@@ -86,6 +95,11 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     private List<TokenBean> eosTokens;
     private Unbinder unbinder;
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onCybexPriceReceived(CybexPriceEvent event){
+        eosUnitPriceRMB = event.getEosPrice();
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onValidateResultReceived(ValidateResultEvent event) {
@@ -216,6 +230,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        delegatedResourceQuantity = "0";
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
 //        updateWallet(curWallet);
     }
@@ -274,7 +289,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 if (multiWalletEntity.getEosWalletEntities().size() > 0) {
                     //如果有EOS账户
                     String eos_public_key = curEosWallet.getPublicKey();
-                    getP().getKeyAccounts(eos_public_key);
+                    getP().getAccount(eos_public_key);
                 }
                 //todo 判断ETH钱包状态
 
@@ -288,7 +303,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     mEthCardView.setVisibility(View.VISIBLE);
                     LoggerManager.d("case eth+eos");
                     String eos_public_key = curEosWallet.getPublicKey();
-                    getP().getKeyAccounts(eos_public_key);
+                    getP().getAccount(eos_public_key);
 
                 } else if (EmptyUtils.isNotEmpty(curEthWallet) && EmptyUtils.isEmpty(curEosWallet)) {
                     //todo 只有ETH钱包
@@ -302,7 +317,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     LoggerManager.d("case eos");
                     String eos_public_key = curEosWallet.getPublicKey();
                     LoggerManager.d("curEosPubKey", eos_public_key);
-                    getP().getKeyAccounts(eos_public_key);
+                    getP().getAccount(eos_public_key);
                 }
             }
         }
@@ -395,5 +410,12 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     public void showEosBalance(String rawBalance){
         String balance = rawBalance.split(" ")[0];
         mEosCardView.setEosNumber(Float.valueOf(balance));
+
+        if (eosUnitPriceRMB != null && eosTokens != null){
+
+            String eosAssetsQuantity = AmountUtil.add(balance, delegatedResourceQuantity, 4);
+            String eosAssetsValue = AmountUtil.mul(eosAssetsQuantity, eosUnitPriceRMB, 2);
+            mEosCardView.setTotlePrice(Float.valueOf(eosAssetsValue));
+        }
     }
 }

@@ -116,7 +116,7 @@
 
                     <TextView
                         android:textColor="@color/black_context"
-                        android:textSize="@dimen/font_3"
+                        android:textSize="@dimen/font_3.5"
                         android:layout_marginStart="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -132,11 +132,11 @@
                         android:textStyle="bold"/>
 
                     <TextView
-                        android:textSize="@dimen/font_3"
+                        android:textSize="@dimen/font_3.5"
                         android:textColor="@color/black_context"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="tokens"/>
+                        android:text=" tokens"/>
 
                 </LinearLayout>
 

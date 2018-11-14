@@ -121,9 +121,11 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
                                 if (response.getResult() != null){
                                     GetEosTokensResult.ResultBean resultBean = response.getResult();
                                     List<TokenBean> tokens = resultBean.getTokens();
-                                    //更新UI
-                                    List<EosTokenVO> tokenVOList = converTokenBeanToVO(tokens);
-                                    getV().showTokens(tokenVOList);
+                                    if (EmptyUtils.isNotEmpty(tokens)){
+                                        //更新UI
+                                        List<EosTokenVO> tokenVOList = converTokenBeanToVO(tokens);
+                                        getV().showTokens(tokenVOList);
+                                    }
                                 }
                             }
                             GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));

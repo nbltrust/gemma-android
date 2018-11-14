@@ -209,17 +209,19 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             if (EmptyUtils.isNotEmpty(getUndelegateCpu())){
                 totalUsedEos = getUndelegateCpu();
                 String curAvailableEos = AmountUtil.sub(totalRefundableCpu, totalUsedEos, 4);
-                if (Float.valueOf(curAvailableEos) > 0) {
+                if (Float.valueOf(curAvailableEos) >= 0) {
                     tvBalanceCpuUndelegate.setText(curAvailableEos + " EOS");
+                    setClickable(btUndelegateCpuNet);
                 } else {
                     AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
+                    setUnclickable(btUndelegateCpuNet);
                 }
             }else {
                 tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
             }
 
 
-            setClickable(btUndelegateCpuNet);
+
         } else {
             tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
             setUnclickable(btUndelegateCpuNet);
@@ -248,16 +250,18 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             if (EmptyUtils.isNotEmpty(getunDelegateNet())){
                 totalUsedEos = getunDelegateNet();
                 String curAvailableEos = AmountUtil.sub(totalRefundableNet, totalUsedEos, 4);
-                if (Float.valueOf(curAvailableEos) > 0) {
+                if (Float.valueOf(curAvailableEos) >= 0) {
                     tvBalanceNetUndelegate.setText(curAvailableEos + " EOS");
+                    setClickable(btUndelegateCpuNet);
                 } else {
+                    setUnclickable(btUndelegateCpuNet);
                     AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
                 }
             }else {
                 tvBalanceNetUndelegate.setText(totalRefundableNet + " EOS");
             }
 
-            setClickable(btUndelegateCpuNet);
+
         } else {
             tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
             setUnclickable(btUndelegateCpuNet);

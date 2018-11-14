@@ -269,10 +269,9 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                         tvRedeem.setRightString(totalRefund);
                     }
                     
-                    if (EmptyUtils.isNotEmpty(refundTime)) {
-                        tvRedeem.setRightBottomString(refundTime);
-
-                    }
+//                    if (EmptyUtils.isNotEmpty(refundTime)) {
+//                        tvRedeem.setRightBottomString(refundTime);
+//                    }
 
                 }
             }
@@ -625,5 +624,8 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                 UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
             }
         });
+
+        viewEosTokens.setVisibility(View.VISIBLE);
+        tvNumberOfTokens.setText(String.valueOf(eosTokens.size()));
     }
 }
