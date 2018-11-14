@@ -289,7 +289,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 if (multiWalletEntity.getEosWalletEntities().size() > 0) {
                     //如果有EOS账户
                     String eos_public_key = curEosWallet.getPublicKey();
-                    getP().getAccount(eos_public_key);
+                    getP().getKeyAccounts(eos_public_key);
                 }
                 //todo 判断ETH钱包状态
 
@@ -303,7 +303,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     mEthCardView.setVisibility(View.VISIBLE);
                     LoggerManager.d("case eth+eos");
                     String eos_public_key = curEosWallet.getPublicKey();
-                    getP().getAccount(eos_public_key);
+                    getP().getKeyAccounts(eos_public_key);
 
                 } else if (EmptyUtils.isNotEmpty(curEthWallet) && EmptyUtils.isEmpty(curEosWallet)) {
                     //todo 只有ETH钱包
@@ -317,7 +317,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     LoggerManager.d("case eos");
                     String eos_public_key = curEosWallet.getPublicKey();
                     LoggerManager.d("curEosPubKey", eos_public_key);
-                    getP().getAccount(eos_public_key);
+                    getP().getKeyAccounts(eos_public_key);
                 }
             }
         }
@@ -412,7 +412,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         mEosCardView.setEosNumber(Float.valueOf(balance));
 
         if (eosUnitPriceRMB != null && eosTokens != null){
-
             String eosAssetsQuantity = AmountUtil.add(balance, delegatedResourceQuantity, 4);
             String eosAssetsValue = AmountUtil.mul(eosAssetsQuantity, eosUnitPriceRMB, 2);
             mEosCardView.setTotlePrice(Float.valueOf(eosAssetsValue));

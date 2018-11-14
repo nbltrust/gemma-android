@@ -468,6 +468,12 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                         showChangeEOSNameDialog();
                     }
                 });
+                tvCurrentAccount.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showChangeEOSNameDialog();
+                    }
+                });
             } else {
                 //只有一个eos账户
                 ivChangeAccount.setVisibility(View.GONE);
