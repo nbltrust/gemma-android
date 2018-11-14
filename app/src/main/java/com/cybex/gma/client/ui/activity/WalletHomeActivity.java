@@ -40,6 +40,7 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -416,5 +417,12 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             String eosAssetsValue = AmountUtil.mul(eosAssetsQuantity, eosUnitPriceRMB, 2);
             mEosCardView.setTotlePrice(Float.valueOf(eosAssetsValue));
         }
+    }
+
+    public void clearEosCardView(){
+        mEosCardView.setAccountName("");
+        mEosCardView.setTotlePrice(Float.valueOf("0.0000"));
+        mEosCardView.setEosNumber(Float.valueOf("0.0000"));
+        mEosCardView.setTokenList(new ArrayList<>());
     }
 }

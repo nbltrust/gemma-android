@@ -72,6 +72,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                         if (getV() != null) {
                             if (response != null && response.body() != null
                                     && response.code() != HttpConst.SERVER_INTERNAL_ERR) {
+                                LoggerManager.d("getKeyAccounts");
                                 //找到此账号
                                 //todo 理论上存在此公钥已经注册过其他账户的可能性
 
@@ -127,11 +128,10 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                     }
                 });
     }
-
     /**
      * 从中心化服务器调取Tokens
      */
-    public void getEosTokens(String account_name) {
+    private void getEosTokens(String account_name) {
         GetEosTokensRequest request = new GetEosTokensRequest(GetEosTokensResult.class, account_name)
                 .getEosTokens(new JsonCallback<GetEosTokensResult>() {
                     @Override
@@ -142,6 +142,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                     @Override
                     public void onSuccess(Response<GetEosTokensResult> data) {
                         if (getV() != null) {
+                            LoggerManager.d("getEosTokens");
                             if (data != null) {
                                 GetEosTokensResult response = data.body();
                                 if (response.getResult() != null) {
@@ -151,11 +152,10 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     getV().setEosTokens(tokens);
                                     getV().updateEosTokensUI(tokens);
 
-                                    requestBalanceInfo();
+                                    requestUnitPrice();
 
                                 }
                             }
-
                         }
                     }
 
@@ -172,63 +172,9 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
     }
 
     /**
-     * 获取当前EOS余额
-     */
-    public void requestBalanceInfo() {
-        MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
-        if (eosEntity == null || entity == null) { return; }
-
-        String currentEOSName = eosEntity.getCurrentEosName();
-        GetCurrencyBalanceReqParams params = new GetCurrencyBalanceReqParams();
-        params.setAccount(currentEOSName);
-        params.setCode(VALUE_CODE);
-        params.setSymbol(VALUE_SYMBOL_EOS);
-        String jsonParams = GsonUtils.objectToJson(params);
-
-        new GetCurrencyBalanceRequest(String.class)
-                .setJsonParams(jsonParams)
-                .getCurrencyBalance(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        try {
-
-                            if (response != null) {
-                                String jsonStr = response.body();
-                                //LoggerManager.d("response json:" + jsonStr);
-
-                                JSONArray array = new JSONArray(jsonStr);
-                                if (array.length() > 0) {
-                                    String balance = array.optString(0);
-                                    if (EmptyUtils.isNotEmpty(balance) && EmptyUtils.isNotEmpty(getV())) {
-                                        getV().showEosBalance(balance);
-                                        GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
-                                        getV().dissmisProgressDialog();
-
-                                        requestUnitPrice();
-                                    }
-                                }
-                            }
-
-                        } catch (Throwable t) {
-                            throw Exceptions.propagate(t);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        if (getV() != null) {
-                            getV().dissmisProgressDialog();
-                        }
-                    }
-                });
-    }
-
-    /**
      * 从接口获取Cybex上主要币种的法币估值
      */
-    public void requestUnitPrice() {
+    private void requestUnitPrice() {
         try {
             new UnitPriceRequest(UnitPrice.class)
                     .getUnitPriceRequest(new JsonCallback<UnitPrice>() {
@@ -251,6 +197,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                         @Override
                         public void onSuccess(Response<UnitPrice> response) {
                             if (response != null && response.body() != null) {
+                                LoggerManager.d("requestUnitPrice");
                                 UnitPrice unitPrice = response.body();
                                 List<UnitPrice.PricesBean> prices = unitPrice.getPrices();
                                 if (EmptyUtils.isNotEmpty(prices)) {
@@ -283,6 +230,9 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
             throw Exceptions.propagate(t);
         }
     }
+
+
+
 
     /**
      * 获取账户信息中是否有抵押资产
@@ -321,6 +271,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                         @Override
                         public void onSuccess(Response<AccountInfo> response) {
                             if (getV() != null) {
+                                LoggerManager.d("getAccount");
                                 if (response != null && response.body() != null) {
                                     AccountInfo info = response.body();
                                     AccountInfo.SelfDelegatedBandwidthBean selfDelegatedBandwidth = info
@@ -331,9 +282,10 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                                 selfDelegatedBandwidth.getNet_weightX().split(" ")[0],
                                                 4);
                                         getV().setDelegatedResourceQuantity(totalDelegetedRes);
+
                                     }
+                                    requestBalanceInfo();
                                 }
-                                getV().dissmisProgressDialog();
                             }
                         }
 
@@ -342,6 +294,82 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
             throw Exceptions.propagate(t);
         }
     }
+
+
+    /**
+     * 获取当前EOS余额
+     */
+    public void requestBalanceInfo() {
+        MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+        if (eosEntity == null || entity == null) { return; }
+
+        String currentEOSName = eosEntity.getCurrentEosName();
+        GetCurrencyBalanceReqParams params = new GetCurrencyBalanceReqParams();
+        params.setAccount(currentEOSName);
+        params.setCode(VALUE_CODE);
+        params.setSymbol(VALUE_SYMBOL_EOS);
+        String jsonParams = GsonUtils.objectToJson(params);
+
+        new GetCurrencyBalanceRequest(String.class)
+                .setJsonParams(jsonParams)
+                .getCurrencyBalance(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        try {
+                            LoggerManager.d("requestBalanceInfo");
+                            if (getV() != null) {
+                                if (response != null) {
+                                    String jsonStr = response.body();
+                                    LoggerManager.d("response json balance:" + jsonStr);
+                                    if (response.body() != null) {
+                                        JSONArray array = new JSONArray(jsonStr);
+                                        if (array.length() > 0) {
+                                            String balance = array.optString(0);
+                                            if (EmptyUtils.isNotEmpty(balance)) {
+                                                GemmaToastUtils.showLongToast(
+                                                        getV().getString(R.string.eos_loading_success));
+                                                getV().showEosBalance(balance);
+
+                                            }else {
+                                                getV().clearEosCardView();
+                                                GemmaToastUtils.showLongToast(
+                                                        getV().getString(R.string.eos_load_account_info_fail));
+                                            }
+                                        }else {
+                                            getV().clearEosCardView();
+                                            GemmaToastUtils.showLongToast(
+                                                    getV().getString(R.string.eos_load_account_info_fail));
+                                        }
+                                    } else {
+                                        getV().clearEosCardView();
+                                        GemmaToastUtils.showLongToast(
+                                                getV().getString(R.string.eos_load_account_info_fail));
+                                    }
+                                }else {
+                                    getV().clearEosCardView();
+                                    GemmaToastUtils.showLongToast(
+                                            getV().getString(R.string.eos_load_account_info_fail));
+                                }
+                                getV().dissmisProgressDialog();
+                            }
+
+                        } catch (Throwable t) {
+                            throw Exceptions.propagate(t);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        if (getV() != null) {
+                            getV().dissmisProgressDialog();
+                        }
+                    }
+                });
+    }
+
+
 
     /**
      * 获取当前EOS用户名
