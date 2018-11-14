@@ -132,7 +132,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         }
     }
 
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshWalletName(WalletNameChangedEvent event) {
         if(event.getWalletID() == curWallet.getId()){
@@ -141,7 +140,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         }
 
     }
-
 
     @OnClick({R.id.iv_wallet_manage, R.id.iv_settings})
     public void onWalletManageIconClick(View view) {

@@ -68,7 +68,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import seed39.Seed39;
 
 /**
- * 转账Fragment
+ * EOS转账Fragment
  *
  * Created by wanglin on 2018/7/9.
  */
@@ -532,60 +532,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         //showPasswordHintDialog();
                     }
                 });
-
-//        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-//        dialog = new CustomFullDialog(getContext(),
-//                R.layout.eos_dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
-//        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
-//            @Override
-//            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-//                switch (view.getId()) {
-//                    case R.id.imc_cancel:
-//                        dialog.cancel();
-//                        showConfirmTransferDialog();
-//                        break;
-//                    case R.id.btn_confirm_authorization:
-//                        EditText etPasword = dialog.findViewById(R.id.et_password);
-//                        String pwd = String.valueOf(etPasword.getText());
-//
-//
-//
-//                        if (EmptyUtils.isEmpty(pwd)) {
-//                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
-//                            return;
-//                        } else {
-//                            //获取当前账户的私钥
-//                            MultiWalletEntity entity = DBManager.getInstance()
-//                                    .getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-//
-//                            if (entity != null) {
-//                                String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
-//
-//                                if ("wrong password".equals(privateKey)) {
-//                                    GemmaToastUtils.showShortToast(
-//                                            getResources().getString(R.string.eos_tip_wrong_password));
-//                                } else {
-//                                    //密码正确，执行转账逻辑
-//                                    getP().executeTransferLogic(entity.getEosWalletEntities().get(0)
-//                                                    .getCurrentEosName(),
-//                                            collectionAccount, amount, memo, privateKey);
-//                                    dialog.cancel();
-//                                }
-//
-//                            } else {
-//                                GemmaToastUtils.showShortToast(getString(R.string.eos_transfer_error));
-//                            }
-//                        }
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
-//        dialog.show();
-//        EditText etPasword = dialog.findViewById(R.id.et_password);
-//        etPasword.setHint(getString(R.string.eos_transfer_eosname_hint) + currentEOSName + getString(
-//                R.string.eos_transfer_eosname_hint_last));
     }
 
     /**

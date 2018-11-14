@@ -6,6 +6,7 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -114,13 +115,14 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
 //    }
 
     /**
-     * 执行软件钱包转账逻辑
+     * 执行EOS Token转账逻辑
      *
      * @param from
      * @param to
      * @param quantity
      * @param memo
      * @param privateKey
+     * @param accuracy Token小数点后精度
      */
     public void executeTokenTransferLogic(
             String from,
@@ -128,10 +130,14 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
             String quantity,
             String memo,
             String privateKey,
-            String tokenContract) {
+            String tokenContract,
+            String tokenSymbol,
+            int accuracy) {
         //通过c++获取 abi json操作体
+
+        String format_quantity = AmountUtil.round(quantity.split(" ")[0], accuracy) + " " + tokenSymbol;
         String abijson = JNIUtil.create_abi_req_transfer(VALUE_CODE, VALUE_ACTION,
-                from, to, quantity, memo);
+                from, to, format_quantity, memo);
 
         //链上接口请求 abi_json_to_bin
         new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)

@@ -18,6 +18,7 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.componentservice.widget.EditTextWithScrollView;
@@ -142,23 +143,28 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             return;
         }
 
-        String[] spiltBanlance = balance.split(" ");
-        if (EmptyUtils.isEmpty(spiltBanlance)) {
+        String[] spiltBalance = balance.split(" ");
+        if (EmptyUtils.isEmpty(spiltBalance)) {
             return;
         }
 
-        maxValue = spiltBanlance[0].trim();
-        LoggerManager.d("maxValue", maxValue);
-        tvBanlance.setText(getString(R.string.eos_show_remain_balance) + balance + " " + tokenName);
+        maxValue = spiltBalance[0].trim();
+        //LoggerManager.d("maxValue", maxValue);
 
-        etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
-                .Type.decimal, 4, maxValue) {
-            @Override
-            public void afterTextChanged(Editable s) {
-                super.afterTextChanged(s);
-                validateButton();
-            }
-        });
+
+        if (curToken != null){
+            tvBanlance.setText(getString(R.string.eos_show_remain_balance)
+                    + AmountUtil.round(balance, curToken.getAccurancy())
+                    + " " + tokenName);
+            etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
+                    .Type.decimal, curToken.getAccurancy(), maxValue) {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    super.afterTextChanged(s);
+                    validateButton();
+                }
+            });
+        }
 
         etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -174,6 +180,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 }
             }
         });
+
+
 
     }
 
@@ -211,6 +219,51 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 currentEOSName = eosEntity.getCurrentEosName();
                 String tokenSymbol = curToken.getTokenSymbol();
                 showInitData(balance, currentEOSName, tokenSymbol);
+
+                String curAccuracyStr = " ";
+                int curAccuracy  = curToken.getAccurancy();
+                if (curAccuracy == 1){
+                    curAccuracyStr = "一";
+                }else if (curAccuracy == 2){
+                    curAccuracyStr = "二";
+                }else if (curAccuracy == 3){
+                    curAccuracyStr = "三";
+                }else if (curAccuracy == 4){
+                    curAccuracyStr = "四";
+                }else if (curAccuracy == 5){
+                    curAccuracyStr = "五";
+                }else if (curAccuracy == 6){
+                    curAccuracyStr = "六";
+                }else if (curAccuracy == 7){
+                    curAccuracyStr = "七";
+                }else if (curAccuracy == 8){
+                    curAccuracyStr = "八";
+                }else if (curAccuracy == 9){
+                    curAccuracyStr = "九";
+                }else if (curAccuracy == 10){
+                    curAccuracyStr = "十";
+                }else if (curAccuracy == 11){
+                    curAccuracyStr = "十一";
+                }else if (curAccuracy == 12){
+                    curAccuracyStr = "十二";
+                }else if (curAccuracy == 13){
+                    curAccuracyStr = "十三";
+                }else if (curAccuracy == 14){
+                    curAccuracyStr = "十四";
+                }else if (curAccuracy == 15){
+                    curAccuracyStr = "十五";
+                }else if (curAccuracy == 16){
+                    curAccuracyStr = "十六";
+                }else if (curAccuracy == 17){
+                    curAccuracyStr = "十七";
+                }else if (curAccuracy == 18){
+                    curAccuracyStr = "十八";
+                }else {
+                    curAccuracyStr = "四";
+                }
+
+                etAmount.setHint(String.format(getString(R.string.eos_token_tip_transfer), curAccuracyStr));
+
                 etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
@@ -399,7 +452,9 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         TextView tv_payment_account = dialog.findViewById(R.id.tv_payment_account);//付款账户
 
         collectionAccount = String.valueOf(etReceiverAccount.getText());
-        amount = String.valueOf(etAmount.getText()) + " EOS";
+        if (curToken != null){
+            amount = String.valueOf(etAmount.getText()) + " " + curToken.getTokenSymbol();
+        }
 
         if (EmptyUtils.isNotEmpty(collectionAccount)) {
             tv_payee.setText(collectionAccount);
@@ -438,9 +493,12 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
                         String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
                         String tokenContract = curToken.getTokenName();
+                        int accuracy = curToken.getAccurancy();
+                        String tokenSymbol = curToken.getTokenSymbol();
                         getP().executeTokenTransferLogic(
                                 wallet.getEosWalletEntities().get(0).getCurrentEosName(),
-                                collectionAccount, amount, memo, privateKey, tokenContract );
+                                collectionAccount, amount, memo,
+                                privateKey, tokenContract,tokenSymbol, accuracy);
                         //dialog.cancel();
                     }
 

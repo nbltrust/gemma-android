@@ -214,7 +214,7 @@
     <string name="eos_unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
     <string name="eos_switch_account">切换账户</string>
     <string name="eos_confirm_delegate">确认抵押</string>
-    <string name="eos_input_pass_hint">请输入@%1$s的密码</string>
+    <string name="eos_input_pass_hint">请输入%1$s的密码</string>
     <string name="eos_gemma_password_hint">请输入钱包密码以授权</string>
     <string name="eos_confirm_author">确认以授权</string>
     <string name="eos_confirm_buy">确认买入</string>

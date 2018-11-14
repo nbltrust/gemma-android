@@ -97,11 +97,6 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
              asset_type = bundle.getInt(ParamConstants.COIN_TYPE);
             if (asset_type == ParamConstants.COIN_TYPE_EOS) {
                 //EOS资产
-                String assetsValue = bundle.getString(ParamConstants.EOS_ASSET_VALUE);
-                tvRmbAmount.setText(assetsValue);
-                String eosAmount = bundle.getString(ParamConstants.EOS_AMOUNT);
-                tvEosAmount.setText(eosAmount);
-
                 tvResourceManage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -146,7 +141,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 if (curToken != null) {
                     //设置Token相关UI
                     tvTokenName.setText(curToken.getTokenSymbol());
-                    tvEosAmount.setText(String.valueOf(curToken.getQuantity()));
+                    tvEosAmount.setText(curToken.getQuantity());
                     String tokenUrl = curToken.getLogo_url();
                     if (tokenUrl == null || tokenUrl.equals("")){
                         ivLogoEosAsset.setImageResource(R.drawable.ic_token_unknown);
@@ -351,7 +346,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     public void showBalance(String balance){
         tvEosAmount.setText(balance.split(" ")[0]);
         if (curEosPrice != null){
-            String eosValue = AmountUtil.mul(balance, curEosPrice,2);
+            String eosValue = AmountUtil.mul(balance.split(" ")[0], curEosPrice,2);
             tvRmbAmount.setText(eosValue);
         }
     }

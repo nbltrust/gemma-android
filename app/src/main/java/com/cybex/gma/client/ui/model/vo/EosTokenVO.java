@@ -7,8 +7,19 @@ public class EosTokenVO implements Parcelable {
 
     private String logo_url;
     private String tokenName;//contract
-    private int quantity;
+    private String quantity;
     private String tokenSymbol;//Symbol
+    private int accuracy;
+
+
+    public int getAccurancy() {
+        return accuracy;
+    }
+
+    public void setAccurancy(int accurancy) {
+        this.accuracy = accurancy;
+    }
+
 
     public String getTokenSymbol() {
         return tokenSymbol;
@@ -34,14 +45,13 @@ public class EosTokenVO implements Parcelable {
         this.tokenName = tokenName;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
-
 
     @Override
     public int describeContents() { return 0; }
@@ -50,8 +60,9 @@ public class EosTokenVO implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.logo_url);
         dest.writeString(this.tokenName);
-        dest.writeInt(this.quantity);
+        dest.writeString(this.quantity);
         dest.writeString(this.tokenSymbol);
+        dest.writeInt(this.accuracy);
     }
 
     public EosTokenVO() {}
@@ -59,8 +70,9 @@ public class EosTokenVO implements Parcelable {
     protected EosTokenVO(Parcel in) {
         this.logo_url = in.readString();
         this.tokenName = in.readString();
-        this.quantity = in.readInt();
+        this.quantity = in.readString();
         this.tokenSymbol = in.readString();
+        this.accuracy = in.readInt();
     }
 
     public static final Parcelable.Creator<EosTokenVO> CREATOR = new Parcelable.Creator<EosTokenVO>() {
