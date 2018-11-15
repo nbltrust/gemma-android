@@ -687,6 +687,7 @@
     <!-- =============== -->
       <string name="eos_activate_your_account">在使用EOS功能前请先激活您的EOS账户</string>
     <string name="eos_token_tip_transfer">输入转账金额，最多%1$s位小数</string>
+    <string name="eos_valid_username_digits">12345.qwertyuioplkjhgfdsazxcvbnm</string>
 
 
       <!-- ============================我是 EOS模块和非EOS模块不严谨的分割线============================ -->

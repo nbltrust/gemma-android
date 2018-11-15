@@ -317,7 +317,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
-                            LoggerManager.d("requestBalanceInfo");
+                            LoggerManager.d("requestBalanceInfo", response.body());
                             if (getV() != null) {
                                 if (response != null) {
                                     String jsonStr = response.body();
@@ -332,21 +332,26 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                                 getV().showEosBalance(balance);
 
                                             }else {
-                                                getV().clearEosCardView();
-                                                GemmaToastUtils.showLongToast(
-                                                        getV().getString(R.string.eos_load_account_info_fail));
+                                                LoggerManager.d("case 1");
+//                                                getV().clearEosCardView();
+//                                                GemmaToastUtils.showLongToast(
+//                                                        getV().getString(R.string.eos_load_account_info_fail));
                                             }
                                         }else {
-                                            getV().clearEosCardView();
+                                            //可用余额为0，链上返回空
+                                            LoggerManager.d("case 2");
+                                            getV().showEosBalance("0.0000");
                                             GemmaToastUtils.showLongToast(
-                                                    getV().getString(R.string.eos_load_account_info_fail));
+                                                    getV().getString(R.string.eos_loading_success));
                                         }
                                     } else {
-                                        getV().clearEosCardView();
-                                        GemmaToastUtils.showLongToast(
-                                                getV().getString(R.string.eos_load_account_info_fail));
+                                        LoggerManager.d("case 3");
+//                                        getV().clearEosCardView();
+//                                        GemmaToastUtils.showLongToast(
+//                                                getV().getString(R.string.eos_load_account_info_fail));
                                     }
                                 }else {
+                                    LoggerManager.d("case 4");
                                     getV().clearEosCardView();
                                     GemmaToastUtils.showLongToast(
                                             getV().getString(R.string.eos_load_account_info_fail));

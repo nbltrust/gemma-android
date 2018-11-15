@@ -67,6 +67,9 @@ public class ChangeWalletNameActivity extends XActivity {
 
         if (getIntent() != null) {
             wallet = getIntent().getParcelableExtra(BaseConst.KEY_WALLET_ENTITY);
+            if(wallet != null){
+                setWalletName.setText(wallet.getWalletName());
+            }
         }
         mTitleBar.setActionTextColor(Color.parseColor("#2D2D2D"));
         mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.save)) {

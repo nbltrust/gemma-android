@@ -401,7 +401,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     public boolean isAccountNameValid() {
         String eosUsername = etReceiverAccount.getText().toString().trim();
-        String regEx = "^[a-z1-5.]{1,13}$";
+        String regEx = "^[a-z1-5.]{1,12}$";
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher((eosUsername));
         boolean res = matcher.matches();

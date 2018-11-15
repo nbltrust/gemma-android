@@ -278,6 +278,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 mEosCardView.setVisibility(View.VISIBLE);
                 mEthCardView.setVisibility(View.VISIBLE);
                 updateEosCardView();
+                String eos_public_key = curEosWallet.getPublicKey();
+                getP().getKeyAccounts(eos_public_key);
             } else if (walletType == BaseConst.WALLET_TYPE_MNE_IMPORT) {
                 //导入的助记词钱包
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
