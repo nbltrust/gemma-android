@@ -13,6 +13,7 @@ import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
+import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
@@ -311,9 +312,12 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
 
-                            //页面跳转至收支记录
+                            //页面跳转至资产详情页
                             AppManager.getAppManager().finishActivity();
-                            UISkipMananger.launchEOSHome(getV());
+                            AppManager.getAppManager().finishActivity(EosAssetDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
+                            UISkipMananger.launchAssetDetail(getV(), bundle);
 
                         }
                     }

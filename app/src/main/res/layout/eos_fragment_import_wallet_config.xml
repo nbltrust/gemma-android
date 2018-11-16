@@ -116,7 +116,7 @@
                 <TextView
                     android:id="@+id/tv_pass_hint_f"
                     style="@style/eos_text_title_config_wallet"
-                    android:text="@string/eos_title_password_hint"
+                    android:text="@string/eos_title_password_hint_optional"
                     android:layout_marginTop="@dimen/dimen_10"/>
 
                 <LinearLayout

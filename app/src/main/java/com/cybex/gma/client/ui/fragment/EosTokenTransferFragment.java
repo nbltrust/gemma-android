@@ -70,6 +70,9 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     @BindView(R.id.root_scrollview_token) ScrollView rootScrollview;
     Unbinder unbinder;
     CustomFullDialog dialog = null;
+
+
+
     EosTokenVO curToken;
 
     private TransferTransactionVO transactionVO;
@@ -560,6 +563,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
         //刷新数据
         //getP().requestBanlanceInfo();
+    }
+
+    public EosTokenVO getCurToken() {
+        return curToken;
     }
 
 }

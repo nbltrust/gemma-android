@@ -1,5 +1,7 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.os.Bundle;
+
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
@@ -11,6 +13,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.fragment.EosTokenTransferFragment;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
@@ -24,6 +27,7 @@ import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -43,76 +47,6 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
     private static final String VALUE_ACTION = "transfer";
     private static final String VALUE_COMPRESSION = "none";
     private static final String VALUE_SYMBOL = "EOS";
-
-//    public void requestBanlanceInfo() {
-//        MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-//        EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
-//        if (entity == null && eosEntity != null) { return; }
-//
-//        String currentEOSName = eosEntity.getCurrentEosName();
-//        GetCurrencyBalanceReqParams params = new GetCurrencyBalanceReqParams();
-//        params.setAccount(currentEOSName);
-//        params.setCode(VALUE_CODE);
-//        params.setSymbol(VALUE_SYMBOL);
-//        String jsonParams = GsonUtils.objectToJson(params);
-//
-//        new GetCurrencyBalanceRequest(String.class)
-//                .setJsonParams(jsonParams)
-//                .getCurrencyBalance(new StringCallback() {
-//                    @Override
-//                    public void onStart(Request<String, ? extends Request> request) {
-//                        getV().showProgressDialog(
-//                                getV().getResources().getString(R.string.eos_loading_pretransfer_info));
-//                        super.onStart(request);
-//                    }
-//
-//                    @Override
-//                    public void onError(Response<String> response) {
-//                        super.onError(response);
-//                        if (EmptyUtils.isNotEmpty(getV())) {
-//                            getV().dissmisProgressDialog();
-//
-//                            try {
-//                                if (response.body() != null && response.getRawResponse().body() != null) {
-//                                    String err_info_string = response.getRawResponse().body().string();
-//                                    try {
-//                                        JSONObject obj = new JSONObject(err_info_string);
-//                                        JSONObject error = obj.optJSONObject("error");
-//                                        String err_code = error.optString("code");
-//                                        handleEosErrorCode(err_code);
-//
-//                                    } catch (JSONException ee) {
-//                                        ee.printStackTrace();
-//                                    }
-//                                }
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(Response<String> response) {
-//                        if (getV() != null) {
-//                            String jsonStr = response.body();
-//                            String banlance = "0.0000";
-//                            LoggerManager.d("json:" + jsonStr);
-//                            try {
-//                                JSONArray array = new JSONArray(jsonStr);
-//                                if (array != null && array.length() > 0) {
-//                                    banlance = array.optString(0);
-//                                    getV().showInitData(banlance, currentEOSName);
-//                                } else {
-//                                    getV().showInitData(banlance, currentEOSName);
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                            getV().dissmisProgressDialog();
-//                        }
-//                    }
-//                });
-//    }
 
     /**
      * 执行EOS Token转账逻辑
@@ -318,9 +252,13 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                                 String jsonStr = response.body();
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
-                                //if (getV().getActivity() != null)getV().getActivity().finish();
 
-                                UISkipMananger.launchEOSHome(getV().getActivity());
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable(ParamConstants.EOS_TOKENS, getV().getCurToken());
+
+                                AppManager.getAppManager().finishActivity();
+                                AppManager.getAppManager().finishActivity(EosAssetDetailActivity.class);
+                                UISkipMananger.launchAssetDetail(getV().getActivity(), bundle);
                                 getV().clearData();
                             }
                         }

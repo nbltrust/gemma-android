@@ -12,6 +12,7 @@
         android:layout_height="48dp"
         android:scaleType="centerInside"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/ic_mask_close"/>
 
 
@@ -20,7 +21,6 @@
         android:layout_height="150dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -78,7 +78,7 @@
                 android:layout_toStartOf="@id/tv_dialog_delegate_amount"
                 android:layout_centerVertical="true"
                 android:textStyle="bold"
-                android:textColor="@color/black_context"
+                android:textColor="@color/black_title"
                 android:textSize="@dimen/font_4"
                 tools:text="2.2345"/>
 

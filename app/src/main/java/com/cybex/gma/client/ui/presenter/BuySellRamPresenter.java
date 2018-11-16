@@ -1,5 +1,7 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.os.Bundle;
+
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -289,9 +291,11 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
                             GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
-                            //跳转到收支记录
+                            //跳转到资产详情
                             AppManager.getAppManager().finishActivity();
-                            UISkipMananger.launchTransferRecord(getV().getActivity());
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
+                            UISkipMananger.launchAssetDetail(getV().getActivity(), bundle);
                         }
                     }
                 });

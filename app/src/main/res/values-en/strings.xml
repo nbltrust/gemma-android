@@ -24,7 +24,7 @@
     <string name="eos_btn_get_invitation">Get invite code</string>
     <string name="eos_tip_agree">Agree on </string>
     <string name="eos_tip_terms_of_service"><u>Terms of Service and Privacy Policy</u></string>
-    <string name="eos_title_password_hint">Password hint(optional)</string>
+    <string name="eos_title_password_hint_optional">Password hint(optional)</string>
     <string name="eos_tip_password_hint">Password hint</string>
     <string name="eos_tip_password_input_part2">Password is very important. It\'s used to encrypt your wallets and other
         private data. You are responsible for saving your password carefully. Password can not be recovered if lost.</string>

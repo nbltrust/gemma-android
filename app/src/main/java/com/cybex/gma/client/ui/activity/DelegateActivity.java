@@ -683,6 +683,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 String stake_net_quantity = net_quantity + " EOS";
                                                 String stake_cpu_quantity = cpu_quantity + " EOS";
 
+                                                confirmDialog = null;
                                                 getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
                                                         stake_cpu_quantity, private_key);
 
@@ -753,6 +754,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 String unstake_net_quantity = net_quantity + " EOS";
                                                 String unstake_cpu_quantity = cpu_quantity + " EOS";
 
+                                                confirmDialog = null;
                                                 getP().executeUndelegateLogic(curEOSName, curEOSName,
                                                         unstake_net_quantity,
                                                         unstake_cpu_quantity, private_key);
@@ -805,6 +807,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
      * 显示密码提示Dialog
      */
     private void showPasswordHintDialog(int operation_type) {
+        confirmDialog.dismiss();
         int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(this,
                 R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);

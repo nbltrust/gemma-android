@@ -427,6 +427,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             final String key = Seed39.keyDecrypt(inputPass, saved_pri_key);
                                             final String curEOSName = curEosWallet.getCurrentEosName();
                                             String quantity = AmountUtil.add(getEOSAmount(), "0", 4) + " EOS";
+
+                                            confirmDialog = null;
                                             getP().executeBuyRamLogic(curEOSName, curEOSName, quantity, key);
                                             dialog.cancel();
                                         }
@@ -477,6 +479,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                             long bytes = Long.parseLong(bytesInStr);
                                             LoggerManager.d("bytes", bytes);
 
+                                            confirmDialog = null;
                                             getP().executeSellRamLogic(curEOSName, bytes, key);
                                             dialog.cancel();
                                         }
