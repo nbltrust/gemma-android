@@ -25,13 +25,14 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import me.framework.fragmentation.FragmentSupport;
+import me.jessyan.autosize.internal.CustomAdapt;
 
 /**
  * Created by linwang on 2018/4/7.
  */
 public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         implements
-        BaseView<P> {
+        BaseView<P> ,CustomAdapt{
 
     private VDelegate vDelegate;
     private P p;
@@ -312,5 +313,15 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         if (kProgressHUD != null && kProgressHUD.isShowing()) {
             kProgressHUD.dismiss();
         }
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return true;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 360;
     }
 }

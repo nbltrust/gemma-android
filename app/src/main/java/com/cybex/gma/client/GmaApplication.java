@@ -12,6 +12,7 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.runtime.DirectModelNotifier;
 import me.framework.fragmentation.Fragmentation;
 import me.framework.fragmentation.helper.ExceptionHandler;
+import me.jessyan.autosize.AutoSizeConfig;
 
 /**
  * GMA application初始化配置
@@ -27,6 +28,8 @@ public class GmaApplication extends BaseApplication {
         initDBFlow();
         HttpConfig.init(this);
         initRefresh();
+
+        AutoSizeConfig.getInstance().setCustomFragment(true);
 
 //        if(BuildConfig.DEBUG){
 //            ClientServer clientServer = new ClientServer(this, 8080);
