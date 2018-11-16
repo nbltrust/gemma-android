@@ -36,6 +36,7 @@ import com.cybex.gma.client.ui.presenter.WalletHomePresenter;
 import com.cybex.gma.client.widget.EosCardView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.lzy.okgo.OkGo;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -119,10 +120,10 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onChangeWalletEventReceived(ChangeSelectedWalletEvent event) {
-        if (event != null) {
-            curWallet = event.getCurrentWallet();
-            updateWallet(curWallet);
-        }
+//        if (event != null) {
+//            curWallet = event.getCurrentWallet();
+//            updateWallet(curWallet);
+//        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -317,7 +318,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     mEthCardView.setVisibility(View.GONE);
                     LoggerManager.d("case eos");
                     String eos_public_key = curEosWallet.getPublicKey();
-                    LoggerManager.d("curEosPubKey", eos_public_key);
                     getP().getKeyAccounts(eos_public_key);
                 }
             }
@@ -372,6 +372,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 });
             } else if (eosStatus == ParamConstants.EOSNAME_NOT_ACTIVATED) {
                 //待激活
+                clearEosCardView();
                 mEosCardView.setState(ParamConstants.EOSNAME_NOT_ACTIVATED);
                 mEosCardView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -400,6 +401,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     @Override
     protected void onStart() {
         super.onStart();
+        delegatedResourceQuantity = "0";
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         updateWallet(curWallet);
     }
@@ -412,11 +414,16 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         String balance = rawBalance.split(" ")[0];
         mEosCardView.setEosNumber(Float.valueOf(balance));
 
-        if (eosUnitPriceRMB != null && eosTokens != null){
+        if (eosUnitPriceRMB != null){
             String eosAssetsQuantity = AmountUtil.add(balance, delegatedResourceQuantity, 4);
+            LoggerManager.d("eosAssetsQuantity", eosAssetsQuantity);
+            LoggerManager.d("balance", balance);
+            LoggerManager.d("delegatedResourceQuantity", delegatedResourceQuantity);
             String eosAssetsValue = AmountUtil.mul(eosAssetsQuantity, eosUnitPriceRMB, 2);
+            LoggerManager.d("eosAssetsValue",eosAssetsValue);
             mEosCardView.setTotlePrice(Float.valueOf(eosAssetsValue));
         }
+        OkGo.getInstance().cancelAll();
     }
 
     public void clearEosCardView(){
@@ -424,5 +431,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         mEosCardView.setTotlePrice(Float.valueOf("0.0000"));
         mEosCardView.setEosNumber(Float.valueOf("0.0000"));
         mEosCardView.setTokenList(new ArrayList<>());
+        delegatedResourceQuantity = "0";
+        eosUnitPriceRMB = "0";
     }
+
 }

@@ -76,7 +76,7 @@
     <string name="eos_title_resource_detail">资源详情</string>
     <string name="eos_balance">余额</string>
     <string name="eos_quantity">数量</string>
-    <string name="eos_amount_balance">%1$s EOS 可用</string>
+    <string name="eos_amount_balance">余额 %1$s EOS</string>
 
     <string name="eos_amount_cpu_used">已用 %1$s ms</string>
     <string name="eos_amount_cpu_total">总量 %1$s ms</string>

@@ -9,7 +9,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:src="@drawable/ic_payment_overtime"
+        android:src="@drawable/eos_ic_payment_overtime"
         android:id="@+id/iv_password_hint"
         android:layout_width="56dp"
         android:layout_height="56dp"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/eos_payment_overtime"
-        android:textColor="@color/black"
+        android:textColor="@color/black_title"
         android:layout_gravity="center"
         android:textSize="@dimen/font_4"
         android:layout_marginTop="6dp"/>
@@ -34,7 +34,7 @@
         android:text="@string/eos_tip_payment_overtime"
         android:layout_gravity="center"
         android:textSize="@dimen/font_4"
-        android:textColor="@color/blueyGrey"
+        android:textColor="@color/black_context"
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginStart="@dimen/dimen_66"
         android:layout_marginEnd="@dimen/dimen_66"
@@ -53,7 +53,7 @@
         android:text="@string/eos_ok"
         android:gravity="center"
         android:textSize="@dimen/font_4"
-        android:textColor="@color/cornflowerBlue"
+        android:textColor="@color/black_title"
         android:background="@drawable/shape_corner_bot_dialog"
         />
 

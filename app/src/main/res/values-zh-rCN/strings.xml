@@ -79,7 +79,7 @@
     <string name="eos_amount_cpu_total">总量 %1$s ms</string>
     <string name="eos_amount_net_used">已用 %1$s KB</string>
     <string name="eos_amount_net_total">总量 %1$s KB</string>
-    <string name="eos_amount_balance">%1$s EOS 可用</string>
+    <string name="eos_amount_balance">余额 %1$s EOS</string>
 
 
     <string name="eos_tip_balance_default">余额： -- EOS</string>

@@ -359,6 +359,8 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
             edtWalletName.setText(BaseConst.INITIAL_WALLET_NAME_PREFIX+currentIndex);
             edtWalletName.setTypeface(Typeface.DEFAULT_BOLD);
         }
+        //setDividerDefaultStyle(viewDividerEosName);
+        viewDividerEosName.setBackgroundColor(getResources().getColor(R.color.dddddd_grey_350));
     }
 
     @Override
@@ -387,6 +389,7 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
         setEditTextHintStyle(edtPassHint, R.string.walletmanage_tip_input_password_hint);
 
         setUnclickable(btFinishImport);
+
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -515,6 +518,7 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
 
 
         OverScrollDecoratorHelper.setUpOverScroll(scrollViewCreateWallet);
+
     }
 
     @Override
@@ -526,7 +530,6 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
     public void setWalletNameValidStyle() {
         tvWalletName.setTextColor(getResources().getColor(R.color.black_context));
         tvWalletName.setText(getResources().getString(R.string.walletmanage_title_wallet_name));
-        setDividerDefaultStyle(viewDividerEosName);
     }
 
     public void setWalletNameInvalidStyle() {

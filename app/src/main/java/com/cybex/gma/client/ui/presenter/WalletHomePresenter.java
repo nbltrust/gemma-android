@@ -30,6 +30,7 @@ import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
@@ -103,8 +104,19 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
 
                                 } else {
                                     //todo account_names为空
-                                    LoggerManager.d("account_names empty");
-                                    GemmaToastUtils.showLongToast(getV().getString(R.string.eos_activate_your_account));
+
+                                    int wallet_type = DBManager.getInstance().getMultiWalletEntityDao()
+                                            .getCurrentMultiWalletEntity().getWalletType();
+
+                                    if (wallet_type == BaseConst.WALLET_TYPE_BLUETOOTH) {
+
+                                    } else if (wallet_type == BaseConst.WALLET_TYPE_PRIKEY_IMPORT) {
+                                        GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                                    } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_CREATE) {
+
+                                    } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_IMPORT) {
+
+                                    }
                                     getV().dissmisProgressDialog();
                                 }
 
@@ -277,18 +289,17 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     AccountInfo.SelfDelegatedBandwidthBean selfDelegatedBandwidth = info
                                             .getSelf_delegated_bandwidth();
                                     if (selfDelegatedBandwidth != null) {
-                                        String totalDelegetedRes = AmountUtil.add(
+                                        String totalDelegatedRes = AmountUtil.add(
                                                 selfDelegatedBandwidth.getCpu_weightX().split(" ")[0],
                                                 selfDelegatedBandwidth.getNet_weightX().split(" ")[0],
                                                 4);
-                                        getV().setDelegatedResourceQuantity(totalDelegetedRes);
+                                        getV().setDelegatedResourceQuantity(totalDelegatedRes);
 
                                     }
                                     requestBalanceInfo();
                                 }
                             }
                         }
-
                     });
         } catch (Throwable t) {
             throw Exceptions.propagate(t);
@@ -299,10 +310,10 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
     /**
      * 获取当前EOS余额
      */
-    public void requestBalanceInfo() {
+    private void requestBalanceInfo() {
         MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
-        if (eosEntity == null || entity == null) { return; }
+        if (eosEntity == null) { return; }
 
         String currentEOSName = eosEntity.getCurrentEosName();
         GetCurrencyBalanceReqParams params = new GetCurrencyBalanceReqParams();
@@ -317,7 +328,6 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
-                            LoggerManager.d("requestBalanceInfo", response.body());
                             if (getV() != null) {
                                 if (response != null) {
                                     String jsonStr = response.body();
@@ -330,12 +340,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                                 GemmaToastUtils.showLongToast(
                                                         getV().getString(R.string.eos_loading_success));
                                                 getV().showEosBalance(balance);
-
-                                            }else {
-                                                LoggerManager.d("case 1");
-//                                                getV().clearEosCardView();
-//                                                GemmaToastUtils.showLongToast(
-//                                                        getV().getString(R.string.eos_load_account_info_fail));
+                                                //OkGo.getInstance().cancelAll();
                                             }
                                         }else {
                                             //可用余额为0，链上返回空
@@ -345,13 +350,13 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                                     getV().getString(R.string.eos_loading_success));
                                         }
                                     } else {
-                                        LoggerManager.d("case 3");
+                                        //LoggerManager.d("case 3");
 //                                        getV().clearEosCardView();
 //                                        GemmaToastUtils.showLongToast(
 //                                                getV().getString(R.string.eos_load_account_info_fail));
                                     }
                                 }else {
-                                    LoggerManager.d("case 4");
+                                    //LoggerManager.d("case 4");
                                     getV().clearEosCardView();
                                     GemmaToastUtils.showLongToast(
                                             getV().getString(R.string.eos_load_account_info_fail));

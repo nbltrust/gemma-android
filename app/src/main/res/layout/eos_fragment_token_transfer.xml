@@ -64,6 +64,7 @@
                             android:layout_marginStart="15dp"
                             android:background="@null"
                             android:hint="@string/eos_account_name"
+                            android:maxLength="12"
                             android:singleLine="true"
                             android:digits="@string/eos_valid_username_digits"
                             android:textColor="@color/black_context"

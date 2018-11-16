@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -334,8 +335,9 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             }
         }
 
-
-
+        etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
+        etAmount.setTypeface(Typeface.DEFAULT_BOLD);
+        etNote.setTypeface(Typeface.DEFAULT_BOLD);
 
     }
 

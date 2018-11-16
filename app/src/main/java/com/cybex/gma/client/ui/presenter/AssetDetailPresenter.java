@@ -168,6 +168,9 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                         getV().showBalance(balance);
                                         getV().showContent();
                                     }
+                                }else {
+                                    getV().showBalance("0.0000");
+                                    getV().showContent();
                                 }
                             }else{
                                 getV().showEmptyOrFinish();

@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -279,9 +280,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
+
                     if (EmptyUtils.isEmpty(getCollectionAccount())) {
                         tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
+                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
                     } else {
                         ivTransferAccountClear.setVisibility(View.VISIBLE);
                     }
@@ -290,7 +292,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     validateButton();
                     if (EmptyUtils.isEmpty(getCollectionAccount())) {
                         tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
+                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
                     }
                     if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
                             etReceiverAccount.getText().toString().trim())) {
@@ -300,7 +302,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     } else {
                         //显示默认样式
                         tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
+                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
                     }
                 }
             }
@@ -327,6 +329,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                 validateButton();
             }
         });
+        etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
+        etAmount.setTypeface(Typeface.DEFAULT_BOLD);
+        etNote.setTypeface(Typeface.DEFAULT_BOLD);
 
         etNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

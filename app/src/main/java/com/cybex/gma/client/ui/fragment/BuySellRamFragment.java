@@ -132,7 +132,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                     String ramAvailable = calAvailableRam(resourceInfoVO);
                     maxRamValue = ramAvailable.split(" ")[0];
 
-                    tvAvaEosRam.setText(String.format(getString(R.string.eos_amount_balance), balance));
+                    tvAvaEosRam.setText(String.format(getString(R.string.eos_amount_balance), balance.split(" ")[0]));
 
                     inputCount = 0;
                     tvApproximatelyAmount.setVisibility(View.GONE);
