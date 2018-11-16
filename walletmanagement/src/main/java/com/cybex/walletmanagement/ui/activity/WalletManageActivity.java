@@ -3,6 +3,7 @@ package com.cybex.walletmanagement.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -28,6 +29,7 @@ import me.framework.fragmentation.anim.FragmentAnimator;
 public class WalletManageActivity extends XActivity {
 
 
+    private ViewGroup rootview;
     private LabelLayout labelCurrentWallet;
     private LabelLayout labelImportWallet;
     private LabelLayout labelCreateWallet;
@@ -39,7 +41,8 @@ public class WalletManageActivity extends XActivity {
     @Override
     public void bindUI(View view) {
 
-        getWindow().getDecorView().setPaddingRelative(0, SizeUtil.getStatusBarHeight(), 0, 0);
+        rootview =  findViewById(R.id.wallet_manage_home);
+        rootview.setPaddingRelative(0, SizeUtil.getStatusBarHeight(), 0, 0);
 
         ivClose = (ImageView) findViewById(R.id.iv_close);
         labelCurrentWallet = (LabelLayout) findViewById(R.id.label_current_wallet);
