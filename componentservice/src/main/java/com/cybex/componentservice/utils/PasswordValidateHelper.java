@@ -10,10 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cybex.componentservice.R;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 public class PasswordValidateHelper {
@@ -22,6 +25,7 @@ public class PasswordValidateHelper {
     private Context context;
 
     private String hintStr;
+    private int count;
 
 
 
@@ -78,11 +82,23 @@ public class PasswordValidateHelper {
                         String cypher = walletEntity.getCypher();
                         String hashPwd = HashGenUtil.generateHashFromText(pwd, HashGenUtil.TYPE_SHA256);
                         if (!hashPwd.equals(cypher)) {
-                            GemmaToastUtils.showShortToast(
-                                    context.getResources().getString(R.string.baseservice_pass_validate_ip_wrong_password));
-                            if(callback!=null){
-                                callback.onValidateFail(0);
+                            String passHint = walletEntity.getPasswordTip();
+                            count++;
+                            if(count>=3&&!TextUtils.isEmpty(passHint)){
+                                if(callback!=null){
+                                    callback.onValidateFail(count);
+                                }
+                                count=0;
+                                //show  password tip
+                                showPasswordHintDialog();
+                            }else{
+                                GemmaToastUtils.showShortToast(
+                                        context.getResources().getString(R.string.baseservice_pass_validate_ip_wrong_password));
+                                if(callback!=null){
+                                    callback.onValidateFail(count);
+                                }
                             }
+
                         } else {
                             //密码正确，
                             dialog.cancel();
@@ -110,6 +126,36 @@ public class PasswordValidateHelper {
         tvHint.setText(hintStr);
         btnConfirm.setText(confirmStr);
         ivCancel.setImageResource(iconRes);
+    }
+
+
+
+    /**
+     * 显示密码提示Dialog
+     */
+    private void showPasswordHintDialog() {
+        int[] listenedItems = {R.id.tv_i_understand};
+        CustomDialog dialog = new CustomDialog(context,
+                R.layout.baseservice_dialog_password_hint, listenedItems, false, Gravity.CENTER);
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                int i = view.getId();
+                if (i == R.id.tv_i_understand) {
+                    dialog.cancel();
+                }
+
+            }
+        });
+        dialog.show();
+
+        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
+        if (EmptyUtils.isNotEmpty(walletEntity) ) {
+            String passHint = walletEntity.getPasswordTip();
+            String showInfo = context.getString(R.string.baseservice_tip_password_hint) + " : " + passHint;
+            tv_pass_hint.setText(showInfo);
+        }
     }
 
 
