@@ -811,5 +811,8 @@
 
 
 
+    <!--home -->
+    <string name="home_not_backup">未备份</string>
+
 
 </resources>

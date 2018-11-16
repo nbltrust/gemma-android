@@ -11,6 +11,7 @@ import com.cybex.base.view.flowlayout.FlowLayout;
 import com.cybex.base.view.flowlayout.TagAdapter;
 import com.cybex.base.view.flowlayout.TagFlowLayout;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.walletmanagement.R;
@@ -27,6 +28,7 @@ public class MnemonicShowActivity extends XActivity {
     private Button btnShowMne;
     private TagFlowLayout mFlowLayout;
     private String[] mnemonic;
+    private MultiWalletEntity multiWalletEntity;
 
 
     @Override
@@ -38,6 +40,7 @@ public class MnemonicShowActivity extends XActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MnemonicShowActivity.this, MnemonicVerifyActivity.class);
                 intent.putExtra(BaseConst.KEY_MNEMONIC,mnemonic);
+                intent.putExtra(BaseConst.KEY_WALLET_ENTITY,multiWalletEntity);
                 startActivity(intent);
                 finish();
             }
@@ -46,6 +49,7 @@ public class MnemonicShowActivity extends XActivity {
 
         if(getIntent()!=null){
             String mnemonicStr = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
+            multiWalletEntity = getIntent().getParcelableExtra(BaseConst.KEY_WALLET_ENTITY);
             LoggerManager.d("mnemonic="+mnemonicStr);
             mnemonic = mnemonicStr.split(" ");
             if(mnemonic!=null){
