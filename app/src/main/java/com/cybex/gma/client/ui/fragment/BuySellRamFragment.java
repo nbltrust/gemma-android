@@ -124,7 +124,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                 tvRamUnitPrice.setRightString(String.format(getString(R.string.eos_amount_ram_unit_price),
                         ramUnitPriceKB));
 
-                resourceInfoVO = getArguments().getParcelable("resourceInfo");
+                resourceInfoVO = getArguments().getParcelable(ParamConstants.RESOURCE_VO);
                 if (resourceInfoVO != null) {
                     String balance = resourceInfoVO.getBanlance();
                     maxValue = balance.split(" ")[0];

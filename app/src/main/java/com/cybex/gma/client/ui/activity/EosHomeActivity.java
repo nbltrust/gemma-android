@@ -109,11 +109,10 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     private EosTokensAdapter mAdapter;
 
     @OnClick(R.id.view_resource_manage)
-    public void goResourceDetail() {
-        bundle.putString(ParamConstants.EOS_ASSET_VALUE, getAssetsValue());
-        bundle.putString(ParamConstants.EOS_AMOUNT, getEosAmount());
+    public void goAssetDetail() {
+//        bundle.putString(ParamConstants.EOS_ASSET_VALUE, getAssetsValue());
+//        bundle.putString(ParamConstants.EOS_AMOUNT, getEosAmount());
         bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
-        //LoggerManager.d("assetsValue", getAssetsValue());
         UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
     }
 
@@ -280,7 +279,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     }
 
-    private void showResourceInfo(String banlance, AccountInfo info) {
+    private void showResourceInfo(String balance, AccountInfo info) {
         if (info != null) {
             //CPU使用进度
             AccountInfo.CpuLimitBean cpuLimitBean = info.getCpu_limit();
@@ -321,20 +320,20 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
             progressBarRAM.setProgress(ramProgress);
             setProgressColor(progressBarRAM, ramProgress);
 
-            resourceInfoVO = new ResourceInfoVO();
-            resourceInfoVO.setBanlance(banlance);
-            resourceInfoVO.setCpuProgress(cpuProgress);
-            resourceInfoVO.setCpuUsed(cpuUsed);
-            resourceInfoVO.setCpuTotal(cpuTotal);
-            resourceInfoVO.setNetTotal(netTotal);
-            resourceInfoVO.setNetProgress(netProgress);
-            resourceInfoVO.setNetUsed(netUsed);
-            resourceInfoVO.setRamUsed(ramUsed);
-            resourceInfoVO.setRamProgress(ramProgress);
-            resourceInfoVO.setRamTotal(ramTotal);
-            resourceInfoVO.setCpuWeight(info.getCpu_weight());
-            resourceInfoVO.setNetWeight(info.getNet_weight());
-            bundle.putParcelable("resourceInfo", resourceInfoVO);
+//            resourceInfoVO = new ResourceInfoVO();
+//            resourceInfoVO.setBanlance(balance);
+//            resourceInfoVO.setCpuProgress(cpuProgress);
+//            resourceInfoVO.setCpuUsed(cpuUsed);
+//            resourceInfoVO.setCpuTotal(cpuTotal);
+//            resourceInfoVO.setNetTotal(netTotal);
+//            resourceInfoVO.setNetProgress(netProgress);
+//            resourceInfoVO.setNetUsed(netUsed);
+//            resourceInfoVO.setRamUsed(ramUsed);
+//            resourceInfoVO.setRamProgress(ramProgress);
+//            resourceInfoVO.setRamTotal(ramTotal);
+//            resourceInfoVO.setCpuWeight(info.getCpu_weight());
+//            resourceInfoVO.setNetWeight(info.getNet_weight());
+//            bundle.putParcelable("resourceInfo", resourceInfoVO);
         }
 
     }

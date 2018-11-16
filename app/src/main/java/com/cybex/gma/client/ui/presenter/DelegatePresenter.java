@@ -6,15 +6,16 @@ import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.utils.AmountUtil;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.DelegateActivity;
 import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
+import com.cybex.gma.client.ui.activity.ResourceDetailActivity;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
+import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
@@ -22,6 +23,7 @@ import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
+import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
 import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -34,6 +36,7 @@ import com.lzy.okgo.request.base.Request;
 import com.tapadoo.alerter.Alert;
 import com.tapadoo.alerter.Alerter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -314,7 +317,7 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
 
                             //页面跳转至资产详情页
                             AppManager.getAppManager().finishActivity();
-                            AppManager.getAppManager().finishActivity(EosAssetDetailActivity.class);
+                            AppManager.getAppManager().finishActivity(ResourceDetailActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
                             UISkipMananger.launchAssetDetail(getV(), bundle);
@@ -399,5 +402,6 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
             throw Exceptions.propagate(t);
         }
     }
+
 
 }

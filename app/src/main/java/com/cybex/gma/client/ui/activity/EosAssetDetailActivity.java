@@ -97,6 +97,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
              asset_type = bundle.getInt(ParamConstants.COIN_TYPE);
             if (asset_type == ParamConstants.COIN_TYPE_EOS) {
                 //EOS资产
+                //资源管理
                 tvResourceManage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -104,6 +105,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                     }
                 });
 
+                //投票
                 tvVote.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -162,9 +164,9 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 btnCollect.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Bundle bd = new Bundle();
-                        bd.putParcelable(ParamConstants.EOS_TOKENS, curToken);
-                        UISkipMananger.launchCollectWithBundle(EosAssetDetailActivity.this, bd);
+//                        Bundle bd = new Bundle();
+//                        bd.putParcelable(ParamConstants.EOS_TOKENS, curToken);
+                        UISkipMananger.launchCollectWithBundle(EosAssetDetailActivity.this, bundle);
                     }
                 });
             }
@@ -175,14 +177,6 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 doRequest(++curPage);
-//                if (mAdapter != null) {
-//                    List<TransferHistory> historyList = mAdapter.getData();
-//                    if (!EmptyUtils.isEmpty(historyList)) {
-//                        TransferHistory history = historyList.get(historyList.size() - 1);
-//                        currentLastPos = history.last_pos;
-//                        doRequest(currentLastPos);
-//                    }
-//                }
 
             }
 
@@ -210,7 +204,6 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
             }
         });
-
 
     }
 

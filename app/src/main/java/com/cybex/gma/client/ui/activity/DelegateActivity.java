@@ -25,6 +25,7 @@ import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
@@ -169,7 +170,6 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         }
     }
 
-
     @OnTextChanged(value = R.id.edt_delegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterDelegateNetChanged(Editable s) {
         if ((EmptyUtils.isNotEmpty(getDelegateCpu()) || EmptyUtils.isNotEmpty(getDelegateNet()))
@@ -212,90 +212,6 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         }
     }
 
-    /*
-
-    @OnTextChanged(value = R.id.edt_undelegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterUndelegateCpuChanged(Editable s) {
-        if ((EmptyUtils.isNotEmpty(getUndelegateCpu()) || EmptyUtils.isNotEmpty(getunDelegateNet()))
-                && !getUndelegateCpu().equals(".") && !getunDelegateNet().equals(".")) {
-
-            if (EmptyUtils.isNotEmpty(getUndelegateCpu()) || EmptyUtils.isNotEmpty(getunDelegateNet())){
-                setClickable(btUndelegateCpuNet);
-            }else {
-                tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
-                setUnclickable(btUndelegateCpuNet);
-            }
-
-        } else {
-            tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
-            setUnclickable(btUndelegateCpuNet);
-        }
-
-
-        //限制输入为最多四位小数
-        String str = s.toString();
-        int posDot = str.indexOf(".");
-        if (posDot >= 0) {
-            if (str.length() - posDot - 1 > 4) {
-                s.delete(posDot + 5, posDot + 6);
-                if (!Alerter.isShowing()) {
-                    AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
-                }
-            }
-        }
-
-
-
-    }
-
-    @OnTextChanged(value = R.id.edt_undelegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterundelegateNetChanged(Editable s) {
-        if ((EmptyUtils.isNotEmpty(getunDelegateNet()) || EmptyUtils.isNotEmpty(getUndelegateCpu()))
-                && !getunDelegateNet().equals(".") && !getUndelegateCpu().equals(".")) {
-
-            //动态计算可用EOS的值
-            //setClickable(btUndelegateCpuNet);
-            if (EmptyUtils.isNotEmpty(getunDelegateNet()) || EmptyUtils.isNotEmpty(getUndelegateCpu())){
-//                curLeftnet = AmountUtil.sub(totalRefundableNet, getunDelegateNet(), 4);
-//                if (curLeftnet != null && curLeftCpu != null){
-//                    if (Float.valueOf(curLeftnet) >= 0 && Float.valueOf(curLeftCpu) >= 0) {
-//                        tvBalanceNetUndelegate.setText(curLeftnet + " EOS");
-//                        setClickable(btUndelegateCpuNet);
-//                    } else {
-//                        tvBalanceNetUndelegate.setText("0 EOS");
-//                        setUnclickable(btUndelegateCpuNet);
-//                        AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
-//                    }
-//                }
-
-            }else {
-                tvBalanceNetUndelegate.setText(totalRefundableNet + " EOS");
-                setUnclickable(btUndelegateCpuNet);
-            }
-
-        } else {
-            tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
-            setUnclickable(btUndelegateCpuNet);
-        }
-
-        LoggerManager.d(curLeftCpu);
-        LoggerManager.d(curLeftnet);
-
-        //限制输入为最多四位小数
-        String str = s.toString();
-        int posDot = str.indexOf(".");
-        if (posDot >= 0) {
-            if (str.length() - posDot - 1 > 4) {
-                s.delete(posDot + 5, posDot + 6);
-                if (!Alerter.isShowing()) {
-                    AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
-                }
-            }
-        }
-    }
-
-    */
-
     @Override
     public void bindUI(View view) {
         ButterKnife.bind(this);
@@ -335,13 +251,11 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             }
         });
 
-        resourceInfoVO = getIntent().getParcelableExtra("resourceInfo");
+        resourceInfoVO = getIntent().getParcelableExtra(ParamConstants.RESOURCE_VO);
         String balance = resourceInfoVO.getBanlance();
         totalAvaiEos = balance.split(" ")[0];
         tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), totalAvaiEos));
         tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), totalAvaiEos));
-
-
 
     }
 
@@ -407,11 +321,6 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     public FragmentAnimator onCreateFragmentAnimator() {
         // 设置横向(和安卓4.x动画相同)
         return new DefaultHorizontalAnimator();
-    }
-
-
-    private void validateButton(){
-
     }
 
     private void showDelegateTab() {
