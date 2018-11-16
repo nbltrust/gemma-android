@@ -136,7 +136,9 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
                     if (edtWalletName.hasFocus()) { setWalletNameFocusedStyle(); }
                 } else  {
                     if (getP().isWalletNameValid()) {
-                        setWalletNameFocusedStyle();
+                        if(edtWalletName.hasFocus()){
+                            setWalletNameFocusedStyle();
+                        }
                     } else {
                         setUnclickable(btCreateWallet);
                         setWalletNameInvalidStyle();

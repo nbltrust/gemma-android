@@ -140,7 +140,9 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
                     if (edtWalletName.hasFocus()) { setWalletNameFocusedStyle(); }
                 } else  {
                     if (getP().isWalletNameValid()) {
-                        setWalletNameFocusedStyle();
+                        if(edtWalletName.hasFocus()){
+                            setWalletNameFocusedStyle();
+                        }
                     } else {
                         setUnclickable(btFinishImport);
                         setWalletNameInvalidStyle();
