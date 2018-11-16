@@ -33,5 +33,8 @@
     <string name="baseservice_pass_validate_ip_wrong_password">密码错误请重新输入！</string>
     <string name="baseservice_pass_validate_et_hint">请输入%1$s的密码</string>
     <string name="baseservice_pass_validate_wallet_error">当前钱包出现异常</string>
+    <string name="baseservice_dialog_password_tip_title">密码提示</string>
 
+    <string name="baseservice_tip_password_hint">密码提示信息</string>
+    <string name="baseservice_tip_i_understand">我知道了</string>
 </resources>
