@@ -104,12 +104,12 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
     public void creatWallet(final String walletName, final String password, final String passwordHint) {
         getV().showProgressDialog("");
 
-        Disposable subscribe = Observable.create(new ObservableOnSubscribe<String>() {
+        Disposable subscribe = Observable.create(new ObservableOnSubscribe<MultiWalletEntity>() {
             @Override
-            public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
+            public void subscribe(final ObservableEmitter<MultiWalletEntity> emitter) throws Exception {
 
 
-                MultiWalletEntity multiWalletEntity = new MultiWalletEntity();
+                final MultiWalletEntity multiWalletEntity = new MultiWalletEntity();
 
                 multiWalletEntity.setWalletName(walletName);
                 multiWalletEntity.setWalletType(0);
@@ -184,7 +184,7 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
                             SPUtils.getInstance().put(BaseConst.INITIAL_WALLET_INDEX_KEY,++currentIndex);
                         }
 
-                        emitter.onNext(mnemonic);
+                        emitter.onNext(multiWalletEntity);
                         emitter.onComplete();
                     }
 
@@ -198,13 +198,13 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
+                .subscribe(new Consumer<MultiWalletEntity>() {
                     @Override
-                    public void accept(String mnemonic) {
+                    public void accept(MultiWalletEntity walletEntity) {
                         getV().dissmisProgressDialog();
                         ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
                                 .withInt(BaseConst.KEY_INIT_TYPE, BaseConst.APP_HOME_INITTYPE_TO_BACKUP_MNEMONIC_GUIDE)
-                                .withString(BaseConst.KEY_MNEMONIC, mnemonic)
+                                .withInt(BaseConst.KEY_WALLET_ENTITY_ID, walletEntity.getId())
                                 .navigation();
                         if (getV().isInitial()) {
                             EventBusProvider.post(new CloseInitialPageEvent());

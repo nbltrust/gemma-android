@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.CollectionUtils;
@@ -48,6 +51,7 @@ public class MnemonicVerifyActivity extends XActivity {
     private String[] mnes;
 
     private boolean isOver;
+    private MultiWalletEntity multiWalletEntity;
 
     @Override
     public void bindUI(View view) {
@@ -70,7 +74,7 @@ public class MnemonicVerifyActivity extends XActivity {
             return;
         }
         mnes = getIntent().getStringArrayExtra(BaseConst.KEY_MNEMONIC);
-
+        multiWalletEntity = getIntent().getParcelableExtra(BaseConst.KEY_WALLET_ENTITY);
         List<String> tempLabels = new ArrayList<>();
         if (EmptyUtils.isNotEmpty(mnes)) {
             for (int i = 0; i < mnes.length; i++) {
@@ -134,13 +138,26 @@ public class MnemonicVerifyActivity extends XActivity {
 //                    ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
 //                            .navigation();
 //                    finish();
-                    isOver=true;
-                    HandlerUtil.runOnUiThreadDelay(new Runnable() {
+                    MultiWalletEntity entityByID = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityByID(multiWalletEntity.getId());
+                    entityByID.setIsBackUp(1);
+                    DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntity(entityByID, new DBCallback() {
                         @Override
-                        public void run() {
-                            finish();
+                        public void onSucceed() {
+                            isOver=true;
+                            HandlerUtil.runOnUiThreadDelay(new Runnable() {
+                                @Override
+                                public void run() {
+                                    finish();
+                                }
+                            },1500);
                         }
-                    },1500);
+
+                        @Override
+                        public void onFailed(Throwable error) {
+
+                        }
+                    });
+
                 } else {
                     AlertUtil.showLongUrgeAlert(context,getString(R.string.walletmanage_mnemonic_validate_error));
                 }

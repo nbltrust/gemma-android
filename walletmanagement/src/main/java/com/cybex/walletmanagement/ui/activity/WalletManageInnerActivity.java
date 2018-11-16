@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.base.view.LabelLayout;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
@@ -56,9 +58,12 @@ public class WalletManageInnerActivity extends XActivity {
         labelExportMnemonic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WalletManageInnerActivity.this, MnemonicBackupGuideActivity.class);
-                intent.putExtra(BaseConst.KEY_WALLET_ENTITY,wallet);
-                startActivity(intent);
+//                Intent intent = new Intent(WalletManageInnerActivity.this, MnemonicBackupGuideActivity.class);
+//                intent.putExtra(BaseConst.KEY_WALLET_ENTITY,wallet);
+//                startActivity(intent);
+                ARouter.getInstance().build(RouterConst.PATH_TO_BACKUP_MNEMONIC_GUIDE_PAGE)
+                        .withInt(BaseConst.KEY_WALLET_ENTITY_ID, wallet.getId())
+                        .navigation();
 
             }
         });

@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -24,9 +26,10 @@ import seed39.Seed39;
 public class MnemonicBackupGuideActivity extends XActivity {
 
     private Button btnShowMne;
-    String mnemonic;
-    private MultiWalletEntity wallet;
-
+//    String mnemonic;
+    @Autowired(name = BaseConst.KEY_WALLET_ENTITY_ID)
+    public int walletID;
+    public MultiWalletEntity wallet;
 
     @Override
     public void bindUI(View view) {
@@ -43,6 +46,7 @@ public class MnemonicBackupGuideActivity extends XActivity {
                             String decryptMnemonic = Seed39.keyDecrypt(password, encryptMnemonic);
                             Intent intent = new Intent(MnemonicBackupGuideActivity.this, MnemonicShowActivity.class);
                             intent.putExtra(BaseConst.KEY_MNEMONIC,decryptMnemonic);
+                            intent.putExtra(BaseConst.KEY_WALLET_ENTITY,wallet);
                             startActivity(intent);
                             finish();
                         }
@@ -51,23 +55,31 @@ public class MnemonicBackupGuideActivity extends XActivity {
                         public void onValidateFail(int failedCount) {
                         }
                     });
-
-                }else{
-                    Intent intent = new Intent(MnemonicBackupGuideActivity.this, MnemonicShowActivity.class);
-                    intent.putExtra(BaseConst.KEY_MNEMONIC,mnemonic);
-                    startActivity(intent);
-                    finish();
                 }
+
+//                else{
+//                    Intent intent = new Intent(MnemonicBackupGuideActivity.this, MnemonicShowActivity.class);
+//                    intent.putExtra(BaseConst.KEY_MNEMONIC,mnemonic);
+//                    startActivity(intent);
+//                    finish();
+//                }
 
             }
         });
         setNavibarTitle(getResources().getString(R.string.walletmanage_backup_title), true);
+
+        wallet= DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityByID(walletID);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mnemonic = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
-        wallet = getIntent().getParcelableExtra(BaseConst.KEY_WALLET_ENTITY);
+//        mnemonic = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
+//        wallet = getIntent().getParcelableExtra(BaseConst.KEY_WALLET_ENTITY);
+    }
+
+    @Override
+    public boolean useArouter() {
+        return true;
     }
 
     @Override

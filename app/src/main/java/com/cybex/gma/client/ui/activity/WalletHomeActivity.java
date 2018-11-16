@@ -54,12 +54,14 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     private static final long WAIT_TIME = 2000L;
     @Autowired(name = BaseConst.KEY_INIT_TYPE)
     int initType = BaseConst.APP_HOME_INITTYPE_NONE;
-    @Autowired(name = BaseConst.KEY_MNEMONIC)
-    String mnemonic;
+    @Autowired(name = BaseConst.KEY_WALLET_ENTITY_ID)
+    int initCreatedWalletID;
     @BindView(R.id.rootview)
     LinearLayout rootview;
     @BindView(R.id.view_wookong_status)
     LinearLayout mViewWookongStatus;
+    @BindView(R.id.view_backup_status)
+    LinearLayout mViewBackupStatus;
     @BindView(R.id.iv_wookong_logo)
     ImageView mIvWookongLogo;
     @BindView(R.id.tv_wookong_status)
@@ -142,6 +144,20 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     }
 
+    @OnClick({R.id.view_backup_status})
+    public void onBackupContainerClick(View view) {
+        switch (view.getId()) {
+            case R.id.view_backup_status:
+                ARouter.getInstance().build(RouterConst.PATH_TO_BACKUP_MNEMONIC_GUIDE_PAGE)
+                        .withInt(BaseConst.KEY_WALLET_ENTITY_ID, curWallet.getId())
+                        .navigation();
+                break;
+                default:
+                    break;
+        }
+
+    }
+
     @Override
     public void bindUI(View rootView) {
         //LoggerManager.d("WalletHomeActivity bindUI initType="+initType);
@@ -179,7 +195,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         if (intent != null) {
             //onNewIntent中Arouter不会自动给initType赋值
             initType = intent.getIntExtra(BaseConst.KEY_INIT_TYPE, -1);
-            mnemonic = intent.getStringExtra(BaseConst.KEY_MNEMONIC);
+            initCreatedWalletID = intent.getIntExtra(BaseConst.KEY_WALLET_ENTITY_ID,0);
+//            initCreatedWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
             handleInitType();
         }
 
@@ -189,9 +206,9 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         //根据跳转到主页面的类型，响应
         if (initType != BaseConst.APP_HOME_INITTYPE_NONE) {
             if (initType == BaseConst.APP_HOME_INITTYPE_TO_BACKUP_MNEMONIC_GUIDE) {
-//                String mnemonic = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
+//                String initCreatedWallet = getIntent().getStringExtra(BaseConst.KEY_MNEMONIC);
                 ARouter.getInstance().build(RouterConst.PATH_TO_BACKUP_MNEMONIC_GUIDE_PAGE)
-                        .withString(BaseConst.KEY_MNEMONIC, mnemonic)
+                        .withInt(BaseConst.KEY_WALLET_ENTITY_ID, initCreatedWalletID)
                         .navigation();
             }
             initType = BaseConst.APP_HOME_INITTYPE_NONE;
@@ -261,12 +278,14 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             } else if (walletType == BaseConst.WALLET_TYPE_MNE_CREATE) {
                 //创建的助记词多币种钱包
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
+                mViewBackupStatus.setVisibility(multiWalletEntity.getIsBackUp()==0?View.VISIBLE:View.GONE);
                 mEosCardView.setVisibility(View.VISIBLE);
                 mEthCardView.setVisibility(View.VISIBLE);
                 updateEosCardView();
             } else if (walletType == BaseConst.WALLET_TYPE_MNE_IMPORT) {
                 //导入的助记词钱包
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
+                mViewBackupStatus.setVisibility(View.GONE);
                 mEosCardView.setVisibility(View.VISIBLE);
                 mEthCardView.setVisibility(View.VISIBLE);
                 //核验EOS账户的状态
@@ -281,6 +300,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             } else if (walletType == BaseConst.WALLET_TYPE_PRIKEY_IMPORT) {
                 //单币种钱包
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
+                mViewBackupStatus.setVisibility(View.GONE);
                 //判断是EOS还是ETH钱包
                 if (EmptyUtils.isNotEmpty(curEosWallet) && EmptyUtils.isNotEmpty(curEthWallet)) {
                     //todo ETH/EOS钱包都不为空

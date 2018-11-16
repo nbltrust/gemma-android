@@ -8,33 +8,74 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_marginStart="@dimen/common_page_content_padding"
         android:layout_marginTop="20dp"
-        android:id="@+id/view_wookong_status"
-        android:orientation="horizontal"
-        android:gravity="bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:src="@drawable/ic_wookong_bio_not_connected"
-            android:id="@+id/iv_wookong_logo"
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/view_wookong_status"
+            android:orientation="horizontal"
+            android:gravity="bottom"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_marginStart="4dp"
-            android:textSize="@dimen/font_3.5"
-            android:text="@string/eos_status_not_connected"
-            android:textColor="@color/brown_grey"
-            android:id="@+id/tv_wookong_status"
+            <ImageView
+                android:src="@drawable/ic_wookong_bio_not_connected"
+                android:id="@+id/iv_wookong_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginStart="4dp"
+                android:textSize="@dimen/font_3.5"
+                android:text="@string/eos_status_not_connected"
+                android:textColor="@color/brown_grey"
+                android:id="@+id/tv_wookong_status"
+                android:includeFontPadding="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/view_backup_status"
+            android:orientation="horizontal"
+            android:gravity="bottom"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_non_backup"
+                android:id="@+id/iv_backup_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginStart="4dp"
+                android:textSize="@dimen/font_3.5"
+                android:text="@string/home_not_backup"
+                android:textColor="@color/brown_grey"
+                android:textStyle="bold"
+                android:includeFontPadding="true"
+                android:id="@+id/tv_backup_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
 
-    </LinearLayout>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"

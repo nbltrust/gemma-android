@@ -807,5 +807,8 @@
     <string name="wookong_init_pin_fail">初始化PIN失败</string>
     <string name="initing_wookong_bio_wallet">正在为您初始化WOOKONG Bio WALLET</string>
 
+    <!--home -->
+    <string name="home_not_backup">未备份</string>
+
 
 </resources>
