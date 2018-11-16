@@ -148,10 +148,11 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
                 .navigationBarBackgroundAlpha(0)
                 .invasionStatusBar();
 
-        //Android P 上的适配
+//        Android P 上的适配
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
             //Android 9.0以上适配
-
+            Sofia.with(mContext)
+                    .invasionNavigationBar();
                 try {
                     //statusBar透明
                     Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
