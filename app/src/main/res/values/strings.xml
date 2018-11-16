@@ -804,7 +804,8 @@
     <!--eos home card-->
     <string name="card_eos_creating_progress">账户创建中...%1$d%%</string>
     <string name="card_eos_wait_notify">待激活</string>
-
+    <string name="wookong_init_pin_fail">初始化PIN失败</string>
+    <string name="initing_wookong_bio_wallet">正在为您初始化WOOKONG Bio WALLET</string>
 
 
 </resources>

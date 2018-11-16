@@ -15,6 +15,7 @@ public class RouterConst {
     public static final String PATH_TO_IMPORT_WALLET_GUIDE_PAGE="/walletmanage/import_wallet_guide";
     public static final String PATH_TO_BACKUP_MNEMONIC_GUIDE_PAGE="/walletmanage/backup_mnemonic_guide";
     public static final String PATH_TO_WALLET_MANAGE_PAGE="/walletmanage/walletmanage";
+    public static final String PATH_TO_WALLET_ENROOL_FP_PAGE="/walletmanage/enroolfp";
 
 
     //eth

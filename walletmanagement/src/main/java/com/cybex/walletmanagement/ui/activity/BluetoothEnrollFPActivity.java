@@ -10,11 +10,15 @@ import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.dao.WalletEntityDao;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.walletmanagement.R;
@@ -27,17 +31,33 @@ import java.util.HashMap;
 /**
  * 录入指纹窗口
  */
+@Route(path= RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE)
 public class BluetoothEnrollFPActivity extends XActivity {
 
 
+    //指纹指令错误
+    int FINGER_PRINT_COMMAND_ERROR = -2147483599;
+    //指纹冗余
+    int FINGER_REDUNDANT = -2147483598;
+    //指纹录入成功
+    int FINGER_GOOD = -2147483597;
+    //指纹录入失败
+    int FINGER_NOT = -2147483596;
+    //指纹采集不全
+    int FINGER_NOT_FULL = -2147483595;
+    //指纹采集错误图片
+    int FINGER_PRINT_BAND_IMAGE = -2147483594;
+    //指纹录入成功
+    int FINGER_SUCCESS = 0;
+
     public int stage = 1;
-    public HashMap<Integer, AnimatedVectorDrawable> vectorDrawableHashMap = new HashMap<>();
+//    public HashMap<Integer, AnimatedVectorDrawable> vectorDrawableHashMap = new HashMap<>();
     TitleBar btnNavibar;
     WebView mWebView;
     private BlueToothWrapper enrollFPThread;
-    private FPHandler mHandler;
+//    private FPHandler mHandler;
     private Bundle bd;
-    private long contextHandle = 0;
+//    private long contextHandle = 0;
 
     @Override
     public void bindUI(View rootView) {
@@ -46,20 +66,34 @@ public class BluetoothEnrollFPActivity extends XActivity {
         mWebView = findViewById(R.id.webView_fingerprints);
 
 
-        mHandler = new FPHandler();
+//        mHandler = new FPHandler();
         bd = getIntent().getExtras();
         if (bd != null) {
-            contextHandle = bd.getLong(WalletManageConst.CONTEXT_HANDLE);
+//            contextHandle = bd.getLong(WalletManageConst.CONTEXT_HANDLE);
         }
         //初始化指纹动画
         //initVectorDrawable();
         initWebView();
 
-        if ((enrollFPThread == null) || (enrollFPThread.getState() == Thread.State.TERMINATED)) {
-            enrollFPThread = new BlueToothWrapper(mHandler);
-            enrollFPThread.setEnrollFPWrapper(contextHandle, 0);
-            enrollFPThread.start();
-        }
+//        if ((enrollFPThread == null) || (enrollFPThread.getState() == Thread.State.TERMINATED)) {
+//            enrollFPThread = new BlueToothWrapper(mHandler);
+//            enrollFPThread.setEnrollFPWrapper(contextHandle, 0);
+//            enrollFPThread.start();
+//        }
+
+        DeviceOperationManager.getInstance().enrollFP(this.toString(), DeviceOperationManager.getInstance().getCurrentDeviceName(), new DeviceOperationManager.EnrollFPCallback() {
+
+            @Override
+            public void onEnrollFPUpate(int state) {
+                doFPLogic(state);
+            }
+
+            @Override
+            public void onEnrollFinish(int state) {
+
+            }
+        });
+
     }
 
     @Override
@@ -76,31 +110,31 @@ public class BluetoothEnrollFPActivity extends XActivity {
      */
     private void doFPLogic(int state) {
         LoggerManager.d("FP state: " + state);
-//        if (stage <= 12){
-//            //前12次录入
-//            if (state == ParamConstants.FINGER_GOOD) {
-//                drawFingerprint();
-//            } else if (state == ParamConstants.FINGER_SUCCESS) {
-//                stage = 1;
+        if (stage <= 12){
+            //前12次录入
+            if (state == FINGER_GOOD) {
+                drawFingerprint();
+            } else if (state ==FINGER_SUCCESS) {
+                stage = 1;
 //                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
 //                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
-//                setCurrentWalletStatus();
+                setCurrentWalletStatus();
 //                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
 //                finish();
-//            }
-//        }else {
-//            //12-16次录入，每次都有可能成功
-//            if (state == ParamConstants.FINGER_GOOD) {
-//                drawFingerprint();
-//            } else if (state == ParamConstants.FINGER_SUCCESS) {
-//                stage = 1;
+            }
+        }else {
+            //12-16次录入，每次都有可能成功
+            if (state == FINGER_GOOD) {
+                drawFingerprint();
+            } else if (state == FINGER_SUCCESS) {
+                stage = 1;
 //                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
 //                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
-//                setCurrentWalletStatus();
+                setCurrentWalletStatus();
 //                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
 //                finish();
-//            }
-//        }
+            }
+        }
 
 
     }
@@ -116,7 +150,7 @@ public class BluetoothEnrollFPActivity extends XActivity {
         mWebView.post(new Runnable() {
             @Override
             public void run() {
-                mWebView.evaluateJavascript("finger:next()", new ValueCallback<String>() {
+                mWebView.evaluateJavascript("next()", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
 
@@ -168,30 +202,32 @@ public class BluetoothEnrollFPActivity extends XActivity {
         // 设置与Js交互的权限
         webSettings.setJavaScriptEnabled(true);
         //载入JS代码
-        mWebView.evaluateJavascript("file:///android_asset/finger.html", new ValueCallback<String>() {
-            @Override
-            public void onReceiveValue(String value) {
-                //JS返回的字符串
-            }
-        });
+//        mWebView.evaluateJavascript("file:///android_asset/finger.html", new ValueCallback<String>() {
+//            @Override
+//            public void onReceiveValue(String value) {
+//                //JS返回的字符串
+//            }
+//        });
+
+        mWebView.loadUrl("file:///android_asset/finger.html");
 
 
     }
 
-    class FPHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case BlueToothWrapper.MSG_ENROLL_UPDATE:
-                    int state = msg.arg1;
-                    doFPLogic(state);
-                    break;
-                default:
-                    break;
-
-            }
-
-        }
-    }
+//    class FPHandler extends Handler {
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case BlueToothWrapper.MSG_ENROLL_UPDATE:
+//                    int state = msg.arg1;
+//                    doFPLogic(state);
+//                    break;
+//                default:
+//                    break;
+//
+//            }
+//
+//        }
+//    }
 }

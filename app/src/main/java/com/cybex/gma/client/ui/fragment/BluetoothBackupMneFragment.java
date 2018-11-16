@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.WookongBioManager;
@@ -36,45 +37,45 @@ public class BluetoothBackupMneFragment extends XFragment {
     @BindView(R.id.id_flowlayout) TagFlowLayout mFlowLayout;
     @BindView(R.id.bt_copied_mne) Button btCopiedMne;
 
-    BlueToothWrapper generateSeedThread;
-    BluetoothHandler handler;
+//    BlueToothWrapper generateSeedThread;
+//    BluetoothHandler handler;
     Bundle bd = null;
-    long contextHandle = 0;
+//    long contextHandle = 0;
 
     private TagAdapter<String> mAdapter;
 
 
-    class BluetoothHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case BlueToothWrapper.MSG_GENERATE_SEED_MNES_START:
-                case BlueToothWrapper.MSG_GENERATE_SEED_MNES_FINISH:
-                    BlueToothWrapper.GenSeedMnesReturnValue value = (BlueToothWrapper.GenSeedMnesReturnValue) msg.obj;
-                    if (EmptyUtils.isNotEmpty(value)) {
-                        String[] mnes = value.getStrMneWord();
-                        bd.putParcelable(ParamConstants.KEY_GEEN_SEED, value);
-
-                        mFlowLayout.setAdapter(mAdapter = new TagAdapter<String>(mnes) {
-
-                            @Override
-                            public View getView(FlowLayout parent, int position, String s) {
-                                TextView tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.eos_item_tag,
-                                        mFlowLayout, false);
-                                tv.setText(s);
-                                return tv;
-                            }
-                        });
-
-                    }
-
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+//    class BluetoothHandler extends Handler {
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case BlueToothWrapper.MSG_GENERATE_SEED_MNES_START:
+//                case BlueToothWrapper.MSG_GENERATE_SEED_MNES_FINISH:
+//                    BlueToothWrapper.GenSeedMnesReturnValue value = (BlueToothWrapper.GenSeedMnesReturnValue) msg.obj;
+//                    if (EmptyUtils.isNotEmpty(value)) {
+//                        String[] mnes = value.getStrMneWord();
+//                        bd.putParcelable(ParamConstants.KEY_GEEN_SEED, value);
+//
+//                        mFlowLayout.setAdapter(mAdapter = new TagAdapter<String>(mnes) {
+//
+//                            @Override
+//                            public View getView(FlowLayout parent, int position, String s) {
+//                                TextView tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.eos_item_tag,
+//                                        mFlowLayout, false);
+//                                tv.setText(s);
+//                                return tv;
+//                            }
+//                        });
+//
+//                    }
+//
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    }
 
     public static BluetoothBackupMneFragment newInstance(Bundle bd) {
         BluetoothBackupMneFragment fragment = new BluetoothBackupMneFragment();
@@ -98,12 +99,38 @@ public class BluetoothBackupMneFragment extends XFragment {
     public void initData(Bundle savedInstanceState) {
         bd = getArguments();
         if (bd != null) {
-            contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE);
+//            contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE);
         }
 
-        handler = new BluetoothHandler();
-        WookongBioManager.getInstance().init(handler);
-        WookongBioManager.getInstance().startGenerateSeedGetMnes(contextHandle,0, 16);
+//        handler = new BluetoothHandler();
+//        WookongBioManager.getInstance().init(handler);
+//        WookongBioManager.getInstance().startGenerateSeedGetMnes(contextHandle,0, 16);
+
+        DeviceOperationManager.getInstance().generateMnemonic(this.toString(), DeviceOperationManager.getInstance().getCurrentDeviceName(), new DeviceOperationManager.GenerateMnemonicCallback() {
+
+            @Override
+            public void onGenerateSuccess(com.cybex.componentservice.utils.bluetooth.BlueToothWrapper.GenSeedMnesReturnValue mnemonic) {
+                String[] mnes = mnemonic.getStrMneWord();
+                bd.putParcelable(ParamConstants.KEY_GEEN_SEED, mnemonic);
+
+                mFlowLayout.setAdapter(mAdapter = new TagAdapter<String>(mnes) {
+
+                    @Override
+                    public View getView(FlowLayout parent, int position, String s) {
+                        TextView tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.eos_item_tag,
+                                mFlowLayout, false);
+                        tv.setText(s);
+                        return tv;
+                    }
+                });
+            }
+
+            @Override
+            public void onGenerateFail() {
+
+            }
+        });
+
         showAlertDialog();
     }
 
@@ -126,10 +153,10 @@ public class BluetoothBackupMneFragment extends XFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if (handler != null){
-            WookongBioManager.getInstance().freeThread();
-            WookongBioManager.getInstance().freeResource();
-        }
+//        if (handler != null){
+//            WookongBioManager.getInstance().freeThread();
+//            WookongBioManager.getInstance().freeResource();
+//        }
     }
 
 

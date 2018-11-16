@@ -40,6 +40,10 @@ public class BaseConst {
 
 
 
+    //蓝牙设备
+    public static final int DEVICE_LIFE_CYCLE_PRODUCE = 2;//produce
+    public static final int DEVICE_LIFE_CYCLE_USER = 4;//user
+
 
 
 }

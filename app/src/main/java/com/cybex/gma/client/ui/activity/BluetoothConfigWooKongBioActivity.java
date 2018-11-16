@@ -10,6 +10,7 @@ import android.text.Spanned;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.style.AbsoluteSizeSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
@@ -46,6 +48,7 @@ import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.xujiaji.happybubble.BubbleLayout;
 
 import java.util.List;
@@ -95,8 +98,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
     private Validator validator;
     private boolean isMask;
     private BlueToothWrapper blueToothThread;
-    private BluetoothHandler mHandler;
-    private long contextHandle = 0;
+//    private BluetoothHandler mHandler;
+//    private long contextHandle = 0;
     private Bundle bd;
 
     @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -306,16 +309,16 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
     protected void onDestroy() {
         super.onDestroy();
         clearListeners();
-        WookongBioManager.getInstance().freeThread();
-        WookongBioManager.getInstance().freeResource();
+//        WookongBioManager.getInstance().freeThread();
+//        WookongBioManager.getInstance().freeResource();
 
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
 
-        mHandler = new BluetoothHandler();
-        WookongBioManager.getInstance().init(mHandler);
+//        mHandler = new BluetoothHandler();
+//        WookongBioManager.getInstance().init(mHandler);
 
         setUnclickable(btCreateWallet);
         SoftHideKeyBoardUtil.assistActivity(this);
@@ -325,7 +328,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
 
         bd = getIntent().getExtras();
         if (bd != null) {
-            contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE, 0);
+//            contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE, 0);
         }
 
         initView();
@@ -373,8 +376,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
             mTitleBar.setLeftClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BluetoothConnectKeepJob.removeJob();
-                    WookongBioManager.getInstance().freeContext(contextHandle);
+//                    BluetoothConnectKeepJob.removeJob();
+//                    WookongBioManager.getInstance().freeContext(contextHandle);
                     finish();
                 }
             });
@@ -508,8 +511,41 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
         //设置初始化PIN
         String password = String.valueOf(edtSetPass.getText());
 
-        LoggerManager.d("contextHandle", contextHandle);
-        WookongBioManager.getInstance().initPIN(contextHandle, 0, password);
+//        LoggerManager.d("contextHandle", contextHandle);
+//        WookongBioManager.getInstance().initPIN(contextHandle, 0, password);
+
+        String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+        DeviceOperationManager.getInstance().initPin(this.toString(), currentDeviceName, password, new DeviceOperationManager.InitPinCallback() {
+            @Override
+            public void onInitSuccess() {
+
+                //跳转到创建账户名界面
+//                    String password = String.valueOf(edtSetPass.getText());
+//                    String pwdTip = String.valueOf(edtPassHint.getText());
+//                    BluetoothAccountInfoVO vo = new BluetoothAccountInfoVO();
+//                    vo.setPassword(password);
+//                    vo.setPasswordTip(pwdTip);
+//
+//                    if (bd != null) {
+//                        bd.putParcelable(ParamConstants.KEY_BLUETOOTH_ACCOUNT_INFO, vo);
+//                    }
+
+                //wookong press to confirm , but now is not supported
+
+
+                //so directly,select init type
+                showInitWookongBioDialog();
+
+
+            }
+
+            @Override
+            public void onInitFail() {
+                GemmaToastUtils.showLongToast(getString(R.string.wookong_init_pin_fail));
+
+            }
+        });
+
     }
 
     /**
@@ -533,67 +569,107 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
         }
     }
 
-    class BluetoothHandler extends Handler {
 
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case BlueToothWrapper.MSG_INIT_PIN_START:
-                    LoggerManager.d("MSG_INIT_PIN_START");
-                    //设置PIN
-                    showProgressDialog(getString(R.string.eos_progress_set_pin));
-                    break;
-                case BlueToothWrapper.MSG_INIT_PIN_FINISH:
-                    LoggerManager.d("MSG_INIT_PIN_FINISH");
-                    //已完成设置PIN
+    /**
+     * 显示Wookong bio对话框
+     */
+    private void showInitWookongBioDialog() {
+        int[] listenedItems = {R.id.btn_close, R.id.btn_create_wallet, R.id.btn_import_mne};
 
-                    //跳转到创建账户名界面
-                    String password = String.valueOf(edtSetPass.getText());
-                    String pwdTip = String.valueOf(edtPassHint.getText());
-                    BluetoothAccountInfoVO vo = new BluetoothAccountInfoVO();
-                    vo.setPassword(password);
-                    vo.setPasswordTip(pwdTip);
+        CustomFullDialog dialog = new CustomFullDialog(this,
+                R.layout.eos_dialog_un_init_wookongbio, listenedItems, false, Gravity.BOTTOM);
 
-                    if (bd != null) {
-                        bd.putParcelable(ParamConstants.KEY_BLUETOOTH_ACCOUNT_INFO, vo);
-                    }
 
-                    WookongBioManager.getInstance().getAddress(contextHandle, 0, MiddlewareInterface
-                            .PAEW_COIN_TYPE_EOS, CacheConstants.EOS_DERIVE_PATH);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.btn_close:
+                        dialog.cancel();
+//                        WookongBioManager.getInstance().freeContext(contextHandle);
+//                        BluetoothConnectKeepJob.removeJob();
+//                        finish();
+                        break;
+                    case R.id.btn_create_wallet:
+                        dialog.cancel();
 
-                    break;
-                case BlueToothWrapper.MSG_GET_ADDRESS_FINISH:
-                    LoggerManager.d("MSG_GET_ADDRESS_FINISH");
-                    BlueToothWrapper.GetAddressReturnValue returnValueAddress = (BlueToothWrapper
-                            .GetAddressReturnValue) msg.obj;
-                    if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
-                        if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
-
-                            String[] strArr = returnValueAddress.getAddress().split("####");
-                            String publicKey = strArr[0];
-
-                            DeviceInfoEvent event = new DeviceInfoEvent();
-                            event.setEosPublicKey(publicKey);
-                            EventBusProvider.postSticky(event);
-
-                            final String deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
-                            if (deviceName != null)getP().creatBluetoothWallet(deviceName, publicKey);
-                            UISkipMananger.skipBackupMneGuideActivity(BluetoothConfigWooKongBioActivity.this, bd);
-                            finish();
-
-                        }else {
-                            GemmaToastUtils.showLongToast("Bio Communication Error");
-                        }
-                    }
-                    dissmisProgressDialog();
-
-                    break;
-
-                default:
-                    break;
+                        //first get mnemonic to backup
+                        UISkipMananger.skipBackupMneGuideActivity(BluetoothConfigWooKongBioActivity.this,
+                                null);
+                        finish();
+                        break;
+                    case R.id.btn_import_mne:
+                        //dialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
+        });
+        dialog.show();
     }
+
+//    class BluetoothHandler extends Handler {
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case BlueToothWrapper.MSG_INIT_PIN_START:
+//                    LoggerManager.d("MSG_INIT_PIN_START");
+//                    //设置PIN
+//                    showProgressDialog(getString(R.string.eos_progress_set_pin));
+//                    break;
+//                case BlueToothWrapper.MSG_INIT_PIN_FINISH:
+//                    LoggerManager.d("MSG_INIT_PIN_FINISH");
+//                    //已完成设置PIN
+//
+//                    //跳转到创建账户名界面
+//                    String password = String.valueOf(edtSetPass.getText());
+//                    String pwdTip = String.valueOf(edtPassHint.getText());
+//                    BluetoothAccountInfoVO vo = new BluetoothAccountInfoVO();
+//                    vo.setPassword(password);
+//                    vo.setPasswordTip(pwdTip);
+//
+//                    if (bd != null) {
+//                        bd.putParcelable(ParamConstants.KEY_BLUETOOTH_ACCOUNT_INFO, vo);
+//                    }
+//
+////                    WookongBioManager.getInstance().getAddress(contextHandle, 0, MiddlewareInterface
+////                            .PAEW_COIN_TYPE_EOS, CacheConstants.EOS_DERIVE_PATH);
+//
+//                    break;
+//                case BlueToothWrapper.MSG_GET_ADDRESS_FINISH:
+//                    LoggerManager.d("MSG_GET_ADDRESS_FINISH");
+//                    BlueToothWrapper.GetAddressReturnValue returnValueAddress = (BlueToothWrapper
+//                            .GetAddressReturnValue) msg.obj;
+//                    if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+//                        if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
+//
+//                            String[] strArr = returnValueAddress.getAddress().split("####");
+//                            String publicKey = strArr[0];
+//
+//                            DeviceInfoEvent event = new DeviceInfoEvent();
+//                            event.setEosPublicKey(publicKey);
+//                            EventBusProvider.postSticky(event);
+//
+//                            final String deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
+//                            if (deviceName != null)getP().creatBluetoothWallet(deviceName, publicKey);
+//                            UISkipMananger.skipBackupMneGuideActivity(BluetoothConfigWooKongBioActivity.this, bd);
+//                            finish();
+//
+//                        }else {
+//                            GemmaToastUtils.showLongToast("Bio Communication Error");
+//                        }
+//                    }
+//                    dissmisProgressDialog();
+//
+//                    break;
+//
+//                default:
+//                    break;
+//            }
+//        }
+//    }
 
 
 }

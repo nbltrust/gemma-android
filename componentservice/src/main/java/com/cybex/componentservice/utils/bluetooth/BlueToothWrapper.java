@@ -1994,10 +1994,10 @@ public class BlueToothWrapper extends Thread {
                 devCount = new int[1];
                 devCount[0] = MiddlewareInterface.PAEW_MAX_DEV_COUNT;
                 strDeviceNames = new String[MiddlewareInterface.PAEW_MAX_DEV_COUNT];
-                m_commonLock.lock();
+//                m_commonLock.lock();
                 iRtn = MiddlewareInterface.getDeviceList(mContext, m_strFilter, 4000, m_enumCallback, strDeviceNames,
                         devCount);
-                m_commonLock.unlock();
+//                m_commonLock.unlock();
 
                 msg = m_mainHandler.obtainMessage();
                 msg.what = MSG_ENUM_FINISH;
