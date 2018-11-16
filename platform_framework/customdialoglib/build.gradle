@@ -20,4 +20,6 @@ android {
 
 dependencies {
     implementation deps.support.appcompatV7
+
+    api project(':platform_framework:basiclib')
 }

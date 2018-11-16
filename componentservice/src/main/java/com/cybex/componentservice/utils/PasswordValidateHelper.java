@@ -1,5 +1,6 @@
 package com.cybex.componentservice.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -10,19 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cybex.componentservice.R;
-import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.manager.DBManager;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
+import me.jessyan.autosize.AutoSize;
+
 public class PasswordValidateHelper {
 
     private MultiWalletEntity walletEntity;
-    private Context context;
+    private Activity activity;
 
     private String hintStr;
     private int count;
@@ -33,12 +34,13 @@ public class PasswordValidateHelper {
     private String confirmStr;
     private int iconRes;
 
-    public PasswordValidateHelper(MultiWalletEntity walletEntity, Context context) {
+    public PasswordValidateHelper(MultiWalletEntity walletEntity,Activity activity) {
         this.walletEntity = walletEntity;
-        this.context = context;
-        hintStr=context.getString(R.string.baseservice_pass_validate_hint);
-        confirmStr=context.getString(R.string.baseservice_pass_validate_next);
+        this.activity = activity;
+        hintStr= this.activity.getString(R.string.baseservice_pass_validate_hint);
+        confirmStr= this.activity.getString(R.string.baseservice_pass_validate_next);
         iconRes=R.drawable.ic_mask_close;
+        AutoSize.autoConvertDensityOfGlobal(activity);
     }
 
 //    public PasswordValidateHelper() {
@@ -63,8 +65,11 @@ public class PasswordValidateHelper {
 
 
     public void startValidatePassword(PasswordValidateCallback callback){
+
+
+
         int[] listenedItems = {R.id.baseservice_passwordvalidate_cancel_icon, R.id.baseservice_passwordvalidate_confirm};
-        CustomFullDialog dialog = new CustomFullDialog(context,
+        CustomFullDialog dialog = new CustomFullDialog(activity,
                 R.layout.baseservice_dialog_password_validate, listenedItems, false, false,Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
@@ -76,7 +81,7 @@ public class PasswordValidateHelper {
                     EditText etPasword = dialog.findViewById(R.id.baseservice_passwordvalidate_et_password);
                     String pwd = String.valueOf(etPasword.getText());
                     if (EmptyUtils.isEmpty(pwd)) {
-                        GemmaToastUtils.showShortToast(context.getString(R.string.baseservice_pass_validate_tip_please_input_pass));
+                        GemmaToastUtils.showShortToast(activity.getString(R.string.baseservice_pass_validate_tip_please_input_pass));
                         return;
                     } else {
                         String cypher = walletEntity.getCypher();
@@ -93,7 +98,7 @@ public class PasswordValidateHelper {
                                 showPasswordHintDialog();
                             }else{
                                 GemmaToastUtils.showShortToast(
-                                        context.getResources().getString(R.string.baseservice_pass_validate_ip_wrong_password));
+                                        activity.getResources().getString(R.string.baseservice_pass_validate_ip_wrong_password));
                                 if(callback!=null){
                                     callback.onValidateFail(count);
                                 }
@@ -119,7 +124,7 @@ public class PasswordValidateHelper {
         TextView  tvHint= dialog.findViewById(R.id.baseservice_passwordvalidate_hint);
 
         if(TextUtils.isEmpty(etHintStr)){
-            etPasword.setHint(String.format(context.getString(R.string.baseservice_pass_validate_et_hint),walletEntity.getWalletName()));
+            etPasword.setHint(String.format(activity.getString(R.string.baseservice_pass_validate_et_hint),walletEntity.getWalletName()));
         }else{
             etPasword.setHint(etHintStr);
         }
@@ -135,7 +140,7 @@ public class PasswordValidateHelper {
      */
     private void showPasswordHintDialog() {
         int[] listenedItems = {R.id.tv_i_understand};
-        CustomDialog dialog = new CustomDialog(context,
+        CustomDialog dialog = new CustomDialog(activity,
                 R.layout.baseservice_dialog_password_hint, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
@@ -153,7 +158,7 @@ public class PasswordValidateHelper {
         TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
         if (EmptyUtils.isNotEmpty(walletEntity) ) {
             String passHint = walletEntity.getPasswordTip();
-            String showInfo = context.getString(R.string.baseservice_tip_password_hint) + " : " + passHint;
+            String showInfo = activity.getString(R.string.baseservice_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);
         }
     }
