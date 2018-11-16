@@ -48,7 +48,9 @@
                         style="@style/eos_editText_config_wallet"
                         android:layout_weight="1"
                         android:inputType="text"
-                        android:hint="@string/eos_tip_eos_username"/>
+                        android:ellipsize="end"
+                        android:hint="@string/eos_tip_eos_username"
+                        />
 
                     <ImageView
                         android:id="@+id/iv_eos_name_clear"
