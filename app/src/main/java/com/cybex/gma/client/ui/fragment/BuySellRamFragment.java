@@ -156,9 +156,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                 edtBuyRam.setText("");
                                 tvEosRamAmount.setText(getResources().getString(R.string.eos_title_eos_quantity));
                                 if (EmptyUtils.isNotEmpty(resourceInfoVO)) {
-                                    String available_eos = resourceInfoVO.getBanlance();
+                                    String available_eos = resourceInfoVO.getBanlance().split(" ")[0];
                                     tvAvaEosRam.setText(
-                                            String.format(getResources().getString(R.string.eos_amount_available_eos),
+                                            String.format(getResources().getString(R.string.eos_amount_balance),
                                                     available_eos));
                                 }
                                 //切换TAB时隐藏软键盘
