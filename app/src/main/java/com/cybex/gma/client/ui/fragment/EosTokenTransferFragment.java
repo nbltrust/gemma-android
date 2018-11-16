@@ -158,10 +158,16 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
         if (curToken != null){
             tvBanlance.setText(getString(R.string.eos_show_remain_balance)
-                    + AmountUtil.round(balance, curToken.getAccurancy())
+                    + balance
                     + " " + tokenName);
+            int accuracy = 0;
+
+            if (curToken.getAccurancy() > 0){
+               accuracy = curToken.getAccurancy();
+            }
+
             etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
-                    .Type.decimal, curToken.getAccurancy(), maxValue) {
+                    .Type.decimal, accuracy, maxValue) {
                 @Override
                 public void afterTextChanged(Editable s) {
                     super.afterTextChanged(s);
@@ -214,7 +220,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         if (getArguments() != null) {
             curToken = getArguments().getParcelable(ParamConstants.EOS_TOKENS);
             if (curToken != null) {
-                String balance = String.valueOf(curToken.getQuantity());
+                String balance = curToken.getQuantity();
 
                 MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
                 MultiWalletEntity entity = dao.getCurrentMultiWalletEntity();

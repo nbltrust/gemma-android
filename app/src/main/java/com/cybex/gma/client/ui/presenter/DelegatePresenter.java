@@ -392,7 +392,11 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
                                         String delegatedNet = selfDelegatedBandwidth.getNet_weightX().split(" ")[0];
                                         getV().updateRefundaleQuantity(delegatedCpu, delegatedNet);
                                         getV().initTextChangedListener(delegatedCpu, delegatedNet);
+                                    }else {
+                                        getV().updateRefundaleQuantity("0.0000", "0.0000");
+                                        getV().initTextChangedListener("0.0000", "0.0000");
                                     }
+
                                 }
                                 getV().dissmisProgressDialog();
                             }

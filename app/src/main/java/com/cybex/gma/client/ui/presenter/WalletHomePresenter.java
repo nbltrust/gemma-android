@@ -244,8 +244,6 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
     }
 
 
-
-
     /**
      * 获取账户信息中是否有抵押资产
      * 如果有，需要把抵押资产也算进总资产估值中
@@ -305,7 +303,6 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
             throw Exceptions.propagate(t);
         }
     }
-
 
     /**
      * 获取当前EOS余额
@@ -378,7 +375,6 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                     }
                 });
     }
-
 
 
     /**

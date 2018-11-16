@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.api.ApiPath;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
@@ -58,7 +59,8 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
     private View viewDividerRepeatPass;
     private View viewDividerPassHint;
 
-    private ScrollView scrollViewCreateWallet;
+    //private ScrollView scrollViewCreateWallet;
+    private CommonRefreshLayout mRefreshLayout;
     private TextView tvWalletName;
     private ImageView ivWalletNameClear;
     private ImageView ivSetPassClear;
@@ -91,7 +93,9 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
         configBean = (ImportWalletConfigBean) getIntent().getSerializableExtra(WalletManageConst.KEY_IMPORT_WALLET_CONFIG);
         //LoggerManager.d("configBean="+configBean);
 
-        scrollViewCreateWallet = (ScrollView) findViewById(R.id.scroll_create_wallet);
+        mRefreshLayout = findViewById(R.id.view_root_refresh);
+        mRefreshLayout.setEnablePureScrollMode(true);
+        //scrollViewCreateWallet = (ScrollView) findViewById(R.id.scroll_create_wallet);
         tvWalletName = (TextView) findViewById(R.id.tv_wallet_name);
         edtWalletName = (EditText) findViewById(R.id.edt_wallet_name);
         ivWalletNameClear = (ImageView) findViewById(R.id.iv_wallet_name_clear);
@@ -238,7 +242,7 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        SoftHideKeyBoardUtil.assistActivity(this);
+        //SoftHideKeyBoardUtil.assistActivity(this);
         isMask = true;
         initView();
 
@@ -519,7 +523,7 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
         });
 
 
-        OverScrollDecoratorHelper.setUpOverScroll(scrollViewCreateWallet);
+        //OverScrollDecoratorHelper.setUpOverScroll(scrollViewCreateWallet);
 
     }
 

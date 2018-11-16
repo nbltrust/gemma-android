@@ -15,10 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
@@ -27,6 +27,8 @@ import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
+import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
+import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ChangeAccountEvent;
@@ -36,8 +38,6 @@ import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
-import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
-import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
@@ -65,7 +65,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import seed39.Seed39;
 
 /**
@@ -108,9 +107,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @BindView(R.id.et_note) EditTextWithScrollView etNote;
     @BindView(R.id.iv_transfer_memo_clear) ImageView ivTransferMemoClear;
     @BindView(R.id.btn_transfer_nextStep) Button btnTransferNextStep;
-    @BindView(R.id.root_scrollview) ScrollView rootScrollview;
+    //@BindView(R.id.root_scrollview) ScrollView rootScrollview;
     @BindView(R.id.iv_transfer_account_clear) ImageView ivTransferAccountClear;
     @BindView(R.id.view_receiver_account) LinearLayout viewReceiverAccount;
+    @BindView(R.id.root_refresh_layout) CommonRefreshLayout rootRefreshLayout;
     private TransferTransactionVO transactionVO;
     private String maxValue = "";
     private String currentEOSName = "";
@@ -256,12 +256,14 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
 
+        rootRefreshLayout.setEnablePureScrollMode(true);
+
         etReceiverAccount.setText("");
         etAmount.setText("");
         etNote.setText("");
         getP().requestBanlanceInfo();
 
-        OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
+        //OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
 
         deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
         m_uiLock = new ReentrantLock();
@@ -524,7 +526,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     public void onValidateSuccess(String password) {
                         //密码正确，执行转账逻辑
                         String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
-                        String privateKey  = Seed39.keyDecrypt(password, saved_pri_key);
+                        String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
                         getP().executeTransferLogic(wallet.getEosWalletEntities().get(0)
                                         .getCurrentEosName(),
                                 collectionAccount, amount, memo, privateKey);

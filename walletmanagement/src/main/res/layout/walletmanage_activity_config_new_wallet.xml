@@ -11,210 +11,218 @@
         layout="@layout/ui_navibar">
     </include>
 
-
-    <ScrollView
-        android:id="@+id/scroll_create_wallet"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.cybex.base.view.refresh.CommonRefreshLayout
+        android:id="@+id/view_root_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <LinearLayout
+        <!--
+        <ScrollView
+            android:id="@+id/scroll_create_wallet"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+            -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-                <TextView
-                    android:id="@+id/tv_wallet_name"
-                    style="@style/walletmanage_text_title_config_wallet"
-                    android:text="@string/walletmanage_title_wallet_name"/>
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    >
 
-                    <EditText
-                        android:id="@+id/edt_wallet_name"
-                        style="@style/walletmanage_editText_config_wallet"
-                        android:layout_weight="1"
-                        android:inputType="text"
-                        android:hint="@string/walletmanage_tip_walletname_hint"/>
-
-                    <ImageView
-                        android:id="@+id/iv_wallet_name_clear"
-                        style="@style/clear_icon_common"
-                        android:layout_marginEnd="@dimen/common_page_content_padding"/>
-
-                </LinearLayout>
-
-
-                <View
-                    android:id="@+id/view_divider_eosName"
-                    style="@style/common_divider_withpadding">
-                </View>
-
-
-                <TextView
-                    android:id="@+id/tv_set_pass"
-                    style="@style/walletmanage_text_title_config_wallet"
-                    android:text="@string/walletmanage_tip_set_password"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/edt_set_pass"
-                        style="@style/walletmanage_editText_config_wallet"
-                        android:layout_weight="1"
-                        android:hint="@string/walletmanage_tip_input_password"
-                        android:inputType="textPassword"/>
+                    <TextView
+                        android:id="@+id/tv_wallet_name"
+                        style="@style/walletmanage_text_title_config_wallet"
+                        android:text="@string/walletmanage_title_wallet_name"/>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <ImageView
-                            android:id="@+id/iv_set_pass_clear"
-                            style="@style/clear_icon_common"/>
+
+                        <EditText
+                            android:id="@+id/edt_wallet_name"
+                            style="@style/walletmanage_editText_config_wallet"
+                            android:layout_weight="1"
+                            android:inputType="text"
+                            android:hint="@string/walletmanage_tip_walletname_hint"/>
 
                         <ImageView
-                            android:id="@+id/iv_set_pass_mask"
-                            style="@style/mask_icon_common"/>
+                            android:id="@+id/iv_wallet_name_clear"
+                            style="@style/clear_icon_common"
+                            android:layout_marginEnd="@dimen/common_page_content_padding"/>
 
                     </LinearLayout>
 
-                </LinearLayout>
 
-                <View
-                    android:id="@+id/view_divider_setPass"
-                    style="@style/common_divider_withpadding">
-                </View>
+                    <View
+                        android:id="@+id/view_divider_eosName"
+                        style="@style/common_divider_withpadding">
+                    </View>
 
 
-                <TextView
-                    android:id="@+id/tv_repeat_pass"
-                    style="@style/walletmanage_text_title_config_wallet"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:text="@string/walletmanage_tip_repeat_pass"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/et_repeat_pass"
-                        style="@style/walletmanage_editText_config_wallet"
-                        android:layout_weight="1"
-                        android:hint="@string/walletmanage_tip_repeat_password"
-                        android:inputType="textPassword"/>
+                    <TextView
+                        android:id="@+id/tv_set_pass"
+                        style="@style/walletmanage_text_title_config_wallet"
+                        android:text="@string/walletmanage_tip_set_password"/>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/iv_repeat_pass_clear"
-                            style="@style/clear_icon_common"/>
+                        <EditText
+                            android:id="@+id/edt_set_pass"
+                            style="@style/walletmanage_editText_config_wallet"
+                            android:layout_weight="1"
+                            android:hint="@string/walletmanage_tip_input_password"
+                            android:inputType="textPassword"/>
 
-                        <ImageView
-                            android:id="@+id/iv_repeat_pass_mask"
-                            style="@style/mask_icon_common"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:id="@+id/iv_set_pass_clear"
+                                style="@style/clear_icon_common"/>
+
+                            <ImageView
+                                android:id="@+id/iv_set_pass_mask"
+                                style="@style/mask_icon_common"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
+                    <View
+                        android:id="@+id/view_divider_setPass"
+                        style="@style/common_divider_withpadding">
+                    </View>
+
+
+                    <TextView
+                        android:id="@+id/tv_repeat_pass"
+                        style="@style/walletmanage_text_title_config_wallet"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:text="@string/walletmanage_tip_repeat_pass"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/et_repeat_pass"
+                            style="@style/walletmanage_editText_config_wallet"
+                            android:layout_weight="1"
+                            android:hint="@string/walletmanage_tip_repeat_password"
+                            android:inputType="textPassword"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/iv_repeat_pass_clear"
+                                style="@style/clear_icon_common"/>
+
+                            <ImageView
+                                android:id="@+id/iv_repeat_pass_mask"
+                                style="@style/mask_icon_common"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/view_divider_repeatPass"
+                        style="@style/common_divider_withpadding">
+                    </View>
+
+
+                    <TextView
+                        android:id="@+id/tv_pass_hint"
+                        style="@style/walletmanage_text_title_config_wallet"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:text="@string/walletmanage_title_password_hint"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/edt_pass_hint"
+                            style="@style/walletmanage_editText_config_wallet"
+                            android:layout_weight="1"
+                            android:hint="@string/walletmanage_tip_input_password_hint"/>
+
+                        <ImageView
+                            android:id="@+id/iv_pass_hint_clear"
+                            style="@style/clear_icon_common"
+                            android:layout_marginEnd="@dimen/common_page_content_padding"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view_divider_pass_hint"
+                        style="@style/common_divider_withpadding">
+                    </View>
+
                 </LinearLayout>
 
-
-                <View
-                    android:id="@+id/view_divider_repeatPass"
-                    style="@style/common_divider_withpadding">
-                </View>
-
-
-                <TextView
-                    android:id="@+id/tv_pass_hint"
-                    style="@style/walletmanage_text_title_config_wallet"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:text="@string/walletmanage_title_password_hint"/>
 
                 <LinearLayout
+                    android:id="@+id/layout_checkBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="@dimen/walletmanage_checkBox_marginTop"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/edt_pass_hint"
-                        style="@style/walletmanage_editText_config_wallet"
-                        android:layout_weight="1"
-                        android:hint="@string/walletmanage_tip_input_password_hint"/>
+                    <CheckBox
+                        android:id="@+id/checkbox_config"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/walletmanage_checkBox_length"
+                        android:text="@string/walletmanage_tip_agree"
+                        android:textColor="@color/grey_content"
+                        android:textSize="@dimen/font_3.5"
+                        android:gravity="center_vertical"
+                        android:theme="@style/myCheckBox"/>
 
-                    <ImageView
-                        android:id="@+id/iv_pass_hint_clear"
-                        style="@style/clear_icon_common"
-                        android:layout_marginEnd="@dimen/common_page_content_padding"/>
-
+                    <TextView
+                        android:id="@+id/tv_service_agreement_config"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/walletmanage_tip_terms_of_service"
+                        android:textColor="@color/black_content"
+                        android:layout_marginLeft="6dp"
+                        android:textSize="@dimen/font_3.5"
+                        />
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/view_divider_pass_hint"
-                    style="@style/common_divider_withpadding">
-                </View>
 
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/layout_checkBox"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="@dimen/walletmanage_checkBox_marginTop"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/checkbox_config"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/walletmanage_checkBox_length"
-                    android:text="@string/walletmanage_tip_agree"
-                    android:textColor="@color/grey_content"
-                    android:textSize="@dimen/font_3.5"
-                    android:gravity="center_vertical"
-                    android:theme="@style/myCheckBox"/>
-
-                <TextView
-                    android:id="@+id/tv_service_agreement_config"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/walletmanage_tip_terms_of_service"
-                    android:textColor="@color/black_content"
-                    android:layout_marginLeft="6dp"
-                    android:textSize="@dimen/font_3.5"
+                <Button
+                    android:id="@+id/bt_finish_import"
+                    android:layout_marginTop="38dp"
+                    style="@style/bt_long_in_linearLayout"
+                    android:layout_marginLeft="@dimen/common_view_margin"
+                    android:layout_marginRight="@dimen/common_view_margin"
+                    android:text="@string/walletmanage_finish_import"
                     />
+
             </LinearLayout>
 
-
-            <Button
-                android:id="@+id/bt_finish_import"
-                android:layout_marginTop="38dp"
-                style="@style/bt_long_in_linearLayout"
-                android:layout_marginLeft="@dimen/common_view_margin"
-                android:layout_marginRight="@dimen/common_view_margin"
-                android:text="@string/walletmanage_finish_import"
-                />
-
-        </LinearLayout>
-
-    </ScrollView>
+        <!--
+        </ScrollView>
+        -->
+    </com.cybex.base.view.refresh.CommonRefreshLayout>
 
 
 </LinearLayout>
