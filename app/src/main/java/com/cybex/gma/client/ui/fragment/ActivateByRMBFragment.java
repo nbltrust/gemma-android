@@ -257,6 +257,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
             public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.tv_cancel:
+                        tvRmbAmount.setText(newPrice + " RMB");
                         dialog.cancel();
                         break;
                     case R.id.tv_ok:

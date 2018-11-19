@@ -268,10 +268,26 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 if ((EmptyUtils.isNotEmpty(getUndelegateCpu()) || EmptyUtils.isNotEmpty(getunDelegateNet()))
                         && !getUndelegateCpu().equals(".") && !getunDelegateNet().equals(".")) {
 
-                    if (EmptyUtils.isNotEmpty(getUndelegateCpu()) || EmptyUtils.isNotEmpty(getunDelegateNet())){
-                        setClickable(btUndelegateCpuNet);
+                    if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
+                        if (Float.valueOf(getUndelegateCpu()) <= 0 || Float.valueOf(getunDelegateNet()) <= 0){
+                            setUnclickable(btUndelegateCpuNet);
+                        }else {
+                            setClickable(btUndelegateCpuNet);
+                        }
+
+                    }else if (EmptyUtils.isEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
+                        //cpu为空,net不为空
+                        if (Float.valueOf(getunDelegateNet()) > 0){
+                            setClickable(btUndelegateCpuNet);
+                        }
+                    }else if (EmptyUtils.isEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())){
+                        //net为空，cpu不为空
+                        if (Float.valueOf(getUndelegateCpu()) > 0){
+                            setClickable(btUndelegateCpuNet);
+                        }
                     }else {
-                        tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
+                        //都为空
+                        tvBalanceNetUndelegate.setText(totalRefundableNet + " EOS");
                         setUnclickable(btUndelegateCpuNet);
                     }
 
@@ -290,10 +306,25 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 if ((EmptyUtils.isNotEmpty(getunDelegateNet()) || EmptyUtils.isNotEmpty(getUndelegateCpu()))
                         && !getunDelegateNet().equals(".") && !getUndelegateCpu().equals(".")) {
 
-                    if (EmptyUtils.isNotEmpty(getunDelegateNet()) || EmptyUtils.isNotEmpty(getUndelegateCpu())){
+                    if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
+                        if (Float.valueOf(getUndelegateCpu()) <= 0 && Float.valueOf(getunDelegateNet()) <= 0){
+                            setUnclickable(btUndelegateCpuNet);
+                        }else {
+                            setClickable(btUndelegateCpuNet);
+                        }
 
-                        setClickable(btUndelegateCpuNet);
+                    }else if (EmptyUtils.isEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())){
+                        //cpu为空,net不为空
+                        if (Float.valueOf(getunDelegateNet()) > 0){
+                            setClickable(btUndelegateCpuNet);
+                        }
+                    }else if (EmptyUtils.isEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())){
+                        //net为空，cpu不为空
+                        if (Float.valueOf(getUndelegateCpu()) > 0){
+                            setClickable(btUndelegateCpuNet);
+                        }
                     }else {
+                        //都为空
                         tvBalanceNetUndelegate.setText(totalRefundableNet + " EOS");
                         setUnclickable(btUndelegateCpuNet);
                     }

@@ -690,6 +690,17 @@
     <string name="eos_token_tip_transfer">输入转账金额，最多%1$s位小数</string>
     <string name="eos_valid_username_digits">12345.qwertyuioplkjhgfdsazxcvbnm</string>
 
+    <string name="eos_activate_by_friend_one">请持有EOS的好友向智能合约</string>
+    <string name="eos_activate_by_friend_two">signupeoseos</string>
+    <string name="eos_activate_by_friend_three">转账</string>
+    <string name="eos_activate_by_friend_four">并须将以下文字作为备注(memo)</string>
+    <string name="eos_activate_by_friend_five">即可完成账户创建。</string>
+
+    <string name="eos_activate_by_exchange_one">请从支持memo功能的交易所向智能合约</string>
+    <string name="eos_activate_by_exchange_two">signupeoseos</string>
+    <string name="eos_activate_by_exchange_three">转账</string>
+    <string name="eos_activate_by_exchange_four">并须将以下文字作为备注(memo)</string>
+    <string name="eos_activate_by_exchange_five">即可完成账户创建。</string>
 
       <!-- ============================我是 EOS模块和非EOS模块不严谨的分割线============================ -->
 

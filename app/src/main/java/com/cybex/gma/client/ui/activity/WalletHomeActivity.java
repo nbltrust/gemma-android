@@ -32,6 +32,7 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.presenter.WalletHomePresenter;
 import com.cybex.gma.client.widget.EosCardView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -200,6 +201,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         if (unbinder != null) {
             unbinder.unbind();
         }
+        dissmisProgressDialog();
     }
 
     @Override
@@ -432,27 +434,43 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     public void showEosBalance(String rawBalance){
         String balance = rawBalance.split(" ")[0];
-        mEosCardView.setEosNumber(Float.valueOf(balance));
-
+        String eosAssetsQuantity = AmountUtil.add(balance, delegatedResourceQuantity, 4);
+        mEosCardView.setEosNumber(Float.valueOf(eosAssetsQuantity));
         if (eosUnitPriceRMB != null){
-            String eosAssetsQuantity = AmountUtil.add(balance, delegatedResourceQuantity, 4);
-            LoggerManager.d("eosAssetsQuantity", eosAssetsQuantity);
-            LoggerManager.d("balance", balance);
-            LoggerManager.d("delegatedResourceQuantity", delegatedResourceQuantity);
-            String eosAssetsValue = AmountUtil.mul(eosAssetsQuantity, eosUnitPriceRMB, 2);
+            String eosAssetsValue = formatCurrency(AmountUtil.mul(eosAssetsQuantity, eosUnitPriceRMB, 2));
             LoggerManager.d("eosAssetsValue",eosAssetsValue);
-            mEosCardView.setTotlePrice(Float.valueOf(eosAssetsValue));
+            mEosCardView.setTotlePrice(eosAssetsValue);
         }
         OkGo.getInstance().cancelAll();
     }
 
     public void clearEosCardView(){
         mEosCardView.setAccountName("");
-        mEosCardView.setTotlePrice(Float.valueOf("0.0000"));
+        mEosCardView.setTotlePrice("0.0000");
         mEosCardView.setEosNumber(Float.valueOf("0.0000"));
         mEosCardView.setTokenList(new ArrayList<>());
         delegatedResourceQuantity = "0";
         eosUnitPriceRMB = "0";
+    }
+
+    /**
+     * 返回每三个位数添加一位逗号的字符串
+     * @param value
+     * @return
+     */
+    public String formatCurrency(String value){
+        String value_int = value.split("\\.")[0];
+        String value_decimal = value.split("\\.")[1];
+        String res = "";
+        for (int i = 0; i < value_int.length();){
+            if (i+3 < value_int.length()){
+                res += value_int.substring(i, i+3) + ",";
+            }else{
+                res += value_int.substring(i, value_int.length());
+            }
+            i += 3;
+        }
+        return res + "." + value_decimal;
     }
 
 }

@@ -57,6 +57,7 @@ import com.tapadoo.alerter.Alerter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -383,18 +384,18 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         switch (savedCurrency) {
             case CacheConstants.CURRENCY_CNY:
                 tvCurrencyType.setText("≈ ¥ ");
-                tvEosValue.setText(" ≈ " + totalCNY);
-                totalCNYAmount.setText(totalCNY);
+                tvEosValue.setText(" ≈ " + balance);
+                totalCNYAmount.setText(getP().formatCurrency(totalCNY));
                 break;
             case CacheConstants.CURRENCY_USD:
                 tvCurrencyType.setText("≈ $ ");
                 totalCNYAmount.setText(" ≈ " + totalUSD);
-                tvEosValue.setText(totalUSD);
+                tvEosValue.setText(balance);
                 break;
             default:
                 tvCurrencyType.setText("≈ ¥ ");
-                tvEosValue.setText(" ≈ " + totalCNY);
-                totalCNYAmount.setText(totalCNY);
+                tvEosValue.setText(balance);
+                totalCNYAmount.setText(getP().formatCurrency(totalCNY));
                 break;
         }
 
@@ -611,6 +612,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
      * 展示Tokens
      */
     public void showTokens(List<EosTokenVO> eosTokens) {
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager
                 .VERTICAL, false);
         recyclerTokenList.setLayoutManager(layoutManager);

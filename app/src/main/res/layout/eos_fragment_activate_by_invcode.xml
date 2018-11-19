@@ -21,7 +21,6 @@
             android:hint="@string/eos_tip_input_inv_code"
             android:textColorHint="@color/very_light_pink"
             android:textColor="@color/black_context"
-            android:paddingStart="@dimen/dimen_20"
             android:paddingTop="@dimen/dimen_5"
             android:paddingBottom="@dimen/dimen_5"
             android:layout_height="@dimen/dimen_50"
@@ -30,7 +29,7 @@
             />
 
         <TextView
-            android:layout_marginEnd="20dp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -42,8 +41,8 @@
     </LinearLayout>
 
     <View
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         style="@style/common_divider">
 
     </View>
@@ -54,7 +53,7 @@
         style="@style/bt_long_in_linearLayout"
         android:textSize="@dimen/font_3.5"
         android:layout_marginTop="@dimen/dimen_30"
-        android:layout_marginStart="@dimen/dimen_50"
-        android:layout_marginEnd="@dimen/dimen_50"/>
+        android:layout_marginStart="@dimen/dimen_36"
+        android:layout_marginEnd="@dimen/dimen_36"/>
 
 </LinearLayout>

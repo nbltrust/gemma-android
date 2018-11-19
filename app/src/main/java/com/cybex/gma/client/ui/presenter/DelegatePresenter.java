@@ -123,7 +123,7 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
-                        getV().dissmisProgressDialog();
+                        //getV().dissmisProgressDialog();
 
                     }
                 });
@@ -188,7 +188,7 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                         }
-                        getV().dissmisProgressDialog();
+                        //getV().dissmisProgressDialog();
 
                     }
                 });

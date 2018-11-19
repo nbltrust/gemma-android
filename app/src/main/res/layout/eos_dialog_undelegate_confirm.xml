@@ -35,7 +35,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_refund_username"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
 
             <TextView
@@ -46,7 +46,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
                 android:textColor="@color/black_title"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_4"
+                android:textStyle="bold"
                 tools:text="0.0001 EOS"/>
         </RelativeLayout>
 
@@ -68,7 +69,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_fund"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
 
             <TextView
@@ -84,13 +85,13 @@
 
             <TextView
                 android:id="@+id/tv_dialog_unDelegate_amount"
-                android:textSize="@dimen/font_4"
+                android:textSize="@dimen/font_3"
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginEnd="16dp"
                 android:text=" EOS"
-                android:textColor="@color/black_context"
+                android:textColor="@color/black_title"
                 android:layout_height="wrap_content"/>
 
 
@@ -116,7 +117,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_memo"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
 
             <TextView
@@ -146,7 +147,7 @@
     <Button
         android:id="@+id/btn_confirm_refund"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"

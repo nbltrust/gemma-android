@@ -7,11 +7,12 @@
               android:background="@color/whiteTwo"
               android:orientation="vertical">
 
+    <!--
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dimen_40"
-        android:layout_marginStart="@dimen/dimen_36"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_36"
         android:orientation="horizontal">
 
@@ -34,23 +35,36 @@
     </LinearLayout>
 
     <TextView
-        android:layout_marginEnd="@dimen/dimen_40"
-        android:layout_marginStart="@dimen/dimen_36"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
         android:id="@+id/tv_tip_mid_exchange_part_three"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@string/eos_tip_activate_by_exchange_part_three"
         android:textColor="@color/black_context"
         android:textSize="@dimen/font_4"/>
+        -->
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="28dp"
+        android:textColor="@color/black_context"
+        android:textSize="@dimen/font_4"
+        android:id="@+id/tv_text_above_ex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dimen_30"
-        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_20"
         android:background="@drawable/shape_corner"
-        android:padding="@dimen/dimen_10">
+        android:padding="@dimen/dimen_16">
 
         <TextView
             android:id="@+id/tv_show_memo_area"
@@ -64,7 +78,6 @@ fb99aa426ef9656e16889012b"
             />
 
         <Button
-            android:layout_margin="5dp"
             android:id="@+id/bt_click_to_copy_memo"
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_20"
@@ -83,8 +96,8 @@ fb99aa426ef9656e16889012b"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black_context"
-        android:layout_marginEnd="@dimen/dimen_40"
-        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_20"
         android:text="@string/eos_tip_use_eos_to_activate"
         android:textSize="@dimen/font_4"/>

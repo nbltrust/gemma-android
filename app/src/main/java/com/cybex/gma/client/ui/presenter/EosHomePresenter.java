@@ -482,4 +482,24 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
         return voList;
     }
 
+    /**
+     * 返回每三个位数添加一位逗号的字符串
+     * @param value
+     * @return
+     */
+    public String formatCurrency(String value){
+        String value_int = value.split("\\.")[0];
+        String value_decimal = value.split("\\.")[1];
+        String res = "";
+        for (int i = 0; i < value_int.length();){
+            if (i+3 < value_int.length()){
+                res += value_int.substring(i, i+3) + ",";
+            }else{
+                res += value_int.substring(i, value_int.length());
+            }
+            i += 3;
+        }
+        return res + "." + value_decimal;
+    }
+
 }

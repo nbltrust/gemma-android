@@ -61,7 +61,6 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                     @Override
                     public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
                         if (getV() != null){
-                            getV().dissmisProgressDialog();
 
                             if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
                                 UserRegisterResult registerResult = data.result;
@@ -73,16 +72,17 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                                     UISkipMananger.launchHome(getV().getActivity());
                                 }
                             } else {
+                                AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_tip_check_network));
                                 LoggerManager.d("err");
                             }
                         }
-
+                        getV().dissmisProgressDialog();
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         if (getV() != null){
-                            AlertUtil.showShortUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_create_fail));
+                            AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_tip_check_network));
                             getV().dissmisProgressDialog();
                         }
                     }
