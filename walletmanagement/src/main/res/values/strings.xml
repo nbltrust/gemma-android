@@ -291,6 +291,12 @@
     <!--wallet manage home -->
     <string name="walletmanage_create_wallet">创建钱包</string>
     <string name="walletmanage_connect_wookong_bio">配对 WOOKONG Bio</string>
+    <string name="walletmanage_formating">正在格式化</string>
+    <string name="walletmanage_format_fail">格式化失败</string>
+    <string name="walletmanage_loading">正在加载</string>
+    <string name="walletmanage_manage_fp">管理指纹</string>
+    <string name="walletmanage_fp_delete_success">指纹删除成功</string>
+    <string name="walletmanage_fp_delete_fail">指纹删除失败</string>
 
 
 </resources>

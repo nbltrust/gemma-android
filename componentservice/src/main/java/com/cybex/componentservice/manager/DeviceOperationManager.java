@@ -34,6 +34,8 @@ public class DeviceOperationManager {
     private DeviceOperationManager() {
     }
 
+
+
     public static class SingleTon {
         public static DeviceOperationManager instance = new DeviceOperationManager();
     }
@@ -169,6 +171,35 @@ public class DeviceOperationManager {
         }
     }
 
+    public void pressConfirm(String tag, String deviceName, PressConfirmCallback pressConfirmCallback) {
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.pressConfirmCallback = pressConfirmCallback;
+
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+        if ((deviceComm.confirmThread == null) || (deviceComm.confirmThread.getState() == Thread.State.TERMINATED)) {
+            deviceComm.confirmThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+
+            //todo
+            deviceComm.confirmThread.setAbortFPWrapper(deviceComm.contextHandle,
+                    0);
+            deviceComm.confirmThread.start();
+        }
+    }
+
+
+
     public void startVerifyFP(String tag, String deviceName, DeviceVerifyFPCallback verifyFPCallback) {
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
         if (deviceCallbacks == null) {
@@ -297,6 +328,32 @@ public class DeviceOperationManager {
     }
 
 
+    public void verifyPin(String tag, String deviceName, String password, VerifyPinCallback verifyPinCallback) {
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.verifyPinCallback = verifyPinCallback;
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+        if ((deviceComm.verifyPinThread == null) || (deviceComm.verifyPinThread.getState() == Thread.State.TERMINATED)) {
+            deviceComm.verifyPinThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+            deviceComm.verifyPinThread.setVerifyPINWrapper(deviceComm.contextHandle,
+                    0, password);
+            deviceComm.verifyPinThread.start();
+        }
+
+    }
+
+
     /**
      * 调用中间件setGenerateSeedGetMnesWrapper来产生种子并由种子生成助记词
      */
@@ -338,6 +395,58 @@ public class DeviceOperationManager {
     }
 
 
+    public void getFPList(String tag, String deviceName, GetFPListCallback getFPListCallback){
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.getFPListCallback = getFPListCallback;
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+        if ((deviceComm.getFPListThread == null) || (deviceComm.getFPListThread.getState() == Thread.State.TERMINATED)) {
+            deviceComm.getFPListThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+            deviceComm.getFPListThread.setGetFPListWrapper(deviceComm.contextHandle,
+                    0);
+            deviceComm.getFPListThread.start();
+        }
+    }
+
+
+    public void deleteFp(String tag, String deviceName, MiddlewareInterface.FingerPrintID[] fpList,DeleteFPCallback deleteFPCallback) {
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.deleteFPCallback = deleteFPCallback;
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+        if ((deviceComm.deleteFPThread == null) || (deviceComm.deleteFPThread.getState() == Thread.State.TERMINATED)) {
+            deviceComm.deleteFPThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+            deviceComm.deleteFPThread.setDeleteFPWrapper(deviceComm.contextHandle,
+                    0,fpList);
+            deviceComm.deleteFPThread.start();
+        }
+
+
+    }
+
+
     public interface DeviceConnectCallback {
         void onConnectStart();
 
@@ -352,6 +461,11 @@ public class DeviceOperationManager {
         void onFormatSuccess();
 
         void onFormatFailed();
+    }
+
+    public interface PressConfirmCallback {
+        void onConfirmSuccess();
+        void onConfirmFailed();
     }
 
     public interface DeviceVerifyFPCallback {
@@ -402,10 +516,28 @@ public class DeviceOperationManager {
         void onInitFail();
     }
 
+    public interface VerifyPinCallback {
+        void onVerifySuccess();
+
+        void onVerifyFail();
+    }
+
     public interface GenerateMnemonicCallback {
         void onGenerateSuccess(BlueToothWrapper.GenSeedMnesReturnValue mnemonic);
 
         void onGenerateFail();
+    }
+
+
+    public interface GetFPListCallback {
+        void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue);
+
+        void onFail();
+    }
+
+    public interface DeleteFPCallback {
+        void onSuccess();
+        void onFail();
     }
 
 
@@ -512,6 +644,31 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag).initPinCallback != null)
                                 callbackMaps.get(tag).initPinCallback.onInitFail();
+                        }
+                    }
+                    break;
+
+            //verify pin
+                case BlueToothWrapper.MSG_VERIFY_PIN_START:
+                    LoggerManager.d("MSG_VERIFY_PIN_START");
+                    //设置PIN
+                    break;
+                case BlueToothWrapper.MSG_VERIFY_PIN_FINISH:
+                    LoggerManager.d("MSG_VERIFY_PIN_FINISH status=" + msg.arg1);
+                    //已完成设置PIN
+                    if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).verifyPinCallback != null)
+                                callbackMaps.get(tag).verifyPinCallback.onVerifySuccess();
+                        }
+                    } else {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).verifyPinCallback != null)
+                                callbackMaps.get(tag).verifyPinCallback.onVerifyFail();
                         }
                     }
                     break;
@@ -800,6 +957,61 @@ public class DeviceOperationManager {
 //                    dissmisProgressDialog();
 
                     break;
+
+
+
+                    //get fp list
+                case BlueToothWrapper.MSG_GET_FP_LIST_START:
+                    LoggerManager.d("MSG_GET_FP_LIST_START");
+                    break;
+                case BlueToothWrapper.MSG_GET_FP_LIST_FINISH:
+                    BlueToothWrapper.GetFPListReturnValue fpListReturnValue = (BlueToothWrapper.GetFPListReturnValue) msg.obj;
+                    LoggerManager.d("MSG_GET_FP_LIST_FINISH  state="+MiddlewareInterface.getReturnString(fpListReturnValue.getReturnValue()));
+                    if (fpListReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).getFPListCallback != null)
+                                callbackMaps.get(tag).getFPListCallback.onSuccess(fpListReturnValue);
+                        }
+                        //获取指纹信息成功
+                        MiddlewareInterface.FingerPrintID[] fpList = fpListReturnValue.getFPList();
+                        for (int i = 0; i < fpListReturnValue.getFPCount(); i++) {
+                            LoggerManager.d("FP Index: " + CommonUtility.byte2hex(fpList[i].data));
+                        }
+                    }else{
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).getFPListCallback != null)
+                                callbackMaps.get(tag).getFPListCallback.onFail();
+                        }
+                    }
+                    break;
+
+
+                    //delete fp
+                case BlueToothWrapper.MSG_DELETE_FP_FINISH:
+                    int deleteRtValue = msg.arg1;
+                    LoggerManager.d("MSG_DELETE_FP_FINISH  rtValue=" + MiddlewareInterface.getReturnString(deleteRtValue));
+                    if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).deleteFPCallback != null)
+                                callbackMaps.get(tag).deleteFPCallback.onSuccess();
+                        }
+                    } else {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).deleteFPCallback != null)
+                                callbackMaps.get(tag).deleteFPCallback.onFail();
+                        }
+                    }
+                    break;
+
+
                 default:
                     break;
             }
@@ -815,12 +1027,16 @@ public class DeviceOperationManager {
         BlueToothWrapper connectThread;
         BlueToothWrapper getDeviceInfoThread;
         BlueToothWrapper formatThread;
+        BlueToothWrapper confirmThread;
         BlueToothWrapper verifyFPThread;
         BlueToothWrapper freeContextThread;
         BlueToothWrapper enrollFPThread;
         BlueToothWrapper jsonSerializeThread;
         BlueToothWrapper initPinThread;
+        BlueToothWrapper verifyPinThread;
         BlueToothWrapper generateMnemonicThread;
+        BlueToothWrapper getFPListThread;
+        BlueToothWrapper deleteFPThread;
 
 
         public DeviceComm(String deviceName) {
@@ -831,6 +1047,7 @@ public class DeviceOperationManager {
     class DeviceCallbacsBean {
         DeviceConnectCallback connectCallback;
         DeviceFormatCallback formatCallback;
+        PressConfirmCallback pressConfirmCallback;
         DeviceVerifyFPCallback verifyFPCallback;
         FreeContextCallback freeContextCallback;
         EnrollFPCallback enrollFPCallback;
@@ -838,7 +1055,10 @@ public class DeviceOperationManager {
         ScanDeviceCallback scanDeviceCallback;
         GetDeviceInfoCallback getDeviceInfoCallback;
         InitPinCallback initPinCallback;
+        VerifyPinCallback verifyPinCallback;
         GenerateMnemonicCallback generateMnemonicCallback;
+        GetFPListCallback getFPListCallback;
+        DeleteFPCallback deleteFPCallback;
     }
 
 

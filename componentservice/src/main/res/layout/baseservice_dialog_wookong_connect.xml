@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="176dp"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp">
+
+        <ImageView
+            android:id="@+id/baseservice_connect_close"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back" />
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/baseservice_connect_loading"
+            style="@style/SpinKitView.Circle"
+            app:SpinKit_Color="@color/very_light_pink"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="20dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/baseservice_connect_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/baseservice_wookong_connect_tip"
+        android:textColor="@color/black_context"
+        android:textSize="@dimen/font_4" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <Button
+            android:id="@+id/baseservice_connect_reconnect"
+            android:layout_width="match_parent"
+            style="@style/bt_long_in_linearLayout"
+            android:layout_marginLeft="@dimen/common_view_margin"
+            android:layout_marginRight="@dimen/common_view_margin"
+            android:text="@string/baseservice_reconnect"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:id="@+id/baseservice_connect_tv_connecting"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_4"
+            android:textColor="@color/black_content"
+            android:text="@string/baseservice_wookong_bio_connecting"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

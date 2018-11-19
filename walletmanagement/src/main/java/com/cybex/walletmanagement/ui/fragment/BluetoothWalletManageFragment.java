@@ -11,9 +11,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
+import com.cybex.componentservice.utils.PasswordValidateHelper;
+import com.cybex.componentservice.utils.WookongBioPswValidateHelper;
+import com.cybex.componentservice.utils.WookongConnectHelper;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.config.WalletManageConst;
@@ -46,19 +53,21 @@ public class BluetoothWalletManageFragment extends XFragment {
     Button btDisconnect;
     TextView tvConnectionStatus;
 
-    private BlueToothWrapper connectThread;
-    private BlueToothWrapper getAddressThread;
-    private BlueToothWrapper disconnectThread;
-    private long mContextHandle;
-    private ConnectHandler mConnectHandler;
-    private String publicKey;
-    //private String deviceName = "";
-    private String deviceName = "WOOKONG BIO####ED:C1:FF:D5:9C:FA";
+//    private BlueToothWrapper connectThread;
+//    private BlueToothWrapper getAddressThread;
+//    private BlueToothWrapper disconnectThread;
+//    private long mContextHandle;
+//    private ConnectHandler mConnectHandler;
+//    private String publicKey;
+//    private String deviceName = "WOOKONG BIO####ED:C1:FF:D5:9C:FA";
+    private MultiWalletEntity multiWalletEntity ;
     //private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
     @Override
     public void bindUI(View rootView) {
         setNavibarTitle(getString(R.string.walletmanage_title_wooKong_bio), true);
+
+
 
         if (getActivity() != null){
             btnNavibar = getActivity().findViewById(R.id.btn_navibar);
@@ -77,11 +86,11 @@ public class BluetoothWalletManageFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        deviceName = SPUtils.getInstance().getString(WalletManageConst.DEVICE_NAME);
 
+        multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList().get(0);
         checkConnection();
-        mConnectHandler = new ConnectHandler();
-        deviceName = SPUtils.getInstance().getString(WalletManageConst.DEVICE_NAME);
+//        mConnectHandler = new ConnectHandler();
+//        deviceName = SPUtils.getInstance().getString(WalletManageConst.DEVICE_NAME);
 
         //连接
         btClickToConnect.setOnClickListener(new View.OnClickListener() {
@@ -89,12 +98,27 @@ public class BluetoothWalletManageFragment extends XFragment {
             public void onClick(View v) {
                 showProgressDialog("connecting");
 
-                if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
-                    connectThread = new BlueToothWrapper(mConnectHandler);
-                    connectThread.setInitContextWithDevNameWrapper(getActivity(),
-                            deviceName);
-                    connectThread.start();
-                }
+//                if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
+//                    connectThread = new BlueToothWrapper(mConnectHandler);
+//                    connectThread.setInitContextWithDevNameWrapper(getActivity(),
+//                            deviceName);
+//                    connectThread.start();
+//                }
+
+                WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(multiWalletEntity, getActivity());
+                wookongConnectHelper.startConnectDevice(new WookongConnectHelper.ConnectWookongBioCallback() {
+                    @Override
+                    public void onConnectSuccess() {
+                        //更换展示UI
+                        showConnectedLayout();
+                    }
+
+                    @Override
+                    public void onConnectFail() {
+
+                    }
+                });
+
             }
         });
 
@@ -102,13 +126,31 @@ public class BluetoothWalletManageFragment extends XFragment {
         btDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((disconnectThread == null) || (disconnectThread.getState() == Thread.State.TERMINATED))
-                {
-                    disconnectThread = new BlueToothWrapper(mConnectHandler);
-                    LoggerManager.d("mContextHandle", mContextHandle);
-                    disconnectThread.setFreeContextWrapper(mContextHandle);
-                    disconnectThread.start();
-                }
+//                if ((disconnectThread == null) || (disconnectThread.getState() == Thread.State.TERMINATED))
+//                {
+//                    disconnectThread = new BlueToothWrapper(mConnectHandler);
+//                    LoggerManager.d("mContextHandle", mContextHandle);
+//                    disconnectThread.setFreeContextWrapper(mContextHandle);
+//                    disconnectThread.start();
+//                }
+
+
+                DeviceOperationManager.getInstance().freeContext(BluetoothWalletManageFragment.this.toString(), multiWalletEntity.getBluetoothDeviceName(), new DeviceOperationManager.FreeContextCallback() {
+                    @Override
+                    public void onFreeStart() {
+
+                    }
+
+                    @Override
+                    public void onFreeSuccess() {
+                        showDisconnectedLayout();
+                    }
+
+                    @Override
+                    public void onFreeFailed() {
+                        LoggerManager.d("onFreeFailed");
+                    }
+                });
             }
         });
 
@@ -116,7 +158,20 @@ public class BluetoothWalletManageFragment extends XFragment {
         superTextViewChangePass.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
             @Override
             public void onClickListener(SuperTextView superTextView) {
-                start(BluetoothFPAndPasswordFragment.newInstance());
+
+                //first verify pin
+                WookongBioPswValidateHelper wookongBioPswValidateHelper = new WookongBioPswValidateHelper(multiWalletEntity, getActivity());
+                wookongBioPswValidateHelper.startValidatePassword(new WookongBioPswValidateHelper.PasswordValidateCallback() {
+                    @Override
+                    public void onValidateSuccess(String password) {
+                        start(BluetoothFPAndPasswordFragment.newInstance());
+                    }
+
+                    @Override
+                    public void onValidateFail(int failedCount) {
+
+                    }
+                });
             }
         });
 
@@ -140,10 +195,10 @@ public class BluetoothWalletManageFragment extends XFragment {
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onContextHandleRecieved(ContextHandleEvent event){
-        mContextHandle = event.getContextHanle();
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+//    public void onContextHandleRecieved(ContextHandleEvent event){
+//        mContextHandle = event.getContextHanle();
+//    }
 
     /**
      * 显示蓝牙卡连接时UI
@@ -169,72 +224,81 @@ public class BluetoothWalletManageFragment extends XFragment {
      * 每次进入页面检查是否连接
      */
     public void checkConnection(){
-        int status = SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS);
-        LoggerManager.d("status", status);
-        switch (status){
-            case CacheConstants.STATUS_BLUETOOTH_CONNCETED:
-                showConnectedLayout();
-                break;
-            case CacheConstants.STATUS_BLUETOOTH_DISCONNCETED:
-                showDisconnectedLayout();
-                break;
-            default:
-                showDisconnectedLayout();
+//        int status = SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS);
+//        LoggerManager.d("status", status);
+//        switch (status){
+//            case CacheConstants.STATUS_BLUETOOTH_CONNCETED:
+//                showConnectedLayout();
+//                break;
+//            case CacheConstants.STATUS_BLUETOOTH_DISCONNCETED:
+//                showDisconnectedLayout();
+//                break;
+//            default:
+//                showDisconnectedLayout();
+//        }
+
+        //check status
+        boolean isConnected = DeviceOperationManager.getInstance().isDeviceConnectted(multiWalletEntity.getBluetoothDeviceName());
+        if(isConnected){
+            showConnectedLayout();
+        }else{
+            showDisconnectedLayout();
         }
+
     }
 
-    class ConnectHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case BlueToothWrapper.MSG_INIT_CONTEXT_START:
-                    LoggerManager.d("MSG_INIT_CONTEXT_START");
-                    break;
-                case BlueToothWrapper.MSG_INIT_CONTEXT_FINISH:
-                    //连接流程完成
-                    LoggerManager.d("MSG_INIT_CONTEXT_FINISH");
-                    BlueToothWrapper.InitContextReturnValue returnValue = (BlueToothWrapper.InitContextReturnValue) msg.obj;
-                    if ((returnValue != null) && (returnValue.getReturnValue()
-                            == MiddlewareInterface.PAEW_RET_SUCCESS)) {
-                        //连接成功
-                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
-
-                        //post 设备句柄
-                        mContextHandle = returnValue.getContextHandle();
-                        ContextHandleEvent event = new ContextHandleEvent();
-                        event.setContextHanle(mContextHandle);
-                        EventBusProvider.postSticky(event);
-                        //更换展示UI
-                        showConnectedLayout();
-
-                    } else {
-                        //连接超时或失败
-                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
-                        dissmisProgressDialog();
-                        AlertUtil.showShortUrgeAlert(getActivity(), "Connect Fail");
-                    }
-
-                    if (connectThread!= null)connectThread.interrupt();
-
-                    break;
-                case BlueToothWrapper.MSG_FREE_CONTEXT_START:
-                    //断开连接流程开始
-                    //LoggerManager.d("MSG_FREE_CONTEXT_START");
-                    break;
-                case BlueToothWrapper.MSG_FREE_CONTEXT_FINISH:
-                    //断开连接流程结束
-                    //BluetoothConnectKeepJob.removeJob();
-                    LoggerManager.d("MSG_FREE_CONTEXT_FINISH");
-                    SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
-                    AlertUtil.showShortUrgeAlert(getActivity(), "Bio Disconnected");
-                    showDisconnectedLayout();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+//    class ConnectHandler extends Handler {
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case BlueToothWrapper.MSG_INIT_CONTEXT_START:
+//                    LoggerManager.d("MSG_INIT_CONTEXT_START");
+//                    break;
+//                case BlueToothWrapper.MSG_INIT_CONTEXT_FINISH:
+//                    //连接流程完成
+//                    LoggerManager.d("MSG_INIT_CONTEXT_FINISH");
+//                    BlueToothWrapper.InitContextReturnValue returnValue = (BlueToothWrapper.InitContextReturnValue) msg.obj;
+//                    if ((returnValue != null) && (returnValue.getReturnValue()
+//                            == MiddlewareInterface.PAEW_RET_SUCCESS)) {
+//                        //连接成功
+//                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_CONNCETED);
+//
+//                        //post 设备句柄
+//                        mContextHandle = returnValue.getContextHandle();
+//                        ContextHandleEvent event = new ContextHandleEvent();
+//                        event.setContextHanle(mContextHandle);
+//                        EventBusProvider.postSticky(event);
+//                        //更换展示UI
+//                        showConnectedLayout();
+//
+//                    } else {
+//                        //连接超时或失败
+//                        SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+//                        dissmisProgressDialog();
+//                        AlertUtil.showShortUrgeAlert(getActivity(), "Connect Fail");
+//                    }
+//
+//                    if (connectThread!= null)connectThread.interrupt();
+//
+//                    break;
+//                case BlueToothWrapper.MSG_FREE_CONTEXT_START:
+//                    //断开连接流程开始
+//                    //LoggerManager.d("MSG_FREE_CONTEXT_START");
+//                    break;
+//                case BlueToothWrapper.MSG_FREE_CONTEXT_FINISH:
+//                    //断开连接流程结束
+//                    //BluetoothConnectKeepJob.removeJob();
+//                    LoggerManager.d("MSG_FREE_CONTEXT_FINISH");
+//                    SPUtils.getInstance().put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
+//                    AlertUtil.showShortUrgeAlert(getActivity(), "Bio Disconnected");
+//                    showDisconnectedLayout();
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    }
 
     @Override
     public boolean useEventBus() {

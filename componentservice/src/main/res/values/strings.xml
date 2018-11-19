@@ -37,4 +37,8 @@
 
     <string name="baseservice_tip_password_hint">密码提示信息</string>
     <string name="baseservice_tip_i_understand">我知道了</string>
+    <string name="baseservice_reconnect">重新连接</string>
+    <string name="baseservice_wookong_bio_connecting">正在连接</string>
+    <string name="baseservice_wookong_connect_tip">若未找到,请检查手机蓝牙和设备电源</string>
+    <string name="baseservice_wookong_connect_error_tip">连接失败,请检查手机蓝牙和设备电源</string>
 </resources>

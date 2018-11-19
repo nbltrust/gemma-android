@@ -9,12 +9,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.walletmanagement.R;
@@ -48,8 +51,8 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
     private long mContextHandle;
     private List<BluetoothFPVO> fingerprints;
     private BluetoothFPManageAdapter mAdapter;
-    private BlueToothWrapper getFpListThread;
-    private ConnectHandler mConnectHandler;
+    //    private BlueToothWrapper getFpListThread;
+//    private ConnectHandler mConnectHandler;
     private MiddlewareInterface.FingerPrintID[] mFpList;
 
     public static BluetoothFPAndPasswordFragment newInstance() {
@@ -98,6 +101,8 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
                     @Override
                     public void onClickListener(SuperTextView superTextView) {
 
+
+
                     }
                 });
 
@@ -106,10 +111,9 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
                 new SuperTextView.OnSuperTextViewClickListener() {
                     @Override
                     public void onClickListener(SuperTextView superTextView) {
-
+                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE).navigation();
                     }
                 });
-
     }
 
     @Override
@@ -140,12 +144,42 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
      * 从蓝牙卡获取指纹列表并显示
      */
     public void initFingerPrintsInfo() {
-        mConnectHandler = new ConnectHandler();
-        if ((getFpListThread == null) || (getFpListThread.getState() == Thread.State.TERMINATED)) {
-            getFpListThread = new BlueToothWrapper(mConnectHandler);
-            getFpListThread.setGetFPListWrapper(mContextHandle, 0);
-            getFpListThread.start();
-        }
+//        mConnectHandler = new ConnectHandler();
+//        if ((getFpListThread == null) || (getFpListThread.getState() == Thread.State.TERMINATED)) {
+//            getFpListThread = new BlueToothWrapper(mConnectHandler);
+//            getFpListThread.setGetFPListWrapper(mContextHandle, 0);
+//            getFpListThread.start();
+//        }
+
+        showProgressDialog(getString(R.string.walletmanage_loading));
+        DeviceOperationManager.getInstance().getFPList(this.toString(), curWallet.getBluetoothDeviceName(), new DeviceOperationManager.GetFPListCallback() {
+            @Override
+            public void onSuccess(BlueToothWrapper.GetFPListReturnValue returnValue) {
+                //获取指纹信息成功
+                MiddlewareInterface.FingerPrintID[] fpList = returnValue.getFPList();
+                int fpCount = returnValue.getFPCount();
+                if (fpCount >= 3) {
+                    hideAddFPCard();
+                } else {
+                    showAddFPCard();
+                }
+                //展示指纹信息
+                dissmisProgressDialog();
+                mFpList = fpList;
+                showFingerprintsInfo(fpCount, mFpList);
+
+//                for (int i = 0; i < returnValue.getFPCount(); i++) {
+//                    LoggerManager.d("FP Index: " + CommonUtility.byte2hex(fpList[i].data));
+//                }
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        });
+
+
     }
 
     /**
@@ -177,50 +211,50 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
                 bundle.putString("fpName", curFpVO.getFingerprintName());
                 bundle.putByteArray("fpIndex", curFpVO.getFingerprintIndex());
 
-                //start(BluetoothManageFPFragment.newInstance(bundle));
+                start(BluetoothManageFPFragment.newInstance(bundle));
 
             }
         });
     }
 
-    class ConnectHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case BlueToothWrapper.MSG_GET_FP_LIST_START:
-                    showProgressDialog("Getting fingerprint info");
-                    //LoggerManager.d("MSG_GET_FP_LIST_START");
-                    break;
-                case BlueToothWrapper.MSG_GET_FP_LIST_FINISH:
-                    LoggerManager.d("MSG_GET_FP_LIST_FINISH");
-                    BlueToothWrapper.GetFPListReturnValue returnValue = (BlueToothWrapper.GetFPListReturnValue) msg.obj;
-                    if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
-                        //获取指纹信息成功
-                        MiddlewareInterface.FingerPrintID[] fpList = returnValue.getFPList();
-                        int fpCount = returnValue.getFPCount();
-                        if (fpCount >= 3) {
-                            hideAddFPCard();
-                        } else {
-                            showAddFPCard();
-                        }
-                        //展示指纹信息
-                        dissmisProgressDialog();
-                        mFpList = fpList;
-                        showFingerprintsInfo(fpCount, mFpList);
-
-                        for (int i = 0; i < returnValue.getFPCount(); i++) {
-                            LoggerManager.d("FP Index: " + CommonUtility.byte2hex(fpList[i].data));
-                        }
-                    }
-                    //LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValue
-                    //.getReturnValue()));
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
+//    class ConnectHandler extends Handler {
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case BlueToothWrapper.MSG_GET_FP_LIST_START:
+//                    showProgressDialog("Getting fingerprint info");
+//                    //LoggerManager.d("MSG_GET_FP_LIST_START");
+//                    break;
+//                case BlueToothWrapper.MSG_GET_FP_LIST_FINISH:
+//                    LoggerManager.d("MSG_GET_FP_LIST_FINISH");
+//                    BlueToothWrapper.GetFPListReturnValue returnValue = (BlueToothWrapper.GetFPListReturnValue) msg.obj;
+//                    if (returnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+//                        //获取指纹信息成功
+//                        MiddlewareInterface.FingerPrintID[] fpList = returnValue.getFPList();
+//                        int fpCount = returnValue.getFPCount();
+//                        if (fpCount >= 3) {
+//                            hideAddFPCard();
+//                        } else {
+//                            showAddFPCard();
+//                        }
+//                        //展示指纹信息
+//                        dissmisProgressDialog();
+//                        mFpList = fpList;
+//                        showFingerprintsInfo(fpCount, mFpList);
+//
+//                        for (int i = 0; i < returnValue.getFPCount(); i++) {
+//                            LoggerManager.d("FP Index: " + CommonUtility.byte2hex(fpList[i].data));
+//                        }
+//                    }
+//                    //LoggerManager.d("Return Value: " + MiddlewareInterface.getReturnString(returnValue
+//                    //.getReturnValue()));
+//                    break;
+//
+//                default:
+//                    break;
+//            }
+//        }
+//    }
 
 }

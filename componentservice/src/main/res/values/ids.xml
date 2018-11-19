@@ -7,4 +7,12 @@
 
 
 
+    <item name="baseservice_connect_close" type="id" />
+    <item name="baseservice_connect_reconnect" type="id" />
+    <item name="baseservice_connect_hint" type="id" />
+    <item name="baseservice_connect_tv_connecting" type="id" />
+    <item name="baseservice_connect_loading" type="id" />
+
+
+
 </resources>
