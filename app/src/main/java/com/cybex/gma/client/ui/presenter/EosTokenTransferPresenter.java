@@ -37,6 +37,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
     private static final String VALUE_ACTION = "transfer";
     private static final String VALUE_COMPRESSION = "none";
     private static final String VALUE_SYMBOL = "EOS";
+    private static final String VALUE_CODE = "eosio.token";
 
     /**
      * 执行EOS Token转账逻辑
