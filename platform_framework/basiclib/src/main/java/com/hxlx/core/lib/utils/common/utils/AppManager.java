@@ -7,6 +7,7 @@ import android.content.Context;
 import java.util.Stack;
 
 public class AppManager {
+
     private static Stack<Activity> activityStack;
     private static AppManager instance;
 
@@ -64,9 +65,11 @@ public class AppManager {
      * 结束指定类名的Activity
      */
     public void finishActivity(Class<?> cls) {
-        for (Activity activity : activityStack) {
-            if (activity.getClass().equals(cls)) {
-                finishActivity(activity);
+        synchronized (activityStack) {
+            for (Activity activity : activityStack) {
+                if (activity.getClass().equals(cls)) {
+                    finishActivity(activity);
+                }
             }
         }
     }

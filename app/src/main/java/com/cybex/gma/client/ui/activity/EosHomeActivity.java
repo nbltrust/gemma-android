@@ -109,11 +109,10 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     private EosTokensAdapter mAdapter;
 
     @OnClick(R.id.view_resource_manage)
-    public void goResourceDetail() {
-        bundle.putString(ParamConstants.EOS_ASSET_VALUE, getAssetsValue());
-        bundle.putString(ParamConstants.EOS_AMOUNT, getEosAmount());
-        bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
-        //LoggerManager.d("assetsValue", getAssetsValue());
+    public void goAssetDetail() {
+//        bundle.putString(ParamConstants.EOS_ASSET_VALUE, getAssetsValue());
+//        bundle.putString(ParamConstants.EOS_AMOUNT, getEosAmount());
+        bundle.putString(ParamConstants.EOS_TOKEN_TYPE, ParamConstants.SYMBOL_EOS);
         UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
     }
 
@@ -269,18 +268,17 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                         tvRedeem.setRightString(totalRefund);
 
                     }
-
-                    if (EmptyUtils.isNotEmpty(refundTime)) {
-                        tvRedeem.setRightBottomString(refundTime);
-
+                    
+//                    if (EmptyUtils.isNotEmpty(refundTime)) {
+//                        tvRedeem.setRightBottomString(refundTime);
+//                    }
 
                     }
                 }
             }
-        }
     }
 
-    private void showResourceInfo(String banlance, AccountInfo info) {
+    private void showResourceInfo(String balance, AccountInfo info) {
         if (info != null) {
             //CPU使用进度
             AccountInfo.CpuLimitBean cpuLimitBean = info.getCpu_limit();
@@ -321,20 +319,20 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
             progressBarRAM.setProgress(ramProgress);
             setProgressColor(progressBarRAM, ramProgress);
 
-            resourceInfoVO = new ResourceInfoVO();
-            resourceInfoVO.setBanlance(banlance);
-            resourceInfoVO.setCpuProgress(cpuProgress);
-            resourceInfoVO.setCpuUsed(cpuUsed);
-            resourceInfoVO.setCpuTotal(cpuTotal);
-            resourceInfoVO.setNetTotal(netTotal);
-            resourceInfoVO.setNetProgress(netProgress);
-            resourceInfoVO.setNetUsed(netUsed);
-            resourceInfoVO.setRamUsed(ramUsed);
-            resourceInfoVO.setRamProgress(ramProgress);
-            resourceInfoVO.setRamTotal(ramTotal);
-            resourceInfoVO.setCpuWeight(info.getCpu_weight());
-            resourceInfoVO.setNetWeight(info.getNet_weight());
-            bundle.putParcelable("resourceInfo", resourceInfoVO);
+//            resourceInfoVO = new ResourceInfoVO();
+//            resourceInfoVO.setBanlance(balance);
+//            resourceInfoVO.setCpuProgress(cpuProgress);
+//            resourceInfoVO.setCpuUsed(cpuUsed);
+//            resourceInfoVO.setCpuTotal(cpuTotal);
+//            resourceInfoVO.setNetTotal(netTotal);
+//            resourceInfoVO.setNetProgress(netProgress);
+//            resourceInfoVO.setNetUsed(netUsed);
+//            resourceInfoVO.setRamUsed(ramUsed);
+//            resourceInfoVO.setRamProgress(ramProgress);
+//            resourceInfoVO.setRamTotal(ramTotal);
+//            resourceInfoVO.setCpuWeight(info.getCpu_weight());
+//            resourceInfoVO.setNetWeight(info.getNet_weight());
+//            bundle.putParcelable("resourceInfo", resourceInfoVO);
         }
 
     }
@@ -384,18 +382,18 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         switch (savedCurrency) {
             case CacheConstants.CURRENCY_CNY:
                 tvCurrencyType.setText("≈ ¥ ");
-                tvEosValue.setText(" ≈ " + totalCNY);
-                totalCNYAmount.setText(totalCNY);
+                tvEosValue.setText(" ≈ " + balance);
+                totalCNYAmount.setText(getP().formatCurrency(totalCNY));
                 break;
             case CacheConstants.CURRENCY_USD:
                 tvCurrencyType.setText("≈ $ ");
                 totalCNYAmount.setText(" ≈ " + totalUSD);
-                tvEosValue.setText(totalUSD);
+                tvEosValue.setText(balance);
                 break;
             default:
                 tvCurrencyType.setText("≈ ¥ ");
-                tvEosValue.setText(" ≈ " + totalCNY);
-                totalCNYAmount.setText(totalCNY);
+                tvEosValue.setText(balance);
+                totalCNYAmount.setText(getP().formatCurrency(totalCNY));
                 break;
         }
 
@@ -612,6 +610,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
      * 展示Tokens
      */
     public void showTokens(List<EosTokenVO> eosTokens) {
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager
                 .VERTICAL, false);
         recyclerTokenList.setLayoutManager(layoutManager);
@@ -624,11 +623,14 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                 EosTokenVO curToken = eosTokens.get(position);
 
                 Bundle bundle = new Bundle();
-                bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_TOKENS);
+                bundle.putString(ParamConstants.EOS_TOKEN_TYPE, curToken.getTokenSymbol());
                 bundle.putParcelable(ParamConstants.EOS_TOKENS, curToken);
 
                 UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
             }
         });
+
+        viewEosTokens.setVisibility(View.VISIBLE);
+        tvNumberOfTokens.setText(String.valueOf(eosTokens.size()));
     }
 }

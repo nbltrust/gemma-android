@@ -1,11 +1,16 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.os.Bundle;
+
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.activity.BuySellRamActivity;
+import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
+import com.cybex.gma.client.ui.activity.ResourceDetailActivity;
 import com.cybex.gma.client.ui.fragment.BuySellRamFragment;
 import com.cybex.gma.client.ui.model.request.GetRamMarketReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
@@ -286,12 +291,18 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                     public void onSuccess(Response<String> response) {
                         getV().dissmisProgressDialog();
                         if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                            //AppManager.getAppManager().finishActivity(EosAssetDetailActivity.class);
                             String jsonStr = response.body();
                             LoggerManager.d("pushTransaction json:" + jsonStr);
                             GemmaToastUtils.showLongToast(getV().getString(R.string.operate_deal_success));
-                            //跳转到收支记录
+                            //跳转到资产详情
+
                             AppManager.getAppManager().finishActivity();
-                            UISkipMananger.launchTransferRecord(getV().getActivity());
+                            AppManager.getAppManager().finishActivity(BuySellRamActivity.class);
+                            AppManager.getAppManager().finishActivity(ResourceDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
+                            UISkipMananger.launchAssetDetail(getV().getActivity(), bundle);
                         }
                     }
                 });

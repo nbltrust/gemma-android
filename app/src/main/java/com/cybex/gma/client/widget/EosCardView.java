@@ -60,7 +60,7 @@ public class EosCardView extends CardView{
 
 //    private int tokenTypeNumber;
     private float eosNumber;
-    private float totlePrice;
+    private String totlePrice;
     private List<TokenBean> tokenList=new ArrayList<>();
     private int state;
     private String accountName;
@@ -134,13 +134,13 @@ public class EosCardView extends CardView{
         mTotalEosAmount.setText(AmountUtil.round(Float.toString(eosNumber), 4));
     }
 
-    public float getTotlePrice() {
+    public String getTotlePrice() {
         return totlePrice;
     }
 
-    public void setTotlePrice(float totlePrice) {
+    public void setTotlePrice(String totlePrice) {
         this.totlePrice = totlePrice;
-        mTotalPriceAmount.setText(Float.toString(totlePrice));
+        mTotalPriceAmount.setText(totlePrice);
     }
 
     public List<TokenBean> getTokenList() {

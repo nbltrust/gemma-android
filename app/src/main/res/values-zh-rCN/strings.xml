@@ -24,7 +24,7 @@
     <string name="eos_btn_get_invitation">获取邀请码</string>
     <string name="eos_tip_agree">我已阅读并同意</string>
     <string name="eos_tip_terms_of_service"><u>服务协议</u></string>
-    <string name="eos_title_password_hint">密码提示（可选）</string>
+    <string name="eos_title_password_hint_optional">密码提示（可选）</string>
     <string name="eos_tip_password_hint">密码提示信息</string>
     <string name="eos_tip_password_input_part2">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不存储密码，无法提供密码找回服务</string>
     <string name="eos_tip_security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不储存密码，无法提供密码找回服务</string>
@@ -214,14 +214,14 @@
     <string name="eos_unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
     <string name="eos_switch_account">切换账户</string>
     <string name="eos_confirm_delegate">确认抵押</string>
-    <string name="eos_input_pass_hint">请输入@%1$s的密码</string>
-    <string name="eos_gemma_password_hint">Gemma不曾知晓钱包密码，每次操作需要输入密码以授权</string>
+    <string name="eos_input_pass_hint">请输入%1$s的密码</string>
+    <string name="eos_gemma_password_hint">请输入钱包密码以授权</string>
     <string name="eos_confirm_author">确认以授权</string>
     <string name="eos_confirm_buy">确认买入</string>
     <string name="eos_confirm_sell">确认卖出</string>
     <string name="eos_explanation">说明</string>
-    <string name="eos_tip_buy_ram">Buy RAM</string>
-    <string name="eos_tip_sell_ram">Sell RAM</string>
+    <string name="eos_tip_buy_ram">buy ram</string>
+    <string name="eos_tip_sell_ram">sell ram</string>
     <string name="eos_input_original_pass">请输入原密码</string>
     <string name="eos_verify_password">验证密码</string>
     <string name="eos_input_password">请输入@账户名的密码</string>

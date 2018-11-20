@@ -126,5 +126,8 @@ public interface ParamConstants {
     String SYMBOL_EOS = "EOS";
     String CONTRACT_EOS = "eosio.token";
 
+    String RESOURCE_VO = "resourceInfoVo";
+    String EOS_TOKEN_TYPE = "eosTokenType";
+
 
 }

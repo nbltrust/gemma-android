@@ -24,20 +24,27 @@ import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.componentservice.widget.EthCardView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.presenter.WalletHomePresenter;
 import com.cybex.gma.client.widget.EosCardView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.lzy.okgo.OkGo;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -81,6 +88,13 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     private EosWalletEntity curEosWallet;
     private EthWalletEntity curEthWallet;
     private boolean isBioConnected;//蓝牙卡是否连接
+    private String eosUnitPriceRMB;
+
+    public void setDelegatedResourceQuantity(String delegatedResourceQuantity) {
+        this.delegatedResourceQuantity = delegatedResourceQuantity;
+    }
+
+    private String delegatedResourceQuantity;
 
     public void setEosTokens(List<TokenBean> eosTokens) {
         this.eosTokens = eosTokens;
@@ -88,6 +102,11 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     private List<TokenBean> eosTokens;
     private Unbinder unbinder;
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onCybexPriceReceived(CybexPriceEvent event){
+        eosUnitPriceRMB = event.getEosPrice();
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onValidateResultReceived(ValidateResultEvent event) {
@@ -106,10 +125,10 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onChangeWalletEventReceived(ChangeSelectedWalletEvent event) {
-        if (event != null) {
-            curWallet = event.getCurrentWallet();
-            updateWallet(curWallet);
-        }
+//        if (event != null) {
+//            curWallet = event.getCurrentWallet();
+//            updateWallet(curWallet);
+//        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -119,7 +138,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         }
     }
 
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshWalletName(WalletNameChangedEvent event) {
         if(event.getWalletID() == curWallet.getId()){
@@ -128,7 +146,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         }
 
     }
-
 
     @OnClick({R.id.iv_wallet_manage, R.id.iv_settings})
     public void onWalletManageIconClick(View view) {
@@ -186,6 +203,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         if (unbinder != null) {
             unbinder.unbind();
         }
+        dissmisProgressDialog();
     }
 
     @Override
@@ -233,6 +251,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        delegatedResourceQuantity = "0";
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
 //        updateWallet(curWallet);
     }
@@ -282,6 +301,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 mEosCardView.setVisibility(View.VISIBLE);
                 mEthCardView.setVisibility(View.VISIBLE);
                 updateEosCardView();
+                String eos_public_key = curEosWallet.getPublicKey();
+                getP().getKeyAccounts(eos_public_key);
             } else if (walletType == BaseConst.WALLET_TYPE_MNE_IMPORT) {
                 //导入的助记词钱包
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
@@ -321,7 +342,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     mEthCardView.setVisibility(View.GONE);
                     LoggerManager.d("case eos");
                     String eos_public_key = curEosWallet.getPublicKey();
-                    LoggerManager.d("curEosPubKey", eos_public_key);
                     getP().getKeyAccounts(eos_public_key);
                 }
             }
@@ -376,6 +396,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 });
             } else if (eosStatus == ParamConstants.EOSNAME_NOT_ACTIVATED) {
                 //待激活
+                clearEosCardView();
                 mEosCardView.setState(ParamConstants.EOSNAME_NOT_ACTIVATED);
                 mEosCardView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -404,6 +425,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     @Override
     protected void onStart() {
         super.onStart();
+        delegatedResourceQuantity = "0";
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         updateWallet(curWallet);
     }
@@ -414,6 +436,37 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     public void showEosBalance(String rawBalance){
         String balance = rawBalance.split(" ")[0];
-        mEosCardView.setEosNumber(Float.valueOf(balance));
+        String eosAssetsQuantity = AmountUtil.add(balance, delegatedResourceQuantity, 4);
+        mEosCardView.setEosNumber(Float.valueOf(eosAssetsQuantity));
+        if (eosUnitPriceRMB != null){
+            String eosAssetsValue = formatCurrency(AmountUtil.mul(eosAssetsQuantity, eosUnitPriceRMB, 2));
+            LoggerManager.d("eosAssetsValue",eosAssetsValue);
+            mEosCardView.setTotlePrice(eosAssetsValue);
+        }
+        OkGo.getInstance().cancelAll();
     }
+
+    public void clearEosCardView(){
+        mEosCardView.setAccountName("");
+        mEosCardView.setTotlePrice("0.0000");
+        mEosCardView.setEosNumber(Float.valueOf("0.0000"));
+        mEosCardView.setTokenList(new ArrayList<>());
+        delegatedResourceQuantity = "0";
+        eosUnitPriceRMB = "0";
+    }
+
+    /**
+     * 返回每三个位数添加一位逗号的字符串
+     * @param value
+     * @return
+     */
+    public String formatCurrency(String value){
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        BigDecimal bigDecimal = new BigDecimal(value);
+        String format_value = df.format(bigDecimal);
+        LoggerManager.d("format_value", format_value);
+
+        return format_value;
+    }
+
 }

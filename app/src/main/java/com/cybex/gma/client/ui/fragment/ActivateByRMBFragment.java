@@ -7,26 +7,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.allen.library.SuperTextView;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.entity.WalletEntity;
-import com.cybex.gma.client.R;
-import com.cybex.componentservice.config.CacheConstants;
-import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.event.KeySendEvent;
-import com.cybex.gma.client.event.ValidateResultEvent;
-import com.cybex.gma.client.event.WXPayStatusEvent;
-import com.cybex.gma.client.event.WalletIDEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AlertUtil;
+import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.WXPayStatusEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.model.response.WXPayBillResult;
 import com.cybex.gma.client.ui.model.response.WXPayPlaceOrderResult;
+import com.cybex.gma.client.ui.model.response.WXPayQueryOrderInfoResult;
 import com.cybex.gma.client.ui.presenter.ActivateByRMBPresenter;
-import com.cybex.componentservice.utils.AlertUtil;
 import com.hxlx.core.lib.common.async.TaskManager;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
@@ -67,11 +62,17 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     private String account_name;
     private String public_key;
 
+    public void setResultBean(WXPayQueryOrderInfoResult.ResultBean resultBean) {
+        this.resultBean = resultBean;
+    }
+
+    private WXPayQueryOrderInfoResult.ResultBean resultBean;
+
     @OnClick(R.id.bt_wechat_pay)
-    public void initPayProcess(){
-        if (getArguments() != null){
+    public void initPayProcess() {
+        if (getArguments() != null) {
             String publicKey = curEosWallet.getPublicKey();
-            if (EmptyUtils.isNotEmpty(publicKey)){
+            if (EmptyUtils.isNotEmpty(publicKey)) {
                 account_name = getArguments().getString(ParamConstants.EOS_USERNAME);
                 public_key = publicKey;
             }
@@ -90,14 +91,15 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 
     /**
      * 支付最终状态判断
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void recievePayStatus(WXPayStatusEvent event){
+    public void recievePayStatus(WXPayStatusEvent event) {
         dissmisProgressDialog();
-        if (event != null && !event.isUsed()){
+        if (event != null && !event.isUsed()) {
             event.setUsed(true);
-            switch (event.getStatus()){
+            switch (event.getStatus()) {
                 case ParamConstants.WX_NOTPAY_INIT:
                     //未支付，等待支付
                     showUnfinishDialog();
@@ -111,8 +113,8 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                     AlertUtil.showLongCommonAlert(getActivity(), "支付成功");
                     //调真正创建账户接口
                     LoggerManager.d("orderId", orderId);
-                    if (getArguments() != null){
-                        getP().createAccount(account_name, public_key, orderId);
+                    if (getArguments() != null) {
+                        getP().checkCreateAccountStatus(account_name, public_key, orderId);
                     }
                     break;
                 case ParamConstants.WX_SUCCESS_TOREFUND:
@@ -179,7 +181,6 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 //
 //        }
 //    }
-
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
@@ -188,7 +189,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         getP().getRMBFeeAmount();
-        if (getActivity() != null){
+        if (getActivity() != null) {
             AlertUtil.showShortCommonAlert(getActivity(), getActivity().getString(R.string.eos_tip_username_valid));
         }
         //注册微信支付
@@ -209,12 +210,12 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         return new ActivateByRMBPresenter();
     }
 
-    public void callWXPay(WXPayPlaceOrderResult.ResultBean result){
+    public void callWXPay(WXPayPlaceOrderResult.ResultBean result) {
         TaskManager.execute(new Runnable() {
             @Override
             public void run() {
                 PayReq req = new PayReq();
-                req.appId =ParamConstants.WXPAY_APPID;
+                req.appId = ParamConstants.WXPAY_APPID;
                 req.partnerId = ParamConstants.WXPAY_PARTNER_ID;
                 req.prepayId = result.getPrepayid();
                 req.packageValue = ParamConstants.WXPAY_PACKAGE_VALUE;
@@ -226,7 +227,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         });
     }
 
-    public void setFee(WXPayBillResult.ResultBean result){
+    public void setFee(WXPayBillResult.ResultBean result) {
         tvRmbAmount.setText(String.format(getString(R.string.eos_rmb_fee), result.getRmbPrice()));
         newPrice = result.getRmbPrice();
         tvCPU.setText(result.getCpu());
@@ -257,6 +258,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
             public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.tv_cancel:
+                        updatePrice();
                         dialog.cancel();
                         break;
                     case R.id.tv_ok:
@@ -333,10 +335,10 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
             public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.tv_i_understand:
-                        if (isWalletListEmpty){
+                        if (isWalletListEmpty) {
                             //如果没有钱包了
                             UISkipMananger.launchGuide(getActivity());
-                        }else {
+                        } else {
                             //如果有钱包
                             //更新当前钱包为最后一个钱包，跳转主页面
                             List<MultiWalletEntity> walletList = DBManager.getInstance().getMultiWalletEntityDao()
@@ -366,18 +368,28 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 
     /**
      * 获取当前EOS钱包
+     *
      * @return
      */
-    private EosWalletEntity getCurEosWallet(){
+    private EosWalletEntity getCurEosWallet() {
         EosWalletEntity curEosWallet = new EosWalletEntity();
         MultiWalletEntity multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao()
                 .getCurrentMultiWalletEntity();
 
-        if (multiWalletEntity != null){
+        if (multiWalletEntity != null) {
             curEosWallet = multiWalletEntity.getEosWalletEntities().get(0);
         }
 
         return curEosWallet;
+    }
+
+    public void updatePrice() {
+        if (resultBean != null) {
+            tvCPU.setText(resultBean.getCpu());
+            tvRAM.setText(resultBean.getRam());
+            tvNET.setText(resultBean.getNet());
+            tvRmbAmount.setText(resultBean.getRmb_price() + " RMB");
+        }
     }
 
 }

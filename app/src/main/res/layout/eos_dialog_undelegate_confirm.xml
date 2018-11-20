@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="#f9f9f9"
               android:orientation="vertical">
 
@@ -10,6 +11,8 @@
         android:id="@+id/btn_close"
         android:layout_width="60dp"
         android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_mask_close"/>
 
@@ -18,7 +21,6 @@
         android:layout_height="150dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -34,7 +36,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_refund_username"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
 
             <TextView
@@ -44,8 +46,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
-                android:textColor="@color/black_context"
-                android:textSize="16sp"
+                android:textColor="@color/black_title"
+                android:textSize="@dimen/font_4"
+                android:textStyle="bold"
                 tools:text="0.0001 EOS"/>
         </RelativeLayout>
 
@@ -54,52 +57,57 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 
-        <RelativeLayout
+        <View
+            style="@style/common_divider"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
             <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/eos_title_fund"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
 
             <TextView
                 android:id="@+id/tv_undelegate_amount"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_dialog_unDelegate_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/tv_dialog_unDelegate_amount"
-                android:layout_centerVertical="true"
                 android:textStyle="bold"
-                android:textColor="@color/black_context"
+                android:textColor="@color/black_title"
                 android:textSize="@dimen/font_4"
                 tools:text="2.2345"/>
 
             <TextView
                 android:id="@+id/tv_dialog_unDelegate_amount"
-                android:textSize="@dimen/font_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tv_undelegate_amount"
+                android:textSize="@dimen/font_3"
+                android:layout_marginTop="18dp"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
                 android:layout_marginEnd="16dp"
+                android:textColor="@color/black_title"
                 android:text=" EOS"
                 android:textColor="@color/black_context"
                 android:layout_height="wrap_content"/>
 
 
-
-        </RelativeLayout>
-
-        <View
-            style="@style/common_divider"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+        </android.support.constraint.ConstraintLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -115,7 +123,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_memo"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
 
             <TextView
@@ -123,15 +131,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginEnd="16dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
                 android:layout_toEndOf="@id/tv_note_title"
                 android:layout_alignParentEnd="true"
                 android:textAlignment="viewEnd"
                 android:ellipsize="end"
-                android:maxLines="3"
+                android:maxLines="2"
                 android:textColor="@color/black_context"
-                tools:text="\ufeff@gemma12345资金用途描述不超过50个字，资金用途资金用途描述不超过50个字，资金用途"/>
+                tools:text="Delegate 0.0100 EOS for CPU, 0.0100 EOS for NET"/>
 
         </RelativeLayout>
 
@@ -145,7 +155,7 @@
     <Button
         android:id="@+id/btn_confirm_refund"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"

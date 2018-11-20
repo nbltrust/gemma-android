@@ -31,6 +31,8 @@ import com.lzy.okgo.request.base.Request;
 
 import org.json.JSONArray;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -121,9 +123,11 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
                                 if (response.getResult() != null){
                                     GetEosTokensResult.ResultBean resultBean = response.getResult();
                                     List<TokenBean> tokens = resultBean.getTokens();
-                                    //更新UI
-                                    List<EosTokenVO> tokenVOList = converTokenBeanToVO(tokens);
-                                    getV().showTokens(tokenVOList);
+                                    if (EmptyUtils.isNotEmpty(tokens)){
+                                        //更新UI
+                                        List<EosTokenVO> tokenVOList = converTokenBeanToVO(tokens);
+                                        getV().showTokens(tokenVOList);
+                                    }
                                 }
                             }
                             GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
@@ -469,9 +473,29 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
             curTokenVO.setQuantity(curToken.getBalance());
             curTokenVO.setTokenName(curToken.getCode());
             curTokenVO.setTokenSymbol(curToken.getSymbol());
+            if (curToken.getBalance().split("\\.").length > 1){
+                curTokenVO.setAccurancy(curToken.getBalance().split("\\.")[1].length());
+            }else {
+                curTokenVO.setAccurancy(0);
+            }
+
             voList.add(curTokenVO);
         }
         return voList;
+    }
+
+    /**
+     * 返回每三个位数添加一位逗号的字符串
+     * @param value
+     * @return
+     */
+    public String formatCurrency(String value){
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        BigDecimal bigDecimal = new BigDecimal(value);
+        String format_value = df.format(bigDecimal);
+        LoggerManager.d("format_value", format_value);
+
+        return format_value;
     }
 
 }

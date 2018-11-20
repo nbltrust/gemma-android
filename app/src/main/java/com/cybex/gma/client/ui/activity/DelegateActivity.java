@@ -22,7 +22,9 @@ import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
+import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleDelegateVO;
 import com.cybex.gma.client.ui.model.vo.TabTitleRefundVO;
@@ -44,6 +46,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
+import me.jessyan.autosize.AutoSize;
 import seed39.Seed39;
 
 /**
@@ -67,6 +70,11 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     private String totalUsedEos;
     private String totalRefundableCpu;
     private String totalRefundableNet;
+
+
+    private String curLeftEos;//当前抵押剩余可用的Eos值
+    private String curLeftCpu;//赎回操作中剩余可用的CPUWeight对应的EOS值
+    private String curLeftnet;
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.STL_delegate) CommonTabLayout mTab;
@@ -128,23 +136,39 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 && (!getDelegateCpu().equals(".") && !getDelegateNet().equals("."))) {
             //动态计算可用EOS的值
             if (EmptyUtils.isEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty(getDelegateNet())) {
+                //cpu为空， net不为空
                 totalUsedEos = getDelegateNet();
             } else if (EmptyUtils.isEmpty(getDelegateNet()) && EmptyUtils.isNotEmpty(getDelegateCpu())) {
+                //net为空， cpu不为空
                 totalUsedEos = getDelegateCpu();
             } else {
+                //都为空
                 totalUsedEos = AmountUtil.add(getDelegateCpu(), getDelegateNet(), 4);
             }
 
-            String curAvailableEos = AmountUtil.sub(totalAvaiEos, totalUsedEos, 4);
-            if (Float.valueOf(curAvailableEos) > 0) {
-                tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), curAvailableEos));
-                tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), curAvailableEos));
-            } else {
-                AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
+            if (curLeftEos != null) {
+                curLeftEos = AmountUtil.sub(totalAvaiEos, totalUsedEos, 4);
+                if (Float.valueOf(curLeftEos) >= 0) {
+                    tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), curLeftEos));
+                    tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), curLeftEos));
+                    setClickable(btDelegateCpuNet);
+                } else {
+                    tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), "0.0000"));
+                    tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), "0.0000"));
+                    if (!Alerter.isShowing()){
+                        AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
+                    }
+                    setUnclickable(btDelegateCpuNet);
+                }
             }
 
-            setClickable(btDelegateCpuNet);
-        } else {
+        } else if ((EmptyUtils.isEmpty(getDelegateCpu()) && EmptyUtils.isEmpty(getDelegateNet()))
+                && (!getDelegateCpu().equals(".") && !getDelegateNet().equals("."))){
+            //都为空
+            tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), totalAvaiEos));
+            tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), totalAvaiEos));
+            setUnclickable(btDelegateCpuNet);
+        }else {
             setUnclickable(btDelegateCpuNet);
         }
         //限制输入为最多四位小数
@@ -159,7 +183,6 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             }
         }
     }
-
 
     @OnTextChanged(value = R.id.edt_delegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterDelegateNetChanged(Editable s) {
@@ -172,95 +195,35 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             } else if (EmptyUtils.isEmpty(getDelegateNet()) && EmptyUtils.isNotEmpty(getDelegateCpu())) {
                 totalUsedEos = getDelegateCpu();
             } else {
+                tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), totalAvaiEos));
+                tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), totalAvaiEos));
                 totalUsedEos = AmountUtil.add(getDelegateCpu(), getDelegateNet(), 4);
             }
 
-            String curAvailableEos = AmountUtil.sub(totalAvaiEos, totalUsedEos, 4);
-            if (Float.valueOf(curAvailableEos) > 0) {
-                tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), curAvailableEos));
-                tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), curAvailableEos));
-            } else {
-                AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
+            if (curLeftEos != null) {
+                curLeftEos = AmountUtil.sub(totalAvaiEos, totalUsedEos, 4);
+                if (Float.valueOf(curLeftEos) >= 0) {
+                    tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), curLeftEos));
+                    tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), curLeftEos));
+                    setClickable(btDelegateCpuNet);
+                } else {
+                    tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), "0.0000"));
+                    tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), "0.0000"));
+                    if (!Alerter.isShowing()){
+                        AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
+                    }
+                    setUnclickable(btDelegateCpuNet);
+                }
             }
 
-            setClickable(btDelegateCpuNet);
-        } else {
+        } else if ((EmptyUtils.isEmpty(getDelegateCpu()) && EmptyUtils.isEmpty(getDelegateNet()))
+                && (!getDelegateCpu().equals(".") && !getDelegateNet().equals("."))){
+            //都为空
+            tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), totalAvaiEos));
+            tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), totalAvaiEos));
             setUnclickable(btDelegateCpuNet);
-        }
-        //限制输入为最多四位小数
-        String str = s.toString();
-        int posDot = str.indexOf(".");
-        if (posDot >= 0) {
-            if (str.length() - posDot - 1 > 4) {
-                s.delete(posDot + 5, posDot + 6);
-                if (!Alerter.isShowing()) {
-                    AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
-                }
-            }
-        }
-    }
-
-    @OnTextChanged(value = R.id.edt_undelegate_cpu, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterUndelegateCpuChanged(Editable s) {
-        if ((EmptyUtils.isNotEmpty(getUndelegateCpu()) || EmptyUtils.isNotEmpty(getunDelegateNet()))
-                && !getUndelegateCpu().equals(".") && !getunDelegateNet().equals(".")) {
-
-            //动态计算可赎回EOS的值
-            if (EmptyUtils.isNotEmpty(getUndelegateCpu())) {
-                totalUsedEos = getUndelegateCpu();
-                String curAvailableEos = AmountUtil.sub(totalRefundableCpu, totalUsedEos, 4);
-                if (Float.valueOf(curAvailableEos) > 0) {
-                    tvBalanceCpuUndelegate.setText(curAvailableEos + " EOS");
-                } else {
-                    AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
-                }
-            } else {
-                tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
-            }
-
-
-            setClickable(btUndelegateCpuNet);
-        } else {
-            tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
-            setUnclickable(btUndelegateCpuNet);
-        }
-
-        //限制输入为最多四位小数
-        String str = s.toString();
-        int posDot = str.indexOf(".");
-        if (posDot >= 0) {
-            if (str.length() - posDot - 1 > 4) {
-                s.delete(posDot + 5, posDot + 6);
-                if (!Alerter.isShowing()) {
-                    AlertUtil.showShortCommonAlert(this, getString(R.string.eos_tip_eos_amount_format_invalid));
-                }
-            }
-        }
-    }
-
-    @OnTextChanged(value = R.id.edt_undelegate_net, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterundelegateNetChanged(Editable s) {
-        if ((EmptyUtils.isNotEmpty(getunDelegateNet()) || EmptyUtils.isNotEmpty(getUndelegateCpu()))
-                && !getunDelegateNet().equals(".") && !getUndelegateCpu().equals(".")) {
-
-            //动态计算可用EOS的值
-
-            if (EmptyUtils.isNotEmpty(getunDelegateNet())) {
-                totalUsedEos = getunDelegateNet();
-                String curAvailableEos = AmountUtil.sub(totalRefundableNet, totalUsedEos, 4);
-                if (Float.valueOf(curAvailableEos) > 0) {
-                    tvBalanceNetUndelegate.setText(curAvailableEos + " EOS");
-                } else {
-                    AlertUtil.showShortUrgeAlert(DelegateActivity.this, getString(R.string.eos_tip_balance_not_enough));
-                }
-            } else {
-                tvBalanceNetUndelegate.setText(totalRefundableNet + " EOS");
-            }
-
-            setClickable(btUndelegateCpuNet);
-        } else {
-            tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
-            setUnclickable(btUndelegateCpuNet);
+        }else {
+            setUnclickable(btDelegateCpuNet);
         }
         //限制输入为最多四位小数
         String str = s.toString();
@@ -283,6 +246,9 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        curLeftEos = "0";
+        curLeftCpu = "0";
+        curLeftnet = "0";
         getP().getRefundQuantity();
         SoftHideKeyBoardUtil.assistActivity(this);
 
@@ -311,12 +277,102 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             }
         });
 
-        resourceInfoVO = getIntent().getParcelableExtra("resourceInfo");
+        resourceInfoVO = getIntent().getParcelableExtra(ParamConstants.RESOURCE_VO);
         String balance = resourceInfoVO.getBanlance();
         totalAvaiEos = balance.split(" ")[0];
         tvBalanceCpu.setText(String.format(getString(R.string.eos_amount_balance), totalAvaiEos));
         tvBalanceNet.setText(String.format(getString(R.string.eos_amount_balance), totalAvaiEos));
 
+    }
+
+    public void initTextChangedListener(String maxValueCpu, String maxValueNet) {
+        edtUndelegateCpu.addTextChangedListener(new DecimalInputTextWatcher(edtUndelegateCpu, DecimalInputTextWatcher
+                .Type.decimal, 4, maxValueCpu) {
+            @Override
+            public void afterTextChanged(Editable s) {
+                super.afterTextChanged(s);
+                if ((EmptyUtils.isNotEmpty(getUndelegateCpu()) || EmptyUtils.isNotEmpty(getunDelegateNet()))
+                        && !getUndelegateCpu().equals(".") && !getunDelegateNet().equals(".")) {
+
+                    if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())) {
+                        if (Float.valueOf(getUndelegateCpu()) <= 0 && Float.valueOf(getunDelegateNet()) <= 0) {
+                            setUnclickable(btUndelegateCpuNet);
+                        } else {
+                            setClickable(btUndelegateCpuNet);
+                        }
+
+                    } else if (EmptyUtils.isEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())) {
+                        //cpu为空,net不为空
+                        if (Float.valueOf(getunDelegateNet()) > 0) {
+                            setClickable(btUndelegateCpuNet);
+                        } else {
+                            setUnclickable(btUndelegateCpuNet);
+                        }
+                    } else if (EmptyUtils.isEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())) {
+                        //net为空，cpu不为空
+                        if (Float.valueOf(getUndelegateCpu()) > 0) {
+                            setClickable(btUndelegateCpuNet);
+                        } else {
+                            setUnclickable(btUndelegateCpuNet);
+                        }
+                    } else {
+                        //都为空
+                        tvBalanceNetUndelegate.setText(
+                                String.format(getString(R.string.eos_amount_balance), totalRefundableNet));
+                        setUnclickable(btUndelegateCpuNet);
+                    }
+
+                } else {
+                    tvBalanceCpuUndelegate.setText(
+                            String.format(getString(R.string.eos_amount_balance), totalRefundableCpu));
+                    setUnclickable(btUndelegateCpuNet);
+                }
+            }
+        });
+
+        edtUndelegateNet.addTextChangedListener(new DecimalInputTextWatcher(edtUndelegateNet, DecimalInputTextWatcher
+                .Type.decimal, 4, maxValueNet) {
+            @Override
+            public void afterTextChanged(Editable s) {
+                super.afterTextChanged(s);
+                if ((EmptyUtils.isNotEmpty(getunDelegateNet()) || EmptyUtils.isNotEmpty(getUndelegateCpu()))
+                        && !getunDelegateNet().equals(".") && !getUndelegateCpu().equals(".")) {
+
+                    if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())) {
+                        if (Float.valueOf(getUndelegateCpu()) <= 0 && Float.valueOf(getunDelegateNet()) <= 0) {
+                            setUnclickable(btUndelegateCpuNet);
+                        } else {
+                            setClickable(btUndelegateCpuNet);
+                        }
+
+                    } else if (EmptyUtils.isEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty(getunDelegateNet())) {
+                        //cpu为空,net不为空
+                        if (Float.valueOf(getunDelegateNet()) > 0) {
+                            setClickable(btUndelegateCpuNet);
+                        } else {
+                            setUnclickable(btUndelegateCpuNet);
+                        }
+                    } else if (EmptyUtils.isEmpty(getunDelegateNet()) && EmptyUtils.isNotEmpty(getUndelegateCpu())) {
+                        //net为空，cpu不为空
+                        if (Float.valueOf(getUndelegateCpu()) > 0) {
+                            setClickable(btUndelegateCpuNet);
+                        } else {
+                            setUnclickable(btUndelegateCpuNet);
+                        }
+                    } else {
+                        //都为空
+                        tvBalanceNetUndelegate.setText(
+                                String.format(getString(R.string.eos_amount_balance), totalRefundableNet));
+                        setUnclickable(btUndelegateCpuNet);
+                    }
+
+                } else {
+                    tvBalanceCpuUndelegate.setText(
+                            String.format(getString(R.string.eos_amount_balance), totalRefundableCpu));
+                    setUnclickable(btUndelegateCpuNet);
+                }
+            }
+        });
     }
 
     @Override
@@ -335,7 +391,6 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         // 设置横向(和安卓4.x动画相同)
         return new DefaultHorizontalAnimator();
     }
-
 
     private void showDelegateTab() {
         edtDelegateCpu.setText("");
@@ -369,8 +424,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         btDelegateCpuNet.setVisibility(View.GONE);
         btUndelegateCpuNet.setVisibility(View.VISIBLE);
 
-        tvBalanceCpuUndelegate.setText(totalRefundableCpu + " EOS");
-        tvBalanceNetUndelegate.setText(totalRefundableNet + " EOS");
+        tvBalanceCpuUndelegate.setText(String.format(getString(R.string.eos_amount_balance), totalRefundableCpu));
+        tvBalanceNetUndelegate.setText(String.format(getString(R.string.eos_amount_balance), totalRefundableNet));
         if (EmptyUtils.isNotEmpty(this)) { hideSoftKeyboard(this); }
     }
 
@@ -405,6 +460,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
      */
     private void showConfirmDelegateiDialog() {
         int[] listenedItems = {R.id.btn_delegate, R.id.btn_close};
+        AutoSize.autoConvertDensityOfGlobal(this);
         confirmDialog = new CustomFullDialog(this,
                 R.layout.eos_dialog_delegate_confirm, listenedItems, false, Gravity.BOTTOM);
         confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
@@ -472,6 +528,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
      */
     private void showConfirmUndelegateiDialog() {
         int[] listenedItems = {R.id.btn_confirm_refund, R.id.btn_close};
+        AutoSize.autoConvertDensityOfGlobal(this);
         confirmDialog = new CustomFullDialog(this,
                 R.layout.eos_dialog_undelegate_confirm, listenedItems, false, Gravity.BOTTOM);
         confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
@@ -606,6 +663,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 String stake_net_quantity = net_quantity + " EOS";
                                                 String stake_cpu_quantity = cpu_quantity + " EOS";
 
+                                                confirmDialog = null;
                                                 getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
                                                         stake_cpu_quantity, private_key);
 
@@ -676,6 +734,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                                                 String unstake_net_quantity = net_quantity + " EOS";
                                                 String unstake_cpu_quantity = cpu_quantity + " EOS";
 
+                                                confirmDialog = null;
                                                 getP().executeUndelegateLogic(curEOSName, curEOSName,
                                                         unstake_net_quantity,
                                                         unstake_cpu_quantity, private_key);
@@ -728,6 +787,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
      * 显示密码提示Dialog
      */
     private void showPasswordHintDialog(int operation_type) {
+        confirmDialog.dismiss();
         int[] listenedItems = {R.id.tv_i_understand};
         CustomDialog dialog = new CustomDialog(this,
                 R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
@@ -801,6 +861,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         tvBalanceNetUndelegate.setText(refundableNet + "EOS");
         tvBalanceCpuUndelegate.setText(refundableCpu + "EOS");
     }
+
+
 
 
     public void dismissDialog() {

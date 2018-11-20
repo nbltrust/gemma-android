@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="#ffffff"
               android:orientation="vertical">
 
@@ -12,6 +13,7 @@
         android:layout_height="48dp"
         android:scaleType="centerInside"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/ic_mask_close"/>
 
 
@@ -20,7 +22,6 @@
         android:layout_height="150dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -36,7 +37,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_receiver"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
             <TextView
                 android:id="@+id/tv_payee"
@@ -47,7 +48,7 @@
                 android:layout_marginRight="16dp"
                 android:textColor="@color/black_title"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_4"
                 tools:text="\ufeff@lhy546802341"/>
         </RelativeLayout>
 
@@ -56,45 +57,50 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
             <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/eos_title_fund"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
-            <TextView
-                android:id="@+id/tv_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/tv_dialog_delegate_amount"
-                android:layout_centerVertical="true"
-                android:textStyle="bold"
-                android:textColor="@color/black_context"
-                android:textSize="@dimen/font_4"
-                tools:text="2.2345"/>
+                <TextView
+                    android:id="@+id/tv_amount"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_dialog_delegate_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/black_title"
+                    android:textSize="@dimen/font_4"
+                    tools:text="2.2345"/>
 
-            <TextView
-                android:id="@+id/tv_dialog_delegate_amount"
-                android:textSize="@dimen/font_4"
-                android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/black_context"
-                android:text=" EOS"
-                android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_dialog_delegate_amount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_amount"
 
+                    android:textSize="@dimen/font_3"
+                    android:layout_marginTop="18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/black_title"
+                    android:text=" EOS"
+                    android:layout_height="wrap_content"/>
 
-        </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <View
             style="@style/common_divider"
@@ -115,7 +121,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_memo"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
             <TextView
                 android:id="@+id/tv_note"
@@ -148,7 +154,7 @@
     <Button
         android:id="@+id/btn_delegate"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"

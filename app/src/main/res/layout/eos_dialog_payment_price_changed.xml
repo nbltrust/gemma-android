@@ -37,8 +37,8 @@
         android:textSize="@dimen/font_4"
         android:textColor="@color/black_context"
         android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_66"
-        android:layout_marginEnd="@dimen/dimen_66"
+        android:layout_marginStart="@dimen/dimen_50"
+        android:layout_marginEnd="@dimen/dimen_50"
         />
 
 

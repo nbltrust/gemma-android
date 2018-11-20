@@ -9,7 +9,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:src="@drawable/ic_payment_overtime"
+        android:src="@drawable/ic_tab_pay"
         android:id="@+id/iv_password_hint"
         android:layout_width="56dp"
         android:layout_height="56dp"

@@ -73,24 +73,6 @@
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
-            <!--
-            <com.allen.library.SuperTextView
-                android:id="@+id/superTextView_cpu_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                title:sLeftTextColor="@color/black_context"
-                title:sLeftTextSize="@dimen/font_3.5"
-                title:sLeftTextString="@string/eos_CPU"
-                title:sRightTextColor="@color/black_context"
-                title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString=" EOS"
-                title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
-                title:sUseShape="true"
-                >
-
-            </com.allen.library.SuperTextView>
-            -->
 
             <com.cybex.base.view.progress.RoundCornerProgressBar
                 android:id="@+id/progressbar_cpu"
@@ -101,7 +83,7 @@
                 title:rcBackgroundPadding="0dp"
                 title:rcMax="100"
                 title:rcProgress="30"
-                title:rcProgressColor="@color/dark_sky_blue"
+                title:rcProgressColor="@color/black_context"
                 title:rcRadius="10dp"
                 >
 
@@ -166,24 +148,6 @@
 
             </LinearLayout>
 
-           <!--
-            <com.allen.library.SuperTextView
-                android:id="@+id/superTextView_net_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                title:sLeftTextColor="@color/black_context"
-                title:sLeftTextSize="@dimen/font_3.5"
-                title:sLeftTextString="@string/eos_NET"
-                title:sRightTextColor="@color/black_context"
-                title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="- EOS"
-                title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
-                title:sUseShape="true"
-                >
-
-            </com.allen.library.SuperTextView>
-            -->
             <com.cybex.base.view.progress.RoundCornerProgressBar
                 android:id="@+id/progressbar_net"
                 android:layout_width="match_parent"
@@ -193,7 +157,7 @@
                 title:rcBackgroundPadding="0dp"
                 title:rcMax="100"
                 title:rcProgress="10"
-                title:rcProgressColor="@color/dark_sky_blue"
+                title:rcProgressColor="@color/black_context"
                 title:rcRadius="10dp"
                 >
 
@@ -257,24 +221,6 @@
 
             </LinearLayout>
 
-            <!--
-            <com.allen.library.SuperTextView
-                android:id="@+id/superTextView_ram_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                title:sLeftTextColor="@color/black_context"
-                title:sLeftTextSize="@dimen/font_3.5"
-                title:sLeftTextString="@string/eos_RAM"
-                title:sRightTextColor="@color/black_context"
-                title:sRightTextSize="@dimen/font_3"
-                title:sRightTextString="- EOS"
-                title:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-                title:sShapeCornersTopRightRadius="@dimen/dimen_6"
-                title:sUseShape="true"
-                >
-
-            </com.allen.library.SuperTextView>
-            -->
             <com.cybex.base.view.progress.RoundCornerProgressBar
                 android:id="@+id/progressbar_ram"
                 android:layout_width="match_parent"
@@ -284,7 +230,7 @@
                 title:rcBackgroundPadding="0dp"
                 title:rcMax="100"
                 title:rcProgress="30"
-                title:rcProgressColor="@color/dark_sky_blue"
+                title:rcProgressColor="@color/black_context"
                 title:rcRadius="10dp"
                 >
 

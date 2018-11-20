@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,10 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
@@ -26,6 +27,8 @@ import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
+import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
+import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ChangeAccountEvent;
@@ -35,8 +38,6 @@ import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.TransferPresenter;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
-import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
-import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
@@ -64,11 +65,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import seed39.Seed39;
 
 /**
- * 转账Fragment
+ * EOS转账Fragment
  *
  * Created by wanglin on 2018/7/9.
  */
@@ -107,9 +107,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @BindView(R.id.et_note) EditTextWithScrollView etNote;
     @BindView(R.id.iv_transfer_memo_clear) ImageView ivTransferMemoClear;
     @BindView(R.id.btn_transfer_nextStep) Button btnTransferNextStep;
-    @BindView(R.id.root_scrollview) ScrollView rootScrollview;
+    //@BindView(R.id.root_scrollview) ScrollView rootScrollview;
     @BindView(R.id.iv_transfer_account_clear) ImageView ivTransferAccountClear;
     @BindView(R.id.view_receiver_account) LinearLayout viewReceiverAccount;
+    @BindView(R.id.root_refresh_layout) CommonRefreshLayout rootRefreshLayout;
     private TransferTransactionVO transactionVO;
     private String maxValue = "";
     private String currentEOSName = "";
@@ -255,12 +256,12 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
 
+        //rootRefreshLayout.setEnablePureScrollMode(true);
+
         etReceiverAccount.setText("");
         etAmount.setText("");
         etNote.setText("");
         getP().requestBanlanceInfo();
-
-        OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
 
         deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
         m_uiLock = new ReentrantLock();
@@ -279,9 +280,10 @@ public class TransferFragment extends XFragment<TransferPresenter> {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
+
                     if (EmptyUtils.isEmpty(getCollectionAccount())) {
                         tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
+                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
                     } else {
                         ivTransferAccountClear.setVisibility(View.VISIBLE);
                     }
@@ -290,7 +292,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     validateButton();
                     if (EmptyUtils.isEmpty(getCollectionAccount())) {
                         tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
+                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
                     }
                     if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
                             etReceiverAccount.getText().toString().trim())) {
@@ -300,7 +302,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     } else {
                         //显示默认样式
                         tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.steel));
+                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
                     }
                 }
             }
@@ -327,6 +329,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                 validateButton();
             }
         });
+//        etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
+//        etAmount.setTypeface(Typeface.DEFAULT_BOLD);
+//        etNote.setTypeface(Typeface.DEFAULT_BOLD);
 
         etNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -401,7 +406,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
 
     public boolean isAccountNameValid() {
         String eosUsername = etReceiverAccount.getText().toString().trim();
-        String regEx = "^[a-z1-5.]{1,13}$";
+        String regEx = "^[a-z1-5.]{1,12}$";
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher((eosUsername));
         boolean res = matcher.matches();
@@ -519,7 +524,7 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                     public void onValidateSuccess(String password) {
                         //密码正确，执行转账逻辑
                         String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
-                        String privateKey  = Seed39.keyDecrypt(password, saved_pri_key);
+                        String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
                         getP().executeTransferLogic(wallet.getEosWalletEntities().get(0)
                                         .getCurrentEosName(),
                                 collectionAccount, amount, memo, privateKey);
@@ -532,60 +537,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         //showPasswordHintDialog();
                     }
                 });
-
-//        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-//        dialog = new CustomFullDialog(getContext(),
-//                R.layout.eos_dialog_input_password_with_ic_mask, listenedItems, false, Gravity.BOTTOM);
-//        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
-//            @Override
-//            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-//                switch (view.getId()) {
-//                    case R.id.imc_cancel:
-//                        dialog.cancel();
-//                        showConfirmTransferDialog();
-//                        break;
-//                    case R.id.btn_confirm_authorization:
-//                        EditText etPasword = dialog.findViewById(R.id.et_password);
-//                        String pwd = String.valueOf(etPasword.getText());
-//
-//
-//
-//                        if (EmptyUtils.isEmpty(pwd)) {
-//                            GemmaToastUtils.showLongToast(getResources().getString(R.string.eos_tip_please_input_pass));
-//                            return;
-//                        } else {
-//                            //获取当前账户的私钥
-//                            MultiWalletEntity entity = DBManager.getInstance()
-//                                    .getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-//
-//                            if (entity != null) {
-//                                String privateKey = JNIUtil.get_private_key(entity.getCypher(), pwd);
-//
-//                                if ("wrong password".equals(privateKey)) {
-//                                    GemmaToastUtils.showShortToast(
-//                                            getResources().getString(R.string.eos_tip_wrong_password));
-//                                } else {
-//                                    //密码正确，执行转账逻辑
-//                                    getP().executeTransferLogic(entity.getEosWalletEntities().get(0)
-//                                                    .getCurrentEosName(),
-//                                            collectionAccount, amount, memo, privateKey);
-//                                    dialog.cancel();
-//                                }
-//
-//                            } else {
-//                                GemmaToastUtils.showShortToast(getString(R.string.eos_transfer_error));
-//                            }
-//                        }
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
-//        dialog.show();
-//        EditText etPasword = dialog.findViewById(R.id.et_password);
-//        etPasword.setHint(getString(R.string.eos_transfer_eosname_hint) + currentEOSName + getString(
-//                R.string.eos_transfer_eosname_hint_last));
     }
 
     /**

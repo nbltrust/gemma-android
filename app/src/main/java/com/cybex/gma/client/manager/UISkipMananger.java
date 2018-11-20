@@ -153,7 +153,7 @@ public final class UISkipMananger {
      * @param context
      */
     public static void launchAssetDetail(Activity context, Bundle bundle) {
-        launchIntent(context, EosAssetDetailActivity.class, bundle);
+        launchSingleTopIntent(context, EosAssetDetailActivity.class, bundle);
     }
 
     /**
@@ -470,6 +470,31 @@ public final class UISkipMananger {
         Intent intent = new Intent(context, cls);
         if (isNewTask) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        context.startActivity(intent);
+        context.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+
+    }
+
+    private static void launchSingleTopIntent(Activity context, Class<? extends Activity> cls) {
+        launchSingleTopIntent(context, cls, null, true);
+    }
+
+    private static void launchSingleTopIntent(
+            Activity context, Class<? extends Activity> cls,
+            Bundle bundle) {
+        launchSingleTopIntent(context, cls, bundle, true);
+    }
+
+    private static void launchSingleTopIntent(
+            Activity context, Class<? extends Activity> cls,
+            Bundle bundle, boolean isSingleTop) {
+        Intent intent = new Intent(context, cls);
+        if (isSingleTop) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         }
         if (bundle != null) {
             intent.putExtras(bundle);

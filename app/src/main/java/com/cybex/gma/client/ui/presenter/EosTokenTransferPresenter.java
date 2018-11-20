@@ -1,11 +1,15 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.os.Bundle;
+
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.fragment.EosTokenTransferFragment;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
@@ -16,6 +20,7 @@ import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -31,15 +36,17 @@ import java.io.IOException;
 public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragment> {
     private static final String VALUE_ACTION = "transfer";
     private static final String VALUE_COMPRESSION = "none";
+    private static final String VALUE_SYMBOL = "EOS";
 
     /**
-     * 执行软件钱包转账逻辑
+     * 执行EOS Token转账逻辑
      *
      * @param from
      * @param to
      * @param quantity
      * @param memo
      * @param privateKey
+     * @param accuracy Token小数点后精度
      */
     public void executeTokenTransferLogic(
             String from,
@@ -47,10 +54,14 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
             String quantity,
             String memo,
             String privateKey,
-            String tokenContract) {
+            String tokenContract,
+            String tokenSymbol,
+            int accuracy) {
         //通过c++获取 abi json操作体
-        String abijson = JNIUtil.create_abi_req_transfer(tokenContract, VALUE_ACTION,
-                from, to, quantity, memo);
+
+        String format_quantity = AmountUtil.round(quantity.split(" ")[0], accuracy) + " " + tokenSymbol;
+        String abijson = JNIUtil.create_abi_req_transfer(VALUE_CODE, VALUE_ACTION,
+                from, to, format_quantity, memo);
 
         //链上接口请求 abi_json_to_bin
         new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)
@@ -230,9 +241,13 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
                                 String jsonStr = response.body();
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
-                                //if (getV().getActivity() != null)getV().getActivity().finish();
 
-                                UISkipMananger.launchEOSHome(getV().getActivity());
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable(ParamConstants.EOS_TOKENS, getV().getCurToken());
+
+                                AppManager.getAppManager().finishActivity();
+                                AppManager.getAppManager().finishActivity(EosAssetDetailActivity.class);
+                                UISkipMananger.launchAssetDetail(getV().getActivity(), bundle);
                                 getV().clearData();
                             }
                         }

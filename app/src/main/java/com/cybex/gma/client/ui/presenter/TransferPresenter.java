@@ -1,5 +1,7 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.os.Bundle;
+
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
@@ -10,6 +12,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.fragment.TransferFragment;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
@@ -23,6 +26,7 @@ import com.cybex.gma.client.ui.request.PushTransactionRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -470,8 +474,11 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                 String jsonStr = response.body();
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
                                 //if (getV().getActivity() != null)getV().getActivity().finish();
-
-                                UISkipMananger.launchEOSHome(getV().getActivity());
+                                Bundle bundle = new Bundle();
+                                bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
+                                AppManager.getAppManager().finishActivity();
+                                AppManager.getAppManager().finishActivity(EosAssetDetailActivity.class);
+                                UISkipMananger.launchAssetDetail(getV().getActivity(), bundle);
                                 getV().clearData();
                             }
                         }

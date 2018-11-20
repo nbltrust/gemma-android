@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.componentservice.widget.EditTextWithScrollView;
@@ -68,6 +70,9 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     @BindView(R.id.root_scrollview_token) ScrollView rootScrollview;
     Unbinder unbinder;
     CustomFullDialog dialog = null;
+
+
+
     EosTokenVO curToken;
 
     private TransferTransactionVO transactionVO;
@@ -142,23 +147,45 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             return;
         }
 
-        String[] spiltBanlance = balance.split(" ");
-        if (EmptyUtils.isEmpty(spiltBanlance)) {
+        String[] spiltBalance = balance.split(" ");
+        if (EmptyUtils.isEmpty(spiltBalance)) {
             return;
         }
 
-        maxValue = spiltBanlance[0].trim();
-        LoggerManager.d("maxValue", maxValue);
-        tvBanlance.setText(getString(R.string.eos_show_remain_balance) + balance + " " + tokenName);
 
-        etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
-                .Type.decimal, 4, maxValue) {
-            @Override
-            public void afterTextChanged(Editable s) {
-                super.afterTextChanged(s);
-                validateButton();
+        maxValue = spiltBalance[0].trim();
+        //LoggerManager.d("maxValue", maxValue);
+
+
+        if (curToken != null){
+            tvBanlance.setText(getString(R.string.eos_show_remain_balance)
+                    + balance
+                    + " " + tokenName);
+            int accuracy = 0;
+
+            if (curToken.getAccurancy() > 0){
+               accuracy = curToken.getAccurancy();
+                etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
+                        .Type.decimal, accuracy, maxValue) {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        super.afterTextChanged(s);
+                        validateButton();
+                    }
+                });
+            }else {
+                etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
+                        .Type.integer, maxValue.length() + 1, maxValue) {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        super.afterTextChanged(s);
+                        validateButton();
+                    }
+                });
             }
-        });
+
+
+        }
 
         etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -174,6 +201,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 }
             }
         });
+
+
 
     }
 
@@ -202,7 +231,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         if (getArguments() != null) {
             curToken = getArguments().getParcelable(ParamConstants.EOS_TOKENS);
             if (curToken != null) {
-                String balance = String.valueOf(curToken.getQuantity());
+                String balance = curToken.getQuantity();
 
                 MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
                 MultiWalletEntity entity = dao.getCurrentMultiWalletEntity();
@@ -211,10 +240,63 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 currentEOSName = eosEntity.getCurrentEosName();
                 String tokenSymbol = curToken.getTokenSymbol();
                 showInitData(balance, currentEOSName, tokenSymbol);
+
+                String curAccuracyStr = " ";
+                int curAccuracy  = curToken.getAccurancy();
+                if (curAccuracy > 0){
+                    if (curAccuracy == 1){
+                        curAccuracyStr = "一";
+                    }else if (curAccuracy == 2){
+                        curAccuracyStr = "二";
+                    }else if (curAccuracy == 3){
+                        curAccuracyStr = "三";
+                    }else if (curAccuracy == 4){
+                        curAccuracyStr = "四";
+                    }else if (curAccuracy == 5){
+                        curAccuracyStr = "五";
+                    }else if (curAccuracy == 6){
+                        curAccuracyStr = "六";
+                    }else if (curAccuracy == 7){
+                        curAccuracyStr = "七";
+                    }else if (curAccuracy == 8){
+                        curAccuracyStr = "八";
+                    }else if (curAccuracy == 9){
+                        curAccuracyStr = "九";
+                    }else if (curAccuracy == 10){
+                        curAccuracyStr = "十";
+                    }else if (curAccuracy == 11){
+                        curAccuracyStr = "十一";
+                    }else if (curAccuracy == 12){
+                        curAccuracyStr = "十二";
+                    }else if (curAccuracy == 13){
+                        curAccuracyStr = "十三";
+                    }else if (curAccuracy == 14){
+                        curAccuracyStr = "十四";
+                    }else if (curAccuracy == 15){
+                        curAccuracyStr = "十五";
+                    }else if (curAccuracy == 16){
+                        curAccuracyStr = "十六";
+                    }else if (curAccuracy == 17){
+                        curAccuracyStr = "十七";
+                    }else if (curAccuracy == 18){
+                        curAccuracyStr = "十八";
+                    }else {
+                        curAccuracyStr = "四";
+                    }
+                    etAmount.setHint(String.format(getString(R.string.eos_token_tip_transfer), curAccuracyStr));
+                }else {
+                    etAmount.setHint(getString(R.string.eos_token_tip_transfer_no_decimal));
+                }
+
+
+
+
+
                 etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (hasFocus) {
+                            etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
                             if (EmptyUtils.isEmpty(getCollectionAccount())) {
                                 tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
                                 tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
@@ -222,6 +304,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                 ivTransferAccountClear.setVisibility(View.VISIBLE);
                             }
                         } else {
+                            etReceiverAccount.setTypeface(Typeface.DEFAULT);
                             ivTransferAccountClear.setVisibility(View.GONE);
                             validateButton();
                             if (EmptyUtils.isEmpty(getCollectionAccount())) {
@@ -268,11 +351,24 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (hasFocus) {
+                            etNote.setTypeface(Typeface.DEFAULT_BOLD);
                             if (EmptyUtils.isNotEmpty(getNote())) {
                                 ivTransferMemoClear.setVisibility(View.VISIBLE);
                             }
                         } else {
+                            etNote.setTypeface(Typeface.DEFAULT);
                             ivTransferMemoClear.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+                etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus){
+                            etAmount.setTypeface(Typeface.DEFAULT_BOLD);
+                        }else {
+                            etAmount.setTypeface(Typeface.DEFAULT);
                         }
                     }
                 });
@@ -280,10 +376,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
             }
         }
-
-
-
-
     }
 
     @Override
@@ -399,7 +491,9 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         TextView tv_payment_account = dialog.findViewById(R.id.tv_payment_account);//付款账户
 
         collectionAccount = String.valueOf(etReceiverAccount.getText());
-        amount = String.valueOf(etAmount.getText()) + " EOS";
+        if (curToken != null){
+            amount = String.valueOf(etAmount.getText()) + " " + curToken.getTokenSymbol();
+        }
 
         if (EmptyUtils.isNotEmpty(collectionAccount)) {
             tv_payee.setText(collectionAccount);
@@ -438,9 +532,12 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
                         String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
                         String tokenContract = curToken.getTokenName();
+                        int accuracy = curToken.getAccurancy();
+                        String tokenSymbol = curToken.getTokenSymbol();
                         getP().executeTokenTransferLogic(
                                 wallet.getEosWalletEntities().get(0).getCurrentEosName(),
-                                collectionAccount, amount, memo, privateKey, tokenContract );
+                                collectionAccount, amount, memo,
+                                privateKey, tokenContract,tokenSymbol, accuracy);
                         //dialog.cancel();
                     }
 
@@ -500,6 +597,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
         //刷新数据
         //getP().requestBanlanceInfo();
+    }
+
+    public EosTokenVO getCurToken() {
+        return curToken;
     }
 
 }
