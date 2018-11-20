@@ -10,6 +10,7 @@
         android:id="@+id/btn_close"
         android:layout_width="60dp"
         android:layout_height="48dp"
+        android:layout_marginStart="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_mask_close"/>
 
@@ -19,7 +20,6 @@
         android:layout_height="150dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -35,7 +35,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_receiver"
                 android:textColor="@color/eos_font_title"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font_3.5"/>
 
             <TextView
                 android:id="@+id/tv_payee"
@@ -44,16 +44,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
-                android:textColor="@color/black_context"
-                android:textStyle="bold"
+                android:textColor="@color/black_title"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:text="\ufeff@lhy546802341"/>
         </RelativeLayout>
 
         <View
+            style="@style/common_divider"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            style="@style/common_divider"/>
+            android:layout_marginRight="16dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -74,18 +74,28 @@
                 android:id="@+id/tv_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="16dp"
+                android:layout_toStartOf="@id/tv_eos_symbol"
+                android:textColor="@color/black_title"
                 android:textStyle="bold"
-                android:textColor="@color/black_context"
-                tools:text="2.2345 EOS"/>
+                tools:text="2.2345"/>
+
+            <TextView
+                android:id="@+id/tv_eos_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="18dp"
+                android:text=" EOS"
+                android:textColor="@color/black_title"
+                android:textSize="@dimen/font_3"/>
         </RelativeLayout>
 
         <View
+            style="@style/common_divider"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            style="@style/common_divider"/>
+            android:layout_marginRight="16dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -107,23 +117,24 @@
                 android:id="@+id/tv_note"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="16dp"
-                android:layout_toEndOf="@id/tv_note_title"
                 android:layout_alignParentRight="true"
-                android:textAlignment="viewEnd"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="30dp"
+                android:layout_toEndOf="@id/tv_note_title"
                 android:ellipsize="end"
                 android:singleLine="true"
+                android:textSize="@dimen/font_3.5"
+                android:textAlignment="viewEnd"
                 android:textColor="@color/black_context"
                 tools:text="@string/eos_default_memo"/>
 
         </RelativeLayout>
 
         <View
+            style="@style/common_divider"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            style="@style/common_divider"/>
+            android:layout_marginRight="16dp"/>
 
     </LinearLayout>
 
@@ -151,25 +162,25 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
-            android:textColor="@color/black_context"
-            android:textStyle="bold"
+            android:textColor="@color/black_title"
             android:textSize="16sp"
+            android:textStyle="bold"
             tools:text="\ufeff@lhy546802341"/>
     </RelativeLayout>
 
     <View
+        style="@style/common_divider"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        style="@style/common_divider"/>
+        android:layout_marginRight="30dp"/>
 
     <Button
         android:id="@+id/btn_transfer_nextStep"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/eos_selector_btn_transfer"
         android:text="@string/eos_btn_confirm_transfer"
         android:textColor="@color/white"

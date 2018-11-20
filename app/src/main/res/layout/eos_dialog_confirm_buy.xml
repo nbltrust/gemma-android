@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="#f9f9f9"
               android:orientation="vertical">
 
@@ -35,10 +36,10 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_fund"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -48,6 +49,8 @@
 
                 <TextView
                     android:id="@+id/tv_ram_amount"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black_title"
@@ -56,13 +59,17 @@
                     tools:text="0.0001"/>
 
                 <TextView
+                    app:layout_constraintStart_toEndOf="@id/tv_ram_amount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_ram_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black_context"
-                    android:textSize="@dimen/font_4"
+                    android:textSize="@dimen/font_3"
                     android:text=" EOS"/>
 
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
 
         </RelativeLayout>
 
@@ -84,7 +91,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_explanation"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
             <TextView
                 android:id="@+id/tv_explanation"
@@ -94,7 +101,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
                 android:textColor="@color/black_context"
-                android:textSize="@dimen/font_4"
+                android:textSize="@dimen/font_3.5"
                 tools:text="buy ram"/>
         </RelativeLayout>
 
@@ -108,7 +115,7 @@
     <Button
         android:id="@+id/btn_confirm_buy_ram"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"

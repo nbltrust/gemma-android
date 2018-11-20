@@ -220,8 +220,8 @@
     <string name="eos_confirm_buy">Confirm buy</string>
     <string name="eos_confirm_sell">Confirm sell</string>
     <string name="eos_explanation">Description</string>
-    <string name="eos_tip_buy_ram">Buy RAM</string>
-    <string name="eos_tip_sell_ram">Sell RAM</string>
+    <string name="eos_tip_buy_ram">buy ram</string>
+    <string name="eos_tip_sell_ram">sell ram</string>
     <string name="eos_quantity">Amount</string>
     <string name="eos_input_original_pass">Enter original password</string>
     <string name="eos_verify_password">Verify</string>

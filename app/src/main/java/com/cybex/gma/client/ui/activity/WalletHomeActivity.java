@@ -42,6 +42,8 @@ import com.lzy.okgo.OkGo;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -459,18 +461,12 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
      * @return
      */
     public String formatCurrency(String value){
-        String value_int = value.split("\\.")[0];
-        String value_decimal = value.split("\\.")[1];
-        String res = "";
-        for (int i = 0; i < value_int.length();){
-            if (i+3 < value_int.length()){
-                res += value_int.substring(i, i+3) + ",";
-            }else{
-                res += value_int.substring(i, value_int.length());
-            }
-            i += 3;
-        }
-        return res + "." + value_decimal;
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        BigDecimal bigDecimal = new BigDecimal(value);
+        String format_value = df.format(bigDecimal);
+        LoggerManager.d("format_value", format_value);
+
+        return format_value;
     }
 
 }

@@ -35,7 +35,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_quantity"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
             <LinearLayout
                 android:layout_alignParentRight="true"
@@ -56,7 +56,7 @@
 
                 <TextView
                     android:textColor="@color/black_context"
-                    android:textSize="@dimen/font_4"
+                    android:textSize="@dimen/font_3"
                     android:text=" KB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -86,7 +86,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_explanation"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
             <TextView
                 android:id="@+id/tv_explanation"
@@ -95,7 +95,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
-                android:textSize="@dimen/font_4"
+                android:textSize="@dimen/font_3.5"
                 android:textColor="@color/black_context"
                 tools:text="buy ram"/>
         </RelativeLayout>
@@ -110,7 +110,7 @@
     <Button
         android:id="@+id/btn_confirm_sell_ram"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"

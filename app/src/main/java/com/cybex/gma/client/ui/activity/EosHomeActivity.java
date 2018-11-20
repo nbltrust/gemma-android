@@ -113,7 +113,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     public void goAssetDetail() {
 //        bundle.putString(ParamConstants.EOS_ASSET_VALUE, getAssetsValue());
 //        bundle.putString(ParamConstants.EOS_AMOUNT, getEosAmount());
-        bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
+        bundle.putString(ParamConstants.EOS_TOKEN_TYPE, ParamConstants.SYMBOL_EOS);
         UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
     }
 
@@ -625,7 +625,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                 EosTokenVO curToken = eosTokens.get(position);
 
                 Bundle bundle = new Bundle();
-                bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_TOKENS);
+                bundle.putString(ParamConstants.EOS_TOKEN_TYPE, curToken.getTokenSymbol());
                 bundle.putParcelable(ParamConstants.EOS_TOKENS, curToken);
 
                 UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);

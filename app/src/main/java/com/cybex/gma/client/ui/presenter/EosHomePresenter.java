@@ -6,6 +6,7 @@ import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.ui.activity.EosHomeActivity;
@@ -31,6 +32,8 @@ import com.lzy.okgo.request.base.Request;
 
 import org.json.JSONArray;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -488,18 +491,12 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
      * @return
      */
     public String formatCurrency(String value){
-        String value_int = value.split("\\.")[0];
-        String value_decimal = value.split("\\.")[1];
-        String res = "";
-        for (int i = 0; i < value_int.length();){
-            if (i+3 < value_int.length()){
-                res += value_int.substring(i, i+3) + ",";
-            }else{
-                res += value_int.substring(i, value_int.length());
-            }
-            i += 3;
-        }
-        return res + "." + value_decimal;
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        BigDecimal bigDecimal = new BigDecimal(value);
+        String format_value = df.format(bigDecimal);
+        LoggerManager.d("format_value", format_value);
+
+        return format_value;
     }
 
 }

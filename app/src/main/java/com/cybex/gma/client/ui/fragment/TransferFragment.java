@@ -256,14 +256,12 @@ public class TransferFragment extends XFragment<TransferPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
 
-        rootRefreshLayout.setEnablePureScrollMode(true);
+        //rootRefreshLayout.setEnablePureScrollMode(true);
 
         etReceiverAccount.setText("");
         etAmount.setText("");
         etNote.setText("");
         getP().requestBanlanceInfo();
-
-        //OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
 
         deviceName = SPUtils.getInstance().getString(ParamConstants.DEVICE_NAME);
         m_uiLock = new ReentrantLock();
@@ -331,9 +329,9 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                 validateButton();
             }
         });
-        etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
-        etAmount.setTypeface(Typeface.DEFAULT_BOLD);
-        etNote.setTypeface(Typeface.DEFAULT_BOLD);
+//        etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
+//        etAmount.setTypeface(Typeface.DEFAULT_BOLD);
+//        etNote.setTypeface(Typeface.DEFAULT_BOLD);
 
         etNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

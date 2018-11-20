@@ -164,16 +164,26 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
             if (curToken.getAccurancy() > 0){
                accuracy = curToken.getAccurancy();
+                etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
+                        .Type.decimal, accuracy, maxValue) {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        super.afterTextChanged(s);
+                        validateButton();
+                    }
+                });
+            }else {
+                etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
+                        .Type.integer, maxValue.length() + 1, maxValue) {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        super.afterTextChanged(s);
+                        validateButton();
+                    }
+                });
             }
 
-            etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
-                    .Type.decimal, accuracy, maxValue) {
-                @Override
-                public void afterTextChanged(Editable s) {
-                    super.afterTextChanged(s);
-                    validateButton();
-                }
-            });
+
         }
 
         etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -232,52 +242,60 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                 String curAccuracyStr = " ";
                 int curAccuracy  = curToken.getAccurancy();
-                if (curAccuracy == 1){
-                    curAccuracyStr = "一";
-                }else if (curAccuracy == 2){
-                    curAccuracyStr = "二";
-                }else if (curAccuracy == 3){
-                    curAccuracyStr = "三";
-                }else if (curAccuracy == 4){
-                    curAccuracyStr = "四";
-                }else if (curAccuracy == 5){
-                    curAccuracyStr = "五";
-                }else if (curAccuracy == 6){
-                    curAccuracyStr = "六";
-                }else if (curAccuracy == 7){
-                    curAccuracyStr = "七";
-                }else if (curAccuracy == 8){
-                    curAccuracyStr = "八";
-                }else if (curAccuracy == 9){
-                    curAccuracyStr = "九";
-                }else if (curAccuracy == 10){
-                    curAccuracyStr = "十";
-                }else if (curAccuracy == 11){
-                    curAccuracyStr = "十一";
-                }else if (curAccuracy == 12){
-                    curAccuracyStr = "十二";
-                }else if (curAccuracy == 13){
-                    curAccuracyStr = "十三";
-                }else if (curAccuracy == 14){
-                    curAccuracyStr = "十四";
-                }else if (curAccuracy == 15){
-                    curAccuracyStr = "十五";
-                }else if (curAccuracy == 16){
-                    curAccuracyStr = "十六";
-                }else if (curAccuracy == 17){
-                    curAccuracyStr = "十七";
-                }else if (curAccuracy == 18){
-                    curAccuracyStr = "十八";
+                if (curAccuracy > 0){
+                    if (curAccuracy == 1){
+                        curAccuracyStr = "一";
+                    }else if (curAccuracy == 2){
+                        curAccuracyStr = "二";
+                    }else if (curAccuracy == 3){
+                        curAccuracyStr = "三";
+                    }else if (curAccuracy == 4){
+                        curAccuracyStr = "四";
+                    }else if (curAccuracy == 5){
+                        curAccuracyStr = "五";
+                    }else if (curAccuracy == 6){
+                        curAccuracyStr = "六";
+                    }else if (curAccuracy == 7){
+                        curAccuracyStr = "七";
+                    }else if (curAccuracy == 8){
+                        curAccuracyStr = "八";
+                    }else if (curAccuracy == 9){
+                        curAccuracyStr = "九";
+                    }else if (curAccuracy == 10){
+                        curAccuracyStr = "十";
+                    }else if (curAccuracy == 11){
+                        curAccuracyStr = "十一";
+                    }else if (curAccuracy == 12){
+                        curAccuracyStr = "十二";
+                    }else if (curAccuracy == 13){
+                        curAccuracyStr = "十三";
+                    }else if (curAccuracy == 14){
+                        curAccuracyStr = "十四";
+                    }else if (curAccuracy == 15){
+                        curAccuracyStr = "十五";
+                    }else if (curAccuracy == 16){
+                        curAccuracyStr = "十六";
+                    }else if (curAccuracy == 17){
+                        curAccuracyStr = "十七";
+                    }else if (curAccuracy == 18){
+                        curAccuracyStr = "十八";
+                    }else {
+                        curAccuracyStr = "四";
+                    }
+                    etAmount.setHint(String.format(getString(R.string.eos_token_tip_transfer), curAccuracyStr));
                 }else {
-                    curAccuracyStr = "四";
+                    etAmount.setHint(getString(R.string.eos_token_tip_transfer_no_decimal));
                 }
 
-                etAmount.setHint(String.format(getString(R.string.eos_token_tip_transfer), curAccuracyStr));
+
+
+
 
                 etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (hasFocus) {
+                            etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
                             if (EmptyUtils.isEmpty(getCollectionAccount())) {
                                 tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
                                 tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
@@ -285,6 +303,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                 ivTransferAccountClear.setVisibility(View.VISIBLE);
                             }
                         } else {
+                            etReceiverAccount.setTypeface(Typeface.DEFAULT);
                             ivTransferAccountClear.setVisibility(View.GONE);
                             validateButton();
                             if (EmptyUtils.isEmpty(getCollectionAccount())) {
@@ -331,11 +350,24 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (hasFocus) {
+                            etNote.setTypeface(Typeface.DEFAULT_BOLD);
                             if (EmptyUtils.isNotEmpty(getNote())) {
                                 ivTransferMemoClear.setVisibility(View.VISIBLE);
                             }
                         } else {
+                            etNote.setTypeface(Typeface.DEFAULT);
                             ivTransferMemoClear.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+                etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus){
+                            etAmount.setTypeface(Typeface.DEFAULT_BOLD);
+                        }else {
+                            etAmount.setTypeface(Typeface.DEFAULT);
                         }
                     }
                 });
@@ -343,11 +375,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
             }
         }
-
-        etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
-        etAmount.setTypeface(Typeface.DEFAULT_BOLD);
-        etNote.setTypeface(Typeface.DEFAULT_BOLD);
-
     }
 
     @Override

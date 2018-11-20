@@ -30,7 +30,6 @@ import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.presenter.AssetDetailPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -58,7 +57,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     private String currentEosName = "";
     private Bundle bundle;
     private EosTokenVO curToken;
-    private int asset_type;
+    private String asset_type;
     private int curPage;//交易记录当前页数
     private String curEosPrice;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
@@ -94,66 +93,92 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         setNavibarTitle(getString(R.string.title_asset_detail), true);
         bundle = getIntent().getExtras();
         if (bundle != null) {
-             asset_type = bundle.getInt(ParamConstants.COIN_TYPE);
-            if (asset_type == ParamConstants.COIN_TYPE_EOS) {
-                //EOS资产
-                //资源管理
-                tvResourceManage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        UISkipMananger.launchResourceDetail(EosAssetDetailActivity.this, bundle);
-                    }
-                });
+            asset_type = bundle.getString(ParamConstants.EOS_TOKEN_TYPE);
+            if (asset_type != null) {
+                if (asset_type.equals(ParamConstants.SYMBOL_EOS)) {
+                    //EOS资产
+                    //资源管理
+                    tvResourceManage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UISkipMananger.launchResourceDetail(EosAssetDetailActivity.this, bundle);
+                        }
+                    });
 
-                //投票
-                tvVote.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MultiWalletEntity curWallet = DBManager.getInstance()
-                                .getMultiWalletEntityDao()
-                                .getCurrentMultiWalletEntity();
-                        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
-                        if (EmptyUtils.isNotEmpty(curWallet)) {
-                            bundle.putString("cur_eos_name", curEosWallet.getCurrentEosName());
-                            UISkipMananger.launchVote(EosAssetDetailActivity.this, bundle);
+                    //投票
+                    tvVote.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            MultiWalletEntity curWallet = DBManager.getInstance()
+                                    .getMultiWalletEntityDao()
+                                    .getCurrentMultiWalletEntity();
+                            EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+                            if (EmptyUtils.isNotEmpty(curWallet)) {
+                                bundle.putString("cur_eos_name", curEosWallet.getCurrentEosName());
+                                UISkipMananger.launchVote(EosAssetDetailActivity.this, bundle);
+                            }
+                        }
+                    });
+
+                    btnGoTransfer.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UISkipMananger.launchTransfer(EosAssetDetailActivity.this);
+                        }
+                    });
+
+                    btnCollect.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UISkipMananger.launchCollect(EosAssetDetailActivity.this);
+                        }
+                    });
+
+                } else {
+                    //EOS Tokens 资产
+                    curToken = bundle.getParcelable(ParamConstants.EOS_TOKENS);
+                    tvRmbAmount.setVisibility(View.GONE);
+                    tvCurrencyType.setVisibility(View.GONE);
+                    viewAssetDetailBot.setVisibility(View.GONE);
+                    if (curToken != null) {
+                        //设置Token相关UI
+                        tvTokenName.setText(curToken.getTokenSymbol());
+                        tvEosAmount.setText(curToken.getQuantity());
+                        String tokenUrl = curToken.getLogo_url();
+                        if (tokenUrl == null || tokenUrl.equals("")) {
+                            ivLogoEosAsset.setImageResource(R.drawable.ic_token_unknown);
+                        } else {
+                            Glide.with(ivLogoEosAsset.getContext())
+                                    .load(tokenUrl)
+                                    .into(ivLogoEosAsset);
                         }
                     }
-                });
 
-                btnGoTransfer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        UISkipMananger.launchTransfer(EosAssetDetailActivity.this);
-                    }
-                });
+                    btnGoTransfer.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UISkipMananger.launchTransferWithBundle(EosAssetDetailActivity.this, bundle);
+                        }
+                    });
 
-                btnCollect.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        UISkipMananger.launchCollect(EosAssetDetailActivity.this);
-                    }
-                });
-
-            } else {
-                //EOS Tokens 资产
-                curToken = bundle.getParcelable(ParamConstants.EOS_TOKENS);
-                tvRmbAmount.setVisibility(View.GONE);
-                tvCurrencyType.setVisibility(View.GONE);
-                viewAssetDetailBot.setVisibility(View.GONE);
-                if (curToken != null) {
-                    //设置Token相关UI
-                    tvTokenName.setText(curToken.getTokenSymbol());
-                    tvEosAmount.setText(curToken.getQuantity());
-                    String tokenUrl = curToken.getLogo_url();
-                    if (tokenUrl == null || tokenUrl.equals("")){
-                        ivLogoEosAsset.setImageResource(R.drawable.ic_token_unknown);
-                    }else {
-                        Glide.with(ivLogoEosAsset.getContext())
-                                .load(tokenUrl)
-                                .into(ivLogoEosAsset);
-                    }
+                    btnCollect.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UISkipMananger.launchCollectWithBundle(EosAssetDetailActivity.this, bundle);
+                        }
+                    });
                 }
+            }
+        }
 
+        /*
+        //todo 将EOS和Tokens处理逻辑进行统一处理，等上正式链测试的时候使用下面这段代码替换现有代码
+
+        if (bundle != null) {
+            curToken = bundle.getParcelable(ParamConstants.EOS_TOKENS);
+            asset_type = bundle.getString(ParamConstants.EOS_TOKEN_TYPE);
+            if (curToken != null){
+                //EOS和TOKENS的公共逻辑
                 btnGoTransfer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -164,20 +189,65 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 btnCollect.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Bundle bd = new Bundle();
-//                        bd.putParcelable(ParamConstants.EOS_TOKENS, curToken);
                         UISkipMananger.launchCollectWithBundle(EosAssetDetailActivity.this, bundle);
                     }
                 });
+
+                //设置Token相关UI
+                tvTokenName.setText(curToken.getTokenSymbol());
+                tvEosAmount.setText(curToken.getQuantity());
+                String tokenUrl = curToken.getLogo_url();
+                if (tokenUrl == null || tokenUrl.equals("")) {
+                    ivLogoEosAsset.setImageResource(R.drawable.ic_token_unknown);
+                } else {
+                    Glide.with(ivLogoEosAsset.getContext())
+                            .load(tokenUrl)
+                            .into(ivLogoEosAsset);
+                }
+
+                //EOS和TOKENS差异处理
+                if (asset_type != null) {
+                    if (asset_type.equals(ParamConstants.SYMBOL_EOS)) {
+                        //EOS资产
+                        //资源管理
+                        tvResourceManage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                UISkipMananger.launchResourceDetail(EosAssetDetailActivity.this, bundle);
+                            }
+                        });
+
+                        //投票
+                        tvVote.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MultiWalletEntity curWallet = DBManager.getInstance()
+                                        .getMultiWalletEntityDao()
+                                        .getCurrentMultiWalletEntity();
+                                EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+                                if (EmptyUtils.isNotEmpty(curWallet)) {
+                                    bundle.putString("cur_eos_name", curEosWallet.getCurrentEosName());
+                                    UISkipMananger.launchVote(EosAssetDetailActivity.this, bundle);
+                                }
+                            }
+                        });
+
+                    } else {
+                        //EOS Tokens 资产
+                        tvRmbAmount.setVisibility(View.GONE);
+                        tvCurrencyType.setVisibility(View.GONE);
+                        viewAssetDetailBot.setVisibility(View.GONE);
+                    }
+                }
             }
-
-
         }
+        */
+
+
         viewRefresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 doRequest(++curPage);
-
             }
 
             @Override
@@ -223,7 +293,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void getCybexPrice(CybexPriceEvent event){
+    public void getCybexPrice(CybexPriceEvent event) {
         curEosPrice = event.getEosPrice();
     }
 
@@ -270,7 +340,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
         if (bundle != null) {
 
-            if (asset_type == ParamConstants.COIN_TYPE_EOS) {
+            if (asset_type.equals(ParamConstants.SYMBOL_EOS)) {
                 //查询EOS交易记录
                 getP().requestHistory(
                         currentEosName,
@@ -280,7 +350,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                         ParamConstants.CONTRACT_EOS,
                         true);
 
-            }else{
+            } else {
                 //查询EOS糖果交易记录
                 String symbol = curToken.getTokenSymbol();
                 String contract = curToken.getTokenName();
@@ -311,7 +381,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     }
 
-    public void finishRefresh(){
+    public void finishRefresh() {
         viewRefresh.finishRefresh();
     }
 
@@ -332,14 +402,14 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     }
 
-    public void setLoadMoreFinish(){
+    public void setLoadMoreFinish() {
         viewRefresh.setLoadmoreFinished(true);
     }
 
-    public void showBalance(String balance){
+    public void showBalance(String balance) {
         tvEosAmount.setText(balance.split(" ")[0]);
-        if (curEosPrice != null){
-            String eosValue = AmountUtil.mul(balance.split(" ")[0], curEosPrice,2);
+        if (curEosPrice != null) {
+            String eosValue = AmountUtil.mul(balance.split(" ")[0], curEosPrice, 2);
             tvRmbAmount.setText(eosValue);
         }
     }

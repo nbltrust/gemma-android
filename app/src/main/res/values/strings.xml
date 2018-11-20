@@ -77,7 +77,7 @@
     <string name="eos_title_resource_detail">资源详情</string>
     <string name="eos_balance">余额</string>
     <string name="eos_quantity">数量</string>
-    <string name="eos_amount_balance">余额 %1$s EOS</string>
+    <string name="eos_amount_balance">%1$s EOS 可用</string>
 
     <string name="eos_amount_cpu_used">已用 %1$s ms</string>
     <string name="eos_amount_cpu_total">总量 %1$s ms</string>
@@ -221,8 +221,8 @@
     <string name="eos_confirm_buy">确认买入</string>
     <string name="eos_confirm_sell">确认卖出</string>
     <string name="eos_explanation">说明</string>
-    <string name="eos_tip_buy_ram">Buy RAM</string>
-    <string name="eos_tip_sell_ram">Sell RAM</string>
+    <string name="eos_tip_buy_ram">buy ram</string>
+    <string name="eos_tip_sell_ram">sell ram</string>
     <string name="eos_input_original_pass">请输入原密码</string>
     <string name="eos_verify_password">验证密码</string>
     <string name="eos_input_password">请输入@账户名的密码</string>
@@ -688,6 +688,7 @@
     <!-- =============== -->
       <string name="eos_activate_your_account">在使用EOS功能前请先激活您的EOS账户</string>
     <string name="eos_token_tip_transfer">输入转账金额，最多%1$s位小数</string>
+    <string name="eos_token_tip_transfer_no_decimal">输入转账金额</string>
     <string name="eos_valid_username_digits">12345.qwertyuioplkjhgfdsazxcvbnm</string>
 
     <string name="eos_activate_by_friend_one">请持有EOS的好友向智能合约</string>

@@ -43,6 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.jessyan.autosize.AutoSize;
 import seed39.Seed39;
 
 
@@ -122,7 +123,10 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             if (ramUnitPriceKB != null) {
                 //显示ram价格
                 tvRamUnitPrice.setRightString(String.format(getString(R.string.eos_amount_ram_unit_price),
-                        ramUnitPriceKB));
+                        AmountUtil.round(ramUnitPriceKB, 4)));
+
+                eosPerKb = ramUnitPriceKB;
+                kbPerEOS = AmountUtil.div("1", ramUnitPriceKB, 8);
 
                 resourceInfoVO = getArguments().getParcelable(ParamConstants.RESOURCE_VO);
                 if (resourceInfoVO != null) {
@@ -177,7 +181,7 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                     String ramAvailable = calAvailableRam(resourceInfoVO);
                                     tvAvaEosRam.setText(
                                             String.format(getResources().getString(R.string.eos_amount_available_ram),
-                                                    ramAvailable));
+                                                    AmountUtil.round(ramAvailable, 4)));
                                 }
 
                                 if (EmptyUtils.isNotEmpty(getActivity())) { hideSoftKeyboard(getActivity()); }
@@ -202,8 +206,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                                 setClickable(btBuyRam);
                                 if (EmptyUtils.isNotEmpty(kbPerEOS)) {
                                     String amount =
-                                            getResources().getString(R.string.eos_tip_quantity_approxi) + AmountUtil.mul(
-                                                    kbPerEOS, getEOSAmount(), 4) + " KB";
+                                            getResources().getString(R.string.eos_tip_quantity_approxi)
+                                                    + " " + AmountUtil.mul(kbPerEOS, getEOSAmount(), 4) + " KB";
                                     tvApproximatelyAmount.setText(amount);
                                     tvApproximatelyAmount.setVisibility(View.VISIBLE);
                                 }
@@ -223,10 +227,10 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                             if (EmptyUtils.isNotEmpty(getRamAmount()) && !getRamAmount().equals(".") && Float.valueOf
                                     (getRamAmount()) > 0) {
                                 setClickable(btSellRam);
-                                if (EmptyUtils.isNotEmpty(kbPerEOS)) {
+                                if (EmptyUtils.isNotEmpty(eosPerKb)) {
                                     String amount =
-                                            getResources().getString(R.string.eos_tip_quantity_approxi) + AmountUtil.mul(
-                                                    kbPerEOS, getEOSAmount(), 4) + " KB";
+                                            getResources().getString(R.string.eos_tip_quantity_approxi) + " "
+                                                    + AmountUtil.mul(eosPerKb, getRamAmount(), 4) + " EOS";
                                     tvApproximatelyAmount.setText(amount);
                                     tvApproximatelyAmount.setVisibility(View.VISIBLE);
                                 }
@@ -290,13 +294,14 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         //superTextViewRamAmount.setRightString(String.format(getResources().getString(R.string.eos_amount_ram),
         //ramPrice));
         kbPerEOS = AmountUtil.div("1", ramUnitPriceKB, 8);
+        LoggerManager.d("kbPerEOS", kbPerEOS);
     }
 
     public String calAvailableRam(ResourceInfoVO vo) {
         String ramUsed = String.valueOf(vo.getRamUsed());
         String ramTotal = String.valueOf(vo.getRamTotal());
-        String ramAvailable = AmountUtil.sub(ramTotal, ramUsed, 2);
-        String ramAvailableKB = AmountUtil.div(ramAvailable, "1024", 2);
+        String ramAvailable = AmountUtil.sub(ramTotal, ramUsed, 4);
+        String ramAvailableKB = AmountUtil.div(ramAvailable, "1024", 4);
         return ramAvailableKB;
     }
 
@@ -305,6 +310,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
      */
     private void showConfirmBuyRamDialog() {
         int[] listenedItems = {R.id.btn_confirm_buy_ram, R.id.btn_close};
+        if (getActivity() != null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
         confirmDialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_confirm_buy, listenedItems, false, Gravity.BOTTOM);
 
@@ -337,6 +345,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
      */
     private void showConfirmSellRamDialog() {
         int[] listenedItems = {R.id.btn_confirm_sell_ram, R.id.btn_close};
+        if (getActivity() != null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
         confirmDialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_confirm_sell, listenedItems, false, Gravity.BOTTOM);
         confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
@@ -369,6 +380,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
      */
     private void showConfirmAuthorDialog(int operation_type) {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
+        if (getActivity() != null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
         confirmAuthorDialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
 
@@ -515,8 +529,6 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
             inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint),
                     curEosWallet.getCurrentEosName()));
         }
-
-
     }
 
     /**
@@ -524,6 +536,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
      */
     private void showPasswordHintDialog(int operation_type) {
         int[] listenedItems = {R.id.tv_i_understand};
+        if (getActivity() != null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
         CustomDialog dialog = new CustomDialog(getContext(),
                 R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {

@@ -7,11 +7,8 @@ import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.api.data.response.CustomData;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.entity.WalletEntity;
-import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.gma.client.R;
-import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.OrderIdEvent;
@@ -19,7 +16,6 @@ import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.ActivateAccountMethodActivity;
 import com.cybex.gma.client.ui.activity.CreateEosAccountActivity;
 import com.cybex.gma.client.ui.fragment.ActivateByRMBFragment;
@@ -40,6 +36,7 @@ import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.NetworkUtils;
 import com.hxlx.core.lib.utils.android.SysUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
@@ -86,6 +83,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                             if (result.getResult() != null){
                                 WXPayQueryOrderInfoResult.ResultBean resultBean = result.getResult();
                                 String orderId = resultBean.get_id();
+                                getV().setResultBean(resultBean);
 
                                 OrderIdEvent orderIdEvent = new OrderIdEvent();
                                 orderIdEvent.setOrderId(orderId);
@@ -93,6 +91,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                 getV().setOrderId(orderId);
 
                                 String curRMBPrice = resultBean.getRmb_price();
+
                                 getV().setNewPrice(curRMBPrice);
 
                                 if (!curRMBPrice.equals(rmbPrice)){
@@ -178,9 +177,9 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
     }
 
     /**
-     * 创建账户
+     * 查询创建账户状态
      */
-    public void createAccount(String eos_username, String public_key, String orderId){
+    public void checkCreateAccountStatus(String eos_username, String public_key, String orderId){
 
         UserRegisterReqParams params = new UserRegisterReqParams();
         params.setApp_id(ParamConstants.APP_ID_GEMMA);
@@ -216,8 +215,14 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                     AppManager.getAppManager().finishActivity(CreateEosAccountActivity.class);
                                     UISkipMananger.launchEOSHome(getV().getActivity());
                                 }
-                            } else {
-                                LoggerManager.d("err");
+                            } else if (data.code == 10022){
+                                //todo 上链失败,手动再调创建接口
+                                checkCreateAccountStatus(eos_username, public_key, orderId);
+                            }else if (data.code == 10020){
+                                //todo 该Account被抢注
+                                GemmaToastUtils.showLongToast(getV().getString(R.string.eos_create_fail));
+                            }else {
+
                             }
                         }
 
@@ -253,8 +258,8 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
         //设置eosNameJson
         List<String> account_names = new ArrayList<>();
         account_names.add(eosUsername);
-        final String eosNameJson = GsonUtils.objectToJson(account_names);
-        walletEntity.setEosNameJson(eosNameJson);
+        //final String eosNameJson = GsonUtils.objectToJson(account_names);
+        //walletEntity.setEosNameJson(eosNameJson);
         //设置currentEosName，创建钱包步骤中可以直接设置，因为默认eosNameJson中只会有一个用户名字符串
         walletEntity.setCurrentEosName(eosUsername);
         //设置当前Transaction的Hash值
