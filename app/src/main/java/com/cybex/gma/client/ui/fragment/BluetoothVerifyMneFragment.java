@@ -241,6 +241,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                 //todo
                 multiWalletEntity.setPasswordTip("");
                 multiWalletEntity.setIsCurrentWallet(1);
+                multiWalletEntity.setBluetoothDeviceName(DeviceOperationManager.getInstance().getCurrentDeviceName());
 
                 //testcode
                 final String mnemonic = mnemonics;

@@ -1,6 +1,7 @@
 package com.cybex.componentservice.db.dao;
 
 
+import com.cybex.componentservice.db.entity.FPEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 
@@ -11,6 +12,9 @@ public interface MultiWalletEntityDao {
 
 
     void  deleteEntity(MultiWalletEntity entity);
+
+
+    void  deleteEntityAsync(MultiWalletEntity entity, DBCallback callback);
 
 
     /**
@@ -85,5 +89,9 @@ public interface MultiWalletEntityDao {
      */
     void batchSaveEntityListASync(List<MultiWalletEntity> list, DBCallback callback);
 
+
+    FPEntity getFpEntityByWalletIdAndIndex(int walletID,int index);
+
+    void deleteFpEntityAsync(FPEntity fpEntity, DBCallback dbCallback);
 
 }

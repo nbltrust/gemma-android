@@ -87,6 +87,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         super.onDestroy();
 //        WookongBioManager.getInstance().freeThread();
 //        WookongBioManager.getInstance().freeResource();
+        DeviceOperationManager.getInstance().clearCallback(TAG);
     }
 
     private void startScan() {
@@ -149,7 +150,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 viewSpinKit.setVisibility(View.GONE);
                 if (EmptyUtils.isNotEmpty(deviceNameList)) {
                     String deviceName = deviceNameList.get(position).deviceName;
-                    SPUtils.getInstance().put(ParamConstants.DEVICE_NAME, deviceName);
+//                    SPUtils.getInstance().put(ParamConstants.DEVICE_NAME, deviceName);
 
 //                    updatePosition = position;
 

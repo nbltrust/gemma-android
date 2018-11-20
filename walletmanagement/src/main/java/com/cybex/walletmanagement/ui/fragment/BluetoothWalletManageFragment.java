@@ -35,7 +35,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class BluetoothWalletManageFragment extends XFragment {
-    
+
     public static BluetoothWalletManageFragment newInstance() {
         Bundle args = new Bundle();
         BluetoothWalletManageFragment fragment = new BluetoothWalletManageFragment();
@@ -53,33 +53,29 @@ public class BluetoothWalletManageFragment extends XFragment {
     Button btDisconnect;
     TextView tvConnectionStatus;
 
-//    private BlueToothWrapper connectThread;
+    //    private BlueToothWrapper connectThread;
 //    private BlueToothWrapper getAddressThread;
 //    private BlueToothWrapper disconnectThread;
 //    private long mContextHandle;
 //    private ConnectHandler mConnectHandler;
 //    private String publicKey;
 //    private String deviceName = "WOOKONG BIO####ED:C1:FF:D5:9C:FA";
-    private MultiWalletEntity multiWalletEntity ;
+    private MultiWalletEntity multiWalletEntity;
     //private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
     @Override
     public void bindUI(View rootView) {
         setNavibarTitle(getString(R.string.walletmanage_title_wooKong_bio), true);
 
-
-
-        if (getActivity() != null){
-            btnNavibar = getActivity().findViewById(R.id.btn_navibar);
-            tvWalletNameInDetailPage = getActivity().findViewById(R.id.tv_walletName_in_detailPage);
-            layoutWalletBriefInfo = getActivity().findViewById(R.id.layout_wallet_briefInfo);
-            btClickToConnect = getActivity().findViewById(R.id.bt_click_to_connect);
-            scrollWalletDetail = getActivity().findViewById(R.id.scroll_wallet_detail);
-            superTextViewChangePass = getActivity().findViewById(R.id.superTextView_fp_and_pass);
-            viewBioManagement = getActivity().findViewById(R.id.view_bio_management);
-            btDisconnect = getActivity().findViewById(R.id.bt_disconnect);
-            tvConnectionStatus = getActivity().findViewById(R.id.tv_connection_status);
-        }
+        btnNavibar = rootView.findViewById(R.id.btn_navibar);
+        tvWalletNameInDetailPage = rootView.findViewById(R.id.tv_walletName_in_detailPage);
+        layoutWalletBriefInfo = rootView.findViewById(R.id.layout_wallet_briefInfo);
+        btClickToConnect = rootView.findViewById(R.id.bt_click_to_connect);
+        scrollWalletDetail = rootView.findViewById(R.id.scroll_wallet_detail);
+        superTextViewChangePass = rootView.findViewById(R.id.superTextView_fp_and_pass);
+        viewBioManagement = rootView.findViewById(R.id.view_bio_management);
+        btDisconnect = rootView.findViewById(R.id.bt_disconnect);
+        tvConnectionStatus = rootView.findViewById(R.id.tv_connection_status);
 
 
     }
@@ -96,7 +92,7 @@ public class BluetoothWalletManageFragment extends XFragment {
         btClickToConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgressDialog("connecting");
+//                showProgressDialog("connecting");
 
 //                if ((connectThread == null) || (connectThread.getState() == Thread.State.TERMINATED)) {
 //                    connectThread = new BlueToothWrapper(mConnectHandler);
@@ -164,7 +160,7 @@ public class BluetoothWalletManageFragment extends XFragment {
                 wookongBioPswValidateHelper.startValidatePassword(new WookongBioPswValidateHelper.PasswordValidateCallback() {
                     @Override
                     public void onValidateSuccess(String password) {
-                        start(BluetoothFPAndPasswordFragment.newInstance());
+                        start(BluetoothFPAndPasswordFragment.newInstance(password));
                     }
 
                     @Override
@@ -182,6 +178,13 @@ public class BluetoothWalletManageFragment extends XFragment {
                 start(BluetoothWalletDetailFragment.newInstance());
             }
         });
+    }
+
+
+    @Override
+    public void onDestroy() {
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
+        super.onDestroy();
     }
 
     @Override
@@ -223,7 +226,7 @@ public class BluetoothWalletManageFragment extends XFragment {
     /**
      * 每次进入页面检查是否连接
      */
-    public void checkConnection(){
+    public void checkConnection() {
 //        int status = SPUtils.getInstance().getInt(CacheConstants.BIO_CONNECT_STATUS);
 //        LoggerManager.d("status", status);
 //        switch (status){
@@ -239,9 +242,9 @@ public class BluetoothWalletManageFragment extends XFragment {
 
         //check status
         boolean isConnected = DeviceOperationManager.getInstance().isDeviceConnectted(multiWalletEntity.getBluetoothDeviceName());
-        if(isConnected){
+        if (isConnected) {
             showConnectedLayout();
-        }else{
+        } else {
             showDisconnectedLayout();
         }
 

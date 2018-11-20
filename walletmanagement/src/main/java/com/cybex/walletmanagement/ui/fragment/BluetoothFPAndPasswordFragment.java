@@ -1,5 +1,6 @@
 package com.cybex.walletmanagement.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,7 +14,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.db.entity.FPEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.manager.DBManager;
@@ -23,6 +26,7 @@ import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.event.ContextHandleEvent;
 import com.cybex.walletmanagement.manager.UISkipMananger;
+import com.cybex.walletmanagement.ui.activity.BluetoothChangePasswordActivity;
 import com.cybex.walletmanagement.ui.adapter.BluetoothFPManageAdapter;
 import com.cybex.walletmanagement.ui.model.vo.BluetoothFPVO;
 import com.extropies.common.CommonUtility;
@@ -54,9 +58,11 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
     //    private BlueToothWrapper getFpListThread;
 //    private ConnectHandler mConnectHandler;
     private MiddlewareInterface.FingerPrintID[] mFpList;
+    private String password;
 
-    public static BluetoothFPAndPasswordFragment newInstance() {
+    public static BluetoothFPAndPasswordFragment newInstance(String password) {
         Bundle args = new Bundle();
+        args.putString(BaseConst.KEY_PASSWORD,password);
         BluetoothFPAndPasswordFragment fragment = new BluetoothFPAndPasswordFragment();
         fragment.setArguments(args);
         return fragment;
@@ -72,12 +78,12 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
 
         setNavibarTitle(getResources().getString(R.string.walletmanage_fp_and_password), true, true);
 
-        btnNavibar = getActivity().findViewById(R.id.btn_navibar);
-        recyclerFpManage = getActivity().findViewById(R.id.recycler_fp_manage);
-        superTextViewBluetoothAddFP = getActivity().findViewById(R.id.superTextView_bluetooth_addFP);
-        layoutFpNumber = getActivity().findViewById(R.id.layout_fp_number);
-        superTextViewBluetoothChangePass = getActivity().findViewById(R.id.superTextView_bluetooth_changePass);
-        scrollWalletManage = getActivity().findViewById(R.id.scroll_wallet_manage);
+        btnNavibar = rootView.findViewById(R.id.btn_navibar);
+        recyclerFpManage = rootView.findViewById(R.id.recycler_fp_manage);
+        superTextViewBluetoothAddFP = rootView.findViewById(R.id.superTextView_bluetooth_addFP);
+        layoutFpNumber = rootView.findViewById(R.id.layout_fp_number);
+        superTextViewBluetoothChangePass = rootView.findViewById(R.id.superTextView_bluetooth_changePass);
+        scrollWalletManage = rootView.findViewById(R.id.scroll_wallet_manage);
     }
 
     @Override
@@ -87,6 +93,9 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        Bundle arguments = getArguments();
+        password = arguments.getString(BaseConst.KEY_PASSWORD);
+
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList().get(0);
         if (curWallet != null) {
             currentID = curWallet.getId();
@@ -100,9 +109,9 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
                 new SuperTextView.OnSuperTextViewClickListener() {
                     @Override
                     public void onClickListener(SuperTextView superTextView) {
-
-
-
+                        Intent intent = new Intent(getActivity(), BluetoothChangePasswordActivity.class);
+                        intent.putExtra(BaseConst.KEY_PASSWORD, password);
+                        getActivity().startActivity(intent);
                     }
                 });
 
@@ -114,6 +123,12 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
                         ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE).navigation();
                     }
                 });
+    }
+
+    @Override
+    public void onDestroy() {
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
+        super.onDestroy();
     }
 
     @Override
@@ -186,15 +201,23 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
      * 从设备获取指纹后在recyclerView中展示出来
      */
     private void showFingerprintsInfo(int fpCount, MiddlewareInterface.FingerPrintID[] fpList) {
+        List<FPEntity> fpEntities = curWallet.getFpEntities();
         for (int i = 0; i < fpCount; i++) {
             BluetoothFPVO bluetoothFPVO = new BluetoothFPVO();
             bluetoothFPVO.setFingerprintIndex(fpList[i].data);
-            bluetoothFPVO.setFingerprintName(getString(R.string.walletmanage_fingerprint) + String.valueOf(i + 1));
+            bluetoothFPVO.setFingerprintName(getString(R.string.walletmanage_fp_prefix) + String.valueOf(i + 1));
+            for (int j = 0; j < fpEntities.size(); j++) {
+                FPEntity fpEntity = fpEntities.get(j);
+                if (fpEntity.getIndex()==fpList[i].data[0]){
+                    bluetoothFPVO.setFingerprintName(fpEntity.getName());
+                    break;
+                }
+            }
             fingerprints.add(bluetoothFPVO);
         }
 
-        String jsonList = GsonUtils.objectToJson(fingerprints);
-        SPUtils.getInstance().put("fingerPrints", jsonList);
+//        String jsonList = GsonUtils.objectToJson(fingerprints);
+//        SPUtils.getInstance().put("fingerPrints", jsonList);
 
         mAdapter = new BluetoothFPManageAdapter(fingerprints);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager
@@ -208,7 +231,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
                 //每个指纹选项卡的点击事件
                 Bundle bundle = new Bundle();
                 BluetoothFPVO curFpVO = fingerprints.get(position);
-                bundle.putString("fpName", curFpVO.getFingerprintName());
+//                bundle.putString("fpName", curFpVO.getFingerprintName());
                 bundle.putByteArray("fpIndex", curFpVO.getFingerprintIndex());
 
                 start(BluetoothManageFPFragment.newInstance(bundle));

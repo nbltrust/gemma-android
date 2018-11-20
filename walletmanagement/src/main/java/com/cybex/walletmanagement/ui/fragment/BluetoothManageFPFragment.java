@@ -5,10 +5,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.allen.library.SuperTextView;
+import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
+import com.cybex.componentservice.db.entity.FPEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.walletmanagement.R;
+import com.cybex.walletmanagement.ui.model.vo.BluetoothFPVO;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -21,7 +24,8 @@ public class BluetoothManageFPFragment extends XFragment {
 
     private MultiWalletEntity multiWalletEntity ;
     private byte[] fpIndex;
-    private String title_fp;
+//    private String title_fp;
+    private FPEntity fpEntity;
 
     public static BluetoothManageFPFragment newInstance(Bundle args) {
         BluetoothManageFPFragment fragment = new BluetoothManageFPFragment();
@@ -32,16 +36,14 @@ public class BluetoothManageFPFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList().get(0);
-
-        if (getActivity()!=null){
-            superTextViewChangeFpName = getActivity().findViewById(R.id.superTextView_change_fp_name);
-            btDeleteFp = getActivity().findViewById(R.id.bt_delete_fp);
-        }
+        superTextViewChangeFpName = rootView.findViewById(R.id.superTextView_change_fp_name);
+        btDeleteFp = rootView.findViewById(R.id.bt_delete_fp);
         setNavibarTitle(getString(R.string.walletmanage_manage_fp), true, false);
 
         btDeleteFp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showProgressDialog("");
 
                 MiddlewareInterface.FingerPrintID[] fingerPrintIDS = new MiddlewareInterface.FingerPrintID[1];
                 fingerPrintIDS[0]=new MiddlewareInterface.FingerPrintID();
@@ -49,6 +51,10 @@ public class BluetoothManageFPFragment extends XFragment {
                 DeviceOperationManager.getInstance().deleteFp(BluetoothManageFPFragment.this.toString(), multiWalletEntity.getBluetoothDeviceName(), fingerPrintIDS, new DeviceOperationManager.DeleteFPCallback() {
                     @Override
                     public void onSuccess() {
+                        if(fpEntity !=null){
+                            DBManager.getInstance().getMultiWalletEntityDao().deleteFpEntityAsync(fpEntity,null);
+                        }
+                        dissmisProgressDialog();
                         GemmaToastUtils.showLongToast(getString(R.string.walletmanage_fp_delete_success));
                         pop();
                     }
@@ -56,7 +62,7 @@ public class BluetoothManageFPFragment extends XFragment {
                     @Override
                     public void onFail() {
                         GemmaToastUtils.showLongToast(getString(R.string.walletmanage_fp_delete_fail));
-
+                        dissmisProgressDialog();
                     }
                 });
 
@@ -67,8 +73,11 @@ public class BluetoothManageFPFragment extends XFragment {
         superTextViewChangeFpName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
 
+                Bundle bundle = new Bundle();
+//                bundle.putString("fpName", curFpVO.getFingerprintName());
+                bundle.putByteArray("fpIndex", fpIndex);
+                start(BluetoothChangeFPNameFragment.newInstance(bundle));
 
 
             }
@@ -79,10 +88,23 @@ public class BluetoothManageFPFragment extends XFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         if (getArguments() != null){
-            title_fp = getArguments().getString("fpName");
+//            title_fp = getArguments().getString("fpName");
             fpIndex = getArguments().getByteArray("fpIndex");
-            superTextViewChangeFpName.setRightString(title_fp);
         }
+        fpEntity = DBManager.getInstance().getMultiWalletEntityDao().getFpEntityByWalletIdAndIndex(multiWalletEntity.getId(), fpIndex[0]);
+
+        if(fpEntity !=null){
+            superTextViewChangeFpName.setRightString(fpEntity.getName());
+        }else{
+            superTextViewChangeFpName.setRightString(getString(R.string.walletmanage_fp_prefix)+(fpIndex[0]+1));
+        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
+        super.onDestroy();
     }
 
     @Override

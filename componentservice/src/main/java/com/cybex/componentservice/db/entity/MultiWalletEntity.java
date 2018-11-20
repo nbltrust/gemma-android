@@ -83,8 +83,11 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
 
     private List<EthWalletEntity> ethWalletEntities;
     private List<EosWalletEntity> eosWalletEntities;
+    private List<FPEntity> fpEntities;
 
-//    @Column
+
+
+    //    @Column
 //    @ForeignKey
 //    private EosWalletEntity eosWalletEntity;
 //
@@ -181,6 +184,10 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         this.eosWalletEntities = eosWalletEntities;
     }
 
+    public void setFpEntities(List<FPEntity> fpEntities) {
+        this.fpEntities = fpEntities;
+    }
+
     public boolean isChecked() {
         return isChecked;
     }
@@ -213,6 +220,18 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
     }
 
 
+    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "fpEntities")
+    public List<FPEntity> getFpEntities() {
+        if (fpEntities == null || fpEntities.isEmpty()) {
+            fpEntities = SQLite.select()
+                    .from(FPEntity.class)
+                    .where(FPEntity_Table.multiWalletEntity_id.eq(id))
+                    .queryList();
+        }
+        return fpEntities;
+    }
+
+
     @Override
     public String toString() {
         return "MultiWalletEntity{" +
@@ -228,6 +247,7 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
                 ", bluetoothDeviceName='" + bluetoothDeviceName + '\'' +
                 ", ethWalletEntities=" + ethWalletEntities +
                 ", eosWalletEntities=" + eosWalletEntities +
+                ", fpEntities=" + fpEntities +
                 ", isChecked=" + isChecked +
                 '}';
     }
@@ -259,6 +279,7 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         dest.writeString(this.bluetoothDeviceName);
         dest.writeTypedList(this.ethWalletEntities);
         dest.writeTypedList(this.eosWalletEntities);
+        dest.writeTypedList(this.fpEntities);
         dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
     }
 
@@ -278,6 +299,7 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         this.bluetoothDeviceName = in.readString();
         this.ethWalletEntities = in.createTypedArrayList(EthWalletEntity.CREATOR);
         this.eosWalletEntities = in.createTypedArrayList(EosWalletEntity.CREATOR);
+        this.fpEntities = in.createTypedArrayList(FPEntity.CREATOR);
         this.isChecked = in.readByte() != 0;
     }
 

@@ -90,6 +90,13 @@
 
         </activity>
 
+        <activity android:name=".ui.activity.BluetoothChangePasswordActivity">
+
+        </activity>
+
+
+
+
 
 
     </application>

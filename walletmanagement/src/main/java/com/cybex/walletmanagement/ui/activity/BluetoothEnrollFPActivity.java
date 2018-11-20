@@ -24,6 +24,7 @@ import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.config.WalletManageConst;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
 import java.util.HashMap;
@@ -57,6 +58,7 @@ public class BluetoothEnrollFPActivity extends XActivity {
     private BlueToothWrapper enrollFPThread;
 //    private FPHandler mHandler;
     private Bundle bd;
+    boolean isEnrolling;
 //    private long contextHandle = 0;
 
     @Override
@@ -81,6 +83,8 @@ public class BluetoothEnrollFPActivity extends XActivity {
 //            enrollFPThread.start();
 //        }
 
+        isEnrolling=true;
+
         DeviceOperationManager.getInstance().enrollFP(this.toString(), DeviceOperationManager.getInstance().getCurrentDeviceName(), new DeviceOperationManager.EnrollFPCallback() {
 
             @Override
@@ -90,7 +94,14 @@ public class BluetoothEnrollFPActivity extends XActivity {
 
             @Override
             public void onEnrollFinish(int state) {
-
+                isEnrolling=false;
+                if (state == FINGER_SUCCESS) {
+                    stage = 1;
+                    GemmaToastUtils.showShortToast(getString(R.string.walletmanage_finger_set_success));
+                    setCurrentWalletStatus();
+//                  UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+                    finish();
+                }
             }
         });
 
@@ -101,6 +112,12 @@ public class BluetoothEnrollFPActivity extends XActivity {
         super.onDestroy();
         //WookongBioManager.getInstance().stopHeartBeat();
         //BluetoothConnectKeepJob.removeJob();
+        if(isEnrolling){
+            DeviceOperationManager.getInstance().abortEnrollFp(DeviceOperationManager.getInstance().getCurrentDeviceName());
+        }
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
+
+
     }
 
     /**
@@ -114,27 +131,32 @@ public class BluetoothEnrollFPActivity extends XActivity {
             //前12次录入
             if (state == FINGER_GOOD) {
                 drawFingerprint();
-            } else if (state ==FINGER_SUCCESS) {
-                stage = 1;
-//                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
-//                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
-                setCurrentWalletStatus();
-//                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
-//                finish();
+                stage++;
             }
+//            else if (state ==FINGER_SUCCESS) {
+//                stage = 1;
+////                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
+////                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
+//                setCurrentWalletStatus();
+////                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+////                finish();
+//            }
         }else {
             //12-16次录入，每次都有可能成功
             if (state == FINGER_GOOD) {
                 drawFingerprint();
-            } else if (state == FINGER_SUCCESS) {
-                stage = 1;
-//                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
-//                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
-                setCurrentWalletStatus();
-//                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
-//                finish();
+                stage++;
             }
+//            else if (state == FINGER_SUCCESS) {
+//                stage = 1;
+////                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
+////                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
+//                setCurrentWalletStatus();
+////                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+////                finish();
+//            }
         }
+
 
 
     }
@@ -176,13 +198,13 @@ public class BluetoothEnrollFPActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         setNavibarTitle(getString(R.string.walletmanage_title_setting_fp), false);
-        mTitleBar.setActionTextColor(Color.WHITE);
+        mTitleBar.setActionTextColor(Color.BLACK);
         mTitleBar.setActionTextSize(18);
         mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.walletmanage_btn_title_skip)) {
             @Override
             public void performAction(View view) {
                 //UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
-                //finish();
+                finish();
             }
         });
     }

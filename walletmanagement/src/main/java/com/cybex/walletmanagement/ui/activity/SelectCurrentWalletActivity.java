@@ -72,8 +72,8 @@ public class SelectCurrentWalletActivity extends XActivity {
 
                     int walletType = wallet.getWalletType();
                     if (walletType == MultiWalletEntity.WALLET_TYPE_HARDWARE) {
-
-
+                        Intent intent = new Intent(context, BluetoothWalletManageActivity.class);
+                        startActivity(intent);
                     }
 //                    else if(walletType==MultiWalletEntity.WALLET_TYPE_MNEMONIC){
 //                        Intent intent = new Intent(context, WalletManageInnerActivity.class);

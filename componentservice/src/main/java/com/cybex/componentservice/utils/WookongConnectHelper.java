@@ -26,6 +26,7 @@ public class WookongConnectHelper {
     private TextView tv_connecting;
     private View widgetLoading;
     private ConnectWookongBioCallback callback;
+    private CustomFullDialog dialog;
 
 
     public WookongConnectHelper(MultiWalletEntity walletEntity, Activity activity) {
@@ -37,8 +38,8 @@ public class WookongConnectHelper {
     public void startConnectDevice(ConnectWookongBioCallback callback){
         this.callback=callback;
         int[] listenedItems = {R.id.baseservice_connect_close, R.id.baseservice_connect_reconnect};
-        CustomFullDialog dialog = new CustomFullDialog(activity,
-                R.layout.baseservice_dialog_wookong_connect, listenedItems, false, false,Gravity.BOTTOM);
+        dialog = new CustomFullDialog(activity,
+                R.layout.baseservice_dialog_wookong_connect, listenedItems, false, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -53,7 +54,7 @@ public class WookongConnectHelper {
         dialog.show();
         ivCancel = dialog.findViewById(R.id.baseservice_connect_close);
         btnReconnect = dialog.findViewById(R.id.baseservice_connect_reconnect);
-        tvHint = dialog.findViewById(R.id.baseservice_passwordvalidate_hint);
+        tvHint = dialog.findViewById(R.id.baseservice_connect_hint);
         tv_connecting = dialog.findViewById(R.id.baseservice_connect_tv_connecting);
         widgetLoading = dialog.findViewById(R.id.baseservice_connect_loading);
 
@@ -87,6 +88,9 @@ public class WookongConnectHelper {
         DeviceOperationManager.getInstance().getDeviceInfo(activity.toString(), walletEntity.getBluetoothDeviceName(), new DeviceOperationManager.GetDeviceInfoCallback() {
                     @Override
                     public void onGetSuccess(MiddlewareInterface.PAEW_DevInfo deviceInfo) {
+                        if(dialog!=null){
+                            dialog.dismiss();
+                        }
                         if(callback!=null){
                             callback.onConnectSuccess();
                         }

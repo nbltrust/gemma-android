@@ -297,6 +297,11 @@
     <string name="walletmanage_manage_fp">管理指纹</string>
     <string name="walletmanage_fp_delete_success">指纹删除成功</string>
     <string name="walletmanage_fp_delete_fail">指纹删除失败</string>
+    <string name="walletmanage_change_fp_name_hint">请输入新的指纹名称</string>
+    <string name="walletmanage_fp_prefix">指纹</string>
+    <string name="walletmanage_fpname_notnull">指纹名称不能为空</string>
+    <string name="walletmanage_fpname_nochange">指纹名称与原名称一致</string>
+    <string name="walletmanage_fpname_change_success">指纹名称修改成功</string>
 
 
 </resources>
