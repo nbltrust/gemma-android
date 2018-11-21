@@ -43,7 +43,7 @@
         android:layout_marginStart="24dp"
         android:text="@string/eos_transefer_bluetooth_connect_tip"
         android:textColor="@color/black_title"
-        android:textSize="14sp"
+        android:textSize="@dimen/font_4"
         />
 
 

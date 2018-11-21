@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@color/whiteTwo"
               android:orientation="vertical">
 
@@ -11,6 +12,7 @@
         android:layout_width="60dp"
         android:layout_height="48dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_mask_close"/>
 
@@ -45,7 +47,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="16dp"
                 android:textColor="@color/black_title"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_3.5"
                 android:textStyle="bold"
                 tools:text="\ufeff@lhy546802341"/>
         </RelativeLayout>
@@ -55,42 +57,50 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_height="19dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/eos_title_fund"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_amount"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_eos_symbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/tv_eos_symbol"
                 android:textColor="@color/black_title"
+                android:textSize="@dimen/font_3.5"
                 android:textStyle="bold"
                 tools:text="2.2345"/>
 
             <TextView
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tv_amount"
                 android:id="@+id/tv_eos_symbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="18dp"
                 android:text=" EOS"
                 android:textColor="@color/black_title"
                 android:textSize="@dimen/font_3"/>
-        </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <View
             style="@style/common_divider"
@@ -111,7 +121,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/eos_title_memo"
                 android:textColor="@color/eos_font_title"
-                android:textSize="@dimen/font_4"/>
+                android:textSize="@dimen/font_3.5"/>
 
             <TextView
                 android:id="@+id/tv_note"
@@ -152,7 +162,7 @@
             android:layout_marginLeft="16dp"
             android:text="@string/eos_title_payer_account"
             android:textColor="@color/eos_font_title"
-            android:textSize="@dimen/font_4"/>
+            android:textSize="@dimen/font_3.5"/>
 
 
         <TextView
@@ -163,7 +173,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
             android:textColor="@color/black_title"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_3.5"
             android:textStyle="bold"
             tools:text="\ufeff@lhy546802341"/>
     </RelativeLayout>

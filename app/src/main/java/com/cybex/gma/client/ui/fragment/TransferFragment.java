@@ -799,7 +799,6 @@ public class TransferFragment extends XFragment<TransferPresenter> {
                         signatures.add(strSignature);
                         transactionVO.setSignatures(signatures);
 
-
                         if (transactionVO != null) {
                             //构造PushTransaction 请求的json参数
                             PushTransactionReqParams reqParams = new PushTransactionReqParams();

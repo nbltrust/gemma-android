@@ -14,28 +14,37 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.componentservice.utils.AmountUtil;
+import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.EosTokenTransferPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,6 +54,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+import me.jessyan.autosize.AutoSize;
 import seed39.Seed39;
 
 public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresenter> {
@@ -68,14 +78,25 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     @BindView(R.id.iv_transfer_memo_clear) ImageView ivTransferMemoClear;
     @BindView(R.id.btn_transfer_nextStep) Button btnTransferNextStep;
     @BindView(R.id.root_scrollview_token) ScrollView rootScrollview;
+    String deviceName;
     Unbinder unbinder;
     CustomFullDialog dialog = null;
-
-
-
     EosTokenVO curToken;
+    String TAG = this.toString();
+    ReentrantLock uiLock = new ReentrantLock();
+
+    public void setChain_id(String chain_id) {
+        this.chain_id = chain_id;
+    }
+
+    private String chain_id = "";
+
+    public void setTransactionVO(TransferTransactionVO transactionVO) {
+        this.transactionVO = transactionVO;
+    }
 
     private TransferTransactionVO transactionVO;
+
     private String maxValue = "";
     private String currentEOSName = "";
     private String collectionAccount = "";
@@ -157,14 +178,14 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         //LoggerManager.d("maxValue", maxValue);
 
 
-        if (curToken != null){
+        if (curToken != null) {
             tvBanlance.setText(getString(R.string.eos_show_remain_balance)
                     + balance
                     + " " + tokenName);
             int accuracy = 0;
 
-            if (curToken.getAccurancy() > 0){
-               accuracy = curToken.getAccurancy();
+            if (curToken.getAccurancy() > 0) {
+                accuracy = curToken.getAccurancy();
                 etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
                         .Type.decimal, accuracy, maxValue) {
                     @Override
@@ -173,7 +194,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         validateButton();
                     }
                 });
-            }else {
+            } else {
                 etAmount.addTextChangedListener(new DecimalInputTextWatcher(etAmount, DecimalInputTextWatcher
                         .Type.integer, maxValue.length() + 1, maxValue) {
                     @Override
@@ -203,7 +224,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         });
 
 
-
     }
 
     private void validateAmountValue() {
@@ -218,13 +238,14 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         }
     }
 
-
     @Override
     public void initData(Bundle savedInstanceState) {
 
         etReceiverAccount.setText("");
         etAmount.setText("");
         etNote.setText("");
+
+        deviceName = getP().getBluetoothDeviceName();
 
         OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
 
@@ -242,55 +263,51 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 showInitData(balance, currentEOSName, tokenSymbol);
 
                 String curAccuracyStr = " ";
-                int curAccuracy  = curToken.getAccurancy();
-                if (curAccuracy > 0){
-                    if (curAccuracy == 1){
+                int curAccuracy = curToken.getAccurancy();
+                if (curAccuracy > 0) {
+                    if (curAccuracy == 1) {
                         curAccuracyStr = "一";
-                    }else if (curAccuracy == 2){
+                    } else if (curAccuracy == 2) {
                         curAccuracyStr = "二";
-                    }else if (curAccuracy == 3){
+                    } else if (curAccuracy == 3) {
                         curAccuracyStr = "三";
-                    }else if (curAccuracy == 4){
+                    } else if (curAccuracy == 4) {
                         curAccuracyStr = "四";
-                    }else if (curAccuracy == 5){
+                    } else if (curAccuracy == 5) {
                         curAccuracyStr = "五";
-                    }else if (curAccuracy == 6){
+                    } else if (curAccuracy == 6) {
                         curAccuracyStr = "六";
-                    }else if (curAccuracy == 7){
+                    } else if (curAccuracy == 7) {
                         curAccuracyStr = "七";
-                    }else if (curAccuracy == 8){
+                    } else if (curAccuracy == 8) {
                         curAccuracyStr = "八";
-                    }else if (curAccuracy == 9){
+                    } else if (curAccuracy == 9) {
                         curAccuracyStr = "九";
-                    }else if (curAccuracy == 10){
+                    } else if (curAccuracy == 10) {
                         curAccuracyStr = "十";
-                    }else if (curAccuracy == 11){
+                    } else if (curAccuracy == 11) {
                         curAccuracyStr = "十一";
-                    }else if (curAccuracy == 12){
+                    } else if (curAccuracy == 12) {
                         curAccuracyStr = "十二";
-                    }else if (curAccuracy == 13){
+                    } else if (curAccuracy == 13) {
                         curAccuracyStr = "十三";
-                    }else if (curAccuracy == 14){
+                    } else if (curAccuracy == 14) {
                         curAccuracyStr = "十四";
-                    }else if (curAccuracy == 15){
+                    } else if (curAccuracy == 15) {
                         curAccuracyStr = "十五";
-                    }else if (curAccuracy == 16){
+                    } else if (curAccuracy == 16) {
                         curAccuracyStr = "十六";
-                    }else if (curAccuracy == 17){
+                    } else if (curAccuracy == 17) {
                         curAccuracyStr = "十七";
-                    }else if (curAccuracy == 18){
+                    } else if (curAccuracy == 18) {
                         curAccuracyStr = "十八";
-                    }else {
+                    } else {
                         curAccuracyStr = "四";
                     }
                     etAmount.setHint(String.format(getString(R.string.eos_token_tip_transfer), curAccuracyStr));
-                }else {
+                } else {
                     etAmount.setHint(getString(R.string.eos_token_tip_transfer_no_decimal));
                 }
-
-
-
-
 
                 etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
@@ -365,15 +382,13 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
-                        if (hasFocus){
+                        if (hasFocus) {
                             etAmount.setTypeface(Typeface.DEFAULT_BOLD);
-                        }else {
+                        } else {
                             etAmount.setTypeface(Typeface.DEFAULT);
                         }
                     }
                 });
-
-
             }
         }
     }
@@ -426,11 +441,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         showConfirmTransferDialog();
     }
 
-    public void setTransactionVO(TransferTransactionVO transactionVO) {
-        this.transactionVO = transactionVO;
-    }
-
-
     public boolean isAccountNameValid() {
         String eosUsername = etReceiverAccount.getText().toString().trim();
         String regEx = "^[a-z1-5.]{1,13}$";
@@ -457,6 +467,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      */
     private void showConfirmTransferDialog() {
         int[] listenedItems = {R.id.btn_close, R.id.btn_transfer_nextStep};
+
+        if (getActivity() != null) { AutoSize.autoConvertDensityOfGlobal(getActivity()); }
 
         CustomFullDialog dialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_transfer_confirm, listenedItems, false, Gravity.BOTTOM);
@@ -487,11 +499,12 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
         TextView tv_payee = dialog.findViewById(R.id.tv_payee); //收款人
         TextView tv_amount = dialog.findViewById(R.id.tv_amount); //金额
+        TextView tv_token_symbol = dialog.findViewById(R.id.tv_eos_symbol);
         TextView tv_note = dialog.findViewById(R.id.tv_note); //备注
         TextView tv_payment_account = dialog.findViewById(R.id.tv_payment_account);//付款账户
 
         collectionAccount = String.valueOf(etReceiverAccount.getText());
-        if (curToken != null){
+        if (curToken != null) {
             amount = String.valueOf(etAmount.getText()) + " " + curToken.getTokenSymbol();
         }
 
@@ -500,7 +513,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         }
 
         if (EmptyUtils.isNotEmpty(amount)) {
-            tv_amount.setText(amount);
+            tv_amount.setText(amount.split(" ")[0]);
+            tv_token_symbol.setText(" " + amount.split(" ")[1]);
         }
 
         if (EmptyUtils.isNotEmpty(currentEOSName)) {
@@ -528,17 +542,37 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 new PasswordValidateHelper.PasswordValidateCallback() {
                     @Override
                     public void onValidateSuccess(String password) {
-                        //密码正确，执行转账逻辑
-                        String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
-                        String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
-                        String tokenContract = curToken.getTokenName();
-                        int accuracy = curToken.getAccurancy();
-                        String tokenSymbol = curToken.getTokenSymbol();
-                        getP().executeTokenTransferLogic(
-                                wallet.getEosWalletEntities().get(0).getCurrentEosName(),
-                                collectionAccount, amount, memo,
-                                privateKey, tokenContract,tokenSymbol, accuracy);
-                        //dialog.cancel();
+                        //密码正确，根据钱包种类执行不同的转账逻辑
+                        if (curToken != null){
+                            String tokenType = curToken.getTokenSymbol();
+                            int walletType = DBManager.getInstance().getMultiWalletEntityDao()
+                                    .getCurrentMultiWalletEntity().getWalletType();
+                            if (walletType == CacheConstants.WALLET_TYPE_BLUETOOTH && tokenType.equals(ParamConstants
+                                    .SYMBOL_EOS)){
+                                //蓝牙钱包EOS转账
+                                //判断蓝牙卡是否连接
+                                int status = DeviceOperationManager.getInstance().getDeviceConnectStatus(deviceName);
+                                if (status == CacheConstants.STATUS_BLUETOOTH_CONNCETED){
+                                    //蓝牙卡已连接
+                                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                                            getAmount() + " EOS", getNote());
+                                }else {
+                                    //蓝牙卡未连接
+                                    connectBio();
+                                }
+                            }else {
+                                //软钱包EOS及Tokens转账
+                                String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
+                                String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
+                                String tokenContract = curToken.getTokenName();
+                                int accuracy = curToken.getAccurancy();
+                                String tokenSymbol = curToken.getTokenSymbol();
+                                getP().executeTokenTransferLogic(
+                                        wallet.getEosWalletEntities().get(0).getCurrentEosName(),
+                                        collectionAccount, amount, memo,
+                                        privateKey, tokenContract, tokenSymbol, accuracy);
+                            }
+                        }
                     }
 
                     @Override
@@ -555,6 +589,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      */
     private void showPasswordHintDialog() {
         int[] listenedItems = {R.id.tv_i_understand};
+        if (getActivity() != null) { AutoSize.autoConvertDensityOfGlobal(getActivity()); }
+
         CustomDialog dialog = new CustomDialog(getContext(),
                 R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
@@ -603,4 +639,154 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         return curToken;
     }
 
+    /**
+     * 连接指定设备
+     *
+     */
+    private void connectBio() {
+
+        DeviceOperationManager.getInstance().connectDevice(TAG, deviceName,
+                new DeviceOperationManager.DeviceConnectCallback() {
+                    @Override
+                    public void onConnectStart() {
+                        showConnectBioDialog();
+                    }
+
+                    @Override
+                    public void onConnectSuccess() {
+                        dialog.cancel();
+                        getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                                getAmount() + " EOS", getNote());
+                    }
+
+                    @Override
+                    public void onConnectFailed() {
+                        dialog.cancel();
+                        showConnectBioFailDialog();
+                    }
+                });
+    }
+
+
+    /**
+     * EOS Transaction字符串序列化
+     */
+    public void startEosSerialization(String jsonTxStr) {
+
+            //String deviceName = getBluetoothDeviceName();
+
+            DeviceOperationManager.getInstance().jsonSerialization(TAG, jsonTxStr, deviceName,
+                    new DeviceOperationManager.JsonSerilizeCallback() {
+                        @Override
+                        public void onSerilizeStart() {
+
+                        }
+
+                        @Override
+                        public void onSerilizeSuccess(String serializeResult) {
+                            //把序列化之后的数据做处理
+                            byte[] builtStr = getP().buildSignStr(serializeResult, chain_id);
+                            //把builtStr 送给设备签名
+                            startEosSign(builtStr);
+                        }
+
+                        @Override
+                        public void onSerilizeFail() {
+                            AlertUtil.showLongUrgeAlert(getActivity(), " Transaction Serialization Fail");
+                        }
+                    });
+    }
+
+
+    /**
+     * EOS Tranasaction 签名
+     */
+    private void startEosSign(byte[] transaction) {
+        uiLock.lock();
+
+        DeviceOperationManager.getInstance().signEosTransaction(TAG, deviceName, uiLock, transaction,
+                new DeviceOperationManager.EosSignCallback() {
+                    @Override
+                    public void onEosSignSuccess(String strSignature) {
+                        uiLock.unlock();
+                        List<String> signatures = new ArrayList<>();
+                        strSignature = strSignature.substring(0, strSignature.length() - 1);
+                        signatures.add(strSignature);
+                        transactionVO.setSignatures(signatures);
+
+                        if (transactionVO != null) {
+                            //构造PushTransaction 请求的json参数
+                            PushTransactionReqParams reqParams = new PushTransactionReqParams();
+                            reqParams.setTransaction(transactionVO);
+                            reqParams.setSignatures(transactionVO.getSignatures());
+                            reqParams.setCompression("none");
+
+                            String buildTransactionJson = GsonUtils.
+                                    objectToJson(reqParams);
+                            LoggerManager.d("buildTransactionJson:" + buildTransactionJson);
+
+                            //执行Push Transaction 最后一步操作
+                            getP().pushTransaction(buildTransactionJson);
+                        }
+                    }
+
+                    @Override
+                    public void onEosSignFail() {
+                        uiLock.unlock();
+                    }
+                });
+
+    }
+
+
+    /**
+     * 显示连接蓝牙dialog
+     */
+    private void showConnectBioDialog() {
+        int[] listenedItems = {R.id.imc_cancel};
+        if (getActivity() != null)AutoSize.autoConvertDensityOfGlobal(getActivity());
+        dialog = new CustomFullDialog(getContext(),
+                R.layout.eos_dialog_transfer_bluetooth_connect_ing, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imc_cancel:
+                        dialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    /**
+     * 显示连接蓝牙卡失败dialog
+     */
+    private void showConnectBioFailDialog() {
+        int[] listenedItems = {R.id.imc_cancel, R.id.btn_reconnect};
+        if (getActivity() != null)AutoSize.autoConvertDensityOfGlobal(getActivity());
+        dialog = new CustomFullDialog(getContext(),
+                R.layout.eos_dialog_transfer_bluetooth_connect_failed, listenedItems, false, Gravity.BOTTOM);
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imc_cancel:
+                        dialog.cancel();
+                        break;
+                    case R.id.btn_reconnect:
+                        //重新连接
+                        dialog.cancel();
+                        connectBio();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+    }
 }

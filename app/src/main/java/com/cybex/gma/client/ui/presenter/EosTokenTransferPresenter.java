@@ -3,6 +3,9 @@ package com.cybex.gma.client.ui.presenter;
 import android.os.Bundle;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
+import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.gma.client.R;
@@ -13,6 +16,7 @@ import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.fragment.EosTokenTransferFragment;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
+import com.cybex.gma.client.ui.model.vo.TransferTransactionTmpVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
@@ -32,12 +36,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragment> {
     private static final String VALUE_ACTION = "transfer";
     private static final String VALUE_COMPRESSION = "none";
     private static final String VALUE_SYMBOL = "EOS";
     private static final String VALUE_CODE = "eosio.token";
+    private static final String VALUE_CONTRACT = "eosio.token";
 
     /**
      * 执行EOS Token转账逻辑
@@ -258,6 +265,275 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
     }
 
     /**
+     * 执行硬件钱包转账逻辑
+     *
+     * @param from
+     * @param to
+     * @param quantity
+     * @param memo
+     */
+    public void executeBluetoothTransferLogic(String from, String to, String quantity, String memo) {
+        //通过c++获取 abi json操作体
+        String abijson = JNIUtil.create_abi_req_transfer(VALUE_CODE, VALUE_ACTION,
+                from, to, quantity, memo);
+
+        //链上接口请求 abi_json_to_bin
+        new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)
+                .setJsonParams(abijson)
+                .getAbiJsonToBean(new JsonCallback<AbiJsonToBeanResult>() {
+                    @Override
+                    public void onStart(Request<AbiJsonToBeanResult, ? extends Request> request) {
+                        super.onStart(request);
+                        getV().showProgressDialog(getV().getString(R.string.eos_tip_transfer_trade_ing));
+                    }
+
+                    @Override
+                    public void onError(Response<AbiJsonToBeanResult> response) {
+                        super.onError(response);
+                        if (EmptyUtils.isNotEmpty(getV())) {
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                } catch (JSONException ee) {
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(Response<AbiJsonToBeanResult> response) {
+                        if (response != null && response.body() != null) {
+                            AbiJsonToBeanResult result = response.body();
+                            String binargs = result.binargs;
+                            LoggerManager.d("abiStr: " + binargs);
+
+                            bluetoothGetInfo(from, binargs);
+
+                        } else {
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
+                        }
+
+                    }
+                });
+    }
+
+    /**
+     * 获取配置信息成功后，再到C++库获取交易体
+     *
+     * @param from
+     * @param abiStr
+     */
+    public void bluetoothGetInfo(String from, String abiStr) {
+        new EOSConfigInfoRequest(String.class)
+                .getInfo(new StringCallback() {
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+
+                        if (EmptyUtils.isNotEmpty(getV())) {
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                } catch (JSONException ee) {
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        if (getV() != null) {
+                            if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                                //蓝牙钱包流程
+                                String infostr = response.body();
+                                try {
+
+                                    JSONObject obj = new JSONObject(infostr);
+                                    final String chain_id = obj.optString("chain_id");
+                                    LoggerManager.d("chain_id", chain_id);
+                                    getV().setChain_id(chain_id);
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                LoggerManager.d("config info:" + infostr);
+                                String[] keyPair = JNIUtil.createKey().split(";");
+                                //随机生成一个无用私钥用于签名
+                                String dumpPriKey = keyPair[1];
+                                //C++库获取Transaction交易体
+                                String transactionStr = JNIUtil.signTransaction_tranfer(dumpPriKey,
+                                        VALUE_CONTRACT, from, infostr, abiStr,
+                                        0,
+                                        0,
+                                        120);
+                                LoggerManager.d("transactionJson:" + transactionStr);
+
+                                TransferTransactionVO vo = GsonUtils.jsonToBean(transactionStr,
+                                        TransferTransactionVO.class);
+                                getV().setTransactionVO(vo);
+                                if (vo != null) {
+                                    //转换临时VO，让硬件可以签名
+                                    TransferTransactionTmpVO tmpVO = switchVO(vo);
+                                    String tmpJson = GsonUtils.objectToJson(tmpVO);
+                                    getV().startEosSerialization(tmpJson);
+                                }
+
+                                getV().dissmisProgressDialog();
+                            } else {
+                                //错误
+                                if (getV() != null) {
+                                    GemmaToastUtils.showShortToast(
+                                            getV().getString(R.string.eos_tip_transfer_oprate_failed));
+                                    getV().dissmisProgressDialog();
+                                }
+
+                            }
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 转换VO类型
+     * 目的是转换字段的基础数据类型以让硬件SDK可以处理
+     *
+     * @param oldVO
+     * @return
+     */
+    private TransferTransactionTmpVO switchVO(TransferTransactionVO oldVO) {
+        TransferTransactionTmpVO newVO = new TransferTransactionTmpVO();
+        /*
+        for (TransferTransactionVO.ActionsBean action : oldVO.getActions()){
+            action.setAccount("eosio");
+            action.setName("newaccount");
+        }
+        */
+        newVO.setActions(oldVO.getActions());
+        newVO.setContext_free_actions(oldVO.getContext_free_actions());
+        newVO.setContext_free_data(new ArrayList<>());
+        newVO.setDelay_sec(oldVO.getDelay_sec());
+        newVO.setExpiration(oldVO.getExpiration());
+        newVO.setMax_cpu_usage_ms(oldVO.getMax_cpu_usage_ms());
+        newVO.setMax_net_usage_words(oldVO.getMax_net_usage_words());
+        newVO.setRef_block_num(oldVO.getRef_block_num());
+        newVO.setSignatures(new ArrayList<>());
+        newVO.setTransaction_extensions(oldVO.getTransaction_extensions());
+        newVO.setRef_block_prefix(String.valueOf(oldVO.getRef_block_prefix()));
+
+        return newVO;
+    }
+
+    /**
+     * 合并两字节数组
+     *
+     * @param bt1
+     * @param bt2
+     * @return
+     */
+    public byte[] byteMerger(byte[] bt1, byte[] bt2) {
+        byte[] bt3 = new byte[bt1.length + bt2.length];
+        System.arraycopy(bt1, 0, bt3, 0, bt1.length);
+        System.arraycopy(bt2, 0, bt3, bt1.length, bt2.length);
+        return bt3;
+    }
+
+    /**
+     * hex String转byte数组
+     *
+     * @param hex
+     * @return
+     */
+    public byte[] hexToByte(String hex) {
+        int m = 0, n = 0;
+        int byteLen = hex.length() / 2; // 每两个字符描述一个字节
+        byte[] ret = new byte[byteLen];
+        for (int i = 0; i < byteLen; i++) {
+            m = i * 2 + 1;
+            n = m + 1;
+            int intVal = Integer.decode("0x" + hex.substring(i * 2, m) + hex.substring(m, n));
+            ret[i] = Byte.valueOf((byte) intVal);
+        }
+        return ret;
+    }
+
+    /**
+     * 返回当前钱包类型
+     */
+    public int getWalletType() {
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        if (curWallet != null) {
+            switch (curWallet.getWalletType()) {
+                case CacheConstants.WALLET_TYPE_BLUETOOTH:
+                    //蓝牙钱包
+                    return CacheConstants.WALLET_TYPE_BLUETOOTH;
+                case CacheConstants.WALLET_TYPE_MNE_CREATE:
+                    //软件钱包
+                    return CacheConstants.WALLET_TYPE_MNE_CREATE;
+            }
+        }
+        return CacheConstants.WALLET_TYPE_MNE_CREATE;
+    }
+
+    /**
+     * 构建硬件能够识别的HEX字符串
+     * 序列化结果前面加32字节chain_id，后面加32字节0
+     *
+     * @param serializedStr
+     */
+    public byte[] buildSignStr(String serializedStr, String chain_id) {
+        //把数据转成HEX数组
+        String prefix = chain_id.toUpperCase();//chain_id已经是HEX
+        LoggerManager.d("prefix_hex", prefix);
+
+        LoggerManager.d("serializedStr_hex", serializedStr);
+
+        byte[] suffix_bytes = {
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};//32字节的0
+
+        LoggerManager.d("suffix_hex", suffix_bytes);
+
+        String hexString = prefix + serializedStr;
+
+        byte[] hexBytes = hexToByte(hexString);
+        LoggerManager.d("hexBytes", hexBytes);
+
+        return byteMerger(hexBytes, suffix_bytes);
+    }
+
+
+    /**
      * 反射机制处理EOS错误码
      *
      * @param err_code
@@ -279,6 +555,22 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
         }
     }
 
+    /**
+     * 获取当前蓝牙钱包对应的设备名称
+     * @return
+     */
+    public String getBluetoothDeviceName() {
+
+        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
+                .getBluetoothWalletList();
+
+        if (bluetoothWalletList != null && bluetoothWalletList.size() > 0) {
+            return bluetoothWalletList.get(0).getBluetoothDeviceName();
+        }
+
+        return "list empty err";
+
+    }
 
 
 }

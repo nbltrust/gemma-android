@@ -58,6 +58,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+import me.jessyan.autosize.AutoSize;
 
 
 /**
@@ -575,6 +576,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
      */
     private void showInitWookongBioDialog() {
         int[] listenedItems = {R.id.btn_close, R.id.btn_create_wallet, R.id.btn_import_mne};
+
+        AutoSize.autoConvertDensityOfGlobal(BluetoothConfigWooKongBioActivity.this);
 
         CustomFullDialog dialog = new CustomFullDialog(this,
                 R.layout.eos_dialog_un_init_wookongbio, listenedItems, false, Gravity.BOTTOM);

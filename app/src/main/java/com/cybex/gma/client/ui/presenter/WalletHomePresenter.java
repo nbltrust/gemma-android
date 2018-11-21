@@ -3,6 +3,7 @@ package com.cybex.gma.client.ui.presenter;
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
@@ -443,5 +444,22 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                 DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(curMultiWallet);
             }
         }
+    }
+
+    /**
+     * 获取当前蓝牙钱包对应的设备名称
+     * @return
+     */
+    public String getBluetoothDeviceName() {
+
+        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
+                .getBluetoothWalletList();
+
+        if (bluetoothWalletList != null && bluetoothWalletList.size() > 0) {
+            return bluetoothWalletList.get(0).getBluetoothDeviceName();
+        }
+
+        return "list empty err";
+
     }
 }

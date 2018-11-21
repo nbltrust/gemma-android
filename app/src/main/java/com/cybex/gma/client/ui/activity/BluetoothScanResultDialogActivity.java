@@ -73,10 +73,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         getWindow().setGravity(Gravity.BOTTOM);
         ButterKnife.bind(this);
 
-//        mHandler = new ScanDeviceHandler();
-//        WookongBioManager.getInstance().init(mHandler);
-
-
         //调起Activity时执行一次扫描
         this.startScan();
         this.initView();
@@ -85,14 +81,10 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        WookongBioManager.getInstance().freeThread();
-//        WookongBioManager.getInstance().freeResource();
         DeviceOperationManager.getInstance().clearCallback(TAG);
     }
 
     private void startScan() {
-//        WookongBioManager.getInstance().startScan(this, DEVICE_PREFIX);
-
         DeviceOperationManager.getInstance().scanDevice(TAG, new DeviceOperationManager.ScanDeviceCallback() {
             @Override
             public void onScanStart() {
@@ -135,7 +127,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-//                WookongBioManager.getInstance().freeContext(contextHandle);
             }
         });
 
@@ -158,9 +149,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     LoggerManager.d(status);
                     if (status == -1) {
 
-//                        WookongBioManager.getInstance().startConnect(BluetoothScanResultDialogActivity.this,
-//                                deviceName);
-
                         DeviceOperationManager.getInstance().connectDevice(TAG,deviceName, new DeviceOperationManager.DeviceConnectCallback() {
                             @Override
                             public void onConnectStart() {
@@ -169,11 +157,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
                             @Override
                             public void onConnectSuccess() {
-//                                deviceNameList.get(updatePosition).isShowProgress = false;
-//                                mAdapter.notifyDataSetChanged();
-
                                 getDeviceInfo(deviceName);
-
                             }
 
                             @Override
@@ -209,7 +193,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
     private void getDeviceInfo(String deviceName) {
 
-//        WookongBioManager.getInstance().getDeviceInfo(contextHandle, 0);
+
         DeviceOperationManager.getInstance().getDeviceInfo(TAG, deviceName, new DeviceOperationManager.GetDeviceInfoCallback() {
             @Override
             public void onGetSuccess(MiddlewareInterface.PAEW_DevInfo deviceInfo) {
@@ -228,7 +212,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 //                    deviceNameList.get(updatePosition).status = 1;
 //                    mAdapter.notifyDataSetChanged();
 
-//                    WookongBioManager.getInstance().getFPList(contextHandle, 0);
                 }
             }
 

@@ -23,6 +23,7 @@ import com.cybex.componentservice.event.ChangeSelectedWalletEvent;
 import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.componentservice.utils.SizeUtil;
@@ -278,10 +279,14 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             if (walletType == BaseConst.WALLET_TYPE_BLUETOOTH) {
                 //蓝牙钱包
                 //todo 需要使用TimeStamp验证流程来确保创建即导入的安全性
+
                 mViewWookongStatus.setVisibility(View.VISIBLE);
                 mEosCardView.setVisibility(View.VISIBLE);
                 mEthCardView.setVisibility(View.VISIBLE);
-                if (isBioConnected) {
+
+                String deviceName = getP().getBluetoothDeviceName();
+
+                if (DeviceOperationManager.getInstance().getDeviceConnectStatus(deviceName) == CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
                     //蓝牙已连接
                     mIvWookongLogo.setImageResource(R.drawable.ic_wookong_bio_logo);
                     //todo 计算电量
@@ -293,6 +298,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     mTvWookongStatus.setText(getString(R.string.eos_status_not_connected));
                 }
 
+                getP().getKeyAccounts(curEosWallet.getPublicKey());
 
             } else if (walletType == BaseConst.WALLET_TYPE_MNE_CREATE) {
                 //创建的助记词多币种钱包

@@ -301,7 +301,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_height">42dp</item>
         <item name="android:background">@drawable/shape_corner_button</item>
     </style>
 
