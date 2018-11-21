@@ -11,6 +11,7 @@ import com.cybex.componentservice.db.entity.FPEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
+import com.cybex.componentservice.event.WookongFpChangedNameEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.walletmanagement.R;
@@ -78,6 +79,7 @@ public class BluetoothChangeFPNameFragment extends XFragment {
                     fpEntity.setMultiWalletEntity(multiWalletEntity);
                     fpEntity.save();
                 }
+                EventBusProvider.post(new WookongFpChangedNameEvent(multiWalletEntity.getId(),fpIndex[0]+0,name));
                 GemmaToastUtils.showLongToast(getString(R.string.walletmanage_fpname_change_success));
                 pop();
             }

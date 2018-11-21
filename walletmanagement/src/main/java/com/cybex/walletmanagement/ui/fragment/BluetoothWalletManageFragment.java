@@ -1,34 +1,26 @@
 package com.cybex.walletmanagement.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
-import com.cybex.componentservice.config.BaseConst;
-import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
+import com.cybex.componentservice.event.HeartBeatRefreshDataEvent;
+import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.componentservice.utils.AlertUtil;
-import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.componentservice.utils.WookongBioPswValidateHelper;
 import com.cybex.componentservice.utils.WookongConnectHelper;
-import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.walletmanagement.R;
-import com.cybex.walletmanagement.config.WalletManageConst;
-import com.cybex.walletmanagement.event.ContextHandleEvent;
-import com.extropies.common.MiddlewareInterface;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -49,9 +41,11 @@ public class BluetoothWalletManageFragment extends XFragment {
     Button btClickToConnect;
     ScrollView scrollWalletDetail;
     SuperTextView superTextViewChangePass;
-    LinearLayout viewBioManagement;
+    LinearLayout batteryContainer;
     Button btDisconnect;
     TextView tvConnectionStatus;
+    ImageView ivWookongLogo;
+    ImageView ivRight;
 
     //    private BlueToothWrapper connectThread;
 //    private BlueToothWrapper getAddressThread;
@@ -73,9 +67,11 @@ public class BluetoothWalletManageFragment extends XFragment {
         btClickToConnect = rootView.findViewById(R.id.bt_click_to_connect);
         scrollWalletDetail = rootView.findViewById(R.id.scroll_wallet_detail);
         superTextViewChangePass = rootView.findViewById(R.id.superTextView_fp_and_pass);
-        viewBioManagement = rootView.findViewById(R.id.view_bio_management);
+        batteryContainer = rootView.findViewById(R.id.view_bio_management);
         btDisconnect = rootView.findViewById(R.id.bt_disconnect);
         tvConnectionStatus = rootView.findViewById(R.id.tv_connection_status);
+        ivWookongLogo = rootView.findViewById(R.id.iv_wooKong_logo);
+        ivRight = rootView.findViewById(R.id.iv_manage_wooKong);
 
 
     }
@@ -84,6 +80,8 @@ public class BluetoothWalletManageFragment extends XFragment {
     public void initData(Bundle savedInstanceState) {
 
         multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList().get(0);
+
+        tvWalletNameInDetailPage.setText(multiWalletEntity.getWalletName());
         checkConnection();
 //        mConnectHandler = new ConnectHandler();
 //        deviceName = SPUtils.getInstance().getString(WalletManageConst.DEVICE_NAME);
@@ -207,20 +205,35 @@ public class BluetoothWalletManageFragment extends XFragment {
      * 显示蓝牙卡连接时UI
      */
     public void showConnectedLayout() {
-        viewBioManagement.setVisibility(View.VISIBLE);
+        layoutWalletBriefInfo.setEnabled(true);
+        batteryContainer.setVisibility(View.VISIBLE);
         btDisconnect.setVisibility(View.VISIBLE);
         btClickToConnect.setVisibility(View.GONE);
-        tvConnectionStatus.setVisibility(View.GONE);
+
+        ivRight.setVisibility(View.VISIBLE);
+        ivWookongLogo.setImageResource(R.drawable.wookong_logo);
+
+        int deviceBatteryChargeMode = DeviceOperationManager.getInstance().getDeviceBatteryChargeMode(multiWalletEntity.getBluetoothDeviceName());
+        if(deviceBatteryChargeMode==1){
+            int powerAmount = DeviceOperationManager.getInstance().getDevicePowerAmount(multiWalletEntity.getBluetoothDeviceName());
+            tvConnectionStatus.setText(getString(R.string.walletmanage_battery_left)+Math.abs(powerAmount));
+        }else{
+            tvConnectionStatus.setText(R.string.walletmanage_status_connected);
+        }
+
     }
 
     /**
      * 显示蓝牙卡断开连接时UI
      */
     public void showDisconnectedLayout() {
-        viewBioManagement.setVisibility(View.GONE);
+        layoutWalletBriefInfo.setEnabled(false);
+        batteryContainer.setVisibility(View.GONE);
         btDisconnect.setVisibility(View.GONE);
         btClickToConnect.setVisibility(View.VISIBLE);
-        tvConnectionStatus.setVisibility(View.VISIBLE);
+        tvConnectionStatus.setText(R.string.walletmanage_status_not_connected);
+        ivRight.setVisibility(View.GONE);
+        ivWookongLogo.setImageResource(R.drawable.wookong_logo_gray);
     }
 
     /**
@@ -307,4 +320,38 @@ public class BluetoothWalletManageFragment extends XFragment {
     public boolean useEventBus() {
         return true;
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveConnectEvent(DeviceConnectStatusUpdateEvent event){
+        if(event.status==DeviceConnectStatusUpdateEvent.STATUS_BLUETOOTH_CONNCETED){
+            showConnectedLayout();
+        }else{
+            showDisconnectedLayout();
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveHeartBeatEvent(HeartBeatRefreshDataEvent event){
+        boolean isConnected = DeviceOperationManager.getInstance().isDeviceConnectted(multiWalletEntity.getBluetoothDeviceName());
+        if (isConnected) {
+            int deviceBatteryChargeMode = DeviceOperationManager.getInstance().getDeviceBatteryChargeMode(multiWalletEntity.getBluetoothDeviceName());
+            if(deviceBatteryChargeMode==1){
+                int powerAmount = DeviceOperationManager.getInstance().getDevicePowerAmount(multiWalletEntity.getBluetoothDeviceName());
+                tvConnectionStatus.setText(getString(R.string.walletmanage_battery_left)+Math.abs(powerAmount));
+            }else{
+                tvConnectionStatus.setText(R.string.walletmanage_status_connected);
+            }
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeWalletName(WalletNameChangedEvent event) {
+        if(event.getWalletID()==multiWalletEntity.getId()){
+            multiWalletEntity.setWalletName(event.getWalletName());
+            tvWalletNameInDetailPage.setText(multiWalletEntity.getWalletName());
+        }
+    }
+
 }

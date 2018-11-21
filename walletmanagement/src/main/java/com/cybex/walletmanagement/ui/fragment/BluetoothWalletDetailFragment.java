@@ -11,6 +11,7 @@ import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.event.HeartBeatRefreshDataEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
@@ -78,6 +79,8 @@ public class BluetoothWalletDetailFragment extends XFragment {
         multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList().get(0);
 
         checkConnection();
+        updatePowerAmount();
+
 //        mConnectHandler = new ConnectHandler();
 //        freeContextHandler = new FreeContextHandler();
 //        deviceName = SPUtils.getInstance().getString(WalletManageConst.DEVICE_NAME);
@@ -148,6 +151,16 @@ public class BluetoothWalletDetailFragment extends XFragment {
         });
     }
 
+    private void updatePowerAmount() {
+        boolean isConnected = DeviceOperationManager.getInstance().isDeviceConnectted(multiWalletEntity.getBluetoothDeviceName());
+        if (isConnected) {
+            int powerAmount = DeviceOperationManager.getInstance().getDevicePowerAmount(multiWalletEntity.getBluetoothDeviceName());
+            superTextViewBatteryLife.setRightString(Math.abs(powerAmount) + "%");
+        }else{
+            superTextViewBatteryLife.setRightString( "--%");
+        }
+    }
+
 
     @Override
     public void onDestroy() {
@@ -178,6 +191,11 @@ public class BluetoothWalletDetailFragment extends XFragment {
             multiWalletEntity.setWalletName(event.getWalletName());
             superTextViewBWalletName.setRightString(multiWalletEntity.getWalletName());
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveHeartBeatEvent(HeartBeatRefreshDataEvent event){
+        updatePowerAmount();
     }
 
 //
@@ -294,6 +312,7 @@ public class BluetoothWalletDetailFragment extends XFragment {
 
     public void showConnectedLayout() {
         btFormat.setVisibility(View.VISIBLE);
+
     }
 
     public void showDisconnectedLayout() {

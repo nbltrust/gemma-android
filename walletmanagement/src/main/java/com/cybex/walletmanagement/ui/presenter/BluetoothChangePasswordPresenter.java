@@ -7,6 +7,7 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.event.BluetoothChangePinEvent;
 import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
@@ -40,12 +41,11 @@ public class BluetoothChangePasswordPresenter extends XPresenter<BluetoothChange
     }
 
 
-
     public boolean isPasswordMatch() {
         return getV().getPassword().equals(getV().getRepeatPassword());
     }
 
-    public void doChangePsw(final String oldPsw, final String newPsw, final int walletID,final String hint){
+    public void doChangePsw(final String oldPsw, final String newPsw, final int walletID, final String hint) {
         getV().showProgressDialog("");
 
         Disposable subscribe = Observable.create(new ObservableOnSubscribe<MultiWalletEntity>() {
@@ -98,7 +98,7 @@ public class BluetoothChangePasswordPresenter extends XPresenter<BluetoothChange
                     @Override
                     public void accept(MultiWalletEntity walletEntity) {
                         getV().dissmisProgressDialog();
-                        EventBusProvider.post(new RefreshWalletPswEvent(walletEntity));
+                        EventBusProvider.post(new BluetoothChangePinEvent(walletID, newPsw));
                         GemmaToastUtils.showShortToast(
                                 getV().getResources().getString(R.string.walletmanage_psw_change_success));
                         getV().finish();
@@ -106,13 +106,12 @@ public class BluetoothChangePasswordPresenter extends XPresenter<BluetoothChange
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
-                        LoggerManager.d("throwable="+throwable.getMessage());
+                        LoggerManager.d("throwable=" + throwable.getMessage());
                         getV().dissmisProgressDialog();
                         GemmaToastUtils.showShortToast(
                                 getV().getResources().getString(R.string.walletmanage_psw_change_fail));
                     }
                 });
-
 
 
     }

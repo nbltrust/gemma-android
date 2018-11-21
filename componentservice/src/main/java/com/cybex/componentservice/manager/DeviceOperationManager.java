@@ -10,6 +10,8 @@ import com.cybex.base.view.flowlayout.FlowLayout;
 import com.cybex.base.view.flowlayout.TagAdapter;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
+import com.cybex.componentservice.event.HeartBeatRefreshDataEvent;
+import com.cybex.componentservice.event.PinLockedEvent;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
@@ -72,6 +74,21 @@ public class DeviceOperationManager {
 
     }
 
+
+    public int getDeviceBatteryChargeMode(String deviceName) {
+        if (deviceMaps.get(deviceName) == null) {
+            return -1;
+        }
+        return deviceMaps.get(deviceName).batteryMode;
+    }
+
+    public int getDevicePowerAmount(String deviceName) {
+        if (deviceMaps.get(deviceName) == null) {
+            return -1;
+        }
+        return deviceMaps.get(deviceName).powerAmount;
+    }
+
     public void clearCallback(String tag) {
         callbackMaps.remove(tag);
     }
@@ -124,6 +141,7 @@ public class DeviceOperationManager {
             deviceComm.connectThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.connectThread.setInitContextWithDevNameWrapper(BaseApplication.getAppContext(),
                     deviceName);
+            deviceComm.connectThread.setHeartBeatHandler(deviceComm.mDeviceHandler);
             deviceComm.connectThread.start();
         }
     }
@@ -299,6 +317,7 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
+
         if ((deviceComm.abortEnrollFPThread == null) || (deviceComm.abortEnrollFPThread.getState() == Thread.State.TERMINATED)) {
             deviceComm.abortEnrollFPThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.abortEnrollFPThread.setAbortFPWrapper(deviceComm.contextHandle,
@@ -763,7 +782,7 @@ public class DeviceOperationManager {
                         deviceMaps.get(deviceName).contextHandle = returnValueConnect.getContextHandle();
 
                         currentDeviceName = deviceName;
-                        EventBusProvider.post(new DeviceConnectStatusUpdateEvent(CacheConstants.STATUS_BLUETOOTH_CONNCETED, deviceName));
+                        EventBusProvider.post(new DeviceConnectStatusUpdateEvent(DeviceConnectStatusUpdateEvent.STATUS_BLUETOOTH_CONNCETED, deviceName));
 
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
@@ -771,15 +790,13 @@ public class DeviceOperationManager {
                             if (callbackMaps.get(tag).connectCallback != null)
                                 callbackMaps.get(tag).connectCallback.onConnectSuccess();
                         }
-
-
                     } else {
                         //连接超时或失败
 //                        SPUtils.getInstance()
 //                                .put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                         deviceMaps.get(deviceName).currentState = CacheConstants.STATUS_BLUETOOTH_DISCONNCETED;
-
-                        EventBusProvider.post(new DeviceConnectStatusUpdateEvent(CacheConstants.STATUS_BLUETOOTH_DISCONNCETED, deviceName));
+                        deviceMaps.get(deviceName).msgBackConnectStatus=false;
+                        EventBusProvider.post(new DeviceConnectStatusUpdateEvent(DeviceConnectStatusUpdateEvent.STATUS_BLUETOOTH_DISCONNCETED, deviceName));
 
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
@@ -787,11 +804,67 @@ public class DeviceOperationManager {
                             if (callbackMaps.get(tag).connectCallback != null)
                                 callbackMaps.get(tag).connectCallback.onConnectFailed();
                         }
+                        if (deviceMaps.get(deviceName).connectThread != null) {
+                            deviceMaps.get(deviceName).connectThread.interrupt();
+                        }
+                        deviceMaps.get(deviceName).connectThread = null;
                     }
-                    if (deviceMaps.get(deviceName).connectThread != null) {
-                        deviceMaps.get(deviceName).connectThread.interrupt();
+
+                    break;
+
+
+                    //heart beat
+                case BlueToothWrapper.MSG_HEART_BEAT_DATA_UPDATE:
+                    LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE " );
+                    if (msg.obj != null) {
+                        byte[] heartBeatData = (byte[])msg.obj;
+                        DeviceComm deviceComm = deviceMaps.get(deviceName);
+                        if(deviceComm!=null){
+                            deviceComm.batteryMode=(heartBeatData[1] == 0x00) ? 0 : 1;
+                            deviceComm.powerAmount=heartBeatData[2]+0;
+                            LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE batteryMode="+deviceComm.batteryMode );
+                            LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE powerAmount="+deviceComm.powerAmount );
+                            EventBusProvider.post(new HeartBeatRefreshDataEvent());
+                        }
                     }
-                    deviceMaps.get(deviceName).connectThread = null;
+                    break;
+                case BlueToothWrapper.MSG_CONNECT_STATE_UPDATE:
+
+
+//                    LoggerManager.d("MSG_CONNECT_STATE_UPDATE msg.obj="+msg.obj );
+//                    if ((boolean) msg.obj) {
+//                        //还在连接状态
+//                        DeviceComm deviceComm = deviceMaps.get(deviceName);
+//                        if(deviceComm!=null){
+//                            deviceComm.msgBackConnectStatus=(boolean)msg.obj;
+//                        }
+//                        if(deviceComm!=null&&deviceComm.currentState == CacheConstants.STATUS_BLUETOOTH_DISCONNCETED){
+//                            LoggerManager.e("MSG_CONNECT_STATE_UPDATE 设备未连接状态下,收到了连接状态的心跳" );
+//                        }
+//                    } else {
+//                        //todo,设备强制断开
+//                        DeviceComm deviceComm = deviceMaps.get(deviceName);
+//                        if (deviceComm != null) {
+//                            if (deviceComm.msgBackConnectStatus&&deviceComm.currentState == CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
+//                                //manual get device info ,if fail ,do disconnect action
+//                                LoggerManager.e("receive back disconnect msg,manual get device info ,if fail ,do disconnect action" );
+//                                getDeviceInfo(this.toString(), deviceName, new GetDeviceInfoCallback() {
+//                                    @Override
+//                                    public void onGetSuccess(MiddlewareInterface.PAEW_DevInfo deviceInfo) {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onGetFail() {
+//                                        deviceComm.currentState = CacheConstants.STATUS_BLUETOOTH_DISCONNCETED;
+//                                        EventBusProvider.post(new DeviceConnectStatusUpdateEvent(DeviceConnectStatusUpdateEvent.STATUS_BLUETOOTH_DISCONNCETED, deviceName, false));
+////                                        freeContext();
+//                                    }
+//                                });
+//                            }
+//                            deviceComm.msgBackConnectStatus=false;
+//                        }
+//                    }
                     break;
 
 
@@ -819,6 +892,17 @@ public class DeviceOperationManager {
 //
 //                            WookongBioManager.getInstance().getFPList(contextHandle, 0);
 //                        }
+                        DeviceComm deviceComm = deviceMaps.get(deviceName);
+                        if(deviceComm!=null){
+                            if(deviceComm.deviceInfo!=null){
+                                if(deviceComm.deviceInfo.ucPINState!=0x02&&deviceComm.deviceInfo.ucPINState==0x02){
+                                    //pin locked,send event
+                                    LoggerManager.e("pin locked,send event...");
+                                    EventBusProvider.post(new PinLockedEvent(deviceName));
+                                }
+                            }
+                            deviceComm.deviceInfo = devInfo;
+                        }
 
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
@@ -835,7 +919,6 @@ public class DeviceOperationManager {
                                 callbackMaps.get(tag).getDeviceInfoCallback.onGetFail();
                         }
                     }
-
                     break;
 
 
@@ -938,7 +1021,7 @@ public class DeviceOperationManager {
 //                    SPUtils.getInstance()
 //                            .put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     deviceMaps.get(deviceName).currentState = CacheConstants.STATUS_BLUETOOTH_DISCONNCETED;
-                    EventBusProvider.post(new DeviceConnectStatusUpdateEvent(CacheConstants.STATUS_BLUETOOTH_DISCONNCETED, deviceName));
+                    EventBusProvider.post(new DeviceConnectStatusUpdateEvent(DeviceConnectStatusUpdateEvent.STATUS_BLUETOOTH_DISCONNCETED, deviceName));
 
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
@@ -1122,6 +1205,10 @@ public class DeviceOperationManager {
         String deviceName;
         long contextHandle;
         int currentState;
+        boolean msgBackConnectStatus;
+        MiddlewareInterface.PAEW_DevInfo deviceInfo;
+        int batteryMode=-1;//0 usb   ,1   battery
+        int powerAmount=-1;//剩余电量
         DeviceHandler mDeviceHandler;
         BlueToothWrapper connectThread;
         BlueToothWrapper getDeviceInfoThread;

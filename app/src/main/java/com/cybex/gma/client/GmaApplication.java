@@ -4,6 +4,7 @@ import com.amitshekhar.server.ClientServer;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.config.HttpConfig;
 import com.cybex.componentservice.db.GemmaDatabase;
+import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.hxlx.core.lib.base.BaseApplication;
 import com.raizlabs.android.dbflow.config.DatabaseConfig;
 import com.raizlabs.android.dbflow.config.FlowConfig;
@@ -30,6 +31,7 @@ public class GmaApplication extends BaseApplication {
         initRefresh();
 
         AutoSizeConfig.getInstance().setCustomFragment(true);
+        BluetoothConnectKeepJob.getInstance();
 
 //        if(BuildConfig.DEBUG){
 //            ClientServer clientServer = new ClientServer(this, 8080);

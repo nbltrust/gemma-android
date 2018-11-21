@@ -19,6 +19,8 @@ import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.FPEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.event.BluetoothChangePinEvent;
+import com.cybex.componentservice.event.WookongFpChangedNameEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -59,6 +61,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
 //    private ConnectHandler mConnectHandler;
     private MiddlewareInterface.FingerPrintID[] mFpList;
     private String password;
+    private boolean isInit=true;
 
     public static BluetoothFPAndPasswordFragment newInstance(String password) {
         Bundle args = new Bundle();
@@ -91,6 +94,14 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
         return true;
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onChangePinEvent(BluetoothChangePinEvent event) {
+        if(event.getWalletId()==curWallet.getId()){
+            password=event.getPsw();
+        }
+    }
+
     @Override
     public void initData(Bundle savedInstanceState) {
         Bundle arguments = getArguments();
@@ -102,7 +113,6 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
         }
 
         fingerprints = new ArrayList<>();
-        initFingerPrintsInfo();
 
         //修改密码
         superTextViewBluetoothChangePass.setOnSuperTextViewClickListener(
@@ -120,9 +130,61 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
                 new SuperTextView.OnSuperTextViewClickListener() {
                     @Override
                     public void onClickListener(SuperTextView superTextView) {
-                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE).navigation();
+                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE)
+                                .withInt(BaseConst.KEY_INIT_TYPE,1)
+                                .navigation();
                     }
                 });
+
+        mAdapter = new BluetoothFPManageAdapter(fingerprints);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager
+                .VERTICAL, false);
+        recyclerFpManage.setLayoutManager(layoutManager);
+        recyclerFpManage.setAdapter(mAdapter);
+
+        recyclerFpManage.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                //每个指纹选项卡的点击事件
+                Bundle bundle = new Bundle();
+                BluetoothFPVO curFpVO = fingerprints.get(position);
+//                bundle.putString("fpName", curFpVO.getFingerprintName());
+                bundle.putByteArray("fpIndex", curFpVO.getFingerprintIndex());
+
+                start(BluetoothManageFPFragment.newInstance(bundle));
+
+            }
+        });
+
+        initFingerPrintsInfo();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(!isInit){
+            refreshData();
+        }
+        isInit=false;
+
+    }
+
+    private void refreshData() {
+        curWallet = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList().get(0);
+        if (curWallet != null) {
+            currentID = curWallet.getId();
+        }
+        fingerprints.clear();
+        initFingerPrintsInfo();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        LoggerManager.e("onHiddenChanged hidden="+hidden);
+        if(!hidden){
+            refreshData();
+        }
     }
 
     @Override
@@ -190,6 +252,8 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
 
             @Override
             public void onFail() {
+                dissmisProgressDialog();
+                mAdapter.notifyDataSetChanged();
 
             }
         });
@@ -205,7 +269,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
         for (int i = 0; i < fpCount; i++) {
             BluetoothFPVO bluetoothFPVO = new BluetoothFPVO();
             bluetoothFPVO.setFingerprintIndex(fpList[i].data);
-            bluetoothFPVO.setFingerprintName(getString(R.string.walletmanage_fp_prefix) + String.valueOf(i + 1));
+            bluetoothFPVO.setFingerprintName(getString(R.string.walletmanage_fp_prefix) + (fpList[i].data[0]+1));
             for (int j = 0; j < fpEntities.size(); j++) {
                 FPEntity fpEntity = fpEntities.get(j);
                 if (fpEntity.getIndex()==fpList[i].data[0]){
@@ -218,26 +282,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
 
 //        String jsonList = GsonUtils.objectToJson(fingerprints);
 //        SPUtils.getInstance().put("fingerPrints", jsonList);
-
-        mAdapter = new BluetoothFPManageAdapter(fingerprints);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager
-                .VERTICAL, false);
-        recyclerFpManage.setLayoutManager(layoutManager);
-        recyclerFpManage.setAdapter(mAdapter);
-
-        recyclerFpManage.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                //每个指纹选项卡的点击事件
-                Bundle bundle = new Bundle();
-                BluetoothFPVO curFpVO = fingerprints.get(position);
-//                bundle.putString("fpName", curFpVO.getFingerprintName());
-                bundle.putByteArray("fpIndex", curFpVO.getFingerprintIndex());
-
-                start(BluetoothManageFPFragment.newInstance(bundle));
-
-            }
-        });
+        mAdapter.notifyDataSetChanged();
     }
 
 //    class ConnectHandler extends Handler {

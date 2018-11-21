@@ -8,13 +8,19 @@ import com.allen.library.SuperTextView;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.FPEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.event.WalletNameChangedEvent;
+import com.cybex.componentservice.event.WookongFpChangedNameEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.ui.model.vo.BluetoothFPVO;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 
 public class BluetoothManageFPFragment extends XFragment {
@@ -100,6 +106,26 @@ public class BluetoothManageFPFragment extends XFragment {
         }
 
     }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeFpName(WookongFpChangedNameEvent event) {
+        if(event.getIndex()==fpIndex[0]+0){
+            if(fpEntity !=null){
+                fpEntity.setName(event.getFpName());
+            }else{
+                fpEntity = DBManager.getInstance().getMultiWalletEntityDao().getFpEntityByWalletIdAndIndex(multiWalletEntity.getId(), fpIndex[0]);
+            }
+            superTextViewChangeFpName.setRightString(event.getFpName());
+        }
+    }
+
+
 
     @Override
     public void onDestroy() {

@@ -188,6 +188,7 @@
     <string name="walletmanage_tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
     <string name="walletmanage_status_un_init">未初始化</string>
     <string name="walletmanage_status_not_connected">未连接</string>
+    <string name="walletmanage_status_connected">已连接</string>
     <string name="walletmanage_status_init_no_pair">已经初始化但没有配对信息</string>
     <string name="walletmanage_status_init_pair">已经初始化但没有配对信息</string>
 
@@ -202,6 +203,7 @@
     <string name="walletmanage_mne_validate_warn">蓝牙连接已断开，请重新连接</string>
     <string name="walletmanage_do_get_init_info">正在获取初始化信息...</string>
     <string name="walletmanage_title_setting_fp">设置指纹</string>
+    <string name="walletmanage_title_add_fp">添加指纹</string>
     <string name="walletmanage_btn_title_skip">跳过</string>
     <string name="walletmanage_finger_set_success">指纹录入成功</string>
     <string name="walletmanage_wookong_password_hint">请输入WOOKONG Bio的密码以确认授权</string>

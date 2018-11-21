@@ -322,7 +322,9 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                     @Override
                     public void accept(String mnemonic) {
                         dissmisProgressDialog();
-                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE).navigation();
+                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE)
+                                .withInt(BaseConst.KEY_INIT_TYPE,0)
+                                .navigation();
                         getActivity().finish();
                         //                                        doGetAddressLogic();
                     }

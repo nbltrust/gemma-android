@@ -10,6 +10,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
@@ -34,6 +35,9 @@ import java.util.HashMap;
  */
 @Route(path= RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE)
 public class BluetoothEnrollFPActivity extends XActivity {
+
+    @Autowired(name = BaseConst.KEY_INIT_TYPE)
+    int initType; //0 是配对设备添加指纹入口, 1 则是初始化指纹入口
 
 
     //指纹指令错误
@@ -68,11 +72,6 @@ public class BluetoothEnrollFPActivity extends XActivity {
         mWebView = findViewById(R.id.webView_fingerprints);
 
 
-//        mHandler = new FPHandler();
-        bd = getIntent().getExtras();
-        if (bd != null) {
-//            contextHandle = bd.getLong(WalletManageConst.CONTEXT_HANDLE);
-        }
         //初始化指纹动画
         //initVectorDrawable();
         initWebView();
@@ -89,33 +88,40 @@ public class BluetoothEnrollFPActivity extends XActivity {
 
             @Override
             public void onEnrollFPUpate(int state) {
-                doFPLogic(state);
+//                doFPLogic(state);
             }
 
             @Override
             public void onEnrollFinish(int state) {
                 isEnrolling=false;
-                if (state == FINGER_SUCCESS) {
-                    stage = 1;
-                    GemmaToastUtils.showShortToast(getString(R.string.walletmanage_finger_set_success));
-                    setCurrentWalletStatus();
-//                  UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
-                    finish();
-                }
+//                if (state == FINGER_SUCCESS) {
+//                    stage = 1;
+//                    GemmaToastUtils.showShortToast(getString(R.string.walletmanage_finger_set_success));
+//                    setCurrentWalletStatus();
+////                  UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+//                    finish();
+//                }
             }
         });
 
     }
 
     @Override
+    public boolean useArouter() {
+        return true;
+    }
+
+    @Override
     protected void onDestroy() {
-        super.onDestroy();
         //WookongBioManager.getInstance().stopHeartBeat();
         //BluetoothConnectKeepJob.removeJob();
+
         if(isEnrolling){
             DeviceOperationManager.getInstance().abortEnrollFp(DeviceOperationManager.getInstance().getCurrentDeviceName());
         }
         DeviceOperationManager.getInstance().clearCallback(this.toString());
+
+        super.onDestroy();
 
 
     }
@@ -197,16 +203,25 @@ public class BluetoothEnrollFPActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getString(R.string.walletmanage_title_setting_fp), false);
+        if(initType==0){
+            setNavibarTitle(getString(R.string.walletmanage_title_add_fp), true);
+        }else{
+            setNavibarTitle(getString(R.string.walletmanage_title_setting_fp), false);
+            mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.walletmanage_btn_title_skip)) {
+                @Override
+                public void performAction(View view) {
+                    //UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+//                    finish();
+//                    DeviceOperationManager.getInstance().clearCallback(this.toString());
+                    if(isEnrolling){
+                        DeviceOperationManager.getInstance().abortEnrollFp(DeviceOperationManager.getInstance().getCurrentDeviceName());
+                    }
+                }
+            });
+        }
         mTitleBar.setActionTextColor(Color.BLACK);
         mTitleBar.setActionTextSize(18);
-        mTitleBar.addAction(new TitleBar.TextAction(getString(R.string.walletmanage_btn_title_skip)) {
-            @Override
-            public void performAction(View view) {
-                //UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
-                finish();
-            }
-        });
+
     }
 
     @Override
