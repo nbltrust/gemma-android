@@ -306,4 +306,7 @@
     <string name="walletmanage_fpname_change_success">指纹名称修改成功</string>
 
 
+    <string name="walletmanage_multi_coin_hard_wallet">多币种硬件钱包</string>
+
+
 </resources>

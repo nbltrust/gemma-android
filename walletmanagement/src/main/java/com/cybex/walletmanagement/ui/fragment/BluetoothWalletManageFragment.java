@@ -10,10 +10,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.event.HeartBeatRefreshDataEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
+
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -44,8 +46,10 @@ public class BluetoothWalletManageFragment extends XFragment {
     LinearLayout batteryContainer;
     Button btDisconnect;
     TextView tvConnectionStatus;
+
     ImageView ivWookongLogo;
     ImageView ivRight;
+
 
     //    private BlueToothWrapper connectThread;
 //    private BlueToothWrapper getAddressThread;
@@ -59,7 +63,7 @@ public class BluetoothWalletManageFragment extends XFragment {
 
     @Override
     public void bindUI(View rootView) {
-        setNavibarTitle(getString(R.string.walletmanage_title_wooKong_bio), true);
+        setNavibarTitle(getString(R.string.walletmanage_title_wooKong_bio), true, true);
 
         btnNavibar = rootView.findViewById(R.id.btn_navibar);
         tvWalletNameInDetailPage = rootView.findViewById(R.id.tv_walletName_in_detailPage);
@@ -70,8 +74,10 @@ public class BluetoothWalletManageFragment extends XFragment {
         batteryContainer = rootView.findViewById(R.id.view_bio_management);
         btDisconnect = rootView.findViewById(R.id.bt_disconnect);
         tvConnectionStatus = rootView.findViewById(R.id.tv_connection_status);
+
         ivWookongLogo = rootView.findViewById(R.id.iv_wooKong_logo);
         ivRight = rootView.findViewById(R.id.iv_manage_wooKong);
+
 
 
     }
@@ -128,8 +134,9 @@ public class BluetoothWalletManageFragment extends XFragment {
 //                    disconnectThread.start();
 //                }
 
-
-                DeviceOperationManager.getInstance().freeContext(BluetoothWalletManageFragment.this.toString(), multiWalletEntity.getBluetoothDeviceName(), new DeviceOperationManager.FreeContextCallback() {
+                DeviceOperationManager.getInstance().freeContext(BluetoothWalletManageFragment.this.toString(),
+                        multiWalletEntity.getBluetoothDeviceName(),
+                        new DeviceOperationManager.FreeContextCallback() {
                     @Override
                     public void onFreeStart() {
 
@@ -221,6 +228,7 @@ public class BluetoothWalletManageFragment extends XFragment {
             tvConnectionStatus.setText(R.string.walletmanage_status_connected);
         }
 
+
     }
 
     /**
@@ -231,9 +239,11 @@ public class BluetoothWalletManageFragment extends XFragment {
         batteryContainer.setVisibility(View.GONE);
         btDisconnect.setVisibility(View.GONE);
         btClickToConnect.setVisibility(View.VISIBLE);
+
         tvConnectionStatus.setText(R.string.walletmanage_status_not_connected);
         ivRight.setVisibility(View.GONE);
         ivWookongLogo.setImageResource(R.drawable.wookong_logo_gray);
+
     }
 
     /**

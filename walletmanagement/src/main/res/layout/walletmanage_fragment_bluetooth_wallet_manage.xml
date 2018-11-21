@@ -50,13 +50,13 @@
 
 
                 <ImageView
-                    android:src="@drawable/wookong_logo"
+                    android:src="@drawable/wookong_logo_gray"
                     android:id="@+id/iv_wooKong_logo"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="3dp"
-                    title:layout_constraintTop_toTopOf="parent"
+                    title:layout_constraintTop_toTopOf="@id/tv_walletName_in_detailPage"
+                    title:layout_constraintBottom_toBottomOf="@id/tv_walletName_in_detailPage"
                     title:layout_constraintEnd_toStartOf="@id/tv_connection_status"/>
 
                 <TextView
@@ -64,11 +64,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dimen_3"
-                    android:layout_marginTop="@dimen/dimen_20"
                     title:layout_goneMarginEnd="3dp"
                     android:textColor="@color/very_light_pink"
                     android:textSize="@dimen/font_3"
-                    title:layout_constraintTop_toTopOf="parent"
+                    title:layout_constraintTop_toTopOf="@id/tv_walletName_in_detailPage"
+                    title:layout_constraintBottom_toBottomOf="@id/tv_walletName_in_detailPage"
                     title:layout_constraintEnd_toStartOf="@id/iv_manage_wooKong"
                     android:text="未连接"
                     />
@@ -92,7 +92,9 @@
                     android:paddingTop="@dimen/dimen_10"
                     android:paddingStart="10dp"
                     android:singleLine="true"
+
                     android:text="@string/walletmanage_wallet_type_hardware"
+
                     android:textColor="@color/black_context"
                     android:textSize="@dimen/font_3.5"
                     title:layout_constraintEnd_toEndOf="parent"

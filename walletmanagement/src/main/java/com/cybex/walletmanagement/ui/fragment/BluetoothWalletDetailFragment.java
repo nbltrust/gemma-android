@@ -216,7 +216,9 @@ public class BluetoothWalletDetailFragment extends XFragment {
 
         showProgressDialog(getString(R.string.walletmanage_formating));
         final String bluetoothDeviceName = multiWalletEntity.getBluetoothDeviceName();
-        DeviceOperationManager.getInstance().startFormat(this.toString(), bluetoothDeviceName, new DeviceOperationManager.DeviceFormatCallback() {
+        DeviceOperationManager.getInstance().startFormat(this.toString(),
+                bluetoothDeviceName,
+                new DeviceOperationManager.DeviceFormatCallback() {
             @Override
             public void onFormatStart() {
 

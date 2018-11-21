@@ -72,6 +72,7 @@ public class SelectCurrentWalletActivity extends XActivity {
 
                     int walletType = wallet.getWalletType();
                     if (walletType == MultiWalletEntity.WALLET_TYPE_HARDWARE) {
+                        //蓝牙钱包
                         Intent intent = new Intent(context, BluetoothWalletManageActivity.class);
                         startActivity(intent);
                     }
@@ -81,6 +82,7 @@ public class SelectCurrentWalletActivity extends XActivity {
 //                        startActivity(intent);
 //                    }
                     else {
+                        //软钱包
                         Intent intent = new Intent(context, WalletManageInnerActivity.class);
                         intent.putExtra(BaseConst.KEY_WALLET_ENTITY, wallet);
                         startActivity(intent);

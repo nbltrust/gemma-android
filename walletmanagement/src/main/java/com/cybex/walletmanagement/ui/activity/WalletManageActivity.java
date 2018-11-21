@@ -10,17 +10,21 @@ import android.widget.RelativeLayout;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.base.view.LabelLayout;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.event.ChangeSelectedWalletEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -96,6 +100,14 @@ public class WalletManageActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
 
+        //如果已有蓝牙钱包，隐藏配对入口
+        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
+                .getBluetoothWalletList();
+
+        if ( bluetoothWalletList!= null && bluetoothWalletList.size() > 0){
+            containerWookong.setVisibility(View.GONE);
+        }
+
 
     }
 
@@ -134,6 +146,23 @@ public class WalletManageActivity extends XActivity {
             currentWallet.setWalletName(event.getWalletName());
             labelCurrentWallet.setRightText(currentWallet.getWalletName());
         }
+    }
+
+    /**
+     * 获取当前蓝牙钱包对应的设备名称
+     * @return
+     */
+    public String getBluetoothDeviceName() {
+
+        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
+                .getBluetoothWalletList();
+
+        if (bluetoothWalletList != null && bluetoothWalletList.size() > 0) {
+            return bluetoothWalletList.get(0).getBluetoothDeviceName();
+        }
+
+        return "list empty err";
+
     }
 
 }

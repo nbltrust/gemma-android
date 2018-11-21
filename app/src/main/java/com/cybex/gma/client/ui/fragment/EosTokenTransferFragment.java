@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
@@ -24,6 +23,7 @@ import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
+import com.cybex.componentservice.utils.WookongConnectHelper;
 import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.cybex.gma.client.R;
@@ -35,7 +35,6 @@ import com.cybex.gma.client.ui.presenter.EosTokenTransferPresenter;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
-import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
@@ -102,6 +101,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     private String collectionAccount = "";
     private String amount = "";
     private String memo = "";
+    private MultiWalletEntity curWallet;
 
     public static EosTokenTransferFragment newInstance(Bundle args) {
         EosTokenTransferFragment fragment = new EosTokenTransferFragment();
@@ -245,6 +245,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         etAmount.setText("");
         etNote.setText("");
 
+        curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         deviceName = getP().getBluetoothDeviceName();
 
         OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
@@ -543,24 +544,24 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onValidateSuccess(String password) {
                         //密码正确，根据钱包种类执行不同的转账逻辑
-                        if (curToken != null){
+                        if (curToken != null) {
                             String tokenType = curToken.getTokenSymbol();
                             int walletType = DBManager.getInstance().getMultiWalletEntityDao()
                                     .getCurrentMultiWalletEntity().getWalletType();
                             if (walletType == CacheConstants.WALLET_TYPE_BLUETOOTH && tokenType.equals(ParamConstants
-                                    .SYMBOL_EOS)){
+                                    .SYMBOL_EOS)) {
                                 //蓝牙钱包EOS转账
                                 //判断蓝牙卡是否连接
                                 int status = DeviceOperationManager.getInstance().getDeviceConnectStatus(deviceName);
-                                if (status == CacheConstants.STATUS_BLUETOOTH_CONNCETED){
+                                if (status == CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
                                     //蓝牙卡已连接
                                     getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
                                             getAmount() + " EOS", getNote());
-                                }else {
+                                } else {
                                     //蓝牙卡未连接
                                     connectBio();
                                 }
-                            }else {
+                            } else {
                                 //软钱包EOS及Tokens转账
                                 String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
                                 String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
@@ -641,30 +642,47 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     /**
      * 连接指定设备
-     *
      */
     private void connectBio() {
 
-        DeviceOperationManager.getInstance().connectDevice(TAG, deviceName,
-                new DeviceOperationManager.DeviceConnectCallback() {
-                    @Override
-                    public void onConnectStart() {
-                        showConnectBioDialog();
-                    }
+//        DeviceOperationManager.getInstance().connectDevice(TAG, deviceName,
+//                new DeviceOperationManager.DeviceConnectCallback() {
+//                    @Override
+//                    public void onConnectStart() {
+//                        showConnectBioDialog();
+//                    }
+//
+//                    @Override
+//                    public void onConnectSuccess() {
+//                        dialog.cancel();
+//                        getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+//                                getAmount() + " EOS", getNote());
+//                    }
+//
+//                    @Override
+//                    public void onConnectFailed() {
+//                        dialog.cancel();
+//                        showConnectBioFailDialog();
+//                    }
+//                });
 
-                    @Override
-                    public void onConnectSuccess() {
-                        dialog.cancel();
-                        getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+        if (curWallet != null) {
+            WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(curWallet, getActivity());
+            wookongConnectHelper.startConnectDevice(new WookongConnectHelper.ConnectWookongBioCallback() {
+                @Override
+                public void onConnectSuccess() {
+                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
                                 getAmount() + " EOS", getNote());
-                    }
 
-                    @Override
-                    public void onConnectFailed() {
-                        dialog.cancel();
-                        showConnectBioFailDialog();
-                    }
-                });
+                }
+
+                @Override
+                public void onConnectFail() {
+
+                }
+            });
+        }
+
     }
 
 
@@ -673,28 +691,28 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      */
     public void startEosSerialization(String jsonTxStr) {
 
-            //String deviceName = getBluetoothDeviceName();
+        //String deviceName = getBluetoothDeviceName();
 
-            DeviceOperationManager.getInstance().jsonSerialization(TAG, jsonTxStr, deviceName,
-                    new DeviceOperationManager.JsonSerilizeCallback() {
-                        @Override
-                        public void onSerilizeStart() {
+        DeviceOperationManager.getInstance().jsonSerialization(TAG, jsonTxStr, deviceName,
+                new DeviceOperationManager.JsonSerilizeCallback() {
+                    @Override
+                    public void onSerilizeStart() {
 
-                        }
+                    }
 
-                        @Override
-                        public void onSerilizeSuccess(String serializeResult) {
-                            //把序列化之后的数据做处理
-                            byte[] builtStr = getP().buildSignStr(serializeResult, chain_id);
-                            //把builtStr 送给设备签名
-                            startEosSign(builtStr);
-                        }
+                    @Override
+                    public void onSerilizeSuccess(String serializeResult) {
+                        //把序列化之后的数据做处理
+                        byte[] builtStr = getP().buildSignStr(serializeResult, chain_id);
+                        //把builtStr 送给设备签名
+                        startEosSign(builtStr);
+                    }
 
-                        @Override
-                        public void onSerilizeFail() {
-                            AlertUtil.showLongUrgeAlert(getActivity(), " Transaction Serialization Fail");
-                        }
-                    });
+                    @Override
+                    public void onSerilizeFail() {
+                        AlertUtil.showLongUrgeAlert(getActivity(), " Transaction Serialization Fail");
+                    }
+                });
     }
 
 
@@ -744,7 +762,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      */
     private void showConnectBioDialog() {
         int[] listenedItems = {R.id.imc_cancel};
-        if (getActivity() != null)AutoSize.autoConvertDensityOfGlobal(getActivity());
+        if (getActivity() != null) { AutoSize.autoConvertDensityOfGlobal(getActivity()); }
         dialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_transfer_bluetooth_connect_ing, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
@@ -767,7 +785,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      */
     private void showConnectBioFailDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_reconnect};
-        if (getActivity() != null)AutoSize.autoConvertDensityOfGlobal(getActivity());
+        if (getActivity() != null) { AutoSize.autoConvertDensityOfGlobal(getActivity()); }
         dialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_transfer_bluetooth_connect_failed, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {

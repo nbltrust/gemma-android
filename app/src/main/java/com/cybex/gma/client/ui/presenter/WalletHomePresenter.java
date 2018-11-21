@@ -106,6 +106,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                 } else {
                                     //todo account_names为空
 
+                                    LoggerManager.d("account_names empty");
                                     int wallet_type = DBManager.getInstance().getMultiWalletEntityDao()
                                             .getCurrentMultiWalletEntity().getWalletType();
 
@@ -118,6 +119,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_IMPORT) {
 
                                     }
+                                    getV().updateEosCardView();
                                     getV().dissmisProgressDialog();
                                 }
 

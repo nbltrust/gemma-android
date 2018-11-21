@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.allen.library.SuperTextView
-    android:id="@+id/superTextView_bluetooth_FPCard"
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_48"
-    app:sLeftTextString="指纹一"
-    app:sLeftTextSize="@dimen/font_3.5"
-    app:sLeftTextColor="@color/black_title"
-    app:sRightTvDrawableRight="@drawable/ic_arrow"
-    app:sUseShape="true"
-    app:sShapeCornersTopLeftRadius="@dimen/dimen_6"
-    app:sShapeCornersTopRightRadius="@dimen/dimen_6"
-    app:sShapeSelectorPressedColor="@color/item_pressed"
-    />
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/superTextView_bluetooth_FPCard"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48"
+        app:sLeftTextString="指纹1"
+        app:sLeftTextSize="@dimen/font_4"
+        app:sLeftTextColor="@color/black_title"
+        app:sRightTvDrawableRight="@drawable/ic_arrow"
+        app:sUseShape="true"
+        app:sDividerLineType="none"
+        app:sShapeCornersTopLeftRadius="@dimen/dimen_6"
+        app:sShapeCornersTopRightRadius="@dimen/dimen_6"
+        app:sShapeSelectorPressedColor="@color/item_pressed"
+        />
+
+    <View
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        style="@style/common_divider">
+    </View>
+
+</LinearLayout>
