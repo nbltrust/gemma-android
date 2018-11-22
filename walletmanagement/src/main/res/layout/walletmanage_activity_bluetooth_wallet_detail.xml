@@ -28,6 +28,7 @@
             title:sLeftTextColor="@color/black_title"
             title:sLeftTextSize="@dimen/font_4"
             title:sLeftTextString="@string/walletmanage_name"
+            title:sLeftViewMarginLeft="0dp"
             title:sRightTextColor="@color/very_light_pink"
             title:sRightTextSize="@dimen/font_4"
             title:sRightTextString="WOOKONG Bio"
@@ -39,8 +40,7 @@
 
         <View
             style="@style/common_divider"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            />
 
 
         <com.allen.library.SuperTextView
@@ -50,9 +50,11 @@
             title:sLeftTextColor="@color/black_title"
             title:sLeftTextSize="@dimen/font_4"
             title:sLeftTextString="@string/walletmanage_battery_left"
+            title:sLeftViewMarginLeft="0dp"
             title:sRightTextColor="@color/very_light_pink"
             title:sRightTextSize="@dimen/font_4"
             title:sRightTextString="--%"
+            title:sRightViewMarginRight="13dp"
             title:sShapeSolidColor="@color/whiteTwo"
             title:sUseShape="true">
 
@@ -60,8 +62,7 @@
 
         <View
             style="@style/common_divider"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+           />
 
     </LinearLayout>
 
@@ -95,8 +96,8 @@
         android:id="@+id/bt_format"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_44"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginEnd="@dimen/common_view_margin"
+        android:layout_marginStart="@dimen/common_view_margin"
         android:layout_marginTop="@dimen/dimen_20"
         android:background="@drawable/shape_corner_button_red"
         android:text="@string/walletmanage_btn_to_format"

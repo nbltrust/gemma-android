@@ -40,7 +40,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:layout_marginTop="20dp"
-                    android:paddingStart="10dp"
                     android:text="WOOKONG Bio"
                     android:textColor="@color/black_title"
                     android:textSize="@dimen/font_4"
@@ -78,10 +77,10 @@
                     android:src="@drawable/ic_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_20"
                     android:layout_marginEnd="10dp"
+                    title:layout_constraintTop_toTopOf="@id/tv_walletName_in_detailPage"
+                    title:layout_constraintBottom_toBottomOf="@id/tv_walletName_in_detailPage"
                     title:layout_constraintEnd_toEndOf="parent"
-                    title:layout_constraintTop_toTopOf="parent"
                     />
 
                 <TextView
@@ -90,11 +89,8 @@
                     android:layout_marginEnd="@dimen/dimen_20"
                     android:ellipsize="middle"
                     android:paddingTop="@dimen/dimen_10"
-                    android:paddingStart="10dp"
                     android:singleLine="true"
-
                     android:text="@string/walletmanage_wallet_type_hardware"
-
                     android:textColor="@color/black_context"
                     android:textSize="@dimen/font_3.5"
                     title:layout_constraintEnd_toEndOf="parent"
@@ -104,8 +100,8 @@
             </android.support.constraint.ConstraintLayout>
 
             <View
-                android:layout_marginStart="@dimen/dimen_30"
-                android:layout_marginEnd="@dimen/dimen_30"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_20"
                 style="@style/common_divider"/>
 
             <LinearLayout
@@ -125,6 +121,7 @@
                     title:sShapeSelectorPressedColor="@color/item_pressed"
                     title:sLeftTextSize="@dimen/font_3.5"
                     title:sLeftTextString="@string/walletmanage_fp_and_password"
+                    title:sLeftViewMarginLeft="0dp"
                     title:sRightTvDrawableRight="@drawable/ic_arrow"
                     title:sUseShape="true"
                     title:sShapeCornersRadius="@dimen/dimen_6"
@@ -133,8 +130,6 @@
                 </com.allen.library.SuperTextView>
 
                 <View
-                    android:layout_marginStart="@dimen/dimen_10"
-                    android:layout_marginEnd="@dimen/dimen_10"
                     style="@style/common_divider"/>
 
             </LinearLayout>
@@ -144,8 +139,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_44"
                 android:layout_marginTop="@dimen/dimen_40"
-                android:layout_marginStart="@dimen/dimen_20"
-                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginStart="@dimen/common_view_margin"
+                android:layout_marginEnd="@dimen/common_view_margin"
                 android:background="@drawable/shape_corner_button"
                 android:text="@string/btn_connect"
                 android:textColor="@color/whiteTwo"/>
@@ -155,8 +150,8 @@
                 android:id="@+id/bt_disconnect"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_44"
-                android:layout_marginStart="@dimen/dimen_20"
-                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginStart="@dimen/common_view_margin"
+                android:layout_marginEnd="@dimen/common_view_margin"
                 android:layout_marginTop="@dimen/dimen_40"
                 android:background="@drawable/shape_corner_button_white_with_stroke"
                 android:text="@string/btn_disconnect"
