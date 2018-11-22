@@ -95,6 +95,11 @@ public class WalletManageActivity extends XActivity {
         currentWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         labelCurrentWallet.setRightText(currentWallet.getWalletName());
 
+        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList();
+        if(bluetoothWalletList.size()>0){
+            containerWookong.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

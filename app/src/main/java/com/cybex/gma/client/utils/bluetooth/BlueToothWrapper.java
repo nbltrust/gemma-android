@@ -1728,7 +1728,7 @@ public class BlueToothWrapper extends Thread {
                 if (m_contextHandle == 0) {
                     iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
                 } else {
-                    iRtn = MiddlewareInterface.initPIN(m_contextHandle, m_devIndex, m_strPIN);
+                    iRtn = MiddlewareInterface.initPIN(m_contextHandle, m_devIndex, m_strPIN,new Object());
                 }
                 m_commonLock.unlock();
 

@@ -1,10 +1,12 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
@@ -14,9 +16,11 @@ import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.event.CloseInitialPageEvent;
+import com.cybex.componentservice.event.WookongInitialedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.manager.RxJavaManager;
 import com.cybex.componentservice.utils.CollectionUtils;
 import com.cybex.componentservice.utils.TSnackbarUtil;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
@@ -61,10 +65,14 @@ import seed39.Seed39;
 public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresenter> {
 
     Unbinder unbinder;
-    @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-    @BindView(R.id.view_click_to_show_mne) LabelsView viewClickToShowMne;
-    @BindView(R.id.view_show_mne) LabelsView viewShowMne;
-    @BindView(R.id.view_root) LinearLayout viewRoot;
+    @BindView(R.id.btn_navibar)
+    TitleBar btnNavibar;
+    @BindView(R.id.view_click_to_show_mne)
+    LabelsView viewClickToShowMne;
+    @BindView(R.id.view_show_mne)
+    LabelsView viewShowMne;
+    @BindView(R.id.view_root)
+    LinearLayout viewRoot;
 
     private boolean isInit;//是否为初始状态，用来调整上方显示区域大小
 
@@ -83,7 +91,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
 //    final int[] deriveEOSPaths =
 //            {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000};
 
-//    private String public_key = "";
+    //    private String public_key = "";
 //    private String public_key_hex = "";
 //    private String public_key_sign = "";
 //    private String SN = "";
@@ -174,6 +182,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         if (EmptyUtils.isEmpty(unSelectedLabels)) {
             if (EmptyUtils.isNotEmpty(selectedLabels) && EmptyUtils.isNotEmpty(answerLabels)) {
                 if (CollectionUtils.isEqualCollection(selectedLabels, answerLabels)) {
+                    showProgressDialog(getString(R.string.mnemonic_checking));
                     //app验证通过，发送给硬件验证，并且获取硬件返回的公钥
                     if (values != null) {
                         int[] checkedIndex = values.getCheckIndex();
@@ -191,28 +200,48 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                             String strDestMnes = sb.toString();
 //                                    int status = MiddlewareInterface.generateSeed_CheckMnes(contextHandle, 0,
 //                                            strDestMnes);
-                            int status =DeviceOperationManager.getInstance().checkMnemonic(DeviceOperationManager.getInstance().getCurrentDeviceName(),strDestMnes);
 
-                            if (status == MiddlewareInterface.PAEW_RET_SUCCESS) {
-                                LoggerManager.d("mne validate success...");
-                                TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_success),
-                                        Prompt.SUCCESS);
-                                //create bluetoothwallet
-                                initWookongBioWallet(strDestMnes);
+                            Observable.create(new ObservableOnSubscribe<Integer>() {
+                                @Override
+                                public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                                    int status = DeviceOperationManager.getInstance().checkMnemonic(DeviceOperationManager.getInstance().getCurrentDeviceName(), strDestMnes);
+                                    e.onNext(status);
+                                    e.onComplete();
+                                }
+                            }).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Consumer<Integer>() {
+                                        @Override
+                                        public void accept(Integer status) {
+                                            if (status == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                                                LoggerManager.d("mne validate success...");
+                                                TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_success),
+                                                        Prompt.SUCCESS);
+                                                //create bluetoothwallet
+                                                initWookongBioWallet(strDestMnes);
 
 
+                                            } else if (status == -2147483642) {
+                                                LoggerManager.d("device disconnected...");
+                                                dissmisProgressDialog();
+                                                TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_warn),
+                                                        Prompt.WARNING);
 
-                            } else if (status == -2147483642) {
-                                LoggerManager.d("device disconnected...");
-
-                                TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_warn),
-                                        Prompt.WARNING);
-
-                            } else {
-                                LoggerManager.d("mne validate error...");
-                                TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
-                                        Prompt.ERROR);
-                            }
+                                            } else {
+                                                LoggerManager.d("mne validate error...");
+                                                dissmisProgressDialog();
+                                                TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
+                                                        Prompt.ERROR);
+                                            }
+                                        }
+                                    }, new Consumer<Throwable>() {
+                                        @Override
+                                        public void accept(Throwable throwable) {
+                                            dissmisProgressDialog();
+                                            GemmaToastUtils.showLongToast(getString(R.string.wokong_init_fail));
+                                            getActivity().finish();
+                                        }
+                                    });
 
 
                         }
@@ -238,8 +267,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                 multiWalletEntity.setWalletName("WOOKONG Bio");
                 multiWalletEntity.setWalletType(MultiWalletEntity.WALLET_TYPE_HARDWARE);
                 multiWalletEntity.setIsBackUp(CacheConstants.ALREADY_BACKUP);
-                //todo
-                multiWalletEntity.setPasswordTip("");
+                multiWalletEntity.setPasswordTip(DeviceOperationManager.getInstance().getCurrentDeviceInitPswHint());
                 multiWalletEntity.setIsCurrentWallet(1);
                 multiWalletEntity.setBluetoothDeviceName(DeviceOperationManager.getInstance().getCurrentDeviceName());
 
@@ -298,7 +326,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                 DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntity(multiWalletEntity, new DBCallback() {
                     @Override
                     public void onSucceed() {
-                        if(BuildConfig.DEBUG){
+                        if (BuildConfig.DEBUG) {
                             List<MultiWalletEntity> list =
                                     SQLite.select().from(MultiWalletEntity.class)
                                             .queryList();
@@ -322,9 +350,21 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                     @Override
                     public void accept(String mnemonic) {
                         dissmisProgressDialog();
-                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE)
-                                .withInt(BaseConst.KEY_INIT_TYPE,0)
+//                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE)
+//                                .withInt(BaseConst.KEY_INIT_TYPE, 0)
+//                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                                .navigation();
+
+                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+                                .withInt(BaseConst.KEY_INIT_TYPE, BaseConst.APP_HOME_INITTYPE_TO_ENROLL_FP)
+//                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                 .navigation();
+                        if(DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList().size()==1){
+                            EventBusProvider.post(new WookongInitialedEvent());
+                        }else{
+
+                        }
+
                         getActivity().finish();
                         //                                        doGetAddressLogic();
                     }
@@ -505,7 +545,6 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
 //            }
 //        }
 //    }
-
     @Override
     public boolean useEventBus() {
         return true;

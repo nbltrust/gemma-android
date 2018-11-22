@@ -48,6 +48,15 @@ public class DeviceOperationManager {
         return currentDeviceName;
     }
 
+
+    public String getCurrentDeviceInitPswHint() {
+        DeviceComm deviceComm = deviceMaps.get(currentDeviceName);
+        if (deviceComm != null) {
+            return deviceComm.initialPswHint;
+        }
+        return "";
+    }
+
     public int getDeviceConnectStatus(String deviceName) {
         if (deviceMaps.get(deviceName) == null) {
             return CacheConstants.STATUS_BLUETOOTH_DISCONNCETED;
@@ -352,7 +361,7 @@ public class DeviceOperationManager {
 
     }
 
-    public void initPin(String tag, String deviceName, String password, InitPinCallback initPinCallback) {
+    public void initPin(String tag, String deviceName, String password,String passwordHint, InitPinCallback initPinCallback) {
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
         if (deviceCallbacks == null) {
             deviceCallbacks = new DeviceCallbacsBean();
@@ -372,6 +381,7 @@ public class DeviceOperationManager {
             deviceComm.initPinThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.initPinThread.setInitPINWrapper(deviceComm.contextHandle,
                     0, password);
+            deviceComm.initialPswHint=passwordHint;
             deviceComm.initPinThread.start();
         }
 
@@ -1344,6 +1354,7 @@ public class DeviceOperationManager {
     class DeviceComm {
 
         String deviceName;
+        String initialPswHint;
         long contextHandle;
         int currentState;
         boolean msgBackConnectStatus;

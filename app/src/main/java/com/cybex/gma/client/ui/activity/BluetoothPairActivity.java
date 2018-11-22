@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.event.WookongInitialedEvent;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.manager.PermissionManager;
 import com.cybex.componentservice.utils.listener.PermissionResultListener;
@@ -33,6 +34,9 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -96,5 +100,15 @@ public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
     @Override
     public boolean useArouter() {
         return true;
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onWookongInitial(WookongInitialedEvent event) {
+        finish();
     }
 }

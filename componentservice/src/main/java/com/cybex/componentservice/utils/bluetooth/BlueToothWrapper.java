@@ -1728,7 +1728,7 @@ public class BlueToothWrapper extends Thread {
                 if (m_contextHandle == 0) {
                     iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
                 } else {
-                    iRtn = MiddlewareInterface.initPIN(m_contextHandle, m_devIndex, m_strPIN);
+                    iRtn = MiddlewareInterface.initPIN(m_contextHandle, m_devIndex, m_strPIN,m_putStateCallback);
                 }
                 m_commonLock.unlock();
 
@@ -2287,4 +2287,27 @@ public class BlueToothWrapper extends Thread {
     public static void setM_getPINResult(int m_getPINResult) {
         BlueToothWrapper.m_getPINResult = m_getPINResult;
     }
+
+
+
+
+    public static final int MSG_INIT_PIN_UPDATE = 95;
+
+    private CommonUtility.putStateCallback m_putStateCallback = new CommonUtility.putStateCallback() {
+        @Override
+        public void pushState(int nState) {
+            Message msg;
+
+            msg = m_mainHandler.obtainMessage();
+            msg.what = MSG_INIT_PIN_UPDATE;
+            msg.arg1 = nState;
+            msg.sendToTarget();
+
+            if (m_bAborting) {
+                m_commonLock.unlock();
+                while(m_bAborting);
+                m_commonLock.lock();
+            }
+        }
+    };
 }

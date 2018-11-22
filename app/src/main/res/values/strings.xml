@@ -824,6 +824,8 @@
 
     <!--home -->
     <string name="home_not_backup">未备份</string>
+    <string name="mnemonic_checking">验证中</string>
+    <string name="wokong_init_fail">WOOKONG Bio初始化失败,请重新初始化</string>
 
 
 </resources>

@@ -511,12 +511,13 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
     public void onValidationSucceeded() {
         //设置初始化PIN
         String password = String.valueOf(edtSetPass.getText());
+        final String passwordHint = String.valueOf(edtPassHint.getText());
 
 //        LoggerManager.d("contextHandle", contextHandle);
 //        WookongBioManager.getInstance().initPIN(contextHandle, 0, password);
 
         String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
-        DeviceOperationManager.getInstance().initPin(this.toString(), currentDeviceName, password, new DeviceOperationManager.InitPinCallback() {
+        DeviceOperationManager.getInstance().initPin(this.toString(), currentDeviceName, password,passwordHint, new DeviceOperationManager.InitPinCallback() {
             @Override
             public void onInitSuccess() {
 

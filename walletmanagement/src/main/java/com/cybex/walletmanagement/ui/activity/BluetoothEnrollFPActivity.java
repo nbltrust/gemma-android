@@ -88,19 +88,19 @@ public class BluetoothEnrollFPActivity extends XActivity {
 
             @Override
             public void onEnrollFPUpate(int state) {
-//                doFPLogic(state);
+                doFPLogic(state);
             }
 
             @Override
             public void onEnrollFinish(int state) {
                 isEnrolling=false;
-//                if (state == FINGER_SUCCESS) {
-//                    stage = 1;
-//                    GemmaToastUtils.showShortToast(getString(R.string.walletmanage_finger_set_success));
-//                    setCurrentWalletStatus();
-////                  UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
-//                    finish();
-//                }
+                if (state == FINGER_SUCCESS) {
+                    stage = 1;
+                    GemmaToastUtils.showShortToast(getString(R.string.walletmanage_finger_set_success));
+                    setCurrentWalletStatus();
+//                  UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+                    finish();
+                }
             }
         });
 
@@ -115,12 +115,10 @@ public class BluetoothEnrollFPActivity extends XActivity {
     protected void onDestroy() {
         //WookongBioManager.getInstance().stopHeartBeat();
         //BluetoothConnectKeepJob.removeJob();
-
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
         if(isEnrolling){
             DeviceOperationManager.getInstance().abortEnrollFp(DeviceOperationManager.getInstance().getCurrentDeviceName());
         }
-        DeviceOperationManager.getInstance().clearCallback(this.toString());
-
         super.onDestroy();
 
 
@@ -203,7 +201,7 @@ public class BluetoothEnrollFPActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        if(initType==0){
+        if(initType==1){
             setNavibarTitle(getString(R.string.walletmanage_title_add_fp), true);
         }else{
             setNavibarTitle(getString(R.string.walletmanage_title_setting_fp), false);
@@ -211,11 +209,7 @@ public class BluetoothEnrollFPActivity extends XActivity {
                 @Override
                 public void performAction(View view) {
                     //UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
-//                    finish();
-//                    DeviceOperationManager.getInstance().clearCallback(this.toString());
-                    if(isEnrolling){
-                        DeviceOperationManager.getInstance().abortEnrollFp(DeviceOperationManager.getInstance().getCurrentDeviceName());
-                    }
+                    finish();
                 }
             });
         }

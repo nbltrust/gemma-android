@@ -229,6 +229,10 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 ARouter.getInstance().build(RouterConst.PATH_TO_BACKUP_MNEMONIC_GUIDE_PAGE)
                         .withInt(BaseConst.KEY_WALLET_ENTITY_ID, initCreatedWalletID)
                         .navigation();
+            }else if (initType == BaseConst.APP_HOME_INITTYPE_TO_ENROLL_FP) {
+                ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE)
+                        .withInt(BaseConst.KEY_INIT_TYPE, 0)
+                        .navigation();
             }
             initType = BaseConst.APP_HOME_INITTYPE_NONE;
         }

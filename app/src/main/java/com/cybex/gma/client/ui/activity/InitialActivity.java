@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.event.CloseInitialPageEvent;
+import com.cybex.componentservice.event.WookongInitialedEvent;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
@@ -110,4 +111,11 @@ public class InitialActivity extends XActivity {
     public void closeSelf(CloseInitialPageEvent event) {
          finish();
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onWookongInitial(WookongInitialedEvent event) {
+        finish();
+    }
+
+
 }

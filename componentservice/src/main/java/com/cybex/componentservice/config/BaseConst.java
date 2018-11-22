@@ -19,6 +19,7 @@ public class BaseConst {
     //主页面跳转类型定义
     public static final int APP_HOME_INITTYPE_NONE=-1;
     public static final int APP_HOME_INITTYPE_TO_BACKUP_MNEMONIC_GUIDE=0;
+    public static final int APP_HOME_INITTYPE_TO_ENROLL_FP=1;
 
     /**
      * 钱包类型 (0--新建助记词软件钱包 1-导入助记词类软钱包  2--硬件钱包  3-导入单个私钥类型的软钱包)
