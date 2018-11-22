@@ -53,11 +53,13 @@
                 </com.xujiaji.happybubble.BubbleLayout>
 
                 <TextView
-                android:id="@+id/tv_wallet_name"
-                style="@style/eos_text_title_config_wallet"
-                android:text="@string/eos_wallet_name"/>
+                    android:id="@+id/tv_wallet_name"
+                    style="@style/eos_text_title_config_wallet"
+                    android:text="@string/eos_wallet_name"
+                    android:visibility="gone" />
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
 
@@ -72,11 +74,11 @@
 
                 </LinearLayout>
 
-                <View
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    style="@style/common_divider">
-                </View>
+                <!--<View-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--style="@style/common_divider">-->
+                <!--</View>-->
 
                 <TextView
                     android:id="@+id/tv_set_pass"
@@ -230,24 +232,12 @@
                 android:layout_marginStart="@dimen/eos_button_margin"
                 android:layout_marginTop="26dp"
                 android:background="@drawable/eos_shape_corner_button"
-                android:text="@string/eos_tip_create_wallet"
+                android:text="@string/next_step"
                 android:textColor="@color/whiteTwo"/>
-
-            <Button
-                android:id="@+id/bt_import_mne"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bt_inInitPage_height"
-                android:layout_marginEnd="@dimen/eos_button_margin"
-                android:layout_marginStart="@dimen/eos_button_margin"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:background="@drawable/shape_corner_button_white_with_stroke"
-                android:text="@string/eos_btn_import_mne"
-                android:textColor="@color/black_title"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="4dp">
-
             </View>
 
         </LinearLayout>

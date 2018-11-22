@@ -88,7 +88,6 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
     @BindView(R.id.edt_pass_hint) EditText edtPassHint;
     @BindView(R.id.iv_pass_hint_clear) ImageView ivPassHintClear;
     @BindView(R.id.bt_create_wallet) Button btCreateWallet;
-    @BindView(R.id.bt_import_mne) Button btImportMne;
     @BindView(R.id.scroll_create_wallet) ScrollView scrollCreateWallet;
     @BindView(R.id.tv_wallet_name) TextView tvWalletName;
     @BindView(R.id.view_divider_passTip) View viewDividerPassTip;
@@ -151,13 +150,11 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
      *
      * @param v
      */
-    @OnClick({R.id.bt_create_wallet, R.id.bt_import_mne})
+    @OnClick({R.id.bt_create_wallet})
     public void onButtonClicked(View v) {
         switch (v.getId()) {
             case R.id.bt_create_wallet:
                 validator.validate();
-                break;
-            case R.id.bt_import_mne:
                 break;
         }
     }
