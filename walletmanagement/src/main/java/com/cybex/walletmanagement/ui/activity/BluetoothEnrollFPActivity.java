@@ -88,11 +88,13 @@ public class BluetoothEnrollFPActivity extends XActivity {
 
             @Override
             public void onEnrollFPUpate(int state) {
+                if(isDestroyed())return;
                 doFPLogic(state);
             }
 
             @Override
             public void onEnrollFinish(int state) {
+                if(isDestroyed())return;
                 isEnrolling=false;
                 if (state == FINGER_SUCCESS) {
                     stage = 1;

@@ -1,4 +1,4 @@
-package com.cybex.walletmanagement.widget;
+package com.cybex.componentservice.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import com.cybex.walletmanagement.R;
+import com.cybex.componentservice.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources  xmlns:tools="http://schemas.android.com/tools">
+
+    <declare-styleable name="labels_view" tools:ignore="ResourceName">
+        <attr name="selectType" format="enum" tools:ignore="ResourceName">
+            <enum name="NONE" value="1" />
+            <enum name="SINGLE" value="2" />
+            <enum name="SINGLE_IRREVOCABLY" value="3" />
+            <enum name="MULTI" value="4" />
+        </attr>
+        <attr name="maxSelect" format="integer" tools:ignore="ResourceName" />
+        <attr name="labelTextColor" format="reference" tools:ignore="ResourceName" />
+        <attr name="labelTextSize" format="dimension" tools:ignore="ResourceName" />
+        <attr name="labelTextPaddingLeft" format="dimension" tools:ignore="ResourceName" />
+        <attr name="labelTextPaddingTop" format="dimension" tools:ignore="ResourceName"  />
+        <attr name="labelTextPaddingRight" format="dimension"  tools:ignore="ResourceName" />
+        <attr name="labelTextPaddingBottom" format="dimension" tools:ignore="ResourceName"  />
+        <attr name="lineMargin" format="dimension"  tools:ignore="ResourceName" />
+        <attr name="wordMargin" format="dimension" tools:ignore="ResourceName"  />
+        <attr name="labelBackground" format="reference"  tools:ignore="ResourceName" />
+    </declare-styleable>
+
+</resources>

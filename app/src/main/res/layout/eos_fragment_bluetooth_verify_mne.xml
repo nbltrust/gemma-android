@@ -20,36 +20,46 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <com.cybex.base.view.AlignTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginLeft="@dimen/common_page_content_padding"
+                android:layout_marginRight="@dimen/common_page_content_padding"
                 android:text="@string/eos_tip_verify_mne"
                 android:textAlignment="center"
                 android:textColor="@color/black_title"
                 android:textSize="@dimen/font_4"/>
 
 
-            <com.cybex.gma.client.widget.LabelsView
+            <com.cybex.componentservice.widget.LabelsView
                 android:id="@+id/view_click_to_show_mne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_20"
-                android:background="@drawable/shape_corner"
-                android:padding="@dimen/dimen_20">
 
-            </com.cybex.gma.client.widget.LabelsView>
+                android:layout_margin="@dimen/common_page_content_padding"
+                android:background="@drawable/shape_corner_radius"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="28dp"
+                android:paddingBottom="28dp"
+
+                >
+
+            </com.cybex.componentservice.widget.LabelsView>
 
 
-            <com.cybex.gma.client.widget.LabelsView
+            <com.cybex.componentservice.widget.LabelsView
                 android:id="@+id/view_show_mne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_20"
-                android:layout_marginStart="@dimen/dimen_20"
-                android:padding="@dimen/dimen_20">
 
-            </com.cybex.gma.client.widget.LabelsView>
+                android:layout_marginEnd="@dimen/dimen_28"
+                android:layout_marginStart="@dimen/dimen_28"
+                android:layout_marginTop="10dp"
+                >
+
+            </com.cybex.componentservice.widget.LabelsView>
 
 
         </LinearLayout>

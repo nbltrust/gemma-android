@@ -29,7 +29,7 @@
                 android:textSize="@dimen/font_3.5"/>
 
 
-            <com.cybex.walletmanagement.widget.LabelsView
+            <com.cybex.componentservice.widget.LabelsView
                 android:id="@+id/view_click_to_show_mne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,10 +37,10 @@
                 android:background="@drawable/shape_corner"
                 android:padding="@dimen/dimen_20">
 
-            </com.cybex.walletmanagement.widget.LabelsView>
+            </com.cybex.componentservice.widget.LabelsView>
 
 
-            <com.cybex.walletmanagement.widget.LabelsView
+            <com.cybex.componentservice.widget.LabelsView
                 android:id="@+id/view_show_mne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:layout_marginStart="@dimen/dimen_20"
                 android:padding="@dimen/dimen_20">
 
-            </com.cybex.walletmanagement.widget.LabelsView>
+            </com.cybex.componentservice.widget.LabelsView>
 
 
         </LinearLayout>

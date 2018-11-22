@@ -2,29 +2,23 @@ package com.cybex.walletmanagement.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
-import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.CollectionUtils;
 import com.cybex.componentservice.utils.SizeUtil;
-import com.cybex.componentservice.utils.TSnackbarUtil;
 import com.cybex.walletmanagement.R;
-import com.cybex.walletmanagement.widget.LabelsView;
+import com.cybex.componentservice.widget.LabelsView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.common.utils.HandlerUtil;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
-import com.trycatch.mysnackbar.Prompt;
 
 import java.util.ArrayList;
 import java.util.Collections;

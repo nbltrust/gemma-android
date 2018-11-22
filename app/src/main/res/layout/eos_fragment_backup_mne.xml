@@ -20,17 +20,16 @@
             android:layout_margin="@dimen/dimen_20"
             android:orientation="vertical">
 
-            <TextView
+            <com.cybex.base.view.AlignTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/eos_tip_memory_your_mne"
                 android:textColor="@color/black_title"
                 android:textSize="@dimen/font_4"/>
 
-            <TextView
+            <com.cybex.base.view.AlignTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:text="@string/eos_tip_use_your_mne"
                 android:textColor="@color/black_context"
