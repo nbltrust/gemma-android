@@ -6,20 +6,27 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.allen.library.SuperTextView;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.event.HeartBeatRefreshDataEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
+import com.cybex.componentservice.event.WookongFormattedEvent;
+import com.cybex.componentservice.event.WookongInitialedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.walletmanagement.R;
+import com.cybex.walletmanagement.ui.activity.BluetoothWalletManageActivity;
 import com.cybex.walletmanagement.ui.activity.ChangeWalletNameActivity;
+import com.cybex.walletmanagement.ui.activity.SelectCurrentWalletActivity;
 import com.cybex.walletmanagement.ui.activity.WalletManageInnerActivity;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -30,6 +37,8 @@ import com.siberiadante.customdialoglib.CustomFullDialog;
 import org.greenrobot.eventbus.Logger;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 public class BluetoothWalletDetailFragment extends XFragment {
 
@@ -249,6 +258,13 @@ public class BluetoothWalletDetailFragment extends XFragment {
                 DBManager.getInstance().getMultiWalletEntityDao().deleteEntityAsync(multiWalletEntity, new DBCallback() {
                     @Override
                     public void onSucceed() {
+
+                        List<MultiWalletEntity> multiWalletEntityList = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
+                        if(multiWalletEntityList.size()>0){
+                            MultiWalletEntity walletEntity = multiWalletEntityList.get(0);
+                            walletEntity.setIsCurrentWallet(1);
+                            walletEntity.save();
+                        }
                         //show dialog
                         showFormatDoneDialog();
                     }
@@ -372,13 +388,43 @@ public class BluetoothWalletDetailFragment extends XFragment {
 
             @Override
             public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-
+                int size = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size();
                 if (view.getId() == R.id.tv_cancel) {
-                    //todo 不再初始化Bio，删除硬件钱包，判断是否还有钱包，跳转
                     dialog.cancel();
+                    if(size>0){
+//                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+//                                .withInt(BaseConst.KEY_INIT_TYPE,BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE)
+//                                .navigation();
+
+
+//                        Intent intent = new Intent(context, SelectCurrentWalletActivity.class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
+
+                        getActivity().finish();
+
+                        EventBusProvider.post(new WookongFormattedEvent(false));
+
+                    }else{
+                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+                                .withInt(BaseConst.KEY_INIT_TYPE,BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE)
+                                .navigation();
+                    }
+
+
+
                 } else if (view.getId() == R.id.tv_init) {
                     dialog.cancel();
                     //UISkipMananger.skipBluetoothPaireActivity(rootView, new Bundle());
+                    if(size>0){
+                        getActivity().finish();
+                        EventBusProvider.post(new WookongFormattedEvent(true));
+                    }else{
+                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+                                .withInt(BaseConst.KEY_INIT_TYPE,BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE_WOOKONG_PAIR)
+                                .navigation();
+                    }
+
                 }
             }
         });

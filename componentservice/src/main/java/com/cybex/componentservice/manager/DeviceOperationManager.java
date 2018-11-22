@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class DeviceOperationManager {
@@ -28,8 +29,8 @@ public class DeviceOperationManager {
     String currentDeviceName;
     BlueToothWrapper scanThread;
     ScanHandler scanHandler;
-    private Map<String, DeviceComm> deviceMaps = new HashMap<>();
-    private Map<String, DeviceCallbacsBean> callbackMaps = new HashMap<>();
+    private ConcurrentHashMap<String, DeviceComm> deviceMaps = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, DeviceCallbacsBean> callbackMaps = new ConcurrentHashMap<>();
 
     private DeviceOperationManager() {
     }

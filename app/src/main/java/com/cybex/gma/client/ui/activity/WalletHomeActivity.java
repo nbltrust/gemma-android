@@ -239,6 +239,16 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE)
                         .withInt(BaseConst.KEY_INIT_TYPE, 0)
                         .navigation();
+            }else if (initType == BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE) {
+                ARouter.getInstance().build(RouterConst.PATH_TO_INIT)
+                        .withInt(BaseConst.KEY_INIT_TYPE, 0)
+                        .navigation();
+                finish();
+            }else if (initType == BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE_WOOKONG_PAIR) {
+                ARouter.getInstance().build(RouterConst.PATH_TO_INIT)
+                        .withInt(BaseConst.KEY_INIT_TYPE, BaseConst.APP_INIT_INITTYPE_TO_WOOKONG_PAIE)
+                        .navigation();
+                finish();
             }
             initType = BaseConst.APP_HOME_INITTYPE_NONE;
         }
@@ -262,6 +272,9 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        if(DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size()<=0){
+            return;
+        }
         delegatedResourceQuantity = "0";
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
 //        updateWallet(curWallet);
@@ -443,6 +456,9 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     @Override
     protected void onStart() {
         super.onStart();
+        if(DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size()<=0){
+            return;
+        }
         delegatedResourceQuantity = "0";
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         updateWallet(curWallet);

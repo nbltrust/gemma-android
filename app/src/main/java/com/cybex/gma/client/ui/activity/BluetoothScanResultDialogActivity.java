@@ -80,8 +80,8 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         DeviceOperationManager.getInstance().clearCallback(TAG);
+        super.onDestroy();
     }
 
     private void startScan() {
@@ -221,6 +221,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             }
         });
     }
+
 
     /**
      * 显示Wookong bio对话框

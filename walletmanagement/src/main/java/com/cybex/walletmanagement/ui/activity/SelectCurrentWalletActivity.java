@@ -6,12 +6,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.event.ChangeSelectedWalletEvent;
 import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
+import com.cybex.componentservice.event.WookongFormattedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.walletmanagement.R;
@@ -174,4 +177,29 @@ public class SelectCurrentWalletActivity extends XActivity {
         }
 
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onWookongFormatted(WookongFormattedEvent event) {
+        wallets.clear();
+        List<MultiWalletEntity> allWallets = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
+        wallets.addAll(allWallets);
+        for (MultiWalletEntity wallet : wallets) {
+            if (wallet.getIsCurrentWallet() != 0) {
+                wallet.setChecked(true);
+                checkedWallet = wallet;
+                originCheckedWallet=wallet;
+                break;
+            }
+        }
+        adatper.notifyDataSetChanged();
+
+        if(event.isNeedReinit()){
+            ARouter.getInstance().build(RouterConst.PATH_TO_BLUETOOTH_PAIR)
+                    .navigation();
+        }
+    }
+
+
+
+
 }

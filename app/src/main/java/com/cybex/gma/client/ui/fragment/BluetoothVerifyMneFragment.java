@@ -454,6 +454,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
 
     @Override
     public void onDestroyView() {
+//        DeviceOperationManager.getInstance().clearCallback(this.toString());
         super.onDestroyView();
         unbinder.unbind();
 //        if (mHandler != null){

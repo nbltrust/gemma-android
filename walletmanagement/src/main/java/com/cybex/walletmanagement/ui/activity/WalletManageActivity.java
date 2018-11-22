@@ -15,6 +15,7 @@ import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.event.ChangeSelectedWalletEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
+import com.cybex.componentservice.event.WookongFormattedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.utils.SizeUtil;
@@ -151,6 +152,20 @@ public class WalletManageActivity extends XActivity {
             currentWallet.setWalletName(event.getWalletName());
             labelCurrentWallet.setRightText(currentWallet.getWalletName());
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onWookongFormatted(WookongFormattedEvent event) {
+        currentWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        labelCurrentWallet.setRightText(currentWallet.getWalletName());
+
+        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList();
+        if(bluetoothWalletList.size()>0){
+            containerWookong.setVisibility(View.GONE);
+        }else{
+            containerWookong.setVisibility(View.VISIBLE);
+        }
+
     }
 
     /**

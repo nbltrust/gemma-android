@@ -308,6 +308,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
 
     @Override
     protected void onDestroy() {
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
         super.onDestroy();
         clearListeners();
 //        WookongBioManager.getInstance().freeThread();
@@ -549,6 +550,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
         });
 
     }
+
+
 
     /**
      * 验证失败回调

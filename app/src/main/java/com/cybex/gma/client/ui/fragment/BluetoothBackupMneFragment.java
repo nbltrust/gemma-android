@@ -151,6 +151,7 @@ public class BluetoothBackupMneFragment extends XFragment {
 
     @Override
     public void onDestroyView() {
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
         super.onDestroyView();
         unbinder.unbind();
 //        if (handler != null){

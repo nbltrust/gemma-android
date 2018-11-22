@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.event.CloseInitialPageEvent;
 import com.cybex.componentservice.event.WookongInitialedEvent;
@@ -24,7 +27,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+
+@Route(path = RouterConst.PATH_TO_INIT)
 public class InitialActivity extends XActivity {
+
+    @Autowired(name = BaseConst.KEY_INIT_TYPE)
+    int initType = BaseConst.APP_HOME_INITTYPE_NONE;
 
     @BindView(R.id.bt_create_new) Button btCreateNew;
     @BindView(R.id.bt_import) Button btImport;
@@ -65,6 +73,10 @@ public class InitialActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        if(initType==BaseConst.APP_INIT_INITTYPE_TO_WOOKONG_PAIE){
+            Bundle bd = new Bundle();
+            UISkipMananger.skipBluetoothPaireActivity(InitialActivity.this, bd);
+        }
 
     }
 
@@ -99,6 +111,11 @@ public class InitialActivity extends XActivity {
                 } catch (Exception e) {}
             }
         }
+    }
+
+    @Override
+    public boolean useArouter() {
+        return true;
     }
 
     @Override

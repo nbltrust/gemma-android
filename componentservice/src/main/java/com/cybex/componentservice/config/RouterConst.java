@@ -6,6 +6,7 @@ package com.cybex.componentservice.config;
 public class RouterConst {
 
     //app
+    public static final String PATH_TO_INIT="/app/init";
     public static final String PATH_TO_WALLET_HOME="/app/home";
     public static final String PATH_TO_BLUETOOTH_PAIR = "/bluetooth/pair";
 
