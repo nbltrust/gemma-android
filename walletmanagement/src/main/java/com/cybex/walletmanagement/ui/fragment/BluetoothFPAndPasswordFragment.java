@@ -79,7 +79,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
 
-        setNavibarTitle(getResources().getString(R.string.walletmanage_fp_and_password), true, true);
+        setNavibarTitle(getResources().getString(R.string.walletmanage_fp_and_password), true, false);
 
         btnNavibar = rootView.findViewById(R.id.btn_navibar);
         recyclerFpManage = rootView.findViewById(R.id.recycler_fp_manage);

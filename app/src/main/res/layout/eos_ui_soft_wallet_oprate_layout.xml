@@ -86,12 +86,14 @@
 
     </android.support.constraint.ConstraintLayout>
 
+    <!--
     <View
         android:layout_marginStart="62dp"
         android:layout_marginEnd="28dp"
         title:layout_constraintTop_toBottomOf="@id/view_resource_manage"
         style="@style/common_divider">
     </View>
+    -->
 
 
     <android.support.v7.widget.RecyclerView

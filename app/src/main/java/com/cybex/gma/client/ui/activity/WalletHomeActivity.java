@@ -20,6 +20,7 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.event.ChangeSelectedWalletEvent;
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
@@ -146,6 +147,11 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             mTvWalletName.setText(event.getWalletName());
         }
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onDeviceConncectStatusChanged(DeviceConnectStatusUpdateEvent event){
+        updateBluetoothUI();
     }
 
     @OnClick({R.id.iv_wallet_manage, R.id.iv_settings})
@@ -284,23 +290,12 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 //蓝牙钱包
                 //todo 需要使用TimeStamp验证流程来确保创建即导入的安全性
 
+                updateBluetoothUI();
                 mViewWookongStatus.setVisibility(View.VISIBLE);
                 mEosCardView.setVisibility(View.VISIBLE);
                 mEthCardView.setVisibility(View.VISIBLE);
 
                 String deviceName = getP().getBluetoothDeviceName();
-
-                if (DeviceOperationManager.getInstance().getDeviceConnectStatus(deviceName) == CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
-                    //蓝牙已连接
-                    mIvWookongLogo.setImageResource(R.drawable.ic_wookong_bio_logo);
-                    //todo 计算电量
-                    mTvWookongStatus.setText(String.format(getString(R.string.power_level), "60"));
-
-                } else {
-                    //蓝牙未连接
-                    mIvWookongLogo.setImageResource(R.drawable.ic_wookong_bio_not_connected);
-                    mTvWookongStatus.setText(getString(R.string.eos_status_not_connected));
-                }
 
                 getP().getKeyAccounts(curEosWallet.getPublicKey());
 
@@ -368,13 +363,26 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         return new WalletHomePresenter();
     }
 
-    public void setBluetoothUI(int bluetooth_status) {
-        switch (bluetooth_status) {
-            case CacheConstants.STATUS_BLUETOOTH_CONNCETED:
-                break;
-            case CacheConstants.STATUS_BLUETOOTH_DISCONNCETED:
-                break;
-
+    public void updateBluetoothUI() {
+        boolean isConnected = DeviceOperationManager.getInstance().isDeviceConnectted(curWallet.getBluetoothDeviceName());
+        if (isConnected) {
+            //判断连接状态
+            //已连接
+            int deviceBatteryChargeMode = DeviceOperationManager.getInstance().getDeviceBatteryChargeMode(curWallet.getBluetoothDeviceName());
+            if(deviceBatteryChargeMode==1){
+                //电池供电
+                int powerAmount = DeviceOperationManager.getInstance().getDevicePowerAmount(curWallet.getBluetoothDeviceName());
+                mTvWookongStatus.setText(getString(R.string.walletmanage_battery_left)+Math.abs(powerAmount));
+                mIvWookongLogo.setImageResource(R.drawable.wookong_logo);
+            }else{
+                //USB供电（正在充电）
+                mTvWookongStatus.setText(R.string.walletmanage_status_connected);
+                mIvWookongLogo.setImageResource(R.drawable.wookong_logo_charge);
+            }
+        }else {
+            //未连接
+            mTvWookongStatus.setText(getString(R.string.eos_status_not_connected));
+            mIvWookongLogo.setImageResource(R.drawable.wookong_logo_gray);
         }
     }
 
@@ -450,7 +458,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         mEosCardView.setEosNumber(Float.valueOf(eosAssetsQuantity));
         if (eosUnitPriceRMB != null){
             String eosAssetsValue = formatCurrency(AmountUtil.mul(eosAssetsQuantity, eosUnitPriceRMB, 2));
-            LoggerManager.d("eosAssetsValue",eosAssetsValue);
+            //LoggerManager.d("eosAssetsValue",eosAssetsValue);
             mEosCardView.setTotlePrice(eosAssetsValue);
         }
         OkGo.getInstance().cancelAll();
@@ -473,10 +481,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     public String formatCurrency(String value){
         DecimalFormat df = new DecimalFormat("#,###.00");
         BigDecimal bigDecimal = new BigDecimal(value);
-        String format_value = df.format(bigDecimal);
-        LoggerManager.d("format_value", format_value);
 
-        return format_value;
+        return df.format(bigDecimal);
     }
 
 }

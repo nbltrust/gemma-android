@@ -115,7 +115,7 @@ public class EosCardView extends CardView{
     }
 
     public void updateTokenView(){
-        mTvTokensNumber.setText(tokenList.size()+"");
+        mTvTokensNumber.setText(tokenList.size()-1+"");
         if(tokenList.size()>0){
             mViewEosTokens.setVisibility(View.VISIBLE);
         }else{

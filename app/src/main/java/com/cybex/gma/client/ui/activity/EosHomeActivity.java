@@ -39,6 +39,7 @@ import com.cybex.gma.client.ui.model.vo.HomeCombineDataVO;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.presenter.EosHomePresenter;
 import com.cybex.componentservice.utils.AmountUtil;
+import com.cybex.gma.client.utils.repeatclick.NoDoubleClick;
 import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -422,6 +423,8 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        viewResourceManage.setVisibility(View.GONE);
+
         bundle = new Bundle();
         getP().requestHomeCombineDataVO();
         //初始化当前节点
@@ -450,7 +453,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
         if (EmptyUtils.isNotEmpty(curEosWallet)) {
             curEosUsername = curEosWallet.getCurrentEosName();
-            LoggerManager.d("curEosUsername", curEosUsername);
+            //LoggerManager.d("curEosUsername", curEosUsername);
             tvAccountName.setText(curEosUsername);
             tvCurrentAccount.setText(curEosUsername);
 
@@ -620,17 +623,19 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         recyclerTokenList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                EosTokenVO curToken = eosTokens.get(position);
+                if (!NoDoubleClick.isDoubleClick()){
+                    EosTokenVO curToken = eosTokens.get(position);
 
-                Bundle bundle = new Bundle();
-                bundle.putString(ParamConstants.EOS_TOKEN_TYPE, curToken.getTokenSymbol());
-                bundle.putParcelable(ParamConstants.EOS_TOKENS, curToken);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(ParamConstants.EOS_TOKEN_TYPE, curToken.getTokenSymbol());
+                    bundle.putParcelable(ParamConstants.EOS_TOKENS, curToken);
 
-                UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
+                    UISkipMananger.launchAssetDetail(EosHomeActivity.this, bundle);
+                }
             }
         });
 
         viewEosTokens.setVisibility(View.VISIBLE);
-        tvNumberOfTokens.setText(String.valueOf(eosTokens.size()));
+        tvNumberOfTokens.setText(String.valueOf(eosTokens.size()-1));
     }
 }

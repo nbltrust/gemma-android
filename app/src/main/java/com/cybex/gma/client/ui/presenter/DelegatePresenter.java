@@ -319,7 +319,7 @@ public class DelegatePresenter extends XPresenter<DelegateActivity> {
                             AppManager.getAppManager().finishActivity();
                             AppManager.getAppManager().finishActivity(ResourceDetailActivity.class);
                             Bundle bundle = new Bundle();
-                            bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
+                            bundle.putString(ParamConstants.EOS_TOKEN_TYPE, ParamConstants.SYMBOL_EOS);
                             UISkipMananger.launchAssetDetail(getV(), bundle);
 
                         }

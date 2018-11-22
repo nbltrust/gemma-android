@@ -187,9 +187,10 @@ public class BluetoothWalletManageFragment extends XFragment {
 
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         DeviceOperationManager.getInstance().clearCallback(this.toString());
-        super.onDestroy();
+        if (getActivity() != null)getActivity().finish();
+        super.onDestroyView();
     }
 
     @Override

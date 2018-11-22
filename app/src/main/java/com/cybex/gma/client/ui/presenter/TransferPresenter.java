@@ -475,7 +475,7 @@ public class TransferPresenter extends XPresenter<TransferFragment> {
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
                                 //if (getV().getActivity() != null)getV().getActivity().finish();
                                 Bundle bundle = new Bundle();
-                                bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
+                                bundle.putString(ParamConstants.EOS_TOKEN_TYPE, ParamConstants.SYMBOL_EOS);
                                 AppManager.getAppManager().finishActivity();
                                 AppManager.getAppManager().finishActivity(EosAssetDetailActivity.class);
                                 UISkipMananger.launchAssetDetail(getV().getActivity(), bundle);

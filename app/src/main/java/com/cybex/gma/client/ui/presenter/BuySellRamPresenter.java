@@ -301,7 +301,7 @@ public class BuySellRamPresenter extends XPresenter<BuySellRamFragment> {
                             AppManager.getAppManager().finishActivity(BuySellRamActivity.class);
                             AppManager.getAppManager().finishActivity(ResourceDetailActivity.class);
                             Bundle bundle = new Bundle();
-                            bundle.putInt(ParamConstants.COIN_TYPE, ParamConstants.COIN_TYPE_EOS);
+                            bundle.putString(ParamConstants.EOS_TOKEN_TYPE, ParamConstants.SYMBOL_EOS);
                             UISkipMananger.launchAssetDetail(getV().getActivity(), bundle);
                         }
                     }

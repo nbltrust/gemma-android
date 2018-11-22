@@ -5,6 +5,7 @@ import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
@@ -49,6 +50,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                 .getTransferHistory(new JsonCallback<TransferHistoryListData>() {
                     @Override
                     public void onStart(Request<TransferHistoryListData, ? extends Request> request) {
+                        LoggerManager.d("request history");
                         if (getV() != null) {
                             super.onStart(request);
                             if (page == 1) {

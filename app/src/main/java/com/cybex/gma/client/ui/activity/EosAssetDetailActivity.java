@@ -92,6 +92,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         curPage = 1;
         setNavibarTitle(getString(R.string.title_asset_detail), true);
         bundle = getIntent().getExtras();
+        /*
         if (bundle != null) {
             asset_type = bundle.getString(ParamConstants.EOS_TOKEN_TYPE);
             if (asset_type != null) {
@@ -168,17 +169,17 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                         }
                     });
                 }
+
             }
         }
-
-        /*
-        //todo 将EOS和Tokens处理逻辑进行统一处理，等上正式链测试的时候使用下面这段代码替换现有代码
+        */
 
         if (bundle != null) {
             curToken = bundle.getParcelable(ParamConstants.EOS_TOKENS);
-            asset_type = bundle.getString(ParamConstants.EOS_TOKEN_TYPE);
+
             if (curToken != null){
                 //EOS和TOKENS的公共逻辑
+                asset_type = curToken.getTokenSymbol();
                 btnGoTransfer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -240,8 +241,9 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                     }
                 }
             }
+            //第一次请求数据
+            doRequest(curPage);
         }
-        */
 
 
         viewRefresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
@@ -257,9 +259,6 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 viewRefresh.finishLoadmore();
             }
         });
-
-        //第一次请求数据
-        doRequest(curPage);
 
         //设置点击事件
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
@@ -338,28 +337,28 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
         LoggerManager.d("curPage", page);
 
-        if (bundle != null) {
-
-            if (asset_type.equals(ParamConstants.SYMBOL_EOS)) {
-                //查询EOS交易记录
+        if (bundle != null){
+            if (asset_type.equals(ParamConstants.SYMBOL_EOS)){
+                //EOS
                 getP().requestHistory(
-                        currentEosName,
-                        page,
-                        ParamConstants.TRANSFER_HISTORY_SIZE,//20
-                        ParamConstants.SYMBOL_EOS,
-                        ParamConstants.CONTRACT_EOS,
-                        true);
-
-            } else {
-                //查询EOS糖果交易记录
-                String symbol = curToken.getTokenSymbol();
-                String contract = curToken.getTokenName();
-                getP().requestHistory(currentEosName,
-                        page,
-                        ParamConstants.TRANSFER_HISTORY_SIZE,
-                        symbol,
-                        contract,
-                        false);
+                            currentEosName,
+                            page,
+                            ParamConstants.TRANSFER_HISTORY_SIZE,//20
+                            ParamConstants.SYMBOL_EOS,
+                            ParamConstants.CONTRACT_EOS,
+                            true);
+            }else {
+                //Tokens
+                if (curToken != null){
+                    String symbol = curToken.getTokenSymbol();
+                    String contract = curToken.getTokenName();
+                    getP().requestHistory(currentEosName,
+                            page,
+                            ParamConstants.TRANSFER_HISTORY_SIZE,
+                            symbol,
+                            contract,
+                            false);
+                }
             }
         }
     }
