@@ -164,7 +164,7 @@ public class BluetoothWalletManageFragment extends XFragment {
             public void onClickListener(SuperTextView superTextView) {
 
                 //first verify pin
-                WookongBioPswValidateHelper wookongBioPswValidateHelper = new WookongBioPswValidateHelper(multiWalletEntity, getActivity());
+                WookongBioPswValidateHelper wookongBioPswValidateHelper = new WookongBioPswValidateHelper(BluetoothWalletManageFragment.this.toString(),multiWalletEntity, getActivity());
                 wookongBioPswValidateHelper.startValidatePassword(new WookongBioPswValidateHelper.PasswordValidateCallback() {
                     @Override
                     public void onValidateSuccess(String password) {

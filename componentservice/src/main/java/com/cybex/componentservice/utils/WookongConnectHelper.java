@@ -49,6 +49,7 @@ public class WookongConnectHelper {
                 if (i == R.id.baseservice_connect_close) {
                     dialog.cancel();
                 } else if (i == R.id.baseservice_connect_reconnect) {
+                    showConnecting();
                     startConnectWookongBio();
                 }
             }

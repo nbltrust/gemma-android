@@ -22,6 +22,7 @@ import me.jessyan.autosize.AutoSize;
 
 public class WookongBioPswValidateHelper {
 
+    private String tag;
     private MultiWalletEntity walletEntity;
     private Activity activity;
 
@@ -35,7 +36,8 @@ public class WookongBioPswValidateHelper {
     private String confirmStr;
     private int iconRes;
 
-    public WookongBioPswValidateHelper(MultiWalletEntity walletEntity, Activity activity) {
+    public WookongBioPswValidateHelper(String tag,MultiWalletEntity walletEntity, Activity activity) {
+        this.tag = tag;
         this.walletEntity = walletEntity;
         this.activity = activity;
         hintStr= this.activity.getString(R.string.baseservice_pass_validate_hint);
@@ -83,7 +85,7 @@ public class WookongBioPswValidateHelper {
                     } else {
                         if(isVerifying)return;
                         isVerifying=true;
-                        DeviceOperationManager.getInstance().verifyPin(activity.toString(), walletEntity.getBluetoothDeviceName(), pwd, new DeviceOperationManager.VerifyPinCallback() {
+                        DeviceOperationManager.getInstance().verifyPin(tag, walletEntity.getBluetoothDeviceName(), pwd, new DeviceOperationManager.VerifyPinCallback() {
                             @Override
                             public void onVerifySuccess() {
                                 isVerifying=false;
