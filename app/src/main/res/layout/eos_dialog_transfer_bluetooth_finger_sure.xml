@@ -39,7 +39,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:text="@string/eos_connect_sure_tip"
-        android:textColor="#212c67"
+        android:textColor="@color/black"
         android:textSize="14sp"
         />
 
