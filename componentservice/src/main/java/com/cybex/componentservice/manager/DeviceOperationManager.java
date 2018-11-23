@@ -692,6 +692,8 @@ public class DeviceOperationManager {
         void onScanStart();
 
         void onScanUpdate(String[] devices);
+
+        void onScanFinish();
     }
 
     public interface GetDeviceInfoCallback {
@@ -810,7 +812,15 @@ public class DeviceOperationManager {
                             callbackMaps.get(tag).scanDeviceCallback.onScanUpdate(devNames);
                         }
                     }
-
+                    break;
+                case BlueToothWrapper.MSG_ENUM_FINISH:
+                    iterator = tags.iterator();
+                    while (iterator.hasNext()) {
+                        String tag = iterator.next();
+                        if (callbackMaps.get(tag).scanDeviceCallback != null) {
+                            callbackMaps.get(tag).scanDeviceCallback.onScanFinish();
+                        }
+                    }
                     break;
                 default:
                     break;
@@ -1133,11 +1143,10 @@ public class DeviceOperationManager {
                     break;
 
                 case BlueToothWrapper.MSG_VERIFYFP_FINISH:
-                    int stateVerifyPin = msg.arg1;
-                    LoggerManager.d(
-                            "MSG_VERIFYFP_FINISH  state=" + MiddlewareInterface.getReturnString(stateVerifyPin));
-                    //验证指纹完成
-                    if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                    BlueToothWrapper.GetFPListReturnValue verifyFpReturnValue = (BlueToothWrapper.GetFPListReturnValue) msg.obj;
+                    LoggerManager.d("MSG_VERIFYFP_FINISH  state=" + MiddlewareInterface.getReturnString(
+                            verifyFpReturnValue.getReturnValue()));
+                    if (verifyFpReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
@@ -1154,7 +1163,6 @@ public class DeviceOperationManager {
                             }
                         }
                     }
-
                     break;
 
 
