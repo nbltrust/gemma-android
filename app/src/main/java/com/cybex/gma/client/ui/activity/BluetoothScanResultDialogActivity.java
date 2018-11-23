@@ -129,6 +129,11 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            @Override
+            public void onScanFinish() {
+
+            }
         });
 
     }
