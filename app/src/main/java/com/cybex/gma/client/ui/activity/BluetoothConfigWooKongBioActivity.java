@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -603,7 +604,10 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
                         finish();
                         break;
                     case R.id.btn_import_mne:
-                        //dialog.cancel();
+                        dialog.cancel();
+                        Intent intent = new Intent(BluetoothConfigWooKongBioActivity.this, BluetoothImportWalletActivity.class);
+                        startActivity(intent);
+                        finish();
                         break;
                     default:
                         break;

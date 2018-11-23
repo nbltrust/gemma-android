@@ -826,6 +826,9 @@
     <string name="home_not_backup">未备份</string>
     <string name="mnemonic_checking">验证中</string>
     <string name="wokong_init_fail">WOOKONG Bio初始化失败,请重新初始化</string>
+    <string name="eos_mnenonic_invalid">助记词格式错误，请检查助记词</string>
+    <string name="eos_mnenonic_import_fail">助记词导入设备失败</string>
+    <string name="eos_mnemonic_importing">正在导入助记词</string>
 
 
 </resources>

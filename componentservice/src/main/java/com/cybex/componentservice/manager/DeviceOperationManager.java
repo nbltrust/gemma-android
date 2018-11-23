@@ -187,6 +187,30 @@ public class DeviceOperationManager {
     }
 
 
+    public void importMnemonics(String tag, String deviceName, String mnemonics,ImportMnemonicCallback importMnemonicCallback) {
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.importMnemonicCallback = importMnemonicCallback;
+
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+        deviceComm.importMnemonicThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+        deviceComm.importMnemonicThread.setImportMneWrapper(deviceComm.contextHandle,
+                0,mnemonics);
+        singleExecutor.execute(deviceComm.importMnemonicThread);
+    }
+
+
     public void startFormat(String tag, String deviceName, DeviceFormatCallback formatCallback) {
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
         if (deviceCallbacks == null) {
@@ -605,6 +629,13 @@ public class DeviceOperationManager {
 
         void onConnectFailed();
     }
+
+    public interface ImportMnemonicCallback {
+        void onImportSuccess();
+
+        void onImportFailed();
+    }
+
 
     public interface DeviceFormatCallback {
 
@@ -1035,6 +1066,30 @@ public class DeviceOperationManager {
                     break;
 
 
+                    //MSG_IMPORT_MNE_FINISH
+                case BlueToothWrapper.MSG_IMPORT_MNE_FINISH:
+                    LoggerManager.d("MSG_IMPORT_MNE_FINISH status=" + MiddlewareInterface.getReturnString(msg.arg1));
+                    //已完成设置PIN
+                    if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).importMnemonicCallback != null) {
+                                callbackMaps.get(tag).importMnemonicCallback.onImportSuccess();
+                            }
+                        }
+                    } else {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).importMnemonicCallback != null) {
+                                callbackMaps.get(tag).importMnemonicCallback.onImportFailed();
+                            }
+                        }
+                    }
+
+
+                    break;
                 //free
                 case BlueToothWrapper.MSG_FORMAT_DEVICE_START:
                     LoggerManager.d("MSG_FORMAT_DEVICE_START");
@@ -1382,6 +1437,7 @@ public class DeviceOperationManager {
         DeviceHandler mDeviceHandler;
         BlueToothWrapper connectThread;
         BlueToothWrapper getDeviceInfoThread;
+        BlueToothWrapper importMnemonicThread;
         BlueToothWrapper formatThread;
         BlueToothWrapper confirmThread;
         BlueToothWrapper verifyFPThread;
@@ -1406,6 +1462,7 @@ public class DeviceOperationManager {
     class DeviceCallbacsBean {
 
         DeviceConnectCallback connectCallback;
+        ImportMnemonicCallback importMnemonicCallback;
         DeviceFormatCallback formatCallback;
         PressConfirmCallback pressConfirmCallback;
         DeviceVerifyFPCallback verifyFPCallback;

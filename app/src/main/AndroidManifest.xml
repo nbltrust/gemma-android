@@ -315,7 +315,7 @@
         <activity
             android:name=".ui.activity.BluetoothImportWalletActivity"
             android:configChanges="layoutDirection|locale"
-            android:theme="@style/Theme.ActivityDialogStyle">
+            >
         </activity>
 
         <!-- 扫描蓝牙设备界面 -->

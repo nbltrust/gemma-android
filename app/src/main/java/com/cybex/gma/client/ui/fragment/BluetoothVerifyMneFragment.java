@@ -393,12 +393,12 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         int verticalViewPadding = SizeUtil.dp2px(31f);
         viewClickToShowMne.setPadding(horizontalViewPadding,verticalViewPadding,horizontalViewPadding,verticalViewPadding);
 
-//        viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(com.cybex.walletmanagement.R.drawable.walletmanage_shape_verify_mnemonic_above));
+//        viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.walletmanage_shape_verify_mnemonic_above));
         viewClickToShowMne.setWordMargin(SizeUtil.dp2px(7.5f));
         viewClickToShowMne.setLineMargin(SizeUtil.dp2px(11.5f));
         viewClickToShowMne.setSelectType(LabelsView.SelectType.NONE);
-        viewClickToShowMne.setLabelTextSize(getResources().getDimension(com.cybex.walletmanagement.R.dimen.font_4));
-        viewClickToShowMne.setLabelTextColor(getResources().getColor(com.cybex.walletmanagement.R.color.black_content));
+        viewClickToShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
+        viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.black_content));
 
         viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.shape_corner_with_black_stroke));
 //        viewClickToShowMne.setWordMargin(30);
@@ -418,12 +418,12 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         int verticalViewPadding = SizeUtil.dp2px(15);
         viewClickToShowMne.setPadding(horizontalViewPadding,verticalViewPadding,horizontalViewPadding,verticalViewPadding);
 
-//        viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(com.cybex.walletmanagement.R.drawable.walletmanage_shape_verify_mnemonic_above));
+//        viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.walletmanage_shape_verify_mnemonic_above));
         viewClickToShowMne.setWordMargin(SizeUtil.dp2px(7.5f));
         viewClickToShowMne.setLineMargin(SizeUtil.dp2px(11.5f));
         viewClickToShowMne.setSelectType(LabelsView.SelectType.NONE);
-        viewClickToShowMne.setLabelTextSize(getResources().getDimension(com.cybex.walletmanagement.R.dimen.font_4));
-        viewClickToShowMne.setLabelTextColor(getResources().getColor(com.cybex.walletmanagement.R.color.black_content));
+        viewClickToShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
+        viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.black_content));
 
         int horizontalPadding = SizeUtil.dp2px(15);
         int verticalPadding = SizeUtil.dp2px(5.5f);
@@ -453,11 +453,11 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
 //        viewShowMne.setLabelTextPadding(40, 20, 40, 20);
 
 
-//        viewShowMne.setLabelBackgroundDrawable(getResources().getDrawable(com.cybex.walletmanagement.R.drawable.walletmanage_shape_verify_mnemonic_bottom));
+//        viewShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.walletmanage_shape_verify_mnemonic_bottom));
         viewShowMne.setWordMargin(SizeUtil.dp2px(7.5f));
         viewShowMne.setLineMargin(SizeUtil.dp2px(11.5f));
         viewShowMne.setSelectType(LabelsView.SelectType.SINGLE);
-        viewShowMne.setLabelTextSize(getResources().getDimension(com.cybex.walletmanagement.R.dimen.font_4));
+        viewShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
         viewShowMne.setLabelTextColor(Color.WHITE);
         int horizontalPadding = SizeUtil.dp2px(15);
         int verticalPadding = SizeUtil.dp2px(5.5f);
