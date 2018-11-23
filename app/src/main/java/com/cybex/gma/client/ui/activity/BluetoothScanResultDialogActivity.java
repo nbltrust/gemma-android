@@ -1,9 +1,8 @@
 package com.cybex.gma.client.ui.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,40 +11,48 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
-import com.cybex.componentservice.db.entity.WalletEntity;
+import com.cybex.componentservice.db.entity.EosWalletEntity;
+import com.cybex.componentservice.db.entity.EthWalletEntity;
+import com.cybex.componentservice.db.entity.FPEntity;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
-import com.cybex.componentservice.utils.AmountUtil;
+import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
+import com.cybex.gma.client.BuildConfig;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.event.ContextHandleEvent;
-import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.manager.WookongBioManager;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
-import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.MiddlewareInterface;
 import com.github.ybq.android.spinkit.SpinKitView;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.siberiadante.customdialoglib.CustomFullDialog;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.autosize.AutoSize;
+import seed39.Seed39;
 
 /**
  * 蓝牙扫描结果对话框界面
@@ -56,7 +63,9 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
 
     private static final String DEVICE_PREFIX = "WOOKONG";
-    private CustomFullDialog dialog;
+    private CustomFullDialog verifyDialog;
+    private CustomFullDialog pinDialog;
+    private CustomFullDialog connectDialog;
     private String deviceName;
 
 
@@ -91,7 +100,9 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         DeviceOperationManager.getInstance().clearCallback(TAG);
-        if (dialog != null && dialog.isShowing())dialog.cancel();
+        if (connectDialog != null && connectDialog.isShowing())connectDialog.cancel();
+        if (pinDialog != null && pinDialog.isShowing())pinDialog.cancel();
+        if (verifyDialog != null && verifyDialog.isShowing())verifyDialog.cancel();
 
         super.onDestroy();
     }
@@ -197,37 +208,39 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
                                 new DeviceOperationManager.GetFPListCallback() {
                                     @Override
-                                    public void onSuccess(com.cybex.componentservice.utils.bluetooth.BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
+                                    public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
                                         if (fpListReturnValue.getFPCount() > 0){
                                             //已设置了指纹
                                             //验证指纹以确认配对
 
-                                            DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
-                                                    new DeviceOperationManager.DeviceVerifyFPCallback() {
-                                                        @Override
-                                                        public void onVerifyStart() {
-                                                            showVerifyFPDialog();
-                                                        }
-
-                                                        @Override
-                                                        public void onVerifySuccess() {
-                                                            dialog.cancel();
-                                                            //todo 验证电量
-
-                                                            int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
-
-                                                            Bundle bundle = new Bundle();
-                                                            bundle.putBoolean(BaseConst.PIN_STATUS, true);
-                                                            UISkipMananger.skipBluetoothConfigWookongBioActivity
-                                                                    (BluetoothScanResultDialogActivity.this,bundle);
-                                                            finish();
-                                                        }
-
-                                                        @Override
-                                                        public void onVerifyFailed() {
-
-                                                        }
-                                                    });
+//                                            DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
+//                                                    new DeviceOperationManager.DeviceVerifyFPCallback() {
+//                                                        @Override
+//                                                        public void onVerifyStart() {
+//                                                            showVerifyFPDialog();
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onVerifySuccess() {
+//                                                            dialog.cancel();
+//                                                            //todo 验证电量
+//
+//                                                            int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
+//
+//                                                            Bundle bundle = new Bundle();
+//                                                            bundle.putBoolean(BaseConst.PIN_STATUS, true);
+//                                                            UISkipMananger.skipBluetoothConfigWookongBioActivity
+//                                                                    (BluetoothScanResultDialogActivity.this,bundle);
+//                                                            finish();
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onVerifyFailed() {
+//
+//                                                        }
+//                                                    });
+                                            verifyFpCount=0;
+                                            doVeriyFp(status);
 
                                         }else {
                                             //未设置指纹
@@ -251,31 +264,14 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
                                 new DeviceOperationManager.GetFPListCallback() {
                                     @Override
-                                    public void onSuccess(com.cybex.componentservice.utils.bluetooth.BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
+                                    public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
                                         if (fpListReturnValue.getFPCount() > 0){
                                             //已设置了指纹
                                             //验证指纹以确认配对
 
-                                            DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
-                                                    new DeviceOperationManager.DeviceVerifyFPCallback() {
-                                                        @Override
-                                                        public void onVerifyStart() {
-                                                            showVerifyFPDialog();
-                                                        }
 
-                                                        @Override
-                                                        public void onVerifySuccess() {
-                                                            dialog.cancel();
-                                                            //todo 验证电量
-                                                            UISkipMananger.launchHome(BluetoothScanResultDialogActivity.this);
-                                                            finish();
-                                                        }
-
-                                                        @Override
-                                                        public void onVerifyFailed() {
-
-                                                        }
-                                                    });
+                                            verifyFpCount=0;
+                                            doVeriyFp(status);
 
                                         }else {
                                             //未设置指纹
@@ -304,6 +300,192 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 startScan();
             }
         });
+
+    }
+
+    int verifyFpCount=0;
+
+    private void doVeriyFp(int status) {
+
+        DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
+                new DeviceOperationManager.DeviceVerifyFPCallback() {
+                    @Override
+                    public void onVerifyStart() {
+                        showVerifyFPDialog();
+                        verifyFpCount++;
+                    }
+
+                    @Override
+                    public void onVerifySuccess() {
+                        LoggerManager.d("onVerifySuccess ");
+                        if(status==1){
+                            verifyDialog.cancel();
+                            //todo 验证电量
+                            showInitWookongBioDialog();
+
+
+//                            int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
+
+//                            Bundle bundle = new Bundle();
+//                            bundle.putBoolean(BaseConst.PIN_STATUS, true);
+//                            UISkipMananger.skipBluetoothConfigWookongBioActivity
+//                                    (BluetoothScanResultDialogActivity.this,bundle);
+//                            finish();
+
+                        }else if (status==2){
+
+                            verifyDialog.cancel();
+                            //todo 验证电量
+
+                            //create wookong wallet firstly
+                            createWookongWallet();
+
+
+//                        UISkipMananger.launchHome(BluetoothScanResultDialogActivity.this);
+//                        finish();
+                        }
+                    }
+
+
+                    @Override
+                    public void onVerifyFailed() {
+                        LoggerManager.d("onVerifyFailed   verifyFpCount="+verifyFpCount);
+                        if(verifyFpCount<4){
+                            doVeriyFp(status);
+                        }else{
+                            if(verifyDialog!=null){
+                                verifyDialog.cancel();
+                            }
+                            showConfirmAuthoriDialog(status==1?BaseConst.STATE_SET_PIN_NOT_INIT:BaseConst.STATE_INIT_DONE);
+                        }
+                    }
+                });
+    }
+
+
+
+    private void createWookongWallet() {
+        //获取蓝牙卡中的eos eth公钥后,在本地创建wallet,最后跳转到首页
+
+        Observable<String> observable1 = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+
+                String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+
+                DeviceOperationManager.getInstance().getEthAddress(BluetoothScanResultDialogActivity.this.toString(), currentDeviceName, new DeviceOperationManager.GetAddressCallback() {
+                    @Override
+                    public void onGetSuccess(String address) {
+                        emitter.onNext(address);
+                        emitter.onComplete();
+                    }
+
+                    @Override
+                    public void onGetFail() {
+                        emitter.onError(new Exception("getEthAddress fail"));
+                    }
+                });
+            }
+        }).subscribeOn(Schedulers.io());
+
+        Observable<String> observable2 = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+                DeviceOperationManager.getInstance().getEosAddress(BluetoothScanResultDialogActivity.this.toString(), currentDeviceName, new DeviceOperationManager.GetAddressCallback() {
+                    @Override
+                    public void onGetSuccess(String address) {
+                        emitter.onNext(address);
+                        emitter.onComplete();
+                    }
+
+                    @Override
+                    public void onGetFail() {
+                        emitter.onError(new Exception("getEosAddress fail"));
+                    }
+                });
+            }
+        }).subscribeOn(Schedulers.io());
+        Disposable subscribe = Observable.zip(observable1, observable2, new BiFunction<String, String, String>() {
+            @Override
+            public String apply(String ethAddress, String eosAddress) throws Exception {
+                return ethAddress + "&&&&&&"+eosAddress;
+            }
+        }).map(new Function<String, String>() {
+            @Override
+            public String apply(String addresses) throws Exception {
+                String[] addressArray = addresses.split("&&&&&&");
+                MultiWalletEntity multiWalletEntity = new MultiWalletEntity();
+
+                multiWalletEntity.setWalletName("WOOKONG Bio");
+                multiWalletEntity.setWalletType(MultiWalletEntity.WALLET_TYPE_HARDWARE);
+                multiWalletEntity.setIsBackUp(CacheConstants.ALREADY_BACKUP);
+                multiWalletEntity.setPasswordTip(DeviceOperationManager.getInstance().getCurrentDeviceInitPswHint());
+                multiWalletEntity.setIsCurrentWallet(1);
+                multiWalletEntity.setBluetoothDeviceName(DeviceOperationManager.getInstance().getCurrentDeviceName());
+
+
+                EthWalletEntity ethWalletEntity = new EthWalletEntity();
+                ethWalletEntity.setAddress(addressArray[0]);
+//                ethWalletEntity.setPublicKey(publicKey);
+                ethWalletEntity.setBackUp(true);
+                ethWalletEntity.setMultiWalletEntity(multiWalletEntity);
+
+                List<EthWalletEntity> ethWalletEntities = new ArrayList<>();
+                ethWalletEntities.add(ethWalletEntity);
+                multiWalletEntity.setEthWalletEntities(ethWalletEntities);
+
+                String eosPublic = addressArray[1];
+                LoggerManager.d(" eosPublic=" + eosPublic);
+                EosWalletEntity eosWalletEntity = new EosWalletEntity();
+//                eosWalletEntity.setPrivateKey(Seed39.keyEncrypt(password, eosPriv));
+                eosWalletEntity.setPublicKey(eosPublic);
+                eosWalletEntity.setIsBackUp(1);
+                eosWalletEntity.setMultiWalletEntity(multiWalletEntity);
+                List<EosWalletEntity> eosWalletEntities = new ArrayList<>();
+                eosWalletEntities.add(eosWalletEntity);
+                multiWalletEntity.setEosWalletEntities(eosWalletEntities);
+
+                List<MultiWalletEntity> multiWalletEntityList = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
+                int walletCount = multiWalletEntityList.size();
+                if (walletCount > 0) {
+                    MultiWalletEntity currentMultiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+                    if (currentMultiWalletEntity != null) {
+                        currentMultiWalletEntity.setIsCurrentWallet(CacheConstants.NOT_CURRENT_WALLET);
+                        currentMultiWalletEntity.save();
+                    }
+                }
+
+                if (ethWalletEntities != null) {
+                    for (EthWalletEntity ethWallet : ethWalletEntities) {
+                        ethWallet.save();
+                    }
+                }
+                if (eosWalletEntities != null) {
+                    for (EosWalletEntity eosWallet : eosWalletEntities) {
+                        eosWallet.save();
+                    }
+                }
+                multiWalletEntity.save();
+
+                return "";
+            }
+        })
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String addresses) throws Exception {
+                        UISkipMananger.launchHome(BluetoothScanResultDialogActivity.this);
+                        finish();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                        GemmaToastUtils.showLongToast(getString(R.string.wookong_init_fail));
+
+
+                    }
+                });
+
 
     }
 
@@ -396,9 +578,9 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
      */
     private void showConnectBioFailDialog() {
         int[] listenedItems = {R.id.imv_back, R.id.btn_reconnect};
-        dialog = new CustomFullDialog(this,
+        connectDialog = new CustomFullDialog(this,
                 R.layout.eos_dialog_transfer_bluetooth_connect_failed, listenedItems, false, Gravity.BOTTOM);
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        connectDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
@@ -416,17 +598,18 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 }
             }
         });
-        dialog.show();
+        connectDialog.show();
     }
 
     /**
      * 显示通过蓝牙卡验证指纹dialog
      */
     private void showVerifyFPDialog() {
+        if(verifyDialog!=null)return;
         int[] listenedItems = {R.id.imv_back};
-        dialog = new CustomFullDialog(this,
+        verifyDialog = new CustomFullDialog(this,
                 R.layout.eos_dialog_transfer_bluetooth_finger_sure, listenedItems, false, Gravity.BOTTOM);
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        verifyDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
@@ -438,7 +621,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 }
             }
         });
-        dialog.show();
+        verifyDialog.show();
     }
 
     /**
@@ -446,9 +629,9 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
      */
     private void showConfirmAuthoriDialog(int state) {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_pair};
-        dialog = new CustomFullDialog(this,
+        pinDialog = new CustomFullDialog(this,
                 R.layout.eos_dialog_bluetooth_confirm_pair, listenedItems, false, Gravity.BOTTOM);
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        pinDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
@@ -467,15 +650,20 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                                             @Override
                                             public void onVerifySuccess() {
                                                 //todo 验证电量
-                                                Bundle bundle = new Bundle();
-                                                bundle.putBoolean(BaseConst.PIN_STATUS, true);
-                                                UISkipMananger.skipBluetoothConfigWookongBioActivity
-                                                        (BluetoothScanResultDialogActivity.this, bundle);
-                                                finish();
+//                                                Bundle bundle = new Bundle();
+//                                                bundle.putBoolean(BaseConst.PIN_STATUS, true);
+//                                                UISkipMananger.skipBluetoothConfigWookongBioActivity
+//                                                        (BluetoothScanResultDialogActivity.this, bundle);
+//                                                finish();
+
+                                                dialog.cancel();
+                                                //todo 验证电量
+                                                showInitWookongBioDialog();
                                             }
 
                                             @Override
                                             public void onVerifyFail() {
+                                                GemmaToastUtils.showShortToast(getString(R.string.baseservice_pass_validate_ip_wrong_password));
 
                                             }
                                         });
@@ -494,13 +682,15 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                                             @Override
                                             public void onVerifySuccess() {
                                                 //todo 验证电量
-                                                UISkipMananger.launchHome(BluetoothScanResultDialogActivity.this);
-                                                finish();
+//                                                UISkipMananger.launchHome(BluetoothScanResultDialogActivity.this);
+//                                                finish();
+                                                dialog.cancel();
+                                                createWookongWallet();
                                             }
 
                                             @Override
                                             public void onVerifyFail() {
-
+                                                GemmaToastUtils.showShortToast(getString(R.string.baseservice_pass_validate_ip_wrong_password));
                                             }
                                         });
                             }else {
@@ -516,9 +706,53 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 }
             }
         });
-        dialog.show();
+        pinDialog.show();
 
     }
+
+
+    /**
+     * 显示Wookong bio对话框
+     */
+    private void showInitWookongBioDialog() {
+        int[] listenedItems = {R.id.btn_close, R.id.btn_create_wallet, R.id.btn_import_mne};
+
+        AutoSize.autoConvertDensityOfGlobal(BluetoothScanResultDialogActivity.this);
+
+        CustomFullDialog dialog = new CustomFullDialog(this,
+                R.layout.eos_dialog_un_init_wookongbio, listenedItems, false, Gravity.BOTTOM);
+
+
+        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.btn_close:
+                        dialog.cancel();
+//                        WookongBioManager.getInstance().freeContext(contextHandle);
+//                        BluetoothConnectKeepJob.removeJob();
+//                        finish();
+                        break;
+                    case R.id.btn_create_wallet:
+                        dialog.cancel();
+                        UISkipMananger.skipBackupMneGuideActivity(BluetoothScanResultDialogActivity.this,
+                                null);
+                        finish();
+                        break;
+                    case R.id.btn_import_mne:
+                        dialog.cancel();
+                        Intent intent = new Intent(BluetoothScanResultDialogActivity.this, BluetoothImportWalletActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        dialog.show();
+    }
+
 
 //    class ScanDeviceHandler extends Handler {
 //

@@ -180,7 +180,7 @@ public class AlignTextView extends android.support.v7.widget.AppCompatTextView {
      * @param text 要计算的文本
      */
     private void calc(Paint paint, String text) {
-        Log.e("czc width="+width);
+//        Log.e("czc width="+width);
         if(width==0){
             return;
         }
@@ -196,7 +196,7 @@ public class AlignTextView extends android.support.v7.widget.AppCompatTextView {
 
         for (int i = ignoreCalcLength + 1; i < text.length(); i++) {
             String substring = text.substring(startPosition, i + 1);
-            Log.e("czc substring="+substring);
+//            Log.e("czc substring="+substring);
             if (paint.measureText(substring) > width) {
                 startPosition = i;
                 //将之前的字符串加入列表中

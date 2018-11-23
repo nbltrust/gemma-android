@@ -37,6 +37,16 @@ public class DeviceOperationManager {
     private ConcurrentHashMap<String, DeviceComm> deviceMaps = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, DeviceCallbacsBean> callbackMaps = new ConcurrentHashMap<>();
 
+    final byte[] coinTypes = {MiddlewareInterface.PAEW_COIN_TYPE_EOS, MiddlewareInterface.PAEW_COIN_TYPE_ETH, MiddlewareInterface.PAEW_COIN_TYPE_CYB};
+    final int[][] derivePaths = {
+            {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000},
+            {0, 0x8000002c, 0x8000003c, 0x80000000, 0x00000000, 0x00000000},
+            {0, 0, 1, 0x00000080, 0x00000000, 0x00000000}
+    };
+
+
+
+
     private ExecutorService singleExecutor= Executors.newSingleThreadExecutor();
 
 
@@ -621,6 +631,54 @@ public class DeviceOperationManager {
     }
 
 
+    public void getEthAddress(String tag, String deviceName, GetAddressCallback getAddressCallback){
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.getEthAddressCallback = getAddressCallback;
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+        int m_coinChoiceIndex=1;
+        deviceComm.getEthAddressThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+        deviceComm.getEthAddressThread.setGetAddressWrapper(deviceComm.contextHandle,
+                0,coinTypes[m_coinChoiceIndex], derivePaths[m_coinChoiceIndex]);
+        singleExecutor.execute(deviceComm.getEthAddressThread);
+    }
+
+
+    public void getEosAddress(String tag, String deviceName, GetAddressCallback getAddressCallback){
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.getEosAddressCallback = getAddressCallback;
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+        int m_coinChoiceIndex=0;
+        deviceComm.getEosAddressThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+        deviceComm.getEosAddressThread.setGetAddressWrapper(deviceComm.contextHandle,
+                0,coinTypes[m_coinChoiceIndex], derivePaths[m_coinChoiceIndex]);
+        singleExecutor.execute(deviceComm.getEosAddressThread);
+    }
+
+
     public interface DeviceConnectCallback {
 
         void onConnectStart();
@@ -750,6 +808,14 @@ public class DeviceOperationManager {
         void onEosSignSuccess(String strSignature);
 
         void onEosSignFail();
+    }
+
+
+    public interface GetAddressCallback {
+
+        void onGetSuccess(String address);
+
+        void onGetFail();
     }
 
 
@@ -1315,26 +1381,64 @@ public class DeviceOperationManager {
                 case BlueToothWrapper.MSG_GET_ADDRESS_START:
                     break;
                 case BlueToothWrapper.MSG_GET_ADDRESS_FINISH:
-//                    //获取EOS地址（公钥）结束
-//                    BlueToothWrapper.GetAddressReturnValue returnValueAddress = (BlueToothWrapper
-//                            .GetAddressReturnValue) msg.obj;
-//                    if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
-//                        if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
-//                            //LoggerManager.d("EOS Address: " + returnValueAddress.getAddress());
+
+                    BlueToothWrapper.GetAddressReturnValue returnValueAddress = (BlueToothWrapper
+                            .GetAddressReturnValue) msg.obj;
+                    LoggerManager.d("MSG_GET_ADDRESS_FINISH returnValueAddress: " + MiddlewareInterface.getReturnString(returnValueAddress.getReturnValue()));
+                    if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
+                            LoggerManager.d("EOS Address: " + returnValueAddress.getAddress());
+                            String[] strArr = returnValueAddress.getAddress().split("####");
+                            String publicKey = strArr[0];
+
+                            iterator = tags.iterator();
+                            while (iterator.hasNext()) {
+                                String tag = iterator.next();
+                                if (callbackMaps.get(tag).getEosAddressCallback != null) {
+                                    callbackMaps.get(tag).getEosAddressCallback.onGetSuccess(publicKey);
+                                }
+                            }
+                            return;
+                        } else if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_ETH) {
+                            LoggerManager.d("ETH Address: " + returnValueAddress.getAddress());
 //                            String[] strArr = returnValueAddress.getAddress().split("####");
 //                            String publicKey = strArr[0];
-//
-//                            DeviceInfoEvent event = new DeviceInfoEvent();
-//                            event.setEosPublicKey(publicKey);
-//                            EventBusProvider.postSticky(event);
-//
-//                            getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-//                                    getAmount() + " EOS", getNote());
-//                        }
-//                    } else {
-//
-//                    }
-//                    dissmisProgressDialog();
+
+                            iterator = tags.iterator();
+                            while (iterator.hasNext()) {
+                                String tag = iterator.next();
+                                if (callbackMaps.get(tag).getEthAddressCallback != null) {
+                                    callbackMaps.get(tag).getEthAddressCallback.onGetSuccess(returnValueAddress.getAddress());
+                                }
+                            }
+                            return;
+                        }else{
+
+
+                        }
+                    } else {
+
+                    }
+
+                    if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).getEosAddressCallback != null) {
+                                callbackMaps.get(tag).getEosAddressCallback.onGetFail();
+                            }
+                        }
+                    }else if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_ETH) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).getEthAddressCallback != null) {
+                                callbackMaps.get(tag).getEthAddressCallback.onGetFail();
+                            }
+                        }
+                    }
+
+
 
                     break;
 
@@ -1461,6 +1565,8 @@ public class DeviceOperationManager {
         BlueToothWrapper getFPListThread;
         BlueToothWrapper deleteFPThread;
         BlueToothWrapper eosSignThread;
+        BlueToothWrapper getEosAddressThread;
+        BlueToothWrapper getEthAddressThread;
 
 
         public DeviceComm(String deviceName) {
@@ -1487,6 +1593,8 @@ public class DeviceOperationManager {
         GetFPListCallback getFPListCallback;
         DeleteFPCallback deleteFPCallback;
         EosSignCallback eosSignCallback;
+        GetAddressCallback getEthAddressCallback;
+        GetAddressCallback getEosAddressCallback;
     }
 
 

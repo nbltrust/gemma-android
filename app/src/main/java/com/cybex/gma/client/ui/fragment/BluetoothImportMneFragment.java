@@ -273,7 +273,7 @@ public class BluetoothImportMneFragment extends XFragment {
                     @Override
                     public void accept(Throwable throwable) {
                         dissmisProgressDialog();
-                        GemmaToastUtils.showLongToast("WOOKONG Bio初始化失败,请重新初始化");
+                        GemmaToastUtils.showLongToast(getString(R.string.wookong_init_fail));
                         getActivity().finish();
                     }
                 });

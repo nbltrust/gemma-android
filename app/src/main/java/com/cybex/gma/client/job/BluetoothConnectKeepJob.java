@@ -32,6 +32,8 @@ public class BluetoothConnectKeepJob {
 //    private static BlueToothWrapper connectThread;
     public static final int intervalTime = 10*1000;
 
+    public int errorCount;
+
     private static BluetoothConnectKeepJob instance;
     private BluetoothConnectKeepJob(){
         EventBusProvider.register(this);
@@ -75,15 +77,16 @@ public class BluetoothConnectKeepJob {
         DeviceOperationManager.getInstance().getDeviceInfo(this.toString(), currentDeviceName, new DeviceOperationManager.GetDeviceInfoCallback() {
             @Override
             public void onGetSuccess(MiddlewareInterface.PAEW_DevInfo deviceInfo) {
-
+                errorCount=0;
             }
 
             @Override
             public void onGetFail() {
                 //heart beat fail , disconnect
+                errorCount++;
                 boolean deviceConnectted = DeviceOperationManager.getInstance().isDeviceConnectted(currentDeviceName);
                 LoggerManager.e("heart beat onGetFail deviceConnectted:"+deviceConnectted);
-                if(deviceConnectted){
+                if(deviceConnectted&&errorCount>=2){
                     DeviceOperationManager.getInstance().freeContext(instance.toString(),currentDeviceName,null);
                 }
 
