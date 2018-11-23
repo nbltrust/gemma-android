@@ -2,6 +2,7 @@ package com.cybex.walletmanagement.ui.fragment;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 
+import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.event.HeartBeatRefreshDataEvent;
@@ -22,6 +24,7 @@ import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.WookongBioPswValidateHelper;
 import com.cybex.componentservice.utils.WookongConnectHelper;
 import com.cybex.walletmanagement.R;
+import com.cybex.walletmanagement.ui.activity.BluetoothWalletManageActivity;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 
@@ -105,7 +108,7 @@ public class BluetoothWalletManageFragment extends XFragment {
 //                    connectThread.start();
 //                }
 
-                WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(multiWalletEntity, getActivity());
+                WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(BluetoothWalletManageFragment.this.toString(),multiWalletEntity, getActivity());
                 wookongConnectHelper.startConnectDevice(new WookongConnectHelper.ConnectWookongBioCallback() {
                     @Override
                     public void onConnectSuccess() {
@@ -221,13 +224,7 @@ public class BluetoothWalletManageFragment extends XFragment {
         ivRight.setVisibility(View.VISIBLE);
         ivWookongLogo.setImageResource(R.drawable.wookong_logo);
 
-        int deviceBatteryChargeMode = DeviceOperationManager.getInstance().getDeviceBatteryChargeMode(multiWalletEntity.getBluetoothDeviceName());
-        if(deviceBatteryChargeMode==1){
-            int powerAmount = DeviceOperationManager.getInstance().getDevicePowerAmount(multiWalletEntity.getBluetoothDeviceName());
-            tvConnectionStatus.setText(getString(R.string.walletmanage_battery_left)+Math.abs(powerAmount));
-        }else{
-            tvConnectionStatus.setText(R.string.walletmanage_status_connected);
-        }
+        updatePowerUI();
 
 
     }
@@ -344,16 +341,27 @@ public class BluetoothWalletManageFragment extends XFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void receiveHeartBeatEvent(HeartBeatRefreshDataEvent event){
+        updatePowerUI();
+    }
+
+    private void updatePowerUI(){
         boolean isConnected = DeviceOperationManager.getInstance().isDeviceConnectted(multiWalletEntity.getBluetoothDeviceName());
         if (isConnected) {
             int deviceBatteryChargeMode = DeviceOperationManager.getInstance().getDeviceBatteryChargeMode(multiWalletEntity.getBluetoothDeviceName());
             if(deviceBatteryChargeMode==1){
                 int powerAmount = DeviceOperationManager.getInstance().getDevicePowerAmount(multiWalletEntity.getBluetoothDeviceName());
-                tvConnectionStatus.setText(getString(R.string.walletmanage_battery_left)+Math.abs(powerAmount));
+                String devicePowerPercent = WookongUtils.getDevicePowerPercent(powerAmount);
+                if(!TextUtils.isEmpty(devicePowerPercent)){
+                    tvConnectionStatus.setText(getString(R.string.walletmanage_battery_left)+ devicePowerPercent);
+                }else{
+                    tvConnectionStatus.setText(R.string.walletmanage_status_connected);
+                }
             }else{
                 tvConnectionStatus.setText(R.string.walletmanage_status_connected);
             }
         }
+
+
     }
 
 

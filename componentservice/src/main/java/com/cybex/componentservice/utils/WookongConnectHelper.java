@@ -17,6 +17,7 @@ import me.jessyan.autosize.AutoSize;
 
 public class WookongConnectHelper {
 
+    private String tag;
     private MultiWalletEntity walletEntity;
     private Activity activity;
 
@@ -29,7 +30,8 @@ public class WookongConnectHelper {
     private CustomFullDialog dialog;
 
 
-    public WookongConnectHelper(MultiWalletEntity walletEntity, Activity activity) {
+    public WookongConnectHelper(String tag,MultiWalletEntity walletEntity, Activity activity) {
+        this.tag = tag;
         this.walletEntity = walletEntity;
         this.activity = activity;
         AutoSize.autoConvertDensityOfGlobal(activity);
@@ -64,7 +66,7 @@ public class WookongConnectHelper {
 
     private void startConnectWookongBio(){
 
-        DeviceOperationManager.getInstance().connectDevice(activity.toString(), walletEntity.getBluetoothDeviceName(), new DeviceOperationManager.DeviceConnectCallback() {
+        DeviceOperationManager.getInstance().connectDevice(tag, walletEntity.getBluetoothDeviceName(), new DeviceOperationManager.DeviceConnectCallback() {
                     @Override
                     public void onConnectStart() {
 
@@ -85,7 +87,7 @@ public class WookongConnectHelper {
     }
 
     private void innerGetDeviceInfo(){
-        DeviceOperationManager.getInstance().getDeviceInfo(activity.toString(), walletEntity.getBluetoothDeviceName(), new DeviceOperationManager.GetDeviceInfoCallback() {
+        DeviceOperationManager.getInstance().getDeviceInfo(tag, walletEntity.getBluetoothDeviceName(), new DeviceOperationManager.GetDeviceInfoCallback() {
                     @Override
                     public void onGetSuccess(MiddlewareInterface.PAEW_DevInfo deviceInfo) {
                         if(dialog!=null){

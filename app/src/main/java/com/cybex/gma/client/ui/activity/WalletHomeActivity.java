@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
@@ -21,6 +23,7 @@ import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.event.ChangeSelectedWalletEvent;
 import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
+import com.cybex.componentservice.event.HeartBeatRefreshDataEvent;
 import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
@@ -151,6 +154,12 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onDeviceConncectStatusChanged(DeviceConnectStatusUpdateEvent event){
+        updateBluetoothUI();
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onHeartBeatRefresh(HeartBeatRefreshDataEvent event){
         updateBluetoothUI();
     }
 
@@ -385,8 +394,17 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             if(deviceBatteryChargeMode==1){
                 //电池供电
                 int powerAmount = DeviceOperationManager.getInstance().getDevicePowerAmount(curWallet.getBluetoothDeviceName());
-                mTvWookongStatus.setText(getString(R.string.walletmanage_battery_left)+Math.abs(powerAmount));
+//                mTvWookongStatus.setText(getString(R.string.walletmanage_battery_left)+Math.abs(powerAmount));
                 mIvWookongLogo.setImageResource(R.drawable.wookong_logo);
+
+                String devicePowerPercent = WookongUtils.getDevicePowerPercent(powerAmount);
+                if(!TextUtils.isEmpty(devicePowerPercent)){
+                    mTvWookongStatus.setText(getString(R.string.walletmanage_battery_left)+ devicePowerPercent);
+                }else{
+                    mTvWookongStatus.setText(R.string.walletmanage_status_connected);
+                }
+
+
             }else{
                 //USB供电（正在充电）
                 mTvWookongStatus.setText(R.string.walletmanage_status_connected);

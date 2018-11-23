@@ -2,12 +2,14 @@ package com.cybex.walletmanagement.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.allen.library.SuperTextView;
+import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
@@ -164,9 +166,20 @@ public class BluetoothWalletDetailFragment extends XFragment {
         boolean isConnected = DeviceOperationManager.getInstance().isDeviceConnectted(multiWalletEntity.getBluetoothDeviceName());
         if (isConnected) {
             int powerAmount = DeviceOperationManager.getInstance().getDevicePowerAmount(multiWalletEntity.getBluetoothDeviceName());
-            superTextViewBatteryLife.setRightString(Math.abs(powerAmount) + "%");
+            int chargeMode = DeviceOperationManager.getInstance().getDeviceBatteryChargeMode(multiWalletEntity.getBluetoothDeviceName());
+            if(chargeMode==0){
+                //usb
+                superTextViewBatteryLife.setRightString(getString(R.string.wookong_charging));
+            }else{
+                String devicePowerPercent = WookongUtils.getDevicePowerPercent(powerAmount);
+                if(!TextUtils.isEmpty(devicePowerPercent)){
+                    superTextViewBatteryLife.setRightString(devicePowerPercent + "%");
+                }else{
+                    superTextViewBatteryLife.setRightString("");
+                }
+            }
         }else{
-            superTextViewBatteryLife.setRightString( "--%");
+            superTextViewBatteryLife.setRightString("");
         }
     }
 

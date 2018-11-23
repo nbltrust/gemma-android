@@ -155,6 +155,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     @Override
     public void onDestroyView() {
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
         clearData();
         unbinder.unbind();
         super.onDestroyView();
@@ -667,7 +668,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 //                });
 
         if (curWallet != null) {
-            WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(curWallet, getActivity());
+            WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(EosTokenTransferFragment.this.toString(),curWallet, getActivity());
             wookongConnectHelper.startConnectDevice(new WookongConnectHelper.ConnectWookongBioCallback() {
                 @Override
                 public void onConnectSuccess() {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wookong_charging">充电中</string>
+    <string name="walletmanage_battery_left">电量</string>
+    <string name="walletmanage_status_not_connected">未连接</string>
+    <string name="walletmanage_status_connected">已连接</string>
+</resources>

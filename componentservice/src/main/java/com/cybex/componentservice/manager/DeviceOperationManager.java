@@ -962,7 +962,8 @@ public class DeviceOperationManager {
                         DeviceComm deviceComm = deviceMaps.get(deviceName);
                         if(deviceComm!=null){
                             deviceComm.batteryMode=(heartBeatData[1] == 0x00) ? 0 : 1;
-                            deviceComm.powerAmount=heartBeatData[2]+0;
+                            deviceComm.powerAmount=Integer.parseInt(String.format("%02x", heartBeatData[2]), 16);
+//                            deviceComm.powerAmount=(int) heartBeatData[2];
                             LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE batteryMode="+deviceComm.batteryMode );
                             LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE powerAmount="+deviceComm.powerAmount );
                             EventBusProvider.post(new HeartBeatRefreshDataEvent());
