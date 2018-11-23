@@ -408,8 +408,8 @@
     <string name="eos_tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
     <string name="eos_status_un_init">未初始化</string>
     <string name="eos_status_not_connected">未连接</string>
-    <string name="eos_status_init_no_pair">已经初始化但没有配对信息</string>
-    <string name="eos_status_init_pair">已经初始化但没有配对信息</string>
+    <string name="eos_status_init_no_pair">已设置PIN但未完成初始化</string>
+    <string name="eos_status_init_pair">已初始化</string>
 
     <string name="eos_tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>
 
@@ -816,6 +816,9 @@
 
     <string name="tip_back_wallet">请务必备份私钥，私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>
     <string name="confirm_pair">确认配对</string>
+    <string name="enroll_fp_overtime">录入指纹超时</string>
+    <string name="jump">跳过</string>
+    <string name="retry">重试</string>
 
     <!--eos home card-->
     <string name="card_eos_creating_progress">账户创建中...%1$d%%</string>

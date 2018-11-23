@@ -307,6 +307,9 @@
 
 
     <string name="walletmanage_multi_coin_hard_wallet">多币种硬件钱包</string>
+    <string name="walletmanage_enroll_fp_overtime">录入指纹超时</string>
+    <string name="walletmanage_jump">跳过</string>
+    <string name="walletmanage_retry">重试</string>
 
 
 </resources>

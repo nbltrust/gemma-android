@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -326,10 +327,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
         validator.setValidationListener(this);
         isMask = true;
 
-        bd = getIntent().getExtras();
-        if (bd != null) {
-//            contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE, 0);
-        }
+
 
         initView();
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -342,6 +340,15 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
                 }
             }
         });
+
+        bd = getIntent().getExtras();
+        if (bd != null) {
+//            contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE, 0);
+            if (bd.getBoolean(BaseConst.PIN_STATUS)){
+                //如果已初始化
+                showInitWookongBioDialog();
+            }
+        }
 
     }
 

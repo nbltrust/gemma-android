@@ -91,6 +91,8 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         DeviceOperationManager.getInstance().clearCallback(TAG);
+        if (dialog != null && dialog.isShowing())dialog.cancel();
+
         super.onDestroy();
     }
 
@@ -205,7 +207,14 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                                                         @Override
                                                         public void onVerifySuccess() {
                                                             dialog.cancel();
-                                                            UISkipMananger.skipBluetoothConfigWookongBioActivity(BluetoothScanResultDialogActivity.this,null);
+                                                            //todo 验证电量
+
+                                                            int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
+
+                                                            Bundle bundle = new Bundle();
+                                                            bundle.putBoolean(BaseConst.PIN_STATUS, true);
+                                                            UISkipMananger.skipBluetoothConfigWookongBioActivity
+                                                                    (BluetoothScanResultDialogActivity.this,bundle);
                                                             finish();
                                                         }
 
@@ -218,7 +227,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                                         }else {
                                             //未设置指纹
                                             //验证PIN以确认配对
-                                            showConfirmAuthoriDialog();
+                                            showConfirmAuthoriDialog(BaseConst.STATE_SET_PIN_NOT_INIT);
                                         }
                                     }
 
@@ -233,6 +242,49 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     }else if (status == 2){
                         //已初始化
                         //LoggerManager.d("init done");
+                        //是否设置指纹
+                        DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
+                                new DeviceOperationManager.GetFPListCallback() {
+                                    @Override
+                                    public void onSuccess(com.cybex.componentservice.utils.bluetooth.BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
+                                        if (fpListReturnValue.getFPCount() > 0){
+                                            //已设置了指纹
+                                            //验证指纹以确认配对
+
+                                            DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
+                                                    new DeviceOperationManager.DeviceVerifyFPCallback() {
+                                                        @Override
+                                                        public void onVerifyStart() {
+                                                            showVerifyFPDialog();
+                                                        }
+
+                                                        @Override
+                                                        public void onVerifySuccess() {
+                                                            dialog.cancel();
+                                                            //todo 验证电量
+                                                            UISkipMananger.launchHome(BluetoothScanResultDialogActivity.this);
+                                                            finish();
+                                                        }
+
+                                                        @Override
+                                                        public void onVerifyFailed() {
+
+                                                        }
+                                                    });
+
+                                        }else {
+                                            //未设置指纹
+                                            //验证PIN以确认配对
+                                            showConfirmAuthoriDialog(BaseConst.STATE_INIT_DONE);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFail() {
+                                        AlertUtil.showLongUrgeAlert(BluetoothScanResultDialogActivity.this, "get fp"
+                                                + " list failed");
+                                    }
+                                });
 
                     }
                 }
@@ -268,15 +320,17 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     mAdapter.notifyDataSetChanged();
 
                 } else if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE
-                        && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_UNSET
+//                        && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_UNSET
                         && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_INVALID) {
                     //已设置PIN但未完成初始化
-                    //在InitPIN之后，LifeCycle变为User
                     deviceNameList.get(updatePosition).isShowProgress = false;
                     deviceNameList.get(updatePosition).status = 1;
                     mAdapter.notifyDataSetChanged();
-                }else if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_USER){
+                }else if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_USER
+                        && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_UNSET
+                        && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_INVALID){
                     //已初始化
+                    //在InitPIN之后，LifeCycle变为User
                     deviceNameList.get(updatePosition).isShowProgress = false;
                     deviceNameList.get(updatePosition).status = 2;
                     mAdapter.notifyDataSetChanged();
@@ -385,9 +439,9 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     /**
      * 显示确认授权dialog
      */
-    private void showConfirmAuthoriDialog() {
+    private void showConfirmAuthoriDialog(int state) {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_pair};
-        CustomFullDialog dialog = new CustomFullDialog(this,
+        dialog = new CustomFullDialog(this,
                 R.layout.eos_dialog_bluetooth_confirm_pair, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
@@ -397,27 +451,59 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         dialog.cancel();
                         break;
                     case R.id.btn_confirm_pair:
-                        EditText edt_PIN = dialog.findViewById(R.id.et_password);
-                        if (EmptyUtils.isNotEmpty(edt_PIN.getText())){
-                            //输入不为空
-                            String pin = edt_PIN.getText().toString().trim();
-                            DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, pin,
-                                    new DeviceOperationManager.VerifyPinCallback() {
-                                        @Override
-                                        public void onVerifySuccess() {
-                                            UISkipMananger.skipBluetoothConfigWookongBioActivity(BluetoothScanResultDialogActivity.this,null);
-                                            finish();
-                                        }
+                        if (state == BaseConst.STATE_SET_PIN_NOT_INIT){
+                            //已设置PIN但未初始化
+                            EditText edt_PIN = dialog.findViewById(R.id.et_password);
+                            if (EmptyUtils.isNotEmpty(edt_PIN.getText())){
+                                //输入不为空
+                                String pin = edt_PIN.getText().toString().trim();
+                                DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, pin,
+                                        new DeviceOperationManager.VerifyPinCallback() {
+                                            @Override
+                                            public void onVerifySuccess() {
+                                                //todo 验证电量
+                                                Bundle bundle = new Bundle();
+                                                bundle.putBoolean(BaseConst.PIN_STATUS, true);
+                                                UISkipMananger.skipBluetoothConfigWookongBioActivity
+                                                        (BluetoothScanResultDialogActivity.this, bundle);
+                                                finish();
+                                            }
 
-                                        @Override
-                                        public void onVerifyFail() {
+                                            @Override
+                                            public void onVerifyFail() {
 
-                                        }
-                                    });
-                        }else {
-                            //输入为空
-                            GemmaToastUtils.showShortToast(getString(R.string.eos_tip_please_input_pass));
+                                            }
+                                        });
+                            }else {
+                                //输入为空
+                                GemmaToastUtils.showShortToast(getString(R.string.eos_tip_please_input_pass));
+                            }
+                        }else if (state == BaseConst.STATE_INIT_DONE){
+                            //已完成初始化
+                            EditText edt_PIN = dialog.findViewById(R.id.et_password);
+                            if (EmptyUtils.isNotEmpty(edt_PIN.getText())){
+                                //输入不为空
+                                String pin = edt_PIN.getText().toString().trim();
+                                DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, pin,
+                                        new DeviceOperationManager.VerifyPinCallback() {
+                                            @Override
+                                            public void onVerifySuccess() {
+                                                //todo 验证电量
+                                                UISkipMananger.launchHome(BluetoothScanResultDialogActivity.this);
+                                                finish();
+                                            }
+
+                                            @Override
+                                            public void onVerifyFail() {
+
+                                            }
+                                        });
+                            }else {
+                                //输入为空
+                                GemmaToastUtils.showShortToast(getString(R.string.eos_tip_please_input_pass));
+                            }
                         }
+
 
                         break;
                     default:

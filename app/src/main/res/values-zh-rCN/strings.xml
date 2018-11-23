@@ -404,8 +404,8 @@
     <string name="eos_tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
     <string name="eos_status_un_init">未初始化</string>
     <string name="eos_status_not_connected">未连接</string>
-    <string name="eos_status_init_no_pair">已经初始化但没有配对信息</string>
-    <string name="eos_status_init_pair">已经初始化但没有配对信息</string>
+    <string name="eos_status_init_no_pair">已设置PIN但未完成初始化</string>
+    <string name="eos_status_init_pair">已初始化</string>
 
     <string name="eos_tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>
 

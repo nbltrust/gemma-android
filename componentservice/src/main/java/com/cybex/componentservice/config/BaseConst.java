@@ -52,11 +52,17 @@ public class BaseConst {
     public static final int DEVICE_LIFE_CYCLE_PRODUCE = 2;//produce
     public static final int DEVICE_LIFE_CYCLE_USER = 4;//user
 
-    public static final int DEVICE_PIN_STATE_INVALID = -1;//
+    public static final int DEVICE_PIN_STATE_INVALID = -1;//PIN非法
     public static final int DEVICE_PIN_STATE_LOGOUT = 0;//
     public static final int DEVICE_PIN_STATE_LOGIN = 1;//
-    public static final int DEVICE_PIN_STATE_LOCKED = 2;//
-    public static final int DEVICE_PIN_STATE_UNSET = 3;//
+    public static final int DEVICE_PIN_STATE_LOCKED = 2;//PIN锁定
+    public static final int DEVICE_PIN_STATE_UNSET = 3;//PIN未设置
+
+    public static final int STATE_SET_PIN_NOT_INIT = 10;//已设置PIN未完成初始化
+    public static final int STATE_INIT_DONE = 11;//已完成初始化
+
+    public static final String PIN_STATUS = "isPINInit";
+
 
 
 

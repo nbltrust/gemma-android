@@ -96,23 +96,18 @@ public class WalletManageActivity extends XActivity {
         currentWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         labelCurrentWallet.setRightText(currentWallet.getWalletName());
 
-        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList();
-        if(bluetoothWalletList.size()>0){
-            containerWookong.setVisibility(View.GONE);
-        }
-
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
 
         //如果已有蓝牙钱包，隐藏配对入口
-        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
-                .getBluetoothWalletList();
-
-        if ( bluetoothWalletList!= null && bluetoothWalletList.size() > 0){
-            containerWookong.setVisibility(View.GONE);
-        }
+//        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
+//                .getBluetoothWalletList();
+//
+//        if ( bluetoothWalletList!= null && bluetoothWalletList.size() > 0){
+//            containerWookong.setVisibility(View.GONE);
+//        }
 
 
     }

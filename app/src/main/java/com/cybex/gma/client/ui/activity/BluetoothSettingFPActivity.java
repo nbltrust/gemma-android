@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
@@ -26,6 +27,7 @@ import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomDialog;
 
 import java.util.HashMap;
 
@@ -230,7 +232,7 @@ public class BluetoothSettingFPActivity extends XActivity {
                 //JS返回的字符串
             }
         });
-
-
     }
+
+
 }
