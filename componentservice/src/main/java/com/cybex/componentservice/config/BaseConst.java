@@ -52,6 +52,13 @@ public class BaseConst {
     public static final int DEVICE_LIFE_CYCLE_PRODUCE = 2;//produce
     public static final int DEVICE_LIFE_CYCLE_USER = 4;//user
 
+    public static final int DEVICE_PIN_STATE_INVALID = -1;//
+    public static final int DEVICE_PIN_STATE_LOGOUT = 0;//
+    public static final int DEVICE_PIN_STATE_LOGIN = 1;//
+    public static final int DEVICE_PIN_STATE_LOCKED = 2;//
+    public static final int DEVICE_PIN_STATE_UNSET = 3;//
+
+
 
 
 }

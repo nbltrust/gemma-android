@@ -62,7 +62,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     private BluetoothScanDeviceListAdapter mAdapter;
     private List<BluetoothDeviceVO> deviceNameList = new ArrayList<>();
 //    private ScanDeviceHandler mHandler;
-//    private int updatePosition = 0;
+    private int updatePosition = 0;
 //    private long contextHandle = 0;
 
     @Override
@@ -143,12 +143,12 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     String deviceName = deviceNameList.get(position).deviceName;
 //                    SPUtils.getInstance().put(ParamConstants.DEVICE_NAME, deviceName);
 
-//                    updatePosition = position;
+                    updatePosition = position;
 
                     int status = deviceNameList.get(position).status;
-                    LoggerManager.d(status);
+                    LoggerManager.d("bluetooth connect status", status);
+                    //设备device状态值 0--未初始化  1-已设置PIN但未完成初始化  2--已经初始化且有配对信息
                     if (status == -1) {
-
                         DeviceOperationManager.getInstance().connectDevice(TAG,deviceName, new DeviceOperationManager.DeviceConnectCallback() {
                             @Override
                             public void onConnectStart() {
@@ -168,14 +168,18 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         });
                         deviceNameList.get(position).isShowProgress = true;
                         mAdapter.notifyDataSetChanged();
-
-
+                    }else if (status == 0){
+                        //未初始化
+                        LoggerManager.d("not init");
+                        UISkipMananger.skipBluetoothConfigWookongBioActivity(BluetoothScanResultDialogActivity.this,null);
+                        finish();
+                    }else if (status == 1){
+                        //已InitPin但未完成初始化
+                        LoggerManager.d("not pair");
+                    }else if (status == 2){
+                        //已初始化
+                        //LoggerManager.d("init done");
                     }
-//                    else if (status == 0) {
-//                        //status == 0 未初始化
-//                        //status == 1 已初始化但没有配对信息
-//                        showInitWookongBioDialog();
-//                    }
                 }
             }
         });
@@ -197,21 +201,27 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         DeviceOperationManager.getInstance().getDeviceInfo(TAG, deviceName, new DeviceOperationManager.GetDeviceInfoCallback() {
             @Override
             public void onGetSuccess(MiddlewareInterface.PAEW_DevInfo deviceInfo) {
-                if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE) {
-                    //在全新（或已Format）的设备上
-//                    deviceNameList.get(updatePosition).isShowProgress = false;
-//                    deviceNameList.get(updatePosition).status = 0;
-//                    mAdapter.notifyDataSetChanged();
-                    UISkipMananger.skipBluetoothConfigWookongBioActivity(BluetoothScanResultDialogActivity.this,null);
-                    finish();
-//                    showInitWookongBioDialog();
+                //更新当前设备状态
+                LoggerManager.d("deviceInfo life cycle", deviceInfo.ucLifeCycle);
+                LoggerManager.d("deviceInfo pin state", deviceInfo.ucPINState);
 
-                } else if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_USER) {
+                if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE
+                        && deviceInfo.ucPINState == BaseConst.DEVICE_PIN_STATE_UNSET) {
+                    //未初始化
+                    deviceNameList.get(updatePosition).isShowProgress = false;
+                    deviceNameList.get(updatePosition).status = 0;
+                    mAdapter.notifyDataSetChanged();
+
+                } else if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE
+                        && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_UNSET
+                        && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_INVALID) {
+                    //已设置PIN但未完成初始化
                     //在InitPIN之后，LifeCycle变为User
-//                    deviceNameList.get(updatePosition).isShowProgress = false;
-//                    deviceNameList.get(updatePosition).status = 1;
-//                    mAdapter.notifyDataSetChanged();
-
+                    deviceNameList.get(updatePosition).isShowProgress = false;
+                    deviceNameList.get(updatePosition).status = 1;
+                    mAdapter.notifyDataSetChanged();
+                }else if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_USER){
+                    //已初始化
                 }
             }
 
