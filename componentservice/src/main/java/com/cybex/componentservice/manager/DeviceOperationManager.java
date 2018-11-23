@@ -20,7 +20,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class DeviceOperationManager {
@@ -32,7 +37,11 @@ public class DeviceOperationManager {
     private ConcurrentHashMap<String, DeviceComm> deviceMaps = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, DeviceCallbacsBean> callbackMaps = new ConcurrentHashMap<>();
 
+    private ExecutorService singleExecutor= Executors.newSingleThreadExecutor();
+
+
     private DeviceOperationManager() {
+
     }
 
 
@@ -119,6 +128,7 @@ public class DeviceOperationManager {
         scanThread.setGetDevListWrapper(BaseApplication.getAppContext(),
                 "WOOKONG");
         scanThread.start();
+//        singleExecutor.execute(scanThread);
     }
 
 
@@ -139,13 +149,14 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.connectThread == null) || (deviceComm.connectThread.getState() == Thread.State.TERMINATED)) {
+//        if ((deviceComm.connectThread == null) || (deviceComm.connectThread.getState() == Thread.State.TERMINATED)) {
             deviceComm.connectThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.connectThread.setInitContextWithDevNameWrapper(BaseApplication.getAppContext(),
                     deviceName);
             deviceComm.connectThread.setHeartBeatHandler(deviceComm.mDeviceHandler);
-            deviceComm.connectThread.start();
-        }
+//            deviceComm.connectThread.start();
+            singleExecutor.execute(deviceComm.connectThread);
+//        }
     }
 
     public void getDeviceInfo(String tag, String deviceName, GetDeviceInfoCallback getDeviceInfoCallback) {
@@ -164,13 +175,14 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.getDeviceInfoThread == null) || (deviceComm.getDeviceInfoThread.getState()
-                == Thread.State.TERMINATED)) {
+//        if ((deviceComm.getDeviceInfoThread == null) || (deviceComm.getDeviceInfoThread.getState()
+//                == Thread.State.TERMINATED)) {
             deviceComm.getDeviceInfoThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.getDeviceInfoThread.setGetInfoWrapper(deviceComm.contextHandle,
                     0);
-            deviceComm.getDeviceInfoThread.start();
-        }
+//            deviceComm.getDeviceInfoThread.start();
+            singleExecutor.execute(deviceComm.getDeviceInfoThread);
+//        }
 
     }
 
@@ -192,12 +204,13 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.formatThread == null) || (deviceComm.formatThread.getState() == Thread.State.TERMINATED)) {
+//        if ((deviceComm.formatThread == null) || (deviceComm.formatThread.getState() == Thread.State.TERMINATED)) {
             deviceComm.formatThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.formatThread.setFormatDeviceWrapper(deviceComm.contextHandle,
                     0);
-            deviceComm.formatThread.start();
-        }
+//            deviceComm.formatThread.start();
+            singleExecutor.execute(deviceComm.formatThread);
+//        }
     }
 
     public void pressConfirm(String tag, String deviceName, PressConfirmCallback pressConfirmCallback) {
@@ -252,12 +265,13 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.verifyFPThread == null) || (deviceComm.verifyFPThread.getState() == Thread.State.TERMINATED)) {
+//        if ((deviceComm.verifyFPThread == null) || (deviceComm.verifyFPThread.getState() == Thread.State.TERMINATED)) {
             deviceComm.verifyFPThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.verifyFPThread.setVerifyFPWrapper(deviceComm.contextHandle,
                     0);
-            deviceComm.verifyFPThread.start();
-        }
+//            deviceComm.verifyFPThread.start();
+            singleExecutor.execute(deviceComm.verifyFPThread);
+//        }
     }
 
     public void freeContext(String tag, String deviceName, FreeContextCallback freeContextCallback) {
@@ -277,16 +291,17 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.freeContextThread == null) || (deviceComm.freeContextThread.getState()
-                == Thread.State.TERMINATED)) {
+//        if ((deviceComm.freeContextThread == null) || (deviceComm.freeContextThread.getState()
+//                == Thread.State.TERMINATED)) {
             deviceComm.freeContextThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.freeContextThread.setFreeContextWrapper(deviceComm.contextHandle);
-            deviceComm.freeContextThread.start();
-        }
+            singleExecutor.execute(deviceComm.freeContextThread);
+//        }
     }
 
 
     public void enrollFP(String tag, String deviceName, EnrollFPCallback enrollFPCallback) {
+        LoggerManager.e("enrollFP tag="+tag+"    deviceName="+deviceName);
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
         if (deviceCallbacks == null) {
             deviceCallbacks = new DeviceCallbacsBean();
@@ -303,16 +318,17 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.enrollFPThread == null) || (deviceComm.enrollFPThread.getState() == Thread.State.TERMINATED)) {
+//        if ((deviceComm.enrollFPThread == null) || (deviceComm.enrollFPThread.getState() == Thread.State.TERMINATED)) {
             deviceComm.enrollFPThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.enrollFPThread.setEnrollFPWrapper(deviceComm.contextHandle,
                     0);
-            deviceComm.enrollFPThread.start();
-        }
+            singleExecutor.execute(deviceComm.enrollFPThread);
+//        }
     }
 
     public void abortEnrollFp(String deviceName) {
         DeviceComm deviceComm = deviceMaps.get(deviceName);
+        LoggerManager.e("abortEnrollFp currentDeviceName="+currentDeviceName+"    deviceName="+deviceName);
         if (deviceComm == null) {
             deviceComm = new DeviceComm(deviceName);
             deviceMaps.put(deviceName, deviceComm);
@@ -353,12 +369,12 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.jsonSerializeThread == null) || (deviceComm.jsonSerializeThread.getState()
-                == Thread.State.TERMINATED)) {
+//        if ((deviceComm.jsonSerializeThread == null) || (deviceComm.jsonSerializeThread.getState()
+//                == Thread.State.TERMINATED)) {
             deviceComm.jsonSerializeThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.jsonSerializeThread.setEOSTxSerializeWrapper(jsonTxStr);
-            deviceComm.jsonSerializeThread.start();
-        }
+            singleExecutor.execute(deviceComm.jsonSerializeThread);
+//        }
 
     }
 
@@ -378,13 +394,13 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.initPinThread == null) || (deviceComm.initPinThread.getState() == Thread.State.TERMINATED)) {
+//        if ((deviceComm.initPinThread == null) || (deviceComm.initPinThread.getState() == Thread.State.TERMINATED)) {
             deviceComm.initPinThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.initPinThread.setInitPINWrapper(deviceComm.contextHandle,
                     0, password);
             deviceComm.initialPswHint=passwordHint;
-            deviceComm.initPinThread.start();
-        }
+            singleExecutor.execute(deviceComm.initPinThread);
+//        }
 
     }
 
@@ -405,13 +421,13 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.verifyPinThread == null) || (deviceComm.verifyPinThread.getState()
-                == Thread.State.TERMINATED)) {
+//        if ((deviceComm.verifyPinThread == null) || (deviceComm.verifyPinThread.getState()
+//                == Thread.State.TERMINATED)) {
             deviceComm.verifyPinThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.verifyPinThread.setVerifyPINWrapper(deviceComm.contextHandle,
                     0, password);
-            deviceComm.verifyPinThread.start();
-        }
+            singleExecutor.execute(deviceComm.verifyPinThread);
+//        }
 
     }
 
@@ -437,13 +453,13 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.changePinThread == null) || (deviceComm.changePinThread.getState()
-                == Thread.State.TERMINATED)) {
+//        if ((deviceComm.changePinThread == null) || (deviceComm.changePinThread.getState()
+//                == Thread.State.TERMINATED)) {
             deviceComm.changePinThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.changePinThread.setChangePINWrapper(deviceComm.contextHandle,
                     0, oldPsw, newPsw);
-            deviceComm.changePinThread.start();
-        }
+            singleExecutor.execute(deviceComm.changePinThread);
+//        }
 
     }
 
@@ -468,13 +484,13 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.generateMnemonicThread == null) || (deviceComm.generateMnemonicThread.getState()
-                == Thread.State.TERMINATED)) {
+//        if ((deviceComm.generateMnemonicThread == null) || (deviceComm.generateMnemonicThread.getState()
+//                == Thread.State.TERMINATED)) {
             deviceComm.generateMnemonicThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.generateMnemonicThread.setGenerateSeedGetMnesWrapper(deviceComm.contextHandle,
                     0, 16);
-            deviceComm.generateMnemonicThread.start();
-        }
+            singleExecutor.execute(deviceComm.generateMnemonicThread);
+//        }
     }
 
 
@@ -506,13 +522,13 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.getFPListThread == null) || (deviceComm.getFPListThread.getState()
-                == Thread.State.TERMINATED)) {
+//        if ((deviceComm.getFPListThread == null) || (deviceComm.getFPListThread.getState()
+//                == Thread.State.TERMINATED)) {
             deviceComm.getFPListThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.getFPListThread.setGetFPListWrapper(deviceComm.contextHandle,
                     0);
-            deviceComm.getFPListThread.start();
-        }
+            singleExecutor.execute(deviceComm.getFPListThread);
+//        }
     }
 
 
@@ -536,12 +552,13 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.deleteFPThread == null) || (deviceComm.deleteFPThread.getState() == Thread.State.TERMINATED)) {
+//        if ((deviceComm.deleteFPThread == null) || (deviceComm.deleteFPThread.getState() == Thread.State.TERMINATED)) {
             deviceComm.deleteFPThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.deleteFPThread.setDeleteFPWrapper(deviceComm.contextHandle,
                     0, fpList);
-            deviceComm.deleteFPThread.start();
-        }
+//            deviceComm.deleteFPThread.start();
+            singleExecutor.execute(deviceComm.deleteFPThread);
+//        }
 
 
     }
@@ -570,13 +587,13 @@ public class DeviceOperationManager {
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
-        if ((deviceComm.eosSignThread == null) || (deviceComm.eosSignThread.getState()
-                == Thread.State.TERMINATED)) {
+//        if ((deviceComm.eosSignThread == null) || (deviceComm.eosSignThread.getState()
+//                == Thread.State.TERMINATED)) {
             deviceComm.eosSignThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.eosSignThread.setEOSSignWrapper(deviceComm.contextHandle, 0, uiLock, CacheConstants
                     .EOS_DERIVE_PATH, transaction);
-            deviceComm.eosSignThread.start();
-        }
+            singleExecutor.execute(deviceComm.eosSignThread);
+//        }
     }
 
 
