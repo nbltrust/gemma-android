@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
@@ -32,6 +33,7 @@ import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.EosTokenTransferPresenter;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -488,7 +490,23 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                             dialog.cancel();
                             break;
                         case R.id.btn_transfer_nextStep:
-                            showConfirmAuthoriDialog();
+                            if (walletType == BaseConst.WALLET_TYPE_BLUETOOTH){
+                                //蓝牙钱包
+                                int connect_status = DeviceOperationManager.getInstance().getDeviceConnectStatus
+                                        (deviceName);
+
+                                if (connect_status == CacheConstants.STATUS_BLUETOOTH_CONNCETED){
+                                    //蓝牙卡已连接
+                                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                                            getAmount() + " EOS", getNote());
+                                }else {
+                                    //蓝牙卡未连接
+                                    connectBio();
+                                }
+                            }else {
+                                //软钱包
+                                showConfirmAuthoriDialog();
+                            }
                             break;
                         default:
                             break;
@@ -646,32 +664,12 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      */
     private void connectBio() {
 
-//        DeviceOperationManager.getInstance().connectDevice(TAG, deviceName,
-//                new DeviceOperationManager.DeviceConnectCallback() {
-//                    @Override
-//                    public void onConnectStart() {
-//                        showConnectBioDialog();
-//                    }
-//
-//                    @Override
-//                    public void onConnectSuccess() {
-//                        dialog.cancel();
-//                        getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-//                                getAmount() + " EOS", getNote());
-//                    }
-//
-//                    @Override
-//                    public void onConnectFailed() {
-//                        dialog.cancel();
-//                        showConnectBioFailDialog();
-//                    }
-//                });
-
         if (curWallet != null) {
             WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(EosTokenTransferFragment.this.toString(),curWallet, getActivity());
             wookongConnectHelper.startConnectDevice(new WookongConnectHelper.ConnectWookongBioCallback() {
                 @Override
                 public void onConnectSuccess() {
+                    if (dialog != null)dialog.cancel();
                     getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
                                 getAmount() + " EOS", getNote());
 
@@ -679,7 +677,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                 @Override
                 public void onConnectFail() {
-
+                    if (dialog != null)dialog.cancel();
                 }
             });
         }

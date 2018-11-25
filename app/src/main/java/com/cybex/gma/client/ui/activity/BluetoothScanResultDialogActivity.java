@@ -67,6 +67,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     private CustomFullDialog pinDialog;
     private CustomFullDialog connectDialog;
     private String deviceName;
+    private int status;//设备device状态值 0--未初始化  1-已设置PIN但未完成初始化  2--已经初始化且有配对信息
 
 
     private String TAG = this.toString();
@@ -143,6 +144,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
             @Override
             public void onScanFinish() {
+                viewSpinKit.setVisibility(View.GONE);
 
             }
         });
@@ -170,123 +172,33 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     deviceName = deviceNameList.get(position).deviceName;
 //                    SPUtils.getInstance().put(ParamConstants.DEVICE_NAME, deviceName);
 
-                    updatePosition = position;
+                    //updatePosition = position;
 
-                    int status = deviceNameList.get(position).status;
+                    status = deviceNameList.get(position).status;
                     LoggerManager.d("bluetooth connect status", status);
-                    //设备device状态值 0--未初始化  1-已设置PIN但未完成初始化  2--已经初始化且有配对信息
-                    if (status == -1) {
-                        DeviceOperationManager.getInstance().connectDevice(TAG,deviceName, new DeviceOperationManager.DeviceConnectCallback() {
-                            @Override
-                            public void onConnectStart() {
+                    DeviceOperationManager.getInstance().connectDevice(TAG,deviceName, new DeviceOperationManager.DeviceConnectCallback() {
+                        @Override
+                        public void onConnectStart() {
 
-                            }
+                        }
 
-                            @Override
-                            public void onConnectSuccess() {
-                                getDeviceInfo(deviceName);
-                            }
+                        @Override
+                        public void onConnectSuccess() {
+                            getDeviceInfo(deviceName);
+                        }
 
-                            @Override
-                            public void onConnectFailed() {
-                                LoggerManager.d("connectDevice fail");
+                        @Override
+                        public void onConnectFailed() {
+                            LoggerManager.d("connectDevice fail");
+                            viewSpinKit.setVisibility(View.GONE);
+                            showConnectBioFailDialog();
 
-                            }
-                        });
-                        deviceNameList.get(position).isShowProgress = true;
-                        mAdapter.notifyDataSetChanged();
-                    }else if (status == 0){
-                        //未初始化
-                        LoggerManager.d("not init");
-                        UISkipMananger.skipBluetoothConfigWookongBioActivity(BluetoothScanResultDialogActivity.this,null);
-                        finish();
-                    }else if (status == 1){
-                        //已InitPin但未完成初始化
-                        LoggerManager.d("not pair");
-                        //是否设置指纹
-                        DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
-                                new DeviceOperationManager.GetFPListCallback() {
-                                    @Override
-                                    public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
-                                        if (fpListReturnValue.getFPCount() > 0){
-                                            //已设置了指纹
-                                            //验证指纹以确认配对
+                        }
+                    });
+                    //deviceNameList.get(position).isShowProgress = true;
+                    viewSpinKit.setVisibility(View.VISIBLE);
+                    mAdapter.notifyDataSetChanged();
 
-//                                            DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
-//                                                    new DeviceOperationManager.DeviceVerifyFPCallback() {
-//                                                        @Override
-//                                                        public void onVerifyStart() {
-//                                                            showVerifyFPDialog();
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onVerifySuccess() {
-//                                                            dialog.cancel();
-//                                                            //todo 验证电量
-//
-//                                                            int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
-//
-//                                                            Bundle bundle = new Bundle();
-//                                                            bundle.putBoolean(BaseConst.PIN_STATUS, true);
-//                                                            UISkipMananger.skipBluetoothConfigWookongBioActivity
-//                                                                    (BluetoothScanResultDialogActivity.this,bundle);
-//                                                            finish();
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onVerifyFailed() {
-//
-//                                                        }
-//                                                    });
-                                            verifyFpCount=0;
-                                            doVeriyFp(status);
-
-                                        }else {
-                                            //未设置指纹
-                                            //验证PIN以确认配对
-                                            showConfirmAuthoriDialog(BaseConst.STATE_SET_PIN_NOT_INIT);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFail() {
-                                        AlertUtil.showLongUrgeAlert(BluetoothScanResultDialogActivity.this, "get fp"
-                                                + " list failed");
-                                    }
-                                });
-
-
-                    }else if (status == 2){
-                        //已初始化
-                        //LoggerManager.d("init done");
-                        //是否设置指纹
-                        DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
-                                new DeviceOperationManager.GetFPListCallback() {
-                                    @Override
-                                    public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
-                                        if (fpListReturnValue.getFPCount() > 0){
-                                            //已设置了指纹
-                                            //验证指纹以确认配对
-
-
-                                            verifyFpCount=0;
-                                            doVeriyFp(status);
-
-                                        }else {
-                                            //未设置指纹
-                                            //验证PIN以确认配对
-                                            showConfirmAuthoriDialog(BaseConst.STATE_INIT_DONE);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFail() {
-                                        AlertUtil.showLongUrgeAlert(BluetoothScanResultDialogActivity.this, "get fp"
-                                                + " list failed");
-                                    }
-                                });
-
-                    }
                 }
             }
         });
@@ -501,25 +413,115 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE
                         && deviceInfo.ucPINState == BaseConst.DEVICE_PIN_STATE_UNSET) {
                     //未初始化
+
+                    LoggerManager.d("not init");
+                    UISkipMananger.skipBluetoothConfigWookongBioActivity(BluetoothScanResultDialogActivity.this,null);
+                    finish();
+
+                    /*
                     deviceNameList.get(updatePosition).isShowProgress = false;
                     deviceNameList.get(updatePosition).status = 0;
                     mAdapter.notifyDataSetChanged();
+                    */
 
                 } else if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE
 //                        && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_UNSET
                         && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_INVALID) {
                     //已设置PIN但未完成初始化
+                    //已InitPin但未完成初始化
+                    LoggerManager.d("not pair");
+                    //是否设置指纹
+                    DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
+                            new DeviceOperationManager.GetFPListCallback() {
+                                @Override
+                                public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
+                                    if (fpListReturnValue.getFPCount() > 0){
+                                        //已设置了指纹
+                                        //验证指纹以确认配对
+
+//                                            DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
+//                                                    new DeviceOperationManager.DeviceVerifyFPCallback() {
+//                                                        @Override
+//                                                        public void onVerifyStart() {
+//                                                            showVerifyFPDialog();
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onVerifySuccess() {
+//                                                            dialog.cancel();
+//                                                            //todo 验证电量
+//
+//                                                            int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
+//
+//                                                            Bundle bundle = new Bundle();
+//                                                            bundle.putBoolean(BaseConst.PIN_STATUS, true);
+//                                                            UISkipMananger.skipBluetoothConfigWookongBioActivity
+//                                                                    (BluetoothScanResultDialogActivity.this,bundle);
+//                                                            finish();
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onVerifyFailed() {
+//
+//                                                        }
+//                                                    });
+                                        verifyFpCount=0;
+                                        doVeriyFp(status);
+
+                                    }else {
+                                        //未设置指纹
+                                        //验证PIN以确认配对
+                                        showConfirmAuthoriDialog(BaseConst.STATE_SET_PIN_NOT_INIT);
+                                    }
+                                }
+
+                                @Override
+                                public void onFail() {
+                                    AlertUtil.showLongUrgeAlert(BluetoothScanResultDialogActivity.this, "get fp"
+                                            + " list failed");
+                                }
+                            });
+                    /*
                     deviceNameList.get(updatePosition).isShowProgress = false;
                     deviceNameList.get(updatePosition).status = 1;
                     mAdapter.notifyDataSetChanged();
+                    */
                 }else if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_USER
                         && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_UNSET
                         && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_INVALID){
                     //已初始化
                     //在InitPIN之后，LifeCycle变为User
+                    DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
+                            new DeviceOperationManager.GetFPListCallback() {
+                                @Override
+                                public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
+                                    if (fpListReturnValue.getFPCount() > 0){
+                                        //已设置了指纹
+                                        //验证指纹以确认配对
+
+
+                                        verifyFpCount=0;
+                                        doVeriyFp(status);
+
+                                    }else {
+                                        //未设置指纹
+                                        //验证PIN以确认配对
+                                        showConfirmAuthoriDialog(BaseConst.STATE_INIT_DONE);
+                                    }
+                                }
+
+                                @Override
+                                public void onFail() {
+                                    AlertUtil.showLongUrgeAlert(BluetoothScanResultDialogActivity.this, "get fp"
+                                            + " list failed");
+                                }
+                            });
+
+                    /*
                     deviceNameList.get(updatePosition).isShowProgress = false;
                     deviceNameList.get(updatePosition).status = 2;
                     mAdapter.notifyDataSetChanged();
+                    */
                 }
             }
 
