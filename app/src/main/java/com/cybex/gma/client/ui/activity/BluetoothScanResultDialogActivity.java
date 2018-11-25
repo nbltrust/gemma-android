@@ -146,7 +146,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void initView() {
