@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/shape_corner_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:src="@drawable/ic_low_battery_alert"
+        android:id="@+id/iv_password_hint"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"/>
+
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="@dimen/font_4"
+        android:text="@string/power_level_alert"
+        android:textColor="@color/black_title"/>
+
+    <TextView
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:id="@+id/tv_power_alert_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tip_power_level_alert"
+        android:textColor="@color/black_title"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_4"/>
+
+    <View
+        android:layout_marginTop="16dp"
+        style="@style/common_divider">
+    </View>
+
+    <TextView
+        android:id="@+id/tv_i_understand"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/eos_ok"
+        android:gravity="center"
+        android:textSize="@dimen/font_4"
+        android:textColor="@color/black_title"
+        android:background="@drawable/shape_corner_bot_dialog"
+        />
+
+</LinearLayout>

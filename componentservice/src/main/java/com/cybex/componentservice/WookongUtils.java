@@ -1,5 +1,7 @@
 package com.cybex.componentservice;
 
+import com.cybex.componentservice.manager.DeviceOperationManager;
+
 public class WookongUtils {
 
     public static String getDevicePowerPercent(int power){
@@ -14,5 +16,33 @@ public class WookongUtils {
         }else{
             return "";
         }
+    }
+
+    /**
+     *
+     * @param threshold 验证电量的阈值
+     * @param callback
+     */
+
+    public static void validatePowerLevel(int threshold, ValidatePowerLevelCallback callback){
+        String deviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+        int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
+        int powerMode = DeviceOperationManager.getInstance().getDeviceBatteryChargeMode(deviceName);
+
+        if (powerMode == 1 || powerMode == -1){
+            //电池供电时或者还未获取到供电信息时
+            if (powerLevel > threshold || powerLevel == -1){
+                callback.onValidateSuccess();
+            }else {
+                callback.onValidateFail();
+            }
+        }
+    }
+
+    public interface ValidatePowerLevelCallback {
+
+        void onValidateSuccess();
+
+        void onValidateFail();
     }
 }

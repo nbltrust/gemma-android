@@ -105,6 +105,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     private String memo = "";
     private MultiWalletEntity curWallet;
 
+    private CustomFullDialog pinDialog;
+    private CustomFullDialog verifyDialog;
+    private int verifyFpCount;
+
     public static EosTokenTransferFragment newInstance(Bundle args) {
         EosTokenTransferFragment fragment = new EosTokenTransferFragment();
         fragment.setArguments(args);
@@ -244,6 +248,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     @Override
     public void initData(Bundle savedInstanceState) {
 
+        verifyFpCount = 0;
         etReceiverAccount.setText("");
         etAmount.setText("");
         etNote.setText("");
@@ -445,6 +450,38 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         showConfirmTransferDialog();
     }
 
+    public void doVerifyFP(){
+        DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
+                new DeviceOperationManager.DeviceVerifyFPCallback() {
+                    @Override
+                    public void onVerifyStart() {
+                        showVerifyFPDialog();
+                    }
+
+                    @Override
+                    public void onVerifySuccess() {
+                        getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                                getAmount() + " EOS", getNote());
+                        verifyDialog.cancel();
+                    }
+
+                    @Override
+                    public void onVerifyFailed() {
+                        LoggerManager.d("onVerifyFailed   verifyFpCount="+verifyFpCount);
+                        if(verifyFpCount<4){
+                            doVerifyFP();
+                        }else{
+                            if(verifyDialog!=null){
+                                verifyDialog.cancel();
+                            }
+                            showConfirmBluetoothAuthoriDialog();
+                        }
+                    }
+                });
+    }
+
+
+
     public boolean isAccountNameValid() {
         String eosUsername = etReceiverAccount.getText().toString().trim();
         String regEx = "^[a-z1-5.]{1,13}$";
@@ -497,8 +534,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                                 if (connect_status == CacheConstants.STATUS_BLUETOOTH_CONNCETED){
                                     //蓝牙卡已连接
-                                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-                                            getAmount() + " EOS", getNote());
+                                    doVerifyFP();
                                 }else {
                                     //蓝牙卡未连接
                                     connectBio();
@@ -574,8 +610,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                 int status = DeviceOperationManager.getInstance().getDeviceConnectStatus(deviceName);
                                 if (status == CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
                                     //蓝牙卡已连接
-                                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-                                            getAmount() + " EOS", getNote());
+                                    doVerifyFP();
                                 } else {
                                     //蓝牙卡未连接
                                     connectBio();
@@ -670,14 +705,13 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 @Override
                 public void onConnectSuccess() {
                     if (dialog != null)dialog.cancel();
-                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-                                getAmount() + " EOS", getNote());
-
+                        doVerifyFP();
                 }
 
                 @Override
                 public void onConnectFail() {
                     if (dialog != null)dialog.cancel();
+                    showConnectBioFailDialog();
                 }
             });
         }
@@ -757,26 +791,74 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
 
     /**
-     * 显示连接蓝牙dialog
+     * 显示确认授权dialog
      */
-    private void showConnectBioDialog() {
-        int[] listenedItems = {R.id.imc_cancel};
-        if (getActivity() != null) { AutoSize.autoConvertDensityOfGlobal(getActivity()); }
-        dialog = new CustomFullDialog(getContext(),
-                R.layout.eos_dialog_transfer_bluetooth_connect_ing, listenedItems, false, Gravity.BOTTOM);
-        dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+    private void showConfirmBluetoothAuthoriDialog() {
+        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_pair};
+        pinDialog = new CustomFullDialog(getActivity(),
+                R.layout.eos_dialog_bluetooth_confirm_pair, listenedItems, false, Gravity.BOTTOM);
+        pinDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.imc_cancel:
                         dialog.cancel();
                         break;
+                    case R.id.btn_confirm_pair:
+                        EditText edt_PIN = dialog.findViewById(R.id.et_password);
+                        if (EmptyUtils.isNotEmpty(edt_PIN.getText())){
+                            //输入不为空
+                            String pin = edt_PIN.getText().toString().trim();
+                            DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, pin,
+                                    new DeviceOperationManager.VerifyPinCallback() {
+                                        @Override
+                                        public void onVerifySuccess() {
+                                            //验证成功，允许转账
+                                            getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                                                    getAmount() + " EOS", getNote());
+                                            dialog.cancel();
+                                        }
+
+                                        @Override
+                                        public void onVerifyFail() {
+                                            GemmaToastUtils.showShortToast(getString(R.string.baseservice_pass_validate_ip_wrong_password));
+                                        }
+                                    });
+                        }else {
+                            //输入为空
+                            GemmaToastUtils.showShortToast(getString(R.string.eos_tip_please_input_pass));
+                        }
+
+                        break;
                     default:
                         break;
                 }
             }
         });
-        dialog.show();
+        pinDialog.show();
+    }
+
+    /**
+     * 显示通过蓝牙卡验证指纹dialog
+     */
+    private void showVerifyFPDialog() {
+        if(verifyDialog!=null)return;
+        int[] listenedItems = {R.id.imv_back};
+        verifyDialog = new CustomFullDialog(getActivity(),
+                R.layout.eos_dialog_transfer_bluetooth_finger_sure, listenedItems, false, Gravity.BOTTOM);
+        verifyDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imv_back:
+                        verifyDialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        verifyDialog.show();
     }
 
     /**
@@ -784,7 +866,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      */
     private void showConnectBioFailDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_reconnect};
-        if (getActivity() != null) { AutoSize.autoConvertDensityOfGlobal(getActivity()); }
         dialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_transfer_bluetooth_connect_failed, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {

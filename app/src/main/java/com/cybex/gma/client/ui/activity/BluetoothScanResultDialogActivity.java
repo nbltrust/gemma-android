@@ -13,29 +13,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
+import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
-import com.cybex.componentservice.db.entity.FPEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
-import com.cybex.gma.client.BuildConfig;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.extropies.common.MiddlewareInterface;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,15 +41,12 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.autosize.AutoSize;
-import seed39.Seed39;
 
 /**
  * 蓝牙扫描结果对话框界面
@@ -64,6 +58,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
     private static final String DEVICE_PREFIX = "WOOKONG";
     private CustomFullDialog verifyDialog;
+    private CustomFullDialog powerAlertDialog;
     private CustomFullDialog pinDialog;
     private CustomFullDialog connectDialog;
     private String deviceName;
@@ -71,6 +66,8 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
 
     private String TAG = this.toString();
+    @BindView(R.id.iv_retry)
+    ImageView ivRetry;
     @BindView(R.id.imv_close)
     ImageView imvClose;
     @BindView(R.id.rv_list)
@@ -116,6 +113,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                 deviceNameList.clear();
                 mAdapter.notifyDataSetChanged();
                 statusView.showLoading();
+                ivRetry.setVisibility(View.GONE);
             }
 
             @Override
@@ -145,6 +143,18 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             @Override
             public void onScanFinish() {
                 viewSpinKit.setVisibility(View.GONE);
+               if (deviceNameList != null){
+                   if (deviceNameList.size() > 0){
+                       ivRetry.setVisibility(View.GONE);
+                   }else {
+                       ivRetry.setVisibility(View.VISIBLE);
+                       statusView.showEmpty();
+                   }
+               }else {
+                   ivRetry.setVisibility(View.VISIBLE);
+                   statusView.showEmpty();
+               }
+
 
             }
         });
@@ -163,6 +173,13 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         rvList.setLayoutManager(manager);
         mAdapter = new BluetoothScanDeviceListAdapter(deviceNameList);
         rvList.setAdapter(mAdapter);
+
+        ivRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startScan();
+            }
+        });
 
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -216,7 +233,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
     int verifyFpCount=0;
 
-    private void doVeriyFp(int status) {
+    private void doVerifyFp(int status) {
 
         DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
                 new DeviceOperationManager.DeviceVerifyFPCallback() {
@@ -229,10 +246,22 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     @Override
                     public void onVerifySuccess() {
                         LoggerManager.d("onVerifySuccess ");
+                        //1-已设置PIN但未完成初始化  2--已经初始化且有配对信息
                         if(status==1){
                             verifyDialog.cancel();
                             //todo 验证电量
-                            showInitWookongBioDialog();
+                            WookongUtils.validatePowerLevel(ParamConstants.POWER_LEVEL_ALERT_INIT,
+                                    new WookongUtils.ValidatePowerLevelCallback() {
+                                        @Override
+                                        public void onValidateSuccess() {
+                                            showInitWookongBioDialog();
+                                        }
+
+                                        @Override
+                                        public void onValidateFail() {
+                                            showpPowerLevelAlertDialog();
+                                        }
+                                    });
 
 
 //                            int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
@@ -246,14 +275,12 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         }else if (status==2){
 
                             verifyDialog.cancel();
-                            //todo 验证电量
 
                             //create wookong wallet firstly
                             createWookongWallet();
 
-
-//                        UISkipMananger.launchHome(BluetoothScanResultDialogActivity.this);
-//                        finish();
+                            UISkipMananger.launchHome(BluetoothScanResultDialogActivity.this);
+                            finish();
                         }
                     }
 
@@ -262,7 +289,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                     public void onVerifyFailed() {
                         LoggerManager.d("onVerifyFailed   verifyFpCount="+verifyFpCount);
                         if(verifyFpCount<4){
-                            doVeriyFp(status);
+                            doVerifyFp(status);
                         }else{
                             if(verifyDialog!=null){
                                 verifyDialog.cancel();
@@ -466,7 +493,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 //                                                        }
 //                                                    });
                                         verifyFpCount=0;
-                                        doVeriyFp(status);
+                                        doVerifyFp(status);
 
                                     }else {
                                         //未设置指纹
@@ -501,7 +528,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
 
                                         verifyFpCount=0;
-                                        doVeriyFp(status);
+                                        doVerifyFp(status);
 
                                     }else {
                                         //未设置指纹
@@ -586,12 +613,12 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.imv_back:
-                        dialog.cancel();
+                        connectDialog.cancel();
                         finish();
                         break;
                     case R.id.btn_reconnect:
                         //重新连接
-                        dialog.cancel();
+                        connectDialog.cancel();
                         startScan();
                         break;
                     default:
@@ -615,7 +642,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.imv_back:
-                        dialog.cancel();
+                        verifyDialog.cancel();
                         break;
                     default:
                         break;
@@ -623,6 +650,30 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             }
         });
         verifyDialog.show();
+    }
+
+    /**
+     * 显示电量不足dialog
+     */
+    private void showpPowerLevelAlertDialog() {
+        if(powerAlertDialog!=null)return;
+        int[] listenedItems = {R.id.tv_i_understand};
+        powerAlertDialog = new CustomFullDialog(this,
+                R.layout.dialog_bluetooth_power_level_alert, listenedItems, false, Gravity.BOTTOM);
+        powerAlertDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.tv_i_understand:
+                        powerAlertDialog.cancel();
+                        finish();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        powerAlertDialog.show();
     }
 
     /**
@@ -752,6 +803,14 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    private void checkCurBatteryLevel(){
+        int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
+
+        if (powerLevel < 130){
+            showpPowerLevelAlertDialog();
+        }
     }
 
 

@@ -129,5 +129,8 @@ public interface ParamConstants {
     String RESOURCE_VO = "resourceInfoVo";
     String EOS_TOKEN_TYPE = "eosTokenType";
 
+    int POWER_LEVEL_ALERT_INIT = 130;
+    int POWER_LEVEL_ALERT = 126;
+
 
 }

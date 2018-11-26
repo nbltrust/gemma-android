@@ -286,7 +286,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         }
         delegatedResourceQuantity = "0";
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-//        updateWallet(curWallet);
     }
 
 

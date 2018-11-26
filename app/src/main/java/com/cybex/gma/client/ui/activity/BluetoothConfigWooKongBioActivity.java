@@ -3,8 +3,6 @@ package com.cybex.gma.client.ui.activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -22,26 +20,18 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
-import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.manager.DeviceOperationManager;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.event.DeviceInfoEvent;
-import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.manager.WookongBioManager;
-import com.cybex.gma.client.ui.model.vo.BluetoothAccountInfoVO;
 import com.cybex.gma.client.ui.presenter.BluetoothConfigWookongBioPresenter;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
-import com.extropies.common.MiddlewareInterface;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -100,6 +90,8 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
     private Validator validator;
     private boolean isMask;
     private BlueToothWrapper blueToothThread;
+
+    private CustomFullDialog powerAlertDialog;
 //    private BluetoothHandler mHandler;
 //    private long contextHandle = 0;
     private Bundle bd;
@@ -606,9 +598,22 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
                         dialog.cancel();
 
                         //first get mnemonic to backup
-                        UISkipMananger.skipBackupMneGuideActivity(BluetoothConfigWooKongBioActivity.this,
-                                null);
-                        finish();
+                        //验证电量
+                        WookongUtils.validatePowerLevel(ParamConstants.POWER_LEVEL_ALERT_INIT,
+                                new WookongUtils.ValidatePowerLevelCallback() {
+                                    @Override
+                                    public void onValidateSuccess() {
+                                        UISkipMananger.skipBackupMneGuideActivity(BluetoothConfigWooKongBioActivity.this,
+                                                null);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onValidateFail() {
+                                        showPowerLevelAlertDialog();
+                                    }
+                                });
+
                         break;
                     case R.id.btn_import_mne:
                         dialog.cancel();
@@ -622,6 +627,30 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
             }
         });
         dialog.show();
+    }
+
+    /**
+     * 显示电量不足dialog
+     */
+    private void showPowerLevelAlertDialog() {
+        if(powerAlertDialog!=null)return;
+        int[] listenedItems = {R.id.tv_i_understand};
+        powerAlertDialog = new CustomFullDialog(this,
+                R.layout.dialog_bluetooth_power_level_alert, listenedItems, false, Gravity.BOTTOM);
+        powerAlertDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.tv_i_understand:
+                        powerAlertDialog.cancel();
+                        finish();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        powerAlertDialog.show();
     }
 
 //    class BluetoothHandler extends Handler {
