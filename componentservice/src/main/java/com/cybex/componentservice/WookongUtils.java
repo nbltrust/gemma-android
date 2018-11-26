@@ -36,6 +36,8 @@ public class WookongUtils {
             }else {
                 callback.onValidateFail();
             }
+        }else {
+            callback.onValidateSuccess();
         }
     }
 

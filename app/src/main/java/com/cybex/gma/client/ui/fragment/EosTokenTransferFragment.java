@@ -29,11 +29,11 @@ import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.ui.activity.BluetoothScanResultDialogActivity;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.EosTokenTransferPresenter;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -450,30 +450,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         showConfirmTransferDialog();
     }
 
-    public void doVerifyFP(){
-        DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
-                new DeviceOperationManager.DeviceVerifyFPCallback() {
-                    @Override
-                    public void onVerifyStart() {
-                        showVerifyFPDialog();
-                    }
-
-                    @Override
-                    public void onVerifySuccess() {
-                        getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-                                getAmount() + " EOS", getNote());
-                        verifyDialog.cancel();
-                    }
-
-                    @Override
-                    public void onVerifyFailed() {
-
-                    }
-                });
-    }
-
-
-
     public boolean isAccountNameValid() {
         String eosUsername = etReceiverAccount.getText().toString().trim();
         String regEx = "^[a-z1-5.]{1,13}$";
@@ -519,19 +495,20 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                             dialog.cancel();
                             break;
                         case R.id.btn_transfer_nextStep:
-                            if (walletType == BaseConst.WALLET_TYPE_BLUETOOTH){
+                            if (walletType == BaseConst.WALLET_TYPE_BLUETOOTH) {
                                 //蓝牙钱包
                                 int connect_status = DeviceOperationManager.getInstance().getDeviceConnectStatus
                                         (deviceName);
 
-                                if (connect_status == CacheConstants.STATUS_BLUETOOTH_CONNCETED){
+                                if (connect_status == CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
                                     //蓝牙卡已连接
-                                    doVerifyFP();
-                                }else {
+                                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                                            getAmount() + " EOS", getNote());
+                                } else {
                                     //蓝牙卡未连接
                                     connectBio();
                                 }
-                            }else {
+                            } else {
                                 //软钱包
                                 showConfirmAuthoriDialog();
                             }
@@ -590,35 +567,20 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 new PasswordValidateHelper.PasswordValidateCallback() {
                     @Override
                     public void onValidateSuccess(String password) {
-                        //密码正确，根据钱包种类执行不同的转账逻辑
+                        //密码正确，执行转账逻辑
                         if (curToken != null) {
-                            String tokenType = curToken.getTokenSymbol();
-                            int walletType = DBManager.getInstance().getMultiWalletEntityDao()
-                                    .getCurrentMultiWalletEntity().getWalletType();
-                            if (walletType == CacheConstants.WALLET_TYPE_BLUETOOTH && tokenType.equals(ParamConstants
-                                    .SYMBOL_EOS)) {
-                                //蓝牙钱包EOS转账
-                                //判断蓝牙卡是否连接
-                                int status = DeviceOperationManager.getInstance().getDeviceConnectStatus(deviceName);
-                                if (status == CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
-                                    //蓝牙卡已连接
-                                    doVerifyFP();
-                                } else {
-                                    //蓝牙卡未连接
-                                    connectBio();
-                                }
-                            } else {
-                                //软钱包EOS及Tokens转账
-                                String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
-                                String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
-                                String tokenContract = curToken.getTokenName();
-                                int accuracy = curToken.getAccurancy();
-                                String tokenSymbol = curToken.getTokenSymbol();
-                                getP().executeTokenTransferLogic(
-                                        wallet.getEosWalletEntities().get(0).getCurrentEosName(),
-                                        collectionAccount, amount, memo,
-                                        privateKey, tokenContract, tokenSymbol, accuracy);
-                            }
+
+                            //软钱包EOS及Tokens转账
+                            String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
+                            String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
+                            String tokenContract = curToken.getTokenName();
+                            int accuracy = curToken.getAccurancy();
+                            String tokenSymbol = curToken.getTokenSymbol();
+                            getP().executeTokenTransferLogic(
+                                    wallet.getEosWalletEntities().get(0).getCurrentEosName(),
+                                    collectionAccount, amount, memo,
+                                    privateKey, tokenContract, tokenSymbol, accuracy);
+
                         }
                     }
 
@@ -692,17 +654,19 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     private void connectBio() {
 
         if (curWallet != null) {
-            WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(EosTokenTransferFragment.this.toString(),curWallet, getActivity());
+            WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(
+                    EosTokenTransferFragment.this.toString(), curWallet, getActivity());
             wookongConnectHelper.startConnectDevice(new WookongConnectHelper.ConnectWookongBioCallback() {
                 @Override
                 public void onConnectSuccess() {
-                    if (dialog != null)dialog.cancel();
-                        doVerifyFP();
+                    if (dialog != null) { dialog.cancel(); }
+                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                            getAmount() + " EOS", getNote());
                 }
 
                 @Override
                 public void onConnectFail() {
-                    if (dialog != null)dialog.cancel();
+                    if (dialog != null) { dialog.cancel(); }
                     showConnectBioFailDialog();
                 }
             });
@@ -781,60 +745,11 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     }
 
-
-    /**
-     * 显示确认授权dialog
-     */
-    private void showConfirmBluetoothAuthoriDialog() {
-        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_pair};
-        pinDialog = new CustomFullDialog(getActivity(),
-                R.layout.eos_dialog_bluetooth_confirm_pair, listenedItems, false, Gravity.BOTTOM);
-        pinDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
-            @Override
-            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.imc_cancel:
-                        dialog.cancel();
-                        break;
-                    case R.id.btn_confirm_pair:
-                        EditText edt_PIN = dialog.findViewById(R.id.et_password);
-                        if (EmptyUtils.isNotEmpty(edt_PIN.getText())){
-                            //输入不为空
-                            String pin = edt_PIN.getText().toString().trim();
-                            DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, pin,
-                                    new DeviceOperationManager.VerifyPinCallback() {
-                                        @Override
-                                        public void onVerifySuccess() {
-                                            //验证成功，允许转账
-                                            getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-                                                    getAmount() + " EOS", getNote());
-                                            dialog.cancel();
-                                        }
-
-                                        @Override
-                                        public void onVerifyFail() {
-                                            GemmaToastUtils.showShortToast(getString(R.string.baseservice_pass_validate_ip_wrong_password));
-                                        }
-                                    });
-                        }else {
-                            //输入为空
-                            GemmaToastUtils.showShortToast(getString(R.string.eos_tip_please_input_pass));
-                        }
-
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        pinDialog.show();
-    }
-
     /**
      * 显示通过蓝牙卡验证指纹dialog
      */
     private void showVerifyFPDialog() {
-        if(verifyDialog!=null)return;
+        if (verifyDialog != null) { return; }
         int[] listenedItems = {R.id.imv_back};
         verifyDialog = new CustomFullDialog(getActivity(),
                 R.layout.eos_dialog_transfer_bluetooth_finger_sure, listenedItems, false, Gravity.BOTTOM);

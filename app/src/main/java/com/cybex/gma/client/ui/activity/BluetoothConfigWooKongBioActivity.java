@@ -56,8 +56,9 @@ import me.jessyan.autosize.AutoSize;
 /**
  * 配置WooKong Bio页面
  */
-public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfigWookongBioPresenter> implements Validator
-        .ValidationListener {
+public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfigWookongBioPresenter> implements
+        Validator
+                .ValidationListener {
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
@@ -90,9 +91,11 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
     private Validator validator;
     private boolean isMask;
     private BlueToothWrapper blueToothThread;
+    private String TAG = this.toString();
+    private String deviceName;
 
     private CustomFullDialog powerAlertDialog;
-//    private BluetoothHandler mHandler;
+    //    private BluetoothHandler mHandler;
 //    private long contextHandle = 0;
     private Bundle bd;
 
@@ -310,24 +313,20 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
     @Override
     public void initData(Bundle savedInstanceState) {
 
-//        mHandler = new BluetoothHandler();
-//        WookongBioManager.getInstance().init(mHandler);
-
+        deviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
         setUnclickable(btCreateWallet);
         SoftHideKeyBoardUtil.assistActivity(this);
         validator = new Validator(this);
         validator.setValidationListener(this);
         isMask = true;
 
-
-
         initView();
         checkboxConfig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && EmptyUtils.isNotEmpty(getPassword())&& EmptyUtils.isNotEmpty(getRepeatPassword())){
+                if (isChecked && EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword())) {
                     setClickable(btCreateWallet);
-                }else {
+                } else {
                     setUnclickable(btCreateWallet);
                 }
             }
@@ -336,7 +335,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
         bd = getIntent().getExtras();
         if (bd != null) {
 //            contextHandle = bd.getLong(ParamConstants.CONTEXT_HANDLE, 0);
-            if (bd.getBoolean(BaseConst.PIN_STATUS)){
+            if (bd.getBoolean(BaseConst.PIN_STATUS)) {
                 //如果已初始化
                 showInitWookongBioDialog();
             }
@@ -375,9 +374,23 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
             mTitleBar.setLeftClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    BluetoothConnectKeepJob.removeJob();
-//                    WookongBioManager.getInstance().freeContext(contextHandle);
-                    finish();
+                    DeviceOperationManager.getInstance().freeContext(TAG, deviceName,
+                            new DeviceOperationManager.FreeContextCallback() {
+                                @Override
+                                public void onFreeStart() {
+
+                                }
+
+                                @Override
+                                public void onFreeSuccess() {
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFreeFailed() {
+
+                                }
+                            });
                 }
             });
         }
@@ -507,47 +520,10 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
      */
     @Override
     public void onValidationSucceeded() {
-        //设置初始化PIN
-        String password = String.valueOf(edtSetPass.getText());
-        final String passwordHint = String.valueOf(edtPassHint.getText());
+        showInitWookongBioDialog();
 
-//        LoggerManager.d("contextHandle", contextHandle);
-//        WookongBioManager.getInstance().initPIN(contextHandle, 0, password);
-
-        String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
-        DeviceOperationManager.getInstance().initPin(this.toString(), currentDeviceName, password,passwordHint, new DeviceOperationManager.InitPinCallback() {
-            @Override
-            public void onInitSuccess() {
-
-                //跳转到创建账户名界面
-//                    String password = String.valueOf(edtSetPass.getText());
-//                    String pwdTip = String.valueOf(edtPassHint.getText());
-//                    BluetoothAccountInfoVO vo = new BluetoothAccountInfoVO();
-//                    vo.setPassword(password);
-//                    vo.setPasswordTip(pwdTip);
-//
-//                    if (bd != null) {
-//                        bd.putParcelable(ParamConstants.KEY_BLUETOOTH_ACCOUNT_INFO, vo);
-//                    }
-
-                //wookong press to confirm , but now is not supported
-
-
-                //so directly,select init type
-                showInitWookongBioDialog();
-
-
-            }
-
-            @Override
-            public void onInitFail() {
-                GemmaToastUtils.showLongToast(getString(R.string.wookong_init_pin_fail));
-
-            }
-        });
 
     }
-
 
 
     /**
@@ -587,39 +563,84 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                String password = String.valueOf(edtSetPass.getText());
+                String passwordHint = String.valueOf(edtPassHint.getText());
+
+                String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
                 switch (view.getId()) {
                     case R.id.btn_close:
                         dialog.cancel();
-//                        WookongBioManager.getInstance().freeContext(contextHandle);
-//                        BluetoothConnectKeepJob.removeJob();
-//                        finish();
+
                         break;
                     case R.id.btn_create_wallet:
+                        //设置初始化PIN
+                        password = String.valueOf(edtSetPass.getText());
+                        passwordHint = String.valueOf(edtPassHint.getText());
+
+                        currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+                        DeviceOperationManager.getInstance()
+                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
+                                        new DeviceOperationManager.InitPinCallback() {
+                                            @Override
+                                            public void onInitSuccess() {
+
+                                                //first get mnemonic to backup
+                                                //验证电量
+                                                WookongUtils.validatePowerLevel(ParamConstants.POWER_LEVEL_ALERT_INIT,
+                                                        new WookongUtils.ValidatePowerLevelCallback() {
+                                                            @Override
+                                                            public void onValidateSuccess() {
+                                                                UISkipMananger.skipBackupMneGuideActivity(
+                                                                        BluetoothConfigWooKongBioActivity.this,
+                                                                        null);
+                                                                finish();
+                                                            }
+
+                                                            @Override
+                                                            public void onValidateFail() {
+                                                                showPowerLevelAlertDialog();
+                                                            }
+                                                        });
+                                            }
+
+                                            @Override
+                                            public void onInitFail() {
+                                                GemmaToastUtils.showLongToast(
+                                                        getString(R.string.wookong_init_pin_fail));
+
+                                            }
+                                        });
                         dialog.cancel();
 
-                        //first get mnemonic to backup
-                        //验证电量
-                        WookongUtils.validatePowerLevel(ParamConstants.POWER_LEVEL_ALERT_INIT,
-                                new WookongUtils.ValidatePowerLevelCallback() {
-                                    @Override
-                                    public void onValidateSuccess() {
-                                        UISkipMananger.skipBackupMneGuideActivity(BluetoothConfigWooKongBioActivity.this,
-                                                null);
-                                        finish();
-                                    }
-
-                                    @Override
-                                    public void onValidateFail() {
-                                        showPowerLevelAlertDialog();
-                                    }
-                                });
 
                         break;
                     case R.id.btn_import_mne:
-                        dialog.cancel();
-                        Intent intent = new Intent(BluetoothConfigWooKongBioActivity.this, BluetoothImportWalletActivity.class);
-                        startActivity(intent);
-                        finish();
+                        //设置初始化PIN
+                        password = String.valueOf(edtSetPass.getText());
+                        passwordHint = String.valueOf(edtPassHint.getText());
+
+
+                        currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+                        DeviceOperationManager.getInstance()
+                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
+                                        new DeviceOperationManager.InitPinCallback() {
+                                            @Override
+                                            public void onInitSuccess() {
+                                                //跳转到创建账户名界面
+                                                dialog.cancel();
+                                                Intent intent = new Intent(BluetoothConfigWooKongBioActivity.this,
+                                                        BluetoothImportWalletActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+
+                                            @Override
+                                            public void onInitFail() {
+                                                GemmaToastUtils.showLongToast(
+                                                        getString(R.string.wookong_init_pin_fail));
+                                            }
+                                        });
+
                         break;
                     default:
                         break;
@@ -633,7 +654,7 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
      * 显示电量不足dialog
      */
     private void showPowerLevelAlertDialog() {
-        if(powerAlertDialog!=null)return;
+        if (powerAlertDialog != null) { return; }
         int[] listenedItems = {R.id.tv_i_understand};
         powerAlertDialog = new CustomFullDialog(this,
                 R.layout.dialog_bluetooth_power_level_alert, listenedItems, false, Gravity.BOTTOM);
