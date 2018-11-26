@@ -54,6 +54,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     private P p;
     protected TitleBar mTitleBar;
     protected Activity mContext;
+    protected boolean isResume;
 
 
     @Nullable
@@ -246,6 +247,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
 
     @Override
     protected void onResume() {
+        isResume=true;
         super.onResume();
         getvDelegate().resume();
        // if (OSUtils.checkDeviceHasNavigationBar(this)) {
@@ -258,6 +260,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
 
     @Override
     protected void onPause() {
+        isResume=false;
         super.onPause();
         getvDelegate().pause();
     }
@@ -375,7 +378,6 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
             kProgressHUD.dismiss();
         }
     }
-
 
 
 }

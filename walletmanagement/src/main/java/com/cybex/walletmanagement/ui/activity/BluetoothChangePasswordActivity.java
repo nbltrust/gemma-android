@@ -20,7 +20,9 @@ import android.widget.TextView;
 
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.ui.presenter.BluetoothChangePasswordPresenter;
@@ -30,12 +32,15 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
 
-public class BluetoothChangePasswordActivity extends XActivity<BluetoothChangePasswordPresenter> {
+public class BluetoothChangePasswordActivity extends BluetoothBaseActivity<BluetoothChangePasswordPresenter> {
 
     private ImageView ivSetPassMask;
     private ImageView ivRepeatPassMask;
@@ -497,6 +502,17 @@ public class BluetoothChangePasswordActivity extends XActivity<BluetoothChangePa
         }
 
         return true;
+    }
+
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveDeviceConnectEvent(DeviceConnectStatusUpdateEvent event){
+        fixDeviceDisconnectEvent(event);
     }
 
 

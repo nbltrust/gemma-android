@@ -33,7 +33,9 @@ public class DeviceOperationManager {
 
     String currentDeviceName;
     BlueToothWrapper scanThread;
+    BlueToothWrapper heartBeatThread;
     ScanHandler scanHandler;
+    HeartBeatHandler heartBeatHandler;
     private ConcurrentHashMap<String, DeviceComm> deviceMaps = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, DeviceCallbacsBean> callbackMaps = new ConcurrentHashMap<>();
 
@@ -197,6 +199,35 @@ public class DeviceOperationManager {
     }
 
 
+    public void getHeartDeviceInfo(String tag, String deviceName, GetDeviceInfoCallback getHeartDeviceInfoCallback) {
+
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.getHeartDeviceInfoCallback = getHeartDeviceInfoCallback;
+
+        if (heartBeatHandler == null) {
+            heartBeatHandler = new HeartBeatHandler(deviceName);
+        }
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if ((heartBeatThread == null) || (heartBeatThread.getState() == Thread.State.TERMINATED)) {
+
+        } else {
+            heartBeatThread.interrupt();
+        }
+        heartBeatThread = new BlueToothWrapper(heartBeatHandler);
+        heartBeatThread.setGetInfoWrapper(deviceComm.contextHandle,
+                0);
+        singleExecutor.execute(heartBeatThread);
+    }
+
+
     public void importMnemonics(String tag, String deviceName, String mnemonics,ImportMnemonicCallback importMnemonicCallback) {
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
         if (deviceCallbacks == null) {
@@ -308,7 +339,14 @@ public class DeviceOperationManager {
 //        }
     }
 
-    public void freeContext(String tag, String deviceName, FreeContextCallback freeContextCallback) {
+
+
+    public void freeContext(String tag,String deviceName, FreeContextCallback freeContextCallback){
+        freeContext(tag,true,deviceName,freeContextCallback);
+    }
+
+    public void freeContext(String tag, boolean isManual, String deviceName, FreeContextCallback freeContextCallback) {
+        LoggerManager.e("freeContext isManual="+isManual);
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
         if (deviceCallbacks == null) {
             deviceCallbacks = new DeviceCallbacsBean();
@@ -322,6 +360,7 @@ public class DeviceOperationManager {
             deviceComm = new DeviceComm(deviceName);
             deviceMaps.put(deviceName, deviceComm);
         }
+        deviceComm.isManualFree=isManual;
         if (deviceComm.mDeviceHandler == null) {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
@@ -819,6 +858,85 @@ public class DeviceOperationManager {
     }
 
 
+    class HeartBeatHandler extends Handler {
+
+        private String deviceName;
+
+        public HeartBeatHandler(String deviceName) {
+            this.deviceName = deviceName;
+        }
+
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Set<String> tags = callbackMaps.keySet();
+            Iterator<String> iterator;
+
+            switch (msg.what) {
+                case BlueToothWrapper.MSG_GET_DEV_INFO_START:
+                    LoggerManager.d("MSG_GET_DEV_INFO_START heart");
+                    break;
+                case BlueToothWrapper.MSG_GET_DEV_INFO_FINISH:
+
+                    //获得设备信息
+                    BlueToothWrapper.GetDevInfoReturnValue reValue = (BlueToothWrapper.GetDevInfoReturnValue) msg.obj;
+                    LoggerManager.d("MSG_GET_DEV_INFO_FINISH  heart rtValue=" + MiddlewareInterface.getReturnString(
+                            reValue.getReturnValue()));
+                    if (reValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        MiddlewareInterface.PAEW_DevInfo devInfo = reValue.getDeviceInfo();
+//                        if (devInfo.ucLifeCycle == DEVICE_LIFE_CYCLE_PRODUCE) {
+//                            //在全新（或已Format）的设备上
+//                            deviceNameList.get(updatePosition).isShowProgress = false;
+//                            deviceNameList.get(updatePosition).status = 0;
+//                            mAdapter.notifyDataSetChanged();
+//
+//                        } else if (devInfo.ucLifeCycle == DEVICE_LIFE_CYCLE_USER) {
+//                            //在InitPIN之后，LifeCycle变为User
+//                            deviceNameList.get(updatePosition).isShowProgress = false;
+//                            deviceNameList.get(updatePosition).status = 1;
+//                            mAdapter.notifyDataSetChanged();
+//
+//                            WookongBioManager.getInstance().getFPList(contextHandle, 0);
+//                        }
+                        DeviceComm deviceComm = deviceMaps.get(deviceName);
+                        if(deviceComm!=null){
+                            if(deviceComm.deviceInfo!=null){
+                                if(deviceComm.deviceInfo.ucPINState!=0x02&&deviceComm.deviceInfo.ucPINState==0x02){
+                                    //pin locked,send event
+                                    LoggerManager.e("pin locked,send event...");
+                                    EventBusProvider.post(new PinLockedEvent(deviceName));
+                                }
+                            }
+                            deviceComm.deviceInfo = devInfo;
+                        }
+
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).getHeartDeviceInfoCallback != null) {
+                                callbackMaps.get(tag).getHeartDeviceInfoCallback.onGetSuccess(devInfo);
+                            }
+                        }
+
+                    } else {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).getHeartDeviceInfoCallback != null) {
+                                callbackMaps.get(tag).getHeartDeviceInfoCallback.onGetFail();
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+
+        }
+    }
+
     class ScanHandler extends Handler {
 
         @Override
@@ -1275,9 +1393,11 @@ public class DeviceOperationManager {
 //                            .put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     deviceMaps.get(deviceName).currentState = CacheConstants.STATUS_BLUETOOTH_DISCONNCETED;
 
+
+                    boolean isManualFree = deviceMaps.get(deviceName).isManualFree;
                     EventBusProvider.post(
                             new DeviceConnectStatusUpdateEvent(CacheConstants.STATUS_BLUETOOTH_DISCONNCETED,
-                                    deviceName));
+                                    deviceName,isManualFree));
 
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
@@ -1547,6 +1667,7 @@ public class DeviceOperationManager {
         MiddlewareInterface.PAEW_DevInfo deviceInfo;
         int batteryMode=-1;//0 usb   ,1   battery
         int powerAmount=-1;//剩余电量
+        public boolean isManualFree; //是否意外断开
         DeviceHandler mDeviceHandler;
         BlueToothWrapper connectThread;
         BlueToothWrapper getDeviceInfoThread;
@@ -1586,6 +1707,7 @@ public class DeviceOperationManager {
         JsonSerilizeCallback jsonSerilizeCallback;
         ScanDeviceCallback scanDeviceCallback;
         GetDeviceInfoCallback getDeviceInfoCallback;
+        GetDeviceInfoCallback getHeartDeviceInfoCallback;
         InitPinCallback initPinCallback;
         VerifyPinCallback verifyPinCallback;
         ChangePinCallback changePinCallback;
@@ -1595,6 +1717,7 @@ public class DeviceOperationManager {
         EosSignCallback eosSignCallback;
         GetAddressCallback getEthAddressCallback;
         GetAddressCallback getEosAddressCallback;
+
     }
 
 

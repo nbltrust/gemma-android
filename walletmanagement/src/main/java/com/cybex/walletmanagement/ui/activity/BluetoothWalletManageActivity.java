@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
 import com.cybex.componentservice.utils.AlertUtil;
 
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
@@ -38,7 +40,7 @@ import me.framework.fragmentation.anim.FragmentAnimator;
 /**
  * 蓝牙钱包管理页
  */
-public class BluetoothWalletManageActivity extends XActivity {
+public class BluetoothWalletManageActivity extends BluetoothBaseActivity {
 
     @Override
     public void bindUI(View view) {
@@ -69,6 +71,16 @@ public class BluetoothWalletManageActivity extends XActivity {
     public FragmentAnimator onCreateFragmentAnimator() {
         // 设置横向(和安卓4.x动画相同)
         return new DefaultHorizontalAnimator();
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveDeviceConnectEvent(DeviceConnectStatusUpdateEvent event){
+        fixDeviceDisconnectEvent(event);
     }
 
 }

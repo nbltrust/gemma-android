@@ -12,18 +12,23 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -37,7 +42,11 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.tapadoo.alerter.Alert;
 import com.tapadoo.alerter.Alerter;
-
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.siberiadante.customdialoglib.CustomDialog;
+import com.siberiadante.customdialoglib.CustomFullDialog;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -938,4 +947,64 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 //            }
 //        }
 //    }
+
+
+    boolean isResume;
+    @Override
+    protected void onResume() {
+        isResume=true;
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        isResume=false;
+        super.onPause();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveDeviceConnectEvent(DeviceConnectStatusUpdateEvent event){
+        LoggerManager.d("receiveDeviceConnectEvent event.manual="+event.manual+"   event.status="+event.status);
+        if(event.status==DeviceConnectStatusUpdateEvent.STATUS_BLUETOOTH_DISCONNCETED&&event.manual==false){
+            //意外断开
+            if(isResume){
+                showDisconnectDialog();
+            }else{
+                finish();
+            }
+        }else{
+        }
+    }
+
+
+    protected void innerFixDisconnectEvent(){
+        //jump to home
+        int size = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size();
+        if(size>0){
+            ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME).navigation();
+            finish();
+        }else{
+            ARouter.getInstance().build(RouterConst.PATH_TO_INIT).navigation();
+            finish();
+        }
+    }
+
+
+    protected void showDisconnectDialog(){
+        int[] listenedItems = {R.id.tv_understand};
+        CustomDialog dialog = new CustomDialog(this,
+                com.cybex.componentservice.R.layout.baseservice_dialog_disconnect, listenedItems, false, Gravity.CENTER);
+        dialog.setmWidth(SizeUtil.dp2px(259));
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                if(view.getId()== com.cybex.componentservice.R.id.tv_understand){
+                    dialog.cancel();
+                    innerFixDisconnectEvent();
+                }
+            }
+        });
+        dialog.show();
+    }
 }

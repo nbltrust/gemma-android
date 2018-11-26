@@ -74,7 +74,7 @@ public class BluetoothConnectKeepJob {
     private void getDeviceInfo() {
 
         String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
-        DeviceOperationManager.getInstance().getDeviceInfo(this.toString(), currentDeviceName, new DeviceOperationManager.GetDeviceInfoCallback() {
+        DeviceOperationManager.getInstance().getHeartDeviceInfo(this.toString(), currentDeviceName, new DeviceOperationManager.GetDeviceInfoCallback() {
             @Override
             public void onGetSuccess(MiddlewareInterface.PAEW_DevInfo deviceInfo) {
                 errorCount=0;
@@ -87,7 +87,8 @@ public class BluetoothConnectKeepJob {
                 boolean deviceConnectted = DeviceOperationManager.getInstance().isDeviceConnectted(currentDeviceName);
                 LoggerManager.e("heart beat onGetFail deviceConnectted:"+deviceConnectted);
                 if(deviceConnectted&&errorCount>=2){
-                    DeviceOperationManager.getInstance().freeContext(instance.toString(),currentDeviceName,null);
+                    DeviceOperationManager.getInstance().freeContext(instance.toString(),false,currentDeviceName,null);
+//                    EventBusProvider.post(new DeviceConnectStatusUpdateEvent());
                 }
 
             }

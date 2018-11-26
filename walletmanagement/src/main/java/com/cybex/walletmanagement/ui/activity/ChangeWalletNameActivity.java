@@ -4,23 +4,32 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.siberiadante.customdialoglib.CustomDialog;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -142,5 +151,57 @@ public class ChangeWalletNameActivity extends XActivity {
     public FragmentAnimator onCreateFragmentAnimator() {
         // 设置横向(和安卓4.x动画相同)
         return new DefaultHorizontalAnimator();
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveDeviceConnectEvent(DeviceConnectStatusUpdateEvent event){
+        LoggerManager.d("receiveDeviceConnectEvent event.manual="+event.manual+"   event.status="+event.status);
+        if(wallet.getWalletType()!=MultiWalletEntity.WALLET_TYPE_HARDWARE)return;
+        if(event.status==DeviceConnectStatusUpdateEvent.STATUS_BLUETOOTH_DISCONNCETED&&event.manual==false){
+            //意外断开
+            if(isResume){
+                showDisconnectDialog();
+            }else{
+                finish();
+            }
+        }else{
+        }
+    }
+
+
+    protected void innerFixDisconnectEvent(){
+        //jump to home
+        int size = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size();
+        if(size>0){
+            ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME).navigation();
+            finish();
+        }else{
+            ARouter.getInstance().build(RouterConst.PATH_TO_INIT).navigation();
+            finish();
+        }
+    }
+
+
+    protected void showDisconnectDialog(){
+        int[] listenedItems = {R.id.tv_understand};
+        CustomDialog dialog = new CustomDialog(this,
+                com.cybex.componentservice.R.layout.baseservice_dialog_disconnect, listenedItems, false, Gravity.CENTER);
+        dialog.setmWidth(SizeUtil.dp2px(259));
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                if(view.getId()== com.cybex.componentservice.R.id.tv_understand){
+                    dialog.cancel();
+                    innerFixDisconnectEvent();
+                }
+            }
+        });
+        dialog.show();
     }
 }

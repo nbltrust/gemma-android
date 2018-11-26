@@ -19,10 +19,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.manager.DeviceOperationManager;
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
+import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.R;
@@ -42,9 +43,9 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.xujiaji.happybubble.BubbleLayout;
-
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,9 +57,8 @@ import me.jessyan.autosize.AutoSize;
 /**
  * 配置WooKong Bio页面
  */
-public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfigWookongBioPresenter> implements
-        Validator
-                .ValidationListener {
+public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<BluetoothConfigWookongBioPresenter> implements Validator
+        .ValidationListener {
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.tv_in_bubble) TextView tvInBubble;
@@ -735,6 +735,17 @@ public class BluetoothConfigWooKongBioActivity extends XActivity<BluetoothConfig
 //            }
 //        }
 //    }
+
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveDeviceConnectEvent(DeviceConnectStatusUpdateEvent event){
+        fixDeviceDisconnectEvent(event);
+    }
 
 
 }

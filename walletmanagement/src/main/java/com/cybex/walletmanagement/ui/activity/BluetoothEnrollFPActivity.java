@@ -15,9 +15,11 @@ import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -25,11 +27,14 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 /**
  * 录入指纹窗口
  */
 @Route(path = RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE)
-public class BluetoothEnrollFPActivity extends XActivity {
+public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
 
     @Autowired(name = BaseConst.KEY_INIT_TYPE)
     int initType; //0 是配对设备添加指纹入口, 1 则是初始化指纹入口
@@ -293,6 +298,17 @@ public class BluetoothEnrollFPActivity extends XActivity {
             }
         });
         dialog.show();
+    }
+
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveDeviceConnectEvent(DeviceConnectStatusUpdateEvent event){
+        fixDeviceDisconnectEvent(event);
     }
 
 //    class FPHandler extends Handler {

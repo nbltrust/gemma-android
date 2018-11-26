@@ -4,9 +4,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
+import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.fragment.BluetoothBackupMneGuideFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
@@ -15,7 +20,7 @@ import me.framework.fragmentation.anim.FragmentAnimator;
  * 备份助记词引导页
  */
 
-public class BluetoothBackupMneGuideActivity extends XActivity {
+public class BluetoothBackupMneGuideActivity extends BluetoothBaseActivity {
 
     @Override
     public void bindUI(View view) {
@@ -47,5 +52,15 @@ public class BluetoothBackupMneGuideActivity extends XActivity {
     public FragmentAnimator onCreateFragmentAnimator() {
         // 设置横向(和安卓4.x动画相同)
         return new DefaultHorizontalAnimator();
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveDeviceConnectEvent(DeviceConnectStatusUpdateEvent event){
+        fixDeviceDisconnectEvent(event);
     }
 }
