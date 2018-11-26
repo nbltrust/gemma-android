@@ -467,15 +467,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                     @Override
                     public void onVerifyFailed() {
-                        LoggerManager.d("onVerifyFailed   verifyFpCount="+verifyFpCount);
-                        if(verifyFpCount<4){
-                            doVerifyFP();
-                        }else{
-                            if(verifyDialog!=null){
-                                verifyDialog.cancel();
-                            }
-                            showConfirmBluetoothAuthoriDialog();
-                        }
+
                     }
                 });
     }

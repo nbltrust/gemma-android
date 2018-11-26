@@ -28,7 +28,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
-            app:SpinKit_Color="#3F51B5"
+            app:SpinKit_Color="@color/black_context"
             />
 
     </RelativeLayout>

@@ -184,7 +184,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                viewSpinKit.setVisibility(View.GONE);
+                //viewSpinKit.setVisibility(View.GONE);
                 if (EmptyUtils.isNotEmpty(deviceNameList)) {
                     deviceName = deviceNameList.get(position).deviceName;
 //                    SPUtils.getInstance().put(ParamConstants.DEVICE_NAME, deviceName);
@@ -213,7 +213,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         }
                     });
                     //deviceNameList.get(position).isShowProgress = true;
-                    viewSpinKit.setVisibility(View.VISIBLE);
+                    //viewSpinKit.setVisibility(View.VISIBLE);
                     mAdapter.notifyDataSetChanged();
 
                 }
@@ -263,7 +263,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                                         }
                                     });
 
-
 //                            int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
 
 //                            Bundle bundle = new Bundle();
@@ -291,6 +290,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         if(verifyFpCount<4){
                             doVerifyFp(status);
                         }else{
+                            DeviceOperationManager.getInstance().abortEnrollFp(deviceName);
                             if(verifyDialog!=null){
                                 verifyDialog.cancel();
                             }
@@ -433,6 +433,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
         DeviceOperationManager.getInstance().getDeviceInfo(TAG, deviceName, new DeviceOperationManager.GetDeviceInfoCallback() {
             @Override
             public void onGetSuccess(MiddlewareInterface.PAEW_DevInfo deviceInfo) {
+                viewSpinKit.setVisibility(View.GONE);
                 //更新当前设备状态
                 LoggerManager.d("deviceInfo life cycle", deviceInfo.ucLifeCycle);
                 LoggerManager.d("deviceInfo pin state", deviceInfo.ucPINState);
@@ -554,6 +555,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 
             @Override
             public void onGetFail() {
+                viewSpinKit.setVisibility(View.GONE);
 
             }
         });
@@ -803,14 +805,6 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             }
         });
         dialog.show();
-    }
-
-    private void checkCurBatteryLevel(){
-        int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
-
-        if (powerLevel < 130){
-            showpPowerLevelAlertDialog();
-        }
     }
 
 
