@@ -4,30 +4,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"
-                android:minHeight="60dp"
+                android:minHeight="40dp"
                 android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/view_child_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/eos_bg_shape_radius_blue_selector"
         android:clickable="true">
 
         <CheckedTextView
             android:id="@+id/tv_device_name"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:checked="false"
-            android:gravity="center_vertical"
-            android:paddingLeft="16dp"
-            android:layout_toLeftOf="@id/view_progress"
+            android:layout_centerVertical="true"
             android:maxLines="1"
-            android:layout_alignParentStart="true"
-            android:textColor="@color/eos_account_change_color_selector"
+            android:textStyle="bold"
+            android:textColor="@color/black_content"
             android:textSize="@dimen/font_4"
             tools:text="WOOKONG-XXXXXXX"/>
 
@@ -42,7 +39,7 @@
             android:layout_marginBottom="10dp"
             android:textColor="@color/red_f3323b"
             android:textSize="@dimen/font_3.5"
-            android:visibility="visible"
+            android:visibility="gone"
             tools:text="未初始化"/>
 
         <com.github.ybq.android.spinkit.SpinKitView
@@ -53,10 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_gravity="center"
             android:layout_marginLeft="6dp"
-            android:layout_marginRight="5dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:SpinKit_Color="@color/black_context"/>
 
 

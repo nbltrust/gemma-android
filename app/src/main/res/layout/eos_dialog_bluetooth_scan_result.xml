@@ -3,6 +3,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
+                android:layout_gravity="bottom"
                 android:background="#ffffff">
 
     <LinearLayout
@@ -12,10 +13,10 @@
         android:orientation="vertical">
 
         <android.support.constraint.ConstraintLayout
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="24dp">
 
             <ImageView
                 android:id="@+id/imv_close"
@@ -29,13 +30,14 @@
                 android:src="@drawable/ic_retry"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
 
             <com.github.ybq.android.spinkit.SpinKitView
                 android:id="@+id/view_spinKit"
                 app:SpinKit_Color="@color/very_light_pink"
                 style="@style/SpinKitView.Circle"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="20dp"
                 android:layout_width="24dp"
@@ -49,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="4dp"
             android:text="@string/eos_title_scan_result"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_4"/>
@@ -61,9 +63,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/btn_navibar"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="12dp"
             app:contentView="@layout/eos_content_recycler_scan_result"
             app:emptyView="@layout/empty_view_bluetooth_scan"
             app:errorView="@layout/error_view"

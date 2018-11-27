@@ -56,6 +56,13 @@ public class DeviceOperationManager {
 
     }
 
+    public void clearDevice(String deviceName) {
+        deviceMaps.remove(currentDeviceName);
+        if(currentDeviceName!=null&&currentDeviceName.equals(deviceName)){
+            currentDeviceName=null;
+        }
+    }
+
 
     public static class SingleTon {
 
@@ -216,6 +223,9 @@ public class DeviceOperationManager {
             deviceComm = new DeviceComm(deviceName);
             deviceMaps.put(deviceName, deviceComm);
         }
+        if(deviceComm.currentState != CacheConstants.STATUS_BLUETOOTH_CONNCETED){
+            return;
+        }
         if ((heartBeatThread == null) || (heartBeatThread.getState() == Thread.State.TERMINATED)) {
 
         } else {
@@ -369,6 +379,7 @@ public class DeviceOperationManager {
             deviceComm.freeContextThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.freeContextThread.setFreeContextWrapper(deviceComm.contextHandle);
             singleExecutor.execute(deviceComm.freeContextThread);
+
 //        }
     }
 
@@ -1026,6 +1037,8 @@ public class DeviceOperationManager {
         @Override
         public void handleMessage(Message msg) {
 
+            if(deviceMaps.get(deviceName)==null)return;
+
             Set<String> tags = callbackMaps.keySet();
             Iterator<String> iterator;
 
@@ -1406,6 +1419,8 @@ public class DeviceOperationManager {
                             callbackMaps.get(tag).freeContextCallback.onFreeSuccess();
                         }
                     }
+                    singleExecutor.shutdownNow();
+                    singleExecutor=Executors.newSingleThreadExecutor();
                     break;
 
 

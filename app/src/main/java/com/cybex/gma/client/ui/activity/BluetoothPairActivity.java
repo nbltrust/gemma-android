@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -13,15 +14,21 @@ import android.widget.Button;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.event.WookongInitialedEvent;
+import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.manager.PermissionManager;
+import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
 import com.cybex.componentservice.utils.listener.PermissionResultListener;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.ContextHandleEvent;
 import com.cybex.gma.client.job.BluetoothConnectKeepJob;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.dialog.WookongScanDialog;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.cybex.gma.client.ui.presenter.BluetoothPairPresenter;
 import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
@@ -51,10 +58,11 @@ import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
  * Created by wanglin on 2018/9/3.
  */
 @Route(path = RouterConst.PATH_TO_BLUETOOTH_PAIR)
-public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
+public class BluetoothPairActivity extends BluetoothBaseActivity<BluetoothPairPresenter> {
 
 
     @BindView(R.id.btn_start_scan) Button btnStartScan;
+    private WookongScanDialog wookongScanDialog;
 
     @Override
     public void bindUI(View rootView) {
@@ -74,7 +82,10 @@ public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
                 manager.requestPermission(new PermissionResultListener() {
                                               @Override
                                               public void onPermissionGranted() {
-                                                  UISkipMananger.startActivity(BluetoothPairActivity.this, BluetoothScanResultDialogActivity.class);
+//                                                  UISkipMananger.startActivity(BluetoothPairActivity.this, BluetoothScanResultDialogActivity.class);
+
+                                                  wookongScanDialog = new WookongScanDialog(BluetoothPairActivity.this, false, false);
+                                                  wookongScanDialog.show();
                                               }
 
                                               @Override
@@ -90,6 +101,31 @@ public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
     @Override
     public int getLayoutId() {
         return R.layout.eos_activity_bluetooth_pair;
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(wookongScanDialog!=null){
+            wookongScanDialog.dismissAllDialog();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //判断有没有当前的连接设备,而且本地数据库并没有任何WOOKONG WALLET,则断开连接
+        String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+        LoggerManager.e("czc currentDeviceName="+currentDeviceName);
+        if(!TextUtils.isEmpty(currentDeviceName)){
+            List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList();
+            LoggerManager.e("czc bluetoothWalletList.size()="+bluetoothWalletList.size());
+            if(bluetoothWalletList.size()==0){
+                DeviceOperationManager.getInstance().freeContext(this.toString(), currentDeviceName,
+                        null);
+                DeviceOperationManager.getInstance().clearDevice(currentDeviceName);
+            }
+        }
     }
 
     @Override
@@ -110,5 +146,10 @@ public class BluetoothPairActivity extends XActivity<BluetoothPairPresenter> {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onWookongInitial(WookongInitialedEvent event) {
         finish();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveDeviceConnectEvent(DeviceConnectStatusUpdateEvent event){
+        fixDeviceDisconnectEvent(event);
     }
 }

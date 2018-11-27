@@ -38,7 +38,7 @@ public class BluetoothScanDeviceListAdapter extends BaseQuickAdapter<BluetoothDe
             if (item.status == -1) {
                 vStatus.setVisibility(View.GONE);
             } else {
-                vStatus.setVisibility(View.VISIBLE);
+                vStatus.setVisibility(View.GONE);
             }
 
             if (item.status == 0) {
