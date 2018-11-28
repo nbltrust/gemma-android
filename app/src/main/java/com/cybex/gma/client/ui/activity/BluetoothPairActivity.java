@@ -49,6 +49,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.jessyan.autosize.AutoSize;
 
 import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
@@ -83,7 +84,7 @@ public class BluetoothPairActivity extends BluetoothBaseActivity<BluetoothPairPr
                                               @Override
                                               public void onPermissionGranted() {
 //                                                  UISkipMananger.startActivity(BluetoothPairActivity.this, BluetoothScanResultDialogActivity.class);
-
+                                                    AutoSize.autoConvertDensityOfGlobal(BluetoothPairActivity.this);
                                                   wookongScanDialog = new WookongScanDialog(BluetoothPairActivity.this, false, false);
                                                   wookongScanDialog.show();
                                               }

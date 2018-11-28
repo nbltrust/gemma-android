@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="260dp"
                 android:layout_gravity="bottom"
                 android:background="#ffffff">
 
@@ -51,10 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="14.5dp"
             android:text="@string/eos_title_scan_result"
             android:textColor="@color/black_context"
-            android:textSize="@dimen/font_4"/>
+            android:textSize="@dimen/font_3.5"/>
 
 
         <com.cybex.base.view.statusview.MultipleStatusView
@@ -68,6 +68,7 @@
             app:errorView="@layout/error_view"
             app:loadingView="@layout/loading_view_bio"
             app:noNetworkView="@layout/no_network_view"
+            android:layout_marginBottom="16dp"
             />
 
     </LinearLayout>

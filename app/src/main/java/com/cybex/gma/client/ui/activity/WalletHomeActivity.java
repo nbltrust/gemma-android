@@ -13,10 +13,10 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.config.BaseConst;
-import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
@@ -37,12 +37,13 @@ import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.presenter.WalletHomePresenter;
 import com.cybex.gma.client.widget.EosCardView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.lzy.okgo.OkGo;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -88,6 +89,9 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     EosCardView mEosCardView;
     @BindView(R.id.eth_card)
     EthCardView mEthCardView;
+    @BindView(R.id.iv_backup_logo) ImageView ivBackupLogo;
+    @BindView(R.id.tv_backup_status) TextView tvBackupStatus;
+    @BindView(R.id.view_refresh_wallet_home) CommonRefreshLayout viewRefreshWalletHome;
     private long TOUCH_TIME = 0;
     private MultiWalletEntity curWallet;
     private EosWalletEntity curEosWallet;
@@ -109,7 +113,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     private Unbinder unbinder;
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onCybexPriceReceived(CybexPriceEvent event){
+    public void onCybexPriceReceived(CybexPriceEvent event) {
         eosUnitPriceRMB = event.getEosPrice();
     }
 
@@ -139,13 +143,13 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshWallet(RefreshWalletPswEvent event) {
         if (event.getCurrentWallet().getId() == curWallet.getId()) {
-            curWallet=DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+            curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshWalletName(WalletNameChangedEvent event) {
-        if(event.getWalletID() == curWallet.getId()){
+        if (event.getWalletID() == curWallet.getId()) {
             curWallet.setWalletName(event.getWalletName());
             mTvWalletName.setText(event.getWalletName());
         }
@@ -153,13 +157,13 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onDeviceConncectStatusChanged(DeviceConnectStatusUpdateEvent event){
+    public void onDeviceConncectStatusChanged(DeviceConnectStatusUpdateEvent event) {
         updateBluetoothUI();
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onHeartBeatRefresh(HeartBeatRefreshDataEvent event){
+    public void onHeartBeatRefresh(HeartBeatRefreshDataEvent event) {
         updateBluetoothUI();
     }
 
@@ -185,8 +189,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                         .withInt(BaseConst.KEY_WALLET_ENTITY_ID, curWallet.getId())
                         .navigation();
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
 
     }
@@ -229,7 +233,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         if (intent != null) {
             //onNewIntent中Arouter不会自动给initType赋值
             initType = intent.getIntExtra(BaseConst.KEY_INIT_TYPE, -1);
-            initCreatedWalletID = intent.getIntExtra(BaseConst.KEY_WALLET_ENTITY_ID,0);
+            initCreatedWalletID = intent.getIntExtra(BaseConst.KEY_WALLET_ENTITY_ID, 0);
 //            initCreatedWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
             handleInitType();
         }
@@ -244,16 +248,16 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 ARouter.getInstance().build(RouterConst.PATH_TO_BACKUP_MNEMONIC_GUIDE_PAGE)
                         .withInt(BaseConst.KEY_WALLET_ENTITY_ID, initCreatedWalletID)
                         .navigation();
-            }else if (initType == BaseConst.APP_HOME_INITTYPE_TO_ENROLL_FP) {
+            } else if (initType == BaseConst.APP_HOME_INITTYPE_TO_ENROLL_FP) {
                 ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_ENROOL_FP_PAGE)
                         .withInt(BaseConst.KEY_INIT_TYPE, 0)
                         .navigation();
-            }else if (initType == BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE) {
+            } else if (initType == BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE) {
                 ARouter.getInstance().build(RouterConst.PATH_TO_INIT)
                         .withInt(BaseConst.KEY_INIT_TYPE, 0)
                         .navigation();
                 finish();
-            }else if (initType == BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE_WOOKONG_PAIR) {
+            } else if (initType == BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE_WOOKONG_PAIR) {
                 ARouter.getInstance().build(RouterConst.PATH_TO_INIT)
                         .withInt(BaseConst.KEY_INIT_TYPE, BaseConst.APP_INIT_INITTYPE_TO_WOOKONG_PAIE)
                         .navigation();
@@ -281,26 +285,35 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        if(DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size()<=0){
+        if (DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size() <= 0) {
             return;
         }
         delegatedResourceQuantity = "0";
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        viewRefreshWalletHome.setEnableLoadmore(false);
+        viewRefreshWalletHome.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                updateWallet(curWallet);
+            }
+        });
     }
 
 
-    public void updateWallet(MultiWalletEntity multiWalletEntity){
+    public void updateWallet(MultiWalletEntity multiWalletEntity) {
         if (multiWalletEntity != null) {
             mTvWalletName.setText(multiWalletEntity.getWalletName());
-            if (multiWalletEntity.getEosWalletEntities() != null && multiWalletEntity.getEosWalletEntities().size() > 0) {
+            if (multiWalletEntity.getEosWalletEntities() != null
+                    && multiWalletEntity.getEosWalletEntities().size() > 0) {
                 curEosWallet = multiWalletEntity.getEosWalletEntities().get(0);
-            }else{
+            } else {
                 curEosWallet = null;
             }
 
-            if (multiWalletEntity.getEthWalletEntities() != null && multiWalletEntity.getEthWalletEntities().size() > 0) {
+            if (multiWalletEntity.getEthWalletEntities() != null
+                    && multiWalletEntity.getEthWalletEntities().size() > 0) {
                 curEthWallet = multiWalletEntity.getEthWalletEntities().get(0);
-            }else{
+            } else {
                 curEthWallet = null;
             }
 
@@ -323,7 +336,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             } else if (walletType == BaseConst.WALLET_TYPE_MNE_CREATE) {
                 //创建的助记词多币种钱包
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
-                mViewBackupStatus.setVisibility(multiWalletEntity.getIsBackUp()==0?View.VISIBLE:View.GONE);
+                mViewBackupStatus.setVisibility(multiWalletEntity.getIsBackUp() == 0 ? View.VISIBLE : View.GONE);
                 mEosCardView.setVisibility(View.VISIBLE);
                 mEthCardView.setVisibility(View.VISIBLE);
                 updateEosCardView();
@@ -371,6 +384,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     getP().getKeyAccounts(eos_public_key);
                 }
             }
+            viewRefreshWalletHome.finishRefresh();
         }
     }
 
@@ -385,31 +399,35 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     }
 
     public void updateBluetoothUI() {
-        boolean isConnected = DeviceOperationManager.getInstance().isDeviceConnectted(curWallet.getBluetoothDeviceName());
+        mViewBackupStatus.setVisibility(View.GONE);
+        boolean isConnected = DeviceOperationManager.getInstance()
+                .isDeviceConnectted(curWallet.getBluetoothDeviceName());
         if (isConnected) {
             //判断连接状态
             //已连接
-            int deviceBatteryChargeMode = DeviceOperationManager.getInstance().getDeviceBatteryChargeMode(curWallet.getBluetoothDeviceName());
-            if(deviceBatteryChargeMode==1){
+            int deviceBatteryChargeMode = DeviceOperationManager.getInstance()
+                    .getDeviceBatteryChargeMode(curWallet.getBluetoothDeviceName());
+            if (deviceBatteryChargeMode == 1) {
                 //电池供电
-                int powerAmount = DeviceOperationManager.getInstance().getDevicePowerAmount(curWallet.getBluetoothDeviceName());
-//                mTvWookongStatus.setText(getString(R.string.walletmanage_battery_left)+Math.abs(powerAmount));
+                int powerAmount = DeviceOperationManager.getInstance()
+                        .getDevicePowerAmount(curWallet.getBluetoothDeviceName());
                 mIvWookongLogo.setImageResource(R.drawable.wookong_logo);
 
                 String devicePowerPercent = WookongUtils.getDevicePowerPercent(powerAmount);
-                if(!TextUtils.isEmpty(devicePowerPercent)){
-                    mTvWookongStatus.setText(getString(R.string.walletmanage_battery_left)+ " " + devicePowerPercent + "%");
-                }else{
+                if (!TextUtils.isEmpty(devicePowerPercent)) {
+                    mTvWookongStatus.setText(
+                            getString(R.string.walletmanage_battery_left) + " " + devicePowerPercent + "%");
+                } else {
                     mTvWookongStatus.setText(R.string.walletmanage_status_connected);
                 }
 
 
-            }else{
+            } else {
                 //USB供电（正在充电）
                 mTvWookongStatus.setText(R.string.walletmanage_status_connected);
                 mIvWookongLogo.setImageResource(R.drawable.wookong_logo_charge);
             }
-        }else {
+        } else {
             //未连接
             mTvWookongStatus.setText(getString(R.string.eos_status_not_connected));
             mIvWookongLogo.setImageResource(R.drawable.wookong_logo_gray);
@@ -423,7 +441,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
 
-        if (curWallet != null && curWallet.getEosWalletEntities().size() > 0){
+        if (curWallet != null && curWallet.getEosWalletEntities().size() > 0) {
             curEosWallet = curWallet.getEosWalletEntities().get(0);
         }
 
@@ -464,7 +482,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     }
                 });
             }
-        }else {
+        } else {
             //当前eos钱包为空
             mEosCardView.setVisibility(View.GONE);
         }
@@ -473,7 +491,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     @Override
     protected void onStart() {
         super.onStart();
-        if(DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size()<=0){
+        if (DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size() <= 0) {
             return;
         }
         delegatedResourceQuantity = "0";
@@ -481,15 +499,15 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         updateWallet(curWallet);
     }
 
-    public void updateEosTokensUI(List<TokenBean> tokens){
+    public void updateEosTokensUI(List<TokenBean> tokens) {
         mEosCardView.setTokenList(tokens);
     }
 
-    public void showEosBalance(String rawBalance){
+    public void showEosBalance(String rawBalance) {
         String balance = rawBalance.split(" ")[0];
         String eosAssetsQuantity = AmountUtil.add(balance, delegatedResourceQuantity, 4);
         mEosCardView.setEosNumber(Float.valueOf(eosAssetsQuantity));
-        if (eosUnitPriceRMB != null){
+        if (eosUnitPriceRMB != null) {
             String eosAssetsValue = formatCurrency(AmountUtil.mul(eosAssetsQuantity, eosUnitPriceRMB, 2));
             //LoggerManager.d("eosAssetsValue",eosAssetsValue);
             mEosCardView.setTotlePrice(eosAssetsValue);
@@ -497,7 +515,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         OkGo.getInstance().cancelAll();
     }
 
-    public void clearEosCardView(){
+    public void clearEosCardView() {
         mEosCardView.setAccountName("");
         mEosCardView.setTotlePrice("0.0000");
         mEosCardView.setEosNumber(Float.valueOf("0.0000"));
@@ -508,10 +526,11 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     /**
      * 返回每三个位数添加一位逗号的字符串
+     *
      * @param value
      * @return
      */
-    public String formatCurrency(String value){
+    public String formatCurrency(String value) {
         DecimalFormat df = new DecimalFormat("#,###.00");
         BigDecimal bigDecimal = new BigDecimal(value);
 

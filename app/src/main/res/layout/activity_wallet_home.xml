@@ -121,28 +121,45 @@
 
     </RelativeLayout>
 
-    <com.cybex.gma.client.widget.EosCardView
-        android:id="@+id/eos_card"
+    <com.cybex.base.view.refresh.CommonRefreshLayout
+        android:id="@+id/view_refresh_wallet_home"
         android:layout_width="match_parent"
-        android:layout_height="204dp"
-        android:layout_marginTop="27dp"
-        style="@style/common_horizontal_padding"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="10dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        >
-    </com.cybex.gma.client.widget.EosCardView>
+        android:layout_height="wrap_content">
 
-    <com.cybex.componentservice.widget.EthCardView
-        android:id="@+id/eth_card"
-        android:layout_width="match_parent"
-        android:layout_height="204dp"
-        android:layout_marginTop="27dp"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="10dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        style="@style/common_horizontal_padding"
-        >
-    </com.cybex.componentservice.widget.EthCardView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cybex.gma.client.widget.EosCardView
+                android:id="@+id/eos_card"
+                android:layout_width="match_parent"
+                android:layout_height="204dp"
+                android:layout_marginTop="27dp"
+                android:layout_marginBottom="10dp"
+                style="@style/common_horizontal_padding"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="10dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                >
+            </com.cybex.gma.client.widget.EosCardView>
+
+            <com.cybex.componentservice.widget.EthCardView
+                android:id="@+id/eth_card"
+                android:layout_width="match_parent"
+                android:layout_height="204dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginBottom="10dp"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="10dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                style="@style/common_horizontal_padding"
+                >
+            </com.cybex.componentservice.widget.EthCardView>
+
+        </LinearLayout>
+
+    </com.cybex.base.view.refresh.CommonRefreshLayout>
+
 
 </LinearLayout>
