@@ -415,8 +415,6 @@ public class WookongScanDialog extends Dialog {
                 return ethAddress + "&&&&&&" + eosAddress;
             }
         })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<String, String>() {
             @Override
             public String apply(String addresses) throws Exception {
@@ -481,7 +479,8 @@ public class WookongScanDialog extends Dialog {
                 return "";
             }
         })
-
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String addresses) throws Exception {
