@@ -111,8 +111,8 @@ public class WookongScanDialog extends Dialog {
         ButterKnife.bind(this);
 
         //调起Activity时执行一次扫描
-        this.startScan();
         this.initView();
+        this.startScan();
     }
 
 
@@ -135,16 +135,15 @@ public class WookongScanDialog extends Dialog {
 
 
     private void startScan() {
+        if(deviceSelected)return;
+        viewSpinKit.setVisibility(View.VISIBLE);
+        ivRetry.setVisibility(View.GONE);
+        deviceNameList.clear();
+        statusView.showLoading();
+
         DeviceOperationManager.getInstance().scanDevice(TAG, new DeviceOperationManager.ScanDeviceCallback() {
             @Override
             public void onScanStart() {
-                viewSpinKit.setVisibility(View.VISIBLE);
-                ivRetry.setVisibility(View.GONE);
-//                deviceNameList.clear();
-//                mAdapter.notifyDataSetChanged();
-                if(deviceNameList.size()==0){
-                    statusView.showLoading();
-                }
             }
 
             @Override

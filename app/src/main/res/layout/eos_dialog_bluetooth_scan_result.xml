@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <android.support.constraint.ConstraintLayout
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="17dp"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="24dp">
@@ -40,18 +40,18 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="20dp"
-                android:layout_width="24dp"
-                android:layout_height="24dp"/>
+                android:layout_width="18dp"
+                android:layout_height="18dp"/>
 
         </android.support.constraint.ConstraintLayout>
 
 
-        <TextView
+        <com.cybex.base.view.AlignTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="14.5dp"
+            android:layout_marginTop="4.5dp"
             android:text="@string/eos_title_scan_result"
             android:textColor="@color/black_context"
             android:textSize="@dimen/font_3.5"/>
