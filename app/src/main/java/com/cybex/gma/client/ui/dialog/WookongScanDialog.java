@@ -49,6 +49,7 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
@@ -396,7 +397,8 @@ public class WookongScanDialog extends Dialog {
                                 new DeviceOperationManager.GetAddressCallback() {
                                     @Override
                                     public void onGetSuccess(String address) {
-                                        emitter.onNext(address.split("####")[0]);
+                                        String s = address.split("####")[0];
+                                        emitter.onNext(s);
                                         emitter.onComplete();
                                     }
 
@@ -412,7 +414,10 @@ public class WookongScanDialog extends Dialog {
             public String apply(String ethAddress, String eosAddress) throws Exception {
                 return ethAddress + "&&&&&&" + eosAddress;
             }
-        }).map(new Function<String, String>() {
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<String, String>() {
             @Override
             public String apply(String addresses) throws Exception {
                 String[] addressArray = addresses.split("&&&&&&");
@@ -476,16 +481,18 @@ public class WookongScanDialog extends Dialog {
                 return "";
             }
         })
+
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String addresses) throws Exception {
+                        LoggerManager.e("create wookong wallet  success");
                         UISkipMananger.launchHome(activity);
                         activity.finish();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) {
-
+                        LoggerManager.e("create wookong wallet fail throwable="+throwable);
                         activity.dissmisProgressDialog();
                         GemmaToastUtils.showLongToast(getContext().getString(com.cybex.gma.client.R.string.wookong_init_fail));
                     }

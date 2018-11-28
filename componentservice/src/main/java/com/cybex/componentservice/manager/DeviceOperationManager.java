@@ -1575,7 +1575,7 @@ public class DeviceOperationManager {
                             while (iterator.hasNext()) {
                                 String tag = iterator.next();
                                 if (callbackMaps.get(tag).getEthAddressCallback != null) {
-//                                    callbackMaps.get(tag).getEthAddressCallback.onGetSuccess(returnValueAddress.getAddress());
+                                    callbackMaps.get(tag).getEthAddressCallback.onGetSuccess(returnValueAddress.getAddress());
                                 }
                             }
                             return;
