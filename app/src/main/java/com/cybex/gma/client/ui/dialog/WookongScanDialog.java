@@ -156,6 +156,7 @@ public class WookongScanDialog extends Dialog {
                             BluetoothDeviceVO vo = new BluetoothDeviceVO();
                             vo.deviceName = deviceName;
                             deviceNameList.add(vo);
+                            mAdapter.notifyDataSetChanged();
                         }
                     }
                 }
@@ -169,6 +170,7 @@ public class WookongScanDialog extends Dialog {
                         statusView.showContent();
                     }
                 }
+
             }
 
             @Override
@@ -196,6 +198,7 @@ public class WookongScanDialog extends Dialog {
     }
 
     private void initView() {
+        AutoSize.autoConvertDensityOfGlobal(activity);
         imvClose.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -236,7 +239,6 @@ public class WookongScanDialog extends Dialog {
                     return;
                 }
 
-
 //                ivRetry.setVisibility(View.GONE);
                 if (EmptyUtils.isNotEmpty(deviceNameList)) {
                     deviceSelected=true;
@@ -272,8 +274,7 @@ public class WookongScanDialog extends Dialog {
                                     GemmaToastUtils.showLongToast(activity.getString(R.string.wookong_connect_fail));
                                 }
                             });
-                    mAdapter.notifyDataSetChanged();
-
+                   //mAdapter.notifyDataSetChanged();
                 }
             }
         });

@@ -57,7 +57,6 @@ public class ResourceDetailPresenter extends XPresenter<ResourceDetailActivity> 
         new GetRamMarketRequest(String.class)
                 .setJsonParams(jsonParams)
                 .getRamMarketRequest(new StringCallback() {
-
                                          @Override
                                          public void onSuccess(Response<String> response) {
                                              if (getV() != null) {
@@ -95,6 +94,7 @@ public class ResourceDetailPresenter extends XPresenter<ResourceDetailActivity> 
                                                  GemmaToastUtils.showLongToast(getV().getResources().getString(R.string
                                                          .eos_load_cur_ram_price_fail));
                                                  getV().dissmisProgressDialog();
+                                                 getV().finishRefresh();
                                              }
                                          }
                                      }
@@ -120,6 +120,7 @@ public class ResourceDetailPresenter extends XPresenter<ResourceDetailActivity> 
                         public void onError(Response<AccountInfo> response) {
                             if (getV() != null) {
                                 getV().dissmisProgressDialog();
+                                getV().finishRefresh();
                                 GemmaToastUtils.showLongToast(getV().getString(R.string
                                         .eos_load_account_info_fail));
                             }
@@ -133,6 +134,7 @@ public class ResourceDetailPresenter extends XPresenter<ResourceDetailActivity> 
                                     AccountInfo info = response.body();
                                     ResourceInfoVO resourceInfoVO = getResourceInfo(info, balance);
                                     getV().showResourceInfo(resourceInfoVO);
+                                    getV().finishRefresh();
 
                                 }
 
@@ -188,12 +190,12 @@ public class ResourceDetailPresenter extends XPresenter<ResourceDetailActivity> 
                                             if (EmptyUtils.isNotEmpty(balance)) {
                                                 getAccountInfo(balance);
                                             }
-                                        }else {
+                                        } else {
                                             //可用余额为0，链上返回空
-                                           getAccountInfo("0.0000");
+                                            getAccountInfo("0.0000");
                                         }
                                     }
-                                }else {
+                                } else {
                                     GemmaToastUtils.showLongToast(
                                             getV().getString(R.string.eos_load_account_info_fail));
                                 }
@@ -208,6 +210,7 @@ public class ResourceDetailPresenter extends XPresenter<ResourceDetailActivity> 
                     public void onError(Response<String> response) {
                         super.onError(response);
                         if (getV() != null) {
+                            getV().finishRefresh();
                             getV().dissmisProgressDialog();
                         }
                     }

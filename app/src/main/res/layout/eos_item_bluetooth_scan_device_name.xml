@@ -11,8 +11,8 @@
         android:id="@+id/view_child_item"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="26dp"
         android:background="@drawable/eos_bg_shape_radius_blue_selector"
         android:clickable="true">
 
@@ -24,9 +24,9 @@
             android:layout_centerVertical="true"
             android:maxLines="1"
             android:textStyle="bold"
-            android:textColor="@color/black_content"
-            android:textSize="@dimen/font_4"
-            tools:text="WOOKONG-XXXXXXX"/>
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/font_3.5"
+            tools:text="WOOKONG BIO####F1:03:1E:EC:CE:62"/>
 
 
         <com.cybex.gma.client.widget.underline.UnderlineTextView
@@ -36,7 +36,6 @@
             android:layout_below="@id/tv_device_name"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
             android:textColor="@color/red_f3323b"
             android:textSize="@dimen/font_3.5"
             android:visibility="gone"
@@ -50,10 +49,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
             android:visibility="visible"
             app:SpinKit_Color="@color/black_context"/>
 
+        <View
+            android:layout_alignParentBottom="true"
+            style="@style/common_divider">
+
+        </View>
 
     </RelativeLayout>
 

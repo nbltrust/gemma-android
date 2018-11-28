@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
-import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -16,6 +16,8 @@ import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
 import com.cybex.gma.client.ui.presenter.ResourceDetailPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +38,7 @@ public class ResourceDetailActivity extends XActivity<ResourceDetailPresenter> {
     @BindView(R.id.superTV_delegate) SuperTextView superTVDelegate;
     @BindView(R.id.superTV_buy_sell_ram) SuperTextView superTVBuySellRam;
     @BindView(R.id.view_resource_manage_area) LinearLayout viewResourceManageArea;
+    @BindView(R.id.view_refresh_resource_detail) CommonRefreshLayout viewRefreshResourceDetail;
     private Bundle bundle;
 
     private ResourceInfoVO curResourceInfoVO;
@@ -72,6 +75,18 @@ public class ResourceDetailActivity extends XActivity<ResourceDetailPresenter> {
         bundle = new Bundle();
         setNavibarTitle(getString(R.string.eos_title_resource_detail), true);
         getP().requestBalanceInfo();
+
+        viewRefreshResourceDetail.setEnableLoadmore(false);
+        viewRefreshResourceDetail.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                getP().requestBalanceInfo();
+            }
+        });
+    }
+
+    public void finishRefresh(){
+        viewRefreshResourceDetail.finishRefresh();
     }
 
     public void showResourceInfo(ResourceInfoVO resourceInfoVO) {
