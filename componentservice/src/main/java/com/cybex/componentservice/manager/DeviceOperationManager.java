@@ -7,6 +7,7 @@ import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.event.HeartBeatRefreshDataEvent;
 import com.cybex.componentservice.event.PinLockedEvent;
+import com.cybex.componentservice.utils.ConvertUtils;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
@@ -14,6 +15,7 @@ import com.hxlx.core.lib.base.BaseApplication;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.common.utils.HandlerUtil;
+import com.trycatch.mysnackbar.Prompt;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -728,6 +730,29 @@ public class DeviceOperationManager {
         singleExecutor.execute(deviceComm.getEosAddressThread);
     }
 
+    public void getCheckCode(String tag, String deviceName, GetCheckCodeCallback getCheckCodeCallback){
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (getCheckCodeCallback == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.getCheckCodeCallback = getCheckCodeCallback;
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+        int m_coinChoiceIndex=0;
+        deviceComm.getCheckCodeThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+        deviceComm.getCheckCodeThread.setGetCheckCodeWrapper(deviceComm.contextHandle,
+                0);
+        singleExecutor.execute(deviceComm.getCheckCodeThread);
+    }
+
 
     public interface DeviceConnectCallback {
 
@@ -868,6 +893,11 @@ public class DeviceOperationManager {
         void onGetFail();
     }
 
+    public interface GetCheckCodeCallback{
+        void onCheckCodeSuccess(byte[] checkCode);
+        void onCheckCodeFail();
+    }
+
 
     class HeartBeatHandler extends Handler {
 
@@ -886,14 +916,14 @@ public class DeviceOperationManager {
 
             switch (msg.what) {
                 case BlueToothWrapper.MSG_GET_DEV_INFO_START:
-                    LoggerManager.d("MSG_GET_DEV_INFO_START heart");
+//                    LoggerManager.d("MSG_GET_DEV_INFO_START heart");
                     break;
                 case BlueToothWrapper.MSG_GET_DEV_INFO_FINISH:
 
                     //获得设备信息
                     BlueToothWrapper.GetDevInfoReturnValue reValue = (BlueToothWrapper.GetDevInfoReturnValue) msg.obj;
-                    LoggerManager.d("MSG_GET_DEV_INFO_FINISH  heart rtValue=" + MiddlewareInterface.getReturnString(
-                            reValue.getReturnValue()));
+//                    LoggerManager.d("MSG_GET_DEV_INFO_FINISH  heart rtValue=" + MiddlewareInterface.getReturnString(
+//                            reValue.getReturnValue()));
                     if (reValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         MiddlewareInterface.PAEW_DevInfo devInfo = reValue.getDeviceInfo();
 //                        if (devInfo.ucLifeCycle == DEVICE_LIFE_CYCLE_PRODUCE) {
@@ -1523,14 +1553,16 @@ public class DeviceOperationManager {
                     if (returnValueAddress.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_EOS) {
                             LoggerManager.d("EOS Address: " + returnValueAddress.getAddress());
-                            String[] strArr = returnValueAddress.getAddress().split("####");
-                            String publicKey = strArr[0];
+                            String address = returnValueAddress.getAddress();
+//                            String[] strArr = returnValueAddress.getAddress().split("####");
+//                            String publicKey = strArr[0];
+//                            String publicKey_sig = strArr[1];
 
                             iterator = tags.iterator();
                             while (iterator.hasNext()) {
                                 String tag = iterator.next();
                                 if (callbackMaps.get(tag).getEosAddressCallback != null) {
-                                    callbackMaps.get(tag).getEosAddressCallback.onGetSuccess(publicKey);
+                                    callbackMaps.get(tag).getEosAddressCallback.onGetSuccess(address);
                                 }
                             }
                             return;
@@ -1543,7 +1575,7 @@ public class DeviceOperationManager {
                             while (iterator.hasNext()) {
                                 String tag = iterator.next();
                                 if (callbackMaps.get(tag).getEthAddressCallback != null) {
-                                    callbackMaps.get(tag).getEthAddressCallback.onGetSuccess(returnValueAddress.getAddress());
+//                                    callbackMaps.get(tag).getEthAddressCallback.onGetSuccess(returnValueAddress.getAddress());
                                 }
                             }
                             return;
@@ -1665,6 +1697,42 @@ public class DeviceOperationManager {
                         }
                     }
                     break;
+                    //checkCode 获取SN及签名
+                case BlueToothWrapper.MSG_GET_CHECK_CODE_START:
+
+                    break;
+                case BlueToothWrapper.MSG_GET_CHECK_CODE_FINISH:
+                    BlueToothWrapper.GetCheckCodeReturnValue getCheckCodeReturnValue = (BlueToothWrapper.GetCheckCodeReturnValue) msg.obj;
+                    if (getCheckCodeReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+
+                        byte[] checkedcode = getCheckCodeReturnValue.getCheckCode();
+//                        byte[] snbyte = ConvertUtils.subByte(checkedcode, 0, 16);
+////                         byte[] snSignByte = ConvertUtils.subByte(checkedcode,17,64);
+//
+//                        String SN = CommonUtility.byte2hex(snbyte);
+//                        String SN_sign = CommonUtility.byte2hex(checkedcode);
+//                        SN_sign = SN_sign.substring(32);
+
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).getCheckCodeCallback != null) {
+                                callbackMaps.get(tag).getCheckCodeCallback.onCheckCodeSuccess(checkedcode);
+                            }
+                        }
+
+                    }else {
+                        //checkCode 失败
+                        LoggerManager.d("checkCode fail");
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).getCheckCodeCallback != null) {
+                                callbackMaps.get(tag).getCheckCodeCallback.onCheckCodeFail();
+                            }
+                        }
+                    }
+                    break;
 
                 default:
                     break;
@@ -1703,6 +1771,7 @@ public class DeviceOperationManager {
         BlueToothWrapper eosSignThread;
         BlueToothWrapper getEosAddressThread;
         BlueToothWrapper getEthAddressThread;
+        BlueToothWrapper getCheckCodeThread;
 
 
         public DeviceComm(String deviceName) {
@@ -1732,6 +1801,7 @@ public class DeviceOperationManager {
         EosSignCallback eosSignCallback;
         GetAddressCallback getEthAddressCallback;
         GetAddressCallback getEosAddressCallback;
+        GetCheckCodeCallback getCheckCodeCallback;
 
     }
 

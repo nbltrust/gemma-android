@@ -21,19 +21,27 @@ public class ApiPath {
     public static String REST_URI_HOST = HOST[BuildConfig.API_PATH];
 
 
+    public static String getHostCenterServer() {
+        return HOST_CENTER_SERVER;
+    }
+
+    public static void setHostCenterServer(String hostCenterServer) {
+        HOST_CENTER_SERVER = hostCenterServer;
+    }
+
     /**
      * ------------EOS 项目情况配置---------------
      */
 
     //中心化服务器host
-    public static final String HOST_CENTER_SERVER = "http://139.196.73.117:3002";
+    public static String HOST_CENTER_SERVER = "http://139.196.73.117:3002";
     //"http://139.196.73.117:3002"微信支付沙盒测试环境
     //"http://139.196.73.117:3001"真实环境
     //"http://139.196.73.117:3005"灰度staging环境
 
     //链上服务器host
-    private static String HOST_ON_CHAIN = "http://47.75.154.248:50003";
-        //http://47.75.154.248:50003 北京团队测试链
+    public static String HOST_ON_CHAIN = "http://47.75.154.248:50003";
+    //http://47.75.154.248:50003 北京团队测试链
     //http://52.77.177.200:8888 cybex eos 主链节点
 
     //eosweb.net,一个外网节点，拥有当前eos链上所有数据
@@ -98,6 +106,11 @@ public class ApiPath {
     public static final String EOS_42 = "https://nodes.eos42.io";
     public static final String EOS_CYPHER_GLASS = "https://api.cypherglass.com";
     public static final String EOS_TEST_BEIJING = "http://47.75.154.248:50003";
+
+    public static final String EOS_SERVER_PORT_TEST = "http://139.196.73.117:3002";
+    public static final String EOS_SERVER_PORT_STAGING = "http://139.196.73.117:3005";
+
+
 
     /**------------节点 地址配置---------------*/
 

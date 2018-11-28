@@ -352,7 +352,7 @@ public class BluetoothWalletManageFragment extends XFragment {
                 int powerAmount = DeviceOperationManager.getInstance().getDevicePowerAmount(multiWalletEntity.getBluetoothDeviceName());
                 String devicePowerPercent = WookongUtils.getDevicePowerPercent(powerAmount);
                 if(!TextUtils.isEmpty(devicePowerPercent)){
-                    tvConnectionStatus.setText(getString(R.string.walletmanage_battery_left)+ devicePowerPercent);
+                    tvConnectionStatus.setText(getString(R.string.walletmanage_battery_left)+" "+ devicePowerPercent + "%");
                 }else{
                     tvConnectionStatus.setText(R.string.walletmanage_status_connected);
                 }
@@ -360,8 +360,6 @@ public class BluetoothWalletManageFragment extends XFragment {
                 tvConnectionStatus.setText(R.string.walletmanage_status_connected);
             }
         }
-
-
     }
 
 

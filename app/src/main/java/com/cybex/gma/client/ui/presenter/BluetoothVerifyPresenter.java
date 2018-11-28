@@ -122,7 +122,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
 
                     @Override
                     public void onComplete() {
-
+                        getV().dissmisProgressDialog();
                     }
                 });
 

@@ -125,8 +125,6 @@ public class CreateEosAccountActivity extends XActivity<CreateEosAccountPresente
     public void onValidationSucceeded() {
         if (isUserNameValid()){
             getP().verifyAccount(getEOSUsername());
-//            bd.putString(ParamConstants.EOS_USERNAME,  getEOSUsername());
-//            UISkipMananger.launchChooseActivateMethod(CreateEosAccountActivity.this, bd);
         }else {
             GemmaToastUtils.showLongToast(getString(R.string.eos_invalid_eos_username));
         }

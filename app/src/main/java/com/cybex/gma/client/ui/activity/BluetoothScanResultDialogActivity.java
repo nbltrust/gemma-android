@@ -22,7 +22,6 @@ import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
@@ -39,14 +38,12 @@ import com.extropies.common.MiddlewareInterface;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
-import com.siberiadante.customdialoglib.CustomFullDialog;
-import com.tapadoo.alerter.Alert;
-import com.tapadoo.alerter.Alerter;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -323,7 +320,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                                 new DeviceOperationManager.GetAddressCallback() {
                                     @Override
                                     public void onGetSuccess(String address) {
-                                        emitter.onNext(address);
+                                        emitter.onNext(address.split("####")[0]);
                                         emitter.onComplete();
                                     }
 
@@ -344,7 +341,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                                 new DeviceOperationManager.GetAddressCallback() {
                                     @Override
                                     public void onGetSuccess(String address) {
-                                        emitter.onNext(address);
+                                        emitter.onNext(address.split("####")[0]);
                                         emitter.onComplete();
                                     }
 
@@ -994,7 +991,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     protected void showDisconnectDialog(){
         int[] listenedItems = {R.id.tv_understand};
         CustomDialog dialog = new CustomDialog(this,
-                com.cybex.componentservice.R.layout.baseservice_dialog_disconnect, listenedItems, false, Gravity.CENTER);
+                com.cybex.componentservice.R.layout.baseservice_dialog_wookong_connect, listenedItems, false, Gravity.CENTER);
         dialog.setmWidth(SizeUtil.dp2px(259));
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 

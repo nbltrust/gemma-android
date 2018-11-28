@@ -41,6 +41,7 @@ public class ChangeNodeFragment extends XFragment {
         switch (v.getId()) {
             case R.id.radioButton_node_cybex:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_CYBEX);
+                ApiPath.setHostCenterServer(ApiPath.EOS_SERVER_PORT_STAGING);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_CYBEX);
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());
@@ -101,12 +102,14 @@ public class ChangeNodeFragment extends XFragment {
                 break;
             case R.id.radioButton_node_beijing_test:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_TEST_BEIJING);
+                ApiPath.setHostCenterServer(ApiPath.EOS_SERVER_PORT_TEST);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_TEST_BEIJING);
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());
                 break;
             default:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_CYBEX);
+                ApiPath.setHostCenterServer(ApiPath.EOS_SERVER_PORT_STAGING);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_CYBEX);
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());

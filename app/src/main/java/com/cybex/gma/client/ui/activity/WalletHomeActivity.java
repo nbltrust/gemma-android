@@ -398,7 +398,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
                 String devicePowerPercent = WookongUtils.getDevicePowerPercent(powerAmount);
                 if(!TextUtils.isEmpty(devicePowerPercent)){
-                    mTvWookongStatus.setText(getString(R.string.walletmanage_battery_left)+ devicePowerPercent);
+                    mTvWookongStatus.setText(getString(R.string.walletmanage_battery_left)+ " " + devicePowerPercent + "%");
                 }else{
                     mTvWookongStatus.setText(R.string.walletmanage_status_connected);
                 }

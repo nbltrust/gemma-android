@@ -60,7 +60,7 @@ public class BluetoothConnectKeepJob {
         SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
             @Override
             public void onJobScheduled(Context context, Job job) {
-                LoggerManager.d("bluetooth startHeartBeat...");
+                //LoggerManager.d("bluetooth startHeartBeat...");
                 getDeviceInfo();
             }
 

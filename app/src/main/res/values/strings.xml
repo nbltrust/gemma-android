@@ -275,6 +275,7 @@
     <string name="eos_invalid_eos_username">EOS用户名不符合规范，请重新输入</string>
 
     <string name="eos_invCode_used">创建失败，邀请码已被使用！</string>
+    <string name="eos_sn_used">创建失败，SN已被使用！</string>
     <string name="eos_invCode_not_exist">创建失败，邀请码不存在！</string>
     <string name="eos_name_used">创建失败，eos账户名已存在！</string>
     <string name="eos_name_invalid">创建失败，eos账户名格式错误！</string>
