@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.activity;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -982,7 +983,7 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
             ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME).navigation();
             finish();
         }else{
-            ARouter.getInstance().build(RouterConst.PATH_TO_INIT).navigation();
+//            ARouter.getInstance().build(RouterConst.PATH_TO_INIT).navigation();
             finish();
         }
     }
@@ -991,8 +992,14 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
     protected void showDisconnectDialog(){
         int[] listenedItems = {R.id.tv_understand};
         CustomDialog dialog = new CustomDialog(this,
-                com.cybex.componentservice.R.layout.baseservice_dialog_wookong_connect, listenedItems, false, Gravity.CENTER);
+                R.layout.baseservice_dialog_disconnect, listenedItems, false, Gravity.CENTER);
         dialog.setmWidth(SizeUtil.dp2px(259));
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                innerFixDisconnectEvent();
+            }
+        });
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override

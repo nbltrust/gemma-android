@@ -150,14 +150,11 @@ public class DeviceOperationManager {
             scanHandler = new ScanHandler();
         }
         if ((scanThread == null) || (scanThread.getState() == Thread.State.TERMINATED)) {
-
-        } else {
-            scanThread.interrupt();
+            scanThread = new BlueToothWrapper(scanHandler);
+            scanThread.setGetDevListWrapper(BaseApplication.getAppContext(),
+                    "WOOKONG");
+            scanThread.start();
         }
-        scanThread = new BlueToothWrapper(scanHandler);
-        scanThread.setGetDevListWrapper(BaseApplication.getAppContext(),
-                "WOOKONG");
-        scanThread.start();
 //        singleExecutor.execute(scanThread);
     }
 
@@ -1405,23 +1402,23 @@ public class DeviceOperationManager {
                 case BlueToothWrapper.MSG_CONNECT_STATE_UPDATE:
 
 
-//                    LoggerManager.d("MSG_CONNECT_STATE_UPDATE msg.obj="+msg.obj );
-//                    if ((boolean) msg.obj) {
-//                        //还在连接状态
-//                        DeviceComm deviceComm = deviceMaps.get(deviceName);
-//                        if(deviceComm!=null){
-//                            deviceComm.msgBackConnectStatus=(boolean)msg.obj;
-//                        }
-//                        if(deviceComm!=null&&deviceComm.currentState == CacheConstants.STATUS_BLUETOOTH_DISCONNCETED){
-//                            LoggerManager.e("MSG_CONNECT_STATE_UPDATE 设备未连接状态下,收到了连接状态的心跳" );
-//                        }
-//                    } else {
-//                        //todo,设备强制断开
-//                        DeviceComm deviceComm = deviceMaps.get(deviceName);
-//                        if (deviceComm != null) {
-//                            if (deviceComm.msgBackConnectStatus&&deviceComm.currentState == CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
-//                                //manual get device info ,if fail ,do disconnect action
-//                                LoggerManager.e("receive back disconnect msg,manual get device info ,if fail ,do disconnect action" );
+                    LoggerManager.d("MSG_CONNECT_STATE_UPDATE msg.obj="+msg.obj );
+                    if ((boolean) msg.obj) {
+                        //还在连接状态
+                        DeviceComm deviceComm = deviceMaps.get(deviceName);
+                        if(deviceComm!=null){
+                            deviceComm.msgBackConnectStatus=(boolean)msg.obj;
+                        }
+                        if(deviceComm!=null&&deviceComm.currentState == CacheConstants.STATUS_BLUETOOTH_DISCONNCETED){
+                            LoggerManager.e("MSG_CONNECT_STATE_UPDATE 设备未连接状态下,收到了连接状态的心跳" );
+                        }
+                    } else {
+                        //todo,设备强制断开
+                        DeviceComm deviceComm = deviceMaps.get(deviceName);
+                        if (deviceComm != null) {
+                            if (deviceComm.msgBackConnectStatus&&deviceComm.currentState == CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
+                                //manual get device info ,if fail ,do disconnect action
+                                LoggerManager.e("receive back disconnect msg,do disconnect action isFreeContexting="+deviceComm.isFreeContexting );
 //                                getDeviceInfo(this.toString(), deviceName, new GetDeviceInfoCallback() {
 //                                    @Override
 //                                    public void onGetSuccess(MiddlewareInterface.PAEW_DevInfo deviceInfo) {
@@ -1435,10 +1432,20 @@ public class DeviceOperationManager {
 ////                                        freeContext();
 //                                    }
 //                                });
-//                            }
-//                            deviceComm.msgBackConnectStatus=false;
-//                        }
-//                    }
+
+                                if(deviceComm.isFreeContexting)return;
+                                deviceMaps.get(deviceName).currentState = CacheConstants.STATUS_BLUETOOTH_DISCONNCETED;
+                                queue.clear();
+                                boolean isManualFree = false;
+                                EventBusProvider.post(
+                                        new DeviceConnectStatusUpdateEvent(CacheConstants.STATUS_BLUETOOTH_DISCONNCETED,
+                                                deviceName, isManualFree));
+                                singleExecutor.shutdownNow();
+                                singleExecutor = Executors.newSingleThreadExecutor();
+                            }
+                            deviceComm.msgBackConnectStatus=false;
+                        }
+                    }
                     break;
 
 
@@ -1616,6 +1623,7 @@ public class DeviceOperationManager {
                 //free context
                 case BlueToothWrapper.MSG_FREE_CONTEXT_START:
                     LoggerManager.d("MSG_FREE_CONTEXT_START");
+                    deviceMaps.get(deviceName).isFreeContexting=true;
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
@@ -1645,6 +1653,7 @@ public class DeviceOperationManager {
                     }
                     singleExecutor.shutdownNow();
                     singleExecutor = Executors.newSingleThreadExecutor();
+                    deviceMaps.get(deviceName).isFreeContexting=false;
                     break;
 
 
@@ -1965,6 +1974,7 @@ public class DeviceOperationManager {
         BlueToothWrapper getEosAddressThread;
         BlueToothWrapper getEthAddressThread;
         BlueToothWrapper getCheckCodeThread;
+        public boolean isFreeContexting;
 
 
         public DeviceComm(String deviceName) {

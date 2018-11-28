@@ -87,7 +87,7 @@ public class BluetoothConnectKeepJob {
                 boolean deviceConnectted = DeviceOperationManager.getInstance().isDeviceConnectted(currentDeviceName);
                 LoggerManager.e("heart beat onGetFail deviceConnectted:"+deviceConnectted);
                 if(deviceConnectted&&errorCount>=2){
-                    DeviceOperationManager.getInstance().freeContext(instance.toString(),false,currentDeviceName,null);
+//                    DeviceOperationManager.getInstance().freeContext(instance.toString(),false,currentDeviceName,null);
 //                    EventBusProvider.post(new DeviceConnectStatusUpdateEvent());
                 }
 

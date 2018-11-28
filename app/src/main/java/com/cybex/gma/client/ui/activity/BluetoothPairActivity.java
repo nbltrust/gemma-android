@@ -114,12 +114,15 @@ public class BluetoothPairActivity extends BluetoothBaseActivity<BluetoothPairPr
     @Override
     protected void onStart() {
         super.onStart();
+        if(wookongScanDialog==null||wookongScanDialog.isShowing()){
+            return;
+        }
         //判断有没有当前的连接设备,而且本地数据库并没有任何WOOKONG WALLET,则断开连接
         String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
-        LoggerManager.e("czc currentDeviceName="+currentDeviceName);
+        LoggerManager.d("currentDeviceName="+currentDeviceName);
         if(!TextUtils.isEmpty(currentDeviceName)){
             List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao().getBluetoothWalletList();
-            LoggerManager.e("czc bluetoothWalletList.size()="+bluetoothWalletList.size());
+            LoggerManager.d("bluetoothWalletList.size()="+bluetoothWalletList.size());
             if(bluetoothWalletList.size()==0){
                 DeviceOperationManager.getInstance().freeContext(this.toString(), currentDeviceName,
                         null);
