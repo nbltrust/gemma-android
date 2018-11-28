@@ -396,7 +396,7 @@ public class WookongScanDialog extends Dialog {
                                 new DeviceOperationManager.GetAddressCallback() {
                                     @Override
                                     public void onGetSuccess(String address) {
-                                        emitter.onNext(address);
+                                        emitter.onNext(address.split("####")[0]);
                                         emitter.onComplete();
                                     }
 
