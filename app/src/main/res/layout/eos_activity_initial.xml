@@ -7,36 +7,85 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.InitialActivity">
 
-    <ImageView
-        android:id="@+id/logo_gma"
-        android:layout_width="@dimen/dimen_120"
-        android:layout_height="@dimen/dimen_120"
-        android:layout_marginTop="@dimen/logo_marginTop"
-        android:background="@drawable/ic_login_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <LinearLayout
         app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bt_create_new"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:layout_marginTop="64dp"
+            tools:background="@drawable/img_page_1"
+            android:id="@+id/viewPager_init"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+
+        </android.support.v4.view.ViewPager>
+        <!--
+
+        <TextView
+            android:id="@+id/tv_tip_above"
+            android:layout_gravity="center"
+            tools:text="主流币种全覆盖"
+            android:textAlignment="center"
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/font_6"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_tip_below"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:textSize="@dimen/font_2.5"
+            android:textColor="@color/black_context"
+            tools:text="即将支持BTC、ETH、EOS、USDT、XRP，LTC、CYB、ETC、NEO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+            -->
+        <com.lwj.widget.viewpagerindicator.ViewPagerIndicator
+            android:id="@+id/viewPager_indicator"
+            android:layout_width="40dp"
+            android:layout_height="8dp"
+            android:layout_marginBottom="35dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            app:vpi_default_color="@color/black_title"
+            app:vpi_indicatorType="CIRCLE_LINE"
+            app:vpi_length="4dp"
+            app:vpi_num="3"
+            app:vpi_radius="3dp"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/bt_create_new"
         style="@style/common_button_clickable"
+        android:layout_width="0dp"
         android:layout_marginBottom="@dimen/bt_marginTop"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
         android:text="@string/eos_btn_create_new_wallet"
         app:layout_constraintBottom_toTopOf="@+id/bt_import"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_width="0dp"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
         android:id="@+id/bt_import"
         style="@style/common_button_clickable"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
         android:layout_width="0dp"
         android:layout_marginBottom="@dimen/bt_marginTop"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
         android:text="@string/eos_btn_restore_wallet"
         app:layout_constraintBottom_toTopOf="@+id/bt_wookongbio"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,46 +94,45 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/bt_wookongbio"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_width="0dp"
-        android:layout_marginBottom="@dimen/bt_marginBot"
         style="@style/common_button_clickable_white"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="35dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_wookong_logo_dark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/wookong_logo"
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/wookong_logo_black"
                 />
 
             <TextView
-                android:textColor="@color/black_title"
-                android:textSize="@dimen/font_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/eos_match_wookong_bio"
+                android:textColor="@color/black_title"
+                android:textSize="@dimen/font_4"
                 />
 
         </LinearLayout>
 
 
     </android.support.constraint.ConstraintLayout>
-
-
 
 
 </android.support.constraint.ConstraintLayout>

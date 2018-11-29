@@ -239,8 +239,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation deps.gma.svgImageViewer
     implementation deps.gma.SuperTextView
-
-
+    implementation deps.gma.viewPagerIndicator
+    implementation deps.gma.viewPagerTransforms
 
 
     implementation project(':componentservice')

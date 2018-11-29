@@ -3,7 +3,7 @@
     <string name="eos_please_confirm_alert">请勿在EOS区块100%确认之前往账户转账</string>
 
     <!-- Common -->
-    <string name="eos_app_name">GEMMA</string>
+    <string name="eos_app_name">WOOKONG</string>
     <string name="eos_eos">EOS</string>
 
     <!-- Initial Activity -->
