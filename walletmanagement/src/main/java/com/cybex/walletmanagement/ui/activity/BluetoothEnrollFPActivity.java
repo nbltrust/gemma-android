@@ -1,5 +1,6 @@
 package com.cybex.walletmanagement.ui.activity;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -25,6 +27,7 @@ import com.cybex.walletmanagement.R;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
+import com.orhanobut.logger.Logger;
 import com.siberiadante.customdialoglib.CustomDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -63,13 +66,15 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
     //    private FPHandler mHandler;
     private Bundle bd;
     boolean isEnrolling;
-//    private long contextHandle = 0;
+    private TextView tvHint;
+    //    private long contextHandle = 0;
 
     @Override
     public void bindUI(View rootView) {
 
         btnNavibar = findViewById(R.id.btn_navibar);
         mWebView = findViewById(R.id.webView_fingerprints);
+        tvHint = findViewById(R.id.fp_enroll_hint);
 
 
         //初始化指纹动画
@@ -82,6 +87,13 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
 //            enrollFPThread.start();
 //        }
 
+
+        startEnroll();
+    }
+
+
+    private void startEnroll(){
+        if(isEnrolling)return;
         isEnrolling = true;
 
         DeviceOperationManager.getInstance()
@@ -104,10 +116,13 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
                                     setCurrentWalletStatus();
 //                  UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
                                     finish();
+                                }else{
+//                                    GemmaToastUtils.showShortToast("录入超时");
+                                    resetFingerPrint();
+                                    showOvertimeDialog();
                                 }
                             }
                         });
-
     }
 
     @Override
@@ -136,35 +151,45 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
      */
     private void doFPLogic(int state) {
         LoggerManager.d("FP state: " + state);
-        if (stage <= 12) {
-            //前12次录入
-            if (state == FINGER_GOOD) {
-                drawFingerprint();
-                stage++;
-            }
-//            else if (state ==FINGER_SUCCESS) {
-//                stage = 1;
-////                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
-////                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
-//                setCurrentWalletStatus();
-////                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
-////                finish();
-//            }
-        } else {
-            //12-16次录入，每次都有可能成功
-            if (state == FINGER_GOOD) {
-                drawFingerprint();
-                stage++;
-            }
-//            else if (state == FINGER_SUCCESS) {
-//                stage = 1;
-////                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
-////                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
-//                setCurrentWalletStatus();
-////                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
-////                finish();
-//            }
+
+        if (state == FINGER_GOOD) {
+            drawFingerprint();
+        }else if (state == FINGER_NOT||state==FINGER_REDUNDANT||state==FINGER_PRINT_COMMAND_ERROR||state==FINGER_PRINT_BAND_IMAGE) {
+            preFingerprint();
+        }else if (state == FINGER_NOT_FULL) {
+            tvHint.setText(R.string.walletmanage_enroll_fp_hint2);
         }
+
+
+//        if (stage <= 12) {
+//            //前12次录入
+//            if (state == FINGER_GOOD) {
+//                drawFingerprint();
+//                stage++;
+//            }
+////            else if (state ==FINGER_SUCCESS) {
+////                stage = 1;
+//////                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
+//////                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
+////                setCurrentWalletStatus();
+//////                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+//////                finish();
+////            }
+//        } else {
+//            //12-16次录入，每次都有可能成功
+//            if (state == FINGER_GOOD) {
+//                drawFingerprint();
+//                stage++;
+//            }
+////            else if (state == FINGER_SUCCESS) {
+////                stage = 1;
+//////                imvFingerPrint.setImageResource(R.drawable.eos_bezier_svg);
+//////                GemmaToastUtils.showShortToast(getString(R.string.eos_finger_set_success));
+////                setCurrentWalletStatus();
+//////                UISkipMananger.launchHome(BluetoothSettingFPActivity.this);
+//////                finish();
+////            }
+//        }
 
 
     }
@@ -188,6 +213,7 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
                 });
             }
         });
+
         /*
         if (bezierAnimator != null && bezierAnimator.isRunning()) {
             return;
@@ -200,6 +226,40 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
 
         stage++;
         */
+    }
+
+
+    private void preFingerprint() {
+        Logger.e("preFingerprint");
+        mWebView.post(new Runnable() {
+            @Override
+            public void run() {
+                mWebView.evaluateJavascript("prev()", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+
+                    }
+                });
+            }
+        });
+
+    }
+
+
+    private void resetFingerPrint() {
+        Logger.e("resetFingerPrint");
+        mWebView.post(new Runnable() {
+            @Override
+            public void run() {
+                mWebView.evaluateJavascript("reset()", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+
+                    }
+                });
+            }
+        });
+
     }
 
 
@@ -248,7 +308,6 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
 
         mWebView.loadUrl("file:///android_asset/finger.html");
 
-
     }
 
     /**
@@ -258,41 +317,21 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
         int[] listenedItems = {R.id.tv_jump, R.id.tv_retry};
         CustomDialog dialog = new CustomDialog(this,
                 R.layout.walletmanage_dialog_bluetooth_enroll_fp_overtime, listenedItems, false, Gravity.CENTER);
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        });
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override
             public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
                 if (view.getId() == R.id.tv_jump) {
                     dialog.cancel();
-                    ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
-                            .navigation();
                 } else if (view.getId() == R.id.tv_retry) {
-                    initWebView();
-                    DeviceOperationManager.getInstance()
-                            .enrollFP(this.toString(), DeviceOperationManager.getInstance().getCurrentDeviceName(),
-                                    new DeviceOperationManager.EnrollFPCallback() {
-
-                                        @Override
-                                        public void onEnrollFPUpate(int state) {
-                                            if (isDestroyed()) { return; }
-                                            doFPLogic(state);
-                                        }
-
-                                        @Override
-                                        public void onEnrollFinish(int state) {
-                                            if (isDestroyed()) { return; }
-                                            isEnrolling = false;
-                                            if (state == FINGER_SUCCESS) {
-                                                stage = 1;
-                                                GemmaToastUtils.showShortToast(
-                                                        getString(R.string.walletmanage_finger_set_success));
-                                                setCurrentWalletStatus();
-                                                ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
-                                                        .navigation();
-                                                finish();
-                                            }
-                                        }
-                                    });
+                    dialog.dismiss();
+                    startEnroll();
                 }
 
             }

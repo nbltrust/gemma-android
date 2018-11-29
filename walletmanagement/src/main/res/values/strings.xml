@@ -310,6 +310,8 @@
     <string name="walletmanage_enroll_fp_overtime">录入指纹超时</string>
     <string name="walletmanage_jump">跳过</string>
     <string name="walletmanage_retry">重试</string>
+    <string name="walletmanage_enroll_fp_hint1">将手指放在指纹识别区域上再移开，\n重复此步骤</string>
+    <string name="walletmanage_enroll_fp_hint2">调整握持姿势\n获取指纹边缘</string>
 
 
 </resources>
