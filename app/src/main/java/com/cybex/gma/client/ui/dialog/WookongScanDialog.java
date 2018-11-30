@@ -1,6 +1,5 @@
 package com.cybex.gma.client.ui.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.text.TextUtils;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,6 +40,7 @@ import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+import com.cybex.componentservice.widget.CustomFullWithAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class WookongScanDialog extends Dialog {
 
     private static final String DEVICE_PREFIX = "WOOKONG";
     private XActivity activity;
-    private CustomFullDialog verifyDialog;
+    private CustomFullWithAlertDialog verifyDialog;
     private CustomFullDialog powerAlertDialog;
     private CustomFullDialog pinDialog;
 //    private CustomFullDialog connectDialog;
@@ -345,7 +346,10 @@ public class WookongScanDialog extends Dialog {
 
                     @Override
                     public void onVerifyFailed() {
-                        AlertUtil.showShortUrgeAlert(activity, getContext().getString(com.cybex.gma.client.R.string.tip_fp_verify_fail));
+//                        AlertUtil.showShortUrgeAlert((ViewGroup) verifyDialog.getWindow().getDecorView(), getContext().getString(com.cybex.gma.client.R.string.tip_fp_verify_fail));
+                        if (verifyDialog != null) {
+                            verifyDialog.showShortUrgeAlert(getContext().getString(com.cybex.gma.client.R.string.tip_fp_verify_fail));
+                        }
                         LoggerManager.d("onVerifyFailed   verifyFpCount=" + verifyFpCount);
                         if (verifyFpCount < 4) {
                             doVerifyFp(status);
@@ -357,6 +361,11 @@ public class WookongScanDialog extends Dialog {
                             showConfirmAuthoriDialog(
                                     status == 1 ? BaseConst.STATE_SET_PIN_NOT_INIT : BaseConst.STATE_INIT_DONE);
                         }
+                    }
+
+                    @Override
+                    public void onVerifyCancelled() {
+
                     }
                 });
     }
@@ -704,17 +713,29 @@ public class WookongScanDialog extends Dialog {
             return;
         }
         int[] listenedItems = {R.id.imv_back};
-        verifyDialog = new CustomFullDialog(activity,
+        verifyDialog = new CustomFullWithAlertDialog(activity,
                 R.layout.eos_dialog_transfer_bluetooth_finger_sure, listenedItems, false,false, Gravity.BOTTOM);
         verifyDialog.setOnCancelListener(new OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                freeContext();
+                DeviceOperationManager.getInstance().abortEnrollFp("verifyDialog", deviceName, new DeviceOperationManager.AbortFPCallback() {
+                    @Override
+                    public void onAbortSuccess() {
+                        DeviceOperationManager.getInstance().clearCallback("verifyDialog");
+                        freeContext();
+                    }
+
+                    @Override
+                    public void onAbortFail() {
+                        DeviceOperationManager.getInstance().clearCallback("verifyDialog");
+                        freeContext();
+                    }
+                });
             }
         });
-        verifyDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        verifyDialog.setOnDialogItemClickListener(new CustomFullWithAlertDialog.OnCustomDialogItemClickListener() {
             @Override
-            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+            public void OnCustomDialogItemClick(CustomFullWithAlertDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.imv_back:
                         verifyDialog.cancel();
@@ -868,12 +889,10 @@ public class WookongScanDialog extends Dialog {
 
                     @Override
                     public void onFreeSuccess() {
-
                     }
 
                     @Override
                     public void onFreeFailed() {
-
                     }
                 });
     }

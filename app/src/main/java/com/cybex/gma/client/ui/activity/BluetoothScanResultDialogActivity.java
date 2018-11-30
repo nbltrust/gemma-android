@@ -295,13 +295,18 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         if (verifyFpCount < 4) {
                             doVerifyFp(status);
                         } else {
-                            DeviceOperationManager.getInstance().abortEnrollFp(deviceName);
+//                            DeviceOperationManager.getInstance().abortEnrollFp(deviceName);
                             if (verifyDialog != null) {
                                 verifyDialog.cancel();
                             }
                             showConfirmAuthoriDialog(
                                     status == 1 ? BaseConst.STATE_SET_PIN_NOT_INIT : BaseConst.STATE_INIT_DONE);
                         }
+                    }
+
+                    @Override
+                    public void onVerifyCancelled() {
+
                     }
                 });
     }

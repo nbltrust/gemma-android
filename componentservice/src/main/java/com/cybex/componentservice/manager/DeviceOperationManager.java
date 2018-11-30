@@ -492,12 +492,26 @@ public class DeviceOperationManager {
 //        }
     }
 
-    public void abortEnrollFp(String deviceName) {
+    public void abortEnrollFp(String tag,String deviceName) {
+        abortEnrollFp(tag,deviceName,null);
+    }
+
+    public void abortEnrollFp(String tag,String deviceName,AbortFPCallback abortFPCallback) {
         if (!isDeviceConnectted(deviceName)) {
+            if(abortFPCallback!=null)
+                abortFPCallback.onAbortFail();
             return;
         }
+
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.abortFPCallback = abortFPCallback;
+
         DeviceComm deviceComm = deviceMaps.get(deviceName);
-        LoggerManager.e("abortEnrollFp currentDeviceName=" + currentDeviceName + "    deviceName=" + deviceName);
+        LoggerManager.d("abortEnrollFp currentDeviceName=" + currentDeviceName + "    deviceName=" + deviceName);
         if (deviceComm == null) {
             deviceComm = new DeviceComm(deviceName);
             deviceMaps.put(deviceName, deviceComm);
@@ -514,6 +528,9 @@ public class DeviceOperationManager {
             deviceComm.abortEnrollFPThread.start();
         }
     }
+
+
+
 
 
     public void jsonSerialization(
@@ -983,6 +1000,8 @@ public class DeviceOperationManager {
         void onVerifySuccess();
 
         void onVerifyFailed();
+
+        void onVerifyCancelled();
     }
 
     public interface FreeContextCallback {
@@ -1040,6 +1059,14 @@ public class DeviceOperationManager {
 
         void onVerifyFail();
     }
+
+    public interface AbortFPCallback {
+
+        void onAbortSuccess();
+
+        void onAbortFail();
+    }
+
 
     public interface ChangePinCallback {
 
@@ -1583,12 +1610,44 @@ public class DeviceOperationManager {
                                 callbackMaps.get(tag).verifyFPCallback.onVerifySuccess();
                             }
                         }
-                    } else {
+                    } else if (verifyFpReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_DEV_OP_CANCEL) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).verifyFPCallback != null) {
+                                callbackMaps.get(tag).verifyFPCallback.onVerifyCancelled();
+                            }
+                        }
+                    }else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag).verifyFPCallback != null) {
                                 callbackMaps.get(tag).verifyFPCallback.onVerifyFailed();
+                            }
+                        }
+                    }
+                    break;
+
+
+                    //MSG_ABORT_FP_FINISH
+                case BlueToothWrapper.MSG_ABORT_FP_FINISH:
+                    LoggerManager.d(
+                            "MSG_ABORT_FP_FINISH  state=" + MiddlewareInterface.getReturnString(msg.arg1));
+                    if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).abortFPCallback != null) {
+                                callbackMaps.get(tag).abortFPCallback.onAbortSuccess();
+                            }
+                        }
+                    } else {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).abortFPCallback != null) {
+                                callbackMaps.get(tag).abortFPCallback.onAbortFail();
                             }
                         }
                     }
@@ -1624,6 +1683,7 @@ public class DeviceOperationManager {
                 case BlueToothWrapper.MSG_FREE_CONTEXT_START:
                     LoggerManager.d("MSG_FREE_CONTEXT_START");
                     deviceMaps.get(deviceName).isFreeContexting=true;
+//                    queue.clear();
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
@@ -1997,6 +2057,7 @@ public class DeviceOperationManager {
         GetDeviceInfoCallback getHeartDeviceInfoCallback;
         InitPinCallback initPinCallback;
         VerifyPinCallback verifyPinCallback;
+        AbortFPCallback abortFPCallback;
         ChangePinCallback changePinCallback;
         GenerateMnemonicCallback generateMnemonicCallback;
         GetFPListCallback getFPListCallback;

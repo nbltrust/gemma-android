@@ -137,7 +137,7 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
         DeviceOperationManager.getInstance().clearCallback(this.toString());
         if (isEnrolling) {
             DeviceOperationManager.getInstance()
-                    .abortEnrollFp(DeviceOperationManager.getInstance().getCurrentDeviceName());
+                    .abortEnrollFp(this.toString(),DeviceOperationManager.getInstance().getCurrentDeviceName());
         }
         super.onDestroy();
 
@@ -274,7 +274,7 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
                 public void performAction(View view) {
                     String deviceName = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity
                             ().getBluetoothDeviceName();
-                    DeviceOperationManager.getInstance().abortEnrollFp(deviceName);
+                    DeviceOperationManager.getInstance().abortEnrollFp(BluetoothEnrollFPActivity.this.toString(),deviceName);
                     finish();
                 }
             });
