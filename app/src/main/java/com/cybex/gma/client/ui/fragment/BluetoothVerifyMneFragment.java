@@ -203,52 +203,32 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                             }
 
                             String strDestMnes = sb.toString();
-//                                    int status = MiddlewareInterface.generateSeed_CheckMnes(contextHandle, 0,
-//                                            strDestMnes);
-
-                            Observable.create(new ObservableOnSubscribe<Integer>() {
+                            DeviceOperationManager.getInstance().checkMnemonic(BluetoothVerifyMneFragment.this.toString(),DeviceOperationManager.getInstance().getCurrentDeviceName(), strDestMnes, new DeviceOperationManager.CheckMnemonicCallback() {
                                 @Override
-                                public void subscribe(ObservableEmitter<Integer> e) throws Exception {
-                                    int status = DeviceOperationManager.getInstance().checkMnemonic(DeviceOperationManager.getInstance().getCurrentDeviceName(), strDestMnes);
-                                    e.onNext(status);
-                                    e.onComplete();
+                                public void onCheckSuccess() {
+                                    LoggerManager.d("mne validate success...");
+                                    TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_success),
+                                            Prompt.SUCCESS);
+                                    //create bluetoothwallet
+                                    initWookongBioWallet(strDestMnes);
                                 }
-                            }).subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new Consumer<Integer>() {
-                                        @Override
-                                        public void accept(Integer status) {
-                                            if (status == MiddlewareInterface.PAEW_RET_SUCCESS) {
-                                                LoggerManager.d("mne validate success...");
-                                                TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_success),
-                                                        Prompt.SUCCESS);
-                                                //create bluetoothwallet
-                                                initWookongBioWallet(strDestMnes);
 
+                                @Override
+                                public void onCheckFail(int status) {
+                                    if (status == -2147483642) {
+                                        LoggerManager.d("device disconnected...");
+                                        dissmisProgressDialog();
+                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_warn),
+                                                Prompt.WARNING);
 
-                                            } else if (status == -2147483642) {
-                                                LoggerManager.d("device disconnected...");
-                                                dissmisProgressDialog();
-                                                TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_warn),
-                                                        Prompt.WARNING);
-
-                                            } else {
-                                                LoggerManager.d("mne validate error...");
-                                                dissmisProgressDialog();
-                                                TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
-                                                        Prompt.ERROR);
-                                            }
-                                        }
-                                    }, new Consumer<Throwable>() {
-                                        @Override
-                                        public void accept(Throwable throwable) {
-                                            dissmisProgressDialog();
-                                            GemmaToastUtils.showLongToast(getString(R.string.wookong_init_fail));
-                                            getActivity().finish();
-                                        }
-                                    });
-
-
+                                    } else {
+                                        LoggerManager.d("mne validate error...");
+                                        dissmisProgressDialog();
+                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
+                                                Prompt.ERROR);
+                                    }
+                                }
+                            });
                         }
                     }
                 } else {

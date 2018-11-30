@@ -742,6 +742,36 @@ public class DeviceOperationManager {
         return status;
     }
 
+    public void checkMnemonic(String tag, String deviceName, String strDestMnes,CheckMnemonicCallback checkMnemonicCallback) {
+        if (!isDeviceConnectted(deviceName)) {
+            checkMnemonicCallback.onCheckFail(-1);
+            return;
+        }
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.checkMnemonicCallback = checkMnemonicCallback;
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+        deviceComm.checkMnemonicThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+        deviceComm.checkMnemonicThread.checkMnesWrapper(deviceComm.contextHandle,
+                0, strDestMnes);
+        try {
+            queue.put(deviceComm.checkMnemonicThread);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void getFPList(String tag, String deviceName, GetFPListCallback getFPListCallback) {
         if (!isDeviceConnectted(deviceName)) {
@@ -1080,6 +1110,13 @@ public class DeviceOperationManager {
         void onGenerateSuccess(BlueToothWrapper.GenSeedMnesReturnValue mnemonic);
 
         void onGenerateFail();
+    }
+
+    public interface CheckMnemonicCallback {
+
+        void onCheckSuccess();
+
+        void onCheckFail(int state);
     }
 
     public interface GetFPListCallback {
@@ -1759,14 +1796,27 @@ public class DeviceOperationManager {
 
                 //generate mnemonic
                 case BlueToothWrapper.MSG_GENERATE_SEED_MNES_FINISH:
-                    BlueToothWrapper.GenSeedMnesReturnValue value = (BlueToothWrapper.GenSeedMnesReturnValue) msg.obj;
-                    if (EmptyUtils.isNotEmpty(value)) {
-                        String[] mnes = value.getStrMneWord();
-                        iterator = tags.iterator();
-                        while (iterator.hasNext()) {
-                            String tag = iterator.next();
-                            if (callbackMaps.get(tag).generateMnemonicCallback != null) {
-                                callbackMaps.get(tag).generateMnemonicCallback.onGenerateSuccess(value);
+
+                    LoggerManager.d("MSG_GENERATE_SEED_MNES_FINISH  state="+MiddlewareInterface.getReturnString(msg.arg1));
+
+                    if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        BlueToothWrapper.GenSeedMnesReturnValue value = (BlueToothWrapper.GenSeedMnesReturnValue) msg.obj;
+                        if (EmptyUtils.isNotEmpty(value)) {
+                            String[] mnes = value.getStrMneWord();
+                            iterator = tags.iterator();
+                            while (iterator.hasNext()) {
+                                String tag = iterator.next();
+                                if (callbackMaps.get(tag).generateMnemonicCallback != null) {
+                                    callbackMaps.get(tag).generateMnemonicCallback.onGenerateSuccess(value);
+                                }
+                            }
+                        } else {
+                            iterator = tags.iterator();
+                            while (iterator.hasNext()) {
+                                String tag = iterator.next();
+                                if (callbackMaps.get(tag).generateMnemonicCallback != null) {
+                                    callbackMaps.get(tag).generateMnemonicCallback.onGenerateFail();
+                                }
                             }
                         }
                     } else {
@@ -1778,7 +1828,6 @@ public class DeviceOperationManager {
                             }
                         }
                     }
-
                     break;
 
 
@@ -1996,6 +2045,34 @@ public class DeviceOperationManager {
                     }
                     break;
 
+
+                    //check mnes
+                case BlueToothWrapper.MSG_CHECK_SEED_MNES_START:
+                    LoggerManager.d(
+                            "MSG_CHECK_SEED_MNES_START  ");
+                    break;
+
+                case BlueToothWrapper.MSG_CHECK_SEED_MNES_FINISH:
+                    LoggerManager.d(
+                            "MSG_CHECK_SEED_MNES_FINISH  state=" + MiddlewareInterface.getReturnString(msg.arg1));
+                    if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).checkMnemonicCallback != null) {
+                                callbackMaps.get(tag).checkMnemonicCallback.onCheckSuccess();
+                            }
+                        }
+                    } else {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).checkMnemonicCallback != null) {
+                                callbackMaps.get(tag).checkMnemonicCallback.onCheckFail(msg.arg1);
+                            }
+                        }
+                    }
+                    break;
                 default:
                     break;
             }
@@ -2028,6 +2105,7 @@ public class DeviceOperationManager {
         BlueToothWrapper verifyPinThread;
         BlueToothWrapper changePinThread;
         BlueToothWrapper generateMnemonicThread;
+        BlueToothWrapper checkMnemonicThread;
         BlueToothWrapper getFPListThread;
         BlueToothWrapper deleteFPThread;
         BlueToothWrapper eosSignThread;
@@ -2060,6 +2138,7 @@ public class DeviceOperationManager {
         AbortFPCallback abortFPCallback;
         ChangePinCallback changePinCallback;
         GenerateMnemonicCallback generateMnemonicCallback;
+        CheckMnemonicCallback checkMnemonicCallback;
         GetFPListCallback getFPListCallback;
         DeleteFPCallback deleteFPCallback;
         EosSignCallback eosSignCallback;

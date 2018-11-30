@@ -2179,6 +2179,25 @@ public class BlueToothWrapper extends Thread {
                 msg.sendToTarget();
 
                 break;
+
+            case CHECK_SEED_MNES_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_CHECK_SEED_MNES_START;
+                msg.sendToTarget();
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.generateSeed_CheckMnes(m_contextHandle, m_devIndex, m_strMnes);
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_CHECK_SEED_MNES_FINISH;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+                break;
         }
     }
 
@@ -2310,4 +2329,18 @@ public class BlueToothWrapper extends Thread {
             }
         }
     };
+
+
+    public boolean checkMnesWrapper(long contextHandle, int devIndex, String strDestMnes) {
+        m_wrapperType = CHECK_SEED_MNES_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+        m_strMnes = strDestMnes;
+
+        return true;
+    }
+
+
+
 }

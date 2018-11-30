@@ -520,15 +520,14 @@ public class WookongScanDialog extends Dialog {
                         LoggerManager.d("deviceInfo life cycle", deviceInfo.ucLifeCycle);
                         LoggerManager.d("deviceInfo pin state", deviceInfo.ucPINState);
 
-                        if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE
-                                && deviceInfo.ucPINState == BaseConst.DEVICE_PIN_STATE_UNSET) {
+                        if (deviceInfo.ucPINState == BaseConst.DEVICE_PIN_STATE_UNSET) {
                             //未初始化
                             LoggerManager.d("not init");
                             status=0;
                             UISkipMananger.skipBluetoothConfigWookongBioActivity(activity,
                                     null);
                             dismiss();
-                        } else if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE
+                        } else if ((deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE||deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_AGREE)
                                 && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_INVALID) {
                             //已设置PIN但未完成初始化
                             LoggerManager.d("not pair");
@@ -541,33 +540,6 @@ public class WookongScanDialog extends Dialog {
                                             if (fpListReturnValue.getFPCount() > 0) {
                                                 //已设置了指纹
                                                 //验证指纹以确认配对
-
-//                                            DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
-//                                                    new DeviceOperationManager.DeviceVerifyFPCallback() {
-//                                                        @Override
-//                                                        public void onVerifyStart() {
-//                                                            showVerifyFPDialog();
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onVerifySuccess() {
-//                                                            dialog.cancel();
-//                                                            //todo 验证电量
-//
-//                                                            int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
-//
-//                                                            Bundle bundle = new Bundle();
-//                                                            bundle.putBoolean(BaseConst.PIN_STATUS, true);
-//                                                            UISkipMananger.skipBluetoothConfigWookongBioActivity
-//                                                                    (BluetoothScanResultDialogActivity.this,bundle);
-//                                                            finish();
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onVerifyFailed() {
-//
-//                                                        }
-//                                                    });
                                                 verifyFpCount = 0;
                                                 doVerifyFp(status);
 
