@@ -27,7 +27,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp"
             app:SpinKit_Color="@color/black_context"
             />
 
