@@ -432,6 +432,7 @@
     <string name="eos_transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>
     <string name="eos_transfer_bluetooth_tip">正在连接WOOKONG Bio</string>
     <string name="eos_connect_sure_tip">请在WOOKONG Bio上按指纹以确认授权</string>
+    <string name="eos_pair_fp_sure_tip">请在WOOKONG Bio上按指纹以确认配对</string>
     <string name="eos_connect_sure_battery_tip">请在WOOKONG Bio上按键以确认转账</string>
     <string name="eos_connect_failed_tip">连接失败。请检查手机蓝牙和设备电源。</string>
     <string name="eos_btn_connect_retry">重试连接</string>
