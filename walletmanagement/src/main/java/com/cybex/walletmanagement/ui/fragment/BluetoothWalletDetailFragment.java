@@ -129,7 +129,10 @@ public class BluetoothWalletDetailFragment extends XFragment {
 
                 //1.wookong press confirm
                 showConfirmFormatonCardDialog();
-                DeviceOperationManager.getInstance().pressConfirm(BluetoothWalletDetailFragment.this.toString(), multiWalletEntity.getBluetoothDeviceName(), new DeviceOperationManager.PressConfirmCallback() {
+                DeviceOperationManager.getInstance().pressConfirm(
+                        BluetoothWalletDetailFragment.this.toString(),
+                        multiWalletEntity.getBluetoothDeviceName(),
+                        new DeviceOperationManager.PressConfirmCallback() {
                     @Override
                     public void onConfirmSuccess() {
                         if(confirmDialog!=null&&confirmDialog.isShowing()){

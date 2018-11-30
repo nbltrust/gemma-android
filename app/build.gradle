@@ -56,14 +56,14 @@ android {
     applicationVariants.all { variant ->
         if (variant.buildType.name.equals('release')) {
             variant.outputs.all { output ->
-                def buildName = "Gemma"
+                def buildName = "Wookong"
                 def type = variant.buildType.name
                 def releaseApkName = buildName + '_' + type + "_" + versionName + '_' + releaseTime() + '.apk'
                 outputFileName = releaseApkName
             }
         } else {
             variant.outputs.all { output ->
-                def buildName = "Gemma"
+                def buildName = "Wookong"
                 def releaseApkName = buildName + '_' + "test" + "_" + versionName + '_' + releaseTime() + '.apk'
                 outputFileName = releaseApkName
             }

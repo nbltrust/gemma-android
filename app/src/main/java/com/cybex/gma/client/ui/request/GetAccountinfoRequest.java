@@ -32,7 +32,6 @@ public class GetAccountinfoRequest extends GMAHttpRequest<AccountInfo> {
 
     public GetAccountinfoRequest getAccountInfo(JsonCallback<AccountInfo> callback) {
         postJsonNoRxRequest(TAG, callback);
-
         return this;
     }
 

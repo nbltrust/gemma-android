@@ -563,83 +563,125 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-                String password = String.valueOf(edtSetPass.getText());
-                String passwordHint = String.valueOf(edtPassHint.getText());
 
-                String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
                 switch (view.getId()) {
                     case R.id.btn_close:
                         dialog.cancel();
 
                         break;
                     case R.id.btn_create_wallet:
-                        //设置初始化PIN
-                        password = String.valueOf(edtSetPass.getText());
-                        passwordHint = String.valueOf(edtPassHint.getText());
+                        //验证电量
+                        showProgressDialog(getString(R.string.creating_wookong_wallet));
+                        WookongUtils.validatePowerLevel(ParamConstants.POWER_LEVEL_ALERT_INIT,
+                                new WookongUtils.ValidatePowerLevelCallback() {
+                                    @Override
+                                    public void onValidateSuccess() {
+                                        //按键验证
+                                        DeviceOperationManager.getInstance().pressConfirm(
+                                                TAG,
+                                                deviceName,
+                                                new DeviceOperationManager.PressConfirmCallback() {
+                                                    @Override
+                                                    public void onConfirmSuccess() {
+                                                        //init PIN
+                                                        String password = String.valueOf(edtSetPass.getText());
+                                                        String passwordHint = String.valueOf(edtPassHint.getText());
 
-                        currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
-                        DeviceOperationManager.getInstance()
-                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
-                                        new DeviceOperationManager.InitPinCallback() {
-                                            @Override
-                                            public void onInitSuccess() {
+                                                        String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
 
-                                                //first get mnemonic to backup
-                                                //验证电量
-                                                WookongUtils.validatePowerLevel(ParamConstants.POWER_LEVEL_ALERT_INIT,
-                                                        new WookongUtils.ValidatePowerLevelCallback() {
-                                                            @Override
-                                                            public void onValidateSuccess() {
-                                                                UISkipMananger.skipBackupMneGuideActivity(
-                                                                        BluetoothConfigWooKongBioActivity.this,
-                                                                        null);
-                                                                finish();
-                                                            }
+                                                        DeviceOperationManager.getInstance()
+                                                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
+                                                                        new DeviceOperationManager.InitPinCallback() {
+                                                                            @Override
+                                                                            public void onInitSuccess() {
+                                                                                dissmisProgressDialog();
+                                                                                UISkipMananger.skipBackupMneGuideActivity(
+                                                                                        BluetoothConfigWooKongBioActivity.this,
+                                                                                        null);
+                                                                                finish();
+                                                                            }
 
-                                                            @Override
-                                                            public void onValidateFail() {
-                                                                showPowerLevelAlertDialog();
-                                                            }
-                                                        });
-                                            }
+                                                                            @Override
+                                                                            public void onInitFail() {
+                                                                                dissmisProgressDialog();
+                                                                                GemmaToastUtils.showLongToast(
+                                                                                        getString(R.string.wookong_init_pin_fail));
 
-                                            @Override
-                                            public void onInitFail() {
-                                                GemmaToastUtils.showLongToast(
-                                                        getString(R.string.wookong_init_pin_fail));
+                                                                            }
+                                                                        });
+                                                    }
 
-                                            }
-                                        });
+                                                    @Override
+                                                    public void onConfirmFailed() {
+                                                        dissmisProgressDialog();
+                                                    }
+                                                }
+                                        );
+                                    }
+
+                                    @Override
+                                    public void onValidateFail() {
+                                        dissmisProgressDialog();
+                                        showPowerLevelAlertDialog();
+                                    }
+                                });
+
                         dialog.cancel();
-
-
                         break;
+
                     case R.id.btn_import_mne:
-                        //设置初始化PIN
-                        password = String.valueOf(edtSetPass.getText());
-                        passwordHint = String.valueOf(edtPassHint.getText());
+                        //验证电量
+                        showProgressDialog(getString(R.string.creating_wookong_wallet));
+                        WookongUtils.validatePowerLevel(ParamConstants.POWER_LEVEL_ALERT_INIT,
+                                new WookongUtils.ValidatePowerLevelCallback() {
+                                    @Override
+                                    public void onValidateSuccess() {
+                                        //按键确认
+                                        DeviceOperationManager.getInstance().pressConfirm(TAG, deviceName,
+                                                new DeviceOperationManager.PressConfirmCallback() {
+                                                    @Override
+                                                    public void onConfirmSuccess() {
+                                                        //init PIN
+                                                        String password = String.valueOf(edtSetPass.getText());
+                                                        String passwordHint = String.valueOf(edtPassHint.getText());
 
+                                                        String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+                                                        DeviceOperationManager.getInstance()
+                                                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
+                                                                        new DeviceOperationManager.InitPinCallback() {
+                                                                            @Override
+                                                                            public void onInitSuccess() {
+                                                                                //跳转到创建账户名界面
+                                                                                dissmisProgressDialog();
+                                                                                dialog.cancel();
+                                                                                Intent intent = new Intent(BluetoothConfigWooKongBioActivity.this,
+                                                                                        BluetoothImportWalletActivity.class);
+                                                                                startActivity(intent);
+                                                                                finish();
+                                                                            }
 
-                        currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
-                        DeviceOperationManager.getInstance()
-                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
-                                        new DeviceOperationManager.InitPinCallback() {
-                                            @Override
-                                            public void onInitSuccess() {
-                                                //跳转到创建账户名界面
-                                                dialog.cancel();
-                                                Intent intent = new Intent(BluetoothConfigWooKongBioActivity.this,
-                                                        BluetoothImportWalletActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
+                                                                            @Override
+                                                                            public void onInitFail() {
+                                                                                dissmisProgressDialog();
+                                                                                GemmaToastUtils.showLongToast(
+                                                                                        getString(R.string.wookong_init_pin_fail));
+                                                                            }
+                                                                        });
+                                                    }
 
-                                            @Override
-                                            public void onInitFail() {
-                                                GemmaToastUtils.showLongToast(
-                                                        getString(R.string.wookong_init_pin_fail));
-                                            }
-                                        });
+                                                    @Override
+                                                    public void onConfirmFailed() {
+                                                        dissmisProgressDialog();
+                                                    }
+                                                });
+                                    }
+
+                                    @Override
+                                    public void onValidateFail() {
+                                        dissmisProgressDialog();
+                                        showPowerLevelAlertDialog();
+                                    }
+                                });
 
                         break;
                     default:

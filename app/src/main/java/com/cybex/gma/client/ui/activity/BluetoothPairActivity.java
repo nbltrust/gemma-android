@@ -84,7 +84,7 @@ public class BluetoothPairActivity extends BluetoothBaseActivity<BluetoothPairPr
                                               @Override
                                               public void onPermissionGranted() {
 //                                                  UISkipMananger.startActivity(BluetoothPairActivity.this, BluetoothScanResultDialogActivity.class);
-                                                    AutoSize.autoConvertDensityOfGlobal(BluetoothPairActivity.this);
+                                                  AutoSize.autoConvertDensityOfGlobal(BluetoothPairActivity.this);
                                                   wookongScanDialog = new WookongScanDialog(BluetoothPairActivity.this, false, false);
                                                   wookongScanDialog.show();
                                               }

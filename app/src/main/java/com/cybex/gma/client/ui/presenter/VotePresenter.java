@@ -323,41 +323,43 @@ public class VotePresenter extends XPresenter<VoteFragment> {
 
                         @Override
                         public void onSuccess(Response<AccountInfo> response) {
-                            if (response != null && response.body() != null) {
-                                AccountInfo info = response.body();
-                                if (EmptyUtils.isNotEmpty(info)) {
-                                    AccountInfo.SelfDelegatedBandwidthBean resource = info
-                                            .getSelf_delegated_bandwidth();
-                                    if (EmptyUtils.isNotEmpty(resource)) {
-                                        //有抵押资源
-                                        String delegated_cpu = resource.getCpu_weightX();
-                                        String delegated_net = resource.getNet_weightX();
+                            if (getV() != null){
+                                if (response != null && response.body() != null) {
+                                    AccountInfo info = response.body();
+                                    if (EmptyUtils.isNotEmpty(info)) {
+                                        AccountInfo.SelfDelegatedBandwidthBean resource = info
+                                                .getSelf_delegated_bandwidth();
+                                        if (EmptyUtils.isNotEmpty(resource)) {
+                                            //有抵押资源
+                                            String delegated_cpu = resource.getCpu_weightX();
+                                            String delegated_net = resource.getNet_weightX();
 
-                                        String[] cpu_amount_arr = delegated_cpu.split(" ");
-                                        String[] net_amount_arr = delegated_net.split(" ");
+                                            String[] cpu_amount_arr = delegated_cpu.split(" ");
+                                            String[] net_amount_arr = delegated_net.split(" ");
 
-                                        String cpu_amount = cpu_amount_arr[0];
-                                        String net_amount = net_amount_arr[0];
+                                            String cpu_amount = cpu_amount_arr[0];
+                                            String net_amount = net_amount_arr[0];
 
-                                        String total_resource = AmountUtil.add(cpu_amount, net_amount, 4) + " EOS";
-                                        if (EmptyUtils.isNotEmpty(getV())) {
-                                            getV().hasDelegatedRes(true);
-                                            getV().setTotalDelegatedResource(total_resource);
-                                            getV().showContent();
-                                        }
+                                            String total_resource = AmountUtil.add(cpu_amount, net_amount, 4) + " EOS";
+                                            if (EmptyUtils.isNotEmpty(getV())) {
+                                                getV().hasDelegatedRes(true);
+                                                getV().setTotalDelegatedResource(total_resource);
+                                                getV().showContent();
+                                            }
 
-                                    } else {
-                                        //该账号没有给自己抵押资源
-                                        if (EmptyUtils.isNotEmpty(getV())) {
-                                            getV().hasDelegatedRes(false);
-                                            getV().showEmptyOrFinish();
-                                            GemmaToastUtils.showLongToast(
-                                                    getV().getResources().getString(R.string.eos_not_enough_delegated_res));
+                                        } else {
+                                            //该账号没有给自己抵押资源
+                                            if (EmptyUtils.isNotEmpty(getV())) {
+                                                getV().hasDelegatedRes(false);
+                                                getV().showEmptyOrFinish();
+                                                GemmaToastUtils.showLongToast(
+                                                        getV().getResources().getString(R.string.eos_not_enough_delegated_res));
+                                            }
                                         }
                                     }
                                 }
+                                getV().dissmisProgressDialog();
                             }
-                            getV().dissmisProgressDialog();
                         }
 
                         @Override

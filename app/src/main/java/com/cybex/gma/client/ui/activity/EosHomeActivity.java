@@ -424,6 +424,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         viewResourceManage.setVisibility(View.GONE);
+        tvAssets.setVisibility(View.INVISIBLE);
 
         bundle = new Bundle();
         getP().requestHomeCombineDataVO();
@@ -614,6 +615,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
      */
     public void showTokens(List<EosTokenVO> eosTokens) {
 
+        tvAssets.setVisibility(View.VISIBLE);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager
                 .VERTICAL, false);
         recyclerTokenList.setLayoutManager(layoutManager);

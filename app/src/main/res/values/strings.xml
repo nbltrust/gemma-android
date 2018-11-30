@@ -837,9 +837,9 @@
     <string name="eos_mnenonic_import_fail">助记词导入设备失败</string>
     <string name="eos_mnemonic_importing">正在导入助记词</string>
     <string name="wookong_init_fail">WOOKONG Bio初始化失败,请重新初始化</string>
-    <string name="creating_wookong_wallet">正在创建WOOKONG Bio</string>
+    <string name="creating_wookong_wallet">正在创建WOOKONG Wallet</string>
     <string name="wookong_connect_fail">设备连接失败,请重试</string>
-    <string name="exit_wait_for_connect">正在连接设备,请稍微退出界面</string>
+    <string name="exit_wait_for_connect">正在连接设备,请稍后退出界面</string>
 
 
 </resources>
