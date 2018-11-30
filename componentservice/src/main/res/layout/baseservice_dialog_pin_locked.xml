@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/shape_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_no_screenshot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_locked"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="18dp"/>
+
+    <TextView
+        android:id="@+id/tv_no_screenshot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/baseservice_dialog_pin_locked_title"
+        android:textColor="@color/black_title"
+        android:layout_gravity="center"
+        android:textSize="@dimen/font_4"
+        android:layout_marginTop="6dp"/>
+
+    <me.codeboy.android.aligntextview.AlignTextView
+        android:id="@+id/tv_no_screenshot_hint"
+        android:layout_width="210dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_3.5"
+        app:align="center"
+        android:textColor="@color/black_context"
+        android:text="@string/baseservice_dialog_pin_locked_hint"
+        android:layout_marginTop="6dp"
+        />
+
+    <View
+        android:layout_marginTop="10dp"
+        android:background="@color/dddddd_grey_350"
+        style="@style/common_divider">
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="42dp"
+            android:text="@string/cancel"
+            android:gravity="center"
+            android:textSize="@dimen/font_4"
+            android:textColor="@color/black_content"
+            android:background="@drawable/shape_corner_bot_dialog"
+            />
+
+        <View
+            android:background="@color/dddddd_grey_350"
+            android:layout_width="0.7dp"
+            android:layout_height="match_parent"
+            >
+        </View>
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="42dp"
+            android:text="@string/baseservice_format"
+            android:gravity="center"
+            android:textSize="@dimen/font_4"
+            android:textColor="@color/black_content"
+            android:background="@drawable/shape_corner_bot_dialog"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

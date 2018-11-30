@@ -64,7 +64,7 @@
 
     <string name="setting">Setting</string>
     <string name="resume">Resume</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">取消</string>
 
     <!-- Language Setting -->
     <string name="language">语言</string>

@@ -733,6 +733,11 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                                             }
 
                                             @Override
+                                            public void onPinLocked() {
+
+                                            }
+
+                                            @Override
                                             public void onVerifyFail() {
                                                 GemmaToastUtils.showShortToast(getString(
                                                         R.string.baseservice_pass_validate_ip_wrong_password));
@@ -758,6 +763,11 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
 //                                                finish();
                                                 dialog.cancel();
                                                 createWookongWallet();
+                                            }
+
+                                            @Override
+                                            public void onPinLocked() {
+
                                             }
 
                                             @Override

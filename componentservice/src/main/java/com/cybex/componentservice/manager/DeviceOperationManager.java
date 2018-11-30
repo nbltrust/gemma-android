@@ -1087,6 +1087,8 @@ public class DeviceOperationManager {
 
         void onVerifySuccess();
 
+        void onPinLocked();
+
         void onVerifyFail();
     }
 
@@ -1202,7 +1204,7 @@ public class DeviceOperationManager {
                                 if (deviceComm.deviceInfo.ucPINState != 0x02 && deviceComm.deviceInfo.ucPINState == 0x02) {
                                     //pin locked,send event
                                     LoggerManager.e("pin locked,send event...");
-                                    EventBusProvider.post(new PinLockedEvent(deviceName));
+//                                    EventBusProvider.post(new PinLockedEvent(deviceName));
                                 }
                             }
                             deviceComm.deviceInfo = devInfo;
@@ -1372,7 +1374,16 @@ public class DeviceOperationManager {
                                 callbackMaps.get(tag).verifyPinCallback.onVerifySuccess();
                             }
                         }
-                    } else {
+                    }else if (msg.arg1 == MiddlewareInterface.PAEW_RET_DEV_PIN_LOCKED) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).verifyPinCallback != null) {
+                                callbackMaps.get(tag).verifyPinCallback.onPinLocked();
+                            }
+                        }
+                    }
+                    else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();

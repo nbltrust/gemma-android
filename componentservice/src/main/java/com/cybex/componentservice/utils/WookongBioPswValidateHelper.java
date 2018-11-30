@@ -1,6 +1,7 @@
 package com.cybex.componentservice.utils;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -9,14 +10,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.R;
+import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.event.WookongFormattedEvent;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
+import com.cybex.componentservice.manager.LoggerManager;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
+import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+
+import java.util.List;
 
 import me.jessyan.autosize.AutoSize;
 
@@ -97,6 +109,12 @@ public class WookongBioPswValidateHelper {
                             }
 
                             @Override
+                            public void onPinLocked() {
+                                isVerifying=false;
+                                showPinLockedDialog();
+                            }
+
+                            @Override
                             public void onVerifyFail() {
                                 isVerifying=false;
                                 String passHint = walletEntity.getPasswordTip();
@@ -137,6 +155,85 @@ public class WookongBioPswValidateHelper {
         ivCancel.setImageResource(iconRes);
     }
 
+    private void showPinLockedDialog() {
+
+        int[] listenedItems = {R.id.tv_cancel,R.id.tv_confirm};
+        CustomDialog dialog = new CustomDialog(activity,
+                R.layout.baseservice_dialog_pin_locked, listenedItems,false, Gravity.CENTER);
+        dialog.setmWidth(SizeUtil.dp2px(259));
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                if(view.getId()== R.id.tv_cancel){
+                    dialog.cancel();
+                }else if(view.getId()== R.id.tv_confirm){
+                    dialog.dismiss();
+                    if(activity instanceof XActivity){
+                        ((XActivity) activity).showProgressDialog("");
+                    }
+                    DeviceOperationManager.getInstance().startFormat(activity.toString(), walletEntity.getBluetoothDeviceName(), new DeviceOperationManager.DeviceFormatCallback() {
+                        @Override
+                        public void onFormatStart() {
+
+                        }
+
+                        @Override
+                        public void onFormatSuccess() {
+                            DeviceOperationManager.getInstance().freeContext(activity.toString(), walletEntity.getBluetoothDeviceName(), null);
+                            //delete db data
+                            DBManager.getInstance().getMultiWalletEntityDao().deleteEntityAsync(walletEntity, new DBCallback() {
+                                @Override
+                                public void onSucceed() {
+                                    List<MultiWalletEntity> multiWalletEntityList = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
+                                    if(multiWalletEntityList.size()>0){
+                                        MultiWalletEntity walletEntity = multiWalletEntityList.get(0);
+                                        walletEntity.setIsCurrentWallet(1);
+                                        walletEntity.save();
+                                    }
+                                    //show dialog
+                                    int size = multiWalletEntityList.size();
+                                    if(size>0){
+                                        EventBusProvider.post(new WookongFormattedEvent(false));
+                                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+                                                .navigation();
+                                    }else{
+                                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+                                                .withInt(BaseConst.KEY_INIT_TYPE,BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE)
+                                                .navigation();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailed(Throwable error) {
+                                    LoggerManager.e("deleteEntityAsync error="+error.getMessage());
+                                }
+                            });
+
+
+                        }
+
+                        @Override
+                        public void onFormatFailed() {
+                            if(activity instanceof XActivity){
+                                ((XActivity) activity).dissmisProgressDialog();
+                            }
+                        }
+                    });
+
+                }
+            }
+        });
+        dialog.show();
+
+
+    }
 
 
     /**

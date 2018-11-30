@@ -14,7 +14,7 @@
     <string name="baseservice_setting">Setting</string>
     <string name="baseservice_resume">Resume</string>
     <string name="baseservice_cancel">Cancel</string>
-
+    <string name="baseservice_format">格式化</string>
 
 
 </resources>

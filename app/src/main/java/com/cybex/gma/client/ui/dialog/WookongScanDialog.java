@@ -15,18 +15,24 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.event.WookongFormattedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -36,9 +42,11 @@ import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.extropies.common.MiddlewareInterface;
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.cybex.componentservice.widget.CustomFullWithAlertDialog;
 
@@ -791,6 +799,11 @@ public class WookongScanDialog extends Dialog {
                                             }
 
                                             @Override
+                                            public void onPinLocked() {
+                                                showPinLockedDialog();
+                                            }
+
+                                            @Override
                                             public void onVerifyFail() {
                                                 GemmaToastUtils.showShortToast(getContext().getString(
                                                         com.cybex.gma.client.R.string.baseservice_pass_validate_ip_wrong_password));
@@ -819,6 +832,11 @@ public class WookongScanDialog extends Dialog {
                                             }
 
                                             @Override
+                                            public void onPinLocked() {
+                                                showPinLockedDialog();
+                                            }
+
+                                            @Override
                                             public void onVerifyFail() {
                                                 GemmaToastUtils.showShortToast(activity.getString(
                                                         com.cybex.gma.client.R.string.baseservice_pass_validate_ip_wrong_password));
@@ -840,6 +858,8 @@ public class WookongScanDialog extends Dialog {
         pinDialog.show();
 
     }
+
+
 
 
     private void revertItemStatus(){
@@ -867,6 +887,57 @@ public class WookongScanDialog extends Dialog {
                     public void onFreeFailed() {
                     }
                 });
+    }
+
+
+    private void showPinLockedDialog() {
+
+        int[] listenedItems = {com.cybex.componentservice.R.id.tv_cancel, com.cybex.componentservice.R.id.tv_confirm};
+        CustomDialog dialog = new CustomDialog(activity,
+                com.cybex.componentservice.R.layout.baseservice_dialog_pin_locked, listenedItems,false, Gravity.CENTER);
+        dialog.setmWidth(SizeUtil.dp2px(259));
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                if(view.getId()== com.cybex.componentservice.R.id.tv_cancel){
+                    dialog.cancel();
+                }else if(view.getId()== com.cybex.componentservice.R.id.tv_confirm){
+                    dialog.dismiss();
+                    activity.showProgressDialog("");
+                    DeviceOperationManager.getInstance().startFormat(activity.toString(), deviceName, new DeviceOperationManager.DeviceFormatCallback() {
+                        @Override
+                        public void onFormatStart() {
+
+                        }
+
+                        @Override
+                        public void onFormatSuccess() {
+                            activity.dissmisProgressDialog();
+                            if(pinDialog!=null&&pinDialog.isShowing()){
+                                pinDialog.cancel();
+                            }
+//                            DeviceOperationManager.getInstance().freeContext(activity.toString(), walletEntity.getBluetoothDeviceName(), null);
+                        }
+
+                        @Override
+                        public void onFormatFailed() {
+                            activity.dissmisProgressDialog();
+                        }
+                    });
+
+                }
+            }
+        });
+        dialog.show();
+
+
     }
 
     /**
