@@ -36,6 +36,9 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.disposables.Disposable;
 
 public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivity> {
@@ -95,6 +98,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                                     } else {
                                         //连接蓝牙卡
 
+                                        getV().showProgressDialog(getV().getString(R.string.creating_wookong_wallet));
                                         if (curWallet != null) {
                                             WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(
                                                     getV().toString(), curWallet, getV());
@@ -107,7 +111,9 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
 
                                                         @Override
                                                         public void onConnectFail() {
-
+                                                            AlertUtil.showShortUrgeAlert(getV(), getV().getString(R
+                                                                    .string.wookong_connect_fail));
+                                                            getV().dissmisProgressDialog();
                                                         }
                                                     });
                                         }
@@ -146,126 +152,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
         return null;
     }
 
-    /**
-     * 蓝牙钱包账户创建请求
-     *
-     * @param account_name
-     * @param SN
-     * @param SN_sig
-     * @param public_key
-     * @param public_key_sig
-     */
-    public void doAccountRegisterRequest(
-            String account_name,
-            String SN, String SN_sig,
-            String public_key,
-            String publick_key_hex,
-            String public_key_sig) {
-        BluetoothCreateAccountReqParams params = new BluetoothCreateAccountReqParams();
 
-        params.setApp_id(ParamConstants.TYPE_APP_ID_BLUETOOTH);
-        params.setAccount_name(account_name);
-        params.setPublic_key(public_key);
-
-        BluetoothCreateAccountReqParams.WookongValidation validation = new BluetoothCreateAccountReqParams
-                .WookongValidation();
-        validation.setSN(SN.toLowerCase());
-        validation.setSN_sig(SN_sig.toLowerCase());
-        validation.setPublic_key(publick_key_hex + "00");
-        validation.setPublic_key_sig(public_key_sig);
-        params.setValidation(validation);
-
-        String json = GsonUtils.objectToJson(params);
-        LoggerManager.d("Bluetooth Create Params", json);
-
-        new BluetoothAccountRegisterRequest(UserRegisterResult.class)
-                .setJsonParams(json)
-                .postJson(new CustomRequestCallback<UserRegisterResult>() {
-                    @Override
-                    public void onBeforeRequest(@NonNull Disposable disposable) {
-                        if (getV() != null) {
-                            getV().showProgressDialog("正在创建账户...");
-                        }
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
-                        if (getV() != null) {
-                            getV().dissmisProgressDialog();
-
-                            if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
-                                UserRegisterResult registerResult = data.result;
-                                if (registerResult != null) {
-                                    //String txId = registerResult.txId;
-
-                                    //TimeStampValidateJob.executedCreateLogic(account_name, public_key);
-                                    AppManager.getAppManager().finishAllActivity();
-                                    UISkipMananger.launchEOSHome(getV());
-                                }
-                            } else {
-                                showOnErrorInfo(data.code);
-                            }
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        if (getV() != null) {
-                            getV().dissmisProgressDialog();
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        if (getV() != null) {
-                            getV().dissmisProgressDialog();
-                        }
-                    }
-                });
-    }
-
-    /**
-     * 根据返回值不同Toast不同内容
-     *
-     * @param errorCode
-     */
-    public void showOnErrorInfo(int errorCode) {
-
-        switch (errorCode) {
-            case (HttpConst.INVCODE_USED):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_sn_used));
-                break;
-            case (HttpConst.INVCODE_NOTEXIST):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_invCode_not_exist));
-                break;
-            case (HttpConst.EOSNAME_USED):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_used));
-                break;
-            case (HttpConst.EOSNAME_INVALID):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_invalid));
-                break;
-            case (HttpConst.EOSNAME_LENGTH_INVALID):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_len_invalid));
-                break;
-            case (HttpConst.PARAMETERS_INVALID):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_params_invalid));
-                break;
-            case (HttpConst.PUBLICKEY_INVALID):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_pubKey_invalid));
-                break;
-            case (HttpConst.BALANCE_NOT_ENOUGH):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_no_balance));
-                break;
-            case (HttpConst.CREATE_ACCOUNT_FAIL):
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
-                break;
-            default:
-                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
-                break;
-        }
-    }
 
     public void getDeviceInfoAndRegister() {
 
@@ -316,6 +203,8 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
 
                                             @Override
                                             public void onCheckCodeFail() {
+                                                getV().dissmisProgressDialog();
+                                                AlertUtil.showShortUrgeAlert(getV(), "SN 签名失败，请重新尝试");
                                                 LoggerManager.d("getCheckCode Fail");
                                             }
                                         });
@@ -326,10 +215,158 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
 
                         @Override
                         public void onGetFail() {
-
+                            getV().dissmisProgressDialog();
+                            AlertUtil.showShortUrgeAlert(getV(), "读取EOS公钥失败，请重新尝试");
                         }
                     }
             );
+        }
+    }
+
+
+    /**
+     * 蓝牙钱包账户创建请求
+     *
+     * @param account_name
+     * @param SN
+     * @param SN_sig
+     * @param public_key
+     * @param public_key_sig
+     */
+    public void doAccountRegisterRequest(
+            String account_name,
+            String SN, String SN_sig,
+            String public_key,
+            String publick_key_hex,
+            String public_key_sig) {
+        BluetoothCreateAccountReqParams params = new BluetoothCreateAccountReqParams();
+
+        params.setApp_id(ParamConstants.TYPE_APP_ID_BLUETOOTH);
+        params.setAccount_name(account_name);
+        params.setPublic_key(public_key);
+
+        BluetoothCreateAccountReqParams.WookongValidation validation = new BluetoothCreateAccountReqParams
+                .WookongValidation();
+        validation.setSN(SN.toLowerCase());
+        validation.setSN_sig(SN_sig.toLowerCase());
+        validation.setPublic_key(publick_key_hex + "00");
+        validation.setPublic_key_sig(public_key_sig);
+        params.setValidation(validation);
+
+        String json = GsonUtils.objectToJson(params);
+        LoggerManager.d("Bluetooth Create Params", json);
+
+        new BluetoothAccountRegisterRequest(UserRegisterResult.class)
+                .setJsonParams(json)
+                .postJson(new CustomRequestCallback<UserRegisterResult>() {
+                    @Override
+                    public void onBeforeRequest(@NonNull Disposable disposable) {
+                        if (getV() != null) {
+                            getV().showProgressDialog("正在创建账户...");
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
+                        if (getV() != null) {
+                            getV().dissmisProgressDialog();
+
+                            if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
+
+                                UserRegisterResult registerResult = data.result;
+                                if (registerResult != null) {
+                                    //String txId = registerResult.txId;
+                                    updateCurBluetoothWallet(account_name);
+                                    //TimeStampValidateJob.executedCreateLogic(account_name, public_key);
+                                    AppManager.getAppManager().finishAllActivity();
+                                    UISkipMananger.launchEOSHome(getV());
+
+                                }
+                            } else {
+                                showOnErrorInfo(data.code);
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        if (getV() != null) {
+                            getV().dissmisProgressDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if (getV() != null) {
+                            getV().dissmisProgressDialog();
+                        }
+                    }
+                });
+    }
+
+
+
+    /**
+     * 创建成功后将相关信息填入数据库
+     */
+    public void updateCurBluetoothWallet(String account_name){
+        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
+                .getBluetoothWalletList();
+        if (bluetoothWalletList != null && bluetoothWalletList.size() > 0){
+            MultiWalletEntity curBluetoothWallet = bluetoothWalletList.get(0);
+            if (curBluetoothWallet.getEosWalletEntities().size() > 0){
+                EosWalletEntity curEosWallet = curBluetoothWallet.getEosWalletEntities().get(0);
+                curEosWallet.setCurrentEosName(account_name);
+                List<String> account_names = new ArrayList<>();
+                account_names.add(account_name);
+                String jsonEosName = GsonUtils.objectToJson(account_names);
+                curEosWallet.setEosNameJson(jsonEosName);
+                curEosWallet.save();
+                curBluetoothWallet.save();
+            }
+        }
+    }
+
+    /**
+     * 根据返回值不同Toast不同内容
+     *
+     * @param errorCode
+     */
+    public void showOnErrorInfo(int errorCode) {
+
+        switch (errorCode) {
+            case (HttpConst.INVCODE_USED):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_sn_used));
+                break;
+            case (HttpConst.INVCODE_NOTEXIST):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_invCode_not_exist));
+                break;
+            case (HttpConst.EOSNAME_USED):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_used));
+                break;
+            case (HttpConst.EOSNAME_INVALID):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_invalid));
+                break;
+            case (HttpConst.EOSNAME_LENGTH_INVALID):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_len_invalid));
+                break;
+            case (HttpConst.PARAMETERS_INVALID):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_params_invalid));
+                break;
+            case (HttpConst.PUBLICKEY_INVALID):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_pubKey_invalid));
+                break;
+            case (HttpConst.BALANCE_NOT_ENOUGH):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_no_balance));
+                break;
+            case (HttpConst.CREATE_ACCOUNT_FAIL):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
+                break;
+            default:
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
+                break;
         }
     }
 

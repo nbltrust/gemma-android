@@ -574,7 +574,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                             String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
                             String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
                             String tokenContract = curToken.getTokenName();
-                            int accuracy = curToken.getAccurancy();
+                            int accuracy = curToken.getAccurancy()>0 ? curToken.getAccurancy() : 0;
+
                             String tokenSymbol = curToken.getTokenSymbol();
                             getP().executeTokenTransferLogic(
                                     wallet.getEosWalletEntities().get(0).getCurrentEosName(),

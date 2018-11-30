@@ -99,6 +99,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                     getV().dissmisProgressDialog();
                                     getV().setNewPrice(curRMBPrice);
                                     getV().showPriceChangedDialog();
+                                    getV().updatePrice();
 
                                 }else {
                                     //价格未变

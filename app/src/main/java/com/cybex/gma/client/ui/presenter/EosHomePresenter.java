@@ -491,6 +491,7 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
      * @return
      */
     public String formatCurrency(String value){
+        if (value.equals("0.00"))return value;
         DecimalFormat df = new DecimalFormat("#,###.00");
         BigDecimal bigDecimal = new BigDecimal(value);
         String format_value = df.format(bigDecimal);

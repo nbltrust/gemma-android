@@ -493,6 +493,10 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             //当前eos钱包为空
             mEosCardView.setVisibility(View.GONE);
         }
+
+        if (eosTokens == null || eosTokens.size() < 2){
+            mEosCardView.setTokenList(new ArrayList<>());
+        }
     }
 
     @Override
@@ -512,6 +516,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     public void showEosBalance(String rawBalance) {
         String balance = rawBalance.split(" ")[0];
+        if (balance.equals("0"));
         String eosAssetsQuantity = AmountUtil.add(balance, delegatedResourceQuantity, 4);
         mEosCardView.setEosNumber(Float.valueOf(eosAssetsQuantity));
         if (eosUnitPriceRMB != null) {
@@ -538,10 +543,11 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
      * @return
      */
     public String formatCurrency(String value) {
-        DecimalFormat df = new DecimalFormat("#,###.00");
-        BigDecimal bigDecimal = new BigDecimal(value);
 
-        return df.format(bigDecimal);
+            DecimalFormat df = new DecimalFormat("#,###.00");
+            BigDecimal bigDecimal = new BigDecimal(value);
+            return df.format(bigDecimal);
+
     }
 
 }

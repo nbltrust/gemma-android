@@ -25,8 +25,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_10"
-            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginStart="@dimen/dimen_20"
             android:orientation="vertical">
 
             <com.cybex.base.view.tablayout.CommonTabLayout
@@ -37,30 +37,28 @@
                 title:tl_indicator_gravity="BOTTOM"
                 title:tl_indicator_height="1dp"
                 title:tl_indicator_style="NORMAL"
-                title:tl_indicator_width="140dp"
                 title:tl_indicator_width_equal_title="false"
-                title:tl_tab_padding="6dp"
+                title:tl_tab_padding="40dp"
                 title:tl_tab_space_equal="true"
                 title:tl_textBold="SELECT"
                 title:tl_textSelectColor="@color/colorTabTextSelect"
                 title:tl_textUnselectColor="@color/colorTabTextUnSelect"
-                title:tl_textsize="16dp"
-                title:tl_underline_color="#E7E9F8"
+                title:tl_textsize="@dimen/font_4.5"
+                title:tl_underline_color="#dddddd"
                 >
 
             </com.cybex.base.view.tablayout.CommonTabLayout>
 
-            <ImageView
+            <View
+                android:background="#dddddd"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/eos_di_notify_bg"/>
+                android:layout_height="1dp"
+                android:layerType="software"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_12"
-                android:layout_marginStart="@dimen/dimen_12"
-                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_20"
                 android:orientation="horizontal">
 
                 <TextView
@@ -83,11 +81,9 @@
 
             <EditText
                 android:id="@+id/edt_buy_ram"
-                style="@style/eos_editText_config_wallet"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:layout_marginStart="@dimen/dimen_12"
                 android:background="@null"
+                android:layout_height="@dimen/dimen_50"
                 android:hint="@string/eos_input_eos_amount"
                 android:inputType="numberDecimal"
                 android:textColorHint="@color/very_light_pink"
@@ -97,22 +93,18 @@
 
             <EditText
                 android:id="@+id/edt_sell_ram"
-                style="@style/eos_editText_config_wallet"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50"
-                android:layout_marginStart="@dimen/dimen_12"
-                android:background="@null"
                 android:hint="@string/eos_input_ram_amount"
                 android:inputType="numberDecimal"
                 android:textColorHint="@color/very_light_pink"
                 android:textColor="@color/black_context"
                 android:textCursorDrawable="@drawable/eos_cursor_custom"
                 android:textSize="@dimen/font_4"
+                android:background="@null"
                 android:visibility="gone"/>
 
             <View
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 style="@style/common_divider">
             </View>
 
@@ -121,6 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="@dimen/dimen_10"
+                title:sLeftViewMarginLeft="0dp"
+                title:sRightViewMarginRight="0dp"
                 title:sLeftTextColor="@color/black_title"
                 title:sLeftTextSize="@dimen/font_3.5"
                 title:sLeftTextString="@string/eos_price"
@@ -133,8 +127,6 @@
             </com.allen.library.SuperTextView>
 
             <View
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 style="@style/common_divider">
             </View>
 

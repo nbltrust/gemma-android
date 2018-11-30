@@ -7,7 +7,6 @@
 
     <LinearLayout
         android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_12"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -39,19 +38,16 @@
         android:inputType="numberDecimal"
         android:hint="@string/eos_amount_delegate"
         android:textColorHint="@color/very_light_pink"
-        style="@style/eos_editText_config_wallet"
-        android:paddingStart="0dp"
+        android:background="@null"
+        android:textColor="@color/black_title"
         android:textCursorDrawable="@drawable/eos_cursor_custom"/>
 
     <View
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         style="@style/common_divider"/>
 
 
     <LinearLayout
         android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_12"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -82,14 +78,12 @@
         android:inputType="numberDecimal"
         android:textSize="@dimen/font_4"
         android:hint="@string/eos_amount_delegate"
+        android:textColor="@color/black_title"
         android:textColorHint="@color/very_light_pink"
-        style="@style/eos_editText_config_wallet"
         android:textCursorDrawable="@drawable/eos_cursor_custom"
         android:background="@null"/>
 
     <View
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         style="@style/common_divider"/>
 
 </LinearLayout>
