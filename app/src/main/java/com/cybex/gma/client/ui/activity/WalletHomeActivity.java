@@ -399,39 +399,46 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     }
 
     public void updateBluetoothUI() {
-        mViewBackupStatus.setVisibility(View.GONE);
-        boolean isConnected = DeviceOperationManager.getInstance()
-                .isDeviceConnectted(curWallet.getBluetoothDeviceName());
-        if (isConnected) {
-            //判断连接状态
-            //已连接
-            int deviceBatteryChargeMode = DeviceOperationManager.getInstance()
-                    .getDeviceBatteryChargeMode(curWallet.getBluetoothDeviceName());
-            if (deviceBatteryChargeMode == 1) {
-                //电池供电
-                int powerAmount = DeviceOperationManager.getInstance()
-                        .getDevicePowerAmount(curWallet.getBluetoothDeviceName());
-                mIvWookongLogo.setImageResource(R.drawable.wookong_logo);
 
-                String devicePowerPercent = WookongUtils.getDevicePowerPercent(powerAmount);
-                if (!TextUtils.isEmpty(devicePowerPercent)) {
-                    mTvWookongStatus.setText(
-                            getString(R.string.walletmanage_battery_left) + " " + devicePowerPercent + "%");
+        if (curWallet.getWalletType() == MultiWalletEntity.WALLET_TYPE_HARDWARE){
+            mViewBackupStatus.setVisibility(View.GONE);
+            boolean isConnected = DeviceOperationManager.getInstance()
+                    .isDeviceConnectted(curWallet.getBluetoothDeviceName());
+            if (isConnected) {
+                //判断连接状态
+                //已连接
+                int deviceBatteryChargeMode = DeviceOperationManager.getInstance()
+                        .getDeviceBatteryChargeMode(curWallet.getBluetoothDeviceName());
+                if (deviceBatteryChargeMode == 1) {
+                    //电池供电
+                    int powerAmount = DeviceOperationManager.getInstance()
+                            .getDevicePowerAmount(curWallet.getBluetoothDeviceName());
+                    mIvWookongLogo.setImageResource(R.drawable.wookong_logo);
+
+                    String devicePowerPercent = WookongUtils.getDevicePowerPercent(powerAmount);
+                    if (!TextUtils.isEmpty(devicePowerPercent)) {
+                        mTvWookongStatus.setText(
+                                getString(R.string.walletmanage_battery_left) + " " + devicePowerPercent + "%");
+                    } else {
+                        mTvWookongStatus.setText(R.string.walletmanage_status_connected);
+                    }
+
+
                 } else {
+                    //USB供电（正在充电）
                     mTvWookongStatus.setText(R.string.walletmanage_status_connected);
+                    mIvWookongLogo.setImageResource(R.drawable.wookong_logo_charge);
                 }
-
-
             } else {
-                //USB供电（正在充电）
-                mTvWookongStatus.setText(R.string.walletmanage_status_connected);
-                mIvWookongLogo.setImageResource(R.drawable.wookong_logo_charge);
+                //未连接
+                mTvWookongStatus.setText(getString(R.string.eos_status_not_connected));
+                mIvWookongLogo.setImageResource(R.drawable.wookong_logo_gray);
             }
-        } else {
-            //未连接
-            mTvWookongStatus.setText(getString(R.string.eos_status_not_connected));
-            mIvWookongLogo.setImageResource(R.drawable.wookong_logo_gray);
+        }else {
+            //非蓝牙钱包
+            mViewWookongStatus.setVisibility(View.INVISIBLE);
         }
+
     }
 
     /**

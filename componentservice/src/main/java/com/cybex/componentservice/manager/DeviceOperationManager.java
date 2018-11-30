@@ -108,7 +108,7 @@ public class DeviceOperationManager {
     }
 
     public boolean isDeviceConnectted(String deviceName) {
-        if (deviceMaps.get(deviceName) == null) {
+        if (deviceName == null || deviceMaps.get(deviceName) == null) {
             return false;
         }
         if (deviceMaps.get(deviceName).currentState != CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
