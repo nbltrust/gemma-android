@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,6 +26,7 @@ import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.componentservice.utils.WookongConnectHelper;
+import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.cybex.gma.client.R;
@@ -34,6 +36,7 @@ import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.EosTokenTransferPresenter;
+import com.cybex.gma.client.utils.taskscheduler.Task;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -163,6 +166,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     public void onDestroyView() {
         DeviceOperationManager.getInstance().clearCallback(this.toString());
         clearData();
+        dissmisProgressDialog();
         unbinder.unbind();
         super.onDestroyView();
     }
@@ -438,6 +442,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         }
     }
 
+    /**
+     *转账操作入口
+     * @param view
+     */
     @OnClick({R.id.btn_transfer_nextStep})
     public void onClickSubmitTransfer(View view) {
         String toAccount = String.valueOf(etReceiverAccount.getText());
@@ -681,8 +689,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      */
     public void startEosSerialization(String jsonTxStr) {
 
-        //String deviceName = getBluetoothDeviceName();
-
         DeviceOperationManager.getInstance().jsonSerialization(TAG, jsonTxStr, deviceName,
                 new DeviceOperationManager.JsonSerilizeCallback() {
                     @Override
@@ -695,7 +701,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         //把序列化之后的数据做处理
                         byte[] builtStr = getP().buildSignStr(serializeResult, chain_id);
                         //把builtStr 送给设备签名
-                        startEosSign(builtStr);
+                        startVerifyProcess(builtStr);
                     }
 
                     @Override
@@ -706,12 +712,59 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     }
 
 
+    public void startVerifyProcess(byte[] builtStr){
+
+        DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
+                new DeviceOperationManager.GetFPListCallback() {
+                    @Override
+                    public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
+                        //判断是否有指纹
+                        if (fpListReturnValue.getFPCount() > 0){
+                            //有设置指纹
+                            DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
+                                    new DeviceOperationManager.DeviceVerifyFPCallback() {
+                                        @Override
+                                        public void onVerifyStart() {
+                                            showVerifyFPDialog();
+                                        }
+
+                                        @Override
+                                        public void onVerifySuccess() {
+                                            //EOS Sign
+                                            verifyDialog.cancel();
+                                            startEosSign(builtStr);
+                                        }
+
+                                        @Override
+                                        public void onVerifyFailed() {
+                                            verifyDialog.cancel();
+                                        }
+
+                                        @Override
+                                        public void onVerifyCancelled() {
+                                            verifyDialog.cancel();
+                                        }
+                                    });
+                        }else {
+                            //没有设置指纹
+                            //PIN 验证
+                            showConfirmPINDialog(builtStr);
+                        }
+                    }
+
+                    @Override
+                    public void onFail() {
+
+                    }
+                });
+    }
+
     /**
      * EOS Tranasaction 签名
      */
     private void startEosSign(byte[] transaction) {
+                showProgressDialog("正在Bio上签名交易");
         uiLock.lock();
-
         DeviceOperationManager.getInstance().signEosTransaction(TAG, deviceName, uiLock, transaction,
                 new DeviceOperationManager.EosSignCallback() {
                     @Override
@@ -743,8 +796,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         uiLock.unlock();
                     }
                 });
-
     }
+
 
     /**
      * 显示通过蓝牙卡验证指纹dialog
@@ -794,5 +847,53 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             }
         });
         dialog.show();
+    }
+
+
+    /**
+     * 显示输入PIN以确认dialog
+     */
+    private void showConfirmPINDialog(byte[] builtStr) {
+        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
+        pinDialog = new CustomFullDialog(getActivity(),
+                R.layout.eos_dialog_bluetooth_input_transfer_password, listenedItems, false,false, Gravity.BOTTOM);
+
+        pinDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+        pinDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imc_cancel:
+                        dialog.cancel();
+                        break;
+                    case R.id.btn_confirm_authorization:
+                        TextView tv_password = dialog.findViewById(R.id.et_password);
+                        String password = tv_password.getText().toString();
+                        DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, password,
+                                new DeviceOperationManager.VerifyPinCallback() {
+                                    @Override
+                                    public void onVerifySuccess() {
+                                        startEosSign(builtStr);
+                                    }
+
+                                    @Override
+                                    public void onVerifyFail() {
+
+                                    }
+                                });
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        pinDialog.show();
+
     }
 }

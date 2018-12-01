@@ -33,7 +33,7 @@ public final class EventBusProvider {
 
     public static void post(Object busEvent) {
         if (busEvent != null) {
-            log(busEvent);
+            //log(busEvent);
             getInstance().post(busEvent);
         }
     }

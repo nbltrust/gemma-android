@@ -92,87 +92,12 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         curPage = 1;
         setNavibarTitle(getString(R.string.title_asset_detail), true);
         bundle = getIntent().getExtras();
-        /*
-        if (bundle != null) {
-            asset_type = bundle.getString(ParamConstants.EOS_TOKEN_TYPE);
-            if (asset_type != null) {
-                if (asset_type.equals(ParamConstants.SYMBOL_EOS)) {
-                    //EOS资产
-                    //资源管理
-                    tvResourceManage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UISkipMananger.launchResourceDetail(EosAssetDetailActivity.this, bundle);
-                        }
-                    });
 
-                    //投票
-                    tvVote.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            MultiWalletEntity curWallet = DBManager.getInstance()
-                                    .getMultiWalletEntityDao()
-                                    .getCurrentMultiWalletEntity();
-                            EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
-                            if (EmptyUtils.isNotEmpty(curWallet)) {
-                                bundle.putString("cur_eos_name", curEosWallet.getCurrentEosName());
-                                UISkipMananger.launchVote(EosAssetDetailActivity.this, bundle);
-                            }
-                        }
-                    });
-
-                    btnGoTransfer.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UISkipMananger.launchTransfer(EosAssetDetailActivity.this);
-                        }
-                    });
-
-                    btnCollect.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UISkipMananger.launchCollect(EosAssetDetailActivity.this);
-                        }
-                    });
-
-                } else {
-                    //EOS Tokens 资产
-                    curToken = bundle.getParcelable(ParamConstants.EOS_TOKENS);
-                    tvRmbAmount.setVisibility(View.GONE);
-                    tvCurrencyType.setVisibility(View.GONE);
-                    viewAssetDetailBot.setVisibility(View.GONE);
-                    if (curToken != null) {
-                        //设置Token相关UI
-                        tvTokenName.setText(curToken.getTokenSymbol());
-                        tvEosAmount.setText(curToken.getQuantity());
-                        String tokenUrl = curToken.getLogo_url();
-                        if (tokenUrl == null || tokenUrl.equals("")) {
-                            ivLogoEosAsset.setImageResource(R.drawable.ic_token_unknown);
-                        } else {
-                            Glide.with(ivLogoEosAsset.getContext())
-                                    .load(tokenUrl)
-                                    .into(ivLogoEosAsset);
-                        }
-                    }
-
-                    btnGoTransfer.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UISkipMananger.launchTransferWithBundle(EosAssetDetailActivity.this, bundle);
-                        }
-                    });
-
-                    btnCollect.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UISkipMananger.launchCollectWithBundle(EosAssetDetailActivity.this, bundle);
-                        }
-                    });
-                }
-
-            }
+        int walletType = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                .getWalletType();
+        if (walletType == MultiWalletEntity.WALLET_TYPE_HARDWARE){
+            viewAssetDetailBot.setVisibility(View.GONE);
         }
-        */
 
         if (bundle != null) {
             curToken = bundle.getParcelable(ParamConstants.EOS_TOKENS);

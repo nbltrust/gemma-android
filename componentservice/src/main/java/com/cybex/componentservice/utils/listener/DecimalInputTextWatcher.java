@@ -57,7 +57,9 @@ public class DecimalInputTextWatcher implements TextWatcher {
             mPattern = Pattern.compile("^[0-9]+(\\.[0-9]{0," + number + "})?$");
         } else if (type == Type.integer) {
             //mPattern = Pattern.compile("^[0-9]{0," + number + "}+(\\.[0-9]{0,})?$");
-            mPattern = Pattern.compile("^[0-9]{0," + number + "$");
+            //mPattern = Pattern.compile("^[0-9]{0," + number + "})?$");
+            mPattern = Pattern.compile("^[0-9]\\d*$");
+
         }
         maxvalue = maxValue;
     }

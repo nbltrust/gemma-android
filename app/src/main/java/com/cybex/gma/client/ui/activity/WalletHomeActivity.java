@@ -330,8 +330,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 mEthCardView.setVisibility(View.VISIBLE);
 
                 String deviceName = getP().getBluetoothDeviceName();
-
                 getP().getKeyAccounts(curEosWallet.getPublicKey());
+                updateEosCardView();
 
             } else if (walletType == BaseConst.WALLET_TYPE_MNE_CREATE) {
                 //创建的助记词多币种钱包
@@ -400,7 +400,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     public void updateBluetoothUI() {
 
-        if (curWallet.getWalletType() == MultiWalletEntity.WALLET_TYPE_HARDWARE){
+        if (curWallet.getWalletType() == MultiWalletEntity.WALLET_TYPE_HARDWARE) {
             mViewBackupStatus.setVisibility(View.GONE);
             boolean isConnected = DeviceOperationManager.getInstance()
                     .isDeviceConnectted(curWallet.getBluetoothDeviceName());
@@ -434,7 +434,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 mTvWookongStatus.setText(getString(R.string.eos_status_not_connected));
                 mIvWookongLogo.setImageResource(R.drawable.wookong_logo_gray);
             }
-        }else {
+        } else {
             //非蓝牙钱包
             mViewWookongStatus.setVisibility(View.INVISIBLE);
         }
@@ -494,7 +494,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             mEosCardView.setVisibility(View.GONE);
         }
 
-        if (eosTokens == null || eosTokens.size() < 2){
+        if (eosTokens == null || eosTokens.size() < 2) {
             mEosCardView.setTokenList(new ArrayList<>());
         }
     }
@@ -516,7 +516,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     public void showEosBalance(String rawBalance) {
         String balance = rawBalance.split(" ")[0];
-        if (balance.equals("0"));
+        if (balance.equals("0")) { ; }
         String eosAssetsQuantity = AmountUtil.add(balance, delegatedResourceQuantity, 4);
         mEosCardView.setEosNumber(Float.valueOf(eosAssetsQuantity));
         if (eosUnitPriceRMB != null) {
@@ -544,9 +544,11 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
      */
     public String formatCurrency(String value) {
 
-            DecimalFormat df = new DecimalFormat("#,###.00");
-            BigDecimal bigDecimal = new BigDecimal(value);
-            return df.format(bigDecimal);
+        if (value.equals("0.00"))return value;
+
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        BigDecimal bigDecimal = new BigDecimal(value);
+        return df.format(bigDecimal);
 
     }
 

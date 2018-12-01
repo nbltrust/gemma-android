@@ -1460,7 +1460,7 @@ public class DeviceOperationManager {
 
                 //heart beat
                 case BlueToothWrapper.MSG_HEART_BEAT_DATA_UPDATE:
-                    LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE ");
+                    //LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE ");
                     if (msg.obj != null) {
                         byte[] heartBeatData = (byte[]) msg.obj;
                         DeviceComm deviceComm = deviceMaps.get(deviceName);
@@ -1468,8 +1468,8 @@ public class DeviceOperationManager {
                             deviceComm.batteryMode = (heartBeatData[1] == 0x00) ? 0 : 1;
                             deviceComm.powerAmount = Integer.parseInt(String.format("%02x", heartBeatData[2]), 16);
 //                            deviceComm.powerAmount=(int) heartBeatData[2];
-                            LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE batteryMode=" + deviceComm.batteryMode);
-                            LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE powerAmount=" + deviceComm.powerAmount);
+                            //LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE batteryMode=" + deviceComm.batteryMode);
+                            //LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE powerAmount=" + deviceComm.powerAmount);
                             EventBusProvider.post(new HeartBeatRefreshDataEvent());
                         }
                     }
@@ -1477,7 +1477,7 @@ public class DeviceOperationManager {
                 case BlueToothWrapper.MSG_CONNECT_STATE_UPDATE:
 
 
-                    LoggerManager.d("MSG_CONNECT_STATE_UPDATE msg.obj="+msg.obj );
+//                    LoggerManager.d("MSG_CONNECT_STATE_UPDATE msg.obj="+msg.obj );
                     if ((boolean) msg.obj) {
                         //还在连接状态
                         DeviceComm deviceComm = deviceMaps.get(deviceName);

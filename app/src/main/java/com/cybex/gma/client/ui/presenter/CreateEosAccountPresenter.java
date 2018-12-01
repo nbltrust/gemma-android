@@ -138,7 +138,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                         } else {
                             GemmaToastUtils.showLongToast(getV().getString(R.string.eos_tip_check_network));
                         }
-                        getV().dissmisProgressDialog();
+
                     }
                 });
 
@@ -161,6 +161,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
             String account_name = getV().getEOSUsername();
             String TAG = getV().toString();
 
+            //getEosAddress
             DeviceOperationManager.getInstance().getEosAddress(
                     TAG,
                     device_name,
@@ -180,6 +181,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                                 LoggerManager.d("publick_key_sign: " + public_key_sign);
 
 
+                                //Check Code
                                 DeviceOperationManager.getInstance().getCheckCode(TAG,
                                         device_name,
                                         new DeviceOperationManager.GetCheckCodeCallback() {
