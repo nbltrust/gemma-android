@@ -754,7 +754,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                     @Override
                     public void onFail() {
-
+                        AlertUtil.showShortUrgeAlert(getActivity(), "读取指纹信息失败");
                     }
                 });
     }
@@ -794,6 +794,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onEosSignFail() {
                         uiLock.unlock();
+                        AlertUtil.showShortUrgeAlert(getActivity(), "签名EOS交易失败");
                     }
                 });
     }

@@ -10,7 +10,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
-        android:background="#0c000050"
+        android:background="#dddddd"
         android:layerType="software"
         android:layout_width="match_parent"
         android:layout_height="1dp">
@@ -34,7 +34,7 @@
             android:layout_gravity="center"/>
 
         <View
-            android:background="#0c000050"
+            android:background="#dddddd"
             android:layerType="software"
             android:layout_width="1dp"
             android:layout_height="match_parent"
