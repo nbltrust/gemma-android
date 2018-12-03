@@ -59,6 +59,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
+import me.jessyan.autosize.AutoSize;
 
 @Route(path = RouterConst.PATH_TO_WALLET_HOME)
 public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
@@ -285,6 +286,9 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
+        AutoSize.autoConvertDensityOfGlobal(this);
+
         if (DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size() <= 0) {
             return;
         }

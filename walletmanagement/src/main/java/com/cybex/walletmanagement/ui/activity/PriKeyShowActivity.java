@@ -23,6 +23,7 @@ import java.util.List;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
+import me.jessyan.autosize.AutoSize;
 
 
 public class PriKeyShowActivity extends XActivity {
@@ -90,6 +91,7 @@ public class PriKeyShowActivity extends XActivity {
      */
     private void showAlertDialog() {
         int[] listenedItems = {R.id.tv_understand};
+        AutoSize.autoConvertDensityOfGlobal(this);
         CustomDialog dialog = new CustomDialog(this,
                 R.layout.walletmanage_dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);
         dialog.setmWidth(SizeUtil.dp2px(259));

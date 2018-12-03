@@ -130,5 +130,6 @@ dependencies {
 
     api (name: 'bluetoothlib-release-1130', ext: 'aar')
     api 'me.codeboy.android:align-text-view:2.3.2'
+    api 'de.hdodenhof:circleimageview:2.2.0'
 
 }

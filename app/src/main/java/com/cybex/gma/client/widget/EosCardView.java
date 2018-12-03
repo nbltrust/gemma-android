@@ -97,13 +97,6 @@ public class EosCardView extends CardView{
 
 
 //        tokenList.add(new TokenBean());
-//        tokenList.add(new TokenBean());
-//        tokenList.add(new TokenBean());
-//        tokenList.add(new TokenBean());
-//        tokenList.add(new TokenBean());
-//        tokenList.add(new TokenBean());
-//        tokenList.add(new TokenBean());
-
         adapter = new TokenIconAdapter(tokenList);
 
         mRvTokenIcons.setAdapter(adapter);
@@ -149,6 +142,8 @@ public class EosCardView extends CardView{
 
     public void setTokenList(List<TokenBean> tokenList) {
         this.tokenList.clear();
+//        this.tokenList.add(new TokenBean("","http://img5.imgtn.bdimg.com/it/u=2321164342,3736510307&fm=26&gp=0.jpg"));
+//        this.tokenList.add(new TokenBean("","https://eosauthority.com/common/images/airdrops_EETH.png"));
         this.tokenList.addAll(tokenList);
         adapter.notifyDataSetChanged();
         updateTokenView();
