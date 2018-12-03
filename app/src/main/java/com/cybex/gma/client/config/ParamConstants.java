@@ -121,7 +121,7 @@ public interface ParamConstants {
     int EOSNAME_CONFIRMING = 1;
     int EOSNAME_ACTIVATED = 2;
 
-    int TRANSFER_HISTORY_SIZE = 20;//每次请求拿20条数据
+    int TRANSFER_HISTORY_SIZE = 10;//每次请求拿20条数据
 
     String SYMBOL_EOS = "EOS";
     String CONTRACT_EOS = "eosio.token";
@@ -132,5 +132,8 @@ public interface ParamConstants {
     int POWER_LEVEL_ALERT_INIT = 130;
     int POWER_LEVEL_ALERT = 126;
 
+    int TRANSACTION_STATUS_ONLINE = 20;//正在上链
+    int TRANSACTION_STATUS_PENDING = 21;//确认中
+    int TRANSACTION_STATUS_CONFIRMED = 22;//已确认
 
 }

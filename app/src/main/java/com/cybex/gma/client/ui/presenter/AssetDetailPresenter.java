@@ -8,14 +8,18 @@ import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
+import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
+import com.cybex.gma.client.ui.model.request.GetTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.GetEosTokensResult;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.model.response.TransferHistoryList;
 import com.cybex.gma.client.ui.model.response.TransferHistoryListData;
+import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
 import com.cybex.gma.client.ui.request.GetEosTokensRequest;
+import com.cybex.gma.client.ui.request.GetTransactionRequest;
 import com.cybex.gma.client.ui.request.TransferHistoryListRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -24,9 +28,14 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import com.tapadoo.alerter.Alert;
+import com.tapadoo.alerter.Alerter;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,12 +96,18 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                                 GemmaToastUtils.showShortToast(getV().getString(R.string.no_more_data));
                                             } else {
                                                 getV().loadMoreData(historyList);
+                                                //循环请求获取当前Transaction的BlockNum
+                                                for (TransferHistory curTransfer : historyList){
+                                                    getTransaction(curTransfer.trx_id);
+                                                }
+
+                                                getInfo();
                                             }
                                         }
 
-                                        if (isEos){
+                                        if (isEos) {
                                             requestEosBalance();
-                                        }else {
+                                        } else {
                                             requestTokenBalance(account_name, contract, symbol);
                                         }
 
@@ -103,7 +118,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                     }
 
                                 } else {
-                                    getV().showEmptyOrFinish();
+                                    getV().showError();
                                 }
                             } else {
                                 getV().showEmptyOrFinish();
@@ -140,7 +155,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
         return newList;
     }
 
-    public void requestEosBalance() {
+    private void requestEosBalance() {
         MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
         if (eosEntity == null) { return; }
@@ -168,13 +183,20 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                     String balance = array.optString(0);
                                     if (EmptyUtils.isNotEmpty(balance) && EmptyUtils.isNotEmpty(getV())) {
                                         getV().showBalance(balance);
+
+
+
+
+
+
+
                                         getV().showContent();
                                     }
-                                }else {
+                                } else {
                                     getV().showBalance("0.0000");
                                     getV().showContent();
                                 }
-                            }else{
+                            } else {
                                 getV().showEmptyOrFinish();
                             }
 
@@ -186,7 +208,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
                     @Override
                     public void onError(Response<String> response) {
-                        if (getV() != null){
+                        if (getV() != null) {
                             super.onError(response);
                             getV().showEmptyOrFinish();
                         }
@@ -194,7 +216,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                 });
     }
 
-    public void requestTokenBalance(String account_name, String token_contract, String token_symbol) {
+    private void requestTokenBalance(String account_name, String token_contract, String token_symbol) {
         GetEosTokensRequest request = new GetEosTokensRequest(GetEosTokensResult.class, account_name)
                 .getEosTokens(new JsonCallback<GetEosTokensResult>() {
                     @Override
@@ -204,25 +226,25 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
                     @Override
                     public void onSuccess(Response<GetEosTokensResult> data) {
-                        if (getV() != null){
-                            if (data != null){
+                        if (getV() != null) {
+                            if (data != null) {
                                 GetEosTokensResult response = data.body();
-                                if (response.getResult() != null){
+                                if (response.getResult() != null) {
                                     GetEosTokensResult.ResultBean resultBean = response.getResult();
                                     List<TokenBean> tokens = resultBean.getTokens();
                                     //更新UI
-                                    for (TokenBean token : tokens){
+                                    for (TokenBean token : tokens) {
                                         if (token.getSymbol().equals(token_symbol)
-                                                && token.getCode().equals(token_contract)){
+                                                && token.getCode().equals(token_contract)) {
                                             String tokenBalance = String.valueOf(token.getBalance());
                                             getV().showBalance(tokenBalance);
                                             getV().showContent();
                                         }
                                     }
-                                }else {
+                                } else {
                                     getV().showEmptyOrFinish();
                                 }
-                            }else {
+                            } else {
                                 getV().showEmptyOrFinish();
                             }
                             GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
@@ -232,7 +254,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
                     @Override
                     public void onError(Response<GetEosTokensResult> response) {
-                        if (getV() != null){
+                        if (getV() != null) {
                             super.onError(response);
                             getV().showEmptyOrFinish();
                             GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
@@ -242,4 +264,171 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
 
     }
+
+
+
+    /**
+     * @return 返回block_num
+     */
+
+    public void getTransaction(String txId) {
+        GetTransactionReqParams reqParams = new GetTransactionReqParams();
+            reqParams.setid(txId);
+            String jsonParams = GsonUtils.objectToJson(reqParams);
+            new GetTransactionRequest(String.class)
+                    .setJsonParams(jsonParams)
+                    .getInfo(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            if (response != null && response.body() != null) {
+                                String infoJson = response.body();
+                                try {
+                                    JSONObject obj = new JSONObject(infoJson);
+                                    if (obj != null) {
+                                        String block_num = obj.optString("block_num");
+                                        LoggerManager.d("block_num", block_num);
+                                        //todo 存入数据库
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError(Response<String> response) {
+                            super.onError(response);
+
+                            if (EmptyUtils.isNotEmpty(getV())) {
+                                GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
+                                getV().dissmisProgressDialog();
+
+                                try {
+                                    String err_info_string = response.getRawResponse().body().string();
+                                    try {
+                                        JSONObject obj = new JSONObject(err_info_string);
+                                        JSONObject error = obj.optJSONObject("error");
+                                        String err_code = error.optString("code");
+                                        handleEosErrorCode(err_code);
+
+                                    } catch (JSONException ee) {
+                                        ee.printStackTrace();
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+
+    }
+
+    /**
+     * 获取链上配置信息
+     * 需要拿到head block num 和lib
+     */
+    public void getInfo() {
+        new EOSConfigInfoRequest(String.class)
+                .getInfo(new StringCallback() {
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+
+                        if (EmptyUtils.isNotEmpty(getV())) {
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                } catch (JSONException ee) {
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        if (response != null && response.body() != null) {
+                            String infoJson = response.body();
+                            try {
+                                JSONObject obj = new JSONObject(infoJson);
+                                if (obj != null) {
+                                    String head_block_num = obj.optString("head_block_num");
+                                    String lib_num = obj.optString("last_irreversible_block_num");
+                                    LoggerManager.d("lib", lib_num);
+                                    LoggerManager.d("head_block_num", head_block_num);
+                                    getV().setCurHead(head_block_num);
+                                    getV().setCurLib(lib_num);
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+    }
+
+
+    /**
+     * 反射机制处理EOS错误码
+     *
+     * @param err_code
+     */
+    private void handleEosErrorCode(String err_code) {
+        String code = ParamConstants.EOS_ERR_CODE_PREFIX + err_code;
+        if (EmptyUtils.isNotEmpty(getV()) && EmptyUtils.isNotEmpty(getV())) {
+            String package_name = getV().getPackageName();
+            int resId = getV().getResources().getIdentifier(code, "string", package_name);
+            String err_info = getV().getResources().getString(resId);
+
+            Alerter.create(getV())
+                    .setText(err_info)
+                    .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
+                    .showIcon(false)
+                    .setDuration(3000)
+                    .setBackgroundColorRes(R.color.scarlet)
+                    .show();
+        }
+    }
+
+    /**
+     * 通过比对确定该Transaction的状态
+     */
+    public int getTransactionStatus(String block_num, String cur_lib, String cur_head_block){
+        int block = Integer.valueOf(block_num);
+        int lib = Integer.valueOf(cur_lib);
+        int head = Integer.valueOf(cur_head_block);
+
+        if (block > head){
+            return ParamConstants.TRANSACTION_STATUS_ONLINE;
+        }else if (block > lib){
+            //pending
+            return ParamConstants.TRANSACTION_STATUS_PENDING;
+        }else {
+            //done
+            return ParamConstants.TRANSACTION_STATUS_CONFIRMED;
+        }
+    }
+
+    /**
+     * 计算该Transaction确认中大致百分比
+     * @return
+     */
+    public int getProgressPrecentage(String block_num, String lib_num){
+        int block = Integer.valueOf(block_num);
+        int lib = Integer.valueOf(lib_num);
+        return (block - lib)/325;
+    }
+
 }

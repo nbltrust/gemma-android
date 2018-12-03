@@ -111,7 +111,6 @@ dependencies {
     api deps.yanzhenjie.permission
 
 
-
     api deps.gma.saripaar
     api deps.gma.happybubble
     api deps.gma.alerter
@@ -129,7 +128,7 @@ dependencies {
     api deps.gma.MaterialEditText
     api deps.gma.agentweb
 
-    api (name: 'bluetoothlib-release', ext: 'aar')
+    api (name: 'bluetoothlib-release-1130', ext: 'aar')
     api 'me.codeboy.android:align-text-view:2.3.2'
 
 }

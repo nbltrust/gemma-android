@@ -53,6 +53,26 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @BindView(R.id.tv_token_name) TextView tvTokenName;
     @BindView(R.id.view_asset_detail_bot) LinearLayout viewAssetDetailBot;
     private TransferRecordListAdapter mAdapter;
+    List<TransferHistory> curDataList;
+
+    public String getCurHead() {
+        return curHead;
+    }
+
+    public void setCurHead(String curHead) {
+        this.curHead = curHead;
+    }
+
+    public String getCurLib() {
+        return curLib;
+    }
+
+    public void setCurLib(String curLib) {
+        this.curLib = curLib;
+    }
+
+    private String curHead;//当前head block num
+    private String curLib;//当前Lib num
 
     private String currentEosName = "";
     private Bundle bundle;
@@ -295,6 +315,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
         if (mAdapter == null) {
             //第一次请求
+            curDataList = dataList;
             mAdapter = new TransferRecordListAdapter(dataList, currentEosName);
             mRecyclerView.setAdapter(mAdapter);
         } else {
@@ -337,5 +358,8 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
             tvRmbAmount.setText(eosValue);
         }
     }
+
+
+
 
 }
