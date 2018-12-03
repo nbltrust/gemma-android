@@ -114,6 +114,8 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     public void onError(Response<WXPayQueryOrderInfoResult> response) {
                         super.onError(response);
                         getV().dissmisProgressDialog();
+                        AlertUtil.showLongUrgeAlert(getV().getActivity(), " 服务器错误,请稍后重试");
+
                     }
                 });
     }
@@ -141,6 +143,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     public void onError(Response<WXPayPlaceOrderResult> response) {
                         super.onError(response);
                         getV().dissmisProgressDialog();
+                        AlertUtil.showLongUrgeAlert(getV().getActivity(), " 服务器错误,请稍后重试");
                     }
                 });
     }
@@ -166,6 +169,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                             WXPayBillResult.ResultBean result = response.body().getResult();
                             getV().setFee(result);
                             getV().dissmisProgressDialog();
+                            AlertUtil.showLongUrgeAlert(getV().getActivity(), " 服务器错误,请稍后重试");
                         }
                     }
 
@@ -173,6 +177,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     public void onError(Response<WXPayBillResult> response) {
                         super.onError(response);
                         getV().dissmisProgressDialog();
+                        AlertUtil.showLongUrgeAlert(getV().getActivity(), " 服务器错误,请稍后重试");
                     }
                 });
     }
@@ -197,7 +202,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     @Override
                     public void onBeforeRequest(@NonNull Disposable disposable) {
                         if (getV() != null){
-                            getV().showProgressDialog("");
+                            //getV().showProgressDialog("");
                         }
                     }
 
@@ -221,9 +226,9 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                 checkCreateAccountStatus(eos_username, public_key, orderId);
                             }else if (data.code == 10020){
                                 //todo 该Account被抢注
-                                GemmaToastUtils.showLongToast(getV().getString(R.string.eos_create_fail));
+                                AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_create_fail));
                             }else {
-
+                                AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_tip_check_network));
                             }
                         }
 

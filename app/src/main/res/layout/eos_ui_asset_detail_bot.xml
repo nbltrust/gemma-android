@@ -23,7 +23,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:textSize="@dimen/font_4"
+            android:textSize="@dimen/font_3.5"
             android:text="@string/eos_tip_vote"
             android:textColor="@color/black_context"
             android:layout_weight="1"
@@ -44,7 +44,7 @@
         </View>
 
         <TextView
-            android:textSize="@dimen/font_4"
+            android:textSize="@dimen/font_3.5"
             android:text="@string/eos_title_resource_management"
             android:textColor="@color/black_context"
             android:layout_weight="1"

@@ -74,31 +74,32 @@
                 android:textColor="@color/eos_font_title"
                 android:textSize="@dimen/font_3.5"/>
 
-                <TextView
-                    android:id="@+id/tv_amount"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/tv_dialog_delegate_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textColor="@color/black_title"
-                    android:textSize="@dimen/font_4"
-                    tools:text="2.2345"/>
+
+            <TextView
+                android:id="@+id/tv_delegate_amount"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_dialog_delegate_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/black_title"
+                android:textSize="@dimen/font_4"
+                tools:text="2.2345"/>
 
             <TextView
                 android:id="@+id/tv_dialog_delegate_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="13dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="18dp"
-                android:text=" EOS"
-                android:textColor="@color/black_title"
-                android:layout_marginBottom="2dp"
-                android:textSize="@dimen/font_3"
-                app:layout_constraintBottom_toBottomOf="@id/tv_amount"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="@id/tv_delegate_amount"
+                android:textSize="@dimen/font_3"
+                android:layout_marginTop="18dp"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/black_title"
+                android:text=" EOS"
+                android:layout_marginBottom="1dp"
+                android:layout_height="wrap_content"/>
+
 
         </android.support.constraint.ConstraintLayout>
 

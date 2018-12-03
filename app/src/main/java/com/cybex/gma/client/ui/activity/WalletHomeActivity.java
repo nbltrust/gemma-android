@@ -511,7 +511,11 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     }
 
     public void updateEosTokensUI(List<TokenBean> tokens) {
-        mEosCardView.setTokenList(tokens);
+        List<TokenBean> tokens_without_eos = new ArrayList<>();
+        for (int i =1; i < tokens.size(); i++){
+            tokens_without_eos.add(tokens.get(i));
+        }
+        mEosCardView.setTokenList(tokens_without_eos);
     }
 
     public void showEosBalance(String rawBalance) {

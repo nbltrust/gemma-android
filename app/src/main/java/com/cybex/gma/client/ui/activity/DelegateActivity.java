@@ -486,7 +486,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                 .getEosWalletEntities().get(0);
         if (EmptyUtils.isNotEmpty(curWallet)) {
             TextView tv_payee = confirmDialog.findViewById(R.id.tv_payee);
-            TextView tv_amount = confirmDialog.findViewById(R.id.tv_amount);
+            TextView tv_amount = confirmDialog.findViewById(R.id.tv_delegate_amount);
             TextView tv_note = confirmDialog.findViewById(R.id.tv_note);
             tv_payee.setText(curWallet.getCurrentEosName());
             try {

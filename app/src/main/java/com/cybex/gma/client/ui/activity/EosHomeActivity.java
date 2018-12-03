@@ -64,6 +64,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.hypertrack.smart_scheduler.SmartScheduler;
+import me.jessyan.autosize.AutoSize;
 
 public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
@@ -423,6 +424,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        AutoSize.autoConvertDensityOfGlobal(this);
         viewResourceManage.setVisibility(View.GONE);
         tvAssets.setVisibility(View.INVISIBLE);
 

@@ -12,6 +12,7 @@
     </include>
 
     <com.cybex.base.view.refresh.CommonRefreshLayout
+        android:background="#ffffff"
         android:id="@+id/view_root_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
