@@ -883,6 +883,11 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                     }
 
                                     @Override
+                                    public void onPinLocked() {
+
+                                    }
+
+                                    @Override
                                     public void onVerifyFail() {
 
                                     }
