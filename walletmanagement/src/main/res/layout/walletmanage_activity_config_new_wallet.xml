@@ -11,18 +11,15 @@
         layout="@layout/ui_navibar">
     </include>
 
-    <com.cybex.base.view.refresh.CommonRefreshLayout
-        android:background="#ffffff"
-        android:id="@+id/view_root_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <!--
+    <!--<com.cybex.base.view.refresh.CommonRefreshLayout-->
+        <!--android:background="#ffffff"-->
+        <!--android:id="@+id/view_root_refresh"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
         <ScrollView
             android:id="@+id/scroll_create_wallet"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -220,10 +217,8 @@
 
             </LinearLayout>
 
-        <!--
         </ScrollView>
-        -->
-    </com.cybex.base.view.refresh.CommonRefreshLayout>
+    <!--</com.cybex.base.view.refresh.CommonRefreshLayout>-->
 
 
 </LinearLayout>
