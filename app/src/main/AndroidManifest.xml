@@ -379,6 +379,12 @@
             android:name="design_height_in_dp"
             android:value="640"/>
 
+        <!--fabric crash-->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="ad1bae7799daed7def3ecc7e9267ff85bfeb3349"
+            />
+
 
     </application>
 
