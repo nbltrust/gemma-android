@@ -190,46 +190,41 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                     showProgressDialog(getString(R.string.mnemonic_checking));
                     //app验证通过，发送给硬件验证，并且获取硬件返回的公钥
                     if (values != null) {
-                        int[] checkedIndex = values.getCheckIndex();
-                        int[] checkIndexCount = values.getCheckIndexCount();
-                        if (EmptyUtils.isNotEmpty(checkedIndex)) {
-                            StringBuffer sb = new StringBuffer();
-                            for (int m = 0; m < checkIndexCount[0]; m++) {
-                                String label = answerLabels.get(checkedIndex[m]);
-                                sb.append(label);
-                                if (m != (checkIndexCount[0] - 1)) {
-                                    sb.append(" ");
-                                }
+                        StringBuffer sb = new StringBuffer();
+                        for (int m = 0; m < selectedLabels.size(); m++) {
+                            String label = answerLabels.get(m);
+                            sb.append(label);
+                            if (m != (selectedLabels.size() - 1)) {
+                                sb.append(" ");
+                            }
+                        }
+                        String strDestMnes = sb.toString();
+                        DeviceOperationManager.getInstance().checkMnemonic(BluetoothVerifyMneFragment.this.toString(), DeviceOperationManager.getInstance().getCurrentDeviceName(), strDestMnes, new DeviceOperationManager.CheckMnemonicCallback() {
+                            @Override
+                            public void onCheckSuccess() {
+                                LoggerManager.d("mne validate success...");
+                                TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_success),
+                                        Prompt.SUCCESS);
+                                //create bluetoothwallet
+                                initWookongBioWallet(strDestMnes);
                             }
 
-                            String strDestMnes = sb.toString();
-                            DeviceOperationManager.getInstance().checkMnemonic(BluetoothVerifyMneFragment.this.toString(),DeviceOperationManager.getInstance().getCurrentDeviceName(), strDestMnes, new DeviceOperationManager.CheckMnemonicCallback() {
-                                @Override
-                                public void onCheckSuccess() {
-                                    LoggerManager.d("mne validate success...");
-                                    TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_success),
-                                            Prompt.SUCCESS);
-                                    //create bluetoothwallet
-                                    initWookongBioWallet(strDestMnes);
-                                }
+                            @Override
+                            public void onCheckFail(int status) {
+                                if (status == -2147483642) {
+                                    LoggerManager.d("device disconnected...");
+                                    dissmisProgressDialog();
+                                    TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_warn),
+                                            Prompt.WARNING);
 
-                                @Override
-                                public void onCheckFail(int status) {
-                                    if (status == -2147483642) {
-                                        LoggerManager.d("device disconnected...");
-                                        dissmisProgressDialog();
-                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_warn),
-                                                Prompt.WARNING);
-
-                                    } else {
-                                        LoggerManager.d("mne validate error...");
-                                        dissmisProgressDialog();
-                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
-                                                Prompt.ERROR);
-                                    }
+                                } else {
+                                    LoggerManager.d("mne validate error...");
+                                    dissmisProgressDialog();
+                                    TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
+                                            Prompt.ERROR);
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 } else {
                     TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
