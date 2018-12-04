@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
+import com.cybex.componentservice.manager.LoggerManager;
+
 public class SoftHideKeyBoardUtil {
     public static void assistActivity (Activity activity) {
         new SoftHideKeyBoardUtil(activity);
@@ -18,12 +20,19 @@ public class SoftHideKeyBoardUtil {
     private int contentHeight;//获取setContentView本来view的高度
     private boolean isfirst = true;//只用获取一次
     private  int statusBarHeight;//状态栏高度
+    private  int navBarHeight;//状态栏高度
 
     private SoftHideKeyBoardUtil(Activity activity) {
         //1､找到Activity的最外层布局控件，它其实是一个DecorView,它所用的控件就是FrameLayout
         FrameLayout content = activity.findViewById(android.R.id.content);
         //2､获取到setContentView放进去的View
         mChildOfContent = content.getChildAt(0);
+
+        statusBarHeight=SizeUtil.getStatusBarHeight();
+        if(SizeUtil.hasSoftKeys(activity.getWindowManager())){
+            navBarHeight=SizeUtil.getNavBarHeight();
+        }
+        LoggerManager.e("czc getNavBarHeight navBarHeight="+navBarHeight);
         //3､给Activity的xml布局设置View树监听，当布局有变化，如键盘弹出或收起时，都会回调此监听
         mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             //4､软键盘弹起会使GlobalLayout发生变化
@@ -54,7 +63,8 @@ public class SoftHideKeyBoardUtil {
             if (heightDifference > (usableHeightSansKeyboard/4)) {
                 // 6､键盘弹出了，Activity的xml布局高度应当减去键盘高度
                 if (Build.VERSION.SDK_INT >= 22){
-                    frameLayoutParams.height = usableHeightSansKeyboard - heightDifference + statusBarHeight;
+                    frameLayoutParams.height = usableHeightSansKeyboard - heightDifference + statusBarHeight+navBarHeight;
+//                    frameLayoutParams.height = usableHeightSansKeyboard - heightDifference + statusBarHeight;
                 } else {
                     frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
                 }
