@@ -38,7 +38,7 @@ public class SizeUtil {
     public static int getNavBarHeight() {
         int resourceId=0;
         int rid = Resources.getSystem().getIdentifier("config_showNavigationBar", "bool", "android");
-        LoggerManager.e("czc getNavBarHeight rid="+rid);
+//        LoggerManager.e("getNavBarHeight rid="+rid);
         if (rid!=0){
             resourceId = Resources.getSystem().getIdentifier("navigation_bar_height", "dimen", "android");
 //            CMLog.show("高度："+resourceId);

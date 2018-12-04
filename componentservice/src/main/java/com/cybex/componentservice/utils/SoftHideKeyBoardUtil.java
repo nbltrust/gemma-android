@@ -32,7 +32,7 @@ public class SoftHideKeyBoardUtil {
         if(SizeUtil.hasSoftKeys(activity.getWindowManager())){
             navBarHeight=SizeUtil.getNavBarHeight();
         }
-        LoggerManager.e("czc getNavBarHeight navBarHeight="+navBarHeight);
+//        LoggerManager.e("getNavBarHeight navBarHeight="+navBarHeight);
         //3､给Activity的xml布局设置View树监听，当布局有变化，如键盘弹出或收起时，都会回调此监听
         mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             //4､软键盘弹起会使GlobalLayout发生变化
