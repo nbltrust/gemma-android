@@ -6,14 +6,13 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:listViewStyle">@style/common_list_view</item>
         <item name="android:gridViewStyle">@style/common_grid_view</item>
-        <item name="android:alertDialogStyle">@style/common_dialog_alert</item>
         <item name="android:textViewStyle">@style/common_textView</item>
-        <item name="android:dialogTheme">@style/common_dialog_alert</item>
-        <item name="android:alertDialogTheme">@style/common_dialog_alert</item>
         <item name="android:windowAnimationStyle">@style/Fantasy.Animation.Activity.SlidingBack
         </item>
 
     </style>
+    <!--<item name="android:alertDialogStyle">@style/common_dialog_alert</item>-->
+
 
     <style name="Fantasy.Animation.Activity.SlidingBack" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_left_in</item>
@@ -45,11 +44,12 @@
     <!--end Splash-->
 
     <!--对话框风格-->
-    <style name="common_dialog_alert" parent="@android:style/Theme.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
+    <style name="common_dialog_alert" parent="@style/Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/white</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:textColor">#3695d9</item>
-        <item name="android:textSize">@dimen/common_text_size_medium_18</item>
+        <item name="android:windowTitleSize">@dimen/dimen_14</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:textSize">@dimen/dimen_14</item>
         <item name="android:scrollbarSize">3dp</item>
         <item name="android:windowFrame">@null</item>
     </style>
