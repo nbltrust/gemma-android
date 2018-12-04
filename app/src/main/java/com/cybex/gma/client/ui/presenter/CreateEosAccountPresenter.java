@@ -98,7 +98,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                                     } else {
                                         //连接蓝牙卡
 
-                                        getV().showProgressDialog(getV().getString(R.string.creating_wookong_wallet));
+
                                         if (curWallet != null) {
                                             WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(
                                                     getV().toString(), curWallet, getV());
@@ -155,6 +155,8 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
 
 
     public void getDeviceInfoAndRegister() {
+
+        getV().showProgressDialog(getV().getString(R.string.baseservice_wookong_bio_connecting));
 
         if (getV() != null) {
             String device_name = DeviceOperationManager.getInstance().getCurrentDeviceName();
@@ -271,7 +273,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                     @Override
                     public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
                         if (getV() != null) {
-                            getV().dissmisProgressDialog();
+
 
                             if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
 
@@ -280,8 +282,9 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                                     //String txId = registerResult.txId;
                                     updateCurBluetoothWallet(account_name);
                                     //TimeStampValidateJob.executedCreateLogic(account_name, public_key);
-                                    AppManager.getAppManager().finishAllActivity();
+                                    AppManager.getAppManager().finishActivity();
                                     UISkipMananger.launchEOSHome(getV());
+                                    getV().dissmisProgressDialog();
 
                                 }
                             } else {
@@ -313,7 +316,8 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
     /**
      * 创建成功后将相关信息填入数据库
      */
-    public void updateCurBluetoothWallet(String account_name){
+    private void updateCurBluetoothWallet(String account_name){
+
         List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
                 .getBluetoothWalletList();
         if (bluetoothWalletList != null && bluetoothWalletList.size() > 0){
@@ -324,11 +328,30 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                 List<String> account_names = new ArrayList<>();
                 account_names.add(account_name);
                 String jsonEosName = GsonUtils.objectToJson(account_names);
+                curEosWallet.setIsConfirmLib(ParamConstants.EOSNAME_ACTIVATED);
                 curEosWallet.setEosNameJson(jsonEosName);
                 curEosWallet.save();
                 curBluetoothWallet.save();
+
             }
         }
+
+        /*
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        if (curWallet != null){
+            List<EosWalletEntity> eosWalletEntities = curWallet.getEosWalletEntities();
+            if (eosWalletEntities != null && eosWalletEntities.size() > 0){
+                EosWalletEntity curEosWallet = eosWalletEntities.get(0);
+                curEosWallet.setCurrentEosName(account_name);
+                List<String> account_names = new ArrayList<>();
+                account_names.add(account_name);
+                String jsonEosName = GsonUtils.objectToJson(account_names);
+                curEosWallet.setEosNameJson(jsonEosName);
+                curEosWallet.save();
+                curWallet.save();
+            }
+        }
+        */
     }
 
     /**

@@ -44,7 +44,7 @@ public class DeviceOperationManager {
     final byte[] coinTypes = {MiddlewareInterface.PAEW_COIN_TYPE_EOS, MiddlewareInterface.PAEW_COIN_TYPE_ETH, MiddlewareInterface.PAEW_COIN_TYPE_CYB};
     final int[][] derivePaths = {
             {0, 0x8000002C, 0x800000c2, 0x80000000, 0x00000000, 0x00000000},
-            {0, 0x8000002c, 0x8000003c, 0x80000000, 0x00000000, 0x00000000},
+            {0, 0x8000002c, 0x8000003c, 0x80000000, 0x00000000},
             {0, 0, 1, 0x00000080, 0x00000000, 0x00000000}
     };
 
@@ -1137,6 +1137,8 @@ public class DeviceOperationManager {
 
     public interface EosSignCallback {
 
+        void onEosSignStart();
+
         void onEosSignSuccess(String strSignature);
 
         void onEosSignFail();
@@ -1991,6 +1993,15 @@ public class DeviceOperationManager {
 
                 //EOS Transaction 签名
                 case BlueToothWrapper.MSG_EOS_SIGN_START:
+                    LoggerManager.d("MSG_EOS_SIGN_START");
+
+                    iterator = tags.iterator();
+                    while (iterator.hasNext()) {
+                        String tag = iterator.next();
+                        if (callbackMaps.get(tag).eosSignCallback != null) {
+                            callbackMaps.get(tag).eosSignCallback.onEosSignStart();
+                        }
+                    }
 
                     break;
                 case BlueToothWrapper.MSG_EOS_SIGN_FINISH:

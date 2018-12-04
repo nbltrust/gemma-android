@@ -31,12 +31,10 @@ import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.ui.activity.BluetoothScanResultDialogActivity;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.EosTokenTransferPresenter;
-import com.cybex.gma.client.utils.taskscheduler.Task;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -443,7 +441,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     }
 
     /**
-     *转账操作入口
+     * 转账操作入口
+     *
      * @param view
      */
     @OnClick({R.id.btn_transfer_nextStep})
@@ -582,7 +581,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                             String saved_pri_key = wallet.getEosWalletEntities().get(0).getPrivateKey();
                             String privateKey = Seed39.keyDecrypt(password, saved_pri_key);
                             String tokenContract = curToken.getTokenName();
-                            int accuracy = curToken.getAccurancy()>0 ? curToken.getAccurancy() : 0;
+                            int accuracy = curToken.getAccurancy() > 0 ? curToken.getAccurancy() : 0;
 
                             String tokenSymbol = curToken.getTokenSymbol();
                             getP().executeTokenTransferLogic(
@@ -701,7 +700,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         //把序列化之后的数据做处理
                         byte[] builtStr = getP().buildSignStr(serializeResult, chain_id);
                         //把builtStr 送给设备签名
-                        startVerifyProcess(builtStr);
+                        startEosSign(builtStr);
                     }
 
                     @Override
@@ -712,14 +711,14 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     }
 
 
-    public void startVerifyProcess(byte[] builtStr){
+    public void startVerifyProcess() {
 
         DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
                 new DeviceOperationManager.GetFPListCallback() {
                     @Override
                     public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
                         //判断是否有指纹
-                        if (fpListReturnValue.getFPCount() > 0){
+                        if (fpListReturnValue.getFPCount() > 0) {
                             //有设置指纹
                             DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
                                     new DeviceOperationManager.DeviceVerifyFPCallback() {
@@ -732,7 +731,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                         public void onVerifySuccess() {
                                             //EOS Sign
                                             verifyDialog.cancel();
-                                            startEosSign(builtStr);
                                         }
 
                                         @Override
@@ -745,10 +743,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                             verifyDialog.cancel();
                                         }
                                     });
-                        }else {
+                        } else {
                             //没有设置指纹
                             //PIN 验证
-                            showConfirmPINDialog(builtStr);
+                            showConfirmPINDialog();
                         }
                     }
 
@@ -763,12 +761,19 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      * EOS Tranasaction 签名
      */
     private void startEosSign(byte[] transaction) {
-                showProgressDialog("正在Bio上签名交易");
+//        showProgressDialog("正在Bio上签名交易");
         uiLock.lock();
         DeviceOperationManager.getInstance().signEosTransaction(TAG, deviceName, uiLock, transaction,
                 new DeviceOperationManager.EosSignCallback() {
+
+                    @Override
+                    public void onEosSignStart() {
+                        //startVerifyProcess();
+                    }
+
                     @Override
                     public void onEosSignSuccess(String strSignature) {
+
                         uiLock.unlock();
                         List<String> signatures = new ArrayList<>();
                         strSignature = strSignature.substring(0, strSignature.length() - 1);
@@ -787,6 +792,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                             LoggerManager.d("buildTransactionJson:" + buildTransactionJson);
 
                             //执行Push Transaction 最后一步操作
+                            dissmisProgressDialog();
                             getP().pushTransaction(buildTransactionJson);
                         }
                     }
@@ -854,10 +860,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     /**
      * 显示输入PIN以确认dialog
      */
-    private void showConfirmPINDialog(byte[] builtStr) {
+    private void showConfirmPINDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
         pinDialog = new CustomFullDialog(getActivity(),
-                R.layout.eos_dialog_bluetooth_input_transfer_password, listenedItems, false,false, Gravity.BOTTOM);
+                R.layout.eos_dialog_bluetooth_input_transfer_password, listenedItems, false, false, Gravity.BOTTOM);
 
         pinDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
@@ -879,7 +885,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                 new DeviceOperationManager.VerifyPinCallback() {
                                     @Override
                                     public void onVerifySuccess() {
-                                        startEosSign(builtStr);
+
                                     }
 
                                     @Override

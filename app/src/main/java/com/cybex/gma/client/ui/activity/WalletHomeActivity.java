@@ -333,7 +333,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 mEosCardView.setVisibility(View.VISIBLE);
                 mEthCardView.setVisibility(View.VISIBLE);
 
-                String deviceName = getP().getBluetoothDeviceName();
                 getP().getKeyAccounts(curEosWallet.getPublicKey());
                 updateEosCardView();
 

@@ -2,6 +2,7 @@ package com.cybex.gma.client.ui.presenter;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.bean.TokenBean;
+import com.cybex.componentservice.db.entity.EosTransactionEntity;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
@@ -288,6 +289,11 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                         String block_num = obj.optString("block_num");
                                         LoggerManager.d("block_num", block_num);
                                         //todo 存入数据库
+
+                                        EosTransactionEntity eosTransactionEntity = new EosTransactionEntity();
+                                        eosTransactionEntity.setBlockNumber(block_num);
+                                        eosTransactionEntity.setTransactionHash(txId);
+                                        eosTransactionEntity.save();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
