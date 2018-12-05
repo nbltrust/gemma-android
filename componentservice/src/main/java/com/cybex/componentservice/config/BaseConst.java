@@ -1,5 +1,7 @@
 package com.cybex.componentservice.config;
 
+import com.extropies.common.MiddlewareInterface;
+
 public class BaseConst {
     public static final String KEY_BACKUP_MNEMONIC_TYPE="key_backup_mnemonic_type";
     public static final String KEY_COIN_TYPE="key_coin_type";
@@ -49,16 +51,16 @@ public class BaseConst {
 
 
     //蓝牙设备
-    public static final int DEVICE_LIFE_CYCLE_INVALID = -1;//INVALID
-    public static final int DEVICE_LIFE_CYCLE_AGREE = 1;//production state
-    public static final int DEVICE_LIFE_CYCLE_PRODUCE = 2;//produce
-    public static final int DEVICE_LIFE_CYCLE_USER = 4;//user
+    public static final int DEVICE_LIFE_CYCLE_INVALID = MiddlewareInterface.PAEW_DEV_INFO_LIFECYCLE_INVALID;//INVALID
+    public static final int DEVICE_LIFE_CYCLE_AGREE = MiddlewareInterface.PAEW_DEV_INFO_LIFECYCLE_AGREE;//production state
+    public static final int DEVICE_LIFE_CYCLE_PRODUCE = MiddlewareInterface.PAEW_DEV_INFO_LIFECYCLE_PRODUCE ;//produce
+    public static final int DEVICE_LIFE_CYCLE_USER = MiddlewareInterface.PAEW_DEV_INFO_LIFECYCLE_USER;//user
 
-    public static final int DEVICE_PIN_STATE_INVALID = -1;//PIN非法
-    public static final int DEVICE_PIN_STATE_LOGOUT = 0;//
-    public static final int DEVICE_PIN_STATE_LOGIN = 1;//
-    public static final int DEVICE_PIN_STATE_LOCKED = 2;//PIN锁定
-    public static final int DEVICE_PIN_STATE_UNSET = 3;//PIN未设置
+    public static final int DEVICE_PIN_STATE_INVALID = MiddlewareInterface.PAEW_DEV_INFO_PIN_INVALID_STATE;//PIN非法
+    public static final int DEVICE_PIN_STATE_LOGOUT = MiddlewareInterface.PAEW_DEV_INFO_PIN_LOGOUT;//
+    public static final int DEVICE_PIN_STATE_LOGIN = MiddlewareInterface.PAEW_DEV_INFO_PIN_LOGIN;//
+    public static final int DEVICE_PIN_STATE_LOCKED = MiddlewareInterface.PAEW_DEV_INFO_PIN_LOCKED;//PIN锁定
+    public static final int DEVICE_PIN_STATE_UNSET = MiddlewareInterface.PAEW_DEV_INFO_PIN_UNSET;//PIN未设置
 
     public static final int STATE_SET_PIN_NOT_INIT = 10;//已设置PIN未完成初始化
     public static final int STATE_INIT_DONE = 11;//已完成初始化
