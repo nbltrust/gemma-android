@@ -1957,7 +1957,7 @@ public class BlueToothWrapper extends Thread {
                     iRtn = MiddlewareInterface.deriveTradeAddress(m_contextHandle, m_devIndex, m_coinType,
                             m_derivePath);
                     if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
-                        iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex, m_coinType, true,
+                        iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex, m_coinType, false,
                                 strAddress);
                     }
                 }

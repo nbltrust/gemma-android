@@ -59,11 +59,11 @@
     <string name="message_install_failed">Your phone is not allowed us to install apps.</string>
     <string name="message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>
     <string name="message_error_storage">Please check the external storage device.</string>
-    <string name="successfully">Successful</string>
-    <string name="failure">Failure</string>
+    <string name="successfully">成功</string>
+    <string name="failure">失败</string>
 
-    <string name="setting">Setting</string>
-    <string name="resume">Resume</string>
+    <string name="setting">设置</string>
+    <string name="resume">继续</string>
     <string name="cancel">取消</string>
 
     <!-- Language Setting -->
