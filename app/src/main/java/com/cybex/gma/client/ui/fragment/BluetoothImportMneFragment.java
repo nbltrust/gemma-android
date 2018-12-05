@@ -1,10 +1,12 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
@@ -18,16 +20,26 @@ import com.cybex.componentservice.event.WookongInitialedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.manager.PermissionManager;
 import com.cybex.componentservice.utils.FormatValidateUtils;
+import com.cybex.componentservice.utils.listener.PermissionResultListener;
 import com.cybex.gma.client.BuildConfig;
 import com.cybex.gma.client.R;
+import com.cybex.gma.client.event.BarcodeScanEvent;
 import com.cybex.gma.client.ui.JNIUtil;
+import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +72,7 @@ public class BluetoothImportMneFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-
+        setNavibarTitle(getResources().getString(R.string.eos_import_wallet), true, true);
         edtShowMnemonic = rootView.findViewById(R.id.edt_show_mnemonic);
         btnNext = rootView.findViewById(R.id.bt_next_step);
         edtShowMnemonic.addTextChangedListener(new TextWatcher() {
@@ -89,6 +101,46 @@ public class BluetoothImportMneFragment extends XFragment {
                 goConfigWallet();
             }
         });
+
+        ImageView mCollectView = (ImageView) mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.ic_notify_scan) {
+            @Override
+            public void performAction(View view) {
+                skipBarcodeScan();
+            }
+        });
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveBarcodeMessage(BarcodeScanEvent message) {
+        if (!EmptyUtils.isEmpty(message)) {
+            edtShowMnemonic.setText(message.getResult());
+        }
+    }
+
+
+    private void skipBarcodeScan() {
+        final PermissionManager manager = PermissionManager.getInstance(getActivity());
+        manager.requestPermission(new PermissionResultListener() {
+                                      @Override
+                                      public void onPermissionGranted() {
+                                          startActivity(new Intent(getContext(),BarcodeScanActivity.class));
+                                      }
+
+                                      @Override
+                                      public void onPermissionDenied(List<String> permissions) {
+                                          GemmaToastUtils.showShortToast(getResources().getString(com.cybex.walletmanagement.R.string.walletmanage_set_camera_permission));
+                                          if (AndPermission.hasAlwaysDeniedPermission(getActivity(), permissions)) {
+                                              manager.showSettingDialog(getContext(), permissions);
+                                          }
+
+                                      }
+                                  }, Permission.CAMERA
+                , Permission.READ_EXTERNAL_STORAGE);
     }
 
     public void goConfigWallet() {
@@ -120,7 +172,6 @@ public class BluetoothImportMneFragment extends XFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        setNavibarTitle(getResources().getString(R.string.eos_import_wallet), true, true);
         setButtonUnclickable(btnNext);
     }
 
