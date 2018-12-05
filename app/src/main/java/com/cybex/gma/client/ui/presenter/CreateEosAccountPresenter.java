@@ -274,7 +274,6 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                     public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
                         if (getV() != null) {
 
-
                             if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
 
                                 UserRegisterResult registerResult = data.result;
@@ -287,7 +286,13 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                                     getV().dissmisProgressDialog();
 
                                 }
-                            } else {
+                            } else if(data.code == HttpConst.INVCODE_USED){
+                                AppManager.getAppManager().finishActivity();
+                                Bundle bundle = new Bundle();
+                                String account_name = getV().getEOSUsername();
+                                bundle.putString(ParamConstants.EOS_USERNAME, account_name);
+                                UISkipMananger.launchChooseActivateMethod(getV(), bundle);
+                            } else{
                                 showOnErrorInfo(data.code);
                             }
                         }

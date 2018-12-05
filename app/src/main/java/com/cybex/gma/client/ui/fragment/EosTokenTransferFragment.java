@@ -110,6 +110,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     private CustomFullDialog pinDialog;
     private CustomFullDialog verifyDialog;
+    private CustomFullDialog powerPressDialog;
     private int verifyFpCount;
 
     public static EosTokenTransferFragment newInstance(Bundle args) {
@@ -830,6 +831,31 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         verifyDialog.show();
     }
 
+
+    /**
+     * 显示按键确认dialog
+     */
+    private void showPowerConfirmTransferDialog() {
+        if (powerPressDialog != null) { return; }
+        int[] listenedItems = {R.id.imv_back};
+        powerPressDialog = new CustomFullDialog(getActivity(),
+                R.layout.dialog_bluetooth_transfer_power_confirm, listenedItems, false, Gravity.BOTTOM);
+        powerPressDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imv_back:
+                        powerPressDialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        powerPressDialog.show();
+    }
+
+
     /**
      * 显示连接蓝牙卡失败dialog
      */
@@ -892,20 +918,21 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                                 new DeviceOperationManager.SetGetSignResultCallback() {
                                                     @Override
                                                     public void onGetSignResultStart() {
-
+                                                        showPowerConfirmTransferDialog();
+                                                        pinDialog.cancel();
                                                     }
 
                                                     @Override
                                                     public void onGetSignResultSuccess(String strSignature) {
                                                         buildTransaction(strSignature);
-                                                        pinDialog.cancel();
+                                                        powerPressDialog.cancel();
                                                     }
 
                                                     @Override
                                                     public void onGetSignResultFail(int status) {
                                                         AlertUtil.showShortUrgeAlert(getActivity(), getString(R
                                                                 .string.tip_pin_verify_fail));
-                                                        pinDialog.cancel();
+                                                        powerPressDialog.cancel();
                                                     }
 
                                                     @Override

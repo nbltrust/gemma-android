@@ -262,6 +262,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                         super.onError(response);
 
                         if (EmptyUtils.isNotEmpty(getV())) {
+
                             AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.operate_deal_failed));
                             getV().dissmisProgressDialog();
                             if (response.body() != null && response.getRawResponse().body() != null){
@@ -286,10 +287,11 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     @Override
                     public void onSuccess(Response<String> response) {
                         if (EmptyUtils.isNotEmpty(getV())) {
-                            AlertUtil.showLongCommonAlert(getV().getActivity(),
-                                    getV().getString(R.string.operate_deal_success));
-                            getV().dissmisProgressDialog();
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                                AlertUtil.showLongCommonAlert(getV().getActivity(),
+                                        getV().getString(R.string.operate_deal_success));
+                                getV().clearSelectNodes();
+                                getV().dissmisProgressDialog();
                                 String jsonStr = response.body();
                                 //停留在投票页面，更新数据
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
