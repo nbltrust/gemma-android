@@ -850,14 +850,14 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      * 显示连接蓝牙卡失败dialog
      */
     private void showConnectBioFailDialog() {
-        int[] listenedItems = {R.id.imc_cancel, R.id.btn_reconnect};
+        int[] listenedItems = {R.id.imv_back, R.id.btn_reconnect};
         dialog = new CustomFullDialog(getContext(),
                 R.layout.eos_dialog_transfer_bluetooth_connect_failed, listenedItems, false, Gravity.BOTTOM);
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
-                    case R.id.imc_cancel:
+                    case R.id.imv_back:
                         dialog.cancel();
                         break;
                     case R.id.btn_reconnect:
