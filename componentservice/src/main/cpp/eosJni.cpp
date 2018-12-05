@@ -2,6 +2,13 @@
 #include <string>
 #include "keosdlib.hpp"
 //#include <iostream>
+#include <android/log.h>
+#define TAG "eos-jni" // 这个是自定义的LOG的标识
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO,TAG ,__VA_ARGS__) // 定义LOGI类型
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN,TAG ,__VA_ARGS__) // 定义LOGW类型
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG ,__VA_ARGS__) // 定义LOGE类型
+#define LOGF(...) __android_log_print(ANDROID_LOG_FATAL,TAG ,__VA_ARGS__) // 定义LOGF类型
 
 keosdlib_api k;
 extern "C" JNIEXPORT jstring
@@ -333,22 +340,29 @@ Java_com_cybex_gma_client_ui_JNIUtil_signTransaction_1voteproducer(JNIEnv *env, 
                                                                    jstring infostr_, jstring abistr_,
                                                                    jlong max_cpu_usage_ms, jlong max_net_usage_words,
                                                                    jlong tx_expiration) {
-    const char *priv_key_str = env->GetStringUTFChars(priv_key_str_, 0);
-    const char *contract = env->GetStringUTFChars(contract_, 0);
+
+    const char *priv_key_str = env->GetStringUTFChars(priv_key_str_,0);
+    const char *contract = env->GetStringUTFChars(contract_,0);
     const char *voter_str = env->GetStringUTFChars(voter_str_, 0);
     const char *infostr = env->GetStringUTFChars(infostr_, 0);
     const char *abistr = env->GetStringUTFChars(abistr_, 0);
+
+//    LOGE("########## E--priv_key_str = %s", priv_key_str);
+//    LOGE("########## E--contract = %s", contract);
+//    LOGE("########## E--voter_str = %s", voter_str);
+//    LOGE("########## E--infostr = %s", infostr);
+//    LOGE("######### E--abistr = %s", abistr);
+
+    std::string returnValue = k.signTransaction_voteproducer
+            (priv_key_str, contract,
+             voter_str, infostr, abistr,
+             max_cpu_usage_ms, max_net_usage_words, tx_expiration);
 
     env->ReleaseStringUTFChars(priv_key_str_, priv_key_str);
     env->ReleaseStringUTFChars(contract_, contract);
     env->ReleaseStringUTFChars(voter_str_, voter_str);
     env->ReleaseStringUTFChars(infostr_, infostr);
     env->ReleaseStringUTFChars(abistr_, abistr);
-
-    std::string returnValue = k.signTransaction_voteproducer
-            (priv_key_str, contract,
-             voter_str, infostr, abistr,
-             max_cpu_usage_ms, max_net_usage_words, tx_expiration);
 
     return env->NewStringUTF(returnValue.c_str());
 }

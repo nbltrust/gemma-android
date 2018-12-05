@@ -95,7 +95,7 @@ public class BluetoothImportMneFragment extends XFragment {
         //check mnemonic
         final String mnemonic = edtShowMnemonic.getText().toString().trim();
         if(FormatValidateUtils.isMnemonicValid(mnemonic)){
-            showProgressDialog(getString(R.string.eos_mnemonic_importing));
+            showProgressDialog("");
             //go wookong check
             DeviceOperationManager.getInstance().importMnemonics(this.toString(), DeviceOperationManager.getInstance().getCurrentDeviceName(),
                     mnemonic, new DeviceOperationManager.ImportMnemonicCallback() {
@@ -157,7 +157,7 @@ public class BluetoothImportMneFragment extends XFragment {
     }
 
     private void initWookongBioWallet(final String mnemonics) {
-        showProgressDialog(getString(R.string.initing_wookong_bio_wallet));
+        showProgressDialog("");
         Disposable subscribe = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
