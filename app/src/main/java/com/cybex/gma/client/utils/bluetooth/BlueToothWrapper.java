@@ -63,6 +63,12 @@ public class BlueToothWrapper extends Thread {
     public static final int GET_IMAGE_COUNT_WRAPPER = 41;
     public static final int EOS_SERIALIZE_WRAPPER = 42;
 
+    public static final int VERIFY_SIGN_PIN_WRAPPER = 47;
+    public static final int SWITCH_SIGN_WRAPPER = 48;
+    public static final int ABORT_SIGN_WRAPPER = 49;
+    public static final int SET_TX_WRAPPER = 50;
+    public static final int GET_SIGN_RESULT_WRAPPER = 51;
+
     //messages
     public static final int MSG_INIT_START = 0;
     public static final int MSG_INIT_FINISH = 1;
@@ -155,6 +161,19 @@ public class BlueToothWrapper extends Thread {
     public static final int MSG_EOS_SERIALIZE_START = 83;
     public static final int MSG_EOS_SERIALIZE_FINISH = 84;
 
+
+    public static final int MSG_VERIFY_SIGN_PIN_START = 96;
+    public static final int MSG_VERIFY_SIGN_PIN_FINISH = 97;
+    public static final int MSG_SWITCH_SIGN_START = 98;
+    public static final int MSG_SWITCH_SIGN_FINISH = 99;
+    public static final int MSG_ABORT_SIGN_START = 100;
+    public static final int MSG_ABORT_SIGN_FINISH = 101;
+    public static final int MSG_SET_TX_START = 102;
+    public static final int MSG_SET_TX_FINISH = 103;
+    public static final int MSG_GET_SIGN_RESULT_START = 104;
+    public static final int MSG_GET_SIGN_RESULT_UPDATE = 105;
+    public static final int MSG_GET_SIGN_RESULT_FINISH = 106;
+
     private static Map<String, Object> m_listCommLock;
     private Object m_objCommLock;
 
@@ -176,6 +195,8 @@ public class BlueToothWrapper extends Thread {
     private MiddlewareInterface.FingerPrintID[] m_fpList;
     private int m_seedLen;
     private byte m_coinType;
+    private byte m_signType;
+    private boolean m_bGetSignResultLoop;
     private int[] m_derivePath;
     private byte[] m_trasaction;
     private String m_strMnes;
@@ -338,9 +359,20 @@ public class BlueToothWrapper extends Thread {
 
         private int m_returnValue;
         private byte[] m_signature;
-
+        private byte m_coinType;
         SignReturnValue(int returnValue, byte[] signature, int sigLen) {
             m_returnValue = returnValue;
+            if (signature != null) {
+                m_signature = new byte[sigLen];
+                System.arraycopy(signature, 0, m_signature, 0, sigLen);
+            } else {
+                m_signature = null;
+            }
+        }
+
+        SignReturnValue(int returnValue, byte coinType, byte[] signature, int sigLen) {
+            m_returnValue = returnValue;
+            m_coinType = coinType;
             if (signature != null) {
                 m_signature = new byte[sigLen];
                 System.arraycopy(signature, 0, m_signature, 0, sigLen);
@@ -1237,6 +1269,66 @@ public class BlueToothWrapper extends Thread {
     public boolean setEOSTxSerializeWrapper(String strEOSTxString) {
         m_wrapperType = EOS_SERIALIZE_WRAPPER;
         m_strEOSTxString = strEOSTxString;
+        return true;
+    }
+
+    public boolean setVerifySignPINWrapper(long contextHandle, int devIndex, String strPIN) {
+        if ((strPIN == null) || (strPIN == "")) {
+            return false;
+        }
+
+        m_wrapperType = VERIFY_SIGN_PIN_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+        m_strPIN = strPIN;
+
+        return true;
+    }
+
+    public boolean setSwitchSignWrapper(long contextHandle, int devIndex) {
+        m_wrapperType = SWITCH_SIGN_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+
+        return true;
+    }
+
+    public boolean setAbortSignWrapper(long contextHandle, int devIndex) {
+        m_wrapperType = ABORT_SIGN_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+
+        return true;
+    }
+
+    public boolean setSetTXWrapper(long contextHandle, int devIndex, byte coinType, int[] derivePath, byte[] transaction) {
+        m_wrapperType = SET_TX_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+        m_coinType = coinType;
+        m_derivePath = derivePath;
+        m_trasaction = transaction;
+
+        return true;
+    }
+
+    public boolean setGetSignResultWrapper(long contextHandle, int devIndex, byte coinType, byte signType) {
+        m_wrapperType = GET_SIGN_RESULT_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+        m_coinType = coinType;
+        m_signType = signType;
+
+        return true;
+    }
+
+    public boolean breakGetSignResultLoop() {
+        m_bGetSignResultLoop = false;
         return true;
     }
 
@@ -2179,6 +2271,119 @@ public class BlueToothWrapper extends Thread {
                 msg.arg1 = iRtn;
                 msg.sendToTarget();
 
+                break;
+
+            case VERIFY_SIGN_PIN_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_VERIFY_SIGN_PIN_START;
+                msg.sendToTarget();
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.verifySignPIN(m_contextHandle, m_devIndex, m_strPIN);
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_VERIFY_SIGN_PIN_FINISH;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+                break;
+            case SWITCH_SIGN_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_SWITCH_SIGN_START;
+                msg.sendToTarget();
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.switchSign(m_contextHandle, m_devIndex);
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_SWITCH_SIGN_FINISH;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+                break;
+            case ABORT_SIGN_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_ABORT_SIGN_START;
+                msg.sendToTarget();
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.abortSign(m_contextHandle, m_devIndex);
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_ABORT_SIGN_FINISH;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+                break;
+            case SET_TX_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_SET_TX_START;
+                msg.sendToTarget();
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.deriveTradeAddress(m_contextHandle, m_devIndex, m_coinType, m_derivePath);
+                    if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iRtn = MiddlewareInterface.setTX(m_contextHandle, m_devIndex, m_coinType, m_trasaction);
+                    }
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_SET_TX_FINISH;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+                break;
+            case GET_SIGN_RESULT_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_GET_SIGN_RESULT_START;
+                msg.sendToTarget();
+
+                signature = null;
+                sigLen = new int[1];
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    m_bGetSignResultLoop = true;
+                    signature = new byte[MiddlewareInterface.PAEW_EOS_SIG_MAX_LEN];
+                    sigLen[0] = MiddlewareInterface.PAEW_EOS_SIG_MAX_LEN;
+                    do {
+                        iRtn = MiddlewareInterface.getSignResult(m_contextHandle, m_devIndex, m_coinType, m_signType, signature, sigLen);
+
+                        msg = m_mainHandler.obtainMessage();
+                        msg.what = MSG_GET_SIGN_RESULT_UPDATE;
+                        msg.arg1 = iRtn;
+                        msg.sendToTarget();
+
+                        if (!m_bGetSignResultLoop) {
+                            break;
+                        }
+
+                    } while ((iRtn == MiddlewareInterface.PAEW_RET_DEV_WAITING) || ((m_signType == MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP) && ((iRtn == MiddlewareInterface.PAEW_RET_DEV_FP_COMMON_ERROR) || (iRtn == MiddlewareInterface.PAEW_RET_DEV_FP_NO_FINGER) || (iRtn == MiddlewareInterface.PAEW_RET_DEV_FP_NOT_FULL_FINGER))));
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_GET_SIGN_RESULT_FINISH;
+                msg.arg1 = iRtn;
+                msg.obj = new SignReturnValue(iRtn, m_coinType, signature, sigLen[0]);
+                msg.sendToTarget();
                 break;
         }
     }

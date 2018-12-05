@@ -67,6 +67,11 @@ public class BaseConst {
 
     public static final String PIN_STATUS = "isPINInit";
 
+    public static final int STATUS_NO_VERIFY_COUNT = -2147483591;
+    public static final int STATUS_NO_DEVICE_NAME = 101;
+    public static final int STATUS_OTHER_ERR = 0;
+
+
 
 
 

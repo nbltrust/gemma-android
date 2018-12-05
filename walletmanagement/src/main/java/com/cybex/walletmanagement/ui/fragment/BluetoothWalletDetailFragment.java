@@ -11,32 +11,25 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.allen.library.SuperTextView;
 import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
-import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.event.HeartBeatRefreshDataEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.event.WookongFormattedEvent;
-import com.cybex.componentservice.event.WookongInitialedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.walletmanagement.R;
-import com.cybex.walletmanagement.ui.activity.BluetoothWalletManageActivity;
 import com.cybex.walletmanagement.ui.activity.ChangeWalletNameActivity;
-import com.cybex.walletmanagement.ui.activity.SelectCurrentWalletActivity;
-import com.cybex.walletmanagement.ui.activity.WalletManageInnerActivity;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
-import org.greenrobot.eventbus.Logger;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -381,7 +374,7 @@ public class BluetoothWalletDetailFragment extends XFragment {
     private void showConfirmFormatonCardDialog() {
         int[] listenedItems = {R.id.imv_back};
         confirmDialog = new CustomFullDialog(getActivity(),
-                R.layout.walletmanage_dialog_bluetooth_power_confirm, listenedItems, false, Gravity.BOTTOM);
+                R.layout.walletmanage_dialog_bluetooth_format_power_confirm, listenedItems, false, Gravity.BOTTOM);
         confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {

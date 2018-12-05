@@ -28,9 +28,62 @@ public class EosTransactionEntity extends BaseModel {
     @Column
     private Integer status;
 
-
     @Column
     private String blockNumber;
+    /**
+     * 交易类型 0为收入，1为支出
+     */
+    @Column
+    private Integer transferType;
+    /**
+     * 该笔交易的数额
+     */
+    @Column
+    private String quantity;
+    /**
+     * 该笔交易的关联账户，收入时为打款人，支出时为付款人
+     */
+    @Column
+    private String account;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    /**
+     * 该笔交易的日期
+     */
+    @Column
+    private String date;
+
+
+    public Integer getTransferType() {
+        return transferType;
+    }
+
+    public void setTransferType(Integer transferType) {
+        this.transferType = transferType;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
     public Integer getId() {
         return id;
@@ -72,6 +125,10 @@ public class EosTransactionEntity extends BaseModel {
                 ", transactionHash='" + transactionHash + '\'' +
                 ", status=" + status +
                 ", blockNumber='" + blockNumber + '\'' +
+                ", transferType='" + transferType + '\'' +
+                ", quantity='" + quantity + '\'' +
+                ", account='" + account + '\'' +
+                ", date='" + date + '\'' +
                 '}';
     }
 

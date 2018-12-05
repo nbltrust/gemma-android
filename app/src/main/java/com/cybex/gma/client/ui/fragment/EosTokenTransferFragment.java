@@ -43,6 +43,7 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+import com.tapadoo.alerter.Alerter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -648,6 +649,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         etReceiverAccount.setText("");
         etAmount.setText("");
         etNote.setText("");
+        Alerter.hide();
+        if (getActivity() != null){
+            Alerter.clearCurrent(getActivity());
+        }
 
         //刷新数据
         //getP().requestBanlanceInfo();
@@ -716,6 +721,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      * EOS Tranasaction 签名
      */
     private void startEosSign(byte[] transaction) {
+
         //先Set Tx
         DeviceOperationManager.getInstance().setTx(TAG, deviceName, transaction,
                 new DeviceOperationManager.SetTxCallback() {
@@ -727,72 +733,50 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onSetTxSuccess() {
 
-                        DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
-                                new DeviceOperationManager.GetFPListCallback() {
+                        DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
+                                MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP,
+                                new DeviceOperationManager.SetGetSignResultCallback() {
                                     @Override
-                                    public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
-                                        //判断是否有指纹
-                                        if (fpListReturnValue.getFPCount() > 0) {
-                                            //有设置指纹
-                                            //使用指纹签名
-                                            DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
-                                                    MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP,
-                                                    new DeviceOperationManager.SetGetSignResultCallback() {
-                                                        @Override
-                                                        public void onGetSignResultStart() {
+                                    public void onGetSignResultStart() {
+                                        showVerifyFPDialog();
+                                    }
 
-                                                        }
+                                    @Override
+                                    public void onGetSignResultSuccess(String strSignature) {
+                                        //LoggerManager.d("Sign Success str Sig = " + strSignature);
+                                        buildTransaction(strSignature);
+                                        verifyDialog.cancel();
+                                    }
 
-                                                        @Override
-                                                        public void onGetSignResultSuccess(String strSignature) {
-                                                            buildTransaction(strSignature);
-                                                        }
-
-                                                        @Override
-                                                        public void onGetSignResultFail() {
-                                                            AlertUtil.showShortUrgeAlert(getActivity(), "使用指纹签名失败,"
-                                                                    + "请重新尝试");
-                                                        }
-                                                    }
-                                            );
-                                        } else {
-                                            //没有设置指纹
-                                            //使用PIN签名
-                                            DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
-                                                    MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_PIN,
-                                                    new DeviceOperationManager.SetGetSignResultCallback() {
-                                                        @Override
-                                                        public void onGetSignResultStart() {
-
-                                                        }
-
-                                                        @Override
-                                                        public void onGetSignResultSuccess(String strSignature) {
-                                                            buildTransaction(strSignature);
-                                                        }
-
-                                                        @Override
-                                                        public void onGetSignResultFail() {
-                                                            AlertUtil.showShortUrgeAlert(getActivity(),
-                                                                    "使用PIN签名失败，请重新尝试");
-                                                        }
-                                                    }
-                                            );
-
+                                    @Override
+                                    public void onGetSignResultFail(int status) {
+                                        if (status == BaseConst.STATUS_NO_VERIFY_COUNT){
+                                            //没有指纹录入错误，调用PIN验证
+                                            verifyDialog.cancel();
+                                            showConfirmPINDialog();
+                                        }else {
+                                            //其他错误
+                                            AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.tip_fp_sign_fail));
                                         }
+
                                     }
 
                                     @Override
-                                    public void onFail() {
-                                        AlertUtil.showShortUrgeAlert(getActivity(), "读取指纹信息失败，请重新尝试");
+                                    public void onGetSignResultUpdate() {
+
                                     }
-                                });
+                                }
+                        );
+
+
+
                     }
 
                     @Override
                     public void onSetTxFail() {
-
+                        AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.tip_set_tx_fail));
                     }
+
                 });
 
 
@@ -898,25 +882,46 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     case R.id.btn_confirm_authorization:
                         TextView tv_password = dialog.findViewById(R.id.et_password);
                         String password = tv_password.getText().toString();
-                        DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, password,
-                                new DeviceOperationManager.VerifyPinCallback() {
+                        pinDialog.cancel();
+                        DeviceOperationManager.getInstance().verifySignPin(TAG, deviceName, password,
+                                new DeviceOperationManager.VerifySignPinCallback() {
                                     @Override
                                     public void onVerifySuccess() {
+                                        DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
+                                                MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_PIN,
+                                                new DeviceOperationManager.SetGetSignResultCallback() {
+                                                    @Override
+                                                    public void onGetSignResultStart() {
 
-                                    }
+                                                    }
 
-                                    @Override
-                                    public void onPinLocked() {
+                                                    @Override
+                                                    public void onGetSignResultSuccess(String strSignature) {
+                                                        buildTransaction(strSignature);
+                                                        pinDialog.cancel();
+                                                    }
 
+                                                    @Override
+                                                    public void onGetSignResultFail(int status) {
+                                                        AlertUtil.showShortUrgeAlert(getActivity(), getString(R
+                                                                .string.tip_pin_verify_fail));
+                                                        pinDialog.cancel();
+                                                    }
+
+                                                    @Override
+                                                    public void onGetSignResultUpdate() {
+
+                                                    }
+                                                });
                                     }
 
                                     @Override
                                     public void onVerifyFail() {
+                                        AlertUtil.showShortUrgeAlert(getActivity(), getString(R
+                                                .string.baseservice_pass_validate_ip_wrong_password));
 
                                     }
-
                                 });
-
                         break;
                     default:
                         break;

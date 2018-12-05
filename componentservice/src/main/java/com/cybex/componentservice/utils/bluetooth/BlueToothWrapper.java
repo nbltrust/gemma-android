@@ -2305,6 +2305,122 @@ public class BlueToothWrapper extends Thread {
                 msg.arg1 = iRtn;
                 msg.sendToTarget();
                 break;
+
+
+
+            case VERIFY_SIGN_PIN_WRAPPER:
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_VERIFY_SIGN_PIN_START;
+                msg.sendToTarget();
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.verifySignPIN(m_contextHandle, m_devIndex, m_strPIN);
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_VERIFY_SIGN_PIN_FINISH;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+                break;
+            case SWITCH_SIGN_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_SWITCH_SIGN_START;
+                msg.sendToTarget();
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.switchSign(m_contextHandle, m_devIndex);
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_SWITCH_SIGN_FINISH;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+                break;
+            case ABORT_SIGN_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_ABORT_SIGN_START;
+                msg.sendToTarget();
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.abortSign(m_contextHandle, m_devIndex);
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_ABORT_SIGN_FINISH;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+                break;
+            case SET_TX_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_SET_TX_START;
+                msg.sendToTarget();
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.deriveTradeAddress(m_contextHandle, m_devIndex, m_coinType, m_derivePath);
+                    if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iRtn = MiddlewareInterface.setTX(m_contextHandle, m_devIndex, m_coinType, m_trasaction);
+                    }
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_SET_TX_FINISH;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+                break;
+            case GET_SIGN_RESULT_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_GET_SIGN_RESULT_START;
+                msg.sendToTarget();
+
+                signature = null;
+                sigLen = new int[1];
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    m_bGetSignResultLoop = true;
+                    signature = new byte[MiddlewareInterface.PAEW_EOS_SIG_MAX_LEN];
+                    sigLen[0] = MiddlewareInterface.PAEW_EOS_SIG_MAX_LEN;
+                    do {
+                        iRtn = MiddlewareInterface.getSignResult(m_contextHandle, m_devIndex, m_coinType, m_signType, signature, sigLen);
+
+                        msg = m_mainHandler.obtainMessage();
+                        msg.what = MSG_GET_SIGN_RESULT_UPDATE;
+                        msg.arg1 = iRtn;
+                        msg.sendToTarget();
+
+                        if (!m_bGetSignResultLoop) {
+                            break;
+                        }
+
+                    } while ((iRtn == MiddlewareInterface.PAEW_RET_DEV_WAITING) || ((m_signType == MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP) && ((iRtn == MiddlewareInterface.PAEW_RET_DEV_FP_COMMON_ERROR) || (iRtn == MiddlewareInterface.PAEW_RET_DEV_FP_NO_FINGER) || (iRtn == MiddlewareInterface.PAEW_RET_DEV_FP_NOT_FULL_FINGER))));
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_GET_SIGN_RESULT_FINISH;
+                msg.arg1 = iRtn;
+                msg.obj = new SignReturnValue(iRtn, m_coinType, signature, sigLen[0]);
+                msg.sendToTarget();
+                break;
         }
     }
 
