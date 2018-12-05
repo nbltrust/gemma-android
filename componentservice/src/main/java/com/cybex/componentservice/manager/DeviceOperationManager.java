@@ -1589,14 +1589,16 @@ public class DeviceOperationManager {
                     //LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE ");
                     if (msg.obj != null) {
                         byte[] heartBeatData = (byte[]) msg.obj;
-                        DeviceComm deviceComm = deviceMaps.get(deviceName);
-                        if (deviceComm != null) {
-                            deviceComm.batteryMode = (heartBeatData[1] == 0x00) ? 0 : 1;
-                            deviceComm.powerAmount = Integer.parseInt(String.format("%02x", heartBeatData[2]), 16);
+                        if(heartBeatData!=null&&heartBeatData.length>=3){
+                            DeviceComm deviceComm = deviceMaps.get(deviceName);
+                            if (deviceComm != null) {
+                                deviceComm.batteryMode = (heartBeatData[1] == 0x00) ? 0 : 1;
+                                deviceComm.powerAmount = Integer.parseInt(String.format("%02x", heartBeatData[2]), 16);
 //                            deviceComm.powerAmount=(int) heartBeatData[2];
-                            //LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE batteryMode=" + deviceComm.batteryMode);
-                            //LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE powerAmount=" + deviceComm.powerAmount);
-                            EventBusProvider.post(new HeartBeatRefreshDataEvent());
+                                //LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE batteryMode=" + deviceComm.batteryMode);
+                                //LoggerManager.d("MSG_HEART_BEAT_DATA_UPDATE powerAmount=" + deviceComm.powerAmount);
+                                EventBusProvider.post(new HeartBeatRefreshDataEvent());
+                            }
                         }
                     }
                     break;

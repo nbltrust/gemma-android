@@ -220,6 +220,10 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     @Override
     protected void onDestroy() {
+        String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+        if(DeviceOperationManager.getInstance().isDeviceConnectted(currentDeviceName)){
+            DeviceOperationManager.getInstance().freeContext(this.toString(),currentDeviceName,null);
+        }
         super.onDestroy();
         if (unbinder != null) {
             unbinder.unbind();
