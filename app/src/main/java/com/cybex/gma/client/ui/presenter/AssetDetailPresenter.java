@@ -288,7 +288,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                     if (obj != null) {
                                         String block_num = obj.optString("block_num");
                                         LoggerManager.d("block_num", block_num);
-                                        //todo 存入数据库
+                                        //存入数据库
 
                                         EosTransactionEntity eosTransactionEntity = new EosTransactionEntity();
                                         eosTransactionEntity.setBlockNumber(block_num);
@@ -431,10 +431,10 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
      * 计算该Transaction确认中大致百分比
      * @return
      */
-    public int getProgressPrecentage(String block_num, String lib_num){
+    public double getProgressPrecentage(String block_num, String lib_num){
         int block = Integer.valueOf(block_num);
         int lib = Integer.valueOf(lib_num);
-        return (block - lib)/325;
+        return Math.min(1 - Math.min((block - lib) / 325, 1), 0.99) * 100;
     }
 
 }

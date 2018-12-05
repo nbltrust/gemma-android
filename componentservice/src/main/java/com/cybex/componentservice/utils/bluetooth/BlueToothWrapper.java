@@ -62,6 +62,15 @@ public class BlueToothWrapper extends Thread {
     public static final int SET_LOGO_IMAGE_WRAPPER = 40;
     public static final int GET_IMAGE_COUNT_WRAPPER = 41;
     public static final int EOS_SERIALIZE_WRAPPER = 42;
+    public static final int PRODUCT_TEST_FP_WRAPPER = 43;
+    public static final int PRODUCT_TEST_SCREEN_WRAPPER = 44;
+    public static final int UPDATE_COS_WRAPPER = 45;
+    public static final int GET_FW_VERSION_WRAPPER = 46;
+    public static final int VERIFY_SIGN_PIN_WRAPPER = 47;
+    public static final int SWITCH_SIGN_WRAPPER = 48;
+    public static final int ABORT_SIGN_WRAPPER = 49;
+    public static final int SET_TX_WRAPPER = 50;
+    public static final int GET_SIGN_RESULT_WRAPPER = 51;
 
     //messages
     public static final int MSG_INIT_START = 0;
@@ -155,6 +164,33 @@ public class BlueToothWrapper extends Thread {
     public static final int MSG_EOS_SERIALIZE_START = 83;
     public static final int MSG_EOS_SERIALIZE_FINISH = 84;
 
+    public static final int MSG_PRODUCT_TEST_FP_START = 85;
+    public static final int MSG_PRODUCT_TEST_FP_UPDATE = 86;
+    public static final int MSG_PRODUCT_TEST_FP_FINISH = 87;
+    public static final int MSG_PRODUCT_TEST_SCREEN_START = 88;
+    public static final int MSG_PRODUCT_TEST_SCREEN_FINISH = 89;
+
+    public static final int MSG_UPDATE_COS_START = 90;
+    public static final int MSG_UPDATE_COS_FINISH = 91;
+    public static final int MSG_UPDATE_COS_UPDATE = 92;
+
+    public static final int MSG_GET_FW_VERSION_START = 93;
+    public static final int MSG_GET_FW_VERSION_FINISH = 94;
+
+    public static final int MSG_INIT_PIN_UPDATE = 95;
+
+    public static final int MSG_VERIFY_SIGN_PIN_START = 96;
+    public static final int MSG_VERIFY_SIGN_PIN_FINISH = 97;
+    public static final int MSG_SWITCH_SIGN_START = 98;
+    public static final int MSG_SWITCH_SIGN_FINISH = 99;
+    public static final int MSG_ABORT_SIGN_START = 100;
+    public static final int MSG_ABORT_SIGN_FINISH = 101;
+    public static final int MSG_SET_TX_START = 102;
+    public static final int MSG_SET_TX_FINISH = 103;
+    public static final int MSG_GET_SIGN_RESULT_START = 104;
+    public static final int MSG_GET_SIGN_RESULT_UPDATE = 105;
+    public static final int MSG_GET_SIGN_RESULT_FINISH = 106;
+
     private static Map<String, Object> m_listCommLock;
     private Object m_objCommLock;
 
@@ -176,6 +212,8 @@ public class BlueToothWrapper extends Thread {
     private MiddlewareInterface.FingerPrintID[] m_fpList;
     private int m_seedLen;
     private byte m_coinType;
+    private byte m_signType;
+    private boolean m_bGetSignResultLoop;
     private int[] m_derivePath;
     private byte[] m_trasaction;
     private String m_strMnes;
@@ -335,10 +373,9 @@ public class BlueToothWrapper extends Thread {
     }
 
     public static class SignReturnValue {
-
         private int m_returnValue;
         private byte[] m_signature;
-
+        private byte m_coinType;
         SignReturnValue(int returnValue, byte[] signature, int sigLen) {
             m_returnValue = returnValue;
             if (signature != null) {
@@ -348,10 +385,19 @@ public class BlueToothWrapper extends Thread {
                 m_signature = null;
             }
         }
-
+        SignReturnValue(int returnValue, byte coinType, byte[] signature, int sigLen) {
+            m_returnValue = returnValue;
+            m_coinType = coinType;
+            if (signature != null) {
+                m_signature = new byte[sigLen];
+                System.arraycopy(signature, 0, m_signature, 0, sigLen);
+            } else {
+                m_signature = null;
+            }
+        }
         public int getReturnValue() { return m_returnValue; }
-
         public byte[] getSignature() { return m_signature; }
+        public byte getCoinType() {return m_coinType; }
     }
 
     public static class GetAddressReturnValue {
@@ -1239,6 +1285,67 @@ public class BlueToothWrapper extends Thread {
         m_strEOSTxString = strEOSTxString;
         return true;
     }
+
+    public boolean setVerifySignPINWrapper(long contextHandle, int devIndex, String strPIN) {
+        if ((strPIN == null) || (strPIN == "")) {
+            return false;
+        }
+
+        m_wrapperType = VERIFY_SIGN_PIN_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+        m_strPIN = strPIN;
+
+        return true;
+    }
+
+    public boolean setSwitchSignWrapper(long contextHandle, int devIndex) {
+        m_wrapperType = SWITCH_SIGN_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+
+        return true;
+    }
+
+    public boolean setAbortSignWrapper(long contextHandle, int devIndex) {
+        m_wrapperType = ABORT_SIGN_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+
+        return true;
+    }
+
+    public boolean setSetTXWrapper(long contextHandle, int devIndex, byte coinType, int[] derivePath, byte[] transaction) {
+        m_wrapperType = SET_TX_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+        m_coinType = coinType;
+        m_derivePath = derivePath;
+        m_trasaction = transaction;
+
+        return true;
+    }
+
+    public boolean setGetSignResultWrapper(long contextHandle, int devIndex, byte coinType, byte signType) {
+        m_wrapperType = GET_SIGN_RESULT_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+        m_coinType = coinType;
+        m_signType = signType;
+
+        return true;
+    }
+
+    public boolean breakGetSignResultLoop() {
+        m_bGetSignResultLoop = false;
+        return true;
+    }
+
 
     //////////////////////////////////////////////////////////////////////////////////
     private int sendCmd() {
@@ -2310,7 +2417,6 @@ public class BlueToothWrapper extends Thread {
 
 
 
-    public static final int MSG_INIT_PIN_UPDATE = 95;
 
     private CommonUtility.putStateCallback m_putStateCallback = new CommonUtility.putStateCallback() {
         @Override

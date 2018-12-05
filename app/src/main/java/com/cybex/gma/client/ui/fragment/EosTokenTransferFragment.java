@@ -35,6 +35,7 @@ import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.presenter.EosTokenTransferPresenter;
+import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -711,98 +712,114 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     }
 
 
-    public void startVerifyProcess() {
-
-        DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
-                new DeviceOperationManager.GetFPListCallback() {
-                    @Override
-                    public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
-                        //判断是否有指纹
-                        if (fpListReturnValue.getFPCount() > 0) {
-                            //有设置指纹
-                            DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
-                                    new DeviceOperationManager.DeviceVerifyFPCallback() {
-                                        @Override
-                                        public void onVerifyStart() {
-                                            showVerifyFPDialog();
-                                        }
-
-                                        @Override
-                                        public void onVerifySuccess() {
-                                            //EOS Sign
-                                            verifyDialog.cancel();
-                                        }
-
-                                        @Override
-                                        public void onVerifyFailed() {
-                                            verifyDialog.cancel();
-                                        }
-
-                                        @Override
-                                        public void onVerifyCancelled() {
-                                            verifyDialog.cancel();
-                                        }
-                                    });
-                        } else {
-                            //没有设置指纹
-                            //PIN 验证
-                            showConfirmPINDialog();
-                        }
-                    }
-
-                    @Override
-                    public void onFail() {
-                        AlertUtil.showShortUrgeAlert(getActivity(), "读取指纹信息失败");
-                    }
-                });
-    }
-
     /**
      * EOS Tranasaction 签名
      */
     private void startEosSign(byte[] transaction) {
-//        showProgressDialog("正在Bio上签名交易");
-        uiLock.lock();
-        DeviceOperationManager.getInstance().signEosTransaction(TAG, deviceName, uiLock, transaction,
-                new DeviceOperationManager.EosSignCallback() {
-
+        //先Set Tx
+        DeviceOperationManager.getInstance().setTx(TAG, deviceName, transaction,
+                new DeviceOperationManager.SetTxCallback() {
                     @Override
-                    public void onEosSignStart() {
-                        //startVerifyProcess();
+                    public void onSetTxStart() {
+
                     }
 
                     @Override
-                    public void onEosSignSuccess(String strSignature) {
+                    public void onSetTxSuccess() {
 
-                        uiLock.unlock();
-                        List<String> signatures = new ArrayList<>();
-                        strSignature = strSignature.substring(0, strSignature.length() - 1);
-                        signatures.add(strSignature);
-                        transactionVO.setSignatures(signatures);
+                        DeviceOperationManager.getInstance().getFPList(TAG, deviceName,
+                                new DeviceOperationManager.GetFPListCallback() {
+                                    @Override
+                                    public void onSuccess(BlueToothWrapper.GetFPListReturnValue fpListReturnValue) {
+                                        //判断是否有指纹
+                                        if (fpListReturnValue.getFPCount() > 0) {
+                                            //有设置指纹
+                                            //使用指纹签名
+                                            DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
+                                                    MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP,
+                                                    new DeviceOperationManager.SetGetSignResultCallback() {
+                                                        @Override
+                                                        public void onGetSignResultStart() {
 
-                        if (transactionVO != null) {
-                            //构造PushTransaction 请求的json参数
-                            PushTransactionReqParams reqParams = new PushTransactionReqParams();
-                            reqParams.setTransaction(transactionVO);
-                            reqParams.setSignatures(transactionVO.getSignatures());
-                            reqParams.setCompression("none");
+                                                        }
 
-                            String buildTransactionJson = GsonUtils.
-                                    objectToJson(reqParams);
-                            LoggerManager.d("buildTransactionJson:" + buildTransactionJson);
+                                                        @Override
+                                                        public void onGetSignResultSuccess(String strSignature) {
+                                                            buildTransaction(strSignature);
+                                                        }
 
-                            //执行Push Transaction 最后一步操作
-                            dissmisProgressDialog();
-                            getP().pushTransaction(buildTransactionJson);
-                        }
+                                                        @Override
+                                                        public void onGetSignResultFail() {
+                                                            AlertUtil.showShortUrgeAlert(getActivity(), "使用指纹签名失败,"
+                                                                    + "请重新尝试");
+                                                        }
+                                                    }
+                                            );
+                                        } else {
+                                            //没有设置指纹
+                                            //使用PIN签名
+                                            DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
+                                                    MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_PIN,
+                                                    new DeviceOperationManager.SetGetSignResultCallback() {
+                                                        @Override
+                                                        public void onGetSignResultStart() {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onGetSignResultSuccess(String strSignature) {
+                                                            buildTransaction(strSignature);
+                                                        }
+
+                                                        @Override
+                                                        public void onGetSignResultFail() {
+                                                            AlertUtil.showShortUrgeAlert(getActivity(),
+                                                                    "使用PIN签名失败，请重新尝试");
+                                                        }
+                                                    }
+                                            );
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFail() {
+                                        AlertUtil.showShortUrgeAlert(getActivity(), "读取指纹信息失败，请重新尝试");
+                                    }
+                                });
                     }
 
                     @Override
-                    public void onEosSignFail() {
-                        uiLock.unlock();
-                        AlertUtil.showShortUrgeAlert(getActivity(), "签名EOS交易失败");
+                    public void onSetTxFail() {
+
                     }
                 });
+
+
+
+    }
+
+    public void buildTransaction(String strSignature){
+        List<String> signatures = new ArrayList<>();
+        strSignature = strSignature.substring(0, strSignature.length() - 1);
+        signatures.add(strSignature);
+        transactionVO.setSignatures(signatures);
+
+        if (transactionVO != null) {
+            //构造PushTransaction 请求的json参数
+            PushTransactionReqParams reqParams = new PushTransactionReqParams();
+            reqParams.setTransaction(transactionVO);
+            reqParams.setSignatures(transactionVO.getSignatures());
+            reqParams.setCompression("none");
+
+            String buildTransactionJson = GsonUtils.
+                    objectToJson(reqParams);
+            LoggerManager.d("buildTransactionJson:" + buildTransactionJson);
+
+            //执行Push Transaction 最后一步操作
+            dissmisProgressDialog();
+            getP().pushTransaction(buildTransactionJson);
+        }
     }
 
 

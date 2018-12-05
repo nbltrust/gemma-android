@@ -316,7 +316,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         if (mAdapter == null) {
             //第一次请求
             curDataList = dataList;
-            mAdapter = new TransferRecordListAdapter(dataList, currentEosName);
+            mAdapter = new TransferRecordListAdapter(curDataList, currentEosName);
             mRecyclerView.setAdapter(mAdapter);
         } else {
             //加载更多
@@ -356,6 +356,12 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         if (curEosPrice != null) {
             String eosValue = AmountUtil.mul(balance.split(" ")[0], curEosPrice, 2);
             tvRmbAmount.setText(eosValue);
+        }
+    }
+
+    public void updateTransactionStatus(String txId){
+        for (TransferHistory curTransfer : curDataList){
+
         }
     }
 
