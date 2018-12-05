@@ -260,9 +260,13 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     // Crashlytics Kit
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.6'
+//    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.6'
     // NDK Kit
-    implementation 'com.crashlytics.sdk.android:crashlytics-ndk:2.0.5'
+//    implementation 'com.crashlytics.sdk.android:crashlytics-ndk:2.0.5'
+
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.7@aar') {
+        transitive = true;
+    }
 
 
 }
