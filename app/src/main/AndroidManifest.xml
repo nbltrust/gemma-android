@@ -116,13 +116,13 @@
             android:screenOrientation="portrait">
         </activity>
         <!-- 主TAB界面 -->
-        <activity
-            android:name=".ui.activity.MainTabActivity"
-            android:configChanges="layoutDirection|locale"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
+        <!--<activity-->
+            <!--android:name=".ui.activity.MainTabActivity"-->
+            <!--android:configChanges="layoutDirection|locale"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
+        <!--</activity>-->
         <!-- EOS资源详情页面 -->
         <activity
             android:name=".ui.activity.ResourceDetailActivity"
@@ -329,33 +329,33 @@
         </activity>
 
         <!-- 设置指纹界面 -->
-        <activity
-            android:name=".ui.activity.BluetoothSettingFPActivity"
-            android:configChanges="layoutDirection|locale"
-            android:screenOrientation="portrait">
-        </activity>
+        <!--<activity-->
+            <!--android:name=".ui.activity.BluetoothSettingFPActivity"-->
+            <!--android:configChanges="layoutDirection|locale"-->
+            <!--android:screenOrientation="portrait">-->
+        <!--</activity>-->
 
-        <!-- 蓝牙钱包管理界面 -->
-        <activity
-            android:name=".ui.activity.BluetoothWalletManageActivity"
-            android:configChanges="layoutDirection|locale"
-            android:screenOrientation="portrait">
+        <!--&lt;!&ndash; 蓝牙钱包管理界面 &ndash;&gt;-->
+        <!--<activity-->
+            <!--android:name=".ui.activity.BluetoothWalletManageActivity"-->
+            <!--android:configChanges="layoutDirection|locale"-->
+            <!--android:screenOrientation="portrait">-->
 
-        </activity>
+        <!--</activity>-->
 
-        <!-- 蓝牙钱包详情界面 -->
-        <activity
-            android:name=".ui.activity.BluetoothWalletDetailActivity"
-            android:configChanges="layoutDirection|locale"
-            android:screenOrientation="portrait">
-        </activity>
+        <!--&lt;!&ndash; 蓝牙钱包详情界面 &ndash;&gt;-->
+        <!--<activity-->
+            <!--android:name=".ui.activity.BluetoothWalletDetailActivity"-->
+            <!--android:configChanges="layoutDirection|locale"-->
+            <!--android:screenOrientation="portrait">-->
+        <!--</activity>-->
 
         <!-- 蓝牙钱包指纹密码管理界面 -->
-        <activity
-            android:name=".ui.activity.BluetoothFPAndPasswordActivity"
-            android:configChanges="layoutDirection|locale"
-            android:screenOrientation="portrait">
-        </activity>
+        <!--<activity-->
+            <!--android:name=".ui.activity.BluetoothFPAndPasswordActivity"-->
+            <!--android:configChanges="layoutDirection|locale"-->
+            <!--android:screenOrientation="portrait">-->
+        <!--</activity>-->
 
         <!-- 蓝牙end -->
 

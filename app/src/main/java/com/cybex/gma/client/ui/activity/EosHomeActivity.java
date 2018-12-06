@@ -505,17 +505,6 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     }
 
     @Override
-    protected void setNavibarTitle(String title, boolean isShowBack) {
-        super.setNavibarTitle(title, isShowBack);
-        ImageView mCollectView = (ImageView) mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.ic_add_wallet) {
-            @Override
-            public void performAction(View view) {
-                UISkipMananger.launchWalletManagement(EosHomeActivity.this);
-            }
-        });
-    }
-
-    @Override
     public int getLayoutId() {
         return R.layout.eos_fragment_wallet;
     }

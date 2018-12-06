@@ -17,11 +17,7 @@ import com.cybex.gma.client.ui.activity.BackUpWalletGuideActivity;
 import com.cybex.gma.client.ui.activity.BarcodeScanActivity;
 import com.cybex.gma.client.ui.activity.BluetoothBackupMneGuideActivity;
 import com.cybex.gma.client.ui.activity.BluetoothConfigWooKongBioActivity;
-import com.cybex.gma.client.ui.activity.BluetoothFPAndPasswordActivity;
 import com.cybex.gma.client.ui.activity.BluetoothPairActivity;
-import com.cybex.gma.client.ui.activity.BluetoothSettingFPActivity;
-import com.cybex.gma.client.ui.activity.BluetoothWalletDetailActivity;
-import com.cybex.gma.client.ui.activity.BluetoothWalletManageActivity;
 import com.cybex.gma.client.ui.activity.BuySellRamActivity;
 import com.cybex.gma.client.ui.activity.BluetoothCreatEosAccountActivity;
 import com.cybex.gma.client.ui.activity.CollectActivity;
@@ -36,7 +32,6 @@ import com.cybex.gma.client.ui.activity.GestureCreateActivity;
 import com.cybex.gma.client.ui.activity.GestureVerifyActivity;
 import com.cybex.gma.client.ui.activity.ImportWalletActivity;
 import com.cybex.gma.client.ui.activity.InitialActivity;
-import com.cybex.gma.client.ui.activity.ManageWalletActivity;
 import com.cybex.gma.client.ui.activity.ResourceDetailActivity;
 import com.cybex.gma.client.ui.activity.SecuritySettingActivity;
 import com.cybex.gma.client.ui.activity.SettingsActivity;
@@ -221,9 +216,9 @@ public final class UISkipMananger {
      *
      * @param mContext
      */
-    public static void launchWalletManagement(Activity mContext) {
-        launchIntent(mContext, ManageWalletActivity.class);
-    }
+//    public static void launchWalletManagement(Activity mContext) {
+//        launchIntent(mContext, ManageWalletActivity.class);
+//    }
 
     /**
      * 跳转到转账记录界面
@@ -346,9 +341,9 @@ public final class UISkipMananger {
      * @param context
      * @param bd
      */
-    public static void skipBluetoothWalletDetailActivity(Activity context, Bundle bd) {
-        launchIntent(context, BluetoothWalletDetailActivity.class, bd);
-    }
+//    public static void skipBluetoothWalletDetailActivity(Activity context, Bundle bd) {
+//        launchIntent(context, BluetoothWalletDetailActivity.class, bd);
+//    }
 
     /**
      * 跳转到蓝牙钱包管理界面
@@ -356,9 +351,9 @@ public final class UISkipMananger {
      * @param context
      * @param bd
      */
-    public static void skipBluetoothWalletManageActivity(Activity context, Bundle bd) {
-        launchIntent(context, BluetoothWalletManageActivity.class, bd);
-    }
+//    public static void skipBluetoothWalletManageActivity(Activity context, Bundle bd) {
+//        launchIntent(context, BluetoothWalletManageActivity.class, bd);
+//    }
 
     /**
      * 跳转到助记词
@@ -376,18 +371,18 @@ public final class UISkipMananger {
      * @param context
      * @param bd
      */
-    public static void skipBluetoothSettingFPActivity(Activity context, Bundle bd) {
-        launchIntent(context, BluetoothSettingFPActivity.class, bd);
-    }
+//    public static void skipBluetoothSettingFPActivity(Activity context, Bundle bd) {
+//        launchIntent(context, BluetoothSettingFPActivity.class, bd);
+//    }
 
     /**
      * 跳转到管理指纹和密码窗口
      *
      * @param context
      */
-    public static void skipBluetoothFPAndPasswordActivity(Activity context) {
-        launchIntent(context, BluetoothFPAndPasswordActivity.class);
-    }
+//    public static void skipBluetoothFPAndPasswordActivity(Activity context) {
+//        launchIntent(context, BluetoothFPAndPasswordActivity.class);
+//    }
 
 
     /**

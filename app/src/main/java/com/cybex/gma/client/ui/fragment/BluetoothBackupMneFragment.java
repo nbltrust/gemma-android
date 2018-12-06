@@ -11,14 +11,10 @@ import android.widget.TextView;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.manager.WookongBioManager;
-import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.base.view.flowlayout.FlowLayout;
 import com.cybex.base.view.flowlayout.TagAdapter;
 import com.cybex.base.view.flowlayout.TagFlowLayout;
-import com.cybex.gma.client.widget.LabelsView;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 

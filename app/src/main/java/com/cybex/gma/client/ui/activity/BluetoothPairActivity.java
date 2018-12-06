@@ -24,22 +24,9 @@ import com.cybex.componentservice.manager.PermissionManager;
 import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
 import com.cybex.componentservice.utils.listener.PermissionResultListener;
 import com.cybex.gma.client.R;
-import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.event.ContextHandleEvent;
-import com.cybex.gma.client.job.BluetoothConnectKeepJob;
-import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.dialog.WookongScanDialog;
-import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.cybex.gma.client.ui.presenter.BluetoothPairPresenter;
-import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
-import com.extropies.common.MiddlewareInterface;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
-import com.hxlx.core.lib.mvp.lite.XActivity;
-import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.SPUtils;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
-import com.siberiadante.customdialoglib.CustomFullDialog;
-import com.yanzhenjie.permission.AndPermission;
+
 import com.yanzhenjie.permission.Permission;
 
 import org.greenrobot.eventbus.Subscribe;

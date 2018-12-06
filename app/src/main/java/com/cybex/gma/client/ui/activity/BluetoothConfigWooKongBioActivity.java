@@ -30,8 +30,6 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.presenter.BluetoothConfigWookongBioPresenter;
-import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
-import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -90,7 +88,6 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
     @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
     private Validator validator;
     private boolean isMask;
-    private BlueToothWrapper blueToothThread;
     private String TAG = this.toString();
     private String deviceName;
 

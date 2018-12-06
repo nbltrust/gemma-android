@@ -6,7 +6,6 @@ import android.view.WindowManager;
 
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.fragment.EosTokenTransferFragment;
-import com.cybex.gma.client.ui.fragment.TransferFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
@@ -21,11 +20,12 @@ public class TransferActivity extends XActivity {
             if (findFragment(EosTokenTransferFragment.class) == null) {
                 loadRootFragment(R.id.fl_container_transfer, EosTokenTransferFragment.newInstance(bd));
             }
-        }else {
-            if (findFragment(TransferFragment.class) == null) {
-                loadRootFragment(R.id.fl_container_transfer, TransferFragment.newInstance());
-            }
         }
+//        else {
+//            if (findFragment(TransferFragment.class) == null) {
+//                loadRootFragment(R.id.fl_container_transfer, TransferFragment.newInstance());
+//            }
+//        }
 
         //让布局向上移来显示软键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
