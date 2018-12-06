@@ -488,17 +488,15 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
 
     @Override
     public void onDestroyView() {
-//        DeviceOperationManager.getInstance().clearCallback(this.toString());
         super.onDestroyView();
         unbinder.unbind();
-//        if (mHandler != null){
-//            WookongBioManager.getInstance().freeThread();
-//            WookongBioManager.getInstance().freeResource();
-//            mHandler.removeCallbacksAndMessages(null);
-//        }
-
     }
 
+    @Override
+    public void onDestroy() {
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
+        super.onDestroy();
+    }
 
     /**
      * 获取秘钥相关逻辑
