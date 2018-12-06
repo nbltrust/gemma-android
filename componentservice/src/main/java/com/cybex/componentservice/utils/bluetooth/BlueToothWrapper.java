@@ -71,6 +71,8 @@ public class BlueToothWrapper extends Thread {
     public static final int ABORT_SIGN_WRAPPER = 49;
     public static final int SET_TX_WRAPPER = 50;
     public static final int GET_SIGN_RESULT_WRAPPER = 51;
+    public static final int ABORT_BUTTON_WRAPPER = 52;
+    public static final int GET_BATTERY_VALUE_WRAPPER = 53;
 
     //messages
     public static final int MSG_INIT_START = 0;
@@ -490,6 +492,18 @@ public class BlueToothWrapper extends Thread {
         }
         public int getReturnValue() { return m_returnValue; }
         public byte[] getSerializeData() { return m_serializeData; }
+    }
+
+    public static class GetBatteryReturnValue {
+        private int m_returnValue;
+        private byte[] m_batteryValue;
+
+        GetBatteryReturnValue(int returnValue, byte[] batteryValue) {
+            m_returnValue = returnValue;
+            m_batteryValue = batteryValue;
+        }
+        public int getReturnValue() { return m_returnValue; }
+        public byte[] getBatteryValue() { return m_batteryValue; }
     }
 
     private CommonUtility.enumCallback m_enumCallback = new CommonUtility.enumCallback() {
@@ -1358,6 +1372,24 @@ public class BlueToothWrapper extends Thread {
     }
 
 
+    public boolean setAbortButtonWrapper(long contextHandle, int devIndex) {
+        m_wrapperType = ABORT_BUTTON_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+
+        return true;
+    }
+
+    boolean setGetBatteryValueWrapper(long contextHandle, int devIndex) {
+        m_wrapperType = GET_BATTERY_VALUE_WRAPPER;
+
+        m_contextHandle = contextHandle;
+        m_devIndex = devIndex;
+        return true;
+    }
+
+
     //////////////////////////////////////////////////////////////////////////////////
     private int sendCmd() {
         Message msg;
@@ -1485,6 +1517,9 @@ public class BlueToothWrapper extends Thread {
 
         byte[] serializeData;
         int[] serializeDataLen;
+
+        byte[] batteryValue;
+        int[] batteryValueLen;
 
         switch (m_wrapperType) {
             case INIT_WRAPPER:
@@ -2430,6 +2465,50 @@ public class BlueToothWrapper extends Thread {
                 msg.what = MSG_GET_SIGN_RESULT_FINISH;
                 msg.arg1 = iRtn;
                 msg.obj = new SignReturnValue(iRtn, m_coinType, signature, sigLen[0]);
+                msg.sendToTarget();
+                break;
+
+
+            case ABORT_BUTTON_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_ABORT_BUTTON_START;
+                msg.sendToTarget();
+
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    m_bAborting = true;
+                    m_commonLock.lock();
+                    iRtn = MiddlewareInterface.abortButton(m_contextHandle, m_devIndex);
+                    m_bAborting = false;
+                    m_commonLock.unlock();
+                }
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_ABORT_BUTTON_FINISH;
+                msg.arg1 = iRtn;
+                msg.sendToTarget();
+                break;
+
+            case GET_BATTERY_VALUE_WRAPPER:
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_GET_BATTERY_VALUE_START;
+                msg.sendToTarget();
+
+                batteryValueLen = new int[1];
+                batteryValue = new byte[2];
+
+                m_commonLock.lock();
+                if (m_contextHandle == 0) {
+                    iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
+                } else {
+                    iRtn = MiddlewareInterface.getBatteryValue(m_contextHandle, m_devIndex, batteryValue, batteryValueLen);
+                }
+                m_commonLock.unlock();
+
+                msg = m_mainHandler.obtainMessage();
+                msg.what = MSG_GET_BATTERY_VALUE_FINISH;
+                msg.obj= new GetBatteryReturnValue(iRtn, batteryValue);
                 msg.sendToTarget();
                 break;
         }

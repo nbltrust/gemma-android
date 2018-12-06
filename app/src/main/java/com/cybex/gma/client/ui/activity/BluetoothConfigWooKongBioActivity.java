@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
@@ -573,47 +575,42 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
                                 new WookongUtils.ValidatePowerLevelCallback() {
                                     @Override
                                     public void onValidateSuccess() {
-                                        //按键验证
-                                        DeviceOperationManager.getInstance().pressConfirm(
-                                                TAG,
-                                                deviceName,
-                                                new DeviceOperationManager.PressConfirmCallback() {
-                                                    @Override
-                                                    public void onConfirmSuccess() {
-                                                        //init PIN
-                                                        String password = String.valueOf(edtSetPass.getText());
-                                                        String passwordHint = String.valueOf(edtPassHint.getText());
+                                        //init PIN
+                                        String password = String.valueOf(edtSetPass.getText());
+                                        String passwordHint = String.valueOf(edtPassHint.getText());
 
-                                                        String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+                                        String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+                                        isInitingPin=true;
+                                        DeviceOperationManager.getInstance()
+                                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
+                                                        new DeviceOperationManager.InitPinCallback() {
+                                                            @Override
+                                                            public void onInitSuccess() {
+                                                                isInitingPin=false;
+                                                                dissmisProgressDialog();
+                                                                UISkipMananger.skipBackupMneGuideActivity(
+                                                                        BluetoothConfigWooKongBioActivity.this,
+                                                                        null);
+                                                                finish();
+                                                            }
 
-                                                        DeviceOperationManager.getInstance()
-                                                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
-                                                                        new DeviceOperationManager.InitPinCallback() {
-                                                                            @Override
-                                                                            public void onInitSuccess() {
-                                                                                dissmisProgressDialog();
-                                                                                UISkipMananger.skipBackupMneGuideActivity(
-                                                                                        BluetoothConfigWooKongBioActivity.this,
-                                                                                        null);
-                                                                                finish();
-                                                                            }
+                                                            @Override
+                                                            public void onInitUpdate(int state) {
+                                                                dissmisProgressDialog();
+                                                                showButtonConfirmDialog();
+                                                            }
 
-                                                                            @Override
-                                                                            public void onInitFail() {
-                                                                                dissmisProgressDialog();
-                                                                                GemmaToastUtils.showLongToast(
-                                                                                        getString(R.string.wookong_init_pin_fail));
-
-                                                                            }
-                                                                        });
-                                                    }
-
-                                                    @Override
-                                                    public void onConfirmFailed() {
-                                                        dissmisProgressDialog();
-                                                    }
-                                                }
-                                        );
+                                                            @Override
+                                                            public void onInitFail() {
+                                                                isInitingPin=false;
+                                                                if(powerPressDialog!=null&&powerPressDialog.isShowing()){
+                                                                    powerPressDialog.cancel();
+                                                                }
+                                                                dissmisProgressDialog();
+                                                                GemmaToastUtils.showLongToast(
+                                                                        getString(R.string.wookong_init_pin_fail));
+                                                            }
+                                                        });
                                     }
 
                                     @Override
@@ -633,44 +630,44 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
                                 new WookongUtils.ValidatePowerLevelCallback() {
                                     @Override
                                     public void onValidateSuccess() {
-                                        //按键确认
-                                        DeviceOperationManager.getInstance().pressConfirm(TAG, deviceName,
-                                                new DeviceOperationManager.PressConfirmCallback() {
-                                                    @Override
-                                                    public void onConfirmSuccess() {
-                                                        //init PIN
-                                                        String password = String.valueOf(edtSetPass.getText());
-                                                        String passwordHint = String.valueOf(edtPassHint.getText());
+                                        //init PIN
+                                        String password = String.valueOf(edtSetPass.getText());
+                                        String passwordHint = String.valueOf(edtPassHint.getText());
 
-                                                        String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
-                                                        DeviceOperationManager.getInstance()
-                                                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
-                                                                        new DeviceOperationManager.InitPinCallback() {
-                                                                            @Override
-                                                                            public void onInitSuccess() {
-                                                                                //跳转到创建账户名界面
-                                                                                dissmisProgressDialog();
-                                                                                dialog.cancel();
-                                                                                Intent intent = new Intent(BluetoothConfigWooKongBioActivity.this,
-                                                                                        BluetoothImportWalletActivity.class);
-                                                                                startActivity(intent);
-                                                                                finish();
-                                                                            }
+                                        String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
+                                        isInitingPin=true;
+                                        DeviceOperationManager.getInstance()
+                                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
+                                                        new DeviceOperationManager.InitPinCallback() {
+                                                            @Override
+                                                            public void onInitSuccess() {
+                                                                isInitingPin=false;
+                                                                //跳转到创建账户名界面
+                                                                dissmisProgressDialog();
+                                                                dialog.cancel();
+                                                                Intent intent = new Intent(BluetoothConfigWooKongBioActivity.this,
+                                                                        BluetoothImportWalletActivity.class);
+                                                                startActivity(intent);
+                                                                finish();
+                                                            }
 
-                                                                            @Override
-                                                                            public void onInitFail() {
-                                                                                dissmisProgressDialog();
-                                                                                GemmaToastUtils.showLongToast(
-                                                                                        getString(R.string.wookong_init_pin_fail));
-                                                                            }
-                                                                        });
-                                                    }
+                                                            @Override
+                                                            public void onInitUpdate(int state) {
+                                                                dissmisProgressDialog();
+                                                                showButtonConfirmDialog();
+                                                            }
 
-                                                    @Override
-                                                    public void onConfirmFailed() {
-                                                        dissmisProgressDialog();
-                                                    }
-                                                });
+                                                            @Override
+                                                            public void onInitFail() {
+                                                                isInitingPin=false;
+                                                                if(powerPressDialog!=null&&powerPressDialog.isShowing()){
+                                                                    powerPressDialog.dismiss();
+                                                                }
+                                                                dissmisProgressDialog();
+                                                                GemmaToastUtils.showLongToast(
+                                                                        getString(R.string.wookong_init_pin_fail));
+                                                            }
+                                                        });
                                     }
 
                                     @Override
@@ -687,6 +684,49 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
             }
         });
         dialog.show();
+    }
+
+
+    CustomFullDialog powerPressDialog;
+    boolean isInitingPin;
+
+    /**
+     * 显示按键确认dialog
+     */
+    private synchronized void showButtonConfirmDialog() {
+        if (powerPressDialog != null) {
+            if(!powerPressDialog.isShowing()&&isInitingPin){
+                powerPressDialog.show();
+            }
+            return;
+        }
+        int[] listenedItems = {R.id.imv_back};
+        powerPressDialog = new CustomFullDialog(this,
+                R.layout.baseservice_dialog_bluetooth_button_confirm, listenedItems, false, Gravity.BOTTOM);
+        powerPressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(isInitingPin){
+                    isInitingPin=false;
+                    DeviceOperationManager.getInstance().abortButton(BluetoothConfigWooKongBioActivity.this.toString(),deviceName);
+                }
+            }
+        });
+        powerPressDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                switch (view.getId()) {
+                    case R.id.imv_back:
+                         powerPressDialog.cancel();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        powerPressDialog.show();
+        TextView tvTip = powerPressDialog.getAllView().findViewById(com.cybex.walletmanagement.R.id.tv_tip);
+        tvTip.setText(getString(R.string.baseservice_hint_button_confirm_init_pin));
     }
 
     /**

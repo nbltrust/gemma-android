@@ -927,6 +927,11 @@ public class WookongScanDialog extends Dialog {
                         }
 
                         @Override
+                        public void onFormatUpdate(int state) {
+
+                        }
+
+                        @Override
                         public void onFormatFailed() {
                             activity.dissmisProgressDialog();
                         }

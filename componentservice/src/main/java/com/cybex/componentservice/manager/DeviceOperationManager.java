@@ -526,6 +526,44 @@ public class DeviceOperationManager {
     }
 
 
+    public void abortButton(String tag,String deviceName) {
+        abortButton(tag,deviceName,null);
+    }
+
+    public void abortButton(String tag,String deviceName,AbortButtonCallback abortButtonCallback) {
+        if (!isDeviceConnectted(deviceName)) {
+            if(abortButtonCallback!=null)
+                abortButtonCallback.onAbortFail();
+            return;
+        }
+
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (deviceCallbacks == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.abortButtonCallback = abortButtonCallback;
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        LoggerManager.d("abortButton currentDeviceName=" + currentDeviceName + "    deviceName=" + deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+
+        if ((deviceComm.abortButtonThread == null) || (deviceComm.abortButtonThread.getState()
+                == Thread.State.TERMINATED)) {
+            deviceComm.abortButtonThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+            deviceComm.abortButtonThread.setAbortButtonWrapper(deviceComm.contextHandle,
+                    0);
+            deviceComm.abortButtonThread.start();
+        }
+    }
+
+
 
 
 
@@ -1187,6 +1225,8 @@ public class DeviceOperationManager {
 
         void onFormatSuccess();
 
+        void onFormatUpdate(int state);
+
         void onFormatFailed();
     }
 
@@ -1254,6 +1294,8 @@ public class DeviceOperationManager {
 
         void onInitSuccess();
 
+        void onInitUpdate(int state);
+
         void onInitFail();
     }
 
@@ -1273,10 +1315,19 @@ public class DeviceOperationManager {
         void onAbortFail();
     }
 
+    public interface AbortButtonCallback {
+
+        void onAbortSuccess();
+
+        void onAbortFail();
+    }
+
 
     public interface ChangePinCallback {
 
         void onChangePinSuccess();
+
+        void onChangePinUpdate(int state);
 
         void onChangePinFail();
     }
@@ -1366,6 +1417,14 @@ public class DeviceOperationManager {
         void onAbortSignSuccess();
 
         void onAbortSignFail();
+
+
+    }
+
+    public interface GetBatteryCallback {
+        void onSuccess(byte[] value);
+
+        void onFail();
     }
 
 
@@ -1547,6 +1606,17 @@ public class DeviceOperationManager {
                 case BlueToothWrapper.MSG_INIT_PIN_START:
                     LoggerManager.d("MSG_INIT_PIN_START");
                     //设置PIN
+                    break;
+
+                case BlueToothWrapper.MSG_INIT_PIN_UPDATE:
+                    LoggerManager.d("MSG_INIT_PIN_UPDATE status="+MiddlewareInterface.getReturnString(msg.arg1));
+                    iterator = tags.iterator();
+                    while (iterator.hasNext()) {
+                        String tag = iterator.next();
+                        if (callbackMaps.get(tag).initPinCallback != null) {
+                            callbackMaps.get(tag).initPinCallback.onInitUpdate(msg.arg1);
+                        }
+                    }
                     break;
                 case BlueToothWrapper.MSG_INIT_PIN_FINISH:
                     LoggerManager.d("MSG_INIT_PIN_FINISH status=" + MiddlewareInterface.getReturnString(msg.arg1));
@@ -1831,19 +1901,39 @@ public class DeviceOperationManager {
                         }
                     }
                     break;
-                case BlueToothWrapper.MSG_FORMAT_DEVICE_FINISH:
-                    LoggerManager.d("MSG_FORMAT_DEVICE_FINISH");
-//                    BlueToothWrapper.GetDevInfoReturnValue reValue = (BlueToothWrapper.GetDevInfoReturnValue) msg.obj;
-
-                    //格式化完成
+                case BlueToothWrapper.MSG_FORMAT_DEVICE_UPDATE:
+                    LoggerManager.d("MSG_FORMAT_DEVICE_UPDATE  state=" + MiddlewareInterface.getReturnString(msg.arg1));
+                    //格式化开始
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
                         if (callbackMaps.get(tag).formatCallback != null) {
-                            callbackMaps.get(tag).formatCallback.onFormatSuccess();
+                            callbackMaps.get(tag).formatCallback.onFormatUpdate(msg.arg1);
                         }
                     }
-                    //断开连接
+                    break;
+                case BlueToothWrapper.MSG_FORMAT_DEVICE_FINISH:
+                    LoggerManager.d(
+                            "MSG_FORMAT_DEVICE_FINISH  state=" + MiddlewareInterface.getReturnString(msg.arg1));
+                    if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        //格式化完成
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).formatCallback != null) {
+                                callbackMaps.get(tag).formatCallback.onFormatSuccess();
+                            }
+                        }
+                    } else {
+                        //格式化完成
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).formatCallback != null) {
+                                callbackMaps.get(tag).formatCallback.onFormatFailed();
+                            }
+                        }
+                    }
                     break;
 
 
@@ -1915,6 +2005,19 @@ public class DeviceOperationManager {
                     }
                     break;
 
+
+
+                case BlueToothWrapper.MSG_CHANGE_PIN_UPDATE:
+                    LoggerManager.d(
+                            "MSG_CHANGE_PIN_UPDATE  state=" + MiddlewareInterface.getReturnString(msg.arg1));
+                    iterator = tags.iterator();
+                    while (iterator.hasNext()) {
+                        String tag = iterator.next();
+                        if (callbackMaps.get(tag).changePinCallback != null) {
+                            callbackMaps.get(tag).changePinCallback.onChangePinUpdate(msg.arg1);
+                        }
+                    }
+                    break;
 
                 //MSG_CHANGE_PIN_FINISH
                 case BlueToothWrapper.MSG_CHANGE_PIN_FINISH:
@@ -2478,6 +2581,52 @@ public class DeviceOperationManager {
                             "MSG_ABORT_SIGN_FINISH  ");
                     break;
 
+
+                case BlueToothWrapper.MSG_ABORT_BUTTON_FINISH:
+                    LoggerManager.d(
+                            "MSG_ABORT_BUTTON_FINISH  state=" + MiddlewareInterface.getReturnString(msg.arg1));
+                    if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).abortButtonCallback != null) {
+                                callbackMaps.get(tag).abortButtonCallback.onAbortSuccess();
+                            }
+                        }
+                    } else {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).abortButtonCallback != null) {
+                                callbackMaps.get(tag).abortButtonCallback.onAbortFail();
+                            }
+                        }
+                    }
+                    break;
+
+                case BlueToothWrapper.MSG_GET_BATTERY_VALUE_FINISH:
+                    BlueToothWrapper.GetBatteryReturnValue batteryReturnValue = (BlueToothWrapper.GetBatteryReturnValue)msg.obj;
+                    LoggerManager.d(
+                            "MSG_GET_BATTERY_VALUE_FINISH  state=" + MiddlewareInterface.getReturnString(batteryReturnValue.getReturnValue()));
+                    if (batteryReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).getBatteryCallback != null) {
+                                callbackMaps.get(tag).getBatteryCallback.onSuccess(batteryReturnValue.getBatteryValue());
+                            }
+                        }
+                    } else {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag).getBatteryCallback != null) {
+                                callbackMaps.get(tag).getBatteryCallback.onFail();
+                            }
+                        }
+                    }
+                    break;
+
                 default:
                     break;
             }
@@ -2505,6 +2654,7 @@ public class DeviceOperationManager {
         BlueToothWrapper freeContextThread;
         BlueToothWrapper enrollFPThread;
         BlueToothWrapper abortEnrollFPThread;
+        BlueToothWrapper abortButtonThread;
         BlueToothWrapper jsonSerializeThread;
         BlueToothWrapper initPinThread;
         BlueToothWrapper verifyPinThread;
@@ -2546,6 +2696,7 @@ public class DeviceOperationManager {
         InitPinCallback initPinCallback;
         VerifyPinCallback verifyPinCallback;
         AbortFPCallback abortFPCallback;
+        AbortButtonCallback abortButtonCallback;
         ChangePinCallback changePinCallback;
         GenerateMnemonicCallback generateMnemonicCallback;
         CheckMnemonicCallback checkMnemonicCallback;
@@ -2560,7 +2711,7 @@ public class DeviceOperationManager {
         SwitchSignCallback switchSignCallback;
         VerifySignPinCallback verifySignPinCallback;
         AbortSignCallback abortSignCallback;
-
+        GetBatteryCallback getBatteryCallback;
     }
 
 

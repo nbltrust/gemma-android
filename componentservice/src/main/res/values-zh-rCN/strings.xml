@@ -16,6 +16,8 @@
     <string name="baseservice_resume">Resume</string>
     <string name="baseservice_cancel">Cancel</string>
     <string name="baseservice_format">格式化</string>
+    <string name="baseservice_hint_button_confirm_init_pin">请在WOOKONG Bio上按键以确认初始化</string>
+    <string name="baseservice_hint_button_confirm_change_psw">请在WOOKONG Bio上按键以确认修改密码</string>
 
 
 </resources>

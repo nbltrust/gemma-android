@@ -220,6 +220,11 @@ public class WookongBioPswValidateHelper {
                         }
 
                         @Override
+                        public void onFormatUpdate(int state) {
+
+                        }
+
+                        @Override
                         public void onFormatFailed() {
                             if(activity instanceof XActivity){
                                 ((XActivity) activity).dissmisProgressDialog();
