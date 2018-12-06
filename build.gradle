@@ -17,7 +17,6 @@ buildscript {
         maven {
             url uri('./repo')
         }
-        maven { url 'https://maven.fabric.io/public' }
     }
 
     dependencies {
@@ -26,7 +25,6 @@ buildscript {
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.mrzhang.andcomponent:build-gradle:0.0.2'
-        classpath 'io.fabric.tools:gradle:1.+'
 //        classpath deps.arouter.register
 
 
@@ -50,7 +48,6 @@ allprojects {
         maven {
             url uri('./repo')
         }
-        maven { url 'https://maven.fabric.io/public' }
     }
 }
 

@@ -2,7 +2,6 @@ apply plugin: 'com.dd.comgradle'
 apply from: '../config/properties-util.gradle'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'io.fabric'
 
 if (!rootProject.optimizeForDevelopment) {
     apply from: '../gradle/plugins/checkstyle-android.gradle'
@@ -209,11 +208,6 @@ android {
 }
 
 
-crashlytics {
-    enableNdk true
-}
-
-
 dependencies {
     configurations.all {
         resolutionStrategy.force deps.support.design
@@ -259,14 +253,10 @@ dependencies {
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
-    // Crashlytics Kit
-//    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.6'
-    // NDK Kit
-//    implementation 'com.crashlytics.sdk.android:crashlytics-ndk:2.0.5'
+//    implementation('com.crashlytics.sdk.android:crashlytics:2.9.7@aar') {
+//        transitive = true;
+//    }
 
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.7@aar') {
-        transitive = true;
-    }
 
 
 }

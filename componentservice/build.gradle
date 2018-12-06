@@ -131,5 +131,8 @@ dependencies {
     api (name: 'bluetoothlib-release-1130', ext: 'aar')
     api 'me.codeboy.android:align-text-view:2.3.2'
     api 'de.hdodenhof:circleimageview:2.2.0'
+    api 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.1.5
+    api 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+
 
 }

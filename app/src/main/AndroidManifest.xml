@@ -30,6 +30,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
+
+
+
     <application
         android:name=".GmaApplication"
         android:allowBackup="true"
@@ -379,11 +382,20 @@
             android:name="design_height_in_dp"
             android:value="640"/>
 
-        <!--fabric crash-->
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="ad1bae7799daed7def3ecc7e9267ff85bfeb3349"
-            />
+
+        <!-- bugly 配置APP ID -->
+        <!--<meta-data-->
+            <!--android:name="BUGLY_APPID"-->
+            <!--android:value="7bf15261-e95a-4bba-b8b5-fc3a64043dc6" /> &lt;!&ndash; 配置APP版本号 &ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="BUGLY_APP_VERSION"-->
+            <!--android:value="internal" /> &lt;!&ndash; 配置APP渠道号 &ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="BUGLY_APP_CHANNEL"-->
+            <!--android:value="true" /> &lt;!&ndash; 配置Bugly调试模式(true或者false)&ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="BUGLY_ENABLE_DEBUG"-->
+            <!--android:value="true" />-->
 
 
     </application>
