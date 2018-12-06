@@ -191,6 +191,17 @@ public class BlueToothWrapper extends Thread {
     public static final int MSG_GET_SIGN_RESULT_UPDATE = 105;
     public static final int MSG_GET_SIGN_RESULT_FINISH = 106;
 
+    public static final int MSG_CHANGE_PIN_UPDATE = 107;
+    public static final int MSG_FORMAT_DEVICE_UPDATE = 108;
+    public static final int MSG_GET_ADDRESS_UPDATE = 109;
+
+    public static final int MSG_ABORT_BUTTON_START = 110;
+    public static final int MSG_ABORT_BUTTON_FINISH = 111;
+
+    public static final int MSG_GET_BATTERY_VALUE_START = 112;
+    public static final int MSG_GET_BATTERY_VALUE_FINISH = 113;
+
+
     private static Map<String, Object> m_listCommLock;
     private Object m_objCommLock;
 
@@ -1835,7 +1846,7 @@ public class BlueToothWrapper extends Thread {
                 if (m_contextHandle == 0) {
                     iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
                 } else {
-                    iRtn = MiddlewareInterface.initPIN(m_contextHandle, m_devIndex, m_strPIN,m_putStateCallback);
+                    iRtn = MiddlewareInterface.initPIN(m_contextHandle, m_devIndex, m_strPIN,m_putStateCallback_initPIN);
                 }
                 m_commonLock.unlock();
 
@@ -1853,7 +1864,7 @@ public class BlueToothWrapper extends Thread {
                 if (m_contextHandle == 0) {
                     iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
                 } else {
-                    iRtn = MiddlewareInterface.changePIN(m_contextHandle, m_devIndex, m_strPIN, m_strNewPIN);
+                    iRtn = MiddlewareInterface.changePIN(m_contextHandle, m_devIndex, m_strPIN, m_strNewPIN,m_putStateCallback_changePIN);
                 }
                 m_commonLock.unlock();
 
@@ -1943,7 +1954,7 @@ public class BlueToothWrapper extends Thread {
                             MiddlewareInterface.PAEW_COIN_TYPE_ETH, m_derivePath);
                     if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex,
-                                MiddlewareInterface.PAEW_COIN_TYPE_ETH, false, strAddress);
+                                MiddlewareInterface.PAEW_COIN_TYPE_ETH, false, strAddress, m_putStateCallback_getTradeAddress);
                         if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                             showGetAuthDialog();
 
@@ -1977,7 +1988,7 @@ public class BlueToothWrapper extends Thread {
                     iRtn = MiddlewareInterface.deriveTradeAddress(m_contextHandle, m_devIndex, MiddlewareInterface.PAEW_COIN_TYPE_EOS, m_derivePath);
                     if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex,
-                                MiddlewareInterface.PAEW_COIN_TYPE_EOS, false, strAddress);
+                                MiddlewareInterface.PAEW_COIN_TYPE_EOS, false, strAddress, m_putStateCallback_getTradeAddress);
                         if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                             showGetAuthDialog();
                             signature = new byte[MiddlewareInterface.PAEW_EOS_SIG_MAX_LEN];
@@ -2011,7 +2022,7 @@ public class BlueToothWrapper extends Thread {
                             MiddlewareInterface.PAEW_COIN_TYPE_CYB, m_derivePath);
                     if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex,
-                                MiddlewareInterface.PAEW_COIN_TYPE_CYB, false, strAddress);
+                                MiddlewareInterface.PAEW_COIN_TYPE_CYB, false, strAddress, m_putStateCallback_getTradeAddress);
                         if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                             showGetAuthDialog();
 
@@ -2038,7 +2049,7 @@ public class BlueToothWrapper extends Thread {
                 if (m_contextHandle == 0) {
                     iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
                 } else {
-                    iRtn = MiddlewareInterface.formatDevice(m_contextHandle, m_devIndex);
+                    iRtn = MiddlewareInterface.formatDevice(m_contextHandle, m_devIndex, m_putStateCallback_formatDevice);
                 }
                 m_commonLock.unlock();
 
@@ -2065,7 +2076,7 @@ public class BlueToothWrapper extends Thread {
                             m_derivePath);
                     if (iRtn == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iRtn = MiddlewareInterface.getTradeAddress(m_contextHandle, m_devIndex, m_coinType, false,
-                                strAddress);
+                                strAddress, m_putStateCallback_getTradeAddress);
                     }
                 }
                 m_commonLock.unlock();
@@ -2534,13 +2545,85 @@ public class BlueToothWrapper extends Thread {
 
 
 
-    private CommonUtility.putStateCallback m_putStateCallback = new CommonUtility.putStateCallback() {
+//    private CommonUtility.putStateCallback m_putStateCallback = new CommonUtility.putStateCallback() {
+//        @Override
+//        public void pushState(int nState) {
+//            Message msg;
+//
+//            msg = m_mainHandler.obtainMessage();
+//            msg.what = MSG_INIT_PIN_UPDATE;
+//            msg.arg1 = nState;
+//            msg.sendToTarget();
+//
+//            if (m_bAborting) {
+//                m_commonLock.unlock();
+//                while(m_bAborting);
+//                m_commonLock.lock();
+//            }
+//        }
+//    };
+
+    private CommonUtility.putStateCallback m_putStateCallback_initPIN = new CommonUtility.putStateCallback() {
         @Override
         public void pushState(int nState) {
             Message msg;
 
             msg = m_mainHandler.obtainMessage();
             msg.what = MSG_INIT_PIN_UPDATE;
+            msg.arg1 = nState;
+            msg.sendToTarget();
+
+            if (m_bAborting) {
+                m_commonLock.unlock();
+                while(m_bAborting);
+                m_commonLock.lock();
+            }
+        }
+    };
+
+    private CommonUtility.putStateCallback m_putStateCallback_changePIN = new CommonUtility.putStateCallback() {
+        @Override
+        public void pushState(int nState) {
+            Message msg;
+
+            msg = m_mainHandler.obtainMessage();
+            msg.what = MSG_CHANGE_PIN_UPDATE;
+            msg.arg1 = nState;
+            msg.sendToTarget();
+
+            if (m_bAborting) {
+                m_commonLock.unlock();
+                while(m_bAborting);
+                m_commonLock.lock();
+            }
+        }
+    };
+
+    private CommonUtility.putStateCallback m_putStateCallback_formatDevice = new CommonUtility.putStateCallback() {
+        @Override
+        public void pushState(int nState) {
+            Message msg;
+
+            msg = m_mainHandler.obtainMessage();
+            msg.what = MSG_FORMAT_DEVICE_UPDATE;
+            msg.arg1 = nState;
+            msg.sendToTarget();
+
+            if (m_bAborting) {
+                m_commonLock.unlock();
+                while(m_bAborting);
+                m_commonLock.lock();
+            }
+        }
+    };
+
+    private CommonUtility.putStateCallback m_putStateCallback_getTradeAddress = new CommonUtility.putStateCallback() {
+        @Override
+        public void pushState(int nState) {
+            Message msg;
+
+            msg = m_mainHandler.obtainMessage();
+            msg.what = MSG_GET_ADDRESS_UPDATE;
             msg.arg1 = nState;
             msg.sendToTarget();
 
