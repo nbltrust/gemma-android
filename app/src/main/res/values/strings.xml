@@ -366,6 +366,7 @@
     <string name="eos_load_avail_res_fail">获取可用资源失败，请检查网络或切换节点重试</string>
     <string name="eos_loading_account_info">正在获取账户信息</string>
     <string name="eos_load_account_info_fail">获取账户信息失败，请检查网络或切换节点重试</string>
+    <string name="eos_load_tokens_fail">获取EOS Tokens失败，请检查网络或切换节点重试</string>
     <string name="eos_not_enough_delegated_res">没有可以用于投票的资源，请先抵押资源</string>
     <string name="eos_loading_cur_ram_price">正在获取当前RAM估值</string>
     <string name="eos_load_cur_ram_price_fail">获取当前RAM价格失败，请检查网络或切换节点重试</string>
@@ -800,6 +801,7 @@
     <string name="status_sending">发送中...%1$s%</string>
     <string name="status_send_fail">发送失败</string>
     <string name="status_accept_fail">接收失败</string>
+    <string name="status_unknown">待查询</string>
 
     <!--eos home card-->
     <string name="card_eos_creating_progress">账户创建中...%1$d%%</string>
@@ -848,7 +850,8 @@
     <string name="tip_fp_sign_fail">指纹签名失败，请重新尝试</string>
     <string name="tip_set_tx_fail">在Bio上保存交易信息失败，请重新尝试</string>
     <string name="tip_pin_verify_fail">验证失败，请重新尝试</string>
-    <string name="tip_press_confirm_transfer">请在WOOKONG Bio上仔细对比转账信息，按指纹以确认转账。</string>
+    <string name="tip_press_fp_confirm_transfer">请在WOOKONG Bio上仔细对比转账信息，按指纹以确认转账。</string>
+    <string name="tip_press_confirm_transfer">请在WOOKONG Bio上仔细对比转账信息，按电源键以确认转账。</string>    
 
 
 </resources>

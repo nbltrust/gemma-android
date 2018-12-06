@@ -164,12 +164,21 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     GetEosTokensResult.ResultBean resultBean = response.getResult();
                                     List<TokenBean> tokens = resultBean.getTokens();
                                     //更新UI
-                                    getV().setEosTokens(tokens);
-                                    getV().updateEosTokensUI(tokens);
-
+                                    if (tokens != null){
+                                        getV().setEosTokens(tokens);
+                                        getV().updateEosTokensUI(tokens);
+                                    }else {
+                                        GemmaToastUtils.showShortToast(getV().getString(R.string.eos_load_tokens_fail));
+                                        getV().dissmisProgressDialog();
+                                    }
                                     requestUnitPrice();
-
+                                }else {
+                                    GemmaToastUtils.showShortToast(getV().getString(R.string.eos_load_tokens_fail));
+                                    getV().dissmisProgressDialog();
                                 }
+                            }else {
+                                GemmaToastUtils.showShortToast(getV().getString(R.string.eos_load_tokens_fail));
+                                getV().dissmisProgressDialog();
                             }
                         }
                     }

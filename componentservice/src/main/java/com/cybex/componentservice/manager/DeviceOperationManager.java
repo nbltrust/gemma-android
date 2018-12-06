@@ -1129,6 +1129,42 @@ public class DeviceOperationManager {
         }
     }
 
+    /**
+     * 在签名时断开的方法
+     */
+    public void abortSign(String tag, String deviceName, AbortSignCallback abortSignCallback){
+
+        if (!isDeviceConnectted(deviceName)) {
+            abortSignCallback.onAbortSignFail();
+            return;
+        }
+
+        DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
+        if (abortSignCallback == null) {
+            deviceCallbacks = new DeviceCallbacsBean();
+            callbackMaps.put(tag, deviceCallbacks);
+        }
+        deviceCallbacks.abortSignCallback = abortSignCallback;
+
+        DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm == null) {
+            deviceComm = new DeviceComm(deviceName);
+            deviceMaps.put(deviceName, deviceComm);
+        }
+        if (deviceComm.mDeviceHandler == null) {
+            deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
+        }
+
+        deviceComm.abortSignThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+        deviceComm.abortSignThread.setAbortSignWrapper(deviceComm.contextHandle,
+                0);
+        try {
+            queue.put(deviceComm.abortSignThread);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public interface DeviceConnectCallback {
 
         void onConnectStart();
@@ -1311,7 +1347,7 @@ public class DeviceOperationManager {
 
         void onGetSignResultFail(int status);
 
-        void onGetSignResultUpdate();
+        void onGetSignResultUpdate(int errCode);
     }
 
     public interface SwitchSignCallback{
@@ -1324,6 +1360,12 @@ public class DeviceOperationManager {
         void onVerifySuccess();
 
         void onVerifyFail();
+    }
+
+    public interface AbortSignCallback{
+        void onAbortSignSuccess();
+
+        void onAbortSignFail();
     }
 
 
@@ -2306,7 +2348,19 @@ public class DeviceOperationManager {
                     break;
                 case BlueToothWrapper.MSG_GET_SIGN_RESULT_UPDATE:
                     LoggerManager.d(
-                            "MSG_GET_SIGN_RESULT_UPDATE  ");
+                            "MSG_GET_SIGN_RESULT_UPDATE ",MiddlewareInterface.getReturnString(msg.arg1));
+                    BlueToothWrapper.SignReturnValue signUpdateReturnValue = (BlueToothWrapper.SignReturnValue)msg.obj;
+                    LoggerManager.d(
+                            "MSG_GET_SIGN_RESULT_FINISH retValue err code " + signUpdateReturnValue.getReturnValue());
+
+                    iterator = tags.iterator();
+                    while (iterator.hasNext()) {
+                        String tag = iterator.next();
+                        if (callbackMaps.get(tag).setGetSignResultCallback != null) {
+                            callbackMaps.get(tag).setGetSignResultCallback.onGetSignResultUpdate(msg.arg1);
+                        }
+                    }
+
                     break;
 
                 case BlueToothWrapper.MSG_GET_SIGN_RESULT_FINISH:
@@ -2420,6 +2474,8 @@ public class DeviceOperationManager {
                     }
                     break;
                 case BlueToothWrapper.MSG_ABORT_SIGN_FINISH:
+                    LoggerManager.d(
+                            "MSG_ABORT_SIGN_FINISH  ");
                     break;
 
                 default:
@@ -2465,6 +2521,7 @@ public class DeviceOperationManager {
         BlueToothWrapper getSignResultThread;
         BlueToothWrapper switchSignThread;
         BlueToothWrapper verifySignPinThread;
+        BlueToothWrapper abortSignThread;
         public boolean isFreeContexting;
 
 
@@ -2502,6 +2559,8 @@ public class DeviceOperationManager {
         SetGetSignResultCallback setGetSignResultCallback;
         SwitchSignCallback switchSignCallback;
         VerifySignPinCallback verifySignPinCallback;
+        AbortSignCallback abortSignCallback;
+
     }
 
 

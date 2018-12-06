@@ -39,6 +39,7 @@ import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
+import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
@@ -327,6 +328,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (hasFocus) {
+                            KeyboardUtils.showKeyBoard(getActivity(), etReceiverAccount);
                             etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
                             if (EmptyUtils.isEmpty(getCollectionAccount())) {
                                 tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
@@ -335,6 +337,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                 ivTransferAccountClear.setVisibility(View.VISIBLE);
                             }
                         } else {
+                            KeyboardUtils.hideSoftInput(getActivity(), etReceiverAccount);
                             etReceiverAccount.setTypeface(Typeface.DEFAULT);
                             ivTransferAccountClear.setVisibility(View.GONE);
                             validateButton();
@@ -382,11 +385,13 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (hasFocus) {
+                            KeyboardUtils.showKeyBoard(getActivity(), etNote);
                             etNote.setTypeface(Typeface.DEFAULT_BOLD);
                             if (EmptyUtils.isNotEmpty(getNote())) {
                                 ivTransferMemoClear.setVisibility(View.VISIBLE);
                             }
                         } else {
+                            KeyboardUtils.hideSoftInput(getActivity(), etNote);
                             etNote.setTypeface(Typeface.DEFAULT);
                             ivTransferMemoClear.setVisibility(View.GONE);
                         }
@@ -397,8 +402,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (hasFocus) {
+                            KeyboardUtils.showKeyBoard(getActivity(), etAmount);
                             etAmount.setTypeface(Typeface.DEFAULT_BOLD);
                         } else {
+                            KeyboardUtils.hideSoftInput(getActivity(), etAmount);
                             etAmount.setTypeface(Typeface.DEFAULT);
                         }
                     }
@@ -522,6 +529,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                 //软钱包
                                 showConfirmAuthoriDialog();
                             }
+                            dialog.cancel();
                             break;
                         default:
                             break;
@@ -729,31 +737,37 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onSetTxStart() {
 
-                    }
+                   }
 
                     @Override
                     public void onSetTxSuccess() {
-
+                        dissmisProgressDialog();
                         DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
                                 MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP,
                                 new DeviceOperationManager.SetGetSignResultCallback() {
                                     @Override
                                     public void onGetSignResultStart() {
-                                        showVerifyFPDialog();
+
                                     }
 
                                     @Override
                                     public void onGetSignResultSuccess(String strSignature) {
+
                                         //LoggerManager.d("Sign Success str Sig = " + strSignature);
                                         buildTransaction(strSignature);
-                                        verifyDialog.cancel();
+                                        if (verifyDialog != null && verifyDialog.isShowing()){
+                                            verifyDialog.cancel();
+                                        }
                                     }
 
                                     @Override
                                     public void onGetSignResultFail(int status) {
+
                                         if (status == BaseConst.STATUS_NO_VERIFY_COUNT){
                                             //没有指纹录入错误，调用PIN验证
-                                            verifyDialog.cancel();
+                                            if (verifyDialog != null && verifyDialog.isShowing()){
+                                                verifyDialog.cancel();
+                                            }
                                             showConfirmPINDialog();
                                         }else {
                                             //其他错误
@@ -763,8 +777,11 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                     }
 
                                     @Override
-                                    public void onGetSignResultUpdate() {
+                                    public void onGetSignResultUpdate(int errCode) {
 
+                                        if (!verifyDialog.isShowing()){
+                                            showVerifyFPDialog();
+                                        }
                                     }
                                 }
                         );
@@ -775,16 +792,15 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                     @Override
                     public void onSetTxFail() {
+                        dissmisProgressDialog();
                         AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.tip_set_tx_fail));
                     }
 
                 });
-
-
-
     }
 
     public void buildTransaction(String strSignature){
+        showProgressDialog(getString(R.string.eos_tip_transfer_trade_ing));
         List<String> signatures = new ArrayList<>();
         strSignature = strSignature.substring(0, strSignature.length() - 1);
         signatures.add(strSignature);
@@ -802,7 +818,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             LoggerManager.d("buildTransactionJson:" + buildTransactionJson);
 
             //执行Push Transaction 最后一步操作
-            dissmisProgressDialog();
             getP().pushTransaction(buildTransactionJson);
         }
     }
@@ -822,6 +837,20 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 switch (view.getId()) {
                     case R.id.imv_back:
                         verifyDialog.cancel();
+                        //abort sign
+                        DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
+                                new DeviceOperationManager.AbortSignCallback() {
+                                    @Override
+                                    public void onAbortSignSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onAbortSignFail() {
+
+                                    }
+                                });
+
                         break;
                     default:
                         break;
@@ -909,6 +938,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         TextView tv_password = dialog.findViewById(R.id.et_password);
                         String password = tv_password.getText().toString();
                         pinDialog.cancel();
+                        showProgressDialog(getString(R.string.operate_deal_ing));
                         DeviceOperationManager.getInstance().verifySignPin(TAG, deviceName, password,
                                 new DeviceOperationManager.VerifySignPinCallback() {
                                     @Override
@@ -918,6 +948,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                                 new DeviceOperationManager.SetGetSignResultCallback() {
                                                     @Override
                                                     public void onGetSignResultStart() {
+                                                        dissmisProgressDialog();
                                                         showPowerConfirmTransferDialog();
                                                         pinDialog.cancel();
                                                     }
@@ -936,7 +967,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                                     }
 
                                                     @Override
-                                                    public void onGetSignResultUpdate() {
+                                                    public void onGetSignResultUpdate(int errCode) {
 
                                                     }
                                                 });

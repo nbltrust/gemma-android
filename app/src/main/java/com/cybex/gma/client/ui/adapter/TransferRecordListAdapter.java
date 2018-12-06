@@ -89,6 +89,9 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
 
             ImageView iconArrow = helper.getView(R.id.imv_arrow);
             String account = "";
+
+
+
             if (!TextUtils.isEmpty(currentEosName)) {
                 if (item.sender.equals(currentEosName)||adapterPosition%2==0) {
                     //转出 -

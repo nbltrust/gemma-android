@@ -98,11 +98,9 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                             } else {
                                                 getV().loadMoreData(historyList);
                                                 //循环请求获取当前Transaction的BlockNum
-                                                for (TransferHistory curTransfer : historyList){
-                                                    getTransaction(curTransfer.trx_id);
-                                                }
-
-                                                getInfo();
+//                                                for (TransferHistory curTransfer : historyList){
+//                                                    getTransaction(curTransfer.trx_id);
+//                                                }
                                             }
                                         }
 
@@ -132,29 +130,6 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
         //return historyList;
     }
 
-    /**
-     * 重新组装数据
-     *
-     * @param lastPos
-     * @param historyList
-     * @return
-     */
-    private List<TransferHistory> buildNewData(int lastPos, List<TransferHistory> historyList) {
-        List<TransferHistory> newList = new ArrayList<>();
-//
-//        if (EmptyUtils.isEmpty(historyList)) {
-//            return newList;
-//        }
-//
-//        for (int i = 0; i < historyList.size(); i++) {
-//            TransferHistory history = historyList.get(i);
-//            history.last_pos = lastPos;
-//
-//            newList.add(history);
-//        }
-//
-        return newList;
-    }
 
     private void requestEosBalance() {
         MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
@@ -174,34 +149,30 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
+                            if (getV() != null) {
+                                if (response != null) {
+                                    String jsonStr = response.body();
+                                    //LoggerManager.d("response json:" + jsonStr);
 
-                            if (response != null) {
-                                String jsonStr = response.body();
-                                //LoggerManager.d("response json:" + jsonStr);
+                                    JSONArray array = new JSONArray(jsonStr);
+                                    if (array.length() > 0) {
+                                        String balance = array.optString(0);
+                                        if (EmptyUtils.isNotEmpty(balance) && EmptyUtils.isNotEmpty(getV())) {
 
-                                JSONArray array = new JSONArray(jsonStr);
-                                if (array.length() > 0) {
-                                    String balance = array.optString(0);
-                                    if (EmptyUtils.isNotEmpty(balance) && EmptyUtils.isNotEmpty(getV())) {
-                                        getV().showBalance(balance);
+                                            getV().showBalance(balance);
+                                            getInfo();
 
+                                        }
+                                    } else {
 
+                                        getV().showBalance("0.0000");
+                                        getInfo();
 
-
-
-
-
-                                        getV().showContent();
                                     }
                                 } else {
-                                    getV().showBalance("0.0000");
-                                    getV().showContent();
+                                    getV().showEmptyOrFinish();
                                 }
-                            } else {
-                                getV().showEmptyOrFinish();
                             }
-
-
                         } catch (Throwable t) {
                             throw Exceptions.propagate(t);
                         }
@@ -239,7 +210,8 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                                 && token.getCode().equals(token_contract)) {
                                             String tokenBalance = String.valueOf(token.getBalance());
                                             getV().showBalance(tokenBalance);
-                                            getV().showContent();
+                                            getInfo();
+//                                            getV().showContent();
                                         }
                                     }
                                 } else {
@@ -267,65 +239,65 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
     }
 
 
-
     /**
      * @return 返回block_num
      */
 
     public void getTransaction(String txId) {
+        LoggerManager.d("Transaction id", txId);
         GetTransactionReqParams reqParams = new GetTransactionReqParams();
-            reqParams.setid(txId);
-            String jsonParams = GsonUtils.objectToJson(reqParams);
-            new GetTransactionRequest(String.class)
-                    .setJsonParams(jsonParams)
-                    .getInfo(new StringCallback() {
-                        @Override
-                        public void onSuccess(Response<String> response) {
-                            if (response != null && response.body() != null) {
-                                String infoJson = response.body();
-                                try {
-                                    JSONObject obj = new JSONObject(infoJson);
-                                    if (obj != null) {
-                                        String block_num = obj.optString("block_num");
-                                        LoggerManager.d("block_num", block_num);
-                                        //存入数据库
+        reqParams.setid(txId);
+        String jsonParams = GsonUtils.objectToJson(reqParams);
+        new GetTransactionRequest(String.class)
+                .setJsonParams(jsonParams)
+                .getInfo(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        if (response != null && response.body() != null) {
+                            String infoJson = response.body();
+                            try {
+                                JSONObject obj = new JSONObject(infoJson);
+                                if (obj != null) {
+                                    String block_num = obj.optString("block_num");
+                                    LoggerManager.d("block_num", block_num);
+                                    //存入数据库
 
-                                        EosTransactionEntity eosTransactionEntity = new EosTransactionEntity();
-                                        eosTransactionEntity.setBlockNumber(block_num);
-                                        eosTransactionEntity.setTransactionHash(txId);
-                                        eosTransactionEntity.save();
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    EosTransactionEntity eosTransactionEntity = new DBManager()
+                                            .getEosTransactionEntityDao().getEosTransactionEntityByHash(txId);
+                                    eosTransactionEntity.setBlockNumber(block_num);
+                                    getV().setTransactionStatus(eosTransactionEntity);
                                 }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         }
+                    }
 
-                        @Override
-                        public void onError(Response<String> response) {
-                            super.onError(response);
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
 
-                            if (EmptyUtils.isNotEmpty(getV())) {
-                                GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                                getV().dissmisProgressDialog();
+                        if (EmptyUtils.isNotEmpty(getV())) {
+//                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
+//                            getV().dissmisProgressDialog();
 
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
                                 try {
-                                    String err_info_string = response.getRawResponse().body().string();
-                                    try {
-                                        JSONObject obj = new JSONObject(err_info_string);
-                                        JSONObject error = obj.optJSONObject("error");
-                                        String err_code = error.optString("code");
-                                        handleEosErrorCode(err_code);
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
 
-                                    } catch (JSONException ee) {
-                                        ee.printStackTrace();
-                                    }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                                } catch (JSONException ee) {
+                                    ee.printStackTrace();
                                 }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
-                    });
+                    }
+                });
 
     }
 
@@ -339,9 +311,8 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
                     @Override
                     public void onError(Response<String> response) {
-                        super.onError(response);
-
                         if (EmptyUtils.isNotEmpty(getV())) {
+                            super.onError(response);
                             GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
                             getV().dissmisProgressDialog();
 
@@ -364,22 +335,26 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        if (response != null && response.body() != null) {
-                            String infoJson = response.body();
-                            try {
-                                JSONObject obj = new JSONObject(infoJson);
-                                if (obj != null) {
-                                    String head_block_num = obj.optString("head_block_num");
-                                    String lib_num = obj.optString("last_irreversible_block_num");
-                                    LoggerManager.d("lib", lib_num);
-                                    LoggerManager.d("head_block_num", head_block_num);
-                                    getV().setCurHead(head_block_num);
-                                    getV().setCurLib(lib_num);
+                        if (getV() != null) {
+                            if (response != null && response.body() != null) {
+                                String infoJson = response.body();
+                                try {
+                                    JSONObject obj = new JSONObject(infoJson);
+                                    if (obj != null) {
+//                                        String head_block_num = obj.optString("head_block_num");
+                                        String lib_num = obj.optString("last_irreversible_block_num");
+//                                        LoggerManager.d("lib", lib_num);
+//                                        LoggerManager.d("head_block_num", head_block_num);
+                                        getV().setCurLib(lib_num);
+                                        getV().setmRecyclerViewOnClick();
+                                        getV().showContent();
 
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
+
                         }
                     }
                 });
@@ -398,43 +373,61 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
             int resId = getV().getResources().getIdentifier(code, "string", package_name);
             String err_info = getV().getResources().getString(resId);
 
-            Alerter.create(getV())
-                    .setText(err_info)
-                    .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
-                    .showIcon(false)
-                    .setDuration(3000)
-                    .setBackgroundColorRes(R.color.scarlet)
-                    .show();
+            if (!Alerter.isShowing()){
+                Alerter.create(getV())
+                        .setText(err_info)
+                        .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)
+                        .showIcon(false)
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.scarlet)
+                        .show();
+            }
         }
     }
 
-    /**
-     * 通过比对确定该Transaction的状态
-     */
-    public int getTransactionStatus(String block_num, String cur_lib, String cur_head_block){
-        int block = Integer.valueOf(block_num);
-        int lib = Integer.valueOf(cur_lib);
-        int head = Integer.valueOf(cur_head_block);
-
-        if (block > head){
-            return ParamConstants.TRANSACTION_STATUS_ONLINE;
-        }else if (block > lib){
-            //pending
-            return ParamConstants.TRANSACTION_STATUS_PENDING;
-        }else {
-            //done
-            return ParamConstants.TRANSACTION_STATUS_CONFIRMED;
-        }
-    }
 
     /**
      * 计算该Transaction确认中大致百分比
+     *
      * @return
      */
-    public double getProgressPrecentage(String block_num, String lib_num){
+    public double getProgressPrecentage(String block_num, String lib_num) {
         int block = Integer.valueOf(block_num);
         int lib = Integer.valueOf(lib_num);
         return Math.min(1 - Math.min((block - lib) / 325, 1), 0.99) * 100;
+    }
+
+    /**
+     * 重新组装数据
+     * 将TransferHistoryList变为EosTransactionList
+     *
+     * @return
+     */
+    public List<EosTransactionEntity> convertTransactionData(List<TransferHistory> transferHistoryList) {
+        List<EosTransactionEntity> entityList = new ArrayList<>();
+        for (TransferHistory curTransfer : transferHistoryList) {
+            EosTransactionEntity curTransaction = new EosTransactionEntity();
+            curTransaction.setTransactionHash(curTransfer.trx_id);
+            curTransaction.setDate(curTransfer.timestamp);
+            curTransaction.setQuantity(curTransfer.quantity);
+            curTransaction.setReceiver(curTransfer.receiver);
+            curTransaction.setSender(curTransfer.sender);
+            curTransaction.setTokenCode(curTransfer.code);
+            curTransaction.setTokenSymbol(curTransfer.symbol);
+            entityList.add(curTransaction);
+        }
+        return entityList;
+    }
+
+    /**
+     * 将Transaction List存入数据库
+     *
+     * @param list
+     */
+    public void saveTransactionData(List<EosTransactionEntity> list) {
+        for (EosTransactionEntity curTransaction : list) {
+            DBManager.getInstance().getEosTransactionEntityDao().saveOrUpateEntity(curTransaction);
+        }
     }
 
 }

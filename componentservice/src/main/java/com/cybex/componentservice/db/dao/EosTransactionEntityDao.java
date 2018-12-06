@@ -15,6 +15,8 @@ public interface EosTransactionEntityDao {
 
     EosTransactionEntity getEosTransactionEntityByID(int id);
 
+    EosTransactionEntity getEosTransactionEntityByHash(String txId);
+
     List<EosTransactionEntity> getWalletEntityList();
 
     void saveOrUpateEntity(EosTransactionEntity entity);

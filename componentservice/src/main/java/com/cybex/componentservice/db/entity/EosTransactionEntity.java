@@ -17,9 +17,8 @@ public class EosTransactionEntity extends BaseModel {
     private Integer id;
 
     @Column
-    @Unique
-    private String transactionHash;
 
+    private String transactionHash;
 
 
     /**
@@ -41,10 +40,62 @@ public class EosTransactionEntity extends BaseModel {
     @Column
     private String quantity;
     /**
-     * 该笔交易的关联账户，收入时为打款人，支出时为付款人
+     * 该笔交易的日期
      */
     @Column
-    private String account;
+    private String date;
+    /**
+     * 该笔交易发送人
+     */
+    @Column
+    private String sender;
+    /**
+     * 该笔交易接收人
+     */
+    @Column
+    private String receiver;
+    /**
+     *代币合约
+     */
+    @Column
+    private String tokenCode;
+    /**
+     * 代币名称
+     */
+    @Column
+    private String tokenSymbol;
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getTokenCode() {
+        return tokenCode;
+    }
+
+    public void setTokenCode(String tokenCode) {
+        this.tokenCode = tokenCode;
+    }
+
+    public String getTokenSymbol() {
+        return tokenSymbol;
+    }
+
+    public void setTokenSymbol(String tokenSymbol) {
+        this.tokenSymbol = tokenSymbol;
+    }
 
     public String getDate() {
         return date;
@@ -53,13 +104,6 @@ public class EosTransactionEntity extends BaseModel {
     public void setDate(String date) {
         this.date = date;
     }
-
-    /**
-     * 该笔交易的日期
-     */
-    @Column
-    private String date;
-
 
     public Integer getTransferType() {
         return transferType;
@@ -77,13 +121,6 @@ public class EosTransactionEntity extends BaseModel {
         this.quantity = quantity;
     }
 
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
 
     public Integer getId() {
         return id;
@@ -127,8 +164,11 @@ public class EosTransactionEntity extends BaseModel {
                 ", blockNumber='" + blockNumber + '\'' +
                 ", transferType='" + transferType + '\'' +
                 ", quantity='" + quantity + '\'' +
-                ", account='" + account + '\'' +
                 ", date='" + date + '\'' +
+                ", sender='" + sender + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", tokenCode='" + tokenCode + '\'' +
+                ", tokenSymbol='" + tokenSymbol + '\'' +
                 '}';
     }
 

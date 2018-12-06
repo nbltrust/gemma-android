@@ -132,8 +132,8 @@ public interface ParamConstants {
     int POWER_LEVEL_ALERT_INIT = 130;
     int POWER_LEVEL_ALERT = 126;
 
-    int TRANSACTION_STATUS_ONLINE = 20;//正在上链
-    int TRANSACTION_STATUS_PENDING = 21;//确认中
-    int TRANSACTION_STATUS_CONFIRMED = 22;//已确认
+    int TRANSACTION_STATUS_FAIL = 3;//失败
+    int TRANSACTION_STATUS_PENDING = 2;//确认中
+    int TRANSACTION_STATUS_CONFIRMED = 1;//已确认
 
 }

@@ -118,21 +118,34 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
 
                     @Override
                     public void onSuccess(Response<GetEosTokensResult> data) {
+                        LoggerManager.d("getEosTokens Success");
                         if (getV() != null){
                             if (data != null){
+                                LoggerManager.d("data.code", data.code());
                                 GetEosTokensResult response = data.body();
                                 if (response.getResult() != null){
                                     GetEosTokensResult.ResultBean resultBean = response.getResult();
+
                                     List<TokenBean> tokens = resultBean.getTokens();
                                     if (EmptyUtils.isNotEmpty(tokens)){
                                         //更新UI
                                         List<EosTokenVO> tokenVOList = converTokenBeanToVO(tokens);
                                         getV().showTokens(tokenVOList);
+                                        GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
+                                        getV().dissmisProgressDialog();
+                                    }else {
+                                        GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_tokens_fail));
                                     }
+                                }else {
+                                    GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_tokens_fail));
                                 }
+                                getV().dissmisProgressDialog();
+                            }else if (data.code() == 500 || data.code() == 10001){
+                                //获取Tokens失败
+                                LoggerManager.d("data.code", data.code());
+                                GemmaToastUtils.showShortToast(getV().getString(R.string.eos_load_tokens_fail));
+                                getV().dissmisProgressDialog();
                             }
-                            GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
-                            getV().dissmisProgressDialog();
                         }
                     }
 

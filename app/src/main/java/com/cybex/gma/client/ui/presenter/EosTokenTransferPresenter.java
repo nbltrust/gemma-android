@@ -403,7 +403,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                     getV().startEosSerialization(tmpJson);
                                 }
 
-                                getV().dissmisProgressDialog();
+//                                getV().dissmisProgressDialog();
                             } else {
                                 //错误
                                 if (getV() != null) {
