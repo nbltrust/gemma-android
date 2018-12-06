@@ -214,7 +214,7 @@
     <string name="eos_unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
     <string name="eos_switch_account">Switch Account</string>
     <string name="eos_confirm_delegate">Confirm stake</string>
-    <string name="eos_input_pass_hint">Enter %1$s\'s password</string>
+    <string name="eos_input_pass_hint">Enter Wookong Bio\'s password</string>
     <string name="eos_gemma_password_hint">Enter account password to authorize operation</string>
     <string name="eos_confirm_author">Authorize</string>
     <string name="eos_confirm_buy">Confirm buy</string>

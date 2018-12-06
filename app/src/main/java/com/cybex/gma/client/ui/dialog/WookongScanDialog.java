@@ -781,7 +781,7 @@ public class WookongScanDialog extends Dialog {
                             EditText edt_PIN = dialog.findViewById(com.cybex.gma.client.R.id.et_password);
                             if (EmptyUtils.isNotEmpty(edt_PIN.getText())) {
                                 //输入不为空
-                                String pin = edt_PIN.getText().toString().trim();
+                                String pin = edt_PIN.getText().toString();
                                 DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, pin,
                                         new DeviceOperationManager.VerifyPinCallback() {
                                             @Override
@@ -819,7 +819,7 @@ public class WookongScanDialog extends Dialog {
                             EditText edt_PIN = dialog.findViewById(com.cybex.gma.client.R.id.et_password);
                             if (EmptyUtils.isNotEmpty(edt_PIN.getText())) {
                                 //输入不为空
-                                String pin = edt_PIN.getText().toString().trim();
+                                String pin = edt_PIN.getText().toString();
                                 DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, pin,
                                         new DeviceOperationManager.VerifyPinCallback() {
                                             @Override
