@@ -117,7 +117,7 @@ dependencies {
     api deps.third.recyclerviewadapterhelper
     api deps.third.overscroll
 
-    api(name:'seed39', ext:'aar')
+    api(name:'seed39-1207', ext:'aar')
 
     api 'org.bitcoinj:bitcoinj-core:0.14.7'
     api 'org.web3j:core:3.3.1-android'

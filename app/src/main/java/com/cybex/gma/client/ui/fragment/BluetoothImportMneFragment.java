@@ -133,7 +133,7 @@ public class BluetoothImportMneFragment extends XFragment {
 
                                       @Override
                                       public void onPermissionDenied(List<String> permissions) {
-                                          GemmaToastUtils.showShortToast(getResources().getString(com.cybex.walletmanagement.R.string.walletmanage_set_camera_permission));
+                                          GemmaToastUtils.showShortToast(getResources().getString(R.string.walletmanage_set_camera_permission));
                                           if (AndPermission.hasAlwaysDeniedPermission(getActivity(), permissions)) {
                                               manager.showSettingDialog(getContext(), permissions);
                                           }
