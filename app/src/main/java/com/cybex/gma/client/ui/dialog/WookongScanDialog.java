@@ -359,7 +359,7 @@ public class WookongScanDialog extends Dialog {
                             verifyDialog.showShortUrgeAlert(getContext().getString(com.cybex.gma.client.R.string.tip_fp_verify_fail));
                         }
                         LoggerManager.d("onVerifyFailed   verifyFpCount=" + verifyFpCount);
-                        if (verifyFpCount < 4) {
+                        if (verifyFpCount < 3) {
                             doVerifyFp(status);
                         } else {
 //                            DeviceOperationManager.getInstance().abortEnrollFp(deviceName);
