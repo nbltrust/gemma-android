@@ -51,6 +51,12 @@
             android:background="@drawable/shape_corner_left_bot"
             />
 
+        <View
+            android:layout_width="0.7dp"
+            android:layout_height="match_parent"
+            android:background="@color/dddddd_grey_350">
+        </View>
+
         <TextView
             android:id="@+id/tv_retry"
             android:layout_width="match_parent"

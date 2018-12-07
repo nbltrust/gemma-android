@@ -58,16 +58,14 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
     //指纹录入成功
     int FINGER_SUCCESS = 0;
 
-    public int stage = 1;
+    public int stage = 0;
     //    public HashMap<Integer, AnimatedVectorDrawable> vectorDrawableHashMap = new HashMap<>();
     TitleBar btnNavibar;
     WebView mWebView;
     private BlueToothWrapper enrollFPThread;
-    //    private FPHandler mHandler;
     private Bundle bd;
     boolean isEnrolling;
     private TextView tvHint;
-    //    private long contextHandle = 0;
 
     @Override
     public void bindUI(View rootView) {
@@ -81,11 +79,6 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
         //initVectorDrawable();
         initWebView();
 
-//        if ((enrollFPThread == null) || (enrollFPThread.getState() == Thread.State.TERMINATED)) {
-//            enrollFPThread = new BlueToothWrapper(mHandler);
-//            enrollFPThread.setEnrollFPWrapper(contextHandle, 0);
-//            enrollFPThread.start();
-//        }
 
 
         startEnroll();
@@ -132,6 +125,7 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
 
     @Override
     protected void onDestroy() {
+        mWebView.getHandler().removeCallbacksAndMessages(null);
         //WookongBioManager.getInstance().stopHeartBeat();
         //BluetoothConnectKeepJob.removeJob();
         DeviceOperationManager.getInstance().clearCallback(this.toString());
@@ -150,14 +144,17 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
      * @param state
      */
     private void doFPLogic(int state) {
-        LoggerManager.d("FP state: " + state);
-
+        LoggerManager.d("FP state: " + state+"    stage:"+stage);
         if (state == FINGER_GOOD) {
+            stage++;
+            if(stage>=8){
+                tvHint.setText(R.string.walletmanage_enroll_fp_hint2);
+            }
             drawFingerprint();
         }else if (state == FINGER_NOT||state==FINGER_REDUNDANT||state==FINGER_PRINT_COMMAND_ERROR||state==FINGER_PRINT_BAND_IMAGE) {
             preFingerprint();
         }else if (state == FINGER_NOT_FULL) {
-            tvHint.setText(R.string.walletmanage_enroll_fp_hint2);
+//            tvHint.setText(R.string.walletmanage_enroll_fp_hint2);
         }
 
 
@@ -234,7 +231,7 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
         mWebView.post(new Runnable() {
             @Override
             public void run() {
-                mWebView.evaluateJavascript("prev()", new ValueCallback<String>() {
+                mWebView.evaluateJavascript("next()", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
 
@@ -242,6 +239,17 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
                 });
             }
         });
+        mWebView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mWebView.evaluateJavascript("prev()", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+
+                    }
+                });
+            }
+        },300);
 
     }
 
@@ -350,20 +358,4 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
         fixDeviceDisconnectEvent(event);
     }
 
-//    class FPHandler extends Handler {
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case BlueToothWrapper.MSG_ENROLL_UPDATE:
-//                    int state = msg.arg1;
-//                    doFPLogic(state);
-//                    break;
-//                default:
-//                    break;
-//
-//            }
-//
-//        }
-//    }
 }
