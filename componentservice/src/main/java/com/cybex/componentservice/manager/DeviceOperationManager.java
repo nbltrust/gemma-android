@@ -376,7 +376,7 @@ public class DeviceOperationManager {
 
     public void startVerifyFP(String tag, String deviceName, DeviceVerifyFPCallback verifyFPCallback) {
         if (!isDeviceConnectted(deviceName)) {
-            verifyFPCallback.onVerifyFailed();
+            verifyFPCallback.onVerifyFailed(-1);
             return;
         }
 
@@ -1242,7 +1242,7 @@ public class DeviceOperationManager {
 
         void onVerifySuccess();
 
-        void onVerifyFailed();
+        void onVerifyFailed(int state);
 
         void onVerifyCancelled();
     }
@@ -1974,7 +1974,7 @@ public class DeviceOperationManager {
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag).verifyFPCallback != null) {
-                                callbackMaps.get(tag).verifyFPCallback.onVerifyFailed();
+                                callbackMaps.get(tag).verifyFPCallback.onVerifyFailed(verifyFpReturnValue.getReturnValue());
                             }
                         }
                     }

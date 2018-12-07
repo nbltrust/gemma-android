@@ -288,8 +288,10 @@ public class BluetoothScanResultDialogActivity extends AppCompatActivity {
                         }
                     }
 
+
+
                     @Override
-                    public void onVerifyFailed() {
+                    public void onVerifyFailed(int state) {
                         AlertUtil.showShortUrgeAlert(BluetoothScanResultDialogActivity.this, getString(R.string.tip_fp_verify_fail));
                         LoggerManager.d("onVerifyFailed   verifyFpCount=" + verifyFpCount);
                         if (verifyFpCount < 4) {

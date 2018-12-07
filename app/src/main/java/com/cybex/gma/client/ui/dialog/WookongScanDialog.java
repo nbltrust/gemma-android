@@ -353,10 +353,15 @@ public class WookongScanDialog extends Dialog {
                     }
 
                     @Override
-                    public void onVerifyFailed() {
+                    public void onVerifyFailed(int state) {
 //                        AlertUtil.showShortUrgeAlert((ViewGroup) verifyDialog.getWindow().getDecorView(), getContext().getString(com.cybex.gma.client.R.string.tip_fp_verify_fail));
                         if (verifyDialog != null) {
-                            verifyDialog.showShortUrgeAlert(getContext().getString(com.cybex.gma.client.R.string.tip_fp_verify_fail));
+                            if(state==MiddlewareInterface.PAEW_RET_DEV_TIMEOUT){
+                                verifyDialog.showShortUrgeAlert(getContext().getString(R.string.tip_fp_verify_timeout));
+                            }else{
+                                verifyDialog.showShortUrgeAlert(getContext().getString(R.string.tip_fp_verify_fail));
+                            }
+
                         }
                         LoggerManager.d("onVerifyFailed   verifyFpCount=" + verifyFpCount);
                         if (verifyFpCount < 3) {
@@ -694,7 +699,7 @@ public class WookongScanDialog extends Dialog {
         }
         int[] listenedItems = {R.id.imv_back};
         verifyDialog = new CustomFullWithAlertDialog(activity,
-                R.layout.eos_dialog_transfer_bluetooth_finger_sure, listenedItems, false,false, Gravity.BOTTOM);
+                R.layout.eos_dialog_pair_bluetooth_finger_sure, listenedItems, false,false, Gravity.BOTTOM);
         verifyDialog.setOnCancelListener(new OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {

@@ -844,6 +844,7 @@
     <string name="power_level_alert">电量不足</string>
     <string name="tip_power_level_alert">请先将WOOKONG Bio充满电以确保顺利完成设备初始化</string>
     <string name="tip_fp_verify_fail">指纹验证失败，请调整位置再试</string>
+    <string name="tip_fp_verify_timeout">指纹验证超时</string>
 
     <string name="tip_fp_sign_fail">指纹签名失败，请重新尝试</string>
     <string name="tip_set_tx_fail">在Bio上保存交易信息失败，请重新尝试</string>

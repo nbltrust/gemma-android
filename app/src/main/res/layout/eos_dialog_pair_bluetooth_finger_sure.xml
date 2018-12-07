@@ -7,15 +7,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp">
 
         <ImageView
             android:id="@+id/imv_back"
+            android:layout_marginLeft="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_back"
+            android:src="@drawable/ic_mask_close"
             />
 
         <com.github.ybq.android.spinkit.SpinKitView
@@ -27,8 +27,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp"
-            app:SpinKit_Color="#3F51B5"
+            app:SpinKit_Color="@color/black_context"
             />
 
     </RelativeLayout>
@@ -36,10 +35,10 @@
         android:id="@+id/tv_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="@string/eos_connect_sure_battery_tip"
-        android:textColor="#212c67"
+        android:text="@string/eos_pair_fp_sure_tip"
+        android:textColor="@color/black_context"
         android:textSize="14sp"
         />
 
@@ -49,8 +48,9 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="@dimen/dimen_20"
         android:scaleType="centerCrop"
-        android:src="@drawable/wookong_bio_card_power_attention"/>
+        android:src="@drawable/card_fingerprint"/>
 
 
 </LinearLayout>
