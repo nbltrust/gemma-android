@@ -184,8 +184,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     }
 
 
-    @OnClick({R.id.view_wookong_status})
-    public void onWookongStatusClick(View view) {
+    @OnClick({R.id.view_wookong_status,R.id.tv_wallet_name})
+    public void onWookongClick(View view) {
         if(curWallet!=null&&curWallet.getWalletType()==MultiWalletEntity.WALLET_TYPE_HARDWARE){
             boolean deviceConnectted = DeviceOperationManager.getInstance().isDeviceConnectted(curWallet.getBluetoothDeviceName());
             if(!deviceConnectted){
