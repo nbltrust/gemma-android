@@ -7,6 +7,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.cybex.componentservice.manager.LoggerManager;
 import com.extropies.common.CommonUtility;
 import com.extropies.common.MiddlewareInterface;
 
@@ -1367,6 +1368,7 @@ public class BlueToothWrapper extends Thread {
     }
 
     public boolean breakGetSignResultLoop() {
+        LoggerManager.d("breakGetSignResultLoop");
         m_bGetSignResultLoop = false;
         return true;
     }

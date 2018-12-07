@@ -38,6 +38,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragment> {
     private static final String VALUE_ACTION = "transfer";
@@ -570,6 +572,19 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
 
         return "list empty err";
 
+    }
+
+    public boolean isBioMemoValid() {
+        if (getV() != null){
+            String memo = getV().getNote().toString();
+            String regEx = "^[A-Za-z0-9\\p{P}]{0,15}$";
+            Pattern pattern = Pattern.compile(regEx);
+            Matcher matcher = pattern.matcher((memo));
+            boolean res = matcher.matches();
+            //LoggerManager.d("regex", res);
+            return res;
+        }
+        return false;
     }
 
 

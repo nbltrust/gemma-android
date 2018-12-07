@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.cybex.componentservice.api.ApiPath;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
@@ -26,7 +27,6 @@ import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.componentservice.utils.WookongConnectHelper;
-import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.componentservice.widget.EditTextWithScrollView;
 import com.cybex.gma.client.R;
@@ -169,6 +169,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         DeviceOperationManager.getInstance().clearCallback(this.toString());
         clearData();
         dissmisProgressDialog();
+        if (getActivity() != null)Alerter.clearCurrent(getActivity());
         unbinder.unbind();
         super.onDestroyView();
     }
@@ -260,158 +261,184 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         etNote.setText("");
 
         curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-        deviceName = getP().getBluetoothDeviceName();
+        if (curWallet != null) {
+            deviceName = getP().getBluetoothDeviceName();
 
-        OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
+            OverScrollDecoratorHelper.setUpOverScroll(rootScrollview);
 
-        if (getArguments() != null) {
-            curToken = getArguments().getParcelable(ParamConstants.EOS_TOKENS);
-            if (curToken != null) {
-                String balance = curToken.getQuantity();
+            if (getArguments() != null) {
+                curToken = getArguments().getParcelable(ParamConstants.EOS_TOKENS);
+                if (curToken != null) {
+                    String balance = curToken.getQuantity();
 
-                MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
-                MultiWalletEntity entity = dao.getCurrentMultiWalletEntity();
-                EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
+                    MultiWalletEntityDao dao = DBManager.getInstance().getMultiWalletEntityDao();
+                    MultiWalletEntity entity = dao.getCurrentMultiWalletEntity();
+                    EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
 
-                currentEOSName = eosEntity.getCurrentEosName();
-                String tokenSymbol = curToken.getTokenSymbol();
-                showInitData(balance, currentEOSName, tokenSymbol);
+                    currentEOSName = eosEntity.getCurrentEosName();
+                    String tokenSymbol = curToken.getTokenSymbol();
+                    showInitData(balance, currentEOSName, tokenSymbol);
 
-                String curAccuracyStr = " ";
-                int curAccuracy = curToken.getAccurancy();
-                if (curAccuracy > 0) {
-                    if (curAccuracy == 1) {
-                        curAccuracyStr = "一";
-                    } else if (curAccuracy == 2) {
-                        curAccuracyStr = "二";
-                    } else if (curAccuracy == 3) {
-                        curAccuracyStr = "三";
-                    } else if (curAccuracy == 4) {
-                        curAccuracyStr = "四";
-                    } else if (curAccuracy == 5) {
-                        curAccuracyStr = "五";
-                    } else if (curAccuracy == 6) {
-                        curAccuracyStr = "六";
-                    } else if (curAccuracy == 7) {
-                        curAccuracyStr = "七";
-                    } else if (curAccuracy == 8) {
-                        curAccuracyStr = "八";
-                    } else if (curAccuracy == 9) {
-                        curAccuracyStr = "九";
-                    } else if (curAccuracy == 10) {
-                        curAccuracyStr = "十";
-                    } else if (curAccuracy == 11) {
-                        curAccuracyStr = "十一";
-                    } else if (curAccuracy == 12) {
-                        curAccuracyStr = "十二";
-                    } else if (curAccuracy == 13) {
-                        curAccuracyStr = "十三";
-                    } else if (curAccuracy == 14) {
-                        curAccuracyStr = "十四";
-                    } else if (curAccuracy == 15) {
-                        curAccuracyStr = "十五";
-                    } else if (curAccuracy == 16) {
-                        curAccuracyStr = "十六";
-                    } else if (curAccuracy == 17) {
-                        curAccuracyStr = "十七";
-                    } else if (curAccuracy == 18) {
-                        curAccuracyStr = "十八";
+                    String curAccuracyStr = " ";
+                    int curAccuracy = curToken.getAccurancy();
+                    if (curAccuracy > 0) {
+                        if (curAccuracy == 1) {
+                            curAccuracyStr = "一";
+                        } else if (curAccuracy == 2) {
+                            curAccuracyStr = "二";
+                        } else if (curAccuracy == 3) {
+                            curAccuracyStr = "三";
+                        } else if (curAccuracy == 4) {
+                            curAccuracyStr = "四";
+                        } else if (curAccuracy == 5) {
+                            curAccuracyStr = "五";
+                        } else if (curAccuracy == 6) {
+                            curAccuracyStr = "六";
+                        } else if (curAccuracy == 7) {
+                            curAccuracyStr = "七";
+                        } else if (curAccuracy == 8) {
+                            curAccuracyStr = "八";
+                        } else if (curAccuracy == 9) {
+                            curAccuracyStr = "九";
+                        } else if (curAccuracy == 10) {
+                            curAccuracyStr = "十";
+                        } else if (curAccuracy == 11) {
+                            curAccuracyStr = "十一";
+                        } else if (curAccuracy == 12) {
+                            curAccuracyStr = "十二";
+                        } else if (curAccuracy == 13) {
+                            curAccuracyStr = "十三";
+                        } else if (curAccuracy == 14) {
+                            curAccuracyStr = "十四";
+                        } else if (curAccuracy == 15) {
+                            curAccuracyStr = "十五";
+                        } else if (curAccuracy == 16) {
+                            curAccuracyStr = "十六";
+                        } else if (curAccuracy == 17) {
+                            curAccuracyStr = "十七";
+                        } else if (curAccuracy == 18) {
+                            curAccuracyStr = "十八";
+                        } else {
+                            curAccuracyStr = "四";
+                        }
+                        etAmount.setHint(String.format(getString(R.string.eos_token_tip_transfer), curAccuracyStr));
                     } else {
-                        curAccuracyStr = "四";
+                        etAmount.setHint(getString(R.string.eos_token_tip_transfer_no_decimal));
                     }
-                    etAmount.setHint(String.format(getString(R.string.eos_token_tip_transfer), curAccuracyStr));
-                } else {
-                    etAmount.setHint(getString(R.string.eos_token_tip_transfer_no_decimal));
-                }
 
-                etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (hasFocus) {
-                            KeyboardUtils.showKeyBoard(getActivity(), etReceiverAccount);
-                            etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
-                            if (EmptyUtils.isEmpty(getCollectionAccount())) {
-                                tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                                tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                    etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if (hasFocus) {
+                                KeyboardUtils.showKeyBoard(getActivity(), etReceiverAccount);
+                                etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
+                                if (EmptyUtils.isEmpty(getCollectionAccount())) {
+                                    tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
+                                    tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                                } else {
+                                    ivTransferAccountClear.setVisibility(View.VISIBLE);
+                                }
                             } else {
+                                KeyboardUtils.hideSoftInput(getActivity(), etReceiverAccount);
+                                etReceiverAccount.setTypeface(Typeface.DEFAULT);
+                                ivTransferAccountClear.setVisibility(View.GONE);
+                                validateButton();
+                                if (EmptyUtils.isEmpty(getCollectionAccount())) {
+                                    tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
+                                    tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                                }
+                                if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
+                                        etReceiverAccount.getText().toString().trim())) {
+                                    //显示alert样式
+                                    tvTitleReceiver.setText(getString(R.string.eos_tip_account_name_err));
+                                    tvTitleReceiver.setTextColor(getResources().getColor(R.color.scarlet));
+                                } else {
+                                    //显示默认样式
+                                    tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
+                                    tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                                }
+                            }
+                        }
+                    });
+
+                    etReceiverAccount.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            if (EmptyUtils.isNotEmpty(getCollectionAccount())) {
                                 ivTransferAccountClear.setVisibility(View.VISIBLE);
-                            }
-                        } else {
-                            KeyboardUtils.hideSoftInput(getActivity(), etReceiverAccount);
-                            etReceiverAccount.setTypeface(Typeface.DEFAULT);
-                            ivTransferAccountClear.setVisibility(View.GONE);
-                            validateButton();
-                            if (EmptyUtils.isEmpty(getCollectionAccount())) {
-                                tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                                tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
-                            }
-                            if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
-                                    etReceiverAccount.getText().toString().trim())) {
-                                //显示alert样式
-                                tvTitleReceiver.setText(getString(R.string.eos_tip_account_name_err));
-                                tvTitleReceiver.setTextColor(getResources().getColor(R.color.scarlet));
                             } else {
-                                //显示默认样式
-                                tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                                tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                                ivTransferAccountClear.setVisibility(View.GONE);
+                            }
+                            validateButton();
+                        }
+                    });
+
+                    etNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if (hasFocus) {
+                                KeyboardUtils.showKeyBoard(getActivity(), etNote);
+                                etNote.setTypeface(Typeface.DEFAULT_BOLD);
+                                if (EmptyUtils.isNotEmpty(getNote())) {
+                                    ivTransferMemoClear.setVisibility(View.VISIBLE);
+                                }
+                            } else {
+                                KeyboardUtils.hideSoftInput(getActivity(), etNote);
+                                etNote.setTypeface(Typeface.DEFAULT);
+                                ivTransferMemoClear.setVisibility(View.GONE);
                             }
                         }
-                    }
-                });
+                    });
 
-                etReceiverAccount.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    if (curWallet.getWalletType() == MultiWalletEntity.WALLET_TYPE_HARDWARE){
+                        etNote.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        if (EmptyUtils.isNotEmpty(getCollectionAccount())) {
-                            ivTransferAccountClear.setVisibility(View.VISIBLE);
-                        } else {
-                            ivTransferAccountClear.setVisibility(View.GONE);
-                        }
-                        validateButton();
-                    }
-                });
-
-                etNote.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (hasFocus) {
-                            KeyboardUtils.showKeyBoard(getActivity(), etNote);
-                            etNote.setTypeface(Typeface.DEFAULT_BOLD);
-                            if (EmptyUtils.isNotEmpty(getNote())) {
-                                ivTransferMemoClear.setVisibility(View.VISIBLE);
                             }
-                        } else {
-                            KeyboardUtils.hideSoftInput(getActivity(), etNote);
-                            etNote.setTypeface(Typeface.DEFAULT);
-                            ivTransferMemoClear.setVisibility(View.GONE);
-                        }
-                    }
-                });
 
-                etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (hasFocus) {
-                            KeyboardUtils.showKeyBoard(getActivity(), etAmount);
-                            etAmount.setTypeface(Typeface.DEFAULT_BOLD);
-                        } else {
-                            KeyboardUtils.hideSoftInput(getActivity(), etAmount);
-                            etAmount.setTypeface(Typeface.DEFAULT);
-                        }
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+                                if (getActivity() != null && !getP().isBioMemoValid()){
+
+                                }
+                            }
+                        });
+
                     }
-                });
+
+                    etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if (hasFocus) {
+                                KeyboardUtils.showKeyBoard(getActivity(), etAmount);
+                                etAmount.setTypeface(Typeface.DEFAULT_BOLD);
+                            } else {
+                                KeyboardUtils.hideSoftInput(getActivity(), etAmount);
+                                etAmount.setTypeface(Typeface.DEFAULT);
+                            }
+                        }
+                    });
+                }
             }
         }
+
+
     }
 
     @Override
@@ -457,14 +484,33 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      */
     @OnClick({R.id.btn_transfer_nextStep})
     public void onClickSubmitTransfer(View view) {
-        String toAccount = String.valueOf(etReceiverAccount.getText());
-        if (toAccount.equals(currentEOSName)) {
-            GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_tip_cant_transfer_to_yourself));
-            return;
-        }
+        if (curWallet != null){
+            if (curWallet.getWalletType() == MultiWalletEntity.WALLET_TYPE_HARDWARE){
+                //蓝牙钱包
+                if (getP().isBioMemoValid()){
+                    String toAccount = String.valueOf(etReceiverAccount.getText());
+                    if (toAccount.equals(currentEOSName)) {
+                        GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_tip_cant_transfer_to_yourself));
+                        return;
+                    }
 
-        validateAmountValue();
-        showConfirmTransferDialog();
+                    validateAmountValue();
+                    showConfirmTransferDialog();
+                }else {
+                    AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.tip_bio_memo_invalid));
+                }
+            }else {
+                //软钱包
+                String toAccount = String.valueOf(etReceiverAccount.getText());
+                if (toAccount.equals(currentEOSName)) {
+                    GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_tip_cant_transfer_to_yourself));
+                    return;
+                }
+
+                validateAmountValue();
+                showConfirmTransferDialog();
+            }
+        }
     }
 
     public boolean isAccountNameValid() {
@@ -564,7 +610,12 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             tv_payment_account.setText(currentEOSName);
 
             if (EmptyUtils.isEmpty(etNote.getText().toString().trim())) {
-                memo = String.format(getString(R.string.eos_default_memo), currentEOSName);
+                if (curWallet.getWalletType() == MultiWalletEntity.WALLET_TYPE_HARDWARE){
+                    memo = "http://wooko.ng";
+                }else {
+                    memo = String.format(getString(R.string.eos_default_memo), currentEOSName);
+                }
+
             } else {
                 memo = String.valueOf(etNote.getText());
             }
@@ -659,7 +710,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         etAmount.setText("");
         etNote.setText("");
         Alerter.hide();
-        if (getActivity() != null){
+        if (getActivity() != null) {
             Alerter.clearCurrent(getActivity());
         }
 
@@ -682,7 +733,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             wookongConnectHelper.startConnectDevice(new WookongConnectHelper.ConnectWookongBioCallback() {
                 @Override
                 public void onConnectSuccess() {
-                    if (dialog != null) { dialog.cancel(); }
+                    if (dialog != null) { dialog.cancel();}
                     getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
                             getAmount() + " EOS", getNote());
                 }
@@ -690,7 +741,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 @Override
                 public void onConnectFail() {
                     if (dialog != null) { dialog.cancel(); }
-                    showConnectBioFailDialog();
+                    //showConnectBioFailDialog();
                 }
             });
         }
@@ -737,7 +788,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onSetTxStart() {
 
-                   }
+                    }
 
                     @Override
                     public void onSetTxSuccess() {
@@ -755,7 +806,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                                         //LoggerManager.d("Sign Success str Sig = " + strSignature);
                                         buildTransaction(strSignature);
-                                        if (verifyDialog != null && verifyDialog.isShowing()){
+                                        if (verifyDialog != null && verifyDialog.isShowing()) {
                                             verifyDialog.cancel();
                                         }
                                     }
@@ -763,29 +814,42 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                     @Override
                                     public void onGetSignResultFail(int status) {
 
-                                        if (status == BaseConst.STATUS_NO_VERIFY_COUNT){
+                                        if (verifyDialog != null && verifyDialog.isShowing()) {
+                                            verifyDialog.cancel();
+                                        }
+
+                                        if (status == BaseConst.STATUS_NO_VERIFY_COUNT) {
                                             //没有指纹录入错误，调用PIN验证
-                                            if (verifyDialog != null && verifyDialog.isShowing()){
-                                                verifyDialog.cancel();
-                                            }
+
                                             showConfirmPINDialog();
-                                        }else {
+                                        } else {
                                             //其他错误
-                                            AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.tip_fp_sign_fail));
+                                            AlertUtil.showShortUrgeAlert(getActivity(),
+                                                    getString(R.string.tip_fp_sign_fail));
                                         }
 
                                     }
 
                                     @Override
-                                    public void onGetSignResultUpdate(int errCode) {
+                                    public void onGetSignResultUpdate(int statusCode) {
 
-                                        if (!verifyDialog.isShowing()){
-                                            showVerifyFPDialog();
+                                        if (statusCode == MiddlewareInterface.PAEW_RET_DEV_STATE_INVALID) {
+                                            if (verifyDialog != null && verifyDialog.isShowing()) {
+                                                verifyDialog.dismiss();
+                                            }
+
+                                            if (powerPressDialog != null && powerPressDialog.isShowing()) {
+                                                powerPressDialog.dismiss();
+                                            }
+
+                                        } else if (statusCode == MiddlewareInterface.PAEW_RET_DEV_WAITING) {
+                                            if (verifyDialog == null || !verifyDialog.isShowing()) {
+                                                showVerifyFPDialog();
+                                            }
                                         }
                                     }
                                 }
                         );
-
 
 
                     }
@@ -793,13 +857,14 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onSetTxFail() {
                         dissmisProgressDialog();
-                        AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.tip_set_tx_fail));
+                        GemmaToastUtils.showShortToast(getString(R.string.tip_set_tx_fail));
+                        //AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.tip_set_tx_fail));
                     }
 
                 });
     }
 
-    public void buildTransaction(String strSignature){
+    public void buildTransaction(String strSignature) {
         showProgressDialog(getString(R.string.eos_tip_transfer_trade_ing));
         List<String> signatures = new ArrayList<>();
         strSignature = strSignature.substring(0, strSignature.length() - 1);
@@ -827,7 +892,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      * 显示通过蓝牙卡验证指纹dialog
      */
     private void showVerifyFPDialog() {
-        if (verifyDialog != null) { return; }
+        if (verifyDialog != null && verifyDialog.isShowing()) {
+            return;
+        }
+
         int[] listenedItems = {R.id.imv_back};
         verifyDialog = new CustomFullDialog(getActivity(),
                 R.layout.eos_dialog_transfer_bluetooth_finger_sure, listenedItems, false, Gravity.BOTTOM);
@@ -865,7 +933,9 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      * 显示按键确认dialog
      */
     private void showPowerConfirmTransferDialog() {
-        if (powerPressDialog != null) { return; }
+        if (powerPressDialog != null && powerPressDialog.isShowing()) {
+            return;
+        }
         int[] listenedItems = {R.id.imv_back};
         powerPressDialog = new CustomFullDialog(getActivity(),
                 R.layout.dialog_bluetooth_transfer_power_confirm, listenedItems, false, Gravity.BOTTOM);
@@ -875,6 +945,19 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 switch (view.getId()) {
                     case R.id.imv_back:
                         powerPressDialog.cancel();
+                        //abort sign
+                        DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
+                                new DeviceOperationManager.AbortSignCallback() {
+                                    @Override
+                                    public void onAbortSignSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onAbortSignFail() {
+
+                                    }
+                                });
                         break;
                     default:
                         break;
@@ -938,7 +1021,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         TextView tv_password = dialog.findViewById(R.id.et_password);
                         String password = tv_password.getText().toString();
                         pinDialog.cancel();
-                        showProgressDialog(getString(R.string.operate_deal_ing));
+                        showProgressDialog(getString(R.string.eos_tip_transfer_trade_ing));
                         DeviceOperationManager.getInstance().verifySignPin(TAG, deviceName, password,
                                 new DeviceOperationManager.VerifySignPinCallback() {
                                     @Override
@@ -949,7 +1032,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                                     @Override
                                                     public void onGetSignResultStart() {
                                                         dissmisProgressDialog();
-                                                        showPowerConfirmTransferDialog();
                                                         pinDialog.cancel();
                                                     }
 
@@ -967,14 +1049,24 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                                     }
 
                                                     @Override
-                                                    public void onGetSignResultUpdate(int errCode) {
+                                                    public void onGetSignResultUpdate(int statusCode) {
+                                                        if (statusCode == MiddlewareInterface.PAEW_RET_DEV_STATE_INVALID) {
+                                                            if (powerPressDialog != null && powerPressDialog.isShowing()) {
+                                                                powerPressDialog.dismiss();
+                                                            }
 
+                                                        } else if (statusCode == MiddlewareInterface.PAEW_RET_DEV_WAITING) {
+                                                            if (powerPressDialog == null || !powerPressDialog.isShowing()) {
+                                                                showPowerConfirmTransferDialog();
+                                                            }
+                                                        }
                                                     }
                                                 });
                                     }
 
                                     @Override
                                     public void onVerifyFail() {
+                                        dissmisProgressDialog();
                                         AlertUtil.showShortUrgeAlert(getActivity(), getString(R
                                                 .string.baseservice_pass_validate_ip_wrong_password));
 

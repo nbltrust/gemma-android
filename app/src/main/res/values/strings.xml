@@ -845,13 +845,13 @@
     <string name="tip_power_level_alert">请先将WOOKONG Bio充满电以确保顺利完成设备初始化</string>
     <string name="tip_fp_verify_fail">指纹验证失败，请调整位置再试</string>
 
-
-
     <string name="tip_fp_sign_fail">指纹签名失败，请重新尝试</string>
     <string name="tip_set_tx_fail">在Bio上保存交易信息失败，请重新尝试</string>
     <string name="tip_pin_verify_fail">验证失败，请重新尝试</string>
     <string name="tip_press_fp_confirm_transfer">请在WOOKONG Bio上仔细对比转账信息，按指纹以确认转账。</string>
-    <string name="tip_press_confirm_transfer">请在WOOKONG Bio上仔细对比转账信息，按电源键以确认转账。</string>    
+    <string name="tip_press_confirm_transfer">请在WOOKONG Bio上仔细对比转账信息，按电源键以确认转账。</string>
+
+    <string name="tip_bio_memo_invalid">备注最多15个字符，仅支持英文、数字、标点符号</string>
 
 
 </resources>

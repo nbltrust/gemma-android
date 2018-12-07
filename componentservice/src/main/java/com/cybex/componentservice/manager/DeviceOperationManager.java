@@ -1193,13 +1193,12 @@ public class DeviceOperationManager {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
 
-        deviceComm.abortSignThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
-        deviceComm.abortSignThread.setAbortSignWrapper(deviceComm.contextHandle,
-                0);
-        try {
-            queue.put(deviceComm.abortSignThread);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        //deviceComm.getSignResultThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+        if (!(deviceComm.getSignResultThread == null || deviceComm.getSignResultThread.getState() == Thread.State
+                .TERMINATED)){
+            (deviceComm.getSignResultThread).breakGetSignResultLoop();
+            deviceComm.getSignResultThread.setAbortSignWrapper(deviceComm.contextHandle, 0);
+            deviceComm.getSignResultThread.start();
         }
     }
 
@@ -2452,9 +2451,6 @@ public class DeviceOperationManager {
                 case BlueToothWrapper.MSG_GET_SIGN_RESULT_UPDATE:
                     LoggerManager.d(
                             "MSG_GET_SIGN_RESULT_UPDATE ",MiddlewareInterface.getReturnString(msg.arg1));
-                    BlueToothWrapper.SignReturnValue signUpdateReturnValue = (BlueToothWrapper.SignReturnValue)msg.obj;
-                    LoggerManager.d(
-                            "MSG_GET_SIGN_RESULT_FINISH retValue err code " + signUpdateReturnValue.getReturnValue());
 
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
@@ -2576,9 +2572,13 @@ public class DeviceOperationManager {
                         }
                     }
                     break;
+                case BlueToothWrapper.MSG_ABORT_SIGN_START:
+                    LoggerManager.d("MSG_ABORT_SIGN_START ");
+
                 case BlueToothWrapper.MSG_ABORT_SIGN_FINISH:
-                    LoggerManager.d(
-                            "MSG_ABORT_SIGN_FINISH  ");
+                    String returnStr = MiddlewareInterface.getReturnString(msg.arg1);
+                    LoggerManager.d("MSG_ABORT_SIGN_FINISH  Return Value:", returnStr);
+
                     break;
 
 
