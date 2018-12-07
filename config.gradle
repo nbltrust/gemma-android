@@ -116,7 +116,7 @@ ext {
                     'gms'                      : "com.google.android.gms:play-services-gcm:10.2.0",
                     'commonslang3'             : "org.apache.commons:commons-lang3:3.7",
                     'toasty'                   : "com.github.GrenderG:Toasty:1.2.5",
-                    'kprogresshud'             : "com.kaopiz:kprogresshud:1.1.0",
+                    'kprogresshud'             : "com.kaopiz:kprogresshud:1.2.0",
                     'androidjob'               : "com.evernote:android-job:1.2.2",
                     'tiny'                     : "com.zxy.android:tiny:0.1.0",
                     'recyclerviewadapterhelper': "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35",

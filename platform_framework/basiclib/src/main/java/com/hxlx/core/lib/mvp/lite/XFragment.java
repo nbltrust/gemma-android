@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -302,7 +303,11 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
                                 .setBackgroundColor(getResources().getColor(R.color.white))
                                 .setDimAmount(0.5f);
                     }
-                    kProgressHUD.setLabel(prompt, getResources().getColor(R.color.black_context));
+                    if(!TextUtils.isEmpty(prompt)){
+                        kProgressHUD.setLabel(prompt, getResources().getColor(R.color.black_context));
+                    }else{
+                        kProgressHUD.setLabel(null);
+                    }
                     kProgressHUD.show();
                 }
             });
