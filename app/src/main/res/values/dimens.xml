@@ -8,7 +8,7 @@
     <!-- 创建钱包页面 -->
     <dimen name="eos_checkBox_length">18dp</dimen>
     <dimen name="eos_checkBox_marginStart">35dp</dimen>
-    <dimen name="eos_checkBox_marginTop">15dp</dimen>
+    <dimen name="eos_checkBox_marginTop">12dp</dimen>
     <dimen name="eos_button_margin">32dp</dimen>
     <dimen name="eos_bubble_lookLength">6dp</dimen>
     <dimen name="eos_bubble_lookPosition">24dp</dimen>

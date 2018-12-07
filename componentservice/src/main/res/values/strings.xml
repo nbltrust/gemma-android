@@ -1,13 +1,32 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Common -->
     <string name="baseservice_app_name">GEMMA</string>
     <string name="baseservice_title">我是标题</string>
     <string name="baseservice_eos">EOS</string>
 
 
-
-
-
+    <!--edit wallet config-->
+    <string name="name_invalid" tools:ignore="ResourceName">创建失败，钱包名称已存在</string>
+    <string name="name_not_empty" tools:ignore="ResourceName">钱包名称不能为空</string>
+    <string name="pass_not_empty" tools:ignore="ResourceName">密码不能为空</string>
+    <string name="pass_lenth_invalid" tools:ignore="ResourceName">密码不符合规则</string>
+    <string name="password_no_match" tools:ignore="ResourceName">两次输入的密码不匹配，请重新输入</string>
+    <string name="repeat_input_pass" tools:ignore="ResourceName">请再次输入您的密码</string>
+    <string name="check_agreement" tools:ignore="ResourceName">请同意我们的服务协议</string>
+    <string name="tip_next_step" tools:ignore="ResourceName">下一步</string>
+    <string name="tip_set_password" tools:ignore="ResourceName">设置密码</string>
+    <string name="tip_create_wallet" tools:ignore="ResourceName">创建钱包</string>
+    <string name="tip_repeat_pass" tools:ignore="ResourceName">重复密码</string>
+    <string name="title_wallet_name" tools:ignore="ResourceName">钱包名称</string>
+    <string name="tip_walletname_hint" tools:ignore="ResourceName">请输入创建的钱包名称</string>
+    <string name="tip_walletname_error" tools:ignore="ResourceName">钱包名称与已有钱包重复，请修改</string>
+    <string name="tip_input_password" tools:ignore="ResourceName">最少8位长度，可混合大小写字母、数字及符号</string>
+    <string name="tip_repeat_password" tools:ignore="ResourceName">请再次输入您的密码</string>
+    <string name="tip_input_password_hint" tools:ignore="ResourceName">密码提示</string>
+    <string name="tip_pass_no_match" tools:ignore="ResourceName">密码不一致</string>
+    <string name="title_password_hint" tools:ignore="ResourceName">密码提示（可选）</string>
+    <string name="tip_agree" tools:ignore="ResourceName">我已阅读并同意</string>
+    <string name="tip_terms_of_service" tools:ignore="ResourceName"><u>服务协议</u></string>
 
 
     <!-- Permission Manage-->

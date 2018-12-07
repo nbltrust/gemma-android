@@ -37,6 +37,7 @@ public class BaseConst {
     public static final int WALLET_TYPE_BLUETOOTH = 2;
     public static final int WALLET_TYPE_PRIKEY_IMPORT = 3;
 
+    public static final String INITIAL_BIO_WALLET_NAME="WOOKONG BIO";
     public static final String INITIAL_WALLET_NAME="WOOKONG Wallet";
     public static final String INITIAL_WALLET_NAME_PREFIX="WOOKONG Wallet ";
     public static final String INITIAL_WALLET_INDEX_KEY="initial_wallet_index_key";

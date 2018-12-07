@@ -34,7 +34,7 @@
 
                     <TextView
                         android:id="@+id/tv_wallet_name"
-                        style="@style/walletmanage_text_title_config_wallet"
+                        style="@style/text_title_config_wallet"
                         android:text="@string/walletmanage_title_wallet_name"/>
 
                     <LinearLayout
@@ -44,7 +44,7 @@
 
                         <EditText
                             android:id="@+id/edt_wallet_name"
-                            style="@style/walletmanage_editText_config_wallet"
+                            style="@style/editText_config_wallet"
                             android:layout_weight="1"
                             android:inputType="text"
                             android:hint="@string/walletmanage_tip_walletname_hint"/>
@@ -65,7 +65,7 @@
 
                     <TextView
                         android:id="@+id/tv_set_pass"
-                        style="@style/walletmanage_text_title_config_wallet"
+                        style="@style/text_title_config_wallet"
                         android:text="@string/walletmanage_tip_set_password"/>
 
                     <LinearLayout
@@ -75,7 +75,7 @@
 
                         <EditText
                             android:id="@+id/edt_set_pass"
-                            style="@style/walletmanage_editText_config_wallet"
+                            style="@style/editText_config_wallet"
                             android:layout_weight="1"
                             android:hint="@string/walletmanage_tip_input_password"
                             android:inputType="textPassword"/>
@@ -104,7 +104,7 @@
 
                     <TextView
                         android:id="@+id/tv_repeat_pass"
-                        style="@style/walletmanage_text_title_config_wallet"
+                        style="@style/text_title_config_wallet"
                         android:layout_marginTop="@dimen/dimen_10"
                         android:text="@string/walletmanage_tip_repeat_pass"/>
 
@@ -115,7 +115,7 @@
 
                         <EditText
                             android:id="@+id/et_repeat_pass"
-                            style="@style/walletmanage_editText_config_wallet"
+                            style="@style/editText_config_wallet"
                             android:layout_weight="1"
                             android:hint="@string/walletmanage_tip_repeat_password"
                             android:inputType="textPassword"/>
@@ -146,7 +146,7 @@
 
                     <TextView
                         android:id="@+id/tv_pass_hint"
-                        style="@style/walletmanage_text_title_config_wallet"
+                        style="@style/text_title_config_wallet"
                         android:layout_marginTop="@dimen/dimen_10"
                         android:text="@string/walletmanage_title_password_hint"/>
 
@@ -157,7 +157,7 @@
 
                         <EditText
                             android:id="@+id/edt_pass_hint"
-                            style="@style/walletmanage_editText_config_wallet"
+                            style="@style/editText_config_wallet"
                             android:layout_weight="1"
                             android:hint="@string/walletmanage_tip_input_password_hint"/>
 

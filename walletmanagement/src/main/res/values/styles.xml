@@ -5,31 +5,31 @@
     <style name="walletmanage_AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <!-- 配置钱包页面 -->
-    <style name="walletmanage_text_title_config_wallet">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/common_page_content_padding</item>
-        <item name="android:layout_marginEnd">@dimen/common_page_content_padding</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/font_3.5</item>
-        <item name="android:textColor">@color/black_context</item>
-        <item name="android:layout_marginTop">20dp</item>
-    </style>
+    <!--<style name="text_title_config_wallet">-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+        <!--<item name="android:layout_marginStart">@dimen/common_page_content_padding</item>-->
+        <!--<item name="android:layout_marginEnd">@dimen/common_page_content_padding</item>-->
+        <!--<item name="android:gravity">center_vertical</item>-->
+        <!--<item name="android:textSize">@dimen/font_3.5</item>-->
+        <!--<item name="android:textColor">@color/black_context</item>-->
+        <!--<item name="android:layout_marginTop">20dp</item>-->
+    <!--</style>-->
 
-    <style name="walletmanage_editText_config_wallet">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dimen_50</item>
-        <item name="android:textColor">@color/black_content</item>
-        <item name="android:textSize">@dimen/font_4</item>
-        <item name="android:textColorHint">@color/grey_content</item>
-        <item name="android:theme">@style/myEditText</item>
-        <item name="android:background">@null</item>
-        <item name="android:textCursorDrawable">@drawable/cursor_custom</item>
-        <item name="android:layout_marginEnd">5dp</item>
-        <item name="android:layout_marginStart">@dimen/common_page_content_padding</item>
-        <item name="android:textStyle">normal</item>
+    <!--<style name="editText_config_wallet">-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+        <!--<item name="android:layout_height">@dimen/dimen_50</item>-->
+        <!--<item name="android:textColor">@color/black_content</item>-->
+        <!--<item name="android:textSize">@dimen/font_4</item>-->
+        <!--<item name="android:textColorHint">@color/grey_content</item>-->
+        <!--<item name="android:theme">@style/myEditText</item>-->
+        <!--<item name="android:background">@null</item>-->
+        <!--<item name="android:textCursorDrawable">@drawable/cursor_custom</item>-->
+        <!--<item name="android:layout_marginEnd">5dp</item>-->
+        <!--<item name="android:layout_marginStart">@dimen/common_page_content_padding</item>-->
+        <!--<item name="android:textStyle">normal</item>-->
 
-    </style>
+    <!--</style>-->
 
     <!-- 通用EditText样式 -->
     <style name="walletmanage_myEditText">
