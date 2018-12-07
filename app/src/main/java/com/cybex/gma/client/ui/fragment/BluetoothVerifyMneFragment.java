@@ -193,7 +193,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
     private void doValidateResult() {
         if (EmptyUtils.isEmpty(unSelectedLabels)) {
             if (EmptyUtils.isNotEmpty(selectedLabels) && EmptyUtils.isNotEmpty(answerLabels)) {
-                if (CollectionUtils.isEqualCollection(selectedLabels, answerLabels)) {
+                if (CollectionUtils.isEqualListWithSequence(selectedLabels, answerLabels)) {
                     showProgressDialog(getString(R.string.mnemonic_checking));
                     //app验证通过，发送给硬件验证，并且获取硬件返回的公钥
                     if (values != null) {
