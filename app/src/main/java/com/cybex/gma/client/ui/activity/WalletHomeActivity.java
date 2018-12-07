@@ -31,6 +31,7 @@ import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.componentservice.utils.SizeUtil;
+import com.cybex.componentservice.utils.WookongConnectHelper;
 import com.cybex.componentservice.widget.EthCardView;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -178,6 +179,28 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             case R.id.iv_settings:
                 UISkipMananger.launchSettings(WalletHomeActivity.this);
                 break;
+        }
+
+    }
+
+
+    @OnClick({R.id.view_wookong_status})
+    public void onWookongStatusClick(View view) {
+        if(curWallet!=null&&curWallet.getWalletType()==MultiWalletEntity.WALLET_TYPE_HARDWARE){
+            boolean deviceConnectted = DeviceOperationManager.getInstance().isDeviceConnectted(curWallet.getBluetoothDeviceName());
+            if(!deviceConnectted){
+                WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(
+                        this.toString(), curWallet, this);
+                wookongConnectHelper.startConnectDevice(new WookongConnectHelper.ConnectWookongBioCallback() {
+                    @Override
+                    public void onConnectSuccess() {
+                    }
+
+                    @Override
+                    public void onConnectFail() {
+                    }
+                });
+            }
         }
 
     }
