@@ -128,4 +128,5 @@ public class ApiPath {
 
     //收支详情页面使用默认memo时使用的推荐下载连接
     public static final String WOOKONG_HOME_PAGE = "https://wooko.ng";
+    public static final String EOS_SPARK = "https://api.eospark.com";
 }

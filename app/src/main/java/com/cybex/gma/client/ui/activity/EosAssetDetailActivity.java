@@ -296,7 +296,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 getP().requestHistory(
                         currentEosName,
                         page,
-                        ParamConstants.TRANSFER_HISTORY_SIZE,//20
+                        ParamConstants.TRANSFER_HISTORY_SIZE,//5
                         ParamConstants.SYMBOL_EOS,
                         ParamConstants.CONTRACT_EOS,
                         true);
@@ -374,13 +374,20 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         }
     }
 
+    /**
+     * 第一次请求和刷新数据方法
+     * @param dataList
+     */
     public void refreshData(List<TransferHistory> dataList) {
+
         if (EmptyUtils.isEmpty(dataList)) {
             dataList = new ArrayList<>();
         }
+
         curDataList = dataList;
         List<EosTransactionEntity> entityList = getP().convertTransactionData(dataList);
         getP().saveTransactionData(entityList);
+
         curTransactionList = entityList;
 
         if (mAdapter != null && EmptyUtils.isNotEmpty(mAdapter.getData())) {
@@ -411,5 +418,18 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     protected void onDestroy() {
         super.onDestroy();
         Alerter.clearCurrent(this);
+    }
+
+
+    /**
+     * 从数据库中查询某个TransferHistory List对应的EosTransaction List
+     */
+    public void queryHistoryList(List<TransferHistory> dataList){
+        List<EosTransactionEntity> transactionList = new ArrayList<>();
+        List<EosTransactionEntity> actionList = new ArrayList<>();
+
+        for (TransferHistory curTransfer : dataList){
+
+        }
     }
 }

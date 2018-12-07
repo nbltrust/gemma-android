@@ -121,7 +121,7 @@ public interface ParamConstants {
     int EOSNAME_CONFIRMING = 1;
     int EOSNAME_ACTIVATED = 2;
 
-    int TRANSFER_HISTORY_SIZE = 10;//每次请求拿20条数据
+    int TRANSFER_HISTORY_SIZE = 5;//每次请求拿20条数据
 
     String SYMBOL_EOS = "EOS";
     String CONTRACT_EOS = "eosio.token";

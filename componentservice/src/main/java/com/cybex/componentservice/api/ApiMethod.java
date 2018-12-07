@@ -113,4 +113,6 @@ public interface ApiMethod {
      * 微信支付支付下单接口
      */
     String WXPAY_PLACE_ORDER = "/api/v1/pay/order/";
+
+    String EOS_SPARK_API_GET_TRANSACTION = "/api?action=get_transaction_detail_info&apikey=2d0b90f1d4b59d5b24369762608cf681&module=transaction&trx_id=";
 }

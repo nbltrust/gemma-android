@@ -10,6 +10,7 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EosTransactionEntityDaoImpl implements EosTransactionEntityDao{
@@ -37,11 +38,11 @@ public class EosTransactionEntityDaoImpl implements EosTransactionEntityDao{
     }
 
     @Override
-    public EosTransactionEntity getEosTransactionEntityByHash(String txId) {
-        EosTransactionEntity entity = SQLite.select().from(EosTransactionEntity.class)
+    public List<EosTransactionEntity> getEosTransactionEntityListByHash(String txId) {
+        List<EosTransactionEntity> entityList =  SQLite.select().from(EosTransactionEntity.class)
                 .where(EosTransactionEntity_Table.transactionHash.eq(txId))
-                .querySingle();
-        return entity;
+                .queryList();
+        return entityList;
     }
 
     @Override

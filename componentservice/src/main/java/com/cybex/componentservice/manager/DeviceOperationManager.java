@@ -1663,8 +1663,7 @@ public class DeviceOperationManager {
                                 callbackMaps.get(tag).verifyPinCallback.onPinLocked();
                             }
                         }
-                    }
-                    else {
+                    } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();

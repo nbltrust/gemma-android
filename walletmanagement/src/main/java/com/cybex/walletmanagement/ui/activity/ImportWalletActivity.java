@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.cybex.base.view.tablayout.SlidingTabLayout;
 import com.cybex.componentservice.manager.PermissionManager;
 import com.cybex.componentservice.manager.TabLayoutManager;
+import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.componentservice.utils.listener.PermissionResultListener;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.event.BarcodeScanEvent;

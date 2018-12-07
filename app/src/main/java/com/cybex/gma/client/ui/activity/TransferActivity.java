@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.fragment.EosTokenTransferFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -33,6 +34,7 @@ public class TransferActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        SoftHideKeyBoardUtil.assistActivity(TransferActivity.this);
     }
 
     @Override

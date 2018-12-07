@@ -12,15 +12,15 @@ import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
-import com.cybex.gma.client.ui.model.request.GetTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.GetEosTokensResult;
+import com.cybex.gma.client.ui.model.response.GetEosTransactionResult;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.model.response.TransferHistoryList;
 import com.cybex.gma.client.ui.model.response.TransferHistoryListData;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
 import com.cybex.gma.client.ui.request.GetEosTokensRequest;
-import com.cybex.gma.client.ui.request.GetTransactionRequest;
+import com.cybex.gma.client.ui.request.GetEosTransactionRequest;
 import com.cybex.gma.client.ui.request.TransferHistoryListRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
@@ -97,10 +97,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                                 GemmaToastUtils.showShortToast(getV().getString(R.string.no_more_data));
                                             } else {
                                                 getV().loadMoreData(historyList);
-                                                //循环请求获取当前Transaction的BlockNum
-//                                                for (TransferHistory curTransfer : historyList){
-//                                                    getTransaction(curTransfer.trx_id);
-//                                                }
+
                                             }
                                         }
 
@@ -244,57 +241,43 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
      */
 
     public void getTransaction(String txId) {
-        LoggerManager.d("Transaction id", txId);
-        GetTransactionReqParams reqParams = new GetTransactionReqParams();
-        reqParams.setid(txId);
-        String jsonParams = GsonUtils.objectToJson(reqParams);
-        new GetTransactionRequest(String.class)
-                .setJsonParams(jsonParams)
-                .getInfo(new StringCallback() {
+        //LoggerManager.d("Transaction id", txId);
+        new GetEosTransactionRequest(GetEosTransactionResult.class, txId)
+                .getTransaction(new JsonCallback<GetEosTransactionResult>() {
                     @Override
-                    public void onSuccess(Response<String> response) {
-                        if (response != null && response.body() != null) {
-                            String infoJson = response.body();
-                            try {
-                                JSONObject obj = new JSONObject(infoJson);
-                                if (obj != null) {
-                                    String block_num = obj.optString("block_num");
+                    public void onSuccess(Response<GetEosTransactionResult> response) {
+                        if (getV() != null) {
+                            if (response != null && response.body() != null) {
+                                GetEosTransactionResult.DataBeanX data = response.body().getData();
+                                if (data != null) {
+                                    //获取到
+                                    String block_num = String.valueOf(data.getBlock_num());
                                     LoggerManager.d("block_num", block_num);
-                                    //存入数据库
+                                    //存入数据库§
 
-                                    EosTransactionEntity eosTransactionEntity = new DBManager()
-                                            .getEosTransactionEntityDao().getEosTransactionEntityByHash(txId);
-                                    eosTransactionEntity.setBlockNumber(block_num);
-                                    getV().setTransactionStatus(eosTransactionEntity);
+                                    List<EosTransactionEntity> eosTransactionEntities = new DBManager()
+                                            .getEosTransactionEntityDao().getEosTransactionEntityListByHash(txId);
+
+                                    for (EosTransactionEntity curTransaction : eosTransactionEntities){
+                                        curTransaction.setBlockNumber(block_num);
+                                        getV().setTransactionStatus(curTransaction);
+                                    }
+
+                                } else {
+                                    //未获取到
+                                    GemmaToastUtils.showShortToast(
+                                            getV().getString(R.string.tip_cant_find_transaction));
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
                         }
                     }
 
                     @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-
-                        if (EmptyUtils.isNotEmpty(getV())) {
-//                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-//                            getV().dissmisProgressDialog();
-
-                            try {
-                                String err_info_string = response.getRawResponse().body().string();
-                                try {
-                                    JSONObject obj = new JSONObject(err_info_string);
-                                    JSONObject error = obj.optJSONObject("error");
-                                    String err_code = error.optString("code");
-                                    handleEosErrorCode(err_code);
-
-                                } catch (JSONException ee) {
-                                    ee.printStackTrace();
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                    public void onError(Response<GetEosTransactionResult> response) {
+                        if (getV() != null){
+                            super.onError(response);
+                            GemmaToastUtils.showShortToast(
+                                    getV().getString(R.string.tip_cant_find_transaction));
                         }
                     }
                 });
@@ -373,7 +356,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
             int resId = getV().getResources().getIdentifier(code, "string", package_name);
             String err_info = getV().getResources().getString(resId);
 
-            if (!Alerter.isShowing()){
+            if (!Alerter.isShowing()) {
                 Alerter.create(getV())
                         .setText(err_info)
                         .setContentGravity(Alert.TEXT_ALIGNMENT_GRAVITY)

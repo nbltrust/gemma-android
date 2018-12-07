@@ -85,7 +85,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                                 getV().finish();
                                 AppManager.getAppManager().finishAllActivity();
                                 UISkipMananger.launchCreateManage(getV());
-                                LibValidateJob.startPolling(10000);
+                                //LibValidateJob.startPolling(10000);
                             }
                         } else {
                             getV().showOnErrorInfo(data.code);
@@ -136,7 +136,7 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                             if (registerResult != null) {
                                 String txId = registerResult.txId;
                                 updateWalletConfirmStatus(walletEntity, txId);
-                                LibValidateJob.startPolling(10000);
+                                //LibValidateJob.startPolling(10000);
                             }
                         } else if(data.code == HttpConst.EOSNAME_INVALID) {
                             if (EmptyUtils.isNotEmpty(walletEntity) && walletEntity.getIsConfirmLib().equals

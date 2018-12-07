@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -440,7 +441,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                 switch (view.getId()) {
                     case R.id.tv_i_understand:
                         dialog.cancel();
-                        showConfirmAuthorDialog();
+                        //showConfirmAuthorDialog();
                         break;
                     default:
                         break;

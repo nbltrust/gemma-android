@@ -181,7 +181,7 @@
 //                            String binargs = result.binargs;
 //                            LoggerManager.d("abiStr: " + binargs);
 //
-//                            getInfo(from, privateKey, binargs);
+//                            getTransaction(from, privateKey, binargs);
 //
 //
 //                        } else {
@@ -199,9 +199,9 @@
 //     * @param privateKey
 //     * @param abiStr
 //     */
-//    public void getInfo(String from, String privateKey, String abiStr) {
+//    public void getTransaction(String from, String privateKey, String abiStr) {
 //        new EOSConfigInfoRequest(String.class)
-//                .getInfo(new StringCallback() {
+//                .getTransaction(new StringCallback() {
 //
 //                    @Override
 //                    public void onError(Response<String> response) {
@@ -346,7 +346,7 @@
 //     */
 //    public void bluetoothGetInfo(String from, String abiStr) {
 //        new EOSConfigInfoRequest(String.class)
-//                .getInfo(new StringCallback() {
+//                .getTransaction(new StringCallback() {
 //
 //                    @Override
 //                    public void onError(Response<String> response) {

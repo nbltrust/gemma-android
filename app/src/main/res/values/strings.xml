@@ -853,6 +853,7 @@
     <string name="tip_press_confirm_transfer">请在WOOKONG Bio上仔细对比转账信息，按电源键以确认转账。</string>
 
     <string name="tip_bio_memo_invalid">备注最多15个字符，仅支持英文、数字、标点符号</string>
+    <string name="tip_cant_find_transaction">部分交易记录状态查询失败，请稍后重试</string>
 
 
 </resources>

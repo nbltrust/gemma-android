@@ -15,6 +15,7 @@
             android:layout_marginLeft="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:src="@drawable/ic_mask_close"
             />
 
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="@string/eos_pair_fp_sure_tip"
+        android:text="@string/eos_connect_sure_tip"
         android:textColor="@color/black_context"
         android:textSize="14sp"
         />

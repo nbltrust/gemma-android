@@ -1,5 +1,6 @@
 package com.cybex.walletmanagement.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,6 +19,7 @@ import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.PasswordValidateHelper;
+import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.config.WalletManageConst;
@@ -25,6 +27,7 @@ import com.cybex.walletmanagement.event.QrResultEvent;
 import com.cybex.walletmanagement.event.SelectCoinTypeEvent;
 import com.cybex.walletmanagement.event.SelectImportWhichWalletEvent;
 import com.cybex.walletmanagement.ui.activity.ConfigNewWalletActivity;
+import com.cybex.walletmanagement.ui.activity.ImportWalletActivity;
 import com.cybex.walletmanagement.ui.activity.SelectImportWhichWalletActivity;
 import com.cybex.walletmanagement.ui.activity.SelectWalletCoinTypeActivity;
 import com.cybex.walletmanagement.ui.model.ImportWalletConfigBean;
@@ -293,7 +296,6 @@ public class ImportWalletPrivateKeyFragment extends XFragment {
         if (wallets.size() == 0) {
             labelWhichWallet.setVisibility(View.GONE);
         }
-
     }
 
     @Override

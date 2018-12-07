@@ -325,13 +325,16 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     } else {
                         etAmount.setHint(getString(R.string.eos_token_tip_transfer_no_decimal));
                     }
+                    etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
+                    etNote.setTypeface(Typeface.DEFAULT_BOLD);
+                    etAmount.setTypeface(Typeface.DEFAULT_BOLD);
 
                     etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         @Override
                         public void onFocusChange(View v, boolean hasFocus) {
                             if (hasFocus) {
                                 KeyboardUtils.showKeyBoard(getActivity(), etReceiverAccount);
-                                etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
+
                                 if (EmptyUtils.isEmpty(getCollectionAccount())) {
                                     tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
                                     tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
@@ -340,7 +343,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                 }
                             } else {
                                 KeyboardUtils.hideSoftInput(getActivity(), etReceiverAccount);
-                                etReceiverAccount.setTypeface(Typeface.DEFAULT);
+                                //etReceiverAccount.setTypeface(Typeface.DEFAULT);
                                 ivTransferAccountClear.setVisibility(View.GONE);
                                 validateButton();
                                 if (EmptyUtils.isEmpty(getCollectionAccount())) {
@@ -388,13 +391,12 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         public void onFocusChange(View v, boolean hasFocus) {
                             if (hasFocus) {
                                 KeyboardUtils.showKeyBoard(getActivity(), etNote);
-                                etNote.setTypeface(Typeface.DEFAULT_BOLD);
                                 if (EmptyUtils.isNotEmpty(getNote())) {
                                     ivTransferMemoClear.setVisibility(View.VISIBLE);
                                 }
                             } else {
                                 KeyboardUtils.hideSoftInput(getActivity(), etNote);
-                                etNote.setTypeface(Typeface.DEFAULT);
+                                //etNote.setTypeface(Typeface.DEFAULT);
                                 ivTransferMemoClear.setVisibility(View.GONE);
                             }
                         }
@@ -427,10 +429,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         public void onFocusChange(View v, boolean hasFocus) {
                             if (hasFocus) {
                                 KeyboardUtils.showKeyBoard(getActivity(), etAmount);
-                                etAmount.setTypeface(Typeface.DEFAULT_BOLD);
+
                             } else {
                                 KeyboardUtils.hideSoftInput(getActivity(), etAmount);
-                                etAmount.setTypeface(Typeface.DEFAULT);
+                                //etAmount.setTypeface(Typeface.DEFAULT);
                             }
                         }
                     });
@@ -455,7 +457,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         String collectionAccount = String.valueOf(etReceiverAccount.getText());
         String amount = String.valueOf(etAmount.getText());
 
-        if (!EmptyUtils.isEmpty(collectionAccount) && !EmptyUtils.isEmpty(amount) && isAccountNameValid()) {
+        if (!EmptyUtils.isEmpty(collectionAccount)
+                && !EmptyUtils.isEmpty(amount)
+                && isAccountNameValid()
+                && Float.valueOf(getAmount()) > 0) {
             btnTransferNextStep.setEnabled(true);
             btnTransferNextStep.setBackground(getActivity().getDrawable(R.drawable.shape_corner_button));
 
@@ -1001,84 +1006,93 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      */
     private void showConfirmPINDialog() {
         int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-        pinDialog = new CustomFullDialog(getActivity(),
-                R.layout.eos_dialog_bluetooth_input_transfer_password, listenedItems, false, false, Gravity.BOTTOM);
+        if (getActivity() != null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+            pinDialog = new CustomFullDialog(getActivity(),
+                    R.layout.eos_dialog_bluetooth_input_transfer_password, listenedItems, false, false, Gravity.BOTTOM);
 
-        pinDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
+            pinDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
 
-            }
-        });
-        pinDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
-            @Override
-            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.imc_cancel:
-                        dialog.cancel();
-                        break;
-                    case R.id.btn_confirm_authorization:
-                        TextView tv_password = dialog.findViewById(R.id.et_password);
-                        String password = tv_password.getText().toString();
-                        pinDialog.cancel();
-                        showProgressDialog(getString(R.string.eos_tip_transfer_trade_ing));
-                        DeviceOperationManager.getInstance().verifySignPin(TAG, deviceName, password,
-                                new DeviceOperationManager.VerifySignPinCallback() {
-                                    @Override
-                                    public void onVerifySuccess() {
-                                        DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
-                                                MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_PIN,
-                                                new DeviceOperationManager.SetGetSignResultCallback() {
-                                                    @Override
-                                                    public void onGetSignResultStart() {
-                                                        dissmisProgressDialog();
-                                                        pinDialog.cancel();
-                                                    }
+                }
+            });
+            pinDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+                @Override
+                public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                    switch (view.getId()) {
+                        case R.id.imc_cancel:
+                            dialog.cancel();
+                            break;
+                        case R.id.btn_confirm_authorization:
+                            TextView tv_password = dialog.findViewById(R.id.et_password);
+                            String password = tv_password.getText().toString();
+                            if (password.equals("")){
+                                GemmaToastUtils.showShortToast(getString(R.string.eos_tip_please_input_pass));
+                                return;
+                            }
+                            showProgressDialog(getString(R.string.eos_tip_transfer_trade_ing));
 
-                                                    @Override
-                                                    public void onGetSignResultSuccess(String strSignature) {
-                                                        buildTransaction(strSignature);
-                                                        powerPressDialog.cancel();
-                                                    }
+                            DeviceOperationManager.getInstance().verifySignPin(TAG, deviceName, password,
+                                    new DeviceOperationManager.VerifySignPinCallback() {
+                                        @Override
+                                        public void onVerifySuccess() {
+                                            pinDialog.cancel();
+                                            DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
+                                                    MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_PIN,
+                                                    new DeviceOperationManager.SetGetSignResultCallback() {
+                                                        @Override
+                                                        public void onGetSignResultStart() {
+                                                            dissmisProgressDialog();
+                                                            pinDialog.cancel();
+                                                        }
 
-                                                    @Override
-                                                    public void onGetSignResultFail(int status) {
-                                                        AlertUtil.showShortUrgeAlert(getActivity(), getString(R
-                                                                .string.tip_pin_verify_fail));
-                                                        powerPressDialog.cancel();
-                                                    }
+                                                        @Override
+                                                        public void onGetSignResultSuccess(String strSignature) {
+                                                            buildTransaction(strSignature);
+                                                            powerPressDialog.cancel();
+                                                        }
 
-                                                    @Override
-                                                    public void onGetSignResultUpdate(int statusCode) {
-                                                        if (statusCode == MiddlewareInterface.PAEW_RET_DEV_STATE_INVALID) {
-                                                            if (powerPressDialog != null && powerPressDialog.isShowing()) {
-                                                                powerPressDialog.dismiss();
-                                                            }
+                                                        @Override
+                                                        public void onGetSignResultFail(int status) {
+                                                            AlertUtil.showShortUrgeAlert(getActivity(), getString(R
+                                                                    .string.tip_pin_verify_fail));
+                                                            powerPressDialog.cancel();
+                                                        }
 
-                                                        } else if (statusCode == MiddlewareInterface.PAEW_RET_DEV_WAITING) {
-                                                            if (powerPressDialog == null || !powerPressDialog.isShowing()) {
-                                                                showPowerConfirmTransferDialog();
+                                                        @Override
+                                                        public void onGetSignResultUpdate(int statusCode) {
+                                                            if (statusCode == MiddlewareInterface.PAEW_RET_DEV_STATE_INVALID) {
+                                                                if (powerPressDialog != null && powerPressDialog.isShowing()) {
+                                                                    powerPressDialog.dismiss();
+                                                                }
+
+                                                            } else if (statusCode == MiddlewareInterface.PAEW_RET_DEV_WAITING) {
+                                                                if (powerPressDialog == null || !powerPressDialog.isShowing()) {
+                                                                    showPowerConfirmTransferDialog();
+                                                                }
                                                             }
                                                         }
-                                                    }
-                                                });
-                                    }
+                                                    });
+                                        }
 
-                                    @Override
-                                    public void onVerifyFail() {
-                                        dissmisProgressDialog();
-                                        AlertUtil.showShortUrgeAlert(getActivity(), getString(R
-                                                .string.baseservice_pass_validate_ip_wrong_password));
+                                        @Override
+                                        public void onVerifyFail() {
+                                            dissmisProgressDialog();
+                                            GemmaToastUtils.showShortToast(getString(R
+                                                    .string.baseservice_pass_validate_ip_wrong_password));
 
-                                    }
-                                });
-                        break;
-                    default:
-                        break;
+                                        }
+                                    });
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-        });
-        pinDialog.show();
+            });
+            pinDialog.show();
+        }
+
 
     }
 }

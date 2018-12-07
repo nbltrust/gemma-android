@@ -1005,6 +1005,7 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
                         break;
                     case R.id.btn_create_wallet:
                         //验证电量
+                        dialog.cancel();
                         showProgressDialog(getString(R.string.creating_wookong_wallet));
                         WookongUtils.validatePowerLevel(ParamConstants.POWER_LEVEL_ALERT_INIT,
                                 new WookongUtils.ValidatePowerLevelCallback() {
@@ -1055,11 +1056,11 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
                                     }
                                 });
 
-                        dialog.cancel();
                         break;
 
                     case R.id.btn_import_mne:
                         //验证电量
+                        dialog.cancel();
                         showProgressDialog(getString(R.string.creating_wookong_wallet));
                         WookongUtils.validatePowerLevel(ParamConstants.POWER_LEVEL_ALERT_INIT,
                                 new WookongUtils.ValidatePowerLevelCallback() {
