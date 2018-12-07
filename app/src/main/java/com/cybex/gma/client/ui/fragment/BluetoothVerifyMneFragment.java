@@ -1,12 +1,10 @@
 package com.cybex.gma.client.ui.fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
@@ -15,15 +13,13 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
-import com.cybex.componentservice.event.CloseInitialPageEvent;
 import com.cybex.componentservice.event.WookongInitialedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.componentservice.manager.RxJavaManager;
+import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.CollectionUtils;
 import com.cybex.componentservice.utils.SizeUtil;
-import com.cybex.componentservice.utils.TSnackbarUtil;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.componentservice.widget.LabelsView;
 import com.cybex.gma.client.BuildConfig;
@@ -31,22 +27,15 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.presenter.BluetoothVerifyPresenter;
-import com.extropies.common.MiddlewareInterface;
-import com.hxlx.core.lib.common.async.TaskManager;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
-import com.hxlx.core.lib.utils.SPUtils;
-import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.trycatch.mysnackbar.Prompt;
-
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -144,7 +133,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                     answerLabels.addAll(tempLabels);
 
                     //打乱顺序
-                    //Collections.shuffle(tempLabels);
+//                    Collections.shuffle(tempLabels);
 
                     viewShowMne.setLabels(tempLabels);
                     unSelectedLabels.addAll(tempLabels);
@@ -186,6 +175,22 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         });
     }
 
+    private void resetMnemonicsUI(){
+
+        List<String> tempLabels = new ArrayList<>();
+        tempLabels.addAll(answerLabels);
+        //打乱顺序
+//        Collections.shuffle(tempLabels);
+        viewShowMne.setLabels(tempLabels);
+        unSelectedLabels.clear();
+        unSelectedLabels.addAll(tempLabels);
+        selectedLabels.clear();
+        isInit=true;
+        initAboveLabelView();
+        updateAboveLabelView(selectedLabels);
+        updateBottomLabelView(unSelectedLabels);
+    }
+
 
     /**
      * 执行验证助记词
@@ -214,8 +219,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                                 @Override
                                 public void onCheckSuccess() {
                                     LoggerManager.d("mne validate success...");
-                                    TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_success),
-                                            Prompt.SUCCESS);
+                                    AlertUtil.showLongSuccessAlert(context,getString(R.string.eos_mne_validate_success));
                                     //create bluetoothwallet
                                     initWookongBioWallet(strDestMnes);
                                 }
@@ -225,22 +229,22 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                                     if (status == -2147483642) {
                                         LoggerManager.d("device disconnected...");
                                         dissmisProgressDialog();
-                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_warn),
-                                                Prompt.WARNING);
+                                        AlertUtil.showLongUrgeAlert(context,getString(R.string.eos_mne_validate_warn));
 
                                     } else {
                                         LoggerManager.d("mne validate error...");
                                         dissmisProgressDialog();
-                                        TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
-                                                Prompt.ERROR);
+                                        AlertUtil.showLongUrgeAlert(context,getString(R.string.eos_mne_validate_failed));
+
                                     }
+                                    resetMnemonicsUI();
                                 }
                             });
                         }
                     }
                 } else {
-                    TSnackbarUtil.showTip(viewRoot, getString(R.string.eos_mne_validate_failed),
-                            Prompt.ERROR);
+                    resetMnemonicsUI();
+                    AlertUtil.showLongUrgeAlert(context,getString(R.string.eos_mne_validate_failed));
                 }
             }
         }
@@ -386,6 +390,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         viewClickToShowMne.setSelectType(LabelsView.SelectType.NONE);
         viewClickToShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
         viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.black_content));
+        viewClickToShowMne.setLabelTextStyle(true);
 
         viewClickToShowMne.setLabelBackgroundDrawable(getResources().getDrawable(R.drawable.shape_corner_with_black_stroke));
 //        viewClickToShowMne.setWordMargin(30);
@@ -411,6 +416,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         viewClickToShowMne.setSelectType(LabelsView.SelectType.NONE);
         viewClickToShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
         viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.black_content));
+        viewClickToShowMne.setLabelTextStyle(true);
 
         int horizontalPadding = SizeUtil.dp2px(15);
         int verticalPadding = SizeUtil.dp2px(5.5f);

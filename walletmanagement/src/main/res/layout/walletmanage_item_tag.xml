@@ -6,6 +6,7 @@
     android:layout_marginBottom="5dp"
     android:background="@null"
     android:textSize="@dimen/font_4"
+    android:textStyle="bold"
     android:textColor="@color/black_content">
 
 </TextView>

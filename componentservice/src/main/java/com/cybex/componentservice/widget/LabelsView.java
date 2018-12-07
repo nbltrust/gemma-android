@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class LabelsView extends ViewGroup implements View.OnClickListener {
     private Context mContext;
 
     private ColorStateList mTextColor;
+    private boolean isBold;
     private float mTextSize;
     private Drawable mLabelBg;
     private int mTextPaddingLeft;
@@ -405,6 +407,7 @@ public class LabelsView extends ViewGroup implements View.OnClickListener {
         label.setPadding(mTextPaddingLeft, mTextPaddingTop, mTextPaddingRight, mTextPaddingBottom);
         label.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
         label.setTextColor(mTextColor != null ? mTextColor : ColorStateList.valueOf(0xFF000000));
+        label.setTypeface(isBold?Typeface.defaultFromStyle(Typeface.BOLD):Typeface.defaultFromStyle(Typeface.NORMAL));
         //设置给label的背景(Drawable)是一个Drawable对象的拷贝，
         // 因为如果所有的标签都共用一个Drawable对象，会引起背景错乱。
         label.setBackgroundDrawable(mLabelBg.getConstantState().newDrawable());
@@ -715,6 +718,19 @@ public class LabelsView extends ViewGroup implements View.OnClickListener {
      */
     public void setLabelTextColor(int color) {
         setLabelTextColor(ColorStateList.valueOf(color));
+    }
+
+    /**
+     * 设置标签的文字style
+     *
+     */
+    public void setLabelTextStyle(boolean isBold) {
+        this.isBold = isBold;
+        int count = getChildCount();
+        for (int i = 0; i < count; i++) {
+            TextView label = (TextView) getChildAt(i);
+            label.setTypeface(isBold?Typeface.defaultFromStyle(Typeface.BOLD):Typeface.defaultFromStyle(Typeface.NORMAL));
+        }
     }
 
     /**

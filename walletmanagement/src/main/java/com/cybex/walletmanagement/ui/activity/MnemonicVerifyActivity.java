@@ -121,6 +121,23 @@ public class MnemonicVerifyActivity extends XActivity {
         });
     }
 
+
+    private void resetMnemonicsUI(){
+
+        List<String> tempLabels = new ArrayList<>();
+        tempLabels.addAll(answerLabels);
+        //打乱顺序
+        Collections.shuffle(tempLabels);
+        viewShowMne.setLabels(tempLabels);
+        unSelectedLabels.clear();
+        unSelectedLabels.addAll(tempLabels);
+        selectedLabels.clear();
+        isInit=true;
+        initAboveLabelView();
+        updateAboveLabelView(selectedLabels);
+        updateBottomLabelView(unSelectedLabels);
+    }
+
     /**
      * 执行验证助记词
      */
@@ -154,6 +171,7 @@ public class MnemonicVerifyActivity extends XActivity {
 
                 } else {
                     AlertUtil.showLongUrgeAlert(context,getString(R.string.walletmanage_mnemonic_validate_error));
+                    resetMnemonicsUI();
                 }
             }
 
@@ -176,6 +194,7 @@ public class MnemonicVerifyActivity extends XActivity {
         viewClickToShowMne.setSelectType(LabelsView.SelectType.NONE);
         viewClickToShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
         viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.black_content));
+        viewClickToShowMne.setLabelTextStyle(true);
     }
 
     /**
@@ -193,6 +212,7 @@ public class MnemonicVerifyActivity extends XActivity {
         viewClickToShowMne.setSelectType(LabelsView.SelectType.NONE);
         viewClickToShowMne.setLabelTextSize(getResources().getDimension(R.dimen.font_4));
         viewClickToShowMne.setLabelTextColor(getResources().getColor(R.color.black_content));
+        viewClickToShowMne.setLabelTextStyle(true);
 
         int horizontalPadding = SizeUtil.dp2px(15);
         int verticalPadding = SizeUtil.dp2px(5.5f);
