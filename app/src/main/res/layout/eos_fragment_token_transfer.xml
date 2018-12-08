@@ -8,8 +8,9 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
+    <include layout="@layout/ui_navibar"/>
+
     <ScrollView
-        android:layout_marginTop="24dp"
         android:id="@+id/root_scrollview_token"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,15 +22,13 @@
             android:background="@color/whiteTwo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_page_content_padding"
+            android:layout_marginEnd="@dimen/common_page_content_padding"
             android:orientation="vertical">
-
-            <include layout="@layout/ui_navibar"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
@@ -42,11 +41,10 @@
                         android:id="@+id/tv_title_receiver"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="@string/eos_title_receiver"
                         android:textColor="@color/black_title"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_3.5"
                         />
 
                     <LinearLayout
@@ -62,7 +60,6 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginStart="15dp"
                             android:background="@null"
                             android:hint="@string/eos_account_name"
                             android:maxLength="12"
@@ -82,10 +79,9 @@
                 </RelativeLayout>
 
                 <View
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="14dp"
                     android:background="@color/eos_horiontal_line"/>
 
 
@@ -98,11 +94,10 @@
                         android:id="@+id/tv_title_pay_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="@string/eos_title_payer_account"
                         android:textColor="@color/black_title"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_3.5"
                         />
 
                     <RelativeLayout
@@ -126,7 +121,6 @@
                             android:id="@+id/tv_pay_account"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_15"
                             android:layout_toEndOf="@+id/imv_wookong_logo"
                             android:singleLine="true"
                             android:textColor="@color/black_title"
@@ -150,10 +144,9 @@
                 </RelativeLayout>
 
                 <View
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="14dp"
                     android:background="@color/eos_horiontal_line"/>
 
                 <RelativeLayout
@@ -165,11 +158,10 @@
                         android:id="@+id/tv_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="@string/eos_title_fund"
                         android:textColor="@color/black_title"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_3.5"
                         />
 
                     <TextView
@@ -183,15 +175,13 @@
                         android:singleLine="true"
                         android:text="@string/eos_remain_balance_zero"
                         android:textColor="@color/black_context"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/font_3"
                         />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@id/tv_amount"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:layout_marginTop="14dp"
                         android:orientation="horizontal">
 
@@ -222,10 +212,9 @@
                 </RelativeLayout>
 
                 <View
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="14dp"
                     android:background="@color/eos_horiontal_line"/>
 
                 <RelativeLayout
@@ -238,19 +227,16 @@
                         android:id="@+id/tv_note"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:text="@string/eos_title_memo_optional"
                         android:textColor="@color/black_title"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_3.5"
                         />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_note"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:orientation="horizontal">
 
                         <com.cybex.componentservice.widget.EditTextWithScrollView
@@ -277,11 +263,9 @@
                 </RelativeLayout>
 
                 <View
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="14dp"
-                    android:layout_marginBottom="18dp"
                     android:background="@color/eos_horiontal_line"/>
 
             </LinearLayout>

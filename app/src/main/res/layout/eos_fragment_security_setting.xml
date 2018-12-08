@@ -1,163 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:title="http://schemas.android.com/apk/res-auto"
-    android:background="@color/whiteTwo"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include
-        layout="@layout/ui_navibar">
-    </include>
+    android:layout_height="match_parent"
+    android:background="@color/whiteTwo"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10">
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/common_page_content_padding"
+        android:layout_marginStart="@dimen/common_page_content_padding"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/ui_navibar">
+        </include>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/eos_card_height"
-            android:visibility="gone"
-            android:layout_marginStart="@dimen/dimen_20"
-            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             >
 
-            <TextView
-                android:text="@string/face"
-                android:layout_width="0dp"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/font_3.5"
-                android:textColor="@color/black_title"
-                android:layout_marginStart="@dimen/dimen_10"
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_height="match_parent"
-                android:layout_weight="6"/>
-            
-            <com.cybex.base.view.switchbutton.SwitchButton
-                android:id="@+id/switch_face"
-                style="@style/mySwitchButton"
-                title:sb_background="#D5D5D5"
-                title:sb_show_indicator="false"
-                title:sb_checked_color="@color/cornflowerBlueTwo"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/eos_card_height"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_weight="6"
+                    android:gravity="center_vertical"
+                    android:text="@string/face"
+                    android:textColor="@color/black_title"
+                    android:textSize="@dimen/font_3.5"/>
+
+                <com.cybex.base.view.switchbutton.SwitchButton
+                    android:id="@+id/switch_face"
+                    style="@style/mySwitchButton"
+                    title:sb_background="#D5D5D5"
+                    title:sb_checked_color="@color/cornflowerBlueTwo"
+                    title:sb_show_indicator="false"
+                    />
+
+            </LinearLayout>
+
+            <View
+                style="@style/common_divider"
+                android:layout_marginEnd="10dp"
+                android:visibility="gone">
+            </View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/eos_card_height"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_weight="6"
+                    android:gravity="center_vertical"
+                    android:text="@string/fingerprints"
+                    android:textColor="@color/black_title"
+                    android:textSize="@dimen/font_3.5"/>
+
+                <com.cybex.base.view.switchbutton.SwitchButton
+                    android:id="@+id/switch_fingerprint"
+                    style="@style/mySwitchButton"
+                    title:sb_background="#D5D5D5"
+                    title:sb_checked_color="@color/cornflowerBlueTwo"
+                    title:sb_show_indicator="false"
+                    />
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             style="@style/common_divider"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp">
+            android:layout_marginEnd="10dp">
         </View>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/eos_card_height"
-            android:layout_marginStart="@dimen/dimen_20"
-            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
+            android:orientation="vertical"
             >
 
-            <TextView
-                android:text="@string/fingerprints"
-                android:layout_width="0dp"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/font_3.5"
-                android:textColor="@color/black_title"
-                android:layout_marginStart="@dimen/dimen_10"
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_height="match_parent"
-                android:layout_weight="6"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/eos_card_height"
+                android:orientation="horizontal"
+                >
 
-            <com.cybex.base.view.switchbutton.SwitchButton
-                android:id="@+id/switch_fingerprint"
-                style="@style/mySwitchButton"
-                title:sb_background="#D5D5D5"
-                title:sb_show_indicator="false"
-                title:sb_checked_color="@color/cornflowerBlueTwo"
-                />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_weight="6"
+                    android:gravity="center_vertical"
+                    android:text="@string/pattern"
+                    android:textColor="@color/black_title"
+                    android:textSize="@dimen/font_3.5"/>
+
+                <com.cybex.base.view.switchbutton.SwitchButton
+                    android:id="@+id/switch_pattern"
+                    style="@style/mySwitchButton"
+                    title:sb_background="#D5D5D5"
+                    title:sb_checked_color="@color/cornflowerBlueTwo"
+                    title:sb_show_indicator="false"
+                    />
+
+            </LinearLayout>
+
+            <View
+                style="@style/common_divider"
+                android:layout_marginEnd="@dimen/dimen_10">
+            </View>
+
+            <com.allen.library.SuperTextView
+                android:id="@+id/superTextView_change_pattern"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/eos_card_height"
+                android:visibility="gone"
+                title:sLeftTextColor="@color/black_title"
+                title:sLeftTextSize="@dimen/font_3.5"
+                title:sLeftTextString="@string/changePattern"
+                title:sRightTvDrawableRight="@drawable/ic_arrow"
+                title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
+                title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
+                title:sShapeSelectorPressedColor="@color/item_pressed"
+                title:sUseShape="true"
+                title:sLeftViewMarginLeft="0dp"
+                >
+
+            </com.allen.library.SuperTextView>
+
+            <View
+                style="@style/common_divider"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:visibility="gone">
+            </View>
 
         </LinearLayout>
-
-    </LinearLayout>
-
-    <View
-        style="@style/common_divider"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp">
-    </View>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginEnd="@dimen/dimen_20"
-        >
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/eos_card_height"
-            >
-
-            <TextView
-                android:text="@string/pattern"
-                android:layout_width="0dp"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/font_3.5"
-                android:textColor="@color/black_title"
-                android:layout_marginStart="@dimen/dimen_10"
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_height="match_parent"
-                android:layout_weight="6"/>
-
-            <com.cybex.base.view.switchbutton.SwitchButton
-                android:id="@+id/switch_pattern"
-                style="@style/mySwitchButton"
-                title:sb_background="#D5D5D5"
-                title:sb_show_indicator="false"
-                title:sb_checked_color="@color/cornflowerBlueTwo"
-                />
-
-        </LinearLayout>
-
-        <View
-            style="@style/common_divider"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:layout_marginEnd="@dimen/dimen_10">
-        </View>
-
-        <com.allen.library.SuperTextView
-            android:id="@+id/superTextView_change_pattern"
-            title:sUseShape="true"
-            title:sShapeSelectorPressedColor="@color/item_pressed"
-            title:sShapeCornersBottomLeftRadius="@dimen/dimen_6"
-            title:sShapeCornersBottomRightRadius="@dimen/dimen_6"
-            title:sRightTvDrawableRight="@drawable/ic_arrow"
-            title:sLeftTextString="@string/changePattern"
-            title:sLeftTextColor="@color/black_title"
-            title:sLeftTextSize="@dimen/font_3.5"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/eos_card_height"
-            >
-
-        </com.allen.library.SuperTextView>
-
-        <View
-            android:visibility="gone"
-            style="@style/common_divider"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:layout_marginEnd="@dimen/dimen_10">
-        </View>
-
 
     </LinearLayout>
 

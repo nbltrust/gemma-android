@@ -16,8 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dimen_10"
-        android:padding="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/common_page_content_padding"
         android:layout_marginEnd="@dimen/dimen_10">
 
         <com.allen.library.SuperTextView
@@ -27,8 +26,9 @@
             title:sLeftTextString="@string/language"
             title:sLeftTextSize="@dimen/font_4"
             title:sLeftTextColor="@color/black_title"
-            title:sRightTextString="@string/follow_system"
+            title:sRightTextString="@string/setting_simplified_chinese"
             title:sRightTextColor="@color/very_light_pink"
+            title:sLeftViewMarginLeft="0dp"
             title:sRightTextSize="@dimen/font_4"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             android:layout_width="match_parent"
@@ -39,8 +39,8 @@
         </com.allen.library.SuperTextView>
 
         <View
-            android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             style="@style/common_divider">
         </View>
 
@@ -51,6 +51,7 @@
             title:sShapeSelectorPressedColor="@color/item_pressed"
             title:sLeftTextString="@string/current_unit"
             title:sLeftTextSize="@dimen/font_4"
+            title:sLeftViewMarginLeft="0dp"
             title:sLeftTextColor="@color/black_title"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             title:sRightTextString="@string/USD"
@@ -63,8 +64,8 @@
         </com.allen.library.SuperTextView>
 
         <View
-            android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             style="@style/common_divider">
         </View>
 
@@ -75,6 +76,7 @@
             title:sShapeSelectorPressedColor="@color/item_pressed"
             title:sLeftTextString="@string/eos_node_select"
             title:sLeftTextSize="@dimen/font_4"
+            title:sLeftViewMarginLeft="0dp"
             title:sLeftTextColor="@color/black_title"
             title:sRightTextColor="@color/very_light_pink"
             title:sRightTextSize="@dimen/font_4"
@@ -87,8 +89,8 @@
         </com.allen.library.SuperTextView>
 
         <View
-            android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             style="@style/common_divider">
         </View>
 

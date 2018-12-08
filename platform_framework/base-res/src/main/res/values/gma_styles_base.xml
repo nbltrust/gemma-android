@@ -180,8 +180,10 @@
 
     <!-- Radio Button 样式-->
     <style name="mRadioButton">
+        <!--
         <item name="android:layout_marginStart">@dimen/dimen_10</item>
         <item name="android:layout_marginEnd">@dimen/dimen_10</item>
+        -->
         <item name="android:layout_height">@dimen/card_height</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">@dimen/font_4</item>

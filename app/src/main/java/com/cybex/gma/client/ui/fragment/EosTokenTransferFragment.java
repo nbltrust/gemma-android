@@ -325,14 +325,12 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     } else {
                         etAmount.setHint(getString(R.string.eos_token_tip_transfer_no_decimal));
                     }
-                    etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
-                    etNote.setTypeface(Typeface.DEFAULT_BOLD);
-                    etAmount.setTypeface(Typeface.DEFAULT_BOLD);
 
                     etReceiverAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         @Override
                         public void onFocusChange(View v, boolean hasFocus) {
                             if (hasFocus) {
+                                etReceiverAccount.setTypeface(Typeface.DEFAULT_BOLD);
                                 KeyboardUtils.showKeyBoard(getActivity(), etReceiverAccount);
 
                                 if (EmptyUtils.isEmpty(getCollectionAccount())) {
@@ -390,6 +388,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         @Override
                         public void onFocusChange(View v, boolean hasFocus) {
                             if (hasFocus) {
+                                etNote.setTypeface(Typeface.DEFAULT_BOLD);
                                 KeyboardUtils.showKeyBoard(getActivity(), etNote);
                                 if (EmptyUtils.isNotEmpty(getNote())) {
                                     ivTransferMemoClear.setVisibility(View.VISIBLE);
@@ -428,8 +427,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                         @Override
                         public void onFocusChange(View v, boolean hasFocus) {
                             if (hasFocus) {
+                                etAmount.setTypeface(Typeface.DEFAULT_BOLD);
                                 KeyboardUtils.showKeyBoard(getActivity(), etAmount);
-
                             } else {
                                 KeyboardUtils.hideSoftInput(getActivity(), etAmount);
                                 //etAmount.setTypeface(Typeface.DEFAULT);

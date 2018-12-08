@@ -95,22 +95,21 @@ public class ApiPath {
 
     /**------------节点 地址配置---------------*/
 
-    public static final String EOS_CYBEX = "http://52.77.177.200:8888";
-    public static final String EOS_START_EOS = "http://api-mainnet.starteos.io";
-    public static final String EOS_NEW_YORK = "https://api.eosnewyork.io";
-    public static final String EOS_GREY_MASS = "https://eos.greymass.com";
-    public static final String EOS_AISA = "https://api-direct.eosasia.one";
-    public static final String EOS_GRAVITY = "https://api-mainnet.eosgravity.com";
+    public static final String EOS_CYBEX = "https://eos-node-wookong.cybex.io";
     public static final String EOS_HELLOEOS = "https://api.helloeos.com.cn";
+    public static final String EOS_START_EOS = "http://api-mainnet.starteos.io";
     public static final String EOS_HK_EOS = "https://api.hkeos.com";
-    public static final String EOS_42 = "https://nodes.eos42.io";
-    public static final String EOS_CYPHER_GLASS = "https://api.cypherglass.com";
+    public static final String EOS_GREY_MASS = "https://eos.greymass.com";
+    public static final String EOS_GRAVITY = "https://api-mainnet.eosgravity.com";
+
+//    public static final String EOS_NEW_YORK = "https://api.eosnewyork.io";
+//    public static final String EOS_AISA = "https://api-direct.eosasia.one";
+//    public static final String EOS_42 = "https://nodes.eos42.io";
+//    public static final String EOS_CYPHER_GLASS = "https://api.cypherglass.com";
     public static final String EOS_TEST_BEIJING = "http://47.75.154.248:50003";
 
     public static final String EOS_SERVER_PORT_TEST = "http://139.196.73.117:3002";
     public static final String EOS_SERVER_PORT_STAGING = "http://139.196.73.117:3005";
-
-
 
     /**------------节点 地址配置---------------*/
 
