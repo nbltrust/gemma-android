@@ -24,17 +24,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="@dimen/font_4"
-        android:text="@string/power_level_alert"
+        android:text="@string/power_level_alert_too_low"
         android:textColor="@color/black_title"/>
 
     <TextView
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginEnd="110dp"
         android:layout_marginTop="10dp"
         android:id="@+id/tv_power_alert_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tip_power_level_alert"
+        android:text="@string/tip_power_level_alert_charge"
         android:textColor="@color/black_title"
         android:layout_gravity="center"
         android:textAlignment="center"

@@ -1172,7 +1172,7 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
         if (powerAlertDialog != null) { return; }
         int[] listenedItems = {R.id.tv_i_understand};
         powerAlertDialog = new CustomFullDialog(this,
-                R.layout.dialog_bluetooth_power_level_alert, listenedItems, false, Gravity.BOTTOM);
+                R.layout.dialog_bluetooth_power_level_alert, listenedItems, false, Gravity.CENTER);
         powerAlertDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
