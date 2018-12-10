@@ -423,6 +423,10 @@ public class BluetoothChangePasswordActivity extends BluetoothBaseActivity<Bluet
 
     @Override
     protected void onDestroy() {
+        if(getP().isChangingPassword()){
+            getP().setChangingPassword(false);
+            DeviceOperationManager.getInstance().abortButton(this.toString(),walletEntity.getBluetoothDeviceName());
+        }
         DeviceOperationManager.getInstance().clearCallback(this.toString());
         clearListeners();
         super.onDestroy();

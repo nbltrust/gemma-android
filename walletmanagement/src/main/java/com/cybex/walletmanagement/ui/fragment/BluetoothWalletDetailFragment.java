@@ -167,6 +167,10 @@ public class BluetoothWalletDetailFragment extends XFragment {
 
     @Override
     public void onDestroy() {
+        if(isFormating){
+            isFormating=false;
+            DeviceOperationManager.getInstance().abortButton(BluetoothWalletDetailFragment.this.toString(),multiWalletEntity.getBluetoothDeviceName());
+        }
         DeviceOperationManager.getInstance().clearCallback(this.toString());
         super.onDestroy();
     }
