@@ -1,317 +1,317 @@
 <resources>
 
-    <!-- 助记词相关-->
-    <string name="walletmanage_backup_mne">备份钱包</string>
-    <string name="walletmanage_show_mne">明白了， 显示助记词</string>
-    <string name="walletmanage_hint_no_screenshot_mne">系统截图在相册中可能被其他APP查看。备份前可开启飞行模式！</string>
-    <string name="walletmanage_mne_copied">已抄写</string>
-    <string name="walletmanage_tip_memory_your_mne">请记下你的钱包私钥助记词并保存在安全的地\n方。 </string>
-    <string name="walletmanage_tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如WOOKONG Bio丢失、忘记密码等，请使用助记词以恢复私钥</string>
-    <string name="walletmanage_tip_verify_mne">请按顺序点击已抄下的助记词以验证抄写是否\n正确。 </string>
-    <string name="walletmanage_tip_import_mne">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
-    <string name="walletmanage_import_mne">输入助记词，用空格分割</string>
-    <string name="walletmanage_title_verify_mne">验证助记词</string>
-    <string name="walletmanage_btn_import_mne">导入助记词</string>
+    <!--&lt;!&ndash; 助记词相关&ndash;&gt;-->
+    <!--<string name="walletmanage_backup_mne">备份钱包</string>-->
+    <!--<string name="walletmanage_show_mne">明白了， 显示助记词</string>-->
+    <!--<string name="walletmanage_hint_no_screenshot_mne">系统截图在相册中可能被其他APP查看。备份前可开启飞行模式！</string>-->
+    <!--<string name="walletmanage_mne_copied">已抄写</string>-->
+    <!--<string name="walletmanage_tip_memory_your_mne">请记下你的钱包私钥助记词并保存在安全的地\n方。 </string>-->
+    <!--<string name="walletmanage_tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如WOOKONG Bio丢失、忘记密码等，请使用助记词以恢复私钥</string>-->
+    <!--<string name="walletmanage_tip_verify_mne">请按顺序点击已抄下的助记词以验证抄写是否\n正确。 </string>-->
+    <!--<string name="walletmanage_tip_import_mne">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>-->
+    <!--<string name="walletmanage_import_mne">输入助记词，用空格分割</string>-->
+    <!--<string name="walletmanage_title_verify_mne">验证助记词</string>-->
+    <!--<string name="walletmanage_btn_import_mne">导入助记词</string>-->
 
-    <string name="walletmanage_backup_title">备份助记词</string>
-    <string name="walletmanage_backup_hint">请务必备份助记词，助记词能够恢复私钥，而私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>
-    <string name="walletmanage_lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
-    <string name="walletmanage_lookAround_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>
-    <string name="walletmanage_backUp_wallet">备份钱包</string>
-    <string name="walletmanage_backupSafely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
-    <string name="walletmanage_showMnemonic">明白了，显示助记词</string>
-    <string name="walletmanage_showPriKey">明白了，显示私钥</string>
-    <string name="walletmanage_start_import">明白了，开始导入</string>
-    <string name="walletmanage_backupLater">稍后备份</string>
+    <!--<string name="walletmanage_backup_title">备份助记词</string>-->
+    <!--<string name="walletmanage_backup_hint">请务必备份助记词，助记词能够恢复私钥，而私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>-->
+    <!--<string name="walletmanage_lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>-->
+    <!--<string name="walletmanage_lookAround_import">请查看你的周围\n确保无人及摄像头的环境下开始导入</string>-->
+    <!--<string name="walletmanage_backUp_wallet">备份钱包</string>-->
+    <!--<string name="walletmanage_backupSafely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>-->
+    <!--<string name="walletmanage_showMnemonic">明白了，显示助记词</string>-->
+    <!--<string name="walletmanage_showPriKey">明白了，显示私钥</string>-->
+    <!--<string name="walletmanage_start_import">明白了，开始导入</string>-->
+    <!--<string name="walletmanage_backupLater">稍后备份</string>-->
 
-    <string name="walletmanage_no_screenshot">请勿截图</string>
-    <string name="walletmanage_no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
-    <string name="walletmanage_i_understand">我知道了</string>
+    <!--<string name="walletmanage_no_screenshot">请勿截图</string>-->
+    <!--<string name="walletmanage_no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>-->
+    <!--<string name="walletmanage_i_understand">我知道了</string>-->
+    <!--&lt;!&ndash;<string name="walletmanage_safety_first">安全第一</string>&ndash;&gt;-->
+    <!--<string name="walletmanage_safety_first_hint">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>-->
+    <!--&lt;!&ndash;<string name="walletmanage_save_offline">离线储存</string>&ndash;&gt;-->
+    <!--<string name="walletmanage_save_offline_hint">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>-->
+    <!--<string name="walletmanage_encrypto_save">加密储存</string>-->
+    <!--<string name="walletmanage_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>-->
+
+    <!--<string name="walletmanage_look_around">注意周围</string>-->
+    <!--<string name="walletmanage_look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>-->
+    <!--<string name="walletmanage_no_screenshot_hint2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>-->
+    <!--<string name="walletmanage_show_QR">显示二维码</string>-->
+
+
+    <!--&lt;!&ndash; Create Wallet Activity&ndash;&gt;-->
+    <!--<string name="walletmanage_tip_next_step">下一步</string>-->
+    <!--<string name="walletmanage_tip_set_password">设置密码</string>-->
+    <!--<string name="walletmanage_tip_create_wallet">创建钱包</string>-->
+    <!--<string name="walletmanage_tip_repeat_pass">重复密码</string>-->
+    <!--<string name="walletmanage_title_wallet_name">钱包名称</string>-->
+    <!--<string name="walletmanage_tip_walletname_hint">请输入创建的钱包名称</string>-->
+    <!--<string name="walletmanage_tip_walletname_error">钱包名称与已有钱包重复，请修改</string>-->
+    <!--<string name="walletmanage_tip_input_password">最少8位长度，可混合大小写字母、数字及符号</string>-->
+    <!--<string name="walletmanage_tip_repeat_password">请再次输入您的密码</string>-->
+    <!--<string name="walletmanage_tip_input_password_hint">密码提示</string>-->
+    <!--<string name="walletmanage_title_invitation_code">邀请码</string>-->
+    <!--<string name="walletmanage_tip_input_inv_code">请输入邀请码</string>-->
+    <!--<string name="walletmanage_btn_get_invitation">获取邀请码</string>-->
+    <!--<string name="walletmanage_tip_agree">我已阅读并同意</string>-->
+    <!--<string name="walletmanage_tip_terms_of_service"><u>服务协议</u></string>-->
+    <!--<string name="walletmanage_title_password_hint">密码提示（可选）</string>-->
+    <!--<string name="walletmanage_tip_password_hint">密码提示信息</string>-->
+    <!--<string name="walletmanage_tip_password_input_part2">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不存储密码，无法提供密码找回服务</string>-->
+    <!--<string name="walletmanage_tip_security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不储存密码，无法提供密码找回服务</string>-->
+
+
+    <!--&lt;!&ndash; Annotation &ndash;&gt;-->
+    <!--<string name="walletmanage_name_not_empty">钱包名称不能为空</string>-->
+    <!--<string name="walletmanage_pass_not_empty">密码不能为空</string>-->
+    <!--<string name="walletmanage_pass_lenth_invalid">密码不符合规则</string>-->
+    <!--<string name="walletmanage_password_no_match">两次输入的密码不匹配，请重新输入</string>-->
+    <!--<string name="walletmanage_repeat_input_pass">请再次输入您的密码</string>-->
+    <!--<string name="walletmanage_check_agreement">请同意我们的服务协议</string>-->
+
+    <!--&lt;!&ndash; Toast &ndash;&gt;-->
+    <!--<string name="walletmanage_copy_success">复制成功</string>-->
+    <!--<string name="walletmanage_change_pass_success">修改密码成功</string>-->
+    <!--<string name="walletmanage_set_camera_permission">请设置相机相关权限</string>-->
+    <!--<string name="walletmanage_agree_terms_of_service">请阅读并同意我们的服务协议</string>-->
+    <!--<string name="walletmanage_invalid_walletname">此钱包名称已存在，请重新输入</string>-->
+
+    <!--<string name="walletmanage_invCode_used">创建失败，邀请码已被使用！</string>-->
+    <!--<string name="walletmanage_invCode_not_exist">创建失败，邀请码不存在！</string>-->
+    <!--<string name="walletmanage_name_used">创建失败，eos账户名已存在！</string>-->
+    <!--<string name="walletmanage_name_invalid">创建失败，钱包名称已存在</string>-->
+    <!--<string name="walletmanage_name_len_invalid">创建失败，eos账户名长度不为12位！</string>-->
+    <!--<string name="walletmanage_params_invalid">创建失败，参数错误！</string>-->
+    <!--<string name="walletmanage_pubKey_invalid">创建失败，无效的公钥！</string>-->
+    <!--<string name="walletmanage_no_balance">创建失败，账户余额不足！</string>-->
+    <!--<string name="walletmanage_default_create_fail_info">创建失败，请重新尝试</string>-->
+    <!--<string name="walletmanage_loading_success">加载成功</string>-->
+    <!--<string name="walletmanage_tip_pass_no_match">密码不一致</string>-->
+
+
+    <!--<string name="walletmanage_mnemonic_validate_error">验证失败</string>-->
+    <!--<string name="walletmanage_mnemonic_validate_success">验证成功</string>-->
+
+    <!--&lt;!&ndash; Import Wallet&ndash;&gt;-->
+    <!--<string name="walletmanage_import_wallet">导入钱包</string>-->
+    <!--<string name="walletmanage_tip_input_key">请完整输入备份的私钥</string>-->
+    <!--<string name="walletmanage_tip_input_key_part2">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>-->
+    <!--<string name="walletmanage_tip_prikey_copied">私钥已复制，请在使用后及时清空系统剪贴板！</string>-->
+    <!--<string name="walletmanage_btn_start_input">开始导入</string>-->
+    <!--<string name="walletmanage_btn_complete_input">完成导入</string>-->
+    <!--<string name="walletmanage_mnemonic">助记词</string>-->
+    <!--<string name="walletmanage_privatekey">私钥</string>-->
+
+
+
+    <!--&lt;!&ndash; Export(BackUp) Wallet&ndash;&gt;-->
+    <!--<string name="walletmanage_tip_look_around">请查看你的周围\n确保在无人及摄像头的环境下进行备份</string>-->
+    <!--<string name="walletmanage_look_around_import">请查看你的周围\n确保在无人及摄像头的环境下开始导入</string>-->
+    <!--<string name="walletmanage_back_up_wallet">备份钱包</string>-->
+    <!--<string name="walletmanage_tip_back_safely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>-->
+    <!--<string name="walletmanage_btn_show_mnemonic">明白了，显示助记词</string>-->
+    <!--<string name="walletmanage_btn_show_PriKey">明白了，显示私钥</string>-->
+    <!--<string name="walletmanage_btn_start_import">明白了，开始导入</string>-->
+    <!--<string name="walletmanage_btn_backup_later">稍后备份</string>-->
+
+    <!--<string name="walletmanage_tip_no_screenshot">请勿截图</string>-->
+    <!--<string name="walletmanage_tip_no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>-->
+    <!--<string name="walletmanage_tip_i_understand">我知道了</string>-->
+    <!--&lt;!&ndash;<string name="walletmanage_tip_safety_first">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>&ndash;&gt;-->
+    <!--&lt;!&ndash;<string name="walletmanage_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>&ndash;&gt;-->
+    <!--&lt;!&ndash;<string name="walletmanage_tip_encrypto_save">加密储存</string>&ndash;&gt;-->
+    <!--&lt;!&ndash;<string name="walletmanage_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>&ndash;&gt;-->
+
+    <!--<string name="walletmanage_tip_look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>-->
+    <!--<string name="walletmanage_tip_no_screenshot_part2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>-->
+    <!--<string name="walletmanage_tip_show_QR">显示二维码</string>-->
+    <!--<string name="walletmanage_tip_input_pri_key">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>-->
+    <!--<string name="walletmanage_input_pri_key_hint">请完整输入备份的私钥</string>-->
+    <!--<string name="walletmanage_tip_input_mnemonic">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>-->
+    <!--<string name="walletmanage_input_mnemonic_hint">支持BIP39助记词，用空格分开</string>-->
+    <!--<string name="walletmanage_wallet_cointype">钱包币种</string>-->
+    <!--<string name="walletmanage_cointype_eos">EOS</string>-->
+    <!--<string name="walletmanage_title_import_which_wallet">导入到钱包</string>-->
+    <!--<string name="walletmanage_create_new_wallet">新建钱包</string>-->
+
+
+    <!--&lt;!&ndash; Barcode scan activity &ndash;&gt;-->
+    <!--<string name="walletmanage_barcode_scan_hint">将条码放入框内，即可自动扫描</string>-->
+    <!--<string name="walletmanage_qr_scan_hint">请将二维码放入框内，即可自动扫描</string>-->
+    <!--<string name="walletmanage_scan_qr_code">扫描二维码</string>-->
+
+    <!--&lt;!&ndash;wallet coin type&ndash;&gt;-->
+    <!--<string name="walletmanage_coin_type_title">钱包币种</string>-->
+
+    <!--&lt;!&ndash;import to which wallet&ndash;&gt;-->
+    <!--<string name="walletmanage_import_which_wallet_title">导入到钱包</string>-->
+
+    <!--&lt;!&ndash;import wallet&ndash;&gt;-->
+    <!--<string name="walletmanage_import_wallet_title">导入钱包</string>-->
+    <!--<string name="walletmanage_finish_import">完成导入</string>-->
+    <!--<string name="walletmanage_import_pri_key_invalid">私钥格式错误，请检查私钥</string>-->
+    <!--<string name="walletmanage_import_mnemonic_invalid">助记词格式错误，请检查助记词</string>-->
+    <!--<string name="walletmanage_eos_account_exist">该钱包下已存在EOS</string>-->
+    <!--<string name="walletmanage_eth_account_exist">该钱包下已存在ETH</string>-->
+    <!--<string name="walletmanage_import_success">导入成功</string>-->
+    <!--<string name="walletmanage_import_fail">导入失败</string>-->
+    <!--&lt;!&ndash;config wallet&ndash;&gt;-->
+    <!--<string name="walletmanage_config_wallet_title">配置钱包</string>-->
+    <!--<string name="walletmanage_exist_wallet">已有的钱包</string>-->
+    <!--<string name="walletmanage_fp_and_password">指纹与密码</string>-->
+
+    <!--&lt;!&ndash; Change Password Fragment&ndash;&gt;-->
+    <!--<string name="walletmanage_new_password">新密码</string>-->
+    <!--<string name="walletmanage_btn_confirm_change">确认修改</string>-->
+    <!--<string name="walletmanage_title_change_pass">修改密码</string>-->
+    <!--<string name="walletmanage_psw_change_success">密码修改成功</string>-->
+    <!--<string name="walletmanage_psw_change_fail">密码修改失败</string>-->
+
+    <!--&lt;!&ndash;蓝牙钱包配置start &ndash;&gt;-->
+    <!--<string name="walletmanage_title_wookong_bio">WOOKONG Bio</string>-->
+    <!--<string name="walletmanage_match_wookong_bio">配对 WOOKONG Bio</string>-->
+
+    <!--<string name="walletmanage_tip_card">第一款支持多币种的蓝牙指纹硬件钱包</string>-->
+    <!--<string name="walletmanage_desc_wookong_url">点击查看 更多WOOKONG Bio介绍</string>-->
+    <!--<string name="walletmanage_bluetooth_scan_step_title">准备使用WOOKONG Bio</string>-->
+
+    <!--<string name="walletmanage_tip_bluetooth_scan_step_one">确保手机蓝牙已开启</string>-->
+    <!--<string name="walletmanage_tip_bluetooth_scan_step_two">启动WOOKONG Bio</string>-->
+
+    <!--<string name="walletmanage_btn_start_pair">开始配对</string>-->
+    <!--<string name="walletmanage_title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>-->
+    <!--<string name="walletmanage_title_paire_bluetooth">WOOKONG Bio</string>-->
+    <!--<string name="walletmanage_empty_no_device">请点击图片重新扫描</string>-->
+    <!--<string name="walletmanage_title_set_wookong_password">设置WOOKONG Bio密码</string>-->
+    <!--<string name="walletmanage_hint_set_wookong_password">长度8-16， 建议混合大小写字母、数字及符号</string>-->
+    <!--<string name="walletmanage_tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>-->
+    <!--<string name="walletmanage_status_un_init">未初始化</string>-->
+    <!--&lt;!&ndash;<string name="walletmanage_status_not_connected">未连接</string>&ndash;&gt;-->
+    <!--&lt;!&ndash;<string name="walletmanage_status_connected">已连接</string>&ndash;&gt;-->
+    <!--<string name="walletmanage_status_init_no_pair">已经初始化但没有配对信息</string>-->
+    <!--<string name="walletmanage_status_init_pair">已经初始化但没有配对信息</string>-->
+
+    <!--<string name="walletmanage_tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>-->
+
+    <!--<string name="walletmanage_progress_set_pin">正在设置PIN...</string>-->
+
+    <!--<string name="walletmanage_title_create_eos_account">创建EOS账户</string>-->
+
+    <!--<string name="walletmanage_mne_validate_success">验证成功</string>-->
+    <!--<string name="walletmanage_mne_validate_failed">验证失败</string>-->
+    <!--<string name="walletmanage_mne_validate_warn">蓝牙连接已断开，请重新连接</string>-->
+    <!--<string name="walletmanage_do_get_init_info">正在获取初始化信息...</string>-->
+    <!--<string name="walletmanage_title_setting_fp">设置指纹</string>-->
+    <!--<string name="walletmanage_title_add_fp">添加指纹</string>-->
+    <!--<string name="walletmanage_btn_title_skip">跳过</string>-->
+    <!--<string name="walletmanage_finger_set_success">指纹录入成功</string>-->
+    <!--<string name="walletmanage_wookong_password_hint">请输入WOOKONG Bio的密码以确认授权</string>-->
+    <!--<string name="walletmanage_transfer_error">当前账户转账出现异常</string>-->
+    <!--<string name="walletmanage_transfer_eosname_hint">请输入@</string>-->
+    <!--<string name="walletmanage_transfer_eosname_hint_last">的密码</string>-->
+    <!--<string name="walletmanage_transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>-->
+    <!--<string name="walletmanage_transfer_bluetooth_tip">正在连接WOOKONG Bio</string>-->
+    <!--<string name="walletmanage_connect_sure_tip">请在WOOKONG Bio上按指纹以确认授权</string>-->
+    <!--<string name="walletmanage_connect_sure_battery_tip">请在WOOKONG Bio上按键以确认转账</string>-->
+    <!--<string name="walletmanage_connect_failed_tip">连接失败。请检查手机蓝牙和设备电源。</string>-->
+    <!--<string name="walletmanage_btn_connect_retry">重试连接</string>-->
+    <!--<string name="walletmanage_btn_connect">连接</string>-->
+    <!--<string name="walletmanage_btn_disconnect">断开连接</string>-->
+    <!--<string name="walletmanage_tip_bio_sign_fail">签名失败，请重新尝试</string>-->
+
+    <!--&lt;!&ndash; WOOKONG BIO 详情页面&ndash;&gt;-->
+    <!--<string name="walletmanage_name">名称</string>-->
+    <!--<string name="walletmanage_public_key">公钥</string>-->
+    <!--&lt;!&ndash;<string name="walletmanage_battery_left">电量</string>&ndash;&gt;-->
+    <!--<string name="walletmanage_btn_to_connect">点击连接</string>-->
+    <!--<string name="walletmanage_btn_to_format">格式化</string>-->
+    <!--<string name="walletmanage_to_cancel_pair">取消配对</string>-->
+    <!--<string name="walletmanage_confirm_format">确认格式化</string>-->
+    <!--<string name="walletmanage_tip_format">一旦格式化，WOOKONG Bio将清除私钥，请在格式化前备份助记词或转移资产。</string>-->
+    <!--<string name="walletmanage_confirm">确认</string>-->
+    <!--<string name="walletmanage_format_success">格式化成功</string>-->
+    <!--<string name="walletmanage_initialize">初始化</string>-->
+    <!--<string name="walletmanage_tip_to_init">是否重新初始化WOOKONG Bio？</string>-->
+    <!--<string name="walletmanage_tip_bluetooth_transfer">若未找到，请检查手机蓝牙和设备电源。</string>-->
+    <!--<string name="walletmanage_connecting_bio">正在连接WOOKONG Bio</string>-->
+    <!--<string name="walletmanage_tip_confirm_format">请在WOOKONG Bio上按键以确认格式化，一旦格式化，WOOKONG Bio将清除私钥，请在格式化前转移资产。</string>-->
+
+
+    <!--<string name="walletmanage_tip_manage_resource_wookong">WOOKONG Bio 暂不支持资源抵押或买卖RAM，若要进行此类操作请使用其他账户为该账户抵押资源或买卖RAM。</string>-->
+
+
+    <!--<string name="walletmanage_title_wooKong_bio">WOOKONG Bio</string>-->
+    <!--&lt;!&ndash; 指纹管理 &ndash;&gt;-->
+    <!--<string name="walletmanage_delete_fingerprint">删除指纹</string>-->
+    <!--<string name="walletmanage_change_fp_name">修改名称</string>-->
+    <!--<string name="walletmanage_fingerprint">指纹</string>-->
+    <!--<string name="walletmanage_add_fingerprint">添加指纹</string>-->
+    <!--<string name="walletmanage_change_pass">修改密码</string>-->
+    <!--<string name="walletmanage_password">密码</string>-->
+
+    <!--&lt;!&ndash; Change Wallet Name fragment&ndash;&gt;-->
+    <!--<string name="walletmanage_wallet_name_short">钱包名</string>-->
+    <!--<string name="walletmanage_wallet_name">钱包名称</string>-->
+
+    <!--&lt;!&ndash;select wallet&ndash;&gt;-->
+    <!--<string name="walletmanage_select_wallet_title">选择钱包</string>-->
+    <!--<string name="walletmanage_wallet_type_multi">多币种钱包</string>-->
+    <!--<string name="walletmanage_wallet_type_eos">EOS钱包</string>-->
+    <!--<string name="walletmanage_wallet_type_eth">ETH钱包</string>-->
+    <!--<string name="walletmanage_wallet_type_hardware">多币种硬件钱包</string>-->
+    <!--&lt;!&ndash;manage wallet&ndash;&gt;-->
+    <!--<string name="walletmanage_manage_wallet_title">管理钱包</string>-->
+    <!--<string name="walletmanage_wookong_bio_description">WOOKONG Bio 是一款面向个人用户使用的便携式蓝牙硬件钱包，为数字资产提供更安全的保护。</string>-->
+    <!--&lt;!&ndash;change wallet name&ndash;&gt;-->
+    <!--<string name="walletmanage_change_wallet_name_title">修改钱包名称</string>-->
+    <!--<string name="walletmanage_change_wallet_name_hint">请输入新的钱包名称</string>-->
+    <!--<string name="walletmanage_same_wallet_name">钱包名称不能与已有钱包名相同</string>-->
+    <!--<string name="walletmanage_empty_wallet_name">钱包名称不能为空！</string>-->
+    <!--<string name="walletmanage_change_name_success">更改成功</string>-->
+    <!--<string name="walletmanage_change_name_fail">更改失败</string>-->
+
+    <!--&lt;!&ndash;pri key backup&ndash;&gt;-->
+    <!--<string name="walletmanage_pri_key_backup_title">备份私钥</string>-->
+    <!--<string name="walletmanage_pri_key_backup_hint">请务必备份私钥，私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>-->
+    <!--<string name="walletmanage_pri_key_lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>-->
+    <!--<string name="walletmanage_pri_key_backup_safely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>-->
+    <!--<string name="walletmanage_pri_key_show_pri">明白了，显示私钥</string>-->
+    <!--<string name="walletmanage_barcode">二维码</string>-->
+    <!--<string name="walletmanage_click_to_copy_priKey">复制私钥</string>-->
+
     <!--<string name="walletmanage_safety_first">安全第一</string>-->
-    <string name="walletmanage_safety_first_hint">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
-    <!--<string name="walletmanage_save_offline">离线储存</string>-->
-    <string name="walletmanage_save_offline_hint">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
-    <string name="walletmanage_encrypto_save">加密储存</string>
-    <string name="walletmanage_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
-
-    <string name="walletmanage_look_around">注意周围</string>
-    <string name="walletmanage_look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
-    <string name="walletmanage_no_screenshot_hint2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
-    <string name="walletmanage_show_QR">显示二维码</string>
-
-
-    <!-- Create Wallet Activity-->
-    <string name="walletmanage_tip_next_step">下一步</string>
-    <string name="walletmanage_tip_set_password">设置密码</string>
-    <string name="walletmanage_tip_create_wallet">创建钱包</string>
-    <string name="walletmanage_tip_repeat_pass">重复密码</string>
-    <string name="walletmanage_title_wallet_name">钱包名称</string>
-    <string name="walletmanage_tip_walletname_hint">请输入创建的钱包名称</string>
-    <string name="walletmanage_tip_walletname_error">钱包名称与已有钱包重复，请修改</string>
-    <string name="walletmanage_tip_input_password">最少8位长度，可混合大小写字母、数字及符号</string>
-    <string name="walletmanage_tip_repeat_password">请再次输入您的密码</string>
-    <string name="walletmanage_tip_input_password_hint">密码提示</string>
-    <string name="walletmanage_title_invitation_code">邀请码</string>
-    <string name="walletmanage_tip_input_inv_code">请输入邀请码</string>
-    <string name="walletmanage_btn_get_invitation">获取邀请码</string>
-    <string name="walletmanage_tip_agree">我已阅读并同意</string>
-    <string name="walletmanage_tip_terms_of_service"><u>服务协议</u></string>
-    <string name="walletmanage_title_password_hint">密码提示（可选）</string>
-    <string name="walletmanage_tip_password_hint">密码提示信息</string>
-    <string name="walletmanage_tip_password_input_part2">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不存储密码，无法提供密码找回服务</string>
-    <string name="walletmanage_tip_security_hint">密码用于加密钱包等机密信息，请务必牢记或使用密码管理工具存储。Gemma不储存密码，无法提供密码找回服务</string>
-
-
-    <!-- Annotation -->
-    <string name="walletmanage_name_not_empty">钱包名称不能为空</string>
-    <string name="walletmanage_pass_not_empty">密码不能为空</string>
-    <string name="walletmanage_pass_lenth_invalid">密码不符合规则</string>
-    <string name="walletmanage_password_no_match">两次输入的密码不匹配，请重新输入</string>
-    <string name="walletmanage_repeat_input_pass">请再次输入您的密码</string>
-    <string name="walletmanage_check_agreement">请同意我们的服务协议</string>
-
-    <!-- Toast -->
-    <string name="walletmanage_copy_success">复制成功</string>
-    <string name="walletmanage_change_pass_success">修改密码成功</string>
-    <string name="walletmanage_set_camera_permission">请设置相机相关权限</string>
-    <string name="walletmanage_agree_terms_of_service">请阅读并同意我们的服务协议</string>
-    <string name="walletmanage_invalid_walletname">此钱包名称已存在，请重新输入</string>
-
-    <string name="walletmanage_invCode_used">创建失败，邀请码已被使用！</string>
-    <string name="walletmanage_invCode_not_exist">创建失败，邀请码不存在！</string>
-    <string name="walletmanage_name_used">创建失败，eos账户名已存在！</string>
-    <string name="walletmanage_name_invalid">创建失败，钱包名称已存在</string>
-    <string name="walletmanage_name_len_invalid">创建失败，eos账户名长度不为12位！</string>
-    <string name="walletmanage_params_invalid">创建失败，参数错误！</string>
-    <string name="walletmanage_pubKey_invalid">创建失败，无效的公钥！</string>
-    <string name="walletmanage_no_balance">创建失败，账户余额不足！</string>
-    <string name="walletmanage_default_create_fail_info">创建失败，请重新尝试</string>
-    <string name="walletmanage_loading_success">加载成功</string>
-    <string name="walletmanage_tip_pass_no_match">密码不一致</string>
-
-
-    <string name="walletmanage_mnemonic_validate_error">验证失败</string>
-    <string name="walletmanage_mnemonic_validate_success">验证成功</string>
-
-    <!-- Import Wallet-->
-    <string name="walletmanage_import_wallet">导入钱包</string>
-    <string name="walletmanage_tip_input_key">请完整输入备份的私钥</string>
-    <string name="walletmanage_tip_input_key_part2">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>
-    <string name="walletmanage_tip_prikey_copied">私钥已复制，请在使用后及时清空系统剪贴板！</string>
-    <string name="walletmanage_btn_start_input">开始导入</string>
-    <string name="walletmanage_btn_complete_input">完成导入</string>
-    <string name="walletmanage_mnemonic">助记词</string>
-    <string name="walletmanage_privatekey">私钥</string>
-
-
-
-    <!-- Export(BackUp) Wallet-->
-    <string name="walletmanage_tip_look_around">请查看你的周围\n确保在无人及摄像头的环境下进行备份</string>
-    <string name="walletmanage_look_around_import">请查看你的周围\n确保在无人及摄像头的环境下开始导入</string>
-    <string name="walletmanage_back_up_wallet">备份钱包</string>
-    <string name="walletmanage_tip_back_safely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
-    <string name="walletmanage_btn_show_mnemonic">明白了，显示助记词</string>
-    <string name="walletmanage_btn_show_PriKey">明白了，显示私钥</string>
-    <string name="walletmanage_btn_start_import">明白了，开始导入</string>
-    <string name="walletmanage_btn_backup_later">稍后备份</string>
-
-    <string name="walletmanage_tip_no_screenshot">请勿截图</string>
-    <string name="walletmanage_tip_no_screenshot_hint">系统截图在相册中可能被其他APP查看，备份前可开启飞行模式！</string>
-    <string name="walletmanage_tip_i_understand">我知道了</string>
     <!--<string name="walletmanage_tip_safety_first">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>-->
-    <!--<string name="walletmanage_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>-->
-    <!--<string name="walletmanage_tip_encrypto_save">加密储存</string>-->
+    <!--<string name="walletmanage_save_offline">离线存储</string>-->
+    <!--<string name="walletmanage_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码获取私钥并存储。</string>-->
+    <!--<string name="walletmanage_tip_encrypto_save">加密存储</string>-->
     <!--<string name="walletmanage_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>-->
+    <!--<string name="walletmanage_key_saved">我已安全备份私钥</string>-->
+    <!--<string name="walletmanage_key_saved_qr">我已安全存储私钥</string>-->
+    <!--<string name="walletmanage_wallet">钱包</string>-->
 
-    <string name="walletmanage_tip_look_around_hint">请在确保周围没有人及摄像头的环境下扫描二维码，以防二维码泄漏。</string>
-    <string name="walletmanage_tip_no_screenshot_part2">建议使用带有摄像头的离线设备扫描识别二维码以获取私钥，并将其以合理的方式存储。</string>
-    <string name="walletmanage_tip_show_QR">显示二维码</string>
-    <string name="walletmanage_tip_input_pri_key">复制粘贴私钥至输入框，或通过扫描私钥生成的二维码输入</string>
-    <string name="walletmanage_input_pri_key_hint">请完整输入备份的私钥</string>
-    <string name="walletmanage_tip_input_mnemonic">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
-    <string name="walletmanage_input_mnemonic_hint">支持BIP39助记词，用空格分开</string>
-    <string name="walletmanage_wallet_cointype">钱包币种</string>
-    <string name="walletmanage_cointype_eos">EOS</string>
-    <string name="walletmanage_title_import_which_wallet">导入到钱包</string>
-    <string name="walletmanage_create_new_wallet">新建钱包</string>
-
-
-    <!-- Barcode scan activity -->
-    <string name="walletmanage_barcode_scan_hint">将条码放入框内，即可自动扫描</string>
-    <string name="walletmanage_qr_scan_hint">请将二维码放入框内，即可自动扫描</string>
-    <string name="walletmanage_scan_qr_code">扫描二维码</string>
-
-    <!--wallet coin type-->
-    <string name="walletmanage_coin_type_title">钱包币种</string>
-
-    <!--import to which wallet-->
-    <string name="walletmanage_import_which_wallet_title">导入到钱包</string>
-
-    <!--import wallet-->
-    <string name="walletmanage_import_wallet_title">导入钱包</string>
-    <string name="walletmanage_finish_import">完成导入</string>
-    <string name="walletmanage_import_pri_key_invalid">私钥格式错误，请检查私钥</string>
-    <string name="walletmanage_import_mnemonic_invalid">助记词格式错误，请检查助记词</string>
-    <string name="walletmanage_eos_account_exist">该钱包下已存在EOS</string>
-    <string name="walletmanage_eth_account_exist">该钱包下已存在ETH</string>
-    <string name="walletmanage_import_success">导入成功</string>
-    <string name="walletmanage_import_fail">导入失败</string>
-    <!--config wallet-->
-    <string name="walletmanage_config_wallet_title">配置钱包</string>
-    <string name="walletmanage_exist_wallet">已有的钱包</string>
-    <string name="walletmanage_fp_and_password">指纹与密码</string>
-
-    <!-- Change Password Fragment-->
-    <string name="walletmanage_new_password">新密码</string>
-    <string name="walletmanage_btn_confirm_change">确认修改</string>
-    <string name="walletmanage_title_change_pass">修改密码</string>
-    <string name="walletmanage_psw_change_success">密码修改成功</string>
-    <string name="walletmanage_psw_change_fail">密码修改失败</string>
-
-    <!--蓝牙钱包配置start -->
-    <string name="walletmanage_title_wookong_bio">WOOKONG Bio</string>
-    <string name="walletmanage_match_wookong_bio">配对 WOOKONG Bio</string>
-
-    <string name="walletmanage_tip_card">第一款支持多币种的蓝牙指纹硬件钱包</string>
-    <string name="walletmanage_desc_wookong_url">点击查看 更多WOOKONG Bio介绍</string>
-    <string name="walletmanage_bluetooth_scan_step_title">准备使用WOOKONG Bio</string>
-
-    <string name="walletmanage_tip_bluetooth_scan_step_one">确保手机蓝牙已开启</string>
-    <string name="walletmanage_tip_bluetooth_scan_step_two">启动WOOKONG Bio</string>
-
-    <string name="walletmanage_btn_start_pair">开始配对</string>
-    <string name="walletmanage_title_scan_result">选择要连接的WOOKONG Bio.若未找到，请检查蓝牙和设备电源</string>
-    <string name="walletmanage_title_paire_bluetooth">WOOKONG Bio</string>
-    <string name="walletmanage_empty_no_device">请点击图片重新扫描</string>
-    <string name="walletmanage_title_set_wookong_password">设置WOOKONG Bio密码</string>
-    <string name="walletmanage_hint_set_wookong_password">长度8-16， 建议混合大小写字母、数字及符号</string>
-    <string name="walletmanage_tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
-    <string name="walletmanage_status_un_init">未初始化</string>
-    <!--<string name="walletmanage_status_not_connected">未连接</string>-->
-    <!--<string name="walletmanage_status_connected">已连接</string>-->
-    <string name="walletmanage_status_init_no_pair">已经初始化但没有配对信息</string>
-    <string name="walletmanage_status_init_pair">已经初始化但没有配对信息</string>
-
-    <string name="walletmanage_tip_status_un_init">此WOOKONG Bio尚未初始化，请先初始化</string>
-
-    <string name="walletmanage_progress_set_pin">正在设置PIN...</string>
-
-    <string name="walletmanage_title_create_eos_account">创建EOS账户</string>
-
-    <string name="walletmanage_mne_validate_success">验证成功</string>
-    <string name="walletmanage_mne_validate_failed">验证失败</string>
-    <string name="walletmanage_mne_validate_warn">蓝牙连接已断开，请重新连接</string>
-    <string name="walletmanage_do_get_init_info">正在获取初始化信息...</string>
-    <string name="walletmanage_title_setting_fp">设置指纹</string>
-    <string name="walletmanage_title_add_fp">添加指纹</string>
-    <string name="walletmanage_btn_title_skip">跳过</string>
-    <string name="walletmanage_finger_set_success">指纹录入成功</string>
-    <string name="walletmanage_wookong_password_hint">请输入WOOKONG Bio的密码以确认授权</string>
-    <string name="walletmanage_transfer_error">当前账户转账出现异常</string>
-    <string name="walletmanage_transfer_eosname_hint">请输入@</string>
-    <string name="walletmanage_transfer_eosname_hint_last">的密码</string>
-    <string name="walletmanage_transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>
-    <string name="walletmanage_transfer_bluetooth_tip">正在连接WOOKONG Bio</string>
-    <string name="walletmanage_connect_sure_tip">请在WOOKONG Bio上按指纹以确认授权</string>
-    <string name="walletmanage_connect_sure_battery_tip">请在WOOKONG Bio上按键以确认转账</string>
-    <string name="walletmanage_connect_failed_tip">连接失败。请检查手机蓝牙和设备电源。</string>
-    <string name="walletmanage_btn_connect_retry">重试连接</string>
-    <string name="walletmanage_btn_connect">连接</string>
-    <string name="walletmanage_btn_disconnect">断开连接</string>
-    <string name="walletmanage_tip_bio_sign_fail">签名失败，请重新尝试</string>
-
-    <!-- WOOKONG BIO 详情页面-->
-    <string name="walletmanage_name">名称</string>
-    <string name="walletmanage_public_key">公钥</string>
-    <!--<string name="walletmanage_battery_left">电量</string>-->
-    <string name="walletmanage_btn_to_connect">点击连接</string>
-    <string name="walletmanage_btn_to_format">格式化</string>
-    <string name="walletmanage_to_cancel_pair">取消配对</string>
-    <string name="walletmanage_confirm_format">确认格式化</string>
-    <string name="walletmanage_tip_format">一旦格式化，WOOKONG Bio将清除私钥，请在格式化前备份助记词或转移资产。</string>
-    <string name="walletmanage_confirm">确认</string>
-    <string name="walletmanage_format_success">格式化成功</string>
-    <string name="walletmanage_initialize">初始化</string>
-    <string name="walletmanage_tip_to_init">是否重新初始化WOOKONG Bio？</string>
-    <string name="walletmanage_tip_bluetooth_transfer">若未找到，请检查手机蓝牙和设备电源。</string>
-    <string name="walletmanage_connecting_bio">正在连接WOOKONG Bio</string>
-    <string name="walletmanage_tip_confirm_format">请在WOOKONG Bio上按键以确认格式化，一旦格式化，WOOKONG Bio将清除私钥，请在格式化前转移资产。</string>
+    <!--&lt;!&ndash;wallet manage home &ndash;&gt;-->
+    <!--<string name="walletmanage_create_wallet">创建钱包</string>-->
+    <!--<string name="walletmanage_connect_wookong_bio">配对 WOOKONG Bio</string>-->
+    <!--<string name="walletmanage_formating">正在格式化</string>-->
+    <!--<string name="walletmanage_format_fail">格式化失败</string>-->
+    <!--<string name="walletmanage_loading">正在加载</string>-->
+    <!--<string name="walletmanage_manage_fp">管理指纹</string>-->
+    <!--<string name="walletmanage_fp_delete_success">指纹删除成功</string>-->
+    <!--<string name="walletmanage_fp_delete_fail">指纹删除失败</string>-->
+    <!--<string name="walletmanage_change_fp_name_hint">请输入新的指纹名称</string>-->
+    <!--<string name="walletmanage_fp_prefix">指纹</string>-->
+    <!--<string name="walletmanage_fpname_notnull">指纹名称不能为空</string>-->
+    <!--<string name="walletmanage_fpname_nochange">指纹名称与原名称一致</string>-->
+    <!--<string name="walletmanage_fpname_change_success">指纹名称修改成功</string>-->
 
 
-    <string name="walletmanage_tip_manage_resource_wookong">WOOKONG Bio 暂不支持资源抵押或买卖RAM，若要进行此类操作请使用其他账户为该账户抵押资源或买卖RAM。</string>
-
-
-    <string name="walletmanage_title_wooKong_bio">WOOKONG Bio</string>
-    <!-- 指纹管理 -->
-    <string name="walletmanage_delete_fingerprint">删除指纹</string>
-    <string name="walletmanage_change_fp_name">修改名称</string>
-    <string name="walletmanage_fingerprint">指纹</string>
-    <string name="walletmanage_add_fingerprint">添加指纹</string>
-    <string name="walletmanage_change_pass">修改密码</string>
-    <string name="walletmanage_password">密码</string>
-
-    <!-- Change Wallet Name fragment-->
-    <string name="walletmanage_wallet_name_short">钱包名</string>
-    <string name="walletmanage_wallet_name">钱包名称</string>
-
-    <!--select wallet-->
-    <string name="walletmanage_select_wallet_title">选择钱包</string>
-    <string name="walletmanage_wallet_type_multi">多币种钱包</string>
-    <string name="walletmanage_wallet_type_eos">EOS钱包</string>
-    <string name="walletmanage_wallet_type_eth">ETH钱包</string>
-    <string name="walletmanage_wallet_type_hardware">多币种硬件钱包</string>
-    <!--manage wallet-->
-    <string name="walletmanage_manage_wallet_title">管理钱包</string>
-    <string name="walletmanage_wookong_bio_description">WOOKONG Bio 是一款面向个人用户使用的便携式蓝牙硬件钱包，为数字资产提供更安全的保护。</string>
-    <!--change wallet name-->
-    <string name="walletmanage_change_wallet_name_title">修改钱包名称</string>
-    <string name="walletmanage_change_wallet_name_hint">请输入新的钱包名称</string>
-    <string name="walletmanage_same_wallet_name">钱包名称不能与已有钱包名相同</string>
-    <string name="walletmanage_empty_wallet_name">钱包名称不能为空！</string>
-    <string name="walletmanage_change_name_success">更改成功</string>
-    <string name="walletmanage_change_name_fail">更改失败</string>
-
-    <!--pri key backup-->
-    <string name="walletmanage_pri_key_backup_title">备份私钥</string>
-    <string name="walletmanage_pri_key_backup_hint">请务必备份私钥，私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>
-    <string name="walletmanage_pri_key_lookAround">请查看你的周围\n确保无人及摄像头的环境下进行备份</string>
-    <string name="walletmanage_pri_key_backup_safely">请在安全环境下备份\n备份期间可将手机调成飞行模式</string>
-    <string name="walletmanage_pri_key_show_pri">明白了，显示私钥</string>
-    <string name="walletmanage_barcode">二维码</string>
-    <string name="walletmanage_click_to_copy_priKey">复制私钥</string>
-
-    <string name="walletmanage_safety_first">安全第一</string>
-    <string name="walletmanage_tip_safety_first">建议开启飞行模式，勿使用网络传输，以防黑客捕获到私钥。</string>
-    <string name="walletmanage_save_offline">离线存储</string>
-    <string name="walletmanage_tip_save_offline">可使用非联网的废旧手机作为冷存储，通过扫描二维码获取私钥并存储。</string>
-    <string name="walletmanage_tip_encrypto_save">加密存储</string>
-    <string name="walletmanage_tip_encrypto_save_hint">若没有废旧的手机，也可复制私钥后使用加密软件或密码管理工具存储。请在存储后及时清空系统剪贴板。</string>
-    <string name="walletmanage_key_saved">我已安全备份私钥</string>
-    <string name="walletmanage_key_saved_qr">我已安全存储私钥</string>
-    <string name="walletmanage_wallet">钱包</string>
-
-    <!--wallet manage home -->
-    <string name="walletmanage_create_wallet">创建钱包</string>
-    <string name="walletmanage_connect_wookong_bio">配对 WOOKONG Bio</string>
-    <string name="walletmanage_formating">正在格式化</string>
-    <string name="walletmanage_format_fail">格式化失败</string>
-    <string name="walletmanage_loading">正在加载</string>
-    <string name="walletmanage_manage_fp">管理指纹</string>
-    <string name="walletmanage_fp_delete_success">指纹删除成功</string>
-    <string name="walletmanage_fp_delete_fail">指纹删除失败</string>
-    <string name="walletmanage_change_fp_name_hint">请输入新的指纹名称</string>
-    <string name="walletmanage_fp_prefix">指纹</string>
-    <string name="walletmanage_fpname_notnull">指纹名称不能为空</string>
-    <string name="walletmanage_fpname_nochange">指纹名称与原名称一致</string>
-    <string name="walletmanage_fpname_change_success">指纹名称修改成功</string>
-
-
-    <string name="walletmanage_multi_coin_hard_wallet">多币种硬件钱包</string>
-    <string name="walletmanage_enroll_fp_overtime">指纹设置超时</string>
-    <string name="walletmanage_jump">跳过</string>
-    <string name="walletmanage_retry">重试</string>
-    <string name="walletmanage_enroll_fp_hint1">将手指放在指纹识别区域上再移开，\n重复此步骤</string>
-    <string name="walletmanage_enroll_fp_hint2">调整握持姿势\n获取指纹边缘</string>
+    <!--<string name="walletmanage_multi_coin_hard_wallet">多币种硬件钱包</string>-->
+    <!--<string name="walletmanage_enroll_fp_overtime">指纹设置超时</string>-->
+    <!--<string name="walletmanage_jump">跳过</string>-->
+    <!--<string name="walletmanage_retry">重试</string>-->
+    <!--<string name="walletmanage_enroll_fp_hint1">将手指放在指纹识别区域上再移开，\n重复此步骤</string>-->
+    <!--<string name="walletmanage_enroll_fp_hint2">调整握持姿势\n获取指纹边缘</string>-->
 
 
 </resources>

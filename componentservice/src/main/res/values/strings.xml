@@ -1,72 +1,72 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Common -->
-    <string name="baseservice_app_name">GEMMA</string>
-    <string name="baseservice_title">我是标题</string>
-    <string name="baseservice_eos">EOS</string>
+    <!--<string name="baseservice_app_name">GEMMA</string>-->
+    <!--<string name="baseservice_title">我是标题</string>-->
+    <!--<string name="baseservice_eos">EOS</string>-->
 
 
-    <!--edit wallet config-->
-    <string name="name_invalid" tools:ignore="ResourceName">创建失败，钱包名称已存在</string>
-    <string name="name_not_empty" tools:ignore="ResourceName">钱包名称不能为空</string>
-    <string name="pass_not_empty" tools:ignore="ResourceName">密码不能为空</string>
-    <string name="pass_lenth_invalid" tools:ignore="ResourceName">密码不符合规则</string>
-    <string name="password_no_match" tools:ignore="ResourceName">两次输入的密码不匹配，请重新输入</string>
-    <string name="repeat_input_pass" tools:ignore="ResourceName">请再次输入您的密码</string>
-    <string name="check_agreement" tools:ignore="ResourceName">请同意我们的服务协议</string>
-    <string name="tip_next_step" tools:ignore="ResourceName">下一步</string>
-    <string name="tip_set_password" tools:ignore="ResourceName">设置密码</string>
-    <string name="tip_create_wallet" tools:ignore="ResourceName">创建钱包</string>
-    <string name="tip_repeat_pass" tools:ignore="ResourceName">重复密码</string>
-    <string name="title_wallet_name" tools:ignore="ResourceName">钱包名称</string>
-    <string name="tip_walletname_hint" tools:ignore="ResourceName">请输入创建的钱包名称</string>
-    <string name="tip_walletname_error" tools:ignore="ResourceName">钱包名称与已有钱包重复，请修改</string>
-    <string name="tip_input_password" tools:ignore="ResourceName">最少8位长度，可混合大小写字母、数字及符号</string>
-    <string name="tip_repeat_password" tools:ignore="ResourceName">请再次输入您的密码</string>
-    <string name="tip_input_password_hint" tools:ignore="ResourceName">密码提示</string>
-    <string name="tip_pass_no_match" tools:ignore="ResourceName">密码不一致</string>
-    <string name="title_password_hint" tools:ignore="ResourceName">密码提示（可选）</string>
-    <string name="tip_agree" tools:ignore="ResourceName">我已阅读并同意</string>
-    <string name="tip_terms_of_service" tools:ignore="ResourceName"><u>服务协议</u></string>
+    <!--&lt;!&ndash;edit wallet config&ndash;&gt;-->
+    <!--<string name="name_invalid" tools:ignore="ResourceName">创建失败，钱包名称已存在</string>-->
+    <!--<string name="name_not_empty" tools:ignore="ResourceName">钱包名称不能为空</string>-->
+    <!--<string name="pass_not_empty" tools:ignore="ResourceName">密码不能为空</string>-->
+    <!--<string name="pass_lenth_invalid" tools:ignore="ResourceName">密码不符合规则</string>-->
+    <!--<string name="password_no_match" tools:ignore="ResourceName">两次输入的密码不匹配，请重新输入</string>-->
+    <!--<string name="repeat_input_pass" tools:ignore="ResourceName">请再次输入您的密码</string>-->
+    <!--<string name="check_agreement" tools:ignore="ResourceName">请同意我们的服务协议</string>-->
+    <!--<string name="tip_next_step" tools:ignore="ResourceName">下一步</string>-->
+    <!--<string name="tip_set_password" tools:ignore="ResourceName">设置密码</string>-->
+    <!--<string name="tip_create_wallet" tools:ignore="ResourceName">创建钱包</string>-->
+    <!--<string name="tip_repeat_pass" tools:ignore="ResourceName">重复密码</string>-->
+    <!--<string name="title_wallet_name" tools:ignore="ResourceName">钱包名称</string>-->
+    <!--<string name="tip_walletname_hint" tools:ignore="ResourceName">请输入创建的钱包名称</string>-->
+    <!--<string name="tip_walletname_error" tools:ignore="ResourceName">钱包名称与已有钱包重复，请修改</string>-->
+    <!--<string name="tip_input_password" tools:ignore="ResourceName">最少8位长度，可混合大小写字母、数字及符号</string>-->
+    <!--<string name="tip_repeat_password" tools:ignore="ResourceName">请再次输入您的密码</string>-->
+    <!--<string name="tip_input_password_hint" tools:ignore="ResourceName">密码提示</string>-->
+    <!--<string name="tip_pass_no_match" tools:ignore="ResourceName">密码不一致</string>-->
+    <!--<string name="title_password_hint" tools:ignore="ResourceName">密码提示（可选）</string>-->
+    <!--<string name="tip_agree" tools:ignore="ResourceName">我已阅读并同意</string>-->
+    <!--<string name="tip_terms_of_service" tools:ignore="ResourceName"><u>服务协议</u></string>-->
 
 
-    <!-- Permission Manage-->
-    <string name="walletmanage_set_camera_permission" tools:ignore="ResourceName">请设置相机相关权限</string>
-    <string name="baseservice_title_dialog">Tips</string>
-    <string name="baseservice_message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
-    <string name="baseservice_message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
-    <string name="baseservice_message_setting_comeback">The user comes back from the settings page.</string>
-    <string name="baseservice_message_install_failed">Your phone is not allowed us to install apps.</string>
-    <string name="baseservice_message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>
-    <string name="baseservice_message_error_storage">Please check the external storage device.</string>
-    <string name="baseservice_successfully">Successful</string>
-    <string name="baseservice_failure">Failure</string>
+    <!--&lt;!&ndash; Permission Manage&ndash;&gt;-->
+    <!--<string name="walletmanage_set_camera_permission" tools:ignore="ResourceName">请设置相机相关权限</string>-->
+    <!--<string name="baseservice_title_dialog">Tips</string>-->
+    <!--<string name="baseservice_message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>-->
+    <!--<string name="baseservice_message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>-->
+    <!--<string name="baseservice_message_setting_comeback">The user comes back from the settings page.</string>-->
+    <!--<string name="baseservice_message_install_failed">Your phone is not allowed us to install apps.</string>-->
+    <!--<string name="baseservice_message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>-->
+    <!--<string name="baseservice_message_error_storage">Please check the external storage device.</string>-->
+    <!--<string name="baseservice_successfully">Successful</string>-->
+    <!--<string name="baseservice_failure">Failure</string>-->
 
-    <string name="baseservice_setting">Setting</string>
-    <string name="baseservice_resume">Resume</string>
-    <string name="baseservice_cancel">Cancel</string>
+    <!--<string name="baseservice_setting">Setting</string>-->
+    <!--<string name="baseservice_resume">Resume</string>-->
+    <!--<string name="baseservice_cancel">Cancel</string>-->
 
-    <!--password validate-->
-    <string name="baseservice_pass_validate_hint">请输入钱包密码以授权</string>
-    <string name="baseservice_bluetooth_pass_validate_hint">请输入WOOKONG Bio的密码以授权</string>
-    <string name="baseservice_pass_validate_next">下一步</string>
-    <string name="baseservice_pass_validate_confirm">确认已授权</string>
-    <string name="baseservice_pass_validate_tip_please_input_pass">请输入密码</string>
-    <string name="baseservice_pass_validate_ip_wrong_password">密码错误请重新输入！</string>
-    <string name="baseservice_pass_validate_et_hint">请输入%1$s的密码</string>
-    <string name="baseservice_pass_validate_wallet_error">当前钱包出现异常</string>
-    <string name="baseservice_dialog_password_tip_title">密码提示</string>
+    <!--&lt;!&ndash;password validate&ndash;&gt;-->
+    <!--<string name="baseservice_pass_validate_hint">请输入钱包密码以授权</string>-->
+    <!--<string name="baseservice_bluetooth_pass_validate_hint">请输入WOOKONG Bio的密码以授权</string>-->
+    <!--<string name="baseservice_pass_validate_next">下一步</string>-->
+    <!--<string name="baseservice_pass_validate_confirm">确认已授权</string>-->
+    <!--<string name="baseservice_pass_validate_tip_please_input_pass">请输入密码</string>-->
+    <!--<string name="baseservice_pass_validate_ip_wrong_password">密码错误请重新输入！</string>-->
+    <!--<string name="baseservice_pass_validate_et_hint">请输入%1$s的密码</string>-->
+    <!--<string name="baseservice_pass_validate_wallet_error">当前钱包出现异常</string>-->
+    <!--<string name="baseservice_dialog_password_tip_title">密码提示</string>-->
 
-    <string name="baseservice_tip_password_hint">密码提示信息</string>
-    <string name="baseservice_tip_i_understand">我知道了</string>
-    <string name="baseservice_reconnect">重新连接</string>
-    <string name="baseservice_wookong_bio_connecting">正在连接</string>
-    <string name="baseservice_wookong_connect_tip">若未找到,请检查手机蓝牙和设备电源</string>
-    <string name="baseservice_wookong_connect_error_tip">连接失败,请检查手机蓝牙和设备电源</string>
-    <string name="baseservice_dialog_change_bluetoothwallet_hint">切换钱包将断开WOOKONG Bio。\n确认断开连接?</string>
-    <string name="baseservice_dialog_change_bluetoothwallet_title">警告</string>
-    <string name="baseservice_dialog_pin_locked_title">设备已锁定</string>
-    <string name="baseservice_dialog_pin_locked_hint">需要格式化后才能使用</string>
-    <string name="baseservice_format">格式化</string>
-    <string name="baseservice_hint_button_confirm_init_pin">请在WOOKONG Bio上按键以确认初始化</string>
-    <string name="baseservice_hint_button_confirm_change_psw">请在WOOKONG Bio上按键以确认修改密码</string>
+    <!--<string name="baseservice_tip_password_hint">密码提示信息</string>-->
+    <!--<string name="baseservice_tip_i_understand">我知道了</string>-->
+    <!--<string name="baseservice_reconnect">重新连接</string>-->
+    <!--<string name="baseservice_wookong_bio_connecting">正在连接</string>-->
+    <!--<string name="baseservice_wookong_connect_tip">若未找到,请检查手机蓝牙和设备电源</string>-->
+    <!--<string name="baseservice_wookong_connect_error_tip">连接失败,请检查手机蓝牙和设备电源</string>-->
+    <!--<string name="baseservice_dialog_change_bluetoothwallet_hint">切换钱包将断开WOOKONG Bio。\n确认断开连接?</string>-->
+    <!--<string name="baseservice_dialog_change_bluetoothwallet_title">警告</string>-->
+    <!--<string name="baseservice_dialog_pin_locked_title">设备已锁定</string>-->
+    <!--<string name="baseservice_dialog_pin_locked_hint">需要格式化后才能使用</string>-->
+    <!--<string name="baseservice_format">格式化</string>-->
+    <!--<string name="baseservice_hint_button_confirm_init_pin">请在WOOKONG Bio上按键以确认初始化</string>-->
+    <!--<string name="baseservice_hint_button_confirm_change_psw">请在WOOKONG Bio上按键以确认修改密码</string>-->
 </resources>

@@ -30,4 +30,5 @@ dependencies {
     api deps.gma.spinkit
     api deps.smartrefresh.layout
     api project(':platform_framework:base-res')
+    api project(':platform_framework:basiclib')
 }

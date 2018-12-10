@@ -92,5 +92,7 @@ dependencies {
     //头条屏幕适配方案
     api 'me.jessyan:autosize:1.0.0'
 
+    api project(':platform_framework:base-res')
+
 
 }

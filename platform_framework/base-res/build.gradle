@@ -21,6 +21,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api project(':platform_framework:basiclib')
+//    api project(':platform_framework:basiclib')
 
 }

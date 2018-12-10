@@ -1,38 +1,38 @@
 <resources>
     <string name="eos_app_name">base-view</string>
-    <string name="empty_view_hint">暂无交易记录~</string>
-    <string name="empty_view_nodes_hint">暂无节点信息</string>
-    <string name="error_view_hint">加载失败</string>
-    <string name="no_network_view_hint">网络异常</string>
-    <string name="fingerprint_not_recognized">指纹扫描失败，请重试</string>
-    <string name="fingerprint_hint">将手指接触传感器</string>
-    <string name="fingerprint_success">认证成功</string>
-    <string name="sign_in">身份验证</string>
-    <string name="fingerprint_description">请将手指接触传感器进行验证</string>
-    <string name="password_description">请输入密码进行验证</string>
-    <string name="new_fingerprint_enrolled_description">新录入的指纹，需要密码进行验证</string>
-    <string name="password">密码</string>
-    <string name="use_fingerprint_in_future">以后均使用指纹验证</string>
-    <string name="finger_auth_cancel">取消</string>
-    <string name="use_password">使用手势密码</string>
-    <string name="finger_ok">确认</string>
+    <!--<string name="empty_view_hint">暂无交易记录~</string>-->
+    <!--<string name="empty_view_nodes_hint">暂无节点信息</string>-->
+    <!--<string name="error_view_hint">加载失败</string>-->
+    <!--<string name="no_network_view_hint">网络异常</string>-->
+    <!--<string name="fingerprint_not_recognized">指纹扫描失败，请重试</string>-->
+    <!--<string name="fingerprint_hint">将手指接触传感器</string>-->
+    <!--<string name="fingerprint_success">认证成功</string>-->
+    <!--<string name="sign_in">身份验证</string>-->
+    <!--<string name="fingerprint_description">请将手指接触传感器进行验证</string>-->
+    <!--<string name="password_description">请输入密码进行验证</string>-->
+    <!--<string name="new_fingerprint_enrolled_description">新录入的指纹，需要密码进行验证</string>-->
+    <!--<string name="password">密码</string>-->
+    <!--<string name="use_fingerprint_in_future">以后均使用指纹验证</string>-->
+    <!--<string name="finger_auth_cancel">取消</string>-->
+    <!--<string name="use_password">使用手势密码</string>-->
+    <!--<string name="finger_ok">确认</string>-->
 
-    <string name="set_password_first">请先设置锁屏密码</string>
-    <string name="one_fingerprint_at_least">请录入至少一个指纹</string>
+    <!--<string name="set_password_first">请先设置锁屏密码</string>-->
+    <!--<string name="one_fingerprint_at_least">请录入至少一个指纹</string>-->
 
-    <string name="no_more_data">没有更多数据</string>
-    <string name="load_more">上拉加载更多</string>
-    <string name="finish_loading">加载完成</string>
-    <string name="loading">加载中...</string>
-    <string name="unleash_refresh">释放刷新</string>
-    <string name="unleash_to_refresh">释放立即刷新</string>
-    <string name="finish_refresh">刷新完成</string>
-    <string name="pull_to_refresh">下拉刷新</string>
+    <!--<string name="no_more_data">没有更多数据</string>-->
+    <!--<string name="load_more">上拉加载更多</string>-->
+    <!--<string name="finish_loading">加载完成</string>-->
+    <!--<string name="loading">加载中...</string>-->
+    <!--<string name="unleash_refresh">释放刷新</string>-->
+    <!--<string name="unleash_to_refresh">释放立即刷新</string>-->
+    <!--<string name="finish_refresh">刷新完成</string>-->
+    <!--<string name="pull_to_refresh">下拉刷新</string>-->
 
-    <string name="scanning_bio">正在搜索可连接的WOOKONG Bio</string>
-    <string name="transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>
-    <string name="transfer_bluetooth_tip">正在连接WOOKONG Bio</string>
-    <string name="bluetooth_scan_no_result">无可连接的WOOKONG Bio</string>
+    <!--<string name="scanning_bio">正在搜索可连接的WOOKONG Bio</string>-->
+    <!--<string name="transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>-->
+    <!--<string name="transfer_bluetooth_tip">正在连接WOOKONG Bio</string>-->
+    <!--<string name="bluetooth_scan_no_result">无可连接的WOOKONG Bio</string>-->
 
 
 </resources>
