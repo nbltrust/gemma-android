@@ -1250,7 +1250,7 @@
     <string name="baseservice_dialog_change_bluetoothwallet_hint">切换钱包将断开WOOKONG Bio。\n确认断开连接?</string>
     <string name="baseservice_dialog_change_bluetoothwallet_title">警告</string>
     <string name="baseservice_dialog_pin_locked_title">设备已锁定</string>
-    <string name="baseservice_dialog_pin_locked_hint">需要格式化后才能使用</string>
+    <string name="baseservice_dialog_pin_locked_hint">需先格式化后才能使用</string>
     <string name="baseservice_format">格式化</string>
     <string name="baseservice_hint_button_confirm_init_pin">请在WOOKONG Bio上按键以确认初始化</string>
     <string name="baseservice_hint_button_confirm_change_psw">请在WOOKONG Bio上按键以确认修改密码</string>

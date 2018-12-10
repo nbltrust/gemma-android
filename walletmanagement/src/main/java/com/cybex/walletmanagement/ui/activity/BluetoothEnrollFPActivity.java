@@ -339,6 +339,7 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
                     dialog.cancel();
                 } else if (view.getId() == R.id.tv_retry) {
                     dialog.dismiss();
+                    tvHint.setText(R.string.walletmanage_enroll_fp_hint1);
                     startEnroll();
                 }
 
