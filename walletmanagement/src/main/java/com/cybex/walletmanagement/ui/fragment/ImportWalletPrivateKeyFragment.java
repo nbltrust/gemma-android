@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.base.view.LabelLayout;
+import com.cybex.componentservice.BuildConfig;
 import com.cybex.componentservice.bean.CoinType;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
@@ -296,6 +297,10 @@ public class ImportWalletPrivateKeyFragment extends XFragment {
         if (wallets.size() == 0) {
             labelWhichWallet.setVisibility(View.GONE);
         }
+        if(!BuildConfig.ETH_ISSHOW){
+            labelCoinType.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

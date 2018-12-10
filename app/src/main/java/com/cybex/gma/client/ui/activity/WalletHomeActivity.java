@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
+import com.cybex.componentservice.BuildConfig;
 import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.config.BaseConst;
@@ -333,6 +334,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     public void updateWallet(MultiWalletEntity multiWalletEntity) {
         if (multiWalletEntity != null) {
+            boolean isEthShow=false;
             mTvWalletName.setText(multiWalletEntity.getWalletName());
             if (multiWalletEntity.getEosWalletEntities() != null
                     && multiWalletEntity.getEosWalletEntities().size() > 0) {
@@ -358,7 +360,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 updateBluetoothUI();
                 mViewWookongStatus.setVisibility(View.VISIBLE);
                 mEosCardView.setVisibility(View.VISIBLE);
-                mEthCardView.setVisibility(View.VISIBLE);
+//                mEthCardView.setVisibility(View.VISIBLE);
+                isEthShow=true;
 
                 getP().getKeyAccounts(curEosWallet.getPublicKey());
                 updateEosCardView();
@@ -368,7 +371,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
                 mViewBackupStatus.setVisibility(multiWalletEntity.getIsBackUp() == 0 ? View.VISIBLE : View.GONE);
                 mEosCardView.setVisibility(View.VISIBLE);
-                mEthCardView.setVisibility(View.VISIBLE);
+//                mEthCardView.setVisibility(View.VISIBLE);
+                isEthShow=true;
                 updateEosCardView();
                 String eos_public_key = curEosWallet.getPublicKey();
                 getP().getKeyAccounts(eos_public_key);
@@ -377,7 +381,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 mViewWookongStatus.setVisibility(View.INVISIBLE);
                 mViewBackupStatus.setVisibility(View.GONE);
                 mEosCardView.setVisibility(View.VISIBLE);
-                mEthCardView.setVisibility(View.VISIBLE);
+//                mEthCardView.setVisibility(View.VISIBLE);
+                isEthShow=true;
                 //核验EOS账户的状态
                 updateEosCardView();
                 if (multiWalletEntity.getEosWalletEntities().size() > 0) {
@@ -395,7 +400,8 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 if (EmptyUtils.isNotEmpty(curEosWallet) && EmptyUtils.isNotEmpty(curEthWallet)) {
                     //todo ETH/EOS钱包都不为空
                     mEosCardView.setVisibility(View.VISIBLE);
-                    mEthCardView.setVisibility(View.VISIBLE);
+//                    mEthCardView.setVisibility(View.VISIBLE);
+                    isEthShow=true;
                     LoggerManager.d("case eth+eos");
                     String eos_public_key = curEosWallet.getPublicKey();
                     getP().getKeyAccounts(eos_public_key);
@@ -403,17 +409,20 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 } else if (EmptyUtils.isNotEmpty(curEthWallet) && EmptyUtils.isEmpty(curEosWallet)) {
                     //todo 只有ETH钱包
                     mEosCardView.setVisibility(View.GONE);
-                    mEthCardView.setVisibility(View.VISIBLE);
+//                    mEthCardView.setVisibility(View.VISIBLE);
+                    isEthShow=true;
                     LoggerManager.d("case eth");
                 } else if (EmptyUtils.isNotEmpty(curEosWallet) && EmptyUtils.isEmpty(curEthWallet)) {
                     //只有EOS钱包
                     mEosCardView.setVisibility(View.VISIBLE);
-                    mEthCardView.setVisibility(View.GONE);
+//                    mEthCardView.setVisibility(View.GONE);
+                    isEthShow=false;
                     LoggerManager.d("case eos");
                     String eos_public_key = curEosWallet.getPublicKey();
                     getP().getKeyAccounts(eos_public_key);
                 }
             }
+            mEthCardView.setVisibility((isEthShow& BuildConfig.ETH_ISSHOW)?View.VISIBLE:View.GONE);
             viewRefreshWalletHome.finishRefresh();
         }
     }

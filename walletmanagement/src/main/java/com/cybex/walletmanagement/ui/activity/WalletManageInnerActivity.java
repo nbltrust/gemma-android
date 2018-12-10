@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.base.view.LabelLayout;
+import com.cybex.componentservice.BuildConfig;
+import com.cybex.componentservice.bean.CoinType;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
@@ -71,10 +73,16 @@ public class WalletManageInnerActivity extends XActivity {
         labelExportPriKey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WalletManageInnerActivity.this, SelectWhichCoinExportPriKeyActivity.class);
-                intent.putExtra(BaseConst.KEY_WALLET_ENTITY,wallet);
-                startActivity(intent);
-
+                if(BuildConfig.ETH_ISSHOW){
+                    Intent intent = new Intent(WalletManageInnerActivity.this, SelectWhichCoinExportPriKeyActivity.class);
+                    intent.putExtra(BaseConst.KEY_WALLET_ENTITY,wallet);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(WalletManageInnerActivity.this, PrivateKeyBackupGuideActivity.class);
+                    intent.putExtra(BaseConst.KEY_WALLET_ENTITY,wallet);
+                    intent.putExtra(BaseConst.KEY_COIN_TYPE, CoinType.EOS);
+                    startActivity(intent);
+                }
             }
         });
 
