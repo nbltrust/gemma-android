@@ -1429,6 +1429,7 @@
     <string name="transefer_bluetooth_connect_tip">若未找到，请检查手机蓝牙和设备电源。</string>
     <string name="transfer_bluetooth_tip">正在连接WOOKONG Bio</string>
     <string name="bluetooth_scan_no_result">无可连接的WOOKONG Bio</string>
+    <string name="click_to_verify">请点击验证</string>
 
     <!--baseview****-->
 

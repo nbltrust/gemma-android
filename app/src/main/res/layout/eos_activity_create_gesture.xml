@@ -24,8 +24,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:text="@string/create_gesture_default"
-        android:textColor="@color/dark_slate_blue"
-        android:textSize="16sp" />
+        android:textColor="@color/black_content"
+        android:textSize="@dimen/font_4" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -47,8 +47,8 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/eos_layout_grey_bg"
             android:text="@string/create_gesture_reset"
-            android:textColor="@color/dark_slate_blue"
-            android:textSize="16sp" />
+            android:textColor="@color/black_content"
+            android:textSize="@dimen/font_4" />
 
     </LinearLayout>
 

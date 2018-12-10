@@ -34,36 +34,41 @@ public class FingerprintVerifyActivity extends XActivity {
 
             @Override
             public void onClick(View v) {
-                new FingerprintScanHelper(FingerprintVerifyActivity.this)
-                        .startAuth(new OnAuthResultListener() {
-                            @Override
-                            public void onSuccess() {
-                                //指纹验证成功
-                                UISkipMananger.launchHome(FingerprintVerifyActivity.this);
-                                finish();
 
-                            }
-
-                            @Override
-                            public void onInputPwd(String pwd) {
-
-                            }
-
-                            @Override
-                            public void onFailed(String msg) {
-                                GemmaToastUtils.showShortToast(msg);
-
-                            }
-
-                            @Override
-                            public void onDeviceNotSupport() {
-                                GemmaToastUtils.showShortToast(getString(R.string.finger_tip_device_no_support));
-
-                            }
-                        });
-
+                startFpVerify();
             }
         });
+        startFpVerify();
+    }
+
+    private void startFpVerify(){
+        new FingerprintScanHelper(FingerprintVerifyActivity.this)
+                .startAuth(new OnAuthResultListener() {
+                    @Override
+                    public void onSuccess() {
+                        //指纹验证成功
+                        UISkipMananger.launchHome(FingerprintVerifyActivity.this);
+                        finish();
+
+                    }
+
+                    @Override
+                    public void onInputPwd(String pwd) {
+
+                    }
+
+                    @Override
+                    public void onFailed(String msg) {
+                        GemmaToastUtils.showShortToast(msg);
+
+                    }
+
+                    @Override
+                    public void onDeviceNotSupport() {
+                        GemmaToastUtils.showShortToast(getString(R.string.finger_tip_device_no_support));
+
+                    }
+                });
 
     }
 

@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/ic_logo_sign_in"/>
+        android:layout_marginTop="76dp"
+        android:src="@drawable/wookong_logo_splash_page"/>
 
     <ImageView
         android:id="@+id/imv_finger_print"
@@ -20,7 +20,7 @@
         android:clickable="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
-        android:src="@drawable/ic_finger_print"/>
+        android:src="@drawable/ic_sign_in_fingerprint"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,8 +28,9 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/imv_finger_print"
         android:layout_marginTop="24dp"
-        android:text="请点击验证"
-        android:textColor="#3381e0"
-        android:textSize="16sp"/>
+        android:text="@string/click_to_verify"
+        android:textColor="@color/black_content"
+        android:textSize="@dimen/font_3.5"/>
+
 
 </RelativeLayout>

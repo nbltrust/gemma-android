@@ -65,7 +65,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_below="@+id/fingerprint_description"
                         android:layout_marginTop="20dp"
-                        android:src="@drawable/ic_finger_print" />
+                        android:src="@drawable/ic_sign_in_fingerprint" />
 
                     <TextView
                         android:id="@+id/fingerprint_status"
@@ -169,7 +169,7 @@
             <Button
                 android:id="@+id/cancel_button"
                 style="?attr/buttonBarNegativeButtonStyle"
-                android:textColor="#3381e0"
+                android:textColor="@color/black_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

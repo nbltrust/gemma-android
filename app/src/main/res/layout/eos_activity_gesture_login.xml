@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/imv_logo"
-        android:src="@drawable/ic_logo_sign_in"
+        android:src="@drawable/wookong_logo_splash_page"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="76dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:textSize="16sp" />
+        android:textColor="@color/black_content"
+        android:textSize="@dimen/font_4" />
 
 
     <LinearLayout

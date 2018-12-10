@@ -1340,6 +1340,7 @@
 
     <!--baseview****-->
     <string name="bluetooth_scan_no_result">无可连接的WOOKONG Bio</string>
+    <string name="click_to_verify">请点击验证</string>
     <!--chinese all copy end-->
 
 </resources>

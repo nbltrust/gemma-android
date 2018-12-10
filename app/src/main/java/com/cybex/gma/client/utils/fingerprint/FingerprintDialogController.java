@@ -62,7 +62,7 @@ public class FingerprintDialogController extends FingerprintManager.Authenticati
         // noinspection ResourceType
         mFingerprintManager
                 .authenticate(cryptoObject, mCancellationSignal, 0 /* flags */, this, null);
-        mIcon.setImageResource(R.drawable.ic_finger_print);
+        mIcon.setImageResource(R.drawable.ic_sign_in_fingerprint);
     }
 
     /**
@@ -132,7 +132,7 @@ public class FingerprintDialogController extends FingerprintManager.Authenticati
                     mErrorTextView.getResources().getColor(R.color.hint_color, null));
             mErrorTextView.setText(
                     mErrorTextView.getResources().getString(R.string.fingerprint_hint));
-            mIcon.setImageResource(R.drawable.ic_finger_print);
+            mIcon.setImageResource(R.drawable.ic_sign_in_fingerprint);
         }
     };
 
