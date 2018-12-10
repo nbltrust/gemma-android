@@ -20,7 +20,7 @@
         android:clickable="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
-        android:src="@drawable/ic_finger_print"/>
+        android:src="@drawable/ic_sign_in_fingerprint"/>
 
     <TextView
         android:layout_width="wrap_content"

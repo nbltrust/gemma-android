@@ -6,6 +6,12 @@
     <string name="walletmanage_status_connected">已连接</string>
 
 
+
+    <string name="eos_username">EOS账户名</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="resource">Manage Resources</string>
+    <string name="title_invite_friend">Request from a friend</string>
+    <string name="eos_title_delegate">Delegate</string>
     <!--app-->
     <!-- Alert -->
     <string name="eos_please_confirm_alert">请勿在EOS区块100%确认之前往账户转账</string>
