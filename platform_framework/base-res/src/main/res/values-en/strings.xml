@@ -925,10 +925,10 @@
     <string name="walletmanage_tip_confirm_format">请在WOOKONG Bio上按键以确认格式化，一旦格式化，WOOKONG Bio将清除私钥，请在格式化前转移资产。</string>
 
     <string name="walletmanage_key_saved_qr">我已安全存储私钥</string>
-    <string name="walletmanage_wallet">钱包</string>
+    <string name="walletmanage_wallet">Wallet</string>
 
     <!--wallet manage home -->
-    <string name="walletmanage_create_wallet">创建钱包</string>
+    <string name="walletmanage_create_wallet">Create Wallet</string>
     <string name="walletmanage_connect_wookong_bio">配对 WOOKONG Bio</string>
     <string name="walletmanage_formating">正在格式化</string>
     <string name="walletmanage_format_fail">格式化失败</string>
@@ -1340,7 +1340,9 @@
 
     <!--baseview****-->
     <string name="bluetooth_scan_no_result">无可连接的WOOKONG Bio</string>
-    <string name="click_to_verify">请点击验证</string>
+    <string name="click_to_verify">Please Click To Verify</string>
+    <string name="walletmanage_walletmanage">Wallet Management</string>
+    <string name="walletmanage_current_wallet">Current Wallet</string>
     <!--chinese all copy end-->
 
 </resources>
