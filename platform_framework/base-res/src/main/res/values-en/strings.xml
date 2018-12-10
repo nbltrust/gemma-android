@@ -1181,9 +1181,9 @@
     <!--app end-->
 
     <!--chinese all copy start-->
-    <string name="wookong_charging">充电中</string>
-    <string name="walletmanage_status_connected">已连接</string>
-    <string name="eos_btn_wookong">配对WOOKONG Bio</string>
+    <string name="wookong_charging">Charging</string>
+    <string name="walletmanage_status_connected">connected</string>
+    <string name="eos_btn_wookong">Pair WOOKONG Bio</string>
     <string name="eos_refund_detail">赎回详情</string>
     <string name="eos_backup_your_mne">请记下你的钱包私钥助记词并保存在安全的地方</string>
     <string name="eos_backup_hint2">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
