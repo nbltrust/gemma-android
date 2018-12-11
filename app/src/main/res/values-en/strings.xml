@@ -1,10 +1,10 @@
 <resources>
 
+    <string name="eos_app_name">WOOKONG</string>
     <!--&lt;!&ndash; Alert &ndash;&gt;-->
     <!--<string name="eos_please_confirm_alert">Pending...The account is still in the air until 100% confirmed.</string>-->
 
     <!--&lt;!&ndash; Common &ndash;&gt;-->
-    <!--<string name="eos_app_name">WOOKONG</string>-->
     <!--<string name="eos_eos">EOS</string>-->
 
     <!--&lt;!&ndash; Initial Activity &ndash;&gt;-->
