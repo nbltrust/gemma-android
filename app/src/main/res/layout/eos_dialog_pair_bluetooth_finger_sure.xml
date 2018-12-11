@@ -49,7 +49,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="@dimen/dimen_20"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         android:src="@drawable/card_fingerprint"/>
 
 

@@ -17,7 +17,7 @@
         android:layout_marginLeft="@dimen/common_page_content_padding"
         android:layout_marginRight="@dimen/common_page_content_padding"
         android:background="@drawable/card_fingerprint"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerInside"/>
 
 
     <TextView

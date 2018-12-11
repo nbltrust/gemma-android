@@ -21,29 +21,40 @@
         android:orientation="vertical"
         >
 
-        <com.allen.library.SuperTextView
+        <!--<com.allen.library.SuperTextView-->
+            <!--android:id="@+id/superTextView_bWallet_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--title:sLeftTextColor="@color/black_title"-->
+            <!--title:sLeftTextSize="@dimen/font_4"-->
+            <!--title:sLeftTextString="@string/walletmanage_name"-->
+            <!--title:sLeftViewMarginLeft="0dp"-->
+            <!--title:sLeftLines="1"-->
+            <!--title:sRightTextGravity="right"-->
+            <!--title:sRightTextColor="@color/very_light_pink"-->
+            <!--title:sRightTextSize="@dimen/font_4"-->
+            <!--title:sRightTextString="WOOKONG Bio"-->
+            <!--title:sRightLines="1"-->
+            <!--title:sRightTvDrawableRight="@drawable/ic_arrow"-->
+            <!--title:sShapeSolidColor="@color/whiteTwo"-->
+            <!--title:sUseShape="true">-->
+        <!--</com.allen.library.SuperTextView>-->
+
+
+        <com.cybex.base.view.LabelLayout
             android:id="@+id/superTextView_bWallet_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            title:sLeftTextColor="@color/black_title"
-            title:sLeftTextSize="@dimen/font_4"
-            title:sLeftTextString="@string/walletmanage_name"
-            title:sLeftViewMarginLeft="0dp"
-            title:sLeftLines="1"
-            title:sRightViewMarginLeft="50dp"
-            title:sRightTextColor="@color/very_light_pink"
-            title:sRightTextSize="@dimen/font_4"
-            title:sRightTextString="WOOKONG Bio"
-            title:sRightLines="1"
-            title:sRightTvDrawableRight="@drawable/ic_arrow"
-            title:sShapeSolidColor="@color/whiteTwo"
-            title:sUseShape="true">
-        </com.allen.library.SuperTextView>
-
-
-        <View
-            style="@style/common_divider"
+            title:text_left="@string/walletmanage_name"
+            title:text_right="主钱包"
+            title:text_right_isShow="true"
             />
+
+
+
+        <!--<View-->
+            <!--style="@style/common_divider"-->
+            <!--/>-->
 
 
         <com.allen.library.SuperTextView

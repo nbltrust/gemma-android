@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.allen.library.SuperTextView;
+import com.cybex.base.view.LabelLayout;
 import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.RouterConst;
@@ -40,7 +41,7 @@ import java.util.List;
 public class BluetoothWalletDetailFragment extends XFragment {
 
     TitleBar btnNavibar;
-    SuperTextView superTextViewBWalletName;
+    LabelLayout superTextViewBWalletName;
     SuperTextView superTextViewBatteryLife;
 //    Button btToConnect;
     //Button btCancelPair;
@@ -115,7 +116,7 @@ public class BluetoothWalletDetailFragment extends XFragment {
             }
         }); */
 
-        superTextViewBWalletName.setRightString(multiWalletEntity.getWalletName());
+        superTextViewBWalletName.setRightText(multiWalletEntity.getWalletName());
 
         //格式化
         btFormat.setOnClickListener(new View.OnClickListener() {
@@ -133,9 +134,9 @@ public class BluetoothWalletDetailFragment extends XFragment {
         });
 
         //修改钱包名称
-        superTextViewBWalletName.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
+        superTextViewBWalletName.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClickListener(SuperTextView superTextView) {
+            public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeWalletNameActivity.class);
                 intent.putExtra(BaseConst.KEY_WALLET_ENTITY,multiWalletEntity);
                 startActivity(intent);
@@ -196,7 +197,7 @@ public class BluetoothWalletDetailFragment extends XFragment {
     public void refreshWalletName(WalletNameChangedEvent event) {
         if (event.getWalletID()==multiWalletEntity.getId()) {
             multiWalletEntity.setWalletName(event.getWalletName());
-            superTextViewBWalletName.setRightString(multiWalletEntity.getWalletName());
+            superTextViewBWalletName.setRightText(multiWalletEntity.getWalletName());
         }
     }
 
