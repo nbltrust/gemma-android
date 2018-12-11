@@ -1,6 +1,6 @@
 <resources>
     <string name="eos_app_name">WOOKONG</string>
-    
+
     <!--&lt;!&ndash; Alert &ndash;&gt;-->
     <!--<string name="eos_please_confirm_alert">请勿在EOS区块100%确认之前往账户转账</string>-->
 
