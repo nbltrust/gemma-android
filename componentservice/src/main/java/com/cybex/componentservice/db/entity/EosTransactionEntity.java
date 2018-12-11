@@ -17,9 +17,8 @@ public class EosTransactionEntity extends BaseModel {
     private Integer id;
 
     @Column
-
+    @Unique
     private String transactionHash;
-
 
     /**
      * 交易当前状态   1 -- 已确认  2---确认中  3--失败

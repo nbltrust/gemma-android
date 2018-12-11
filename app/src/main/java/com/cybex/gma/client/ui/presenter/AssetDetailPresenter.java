@@ -46,6 +46,87 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
     private static final String VALUE_CODE_EOS = "eosio.token";
     private static final String VALUE_SYMBOL_EOS = "EOS";
+    private static String curLib = null;
+
+    /**
+     * 获取链上配置信息
+     * 需要拿到head block num 和lib
+     */
+    public void getInfo(
+            final String account_name,
+            final int page,
+            final int size,
+            final String symbol,
+            final String contract,
+            final boolean isEos) {
+        new EOSConfigInfoRequest(String.class)
+                .getInfo(new StringCallback() {
+
+                    @Override
+                    public void onStart(Request<String, ? extends Request> request) {
+                        LoggerManager.d(" get Info");
+                        super.onStart(request);
+                        if (getV() != null) {
+                            super.onStart(request);
+                            if (page == 1) {
+                                getV().showLoading();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        if (EmptyUtils.isNotEmpty(getV())) {
+                            super.onError(response);
+                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
+                            getV().dissmisProgressDialog();
+
+                            try {
+                                String err_info_string = response.getRawResponse().body().string();
+                                try {
+                                    JSONObject obj = new JSONObject(err_info_string);
+                                    JSONObject error = obj.optJSONObject("error");
+                                    String err_code = error.optString("code");
+                                    handleEosErrorCode(err_code);
+
+                                } catch (JSONException ee) {
+                                    ee.printStackTrace();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        if (getV() != null) {
+                            if (response != null && response.body() != null) {
+                                String infoJson = response.body();
+                                try {
+                                    JSONObject obj = new JSONObject(infoJson);
+                                    if (obj != null) {
+//                                        String head_block_num = obj.optString("head_block_num");
+                                        String lib_num = obj.optString("last_irreversible_block_num");
+                                        curLib = lib_num;
+//                                        LoggerManager.d("lib", lib_num);
+//                                        LoggerManager.d("head_block_num", head_block_num);
+                                        getV().setCurLib(lib_num);
+                                        getV().setmRecyclerViewOnClick();
+                                        requestHistory(account_name, page, size, symbol, contract, isEos);
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        }
+                    }
+                });
+    }
+
 
     public void requestHistory(
             final String account_name,
@@ -61,12 +142,12 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                     @Override
                     public void onStart(Request<TransferHistoryListData, ? extends Request> request) {
                         LoggerManager.d("request history");
-                        if (getV() != null) {
-                            super.onStart(request);
-                            if (page == 1) {
-                                getV().showLoading();
-                            }
-                        }
+//                        if (getV() != null) {
+//                            super.onStart(request);
+//                            if (page == 1) {
+//                                getV().showLoading();
+//                            }
+//                        }
                     }
 
                     @Override
@@ -87,6 +168,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                         TransferHistoryList transferHistoryList = data.result;
                                         //int trace_count = transferHistoryList.trace_count;
                                         List<TransferHistory> historyList = transferHistoryList.trace_list;
+                                        historyList = clearListStatus(historyList);
 
                                         if (page == 1) {
                                             getV().refreshData(historyList);
@@ -157,13 +239,13 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                         if (EmptyUtils.isNotEmpty(balance) && EmptyUtils.isNotEmpty(getV())) {
 
                                             getV().showBalance(balance);
-                                            getInfo();
+                                            getV().showContent();
 
                                         }
                                     } else {
 
                                         getV().showBalance("0.0000");
-                                        getInfo();
+                                        getV().showContent();
 
                                     }
                                 } else {
@@ -207,10 +289,10 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                                 && token.getCode().equals(token_contract)) {
                                             String tokenBalance = String.valueOf(token.getBalance());
                                             getV().showBalance(tokenBalance);
-                                            getInfo();
-//                                            getV().showContent();
+
                                         }
                                     }
+                                    getV().showContent();
                                 } else {
                                     getV().showEmptyOrFinish();
                                 }
@@ -241,40 +323,23 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
      */
 
     public void getTransaction(String txId) {
-        //LoggerManager.d("Transaction id", txId);
         new GetEosTransactionRequest(GetEosTransactionResult.class, txId)
                 .getTransaction(new JsonCallback<GetEosTransactionResult>() {
                     @Override
                     public void onSuccess(Response<GetEosTransactionResult> response) {
                         if (getV() != null) {
                             if (response != null && response.body() != null) {
-                                GetEosTransactionResult.DataBeanX data = response.body().getData();
-                                if (data != null) {
-                                    //获取到
-                                    String block_num = String.valueOf(data.getBlock_num());
-                                    LoggerManager.d("block_num", block_num);
-                                    //存入数据库§
-
-                                    List<EosTransactionEntity> eosTransactionEntities = new DBManager()
-                                            .getEosTransactionEntityDao().getEosTransactionEntityListByHash(txId);
-
-                                    for (EosTransactionEntity curTransaction : eosTransactionEntities){
-                                        curTransaction.setBlockNumber(block_num);
-                                        getV().setTransactionStatus(curTransaction);
-                                    }
-
-                                } else {
-                                    //未获取到
-                                    GemmaToastUtils.showShortToast(
-                                            getV().getString(R.string.tip_cant_find_transaction));
-                                }
+                                String block_num = String.valueOf(response.body().getBlock_num());
+                                updateBlockNum(block_num, txId);
+                                updateStatus(block_num, curLib, txId);
+                                getV().updateTransactionStatus();
                             }
                         }
                     }
 
                     @Override
                     public void onError(Response<GetEosTransactionResult> response) {
-                        if (getV() != null){
+                        if (getV() != null) {
                             super.onError(response);
                             GemmaToastUtils.showShortToast(
                                     getV().getString(R.string.tip_cant_find_transaction));
@@ -282,65 +347,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                     }
                 });
 
-    }
 
-    /**
-     * 获取链上配置信息
-     * 需要拿到head block num 和lib
-     */
-    public void getInfo() {
-        new EOSConfigInfoRequest(String.class)
-                .getInfo(new StringCallback() {
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        if (EmptyUtils.isNotEmpty(getV())) {
-                            super.onError(response);
-                            GemmaToastUtils.showShortToast(getV().getString(R.string.operate_deal_failed));
-                            getV().dissmisProgressDialog();
-
-                            try {
-                                String err_info_string = response.getRawResponse().body().string();
-                                try {
-                                    JSONObject obj = new JSONObject(err_info_string);
-                                    JSONObject error = obj.optJSONObject("error");
-                                    String err_code = error.optString("code");
-                                    handleEosErrorCode(err_code);
-
-                                } catch (JSONException ee) {
-                                    ee.printStackTrace();
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        if (getV() != null) {
-                            if (response != null && response.body() != null) {
-                                String infoJson = response.body();
-                                try {
-                                    JSONObject obj = new JSONObject(infoJson);
-                                    if (obj != null) {
-//                                        String head_block_num = obj.optString("head_block_num");
-                                        String lib_num = obj.optString("last_irreversible_block_num");
-//                                        LoggerManager.d("lib", lib_num);
-//                                        LoggerManager.d("head_block_num", head_block_num);
-                                        getV().setCurLib(lib_num);
-                                        getV().setmRecyclerViewOnClick();
-                                        getV().showContent();
-
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                        }
-                    }
-                });
     }
 
 
@@ -381,36 +388,165 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
     }
 
     /**
-     * 重新组装数据
-     * 将TransferHistoryList变为EosTransactionList
-     *
-     * @return
+     * 将Block_Num字段更新进数据库中对应的Transaction
      */
-    public List<EosTransactionEntity> convertTransactionData(List<TransferHistory> transferHistoryList) {
-        List<EosTransactionEntity> entityList = new ArrayList<>();
-        for (TransferHistory curTransfer : transferHistoryList) {
-            EosTransactionEntity curTransaction = new EosTransactionEntity();
-            curTransaction.setTransactionHash(curTransfer.trx_id);
-            curTransaction.setDate(curTransfer.timestamp);
-            curTransaction.setQuantity(curTransfer.quantity);
-            curTransaction.setReceiver(curTransfer.receiver);
-            curTransaction.setSender(curTransfer.sender);
-            curTransaction.setTokenCode(curTransfer.code);
-            curTransaction.setTokenSymbol(curTransfer.symbol);
-            entityList.add(curTransaction);
+    public void updateBlockNum(String block_num, String txId) {
+        EosTransactionEntity curTransaction = DBManager.getInstance().getEosTransactionEntityDao()
+                .getEosTransactionEntityByHash(txId);
+
+        if (curTransaction != null) {
+            curTransaction.setBlockNumber(block_num);
+            DBManager.getInstance().getEosTransactionEntityDao().saveOrUpateEntity(curTransaction);
         }
-        return entityList;
+
     }
 
     /**
-     * 将Transaction List存入数据库
-     *
-     * @param list
+     * 通过比对更新状态字段进数据库中对应的Transaction
      */
-    public void saveTransactionData(List<EosTransactionEntity> list) {
-        for (EosTransactionEntity curTransaction : list) {
+    public void updateStatus(String block_num, String cur_lib, String txId) {
+        EosTransactionEntity curTransaction = DBManager.getInstance().getEosTransactionEntityDao()
+                .getEosTransactionEntityByHash(txId);
+
+        if (curTransaction != null) {
+            int status = getTransactionStatus(block_num, cur_lib);
+            curTransaction.setStatus(status);
             DBManager.getInstance().getEosTransactionEntityDao().saveOrUpateEntity(curTransaction);
         }
     }
+
+    /**
+     * 通过比对确定该Transaction的状态
+     */
+    public int getTransactionStatus(String block_num, String cur_lib) {
+        int block = Integer.valueOf(block_num);
+        int lib = Integer.valueOf(cur_lib);
+
+        if (block > lib) {
+            //pending
+            return ParamConstants.TRANSACTION_STATUS_PENDING;
+        } else {
+            //done
+            return ParamConstants.TRANSACTION_STATUS_CONFIRMED;
+        }
+    }
+
+    /**
+     * 把对应dataList中所有Action所对应的Transaction实体存入数据库
+     *
+     * @param dataList
+     */
+    public void saveTransaction(List<TransferHistory> dataList) {
+        for (TransferHistory curTransfer : dataList) {
+            EosTransactionEntity curTransaction = DBManager.getInstance().getEosTransactionEntityDao()
+                    .getEosTransactionEntityByHash(curTransfer.trx_id);
+
+            if (curTransaction != null) {
+                continue;
+            }
+
+            curTransaction = new EosTransactionEntity();
+            curTransaction.setTransactionHash(curTransfer.trx_id);
+            DBManager.getInstance().getEosTransactionEntityDao().saveOrUpateEntity(curTransaction);
+        }
+    }
+
+    public List<TransferHistory> clearListStatus(List<TransferHistory> list){
+        for (TransferHistory curTransfer : list){
+            curTransfer.status = null;
+        }
+        return list;
+    }
+
+    /**
+     * 更新Adapter的数据源
+     */
+    public List<TransferHistory> updateDataSource(List<TransferHistory> dataList) {
+        List<TransferHistory> newDataList = new ArrayList<>();
+        for (TransferHistory curTransfer : dataList) {
+            EosTransactionEntity curTransaction = DBManager.getInstance().getEosTransactionEntityDao()
+                    .getEosTransactionEntityByHash(curTransfer.trx_id);
+
+            if (curTransaction != null) {
+                //todo 根据不同类型设置status的值
+                String currentEosName = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity
+                        ().getEosWalletEntities().get(0).getCurrentEosName();
+
+                if(EmptyUtils.isNotEmpty(curTransaction.getStatus())){
+                    int status = curTransaction.getStatus();
+                    if (currentEosName != null) {
+
+                        if (status == ParamConstants.TRANSACTION_STATUS_PENDING) {
+                            //正在确认
+                            if (curTransfer.sender.equals(currentEosName)) {
+                                //转出 -
+                                curTransfer.status = "正在确认";
+
+                            } else {
+                                //转入 +
+                                curTransfer.status = "正在确认";
+                            }
+                        } else if (status == ParamConstants.TRANSACTION_STATUS_CONFIRMED) {
+                            //已经确认
+                            if (curTransfer.sender.equals(currentEosName)) {
+                                //转出 -
+                                curTransfer.status = getV().getString(R.string.status_sent);
+
+                            } else {
+                                //转入 +
+                                curTransfer.status = getV().getString(R.string.status_accepted);
+                            }
+                        }else if (status == ParamConstants.TRANSACTION_STATUS_FAIL){
+                            //已经失败
+                            if (curTransfer.sender.equals(currentEosName)) {
+                                //转出 -
+                                curTransfer.status = getV().getString(R.string.status_send_fail);
+
+                            } else {
+                                //转入 +
+                                curTransfer.status = getV().getString(R.string.status_accept_fail);
+                            }
+                        }
+
+                    }
+
+                }else {
+                    //status为空
+                    curTransfer.status = getV().getString(R.string.status_unknown);
+                }
+
+
+                newDataList.add(curTransfer);
+            }
+
+        }
+        return newDataList;
+    }
+
+    /**
+     * 拿当前显示数据中状态不确定的项进行查询
+     */
+    public void queryStatus(List<TransferHistory> dataList) {
+
+        List<String> hashList = new ArrayList<>();
+        for (TransferHistory curTransfer : dataList) {
+            if (hashList.contains(curTransfer.trx_id)) { continue; }
+            hashList.add(curTransfer.trx_id);
+        }
+
+        for (String curHash : hashList) {
+            EosTransactionEntity curTransaction = DBManager.getInstance().getEosTransactionEntityDao()
+                    .getEosTransactionEntityByHash(curHash);
+
+            if (curTransaction != null) {
+                if (curTransaction.getStatus() == null) {
+                    //如果数据库中有Transaction且状态未确定
+                    getTransaction(curHash);
+                }
+            }
+
+        }
+    }
+
 
 }

@@ -25,7 +25,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
-import com.cybex.gma.client.ui.adapter.TransferHistoryAdapter;
+import com.cybex.gma.client.ui.adapter.TransferRecordListAdapter;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.presenter.AssetDetailPresenter;
@@ -54,9 +54,10 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @BindView(R.id.view_asset_value) LinearLayout viewAssetValue;
     @BindView(R.id.tv_token_name) TextView tvTokenName;
     @BindView(R.id.view_asset_detail_bot) LinearLayout viewAssetDetailBot;
-    private TransferHistoryAdapter mAdapter;
+    private TransferRecordListAdapter mAdapter;
     List<TransferHistory> curDataList;
-    List<EosTransactionEntity> curTransactionList;
+    List<EosTransactionEntity> curTransactionList;//给Adapter的数据源
+    List<EosTransactionEntity> updateTransactionList;//暂存的给Adapter的数据源，更新用
 
     public String getCurHead() {
         return curHead;
@@ -72,7 +73,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     public void setCurLib(String curLib) {
         this.curLib = curLib;
-        getBlockNum(curTransactionList);
+        //getBlockNum(curTransactionList);
     }
 
     private String curHead;//当前head block num
@@ -213,7 +214,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     }
 
-    public void setmRecyclerViewOnClick(){
+    public void setmRecyclerViewOnClick() {
         //设置点击事件
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -269,7 +270,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     public void showEmptyOrFinish() {
 
         if (mAdapter != null) {
-            List<EosTransactionEntity> historyList = mAdapter.getData();
+            List<TransferHistory> historyList = mAdapter.getData();
             if (EmptyUtils.isEmpty(historyList)) {
                 listMultipleStatusView.showEmpty();
             } else {
@@ -293,7 +294,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         if (bundle != null) {
             if (asset_type.equals(ParamConstants.SYMBOL_EOS)) {
                 //EOS
-                getP().requestHistory(
+                getP().getInfo(
                         currentEosName,
                         page,
                         ParamConstants.TRANSFER_HISTORY_SIZE,//5
@@ -305,7 +306,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 if (curToken != null) {
                     String symbol = curToken.getTokenSymbol();
                     String contract = curToken.getTokenName();
-                    getP().requestHistory(currentEosName,
+                    getP().getInfo(currentEosName,
                             page,
                             ParamConstants.TRANSFER_HISTORY_SIZE,
                             symbol,
@@ -316,66 +317,9 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         }
     }
 
-    public void loadMoreData(List<TransferHistory> dataList) {
-        if (EmptyUtils.isEmpty(dataList)) {
-            dataList = new ArrayList<>();
-        }
-
-        curDataList = dataList;
-        List<EosTransactionEntity> eosTransactionEntities = getP().convertTransactionData(dataList);
-        getP().saveTransactionData(eosTransactionEntities);
-        getBlockNum(eosTransactionEntities);
-        curTransactionList = eosTransactionEntities;
-
-        if (mAdapter == null) {
-            //第一次请求
-
-            mAdapter = new TransferHistoryAdapter(curTransactionList, currentEosName);
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            //加载更多
-            mAdapter.addData(eosTransactionEntities);
-            viewRefresh.finishLoadmore();
-        }
-    }
-
-    public void getBlockNum(List<EosTransactionEntity> list) {
-        for (EosTransactionEntity curTransaction : list) {
-            if (curTransaction.getBlockNumber() == null) {
-                getP().getTransaction(curTransaction.getTransactionHash());
-            }
-        }
-    }
-
-    public void setTransactionStatus(EosTransactionEntity curTransaction) {
-
-        if (curTransaction.getBlockNumber() != null) {
-            int status = getTransactionStatus(curTransaction.getBlockNumber());
-            curTransaction.setStatus(status);
-            DBManager.getInstance().getEosTransactionEntityDao().saveOrUpateEntity(curTransaction);
-            mAdapter.notifyDataSetChanged();
-        }
-
-    }
-
-    /**
-     * 通过比对确定该Transaction的状态
-     */
-    public int getTransactionStatus(String block_num) {
-        int block = Integer.valueOf(block_num);
-        int lib = Integer.valueOf(curLib);
-
-        if (block > lib) {
-            //pending
-            return ParamConstants.TRANSACTION_STATUS_PENDING;
-        } else {
-            //done
-            return ParamConstants.TRANSACTION_STATUS_CONFIRMED;
-        }
-    }
-
     /**
      * 第一次请求和刷新数据方法
+     *
      * @param dataList
      */
     public void refreshData(List<TransferHistory> dataList) {
@@ -385,22 +329,47 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         }
 
         curDataList = dataList;
-        List<EosTransactionEntity> entityList = getP().convertTransactionData(dataList);
-        getP().saveTransactionData(entityList);
-
-        curTransactionList = entityList;
+        getP().saveTransaction(dataList);
+        getP().queryStatus(curDataList);
 
         if (mAdapter != null && EmptyUtils.isNotEmpty(mAdapter.getData())) {
             mAdapter.getData().clear();
-            mAdapter.setNewData(entityList);
+            mAdapter.setNewData(curDataList);
+            getP().updateDataSource(curDataList);
         } else {
-            mAdapter = new TransferHistoryAdapter(curTransactionList, currentEosName);
+            //首次请求
+            mAdapter = new TransferRecordListAdapter(curDataList, currentEosName);
             mRecyclerView.setAdapter(mAdapter);
+            getP().updateDataSource(curDataList);
         }
+
         viewRefresh.finishRefresh();
         viewRefresh.setLoadmoreFinished(false);
-
     }
+
+
+    public void loadMoreData(List<TransferHistory> dataList) {
+        if (EmptyUtils.isEmpty(dataList)) {
+            dataList = new ArrayList<>();
+        }
+
+        curDataList.addAll(dataList);
+        getP().saveTransaction(dataList);
+        getP().queryStatus(dataList);
+
+        if (mAdapter == null) {
+            //第一次请求
+            mAdapter = new TransferRecordListAdapter(curDataList, currentEosName);
+            mRecyclerView.setAdapter(mAdapter);
+            getP().updateDataSource(curDataList);
+        } else {
+            //加载更多
+            mAdapter.addData(dataList);
+            getP().updateDataSource(curDataList);
+            viewRefresh.finishLoadmore();
+        }
+    }
+
 
     public void setLoadMoreFinish() {
         viewRefresh.setLoadmoreFinished(true);
@@ -414,22 +383,15 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         }
     }
 
+    public void updateTransactionStatus(){
+        curDataList = getP().updateDataSource(curDataList);
+        mAdapter.notifyDataSetChanged();
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Alerter.clearCurrent(this);
-    }
-
-
-    /**
-     * 从数据库中查询某个TransferHistory List对应的EosTransaction List
-     */
-    public void queryHistoryList(List<TransferHistory> dataList){
-        List<EosTransactionEntity> transactionList = new ArrayList<>();
-        List<EosTransactionEntity> actionList = new ArrayList<>();
-
-        for (TransferHistory curTransfer : dataList){
-
-        }
     }
 }

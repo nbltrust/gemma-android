@@ -38,11 +38,11 @@ public class EosTransactionEntityDaoImpl implements EosTransactionEntityDao{
     }
 
     @Override
-    public List<EosTransactionEntity> getEosTransactionEntityListByHash(String txId) {
-        List<EosTransactionEntity> entityList =  SQLite.select().from(EosTransactionEntity.class)
+    public EosTransactionEntity getEosTransactionEntityByHash(String txId) {
+        EosTransactionEntity entity =  SQLite.select().from(EosTransactionEntity.class)
                 .where(EosTransactionEntity_Table.transactionHash.eq(txId))
-                .queryList();
-        return entityList;
+                .querySingle();
+        return entity;
     }
 
     @Override

@@ -21,6 +21,7 @@ import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -45,6 +46,9 @@ import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.tapadoo.alerter.Alerter;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -335,7 +339,9 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                                 if (EmptyUtils.isEmpty(getCollectionAccount())) {
                                     tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                                    tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                                    if (isAdded()){
+                                        tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                                    }
                                 } else {
                                     ivTransferAccountClear.setVisibility(View.VISIBLE);
                                 }
@@ -346,17 +352,17 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                 validateButton();
                                 if (EmptyUtils.isEmpty(getCollectionAccount())) {
                                     tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                                    tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                                    if (isAdded())tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
                                 }
                                 if (!isAccountNameValid() && EmptyUtils.isNotEmpty(
                                         etReceiverAccount.getText().toString().trim())) {
                                     //显示alert样式
                                     tvTitleReceiver.setText(getString(R.string.eos_tip_account_name_err));
-                                    tvTitleReceiver.setTextColor(getResources().getColor(R.color.scarlet));
+                                    if (isAdded())tvTitleReceiver.setTextColor(getResources().getColor(R.color.scarlet));
                                 } else {
                                     //显示默认样式
                                     tvTitleReceiver.setText(getString(R.string.eos_title_receiver));
-                                    tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
+                                    if (isAdded())tvTitleReceiver.setTextColor(getResources().getColor(R.color.black_title));
                                 }
                             }
                         }
@@ -494,7 +500,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 if (getP().isBioMemoValid()){
                     String toAccount = String.valueOf(etReceiverAccount.getText());
                     if (toAccount.equals(currentEOSName)) {
-                        GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_tip_cant_transfer_to_yourself));
+                        if (isAdded())GemmaToastUtils.showShortToast(getResources().getString(R.string
+                                .eos_tip_cant_transfer_to_yourself));
                         return;
                     }
 
@@ -506,7 +513,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             }else {
                 //软钱包
                 String toAccount = String.valueOf(etReceiverAccount.getText());
-                if (toAccount.equals(currentEOSName)) {
+                if (toAccount.equals(currentEOSName) && isAdded()) {
                     GemmaToastUtils.showShortToast(getResources().getString(R.string.eos_tip_cant_transfer_to_yourself));
                     return;
                 }
@@ -624,7 +631,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                 memo = String.valueOf(etNote.getText());
             }
             tv_note.setText(memo);
-            tv_note.setTextColor(getResources().getColor(R.color.black_context));
+            if (isAdded())tv_note.setTextColor(getResources().getColor(R.color.black_context));
         }
     }
 

@@ -315,6 +315,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
 
+        mEthCardView.setVisibility(View.GONE);
         AutoSize.autoConvertDensityOfGlobal(this);
 
         if (DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size() <= 0) {

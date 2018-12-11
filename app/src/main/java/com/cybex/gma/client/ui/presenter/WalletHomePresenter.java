@@ -111,8 +111,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     if (wallet_type == BaseConst.WALLET_TYPE_BLUETOOTH) {
 
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_PRIKEY_IMPORT) {
-                                        GemmaToastUtils.showLongToast(
-                                                getV().getString(R.string.eos_load_account_info_fail));
+
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_CREATE) {
 
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_IMPORT) {

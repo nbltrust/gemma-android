@@ -5,274 +5,531 @@ import java.util.List;
 public class GetEosTransactionResult {
 
     /**
-     * errno : 0
-     * errmsg : Success
-     * data : {"block_num":21203928,"cpu_usage_us":995,"eospark_trx_type":"ordinary","net_usage_words":18,"status":"executed","timestamp":"","trx":{"compression":"none","context_free_data":[],"id":"d016104ed13ad34c41166e9689229341d0fb2ffb7e2b2f0e4b5c8ddf1337f0e5","packed_context_free_data":"","packed_trx":"dd8ec05b908ab9dac77200000000010000000000ea305500003f2a1ba6a24a011032d6379ba88f9a00000000a8ed3232311032d6379ba88f9a1032d6379ba88f9a000000000000000004454f5300000000640000000000000004454f53000000000000","signatures":["SIG_K1_K8JwS4aLQrJaAwSjRZbACjycPHoySC23VV6r2M2VcmF6a96v88DuYfiUbRVQobtzuiPg74X7WbELydnCJAFso4U5bfrVQr"],"transaction":{"actions":[{"account":"eosio","authorization":[{"actor":"nebulatrust1","permission":"active"}],"data":{"from":"nebulatrust1","receiver":"nebulatrust1","stake_cpu_quantity":"0.0100 EOS","stake_net_quantity":"0.0000 EOS","transfer":0},"hex_data":"1032d6379ba88f9a1032d6379ba88f9a000000000000000004454f5300000000640000000000000004454f530000000000","name":"delegatebw"}],"context_free_actions":[],"delay_sec":0,"expiration":"2018-10-12T12:09:01","max_cpu_usage_ms":0,"max_net_usage_words":0,"ref_block_num":35472,"ref_block_prefix":1925700281,"transaction_extensions":[]}}}
+     * _id : 5c093e5ab5035b95f588e163
+     * id : f05589296d5268c03887d7b729e6b29e68548cb86eabf9ccce33c0f91fd87a3b
+     * block_num : 30694546
+     * block_time : 2018-12-06T15:20:58.000
+     * producer_block_id : 01d45c927141dbff525965b36bfb23bdc5a7e04762e37b5549f8ce9ba981ef40
+     * receipt : {"status":"executed","cpu_usage_us":399,"net_usage_words":43}
+     * elapsed : 916
+     * net_usage : 344
+     * scheduled : false
+     * action_traces : [{"receipt":{"receiver":"eosio.token","act_digest":"2385d689d5141ad7ce2785c25ea1eb8507f67fa4890575330329131318698372","global_sequence":2556040116,"recv_sequence":416600068,"auth_sequence":[["wizznetwork1",1478205]],"code_sequence":2,"abi_sequence":2},"act":{"account":"eosio.token","name":"transfer","authorization":[{"actor":"wizznetwork1","permission":"active"}],"data":{"from":"wizznetwork1","to":"ha2tsmzqhege","quantity":"0.0001 EOS","memo":"PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1"},"hex_data":"10e0a53cabf9bfe3a0986af64b9c8569010000000000000004454f5300000000d801504c41592057415247414d45202d203558207061796f7574205b2068747470733a2f2f77697a7a2e6e6574776f726b2f77617267616d65205d20576167657220454f53206f722057495a5a20544f4b454e532e204561726e20352520454f5320526566657272616c732e2057495a5a20544f4b454e20426f6e757320666f7220616c6c205761676572732e20444f4e5420484156452057495a5a20544f4b454e3f205b2068747470733a2f2f77697a7a2e6e6574776f726b205d20414952475241422e20564f54452042502077697a7a6e6574776f726b31"},"context_free":false,"elapsed":337,"console":"","trx_id":"f05589296d5268c03887d7b729e6b29e68548cb86eabf9ccce33c0f91fd87a3b","block_num":30694546,"block_time":"2018-12-06T15:20:58.000","producer_block_id":"01d45c927141dbff525965b36bfb23bdc5a7e04762e37b5549f8ce9ba981ef40","account_ram_deltas":[],"except":null,"inline_traces":[{"receipt":{"receiver":"wizznetwork1","act_digest":"2385d689d5141ad7ce2785c25ea1eb8507f67fa4890575330329131318698372","global_sequence":2556040117,"recv_sequence":635077,"auth_sequence":[["wizznetwork1",1478206]],"code_sequence":2,"abi_sequence":2},"act":{"account":"eosio.token","name":"transfer","authorization":[{"actor":"wizznetwork1","permission":"active"}],"data":{"from":"wizznetwork1","to":"ha2tsmzqhege","quantity":"0.0001 EOS","memo":"PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1"},"hex_data":"10e0a53cabf9bfe3a0986af64b9c8569010000000000000004454f5300000000d801504c41592057415247414d45202d203558207061796f7574205b2068747470733a2f2f77697a7a2e6e6574776f726b2f77617267616d65205d20576167657220454f53206f722057495a5a20544f4b454e532e204561726e20352520454f5320526566657272616c732e2057495a5a20544f4b454e20426f6e757320666f7220616c6c205761676572732e20444f4e5420484156452057495a5a20544f4b454e3f205b2068747470733a2f2f77697a7a2e6e6574776f726b205d20414952475241422e20564f54452042502077697a7a6e6574776f726b31"},"context_free":false,"elapsed":38,"console":"","trx_id":"f05589296d5268c03887d7b729e6b29e68548cb86eabf9ccce33c0f91fd87a3b","block_num":30694546,"block_time":"2018-12-06T15:20:58.000","producer_block_id":"01d45c927141dbff525965b36bfb23bdc5a7e04762e37b5549f8ce9ba981ef40","account_ram_deltas":[],"except":null,"inline_traces":[]},{"receipt":{"receiver":"ha2tsmzqhege","act_digest":"2385d689d5141ad7ce2785c25ea1eb8507f67fa4890575330329131318698372","global_sequence":2556040118,"recv_sequence":2272,"auth_sequence":[["wizznetwork1",1478207]],"code_sequence":2,"abi_sequence":2},"act":{"account":"eosio.token","name":"transfer","authorization":[{"actor":"wizznetwork1","permission":"active"}],"data":{"from":"wizznetwork1","to":"ha2tsmzqhege","quantity":"0.0001 EOS","memo":"PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1"},"hex_data":"10e0a53cabf9bfe3a0986af64b9c8569010000000000000004454f5300000000d801504c41592057415247414d45202d203558207061796f7574205b2068747470733a2f2f77697a7a2e6e6574776f726b2f77617267616d65205d20576167657220454f53206f722057495a5a20544f4b454e532e204561726e20352520454f5320526566657272616c732e2057495a5a20544f4b454e20426f6e757320666f7220616c6c205761676572732e20444f4e5420484156452057495a5a20544f4b454e3f205b2068747470733a2f2f77697a7a2e6e6574776f726b205d20414952475241422e20564f54452042502077697a7a6e6574776f726b31"},"context_free":false,"elapsed":381,"console":"","trx_id":"f05589296d5268c03887d7b729e6b29e68548cb86eabf9ccce33c0f91fd87a3b","block_num":30694546,"block_time":"2018-12-06T15:20:58.000","producer_block_id":"01d45c927141dbff525965b36bfb23bdc5a7e04762e37b5549f8ce9ba981ef40","account_ram_deltas":[],"except":null,"inline_traces":[]}]}]
+     * except : null
+     * createdAt : 2018-12-06T15:20:58.343Z
      */
 
-    private int errno;
-    private String errmsg;
-    private DataBeanX data;
+    private String _id;
+    private String id;
+    private int block_num;
+    private String block_time;
+    private String producer_block_id;
+    private ReceiptBean receipt;
+    private int elapsed;
+    private int net_usage;
+    private boolean scheduled;
+    private Object except;
+    private String createdAt;
+    private List<ActionTracesBean> action_traces;
 
-    public int getErrno() { return errno;}
+    public String get_id() { return _id;}
 
-    public void setErrno(int errno) { this.errno = errno;}
+    public void set_id(String _id) { this._id = _id;}
 
-    public String getErrmsg() { return errmsg;}
+    public String getId() { return id;}
 
-    public void setErrmsg(String errmsg) { this.errmsg = errmsg;}
+    public void setId(String id) { this.id = id;}
 
-    public DataBeanX getData() { return data;}
+    public int getBlock_num() { return block_num;}
 
-    public void setData(DataBeanX data) { this.data = data;}
+    public void setBlock_num(int block_num) { this.block_num = block_num;}
 
-    public static class DataBeanX {
+    public String getBlock_time() { return block_time;}
+
+    public void setBlock_time(String block_time) { this.block_time = block_time;}
+
+    public String getProducer_block_id() { return producer_block_id;}
+
+    public void setProducer_block_id(String producer_block_id) { this.producer_block_id = producer_block_id;}
+
+    public ReceiptBean getReceipt() { return receipt;}
+
+    public void setReceipt(ReceiptBean receipt) { this.receipt = receipt;}
+
+    public int getElapsed() { return elapsed;}
+
+    public void setElapsed(int elapsed) { this.elapsed = elapsed;}
+
+    public int getNet_usage() { return net_usage;}
+
+    public void setNet_usage(int net_usage) { this.net_usage = net_usage;}
+
+    public boolean isScheduled() { return scheduled;}
+
+    public void setScheduled(boolean scheduled) { this.scheduled = scheduled;}
+
+    public Object getExcept() { return except;}
+
+    public void setExcept(Object except) { this.except = except;}
+
+    public String getCreatedAt() { return createdAt;}
+
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt;}
+
+    public List<ActionTracesBean> getAction_traces() { return action_traces;}
+
+    public void setAction_traces(List<ActionTracesBean> action_traces) { this.action_traces = action_traces;}
+
+    public static class ReceiptBean {
 
         /**
-         * block_num : 21203928
-         * cpu_usage_us : 995
-         * eospark_trx_type : ordinary
-         * net_usage_words : 18
          * status : executed
-         * timestamp :
-         * trx : {"compression":"none","context_free_data":[],"id":"d016104ed13ad34c41166e9689229341d0fb2ffb7e2b2f0e4b5c8ddf1337f0e5","packed_context_free_data":"","packed_trx":"dd8ec05b908ab9dac77200000000010000000000ea305500003f2a1ba6a24a011032d6379ba88f9a00000000a8ed3232311032d6379ba88f9a1032d6379ba88f9a000000000000000004454f5300000000640000000000000004454f53000000000000","signatures":["SIG_K1_K8JwS4aLQrJaAwSjRZbACjycPHoySC23VV6r2M2VcmF6a96v88DuYfiUbRVQobtzuiPg74X7WbELydnCJAFso4U5bfrVQr"],"transaction":{"actions":[{"account":"eosio","authorization":[{"actor":"nebulatrust1","permission":"active"}],"data":{"from":"nebulatrust1","receiver":"nebulatrust1","stake_cpu_quantity":"0.0100 EOS","stake_net_quantity":"0.0000 EOS","transfer":0},"hex_data":"1032d6379ba88f9a1032d6379ba88f9a000000000000000004454f5300000000640000000000000004454f530000000000","name":"delegatebw"}],"context_free_actions":[],"delay_sec":0,"expiration":"2018-10-12T12:09:01","max_cpu_usage_ms":0,"max_net_usage_words":0,"ref_block_num":35472,"ref_block_prefix":1925700281,"transaction_extensions":[]}}
+         * cpu_usage_us : 399
+         * net_usage_words : 43
          */
 
-        private int block_num;
-        private int cpu_usage_us;
-        private String eospark_trx_type;
-        private int net_usage_words;
         private String status;
-        private String timestamp;
-        private TrxBean trx;
-
-        public int getBlock_num() { return block_num;}
-
-        public void setBlock_num(int block_num) { this.block_num = block_num;}
-
-        public int getCpu_usage_us() { return cpu_usage_us;}
-
-        public void setCpu_usage_us(int cpu_usage_us) { this.cpu_usage_us = cpu_usage_us;}
-
-        public String getEospark_trx_type() { return eospark_trx_type;}
-
-        public void setEospark_trx_type(String eospark_trx_type) { this.eospark_trx_type = eospark_trx_type;}
-
-        public int getNet_usage_words() { return net_usage_words;}
-
-        public void setNet_usage_words(int net_usage_words) { this.net_usage_words = net_usage_words;}
+        private int cpu_usage_us;
+        private int net_usage_words;
 
         public String getStatus() { return status;}
 
         public void setStatus(String status) { this.status = status;}
 
-        public String getTimestamp() { return timestamp;}
+        public int getCpu_usage_us() { return cpu_usage_us;}
 
-        public void setTimestamp(String timestamp) { this.timestamp = timestamp;}
+        public void setCpu_usage_us(int cpu_usage_us) { this.cpu_usage_us = cpu_usage_us;}
 
-        public TrxBean getTrx() { return trx;}
+        public int getNet_usage_words() { return net_usage_words;}
 
-        public void setTrx(TrxBean trx) { this.trx = trx;}
+        public void setNet_usage_words(int net_usage_words) { this.net_usage_words = net_usage_words;}
+    }
 
-        public static class TrxBean {
+    public static class ActionTracesBean {
+
+        /**
+         * receipt : {"receiver":"eosio.token","act_digest":"2385d689d5141ad7ce2785c25ea1eb8507f67fa4890575330329131318698372","global_sequence":2556040116,"recv_sequence":416600068,"auth_sequence":[["wizznetwork1",1478205]],"code_sequence":2,"abi_sequence":2}
+         * act : {"account":"eosio.token","name":"transfer","authorization":[{"actor":"wizznetwork1","permission":"active"}],"data":{"from":"wizznetwork1","to":"ha2tsmzqhege","quantity":"0.0001 EOS","memo":"PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1"},"hex_data":"10e0a53cabf9bfe3a0986af64b9c8569010000000000000004454f5300000000d801504c41592057415247414d45202d203558207061796f7574205b2068747470733a2f2f77697a7a2e6e6574776f726b2f77617267616d65205d20576167657220454f53206f722057495a5a20544f4b454e532e204561726e20352520454f5320526566657272616c732e2057495a5a20544f4b454e20426f6e757320666f7220616c6c205761676572732e20444f4e5420484156452057495a5a20544f4b454e3f205b2068747470733a2f2f77697a7a2e6e6574776f726b205d20414952475241422e20564f54452042502077697a7a6e6574776f726b31"}
+         * context_free : false
+         * elapsed : 337
+         * console :
+         * trx_id : f05589296d5268c03887d7b729e6b29e68548cb86eabf9ccce33c0f91fd87a3b
+         * block_num : 30694546
+         * block_time : 2018-12-06T15:20:58.000
+         * producer_block_id : 01d45c927141dbff525965b36bfb23bdc5a7e04762e37b5549f8ce9ba981ef40
+         * account_ram_deltas : []
+         * except : null
+         * inline_traces : [{"receipt":{"receiver":"wizznetwork1","act_digest":"2385d689d5141ad7ce2785c25ea1eb8507f67fa4890575330329131318698372","global_sequence":2556040117,"recv_sequence":635077,"auth_sequence":[["wizznetwork1",1478206]],"code_sequence":2,"abi_sequence":2},"act":{"account":"eosio.token","name":"transfer","authorization":[{"actor":"wizznetwork1","permission":"active"}],"data":{"from":"wizznetwork1","to":"ha2tsmzqhege","quantity":"0.0001 EOS","memo":"PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1"},"hex_data":"10e0a53cabf9bfe3a0986af64b9c8569010000000000000004454f5300000000d801504c41592057415247414d45202d203558207061796f7574205b2068747470733a2f2f77697a7a2e6e6574776f726b2f77617267616d65205d20576167657220454f53206f722057495a5a20544f4b454e532e204561726e20352520454f5320526566657272616c732e2057495a5a20544f4b454e20426f6e757320666f7220616c6c205761676572732e20444f4e5420484156452057495a5a20544f4b454e3f205b2068747470733a2f2f77697a7a2e6e6574776f726b205d20414952475241422e20564f54452042502077697a7a6e6574776f726b31"},"context_free":false,"elapsed":38,"console":"","trx_id":"f05589296d5268c03887d7b729e6b29e68548cb86eabf9ccce33c0f91fd87a3b","block_num":30694546,"block_time":"2018-12-06T15:20:58.000","producer_block_id":"01d45c927141dbff525965b36bfb23bdc5a7e04762e37b5549f8ce9ba981ef40","account_ram_deltas":[],"except":null,"inline_traces":[]},{"receipt":{"receiver":"ha2tsmzqhege","act_digest":"2385d689d5141ad7ce2785c25ea1eb8507f67fa4890575330329131318698372","global_sequence":2556040118,"recv_sequence":2272,"auth_sequence":[["wizznetwork1",1478207]],"code_sequence":2,"abi_sequence":2},"act":{"account":"eosio.token","name":"transfer","authorization":[{"actor":"wizznetwork1","permission":"active"}],"data":{"from":"wizznetwork1","to":"ha2tsmzqhege","quantity":"0.0001 EOS","memo":"PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1"},"hex_data":"10e0a53cabf9bfe3a0986af64b9c8569010000000000000004454f5300000000d801504c41592057415247414d45202d203558207061796f7574205b2068747470733a2f2f77697a7a2e6e6574776f726b2f77617267616d65205d20576167657220454f53206f722057495a5a20544f4b454e532e204561726e20352520454f5320526566657272616c732e2057495a5a20544f4b454e20426f6e757320666f7220616c6c205761676572732e20444f4e5420484156452057495a5a20544f4b454e3f205b2068747470733a2f2f77697a7a2e6e6574776f726b205d20414952475241422e20564f54452042502077697a7a6e6574776f726b31"},"context_free":false,"elapsed":381,"console":"","trx_id":"f05589296d5268c03887d7b729e6b29e68548cb86eabf9ccce33c0f91fd87a3b","block_num":30694546,"block_time":"2018-12-06T15:20:58.000","producer_block_id":"01d45c927141dbff525965b36bfb23bdc5a7e04762e37b5549f8ce9ba981ef40","account_ram_deltas":[],"except":null,"inline_traces":[]}]
+         */
+
+        private ReceiptBeanX receipt;
+        private ActBean act;
+        private boolean context_free;
+        private int elapsed;
+        private String console;
+        private String trx_id;
+        private int block_num;
+        private String block_time;
+        private String producer_block_id;
+        private Object except;
+        private List<?> account_ram_deltas;
+        private List<InlineTracesBean> inline_traces;
+
+        public ReceiptBeanX getReceipt() { return receipt;}
+
+        public void setReceipt(ReceiptBeanX receipt) { this.receipt = receipt;}
+
+        public ActBean getAct() { return act;}
+
+        public void setAct(ActBean act) { this.act = act;}
+
+        public boolean isContext_free() { return context_free;}
+
+        public void setContext_free(boolean context_free) { this.context_free = context_free;}
+
+        public int getElapsed() { return elapsed;}
+
+        public void setElapsed(int elapsed) { this.elapsed = elapsed;}
+
+        public String getConsole() { return console;}
+
+        public void setConsole(String console) { this.console = console;}
+
+        public String getTrx_id() { return trx_id;}
+
+        public void setTrx_id(String trx_id) { this.trx_id = trx_id;}
+
+        public int getBlock_num() { return block_num;}
+
+        public void setBlock_num(int block_num) { this.block_num = block_num;}
+
+        public String getBlock_time() { return block_time;}
+
+        public void setBlock_time(String block_time) { this.block_time = block_time;}
+
+        public String getProducer_block_id() { return producer_block_id;}
+
+        public void setProducer_block_id(String producer_block_id) { this.producer_block_id = producer_block_id;}
+
+        public Object getExcept() { return except;}
+
+        public void setExcept(Object except) { this.except = except;}
+
+        public List<?> getAccount_ram_deltas() { return account_ram_deltas;}
+
+        public void setAccount_ram_deltas(List<?> account_ram_deltas) { this.account_ram_deltas = account_ram_deltas;}
+
+        public List<InlineTracesBean> getInline_traces() { return inline_traces;}
+
+        public void setInline_traces(List<InlineTracesBean> inline_traces) { this.inline_traces = inline_traces;}
+
+        public static class ReceiptBeanX {
 
             /**
-             * compression : none
-             * context_free_data : []
-             * id : d016104ed13ad34c41166e9689229341d0fb2ffb7e2b2f0e4b5c8ddf1337f0e5
-             * packed_context_free_data :
-             * packed_trx : dd8ec05b908ab9dac77200000000010000000000ea305500003f2a1ba6a24a011032d6379ba88f9a00000000a8ed3232311032d6379ba88f9a1032d6379ba88f9a000000000000000004454f5300000000640000000000000004454f53000000000000
-             * signatures : ["SIG_K1_K8JwS4aLQrJaAwSjRZbACjycPHoySC23VV6r2M2VcmF6a96v88DuYfiUbRVQobtzuiPg74X7WbELydnCJAFso4U5bfrVQr"]
-             * transaction : {"actions":[{"account":"eosio","authorization":[{"actor":"nebulatrust1","permission":"active"}],"data":{"from":"nebulatrust1","receiver":"nebulatrust1","stake_cpu_quantity":"0.0100 EOS","stake_net_quantity":"0.0000 EOS","transfer":0},"hex_data":"1032d6379ba88f9a1032d6379ba88f9a000000000000000004454f5300000000640000000000000004454f530000000000","name":"delegatebw"}],"context_free_actions":[],"delay_sec":0,"expiration":"2018-10-12T12:09:01","max_cpu_usage_ms":0,"max_net_usage_words":0,"ref_block_num":35472,"ref_block_prefix":1925700281,"transaction_extensions":[]}
+             * receiver : eosio.token
+             * act_digest : 2385d689d5141ad7ce2785c25ea1eb8507f67fa4890575330329131318698372
+             * global_sequence : 2556040116
+             * recv_sequence : 416600068
+             * auth_sequence : [["wizznetwork1",1478205]]
+             * code_sequence : 2
+             * abi_sequence : 2
              */
 
-            private String compression;
-            private String id;
-            private String packed_context_free_data;
-            private String packed_trx;
-            private TransactionBean transaction;
-            private List<?> context_free_data;
-            private List<String> signatures;
+            private String receiver;
+            private String act_digest;
+            private long global_sequence;
+            private int recv_sequence;
+            private int code_sequence;
+            private int abi_sequence;
+            private List<List<String>> auth_sequence;
 
-            public String getCompression() { return compression;}
+            public String getReceiver() { return receiver;}
 
-            public void setCompression(String compression) { this.compression = compression;}
+            public void setReceiver(String receiver) { this.receiver = receiver;}
 
-            public String getId() { return id;}
+            public String getAct_digest() { return act_digest;}
 
-            public void setId(String id) { this.id = id;}
+            public void setAct_digest(String act_digest) { this.act_digest = act_digest;}
 
-            public String getPacked_context_free_data() { return packed_context_free_data;}
+            public long getGlobal_sequence() { return global_sequence;}
 
-            public void setPacked_context_free_data(String packed_context_free_data) { this.packed_context_free_data = packed_context_free_data;}
+            public void setGlobal_sequence(long global_sequence) { this.global_sequence = global_sequence;}
 
-            public String getPacked_trx() { return packed_trx;}
+            public int getRecv_sequence() { return recv_sequence;}
 
-            public void setPacked_trx(String packed_trx) { this.packed_trx = packed_trx;}
+            public void setRecv_sequence(int recv_sequence) { this.recv_sequence = recv_sequence;}
 
-            public TransactionBean getTransaction() { return transaction;}
+            public int getCode_sequence() { return code_sequence;}
 
-            public void setTransaction(TransactionBean transaction) { this.transaction = transaction;}
+            public void setCode_sequence(int code_sequence) { this.code_sequence = code_sequence;}
 
-            public List<?> getContext_free_data() { return context_free_data;}
+            public int getAbi_sequence() { return abi_sequence;}
 
-            public void setContext_free_data(List<?> context_free_data) { this.context_free_data = context_free_data;}
+            public void setAbi_sequence(int abi_sequence) { this.abi_sequence = abi_sequence;}
 
-            public List<String> getSignatures() { return signatures;}
+            public List<List<String>> getAuth_sequence() { return auth_sequence;}
 
-            public void setSignatures(List<String> signatures) { this.signatures = signatures;}
+            public void setAuth_sequence(List<List<String>> auth_sequence) { this.auth_sequence = auth_sequence;}
+        }
 
-            public static class TransactionBean {
+        public static class ActBean {
+
+            /**
+             * account : eosio.token
+             * name : transfer
+             * authorization : [{"actor":"wizznetwork1","permission":"active"}]
+             * data : {"from":"wizznetwork1","to":"ha2tsmzqhege","quantity":"0.0001 EOS","memo":"PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1"}
+             * hex_data : 10e0a53cabf9bfe3a0986af64b9c8569010000000000000004454f5300000000d801504c41592057415247414d45202d203558207061796f7574205b2068747470733a2f2f77697a7a2e6e6574776f726b2f77617267616d65205d20576167657220454f53206f722057495a5a20544f4b454e532e204561726e20352520454f5320526566657272616c732e2057495a5a20544f4b454e20426f6e757320666f7220616c6c205761676572732e20444f4e5420484156452057495a5a20544f4b454e3f205b2068747470733a2f2f77697a7a2e6e6574776f726b205d20414952475241422e20564f54452042502077697a7a6e6574776f726b31
+             */
+
+            private String account;
+            private String name;
+            private DataBean data;
+            private String hex_data;
+            private List<AuthorizationBean> authorization;
+
+            public String getAccount() { return account;}
+
+            public void setAccount(String account) { this.account = account;}
+
+            public String getName() { return name;}
+
+            public void setName(String name) { this.name = name;}
+
+            public DataBean getData() { return data;}
+
+            public void setData(DataBean data) { this.data = data;}
+
+            public String getHex_data() { return hex_data;}
+
+            public void setHex_data(String hex_data) { this.hex_data = hex_data;}
+
+            public List<AuthorizationBean> getAuthorization() { return authorization;}
+
+            public void setAuthorization(List<AuthorizationBean> authorization) { this.authorization = authorization;}
+
+            public static class DataBean {
 
                 /**
-                 * actions : [{"account":"eosio","authorization":[{"actor":"nebulatrust1","permission":"active"}],"data":{"from":"nebulatrust1","receiver":"nebulatrust1","stake_cpu_quantity":"0.0100 EOS","stake_net_quantity":"0.0000 EOS","transfer":0},"hex_data":"1032d6379ba88f9a1032d6379ba88f9a000000000000000004454f5300000000640000000000000004454f530000000000","name":"delegatebw"}]
-                 * context_free_actions : []
-                 * delay_sec : 0
-                 * expiration : 2018-10-12T12:09:01
-                 * max_cpu_usage_ms : 0
-                 * max_net_usage_words : 0
-                 * ref_block_num : 35472
-                 * ref_block_prefix : 1925700281
-                 * transaction_extensions : []
+                 * from : wizznetwork1
+                 * to : ha2tsmzqhege
+                 * quantity : 0.0001 EOS
+                 * memo : PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1
                  */
 
-                private int delay_sec;
-                private String expiration;
-                private int max_cpu_usage_ms;
-                private int max_net_usage_words;
-                private int ref_block_num;
-                private int ref_block_prefix;
-                private List<ActionsBean> actions;
-                private List<?> context_free_actions;
-                private List<?> transaction_extensions;
+                private String from;
+                private String to;
+                private String quantity;
+                private String memo;
 
-                public int getDelay_sec() { return delay_sec;}
+                public String getFrom() { return from;}
 
-                public void setDelay_sec(int delay_sec) { this.delay_sec = delay_sec;}
+                public void setFrom(String from) { this.from = from;}
 
-                public String getExpiration() { return expiration;}
+                public String getTo() { return to;}
 
-                public void setExpiration(String expiration) { this.expiration = expiration;}
+                public void setTo(String to) { this.to = to;}
 
-                public int getMax_cpu_usage_ms() { return max_cpu_usage_ms;}
+                public String getQuantity() { return quantity;}
 
-                public void setMax_cpu_usage_ms(int max_cpu_usage_ms) { this.max_cpu_usage_ms = max_cpu_usage_ms;}
+                public void setQuantity(String quantity) { this.quantity = quantity;}
 
-                public int getMax_net_usage_words() { return max_net_usage_words;}
+                public String getMemo() { return memo;}
 
-                public void setMax_net_usage_words(int max_net_usage_words) { this.max_net_usage_words = max_net_usage_words;}
+                public void setMemo(String memo) { this.memo = memo;}
+            }
 
-                public int getRef_block_num() { return ref_block_num;}
+            public static class AuthorizationBean {
 
-                public void setRef_block_num(int ref_block_num) { this.ref_block_num = ref_block_num;}
+                /**
+                 * actor : wizznetwork1
+                 * permission : active
+                 */
 
-                public int getRef_block_prefix() { return ref_block_prefix;}
+                private String actor;
+                private String permission;
 
-                public void setRef_block_prefix(int ref_block_prefix) { this.ref_block_prefix = ref_block_prefix;}
+                public String getActor() { return actor;}
 
-                public List<ActionsBean> getActions() { return actions;}
+                public void setActor(String actor) { this.actor = actor;}
 
-                public void setActions(List<ActionsBean> actions) { this.actions = actions;}
+                public String getPermission() { return permission;}
 
-                public List<?> getContext_free_actions() { return context_free_actions;}
+                public void setPermission(String permission) { this.permission = permission;}
+            }
+        }
 
-                public void setContext_free_actions(List<?> context_free_actions) { this.context_free_actions = context_free_actions;}
+        public static class InlineTracesBean {
 
-                public List<?> getTransaction_extensions() { return transaction_extensions;}
+            /**
+             * receipt : {"receiver":"wizznetwork1","act_digest":"2385d689d5141ad7ce2785c25ea1eb8507f67fa4890575330329131318698372","global_sequence":2556040117,"recv_sequence":635077,"auth_sequence":[["wizznetwork1",1478206]],"code_sequence":2,"abi_sequence":2}
+             * act : {"account":"eosio.token","name":"transfer","authorization":[{"actor":"wizznetwork1","permission":"active"}],"data":{"from":"wizznetwork1","to":"ha2tsmzqhege","quantity":"0.0001 EOS","memo":"PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1"},"hex_data":"10e0a53cabf9bfe3a0986af64b9c8569010000000000000004454f5300000000d801504c41592057415247414d45202d203558207061796f7574205b2068747470733a2f2f77697a7a2e6e6574776f726b2f77617267616d65205d20576167657220454f53206f722057495a5a20544f4b454e532e204561726e20352520454f5320526566657272616c732e2057495a5a20544f4b454e20426f6e757320666f7220616c6c205761676572732e20444f4e5420484156452057495a5a20544f4b454e3f205b2068747470733a2f2f77697a7a2e6e6574776f726b205d20414952475241422e20564f54452042502077697a7a6e6574776f726b31"}
+             * context_free : false
+             * elapsed : 38
+             * console :
+             * trx_id : f05589296d5268c03887d7b729e6b29e68548cb86eabf9ccce33c0f91fd87a3b
+             * block_num : 30694546
+             * block_time : 2018-12-06T15:20:58.000
+             * producer_block_id : 01d45c927141dbff525965b36bfb23bdc5a7e04762e37b5549f8ce9ba981ef40
+             * account_ram_deltas : []
+             * except : null
+             * inline_traces : []
+             */
 
-                public void setTransaction_extensions(List<?> transaction_extensions) { this.transaction_extensions = transaction_extensions;}
+            private ReceiptBeanXX receipt;
+            private ActBeanX act;
+            private boolean context_free;
+            private int elapsed;
+            private String console;
+            private String trx_id;
+            private int block_num;
+            private String block_time;
+            private String producer_block_id;
+            private Object except;
+            private List<?> account_ram_deltas;
+            private List<?> inline_traces;
 
-                public static class ActionsBean {
+            public ReceiptBeanXX getReceipt() { return receipt;}
+
+            public void setReceipt(ReceiptBeanXX receipt) { this.receipt = receipt;}
+
+            public ActBeanX getAct() { return act;}
+
+            public void setAct(ActBeanX act) { this.act = act;}
+
+            public boolean isContext_free() { return context_free;}
+
+            public void setContext_free(boolean context_free) { this.context_free = context_free;}
+
+            public int getElapsed() { return elapsed;}
+
+            public void setElapsed(int elapsed) { this.elapsed = elapsed;}
+
+            public String getConsole() { return console;}
+
+            public void setConsole(String console) { this.console = console;}
+
+            public String getTrx_id() { return trx_id;}
+
+            public void setTrx_id(String trx_id) { this.trx_id = trx_id;}
+
+            public int getBlock_num() { return block_num;}
+
+            public void setBlock_num(int block_num) { this.block_num = block_num;}
+
+            public String getBlock_time() { return block_time;}
+
+            public void setBlock_time(String block_time) { this.block_time = block_time;}
+
+            public String getProducer_block_id() { return producer_block_id;}
+
+            public void setProducer_block_id(String producer_block_id) { this.producer_block_id = producer_block_id;}
+
+            public Object getExcept() { return except;}
+
+            public void setExcept(Object except) { this.except = except;}
+
+            public List<?> getAccount_ram_deltas() { return account_ram_deltas;}
+
+            public void setAccount_ram_deltas(List<?> account_ram_deltas) { this.account_ram_deltas = account_ram_deltas;}
+
+            public List<?> getInline_traces() { return inline_traces;}
+
+            public void setInline_traces(List<?> inline_traces) { this.inline_traces = inline_traces;}
+
+            public static class ReceiptBeanXX {
+
+                /**
+                 * receiver : wizznetwork1
+                 * act_digest : 2385d689d5141ad7ce2785c25ea1eb8507f67fa4890575330329131318698372
+                 * global_sequence : 2556040117
+                 * recv_sequence : 635077
+                 * auth_sequence : [["wizznetwork1",1478206]]
+                 * code_sequence : 2
+                 * abi_sequence : 2
+                 */
+
+                private String receiver;
+                private String act_digest;
+                private long global_sequence;
+                private int recv_sequence;
+                private int code_sequence;
+                private int abi_sequence;
+                private List<List<String>> auth_sequence;
+
+                public String getReceiver() { return receiver;}
+
+                public void setReceiver(String receiver) { this.receiver = receiver;}
+
+                public String getAct_digest() { return act_digest;}
+
+                public void setAct_digest(String act_digest) { this.act_digest = act_digest;}
+
+                public long getGlobal_sequence() { return global_sequence;}
+
+                public void setGlobal_sequence(long global_sequence) { this.global_sequence = global_sequence;}
+
+                public int getRecv_sequence() { return recv_sequence;}
+
+                public void setRecv_sequence(int recv_sequence) { this.recv_sequence = recv_sequence;}
+
+                public int getCode_sequence() { return code_sequence;}
+
+                public void setCode_sequence(int code_sequence) { this.code_sequence = code_sequence;}
+
+                public int getAbi_sequence() { return abi_sequence;}
+
+                public void setAbi_sequence(int abi_sequence) { this.abi_sequence = abi_sequence;}
+
+                public List<List<String>> getAuth_sequence() { return auth_sequence;}
+
+                public void setAuth_sequence(List<List<String>> auth_sequence) { this.auth_sequence = auth_sequence;}
+            }
+
+            public static class ActBeanX {
+
+                /**
+                 * account : eosio.token
+                 * name : transfer
+                 * authorization : [{"actor":"wizznetwork1","permission":"active"}]
+                 * data : {"from":"wizznetwork1","to":"ha2tsmzqhege","quantity":"0.0001 EOS","memo":"PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1"}
+                 * hex_data : 10e0a53cabf9bfe3a0986af64b9c8569010000000000000004454f5300000000d801504c41592057415247414d45202d203558207061796f7574205b2068747470733a2f2f77697a7a2e6e6574776f726b2f77617267616d65205d20576167657220454f53206f722057495a5a20544f4b454e532e204561726e20352520454f5320526566657272616c732e2057495a5a20544f4b454e20426f6e757320666f7220616c6c205761676572732e20444f4e5420484156452057495a5a20544f4b454e3f205b2068747470733a2f2f77697a7a2e6e6574776f726b205d20414952475241422e20564f54452042502077697a7a6e6574776f726b31
+                 */
+
+                private String account;
+                private String name;
+                private DataBeanX data;
+                private String hex_data;
+                private List<AuthorizationBeanX> authorization;
+
+                public String getAccount() { return account;}
+
+                public void setAccount(String account) { this.account = account;}
+
+                public String getName() { return name;}
+
+                public void setName(String name) { this.name = name;}
+
+                public DataBeanX getData() { return data;}
+
+                public void setData(DataBeanX data) { this.data = data;}
+
+                public String getHex_data() { return hex_data;}
+
+                public void setHex_data(String hex_data) { this.hex_data = hex_data;}
+
+                public List<AuthorizationBeanX> getAuthorization() { return authorization;}
+
+                public void setAuthorization(List<AuthorizationBeanX> authorization) { this.authorization = authorization;}
+
+                public static class DataBeanX {
 
                     /**
-                     * account : eosio
-                     * authorization : [{"actor":"nebulatrust1","permission":"active"}]
-                     * data : {"from":"nebulatrust1","receiver":"nebulatrust1","stake_cpu_quantity":"0.0100 EOS","stake_net_quantity":"0.0000 EOS","transfer":0}
-                     * hex_data : 1032d6379ba88f9a1032d6379ba88f9a000000000000000004454f5300000000640000000000000004454f530000000000
-                     * name : delegatebw
+                     * from : wizznetwork1
+                     * to : ha2tsmzqhege
+                     * quantity : 0.0001 EOS
+                     * memo : PLAY WARGAME - 5X payout [ https://wizz.network/wargame ] Wager EOS or WIZZ TOKENS. Earn 5% EOS Referrals. WIZZ TOKEN Bonus for all Wagers. DONT HAVE WIZZ TOKEN? [ https://wizz.network ] AIRGRAB. VOTE BP wizznetwork1
                      */
 
-                    private String account;
-                    private DataBean data;
-                    private String hex_data;
-                    private String name;
-                    private List<AuthorizationBean> authorization;
+                    private String from;
+                    private String to;
+                    private String quantity;
+                    private String memo;
 
-                    public String getAccount() { return account;}
+                    public String getFrom() { return from;}
 
-                    public void setAccount(String account) { this.account = account;}
+                    public void setFrom(String from) { this.from = from;}
 
-                    public DataBean getData() { return data;}
+                    public String getTo() { return to;}
 
-                    public void setData(DataBean data) { this.data = data;}
+                    public void setTo(String to) { this.to = to;}
 
-                    public String getHex_data() { return hex_data;}
+                    public String getQuantity() { return quantity;}
 
-                    public void setHex_data(String hex_data) { this.hex_data = hex_data;}
+                    public void setQuantity(String quantity) { this.quantity = quantity;}
 
-                    public String getName() { return name;}
+                    public String getMemo() { return memo;}
 
-                    public void setName(String name) { this.name = name;}
+                    public void setMemo(String memo) { this.memo = memo;}
+                }
 
-                    public List<AuthorizationBean> getAuthorization() { return authorization;}
+                public static class AuthorizationBeanX {
 
-                    public void setAuthorization(List<AuthorizationBean> authorization) { this.authorization = authorization;}
+                    /**
+                     * actor : wizznetwork1
+                     * permission : active
+                     */
 
-                    public static class DataBean {
+                    private String actor;
+                    private String permission;
 
-                        /**
-                         * from : nebulatrust1
-                         * receiver : nebulatrust1
-                         * stake_cpu_quantity : 0.0100 EOS
-                         * stake_net_quantity : 0.0000 EOS
-                         * transfer : 0
-                         */
+                    public String getActor() { return actor;}
 
-                        private String from;
-                        private String receiver;
-                        private String stake_cpu_quantity;
-                        private String stake_net_quantity;
-                        private int transfer;
+                    public void setActor(String actor) { this.actor = actor;}
 
-                        public String getFrom() { return from;}
+                    public String getPermission() { return permission;}
 
-                        public void setFrom(String from) { this.from = from;}
-
-                        public String getReceiver() { return receiver;}
-
-                        public void setReceiver(String receiver) { this.receiver = receiver;}
-
-                        public String getStake_cpu_quantity() { return stake_cpu_quantity;}
-
-                        public void setStake_cpu_quantity(String stake_cpu_quantity) { this.stake_cpu_quantity = stake_cpu_quantity;}
-
-                        public String getStake_net_quantity() { return stake_net_quantity;}
-
-                        public void setStake_net_quantity(String stake_net_quantity) { this.stake_net_quantity = stake_net_quantity;}
-
-                        public int getTransfer() { return transfer;}
-
-                        public void setTransfer(int transfer) { this.transfer = transfer;}
-                    }
-
-                    public static class AuthorizationBean {
-
-                        /**
-                         * actor : nebulatrust1
-                         * permission : active
-                         */
-
-                        private String actor;
-                        private String permission;
-
-                        public String getActor() { return actor;}
-
-                        public void setActor(String actor) { this.actor = actor;}
-
-                        public String getPermission() { return permission;}
-
-                        public void setPermission(String permission) { this.permission = permission;}
-                    }
+                    public void setPermission(String permission) { this.permission = permission;}
                 }
             }
         }

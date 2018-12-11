@@ -577,7 +577,8 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
     public boolean isBioMemoValid() {
         if (getV() != null){
             String memo = getV().getNote().toString();
-            String regEx = "^[A-Za-z0-9\\p{P}]{0,15}$";
+//            String regEx = "^[A-Za-z0-9\\p{P}]{0,15}$";
+            String regEx = "^[A-Za-z0-9!@#$%^&*().,_+=><?]{0,15}$";
             Pattern pattern = Pattern.compile(regEx);
             Matcher matcher = pattern.matcher((memo));
             boolean res = matcher.matches();

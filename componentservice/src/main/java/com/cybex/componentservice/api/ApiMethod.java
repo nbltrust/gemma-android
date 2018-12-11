@@ -115,4 +115,7 @@ public interface ApiMethod {
     String WXPAY_PLACE_ORDER = "/api/v1/pay/order/";
 
     String EOS_SPARK_API_GET_TRANSACTION = "/api?action=get_transaction_detail_info&apikey=2d0b90f1d4b59d5b24369762608cf681&module=transaction&trx_id=";
+
+    String EOS_WEB_GET_TRANSACTION = "/api/v1/get_transaction/";
+
 }

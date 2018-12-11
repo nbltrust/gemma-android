@@ -22,13 +22,13 @@
             android:layout_height="wrap_content">
 
             <RadioButton
+                android:layout_marginTop="10dp"
                 android:id="@+id/radioButton_node_cybex"
                 style="@style/mRadioButton"
                 android:text="@string/eos_node_cybex"/>
 
             <View
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_margin="10dp"
                 style="@style/common_divider">
             </View>
 
@@ -38,8 +38,7 @@
                 android:text="@string/eos_node_starteos"/>
 
             <View
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_margin="10dp"
                 style="@style/common_divider">
             </View>
 
@@ -50,8 +49,7 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_margin="10dp"
                 style="@style/common_divider">
             </View>
 
@@ -62,8 +60,7 @@
                 android:text="@string/eos_node_eosgravity"/>
 
             <View
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_margin="10dp"
                 style="@style/common_divider">
             </View>
 
@@ -74,8 +71,7 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_margin="10dp"
                 style="@style/common_divider">
             </View>
 
@@ -86,8 +82,7 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_margin="10dp"
                 style="@style/common_divider">
             </View>
 
@@ -98,8 +93,7 @@
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_margin="10dp"
                 style="@style/common_divider">
             </View>
 

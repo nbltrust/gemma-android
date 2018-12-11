@@ -1,6 +1,7 @@
 package com.cybex.gma.client;
 
 
+import com.amitshekhar.server.ClientServer;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.config.HttpConfig;
 import com.cybex.componentservice.db.GemmaDatabase;
@@ -43,10 +44,10 @@ public class GmaApplication extends BaseApplication {
 //        strategy.setAppPackageName("com.tencent.xx"); //App的包名
         CrashReport.initCrashReport(getApplicationContext(), "9fd7c781c3", BuildConfig.DEBUG, strategy);
 
-//        if(BuildConfig.DEBUG){
-//            ClientServer clientServer = new ClientServer(this, 8080);
-//            clientServer.start();
-//        }
+        if(BuildConfig.DEBUG){
+            ClientServer clientServer = new ClientServer(this, 8080);
+            clientServer.start();
+        }
 
     }
 

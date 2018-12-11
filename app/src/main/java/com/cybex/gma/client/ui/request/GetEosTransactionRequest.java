@@ -20,7 +20,7 @@ public class GetEosTransactionRequest extends GMAHttpRequest<GetEosTransactionRe
      */
     public GetEosTransactionRequest(Class clazz, String txId) {
         super(clazz);
-        setMethod(ApiPath.EOS_SPARK + ApiMethod.EOS_SPARK_API_GET_TRANSACTION + txId);
+        setMethod(ApiPath.EOS_WEB + ApiMethod.EOS_WEB_GET_TRANSACTION + txId);
     }
 
 
