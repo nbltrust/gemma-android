@@ -418,7 +418,7 @@ public class ChangePasswordActivity extends XActivity<ChangePasswordPresenter> {
     }
 
     public String getPassHint() {
-        return edtPassHint.getText().toString().trim();
+        return edtPassHint.getText().toString();
     }
 
 

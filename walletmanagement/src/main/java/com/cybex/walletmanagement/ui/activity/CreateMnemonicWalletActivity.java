@@ -629,7 +629,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
     }
 
     public String getPassHint() {
-        return edtPassHint.getText().toString().trim();
+        return edtPassHint.getText().toString();
     }
 
 

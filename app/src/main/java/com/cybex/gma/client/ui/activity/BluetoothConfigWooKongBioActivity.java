@@ -810,7 +810,7 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
     }
 
     public String getPassHint() {
-        return edtPassHint.getText().toString().trim();
+        return edtPassHint.getText().toString();
     }
     //---------
 

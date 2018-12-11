@@ -17,7 +17,7 @@ public class FormatValidateUtils {
 
     public static boolean isPasswordValid(String psw){
         if(TextUtils.isEmpty(psw))return false;
-        String regEx = "^[\\S ]{8,}$";
+        String regEx = "^[\\S ]{8,16}$";
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher(psw);
         return matcher.matches();

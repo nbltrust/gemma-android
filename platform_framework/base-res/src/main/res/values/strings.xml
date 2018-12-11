@@ -1211,7 +1211,7 @@
     <string name="title_wallet_name" tools:ignore="ResourceName">钱包名称</string>
     <string name="tip_walletname_hint" tools:ignore="ResourceName">请输入创建的钱包名称</string>
     <string name="tip_walletname_error" tools:ignore="ResourceName">钱包名称与已有钱包重复，请修改</string>
-    <string name="tip_input_password" tools:ignore="ResourceName">最少8位长度，可混合大小写字母、数字及符号</string>
+    <string name="tip_input_password" tools:ignore="ResourceName">8-16位，可混合大小写字母、数字及符号</string>
     <string name="tip_repeat_password" tools:ignore="ResourceName">请再次输入您的密码</string>
     <string name="tip_input_password_hint" tools:ignore="ResourceName">密码提示</string>
     <string name="tip_pass_no_match" tools:ignore="ResourceName">密码不一致</string>
@@ -1452,6 +1452,8 @@
     <string name="get_sn_fail">从Bio读取序列号失败，请重新尝试</string>
     <string name="cpu_insufficient">CPU 不足，请给本账户抵押CPU后再进行操作</string>
     <string name="eos_chain_unstable">EOS主网不稳定，请稍后再试</string>
+    <string name="fp_error">指纹验证失败，请重新尝试</string>
+    <string name="switch_sign_fail">切换验证方式失败，请重新尝试</string>
 
 
 

@@ -77,6 +77,7 @@
                             android:id="@+id/edt_set_pass"
                             style="@style/editText_config_wallet"
                             android:layout_weight="1"
+                            android:maxLength="16"
                             android:hint="@string/walletmanage_tip_input_password"
                             android:inputType="textPassword"/>
 
@@ -117,6 +118,7 @@
                             android:id="@+id/et_repeat_pass"
                             style="@style/editText_config_wallet"
                             android:layout_weight="1"
+                            android:maxLength="16"
                             android:hint="@string/walletmanage_tip_repeat_password"
                             android:inputType="textPassword"/>
 

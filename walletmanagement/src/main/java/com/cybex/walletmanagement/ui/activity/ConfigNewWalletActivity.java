@@ -612,7 +612,7 @@ public class ConfigNewWalletActivity extends XActivity<ConfigNewWalletPresenter>
     }
 
     public String getPassHint() {
-        return edtPassHint.getText().toString().trim();
+        return edtPassHint.getText().toString();
     }
 
 

@@ -417,7 +417,7 @@ public class BluetoothChangePasswordActivity extends BluetoothBaseActivity<Bluet
     }
 
     public String getPassHint() {
-        return edtPassHint.getText().toString().trim();
+        return edtPassHint.getText().toString();
     }
 
 
