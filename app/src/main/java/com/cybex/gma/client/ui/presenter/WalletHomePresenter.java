@@ -78,7 +78,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
 
                                 GetKeyAccountsResult result = response.body();
                                 List<String> account_names = result.account_names;
-                                if (account_names.size() > 0) {
+                                if (account_names != null && account_names.size() > 0) {
                                     final String firstEosName = account_names.get(0);
                                     LoggerManager.d("firstEosname", firstEosName);
 

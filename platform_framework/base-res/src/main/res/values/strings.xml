@@ -1445,7 +1445,13 @@
     <!--baseview****-->
 
 
+    <!-- new Strings -->
 
+    <string name="status_confirming">正在确认</string>
+    <string name="original_pass">原密码</string>
+    <string name="get_sn_fail">从Bio读取序列号失败，请重新尝试</string>
+    <string name="cpu_insufficient">CPU 不足，请给本账户抵押CPU后再进行操作</string>
+    <string name="eos_chain_unstable">EOS主网不稳定，请稍后再试</string>
 
 
 

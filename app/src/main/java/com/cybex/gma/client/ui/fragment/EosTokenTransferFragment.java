@@ -829,7 +829,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                                         if (status == BaseConst.STATUS_NO_VERIFY_COUNT) {
                                             //没有指纹录入错误，调用PIN验证
-
                                             showConfirmPINDialog();
                                         } else {
                                             //其他错误

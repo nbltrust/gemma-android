@@ -903,6 +903,10 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
         edtSetPass.setOnFocusChangeListener(null);
         edtPassHint.setOnFocusChangeListener(null);
         checkboxConfig.setOnCheckedChangeListener(null);
+
+        if (powerAlertDialog != null)powerAlertDialog.cancel();
+        if (powerPressDialog != null)powerPressDialog.cancel();
+
     }
 
     public void setDividerFocusStyle(View divider) {

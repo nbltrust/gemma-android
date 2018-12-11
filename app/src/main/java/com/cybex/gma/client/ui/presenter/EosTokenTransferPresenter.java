@@ -6,21 +6,30 @@ import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.AmountUtil;
+import com.cybex.componentservice.utils.ConvertUtils;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.fragment.EosTokenTransferFragment;
+import com.cybex.gma.client.ui.model.request.DelegateReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
+import com.cybex.gma.client.ui.model.response.CheckGoodsCodeResult;
+import com.cybex.gma.client.ui.model.response.DelegateReqResult;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionTmpVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
+import com.cybex.gma.client.ui.request.CheckGoodsCodeRequest;
+import com.cybex.gma.client.ui.request.DelegateRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.PushTransactionRequest;
+import com.extropies.common.CommonUtility;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -42,11 +51,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragment> {
+
     private static final String VALUE_ACTION = "transfer";
     private static final String VALUE_COMPRESSION = "none";
     private static final String VALUE_SYMBOL = "EOS";
     private static final String VALUE_CODE = "eosio.token";
     private static final String VALUE_CONTRACT = "eosio.token";
+
+    private String savedJsonParams;
 
     /**
      * 执行EOS Token转账逻辑
@@ -210,6 +222,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
      * 最后执行push transaction
      */
     public void pushTransaction(String jsonParams) {
+        savedJsonParams = jsonParams;
         new PushTransactionRequest(String.class)
                 .setJsonParams(jsonParams)
                 .pushTransaction(new StringCallback() {
@@ -225,7 +238,6 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                     public void onError(Response<String> response) {
                         super.onError(response);
                         if (EmptyUtils.isNotEmpty(getV())) {
-                            getV().dissmisProgressDialog();
 
                             try {
                                 String err_info_string = response.getRawResponse().body().string();
@@ -233,7 +245,58 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                     JSONObject obj = new JSONObject(err_info_string);
                                     JSONObject error = obj.optJSONObject("error");
                                     String err_code = error.optString("code");
-                                    handleEosErrorCode(err_code);
+
+                                    if (err_code.equals("3080004") || err_code.equals("3080005")) {
+                                        //CPU不足
+                                        //从卡获取SN
+                                        MultiWalletEntity curWallet = DBManager.getInstance()
+                                                .getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+
+                                        if (curWallet != null) {
+                                            String TAG = getV().toString();
+                                            String deviceName = curWallet.getBluetoothDeviceName();
+
+                                            DeviceOperationManager.getInstance().getCheckCode(TAG, deviceName,
+                                                    new DeviceOperationManager.GetCheckCodeCallback() {
+                                                        @Override
+                                                        public void onCheckCodeSuccess(byte[] checkCode) {
+                                                            byte[] snbyte = ConvertUtils.subByte(
+                                                                    checkCode, 0, 16);
+
+                                                            String SN = CommonUtility.byte2hex(snbyte);
+                                                            String SN_sign = CommonUtility.byte2hex(
+                                                                    checkCode);
+                                                            SN_sign = SN_sign.substring(32);
+
+                                                            LoggerManager.d("SN : ", SN);
+
+                                                            curWallet.setSerialNumber(SN);
+                                                            curWallet.save();
+
+                                                            //获取到，查询SN对应的权益
+                                                            checkGoodsCode(SN, SN_sign);
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCheckCodeFail() {
+                                                            if (getV() != null) {
+                                                                LoggerManager.d("onCheckCodeFail");
+                                                                getV().dissmisProgressDialog();
+                                                                AlertUtil.showShortUrgeAlert(getV().getActivity(),
+                                                                        getV().getString(R.string.get_sn_fail));
+                                                            }
+                                                        }
+                                                    });
+
+
+                                        }
+
+                                    } else {
+                                        //其他错误
+                                        getV().dissmisProgressDialog();
+                                        handleEosErrorCode(err_code);
+                                    }
 
                                 } catch (JSONException ee) {
                                     ee.printStackTrace();
@@ -420,6 +483,116 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                 });
     }
 
+    public void checkGoodsCode(String SN, String SN_Sig) {
+        new CheckGoodsCodeRequest(CheckGoodsCodeResult.class, SN)
+                .checkGoodsCode(new JsonCallback<CheckGoodsCodeResult>() {
+
+                    @Override
+                    public void onStart(Request<CheckGoodsCodeResult, ? extends Request> request) {
+                        super.onStart(request);
+                    }
+
+                    @Override
+                    public void onSuccess(Response<CheckGoodsCodeResult> response) {
+                        if (getV() != null) {
+                            if (response != null && response.body() != null) {
+                                CheckGoodsCodeResult result = response.body();
+                                CheckGoodsCodeResult.ResultBean resultBean = result.getResult();
+                                if (resultBean != null) {
+                                    CheckGoodsCodeResult.ResultBean.RightsBean rightsBean = resultBean.getRights();
+                                    if (rightsBean != null) {
+
+                                        CheckGoodsCodeResult.ResultBean.RightsBean.DelegationBean delegationBean = rightsBean
+                                                .getDelegation();
+                                        if (delegationBean != null) {
+
+                                            if (delegationBean.getActions() != null && delegationBean.getActions()
+                                                    .size() > 0) {
+                                                //有抵押权益
+                                                String account_name = DBManager.getInstance().getMultiWalletEntityDao
+                                                        ().getCurrentMultiWalletEntity().getEosWalletEntities().get
+                                                        (0).getCurrentEosName();
+
+                                                doDelegate(account_name, SN, SN_Sig);
+
+                                            } else {
+                                                //无抵押权益
+                                                getV().dissmisProgressDialog();
+                                                AlertUtil.showShortUrgeAlert(getV().getActivity(),
+                                                        getV().getString(R.string.cpu_insufficient));
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<CheckGoodsCodeResult> response) {
+                        if (getV() != null) {
+                            super.onError(response);
+                            AlertUtil.showShortUrgeAlert(getV().getActivity(),
+                                    getV().getString(R.string.eos_chain_unstable));
+                        }
+
+                    }
+                });
+    }
+
+    public void doDelegate(String account_name, String SN, String SN_Sig) {
+        DelegateReqParams params = new DelegateReqParams();
+        params.setApp_id(1);
+        params.setGoods_id(1001);
+        params.setCode("serialNumber");
+        params.setAccount_name(account_name);
+
+        DelegateReqParams.DelegateValidation validation = new DelegateReqParams.DelegateValidation();
+        validation.setSN(SN);
+        validation.setSN_sig(SN_Sig);
+
+        params.setValidation(validation);
+
+        String jsonParams = GsonUtils.objectToJson(params);
+
+        new DelegateRequest(DelegateReqResult.class)
+                .setJsonParams(jsonParams)
+                .delegate(new JsonCallback<DelegateReqResult>() {
+                    @Override
+                    public void onSuccess(Response<DelegateReqResult> response) {
+                        if (getV() != null) {
+                            if (response != null && response.body() != null) {
+                                DelegateReqResult result = response.body();
+                                DelegateReqResult.ResultBean resultBean = result.getResult();
+                                if (resultBean != null) {
+                                    String action_id = resultBean.getAction_id();
+                                    LoggerManager.d("action_id : ", action_id);
+
+                                    //抵押成功
+                                    pushTransaction(savedJsonParams);
+                                }
+
+                            } else {
+                                getV().dissmisProgressDialog();
+                                AlertUtil.showShortUrgeAlert(getV().getActivity(),
+                                        getV().getString(R.string.eos_chain_unstable));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<DelegateReqResult> response) {
+                        if (getV() != null) {
+                            AlertUtil.showShortUrgeAlert(getV().getActivity(),
+                                    getV().getString(R.string.cpu_insufficient));
+                        }
+                    }
+                });
+
+    }
+
+
     /**
      * 转换VO类型
      * 目的是转换字段的基础数据类型以让硬件SDK可以处理
@@ -559,6 +732,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
 
     /**
      * 获取当前蓝牙钱包对应的设备名称
+     *
      * @return
      */
     public String getBluetoothDeviceName() {
@@ -575,10 +749,10 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
     }
 
     public boolean isBioMemoValid() {
-        if (getV() != null){
+        if (getV() != null) {
             String memo = getV().getNote().toString();
 //            String regEx = "^[A-Za-z0-9\\p{P}]{0,15}$";
-            String regEx = "^[A-Za-z0-9!@#$%^&*().,_+=><?]{0,15}$";
+            String regEx = "^[A-Za-z0-9!@#$%^&*().,_+=><? ]{0,15}$";
             Pattern pattern = Pattern.compile(regEx);
             Matcher matcher = pattern.matcher((memo));
             boolean res = matcher.matches();

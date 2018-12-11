@@ -44,10 +44,10 @@ public class GmaApplication extends BaseApplication {
 //        strategy.setAppPackageName("com.tencent.xx"); //App的包名
         CrashReport.initCrashReport(getApplicationContext(), "9fd7c781c3", BuildConfig.DEBUG, strategy);
 
-        if(BuildConfig.DEBUG){
-            ClientServer clientServer = new ClientServer(this, 8080);
-            clientServer.start();
-        }
+//        if(BuildConfig.DEBUG){
+//            ClientServer clientServer = new ClientServer(this, 8080);
+//            clientServer.start();
+//        }
 
     }
 
