@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="collect">collect</string>
+    <string name="collect">Collect</string>
     <string name="reconnect">Reconnect</string>
     <string name="btn_connect">Connect</string>
     <string name="btn_disconnect">Disconnect</string>
@@ -845,13 +845,12 @@
     <string name="next_step">下一步</string>
     <string name="manage">管理</string>
 
-    <string name="tip_back_wallet">请务必备份私钥，私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>
+    <string name="tip_back_wallet">Please do back up the private key. It stands for the control and ownership of the crypto-assets. When accidents happen, this is your only way to retrieve your assets.</string>
 
     <!--app******-->
 
 
     <!--componentservice******-->
-
     <string name="baseservice_title_dialog">Tips</string>
     <string name="baseservice_message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
     <string name="baseservice_message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
@@ -865,9 +864,10 @@
     <string name="baseservice_setting">Setting</string>
     <string name="baseservice_resume">Resume</string>
     <string name="baseservice_cancel">Cancel</string>
-    <string name="baseservice_format">格式化</string>
-    <string name="baseservice_hint_button_confirm_init_pin">请在WOOKONG Bio上按键以确认初始化</string>
-    <string name="baseservice_hint_button_confirm_change_psw">请在WOOKONG Bio上按键以确认修改密码</string>
+    <string name="baseservice_format">Formatting</string>
+    <string name="baseservice_hint_button_confirm_init_pin">Press the button on WOOKONG Bio to confirm formatting</string>
+    <string name="baseservice_hint_button_confirm_change_psw">Press the button on WOOKONG Bio to confirm changing the password</string>
+
 
     <!--componentservice******-->
 
@@ -921,34 +921,35 @@
 
 
     <!--walletmanage-->
-    <string name="walletmanage_title_add_fp">添加指纹</string>
-    <string name="walletmanage_tip_confirm_format">请在WOOKONG Bio上按键以确认格式化，一旦格式化，WOOKONG Bio将清除私钥，请在格式化前转移资产。</string>
+    <string name="walletmanage_title_add_fp">Add a fingerprint</string>
+    <string name="walletmanage_tip_confirm_format">Press the button on WOOKONG Bio to confirm formatting. Once formatted, WOOKONG Bio will erase the private key. Please transfer your assets elsewhere before formatting.</string>
 
-    <string name="walletmanage_key_saved_qr">我已安全存储私钥</string>
+    <string name="walletmanage_key_saved_qr">I\'ve stored my private keys.</string>
     <string name="walletmanage_wallet">Wallet</string>
 
     <!--wallet manage home -->
-    <string name="walletmanage_create_wallet">Create Wallet</string>
-    <string name="walletmanage_connect_wookong_bio">配对 WOOKONG Bio</string>
-    <string name="walletmanage_formating">正在格式化</string>
-    <string name="walletmanage_format_fail">格式化失败</string>
-    <string name="walletmanage_loading">正在加载</string>
-    <string name="walletmanage_manage_fp">管理指纹</string>
-    <string name="walletmanage_fp_delete_success">指纹删除成功</string>
-    <string name="walletmanage_fp_delete_fail">指纹删除失败</string>
-    <string name="walletmanage_change_fp_name_hint">请输入新的指纹名称</string>
-    <string name="walletmanage_fp_prefix">指纹</string>
-    <string name="walletmanage_fpname_notnull">指纹名称不能为空</string>
-    <string name="walletmanage_fpname_nochange">指纹名称与原名称一致</string>
-    <string name="walletmanage_fpname_change_success">指纹名称修改成功</string>
+    <string name="walletmanage_create_wallet">Create a wallet</string>
+    <string name="walletmanage_connect_wookong_bio">Pairing WOOKONG Bio</string>
+    <string name="walletmanage_formating">Formatting</string>
+    <string name="walletmanage_format_fail">Formatting failed</string>
+    <string name="walletmanage_loading">Loading</string>
+    <string name="walletmanage_manage_fp">Manage fingerprints</string>
+    <string name="walletmanage_fp_delete_success">Fingerprint deleted</string>
+    <string name="walletmanage_fp_delete_fail">Failed to delete fingerprint</string>
+    <string name="walletmanage_change_fp_name_hint">Enter new fingerprint name</string>
+    <string name="walletmanage_fp_prefix">Fingerprints</string>
+    <string name="walletmanage_fpname_notnull">Fingerprint name cannot be empty</string>
+    <string name="walletmanage_fpname_nochange">New fingerprint name is the same as the previous one</string>
+    <string name="walletmanage_fpname_change_success">Fingerprint name changed</string>
 
 
-    <string name="walletmanage_multi_coin_hard_wallet">多币种硬件钱包</string>
-    <string name="walletmanage_enroll_fp_overtime">指纹设置超时</string>
-    <string name="walletmanage_jump">跳过</string>
-    <string name="walletmanage_retry">重试</string>
-    <string name="walletmanage_enroll_fp_hint1">将手指放在指纹识别区域上再移开，\n重复此步骤</string>
-    <string name="walletmanage_enroll_fp_hint2">调整握持姿势\n获取指纹边缘</string>
+    <string name="walletmanage_multi_coin_hard_wallet">Multi-currency hardware wallet</string>
+    <string name="walletmanage_enroll_fp_overtime">Fingerprint setup timed out</string>
+    <string name="walletmanage_jump">Skip</string>
+    <string name="walletmanage_retry">Retry</string>
+    <string name="walletmanage_enroll_fp_hint1">Put your finger on the recognition zone and lift it, \n and repeat for several times.</string>
+    <string name="walletmanage_enroll_fp_hint2">Adjust holding gestures\nto collect marginal fingerprint</string>
+
 
     <!--walletmanage****-->
 
@@ -1184,142 +1185,146 @@
     <string name="wookong_charging">Charging</string>
     <string name="walletmanage_status_connected">connected</string>
     <string name="eos_btn_wookong">Pair WOOKONG Bio</string>
-    <string name="eos_refund_detail">赎回详情</string>
-    <string name="eos_backup_your_mne">请记下你的钱包私钥助记词并保存在安全的地方</string>
-    <string name="eos_backup_hint2">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
-    <string name="eos_sn_used">创建失败，SN已被使用！</string>
+    <string name="eos_refund_detail">Refund details</string>
+    <string name="eos_backup_your_mne">Please record down mnemonic phrases of your wallet\'s private key and store it apprepriately</string>
+    <string name="eos_backup_hint2">Mnemonic phrases are used to recover the private key of your wallet. When circumstances such as importing EOS wallet on the PC end, re-install APP, phone lost, password forgotten, etc. happen, please use mnemonic phrases to recover the private key to your wallet.</string>
+    <string name="eos_sn_used">Creation failed. SN has been used!</string>
+
     <!-- activate account -->
-    <string name="eos_tip_activate_by_friend">请持有EOS的好友向智能合约signupeoseos转账并将以下文字作为备注(memo)，即可完成账户创建。</string>
+    <string name="eos_tip_activate_by_friend">Please ask one of your friend in possess of EOS to transfer to smart contract signupeoseos with the following memo to complete the account creation.</string>
     <!--others-->
-    <string name="eos_load_tokens_fail">获取EOS Tokens失败，请检查网络或切换节点重试</string>
-    <string name="eos_pair_fp_sure_tip">请在WOOKONG Bio上按指纹以确认配对</string>
+    <string name="eos_load_tokens_fail">Failed to acquire EOS tokens. Please check the network or switch nodes.</string>
+    <string name="eos_pair_fp_sure_tip">Verify your fingerprint on WOOKONG Bio to confirm pairing</string>
     <!-- WOOKONG BIO 详情页面-->
-    <string name="eos_tip_manage_resource_wookong">WOOKONG Bio 暂不支持资源抵押或买卖RAM，若要进行此类操作请使用其他账户为该账户抵押资源或买卖RAM。</string>
-    <string name="eos_activate_your_account">在使用EOS功能前请先激活您的EOS账户</string>
-    <string name="eos_token_tip_transfer">输入转账金额，最多%1$s位小数</string>
-    <string name="eos_token_tip_transfer_no_decimal">输入转账金额</string>
+    <string name="eos_tip_manage_resource_wookong">WOOKONG Bio does not support resource staking or RAM trading currently. Please use other accounts for aforesaid actions.</string>
+    <string name="eos_activate_your_account">Please activate your EOS account before using EOS-related functions.</string>
+    <string name="eos_token_tip_transfer">Enter transfer amount. At most %1$s digits behind the decimal number</string>
+    <string name="eos_token_tip_transfer_no_decimal">Enter transfer amount</string>
     <string name="eos_valid_username_digits">12345.qwertyuioplkjhgfdsazxcvbnm</string>
 
-    <string name="eos_activate_by_friend_one">请持有EOS的好友向智能合约</string>
+    <string name="eos_activate_by_friend_one">Please ask one of your friends in possess of EOS to</string>
     <string name="eos_activate_by_friend_two">signupeoseos</string>
     <string name="eos_activate_by_friend_three">转账</string>
-    <string name="eos_activate_by_friend_four">并须将以下文字作为备注(memo)</string>
-    <string name="eos_activate_by_friend_five">即可完成账户创建。</string>
+    <string name="eos_activate_by_friend_four">with the following memo</string>
+    <string name="eos_activate_by_friend_five">to complete the account creation</string>
 
-    <string name="eos_activate_by_exchange_one">请从支持memo功能的交易所向智能合约</string>
+    <string name="eos_activate_by_exchange_one">Please use an exchange that supports memo attachment to</string>
     <string name="eos_activate_by_exchange_two">signupeoseos</string>
     <string name="eos_activate_by_exchange_three">转账</string>
-    <string name="eos_activate_by_exchange_four">并须将以下文字作为备注(memo)</string>
-    <string name="eos_activate_by_exchange_five">即可完成账户创建。</string>
-    <string name="status_send_fail">发送失败</string>
-    <string name="status_accept_fail">接收失败</string>
-    <string name="status_unknown">待查询</string>
+    <string name="eos_activate_by_exchange_four">with the following memo</string>
+    <string name="eos_activate_by_exchange_five">to complete the account creation</string>
+    <string name="status_send_fail">Failed to send</string>
+    <string name="status_accept_fail">Failed to receive</string>
+    <string name="status_unknown">To be queried</string>
 
     <!--eos home card-->
-    <string name="card_eos_creating_progress">账户创建中...%1$d%%</string>
-    <string name="card_eos_wait_notify">待激活</string>
-    <string name="wookong_init_pin_fail">初始化PIN失败</string>
-    <string name="initing_wookong_bio_wallet">正在为您初始化WOOKONG Bio WALLET</string>
+    <string name="card_eos_creating_progress">Account creating...%1$d%%</string>
+    <string name="card_eos_wait_notify">To be activated</string>
+    <string name="wookong_init_pin_fail">Failed to initialize PIN</string>
+    <string name="initing_wookong_bio_wallet">Initializing WOOKONG Bio WALLET</string>
 
     <!--home -->
-    <string name="home_not_backup">未备份</string>
-    <string name="mnemonic_checking">验证中</string>
-    <string name="eos_mnenonic_invalid">助记词格式错误，请检查助记词</string>
-    <string name="eos_mnenonic_import_fail">助记词导入设备失败</string>
-    <string name="eos_mnemonic_importing">正在导入助记词</string>
-    <string name="wookong_init_fail">WOOKONG Bio初始化失败,请重新初始化</string>
-    <string name="creating_wookong_wallet">正在创建WOOKONG Wallet</string>
-    <string name="wookong_connect_fail">设备连接失败,请重试</string>
-    <string name="exit_wait_for_connect">正在连接设备,请稍后退出界面</string>
+    <string name="home_not_backup">To be backed up</string>
+    <string name="mnemonic_checking">Verifying</string>
+    <string name="eos_mnenonic_invalid">Invalid mnemonic phrases. Please check them.</string>
+    <string name="eos_mnenonic_import_fail">Failed to import mnemonic phrases to the device</string>
+    <string name="eos_mnemonic_importing">Importing mnemonic phrases</string>
+    <string name="wookong_init_fail">Failed to initialize WOOKONG Bio. Please retry.</string>
+    <string name="creating_wookong_wallet">Creating WOOKONG Wallet</string>
+    <string name="wookong_connect_fail">Failed to connect the device. Please retry.</string>
+    <string name="exit_wait_for_connect">Connecting the device. Please do not leave this page for now.</string>
 
-    <string name="power_level">电量%1$s%%</string>
+    <string name="power_level">Battery%1$s%%</string>
 
-    <string name="confirm_pair">确认配对</string>
-    <string name="enroll_fp_overtime">录入指纹超时</string>
-    <string name="jump">跳过</string>
-    <string name="retry">重试</string>
-    <string name="power_level_alert">电量不足</string>
-    <string name="power_level_alert_too_low">电量过低</string>
-    <string name="tip_power_level_alert">请先将WOOKONG Bio充满电以确保顺利完成设备初始化</string>
-    <string name="tip_power_level_alert_charge">请先给WOOKONG Bio充电以完成后续流程</string>
-    <string name="tip_fp_verify_fail">指纹验证失败，请调整位置再试</string>
-    <string name="tip_fp_verify_timeout">指纹验证超时</string>
+    <string name="confirm_pair">Confirm pairing</string>
+    <string name="enroll_fp_overtime">Fingerprint collection timed out</string>
+    <string name="jump">Skip</string>
+    <string name="retry">Retry</string>
+    <string name="power_level_alert">Low battery</string>
+    <string name="power_level_alert_too_low">Battery too low</string>
+    <string name="tip_power_level_alert">Please fully charge WOOKONG Bio first to ensure a successful initialization</string>
+    <string name="tip_power_level_alert_charge">Please charge WOOKONG Bio before following procedures</string>
+    <string name="tip_fp_verify_fail">Failed to verify fingerprint. Please adjust contact area</string>
+    <string name="tip_fp_verify_timeout">Finger verification timed out</string>
 
-    <string name="tip_fp_sign_fail">指纹签名失败，请重新尝试</string>
-    <string name="tip_set_tx_fail">在Bio上保存交易信息失败，请重新尝试</string>
-    <string name="tip_pin_verify_fail">验证失败，请重新尝试</string>
-    <string name="tip_press_fp_confirm_transfer">请在WOOKONG Bio上仔细对比转账信息，按指纹以确认转账。</string>
-    <string name="tip_press_confirm_transfer">请在WOOKONG Bio上仔细对比转账信息，按电源键以确认转账。</string>
 
-    <string name="tip_bio_memo_invalid">备注最多15个字符，仅支持英文、数字、标点符号</string>
-    <string name="tip_cant_find_transaction">部分交易记录状态查询失败，请稍后重试</string>
+    <string name="tip_fp_sign_fail">Failed to sign with fingerprint. Please retry.</string>
+    <string name="tip_set_tx_fail">Failed to store transaction details on Bio. Please retry.</string>
+    <string name="tip_pin_verify_fail">Failed to verify. Please retry.</string>
+    <string name="tip_press_fp_confirm_transfer">Please carefully check transaction info. on WOOKONG Bio then confirm with fingerprint</string>
+    <string name="tip_press_confirm_transfer">Please carefully check transaction info. on WOOKONG Bio then confirm by pressing the power button</string>
+
+    <string name="tip_bio_memo_invalid">Memo must be within 15 bit with only letters, numbers and symbols.</string>
+    <string name="tip_cant_find_transaction">Failed to query part of transaction history. Please try again later.</string>
     <!--app end-->
 
     <!--walletmanage-->
 
-    <string name="walletmanage_save_offline_hint">可使用非联网的废旧手机作为冷存储，通过扫描二维码扫描获取私钥并存储。</string>
+    <string name="walletmanage_save_offline_hint">You can use an offline backup device as a cold storage. Scan the QR Code to extract private key and store it.</string>
 
 
     <string name="baseservice_app_name">GEMMA</string>
-    <string name="baseservice_title">我是标题</string>
+    <string name="baseservice_title">Title</string>
     <string name="baseservice_eos">EOS</string>
 
-    <string name="name_invalid" tools:ignore="ResourceName">创建失败，钱包名称已存在</string>
-    <string name="name_not_empty" tools:ignore="ResourceName">钱包名称不能为空</string>
-    <string name="pass_not_empty" tools:ignore="ResourceName">密码不能为空</string>
-    <string name="pass_lenth_invalid" tools:ignore="ResourceName">密码不符合规则</string>
-    <string name="password_no_match" tools:ignore="ResourceName">两次输入的密码不匹配，请重新输入</string>
-    <string name="repeat_input_pass" tools:ignore="ResourceName">请再次输入您的密码</string>
-    <string name="check_agreement" tools:ignore="ResourceName">请同意我们的服务协议</string>
-    <string name="tip_next_step" tools:ignore="ResourceName">下一步</string>
-    <string name="tip_set_password" tools:ignore="ResourceName">设置密码</string>
-    <string name="tip_create_wallet" tools:ignore="ResourceName">创建钱包</string>
-    <string name="tip_repeat_pass" tools:ignore="ResourceName">重复密码</string>
-    <string name="title_wallet_name" tools:ignore="ResourceName">钱包名称</string>
-    <string name="tip_walletname_hint" tools:ignore="ResourceName">请输入创建的钱包名称</string>
-    <string name="tip_walletname_error" tools:ignore="ResourceName">钱包名称与已有钱包重复，请修改</string>
-    <string name="tip_input_password" tools:ignore="ResourceName">最少8位长度，可混合大小写字母、数字及符号</string>
-    <string name="tip_repeat_password" tools:ignore="ResourceName">请再次输入您的密码</string>
-    <string name="tip_input_password_hint" tools:ignore="ResourceName">密码提示</string>
-    <string name="tip_pass_no_match" tools:ignore="ResourceName">密码不一致</string>
-    <string name="title_password_hint" tools:ignore="ResourceName">密码提示（可选）</string>
-    <string name="tip_agree" tools:ignore="ResourceName">我已阅读并同意</string>
-    <string name="tip_terms_of_service" tools:ignore="ResourceName"><u>服务协议</u></string>
-
+    <string name="name_invalid" tools:ignore="ResourceName">Failed to create. Existing wallet name</string>
+    <string name="name_not_empty" tools:ignore="ResourceName">Wallet name cannot be empty</string>
+    <string name="pass_not_empty" tools:ignore="ResourceName">Password cannot be empty</string>
+    <string name="pass_lenth_invalid" tools:ignore="ResourceName">Password not allowed</string>
+    <string name="password_no_match" tools:ignore="ResourceName">Inconsistent passwords. Please try again.</string>
+    <string name="repeat_input_pass" tools:ignore="ResourceName">Please re-enter password</string>
+    <string name="check_agreement" tools:ignore="ResourceName">Please read and agree to our Service Agreement</string>
+    <string name="tip_next_step" tools:ignore="ResourceName">Next</string>
+    <string name="tip_set_password" tools:ignore="ResourceName">Set password</string>
+    <string name="tip_create_wallet" tools:ignore="ResourceName">Create a wallet</string>
+    <string name="tip_repeat_pass" tools:ignore="ResourceName">Repeat password</string>
+    <string name="title_wallet_name" tools:ignore="ResourceName">Wallet name</string>
+    <string name="tip_walletname_hint" tools:ignore="ResourceName">Enter wallet name</string>
+    <string name="tip_walletname_error" tools:ignore="ResourceName">Existing wallet name. Please try again.</string>
+    <string name="tip_input_password" tools:ignore="ResourceName">At least 8 bits. Prefer a mix of upper and lower cases, numbers and symbols.</string>
+    <string name="tip_repeat_password" tools:ignore="ResourceName">Please re-enter your password</string>
+    <string name="tip_input_password_hint" tools:ignore="ResourceName">Password hint</string>
+    <string name="tip_pass_no_match" tools:ignore="ResourceName">Inconsistent passwords</string>
+    <string name="title_password_hint" tools:ignore="ResourceName">Password hint (Optional)</string>
+    <string name="tip_agree" tools:ignore="ResourceName">Read and agreed</string>
+    <string name="tip_terms_of_service" tools:ignore="ResourceName"><u>Service Agreement</u></string>
 
     <!--password validate-->
-    <string name="baseservice_pass_validate_hint">请输入钱包密码以授权</string>
-    <string name="baseservice_bluetooth_pass_validate_hint">请输入WOOKONG Bio的密码以授权</string>
-    <string name="baseservice_pass_validate_next">下一步</string>
-    <string name="baseservice_pass_validate_confirm">确认已授权</string>
-    <string name="baseservice_pass_validate_tip_please_input_pass">请输入密码</string>
-    <string name="baseservice_pass_validate_ip_wrong_password">密码错误请重新输入！</string>
-    <string name="baseservice_pass_validate_et_hint">请输入%1$s的密码</string>
-    <string name="baseservice_pass_validate_wallet_error">当前钱包出现异常</string>
-    <string name="baseservice_dialog_password_tip_title">密码提示</string>
+    <string name="baseservice_pass_validate_hint">Enter wallet password to authorize</string>
+    <string name="baseservice_bluetooth_pass_validate_hint">Enter WOOKONG Bio password to authorize</string>
+    <string name="baseservice_pass_validate_next">Next</string>
+    <string name="baseservice_pass_validate_confirm">Confirm authorization</string>
+    <string name="baseservice_pass_validate_tip_please_input_pass">Enter password</string>
+    <string name="baseservice_pass_validate_ip_wrong_password">Wrong password. Enter again.</string>
+    <string name="baseservice_pass_validate_et_hint">Please enter %1$s \'s password</string>
+    <string name="baseservice_pass_validate_wallet_error">Abnormal wallet</string>
+    <string name="baseservice_dialog_password_tip_title">Password hint</string>
 
-    <string name="baseservice_tip_password_hint">密码提示信息</string>
-    <string name="baseservice_tip_i_understand">我知道了</string>
-    <string name="baseservice_reconnect">重新连接</string>
-    <string name="baseservice_wookong_bio_connecting">正在连接</string>
-    <string name="baseservice_wookong_connect_tip">若未找到,请检查手机蓝牙和设备电源</string>
-    <string name="baseservice_wookong_connect_error_tip">连接失败,请检查手机蓝牙和设备电源</string>
-    <string name="baseservice_dialog_change_bluetoothwallet_hint">切换钱包将断开WOOKONG Bio。\n确认断开连接?</string>
-    <string name="baseservice_dialog_change_bluetoothwallet_title">警告</string>
-    <string name="baseservice_dialog_pin_locked_title">设备已锁定</string>
-    <string name="baseservice_dialog_pin_locked_hint">需先格式化后才能使用</string>
+    <string name="baseservice_tip_password_hint">Password hint</string>
+    <string name="baseservice_tip_i_understand">Got it</string>
+    <string name="baseservice_reconnect">Reconnect</string>
+    <string name="baseservice_wookong_bio_connecting">Connecting</string>
+    <string name="baseservice_wookong_connect_tip">If not found. Please check Bluetooth and device power</string>
+    <string name="baseservice_wookong_connect_error_tip">Failed to connect. Please check Bluetooth and device power</string>
+    <string name="baseservice_dialog_change_bluetoothwallet_hint">You will be disconnected to WOOKONG Bio before switching wallet\nSure to disconnect?</string>
+    <string name="baseservice_dialog_change_bluetoothwallet_title">Warning</string>
+    <string name="baseservice_dialog_pin_locked_title">Device is locked</string>
+    <string name="baseservice_dialog_pin_locked_hint">You have to format the device first</string>
     <!--component end-->
 
 
-    <!--baseres gma-->
+
+
+
+
     <!-- Me/General/About -->
-    <string name="eos_title_me">我的</string>
+    <string name="eos_title_me">My</string>
 
 
     <!-- Barcode scan activity -->
-    <string name="eos_barcode_scan_hint">将条码放入框内，即可自动扫描</string>
-    <string name="eos_qr_scan_hint">请将二维码放入框内，即可自动扫描</string>
-    <string name="eos_scan_qr_code">扫描二维码</string>
+    <string name="eos_barcode_scan_hint">Put Barcode into the frame to scan it</string>
+    <string name="eos_qr_scan_hint">Put QR Code into the frame to scan it</string>
+    <string name="eos_scan_qr_code">Scan QR Code</string>
 
     <!-- Permission Manage-->
     <string name="eos_press_again_exit">Back again to exit</string>
@@ -1327,22 +1332,24 @@
     <item name="tag_key_position" type="id"/>
     <string name="transfer">transfer</string>
 
-    <string name="ok">ok</string>
+    <string name="ok">OK</string>
     <string name="cancel_cn">Cancel</string>
 
-    <string name="save">save</string>
+    <string name="save">Save</string>
     <string name="eth_eth">ETH</string>
     <string name="transfer_from">From :&#160;</string>
     <string name="transfer_to">To :&#160;</string>
 
     <!--baseres gma end-->
-
-
     <!--baseview****-->
-    <string name="bluetooth_scan_no_result">无可连接的WOOKONG Bio</string>
+    <string name="bluetooth_scan_no_result">No available WOOKONG Bio</string>
+    <!--chinese all copy end-->
+
     <string name="click_to_verify">Please Click To Verify</string>
     <string name="walletmanage_walletmanage">Wallet Management</string>
     <string name="walletmanage_current_wallet">Current Wallet</string>
-    <!--chinese all copy end-->
+    <string name="walletmanage_export_mnemonic">Export Mnemonic</string>
+    <string name="walletmanage_export_prikey">Export Private Key</string>
+    <string name="walletmanage_change_psw">Change Passsword</string>
 
 </resources>

@@ -1438,6 +1438,9 @@
     <string name="click_to_verify">请点击验证</string>
     <string name="walletmanage_walletmanage">钱包管理</string>
     <string name="walletmanage_current_wallet">当前钱包</string>
+    <string name="walletmanage_export_mnemonic">导出助记词</string>
+    <string name="walletmanage_export_prikey">导出私钥</string>
+    <string name="walletmanage_change_psw">修改密码</string>
 
     <!--baseview****-->
 

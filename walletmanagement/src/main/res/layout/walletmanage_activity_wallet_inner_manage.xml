@@ -65,7 +65,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="@dimen/common_page_content_padding"
         android:layout_marginRight="@dimen/common_page_content_padding"
-        app:text_left="导出助记词" />
+        app:text_left="@string/walletmanage_export_mnemonic" />
 
     <com.cybex.base.view.LabelLayout
         android:id="@+id/label_export_pri_key"
@@ -73,7 +73,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="@dimen/common_page_content_padding"
         android:layout_marginRight="@dimen/common_page_content_padding"
-        app:text_left="导出私钥" />
+        app:text_left="@string/walletmanage_export_prikey" />
 
     <com.cybex.base.view.LabelLayout
         android:id="@+id/label_change_psw"
@@ -81,7 +81,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="@dimen/common_page_content_padding"
         android:layout_marginRight="@dimen/common_page_content_padding"
-        app:text_left="修改密码" />
+        app:text_left="@string/walletmanage_change_psw" />
 
 </LinearLayout>
 

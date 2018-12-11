@@ -32,7 +32,7 @@
 
                 <TextView
                     android:layout_marginTop="24dp"
-                    android:text="设置"
+                    android:text="@string/setting"
                     android:textColor="@color/black_title"
                     android:textStyle="bold"
                     android:textSize="@dimen/font_7"
