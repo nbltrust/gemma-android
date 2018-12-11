@@ -483,7 +483,7 @@
     <string name="eos_mne_copied">已抄写</string>
     <string name="eos_tip_memory_your_mne">请记下你的钱包私钥助记词并保存在安全的地方</string>
     <string name="eos_tip_use_your_mne">助记词用于恢复钱包私钥，当遇到需要恢复钱包的情况，比如导入PC版EOS钱包、APP重新安装、手机丢失、忘记密码等，请使用助记词以恢复钱包私钥</string>
-    <string name="eos_tip_verify_mne">请按顺序点击已抄下的助记词以验证抄写是否正确</string>
+    <string name="eos_tip_verify_mne">请按顺序点击已抄下的助记词以验证抄写是否正确。</string>
     <string name="eos_tip_import_mne">复制粘贴助记词至输入框，或通过扫描助记词生成的二维码输入</string>
     <string name="eos_import_mne">输入助记词，用空格分割</string>
     <string name="eos_title_verify_mne">验证助记词</string>

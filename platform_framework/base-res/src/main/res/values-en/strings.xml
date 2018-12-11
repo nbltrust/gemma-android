@@ -731,7 +731,7 @@
         Mnemonic is used to restore wallet private key, when comes to restore wallet, like import a PC version EOS
         wallet, reinstall APP, lost of phone and forget your password, etc, please use your mnemonic to restore your
         private key.</string>
-    <string name="eos_tip_verify_mne">Please click the mnemonic in the right order to verify it</string>
+    <string name="eos_tip_verify_mne">Please click the mnemonic in the right order to verify it.</string>
     <string name="eos_tip_import_mne">Copy and paste mnemonic to input area, or use a QR code</string>
     <string name="eos_import_mne">Input Mnemonic，use space to spilt</string>
     <string name="eos_title_verify_mne">Verify Mnemonic</string>

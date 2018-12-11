@@ -24,7 +24,6 @@ public class BluetoothBackupMneGuideFragment extends XFragment {
     @BindView(R.id.iv_dot_two) ImageView ivDotTwo;
     @BindView(R.id.tv_look_around_hint_two) TextView tvLookAroundHintTwo;
     @BindView(R.id.bt_show_mne) Button btShowMne;
-    @BindView(R.id.testTV) TextView testTV;
 
     private Bundle bd = null;
 
