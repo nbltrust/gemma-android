@@ -421,6 +421,7 @@ public class DeviceOperationManager {
                 freeContextCallback.onFreeFailed();
             return;
         }
+
         LoggerManager.e("freeContext isManual=" + isManual);
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
         if (deviceCallbacks == null) {
@@ -429,8 +430,10 @@ public class DeviceOperationManager {
         }
         deviceCallbacks.freeContextCallback = freeContextCallback;
 
-
         DeviceComm deviceComm = deviceMaps.get(deviceName);
+        if (deviceComm != null&&deviceComm.isFreeContexting) {
+            return;
+        }
         if (deviceComm == null) {
             deviceComm = new DeviceComm(deviceName);
             deviceMaps.put(deviceName, deviceComm);

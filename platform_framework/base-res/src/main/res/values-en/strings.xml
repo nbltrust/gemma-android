@@ -931,6 +931,7 @@
     <string name="walletmanage_create_wallet">Create a wallet</string>
     <string name="walletmanage_connect_wookong_bio">Pairing WOOKONG Bio</string>
     <string name="walletmanage_formating">Formatting</string>
+    <string name="walletmanage_pair_format_success">Formatting Successed,Please Retry</string>
     <string name="walletmanage_format_fail">Formatting failed</string>
     <string name="walletmanage_loading">Loading</string>
     <string name="walletmanage_manage_fp">Manage fingerprints</string>
