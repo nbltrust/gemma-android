@@ -170,7 +170,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     @Override
     public void onDestroyView() {
-        DeviceOperationManager.getInstance().clearCallback(this.toString());
+        DeviceOperationManager.getInstance().clearCallback(TAG);
         clearData();
         dissmisProgressDialog();
         if (getActivity() != null)Alerter.clearCurrent(getActivity());
@@ -764,7 +764,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      * EOS Transaction字符串序列化
      */
     public void startEosSerialization(String jsonTxStr) {
-
         DeviceOperationManager.getInstance().jsonSerialization(TAG, jsonTxStr, deviceName,
                 new DeviceOperationManager.JsonSerilizeCallback() {
                     @Override
@@ -792,7 +791,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      * EOS Tranasaction 签名
      */
     private void startEosSign(byte[] transaction) {
-
         //先Set Tx
         DeviceOperationManager.getInstance().setTx(TAG, deviceName, transaction,
                 new DeviceOperationManager.SetTxCallback() {

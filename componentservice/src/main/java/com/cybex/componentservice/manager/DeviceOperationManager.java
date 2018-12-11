@@ -2414,7 +2414,7 @@ public class DeviceOperationManager {
                     break;
                 case BlueToothWrapper.MSG_SET_TX_FINISH:
                     LoggerManager.d(
-                            "MSG_SET_TX_FINISH  ");
+                            "MSG_SET_TX_FINISH  state="+MiddlewareInterface.getReturnString(msg.arg1));
 
                     if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iterator = tags.iterator();
