@@ -131,20 +131,20 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
                     public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
                         getV().dissmisProgressDialog();
 
-                        if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
-                            UserRegisterResult registerResult = data.result;
-                            if (registerResult != null) {
-                                String txId = registerResult.txId;
-                                updateWalletConfirmStatus(walletEntity, txId);
-                                //LibValidateJob.startPolling(10000);
-                            }
-                        } else if(data.code == HttpConst.EOSNAME_INVALID) {
-                            if (EmptyUtils.isNotEmpty(walletEntity) && walletEntity.getIsConfirmLib().equals
-                                    (CacheConstants.CONFIRM_FAILED)){
-                                //todo 如果是重传失败且提示EOS用户名被占用，表示该账户名被其他人抢注，此时需要提示用户选择其他用户名，具体方式？
-                                //UISkipMananger.launchCreateWallet(getV());
-                            }
-                        }
+//                        if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
+//                            UserRegisterResult registerResult = data.result;
+//                            if (registerResult != null) {
+//                                String txId = registerResult.txId;
+//                                updateWalletConfirmStatus(walletEntity, txId);
+//                                //LibValidateJob.startPolling(10000);
+//                            }
+//                        } else if(data.code == HttpConst.EOSNAME_INVALID) {
+//                            if (EmptyUtils.isNotEmpty(walletEntity) && walletEntity.getIsConfirmLib().equals
+//                                    (CacheConstants.CONFIRM_FAILED)){
+//                                //todo 如果是重传失败且提示EOS用户名被占用，表示该账户名被其他人抢注，此时需要提示用户选择其他用户名，具体方式？
+//                                //UISkipMananger.launchCreateWallet(getV());
+//                            }
+//                        }
                     }
 
                     @Override
@@ -232,7 +232,9 @@ public class CreateWalletPresenter extends XPresenter<CreateWalletActivity> {
         //设置为未备份
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
         //设置被链上确认状态位未被确认
-        walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
+        //walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
+        //设置被链上确认状态位未被确认
+        walletEntity.setIsConfirmLib(ParamConstants.EOSACCOUNT_NOT_ACTIVATED);
         //设置当前Transaction的Hash值
         walletEntity.setTxId(txId);
         //设置邀请码

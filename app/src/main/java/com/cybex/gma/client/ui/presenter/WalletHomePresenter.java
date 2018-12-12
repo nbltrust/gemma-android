@@ -416,7 +416,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
             EosWalletEntity eosWalletEntity = bluetoothMultiWalletEntity.getEosWalletEntities().get(0);
 
             if (eosWalletEntity != null) {
-                eosWalletEntity.setIsConfirmLib(ParamConstants.EOSNAME_ACTIVATED);
+                eosWalletEntity.setIsConfirmLib(ParamConstants.EOSACCOUNT_ACTIVATED);
                 eosWalletEntity.setCurrentEosName(cur_eos_name);
                 String eos_name_json = GsonUtils.objectToJson(account_names);
                 eosWalletEntity.setEosNameJson(eos_name_json);
@@ -441,7 +441,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
         if (eosList.size() > 0) {
             EosWalletEntity curEosWallet = eosList.get(0);
             if (curEosWallet != null) {
-                curEosWallet.setIsConfirmLib(ParamConstants.EOSNAME_ACTIVATED);
+                curEosWallet.setIsConfirmLib(ParamConstants.EOSACCOUNT_ACTIVATED);
                 String curEosName = "";
                 if (EmptyUtils.isEmpty(getCurEosname())) {
                     curEosName = account_names.get(0);
@@ -458,21 +458,4 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
         }
     }
 
-    /**
-     * 获取当前蓝牙钱包对应的设备名称
-     *
-     * @return
-     */
-    public String getBluetoothDeviceName() {
-
-        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
-                .getBluetoothWalletList();
-
-        if (bluetoothWalletList != null && bluetoothWalletList.size() > 0) {
-            return bluetoothWalletList.get(0).getBluetoothDeviceName();
-        }
-
-        return "list empty err";
-
-    }
 }

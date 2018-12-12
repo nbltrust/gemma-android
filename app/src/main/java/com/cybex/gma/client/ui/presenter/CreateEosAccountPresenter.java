@@ -19,6 +19,7 @@ import com.cybex.componentservice.utils.WookongConnectHelper;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.activity.CreateEosAccountActivity;
 import com.cybex.gma.client.ui.model.request.BluetoothCreateAccountReqParams;
@@ -85,6 +86,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                             if (curWallet != null) {
                                 int walletType = curWallet.getWalletType();
                                 if (walletType == BaseConst.WALLET_TYPE_BLUETOOTH) {
+                                    //蓝牙钱包
                                     LoggerManager.d("Type Bluetooth");
                                     String deviceName = DBManager.getInstance().getMultiWalletEntityDao()
                                             .getCurrentMultiWalletEntity().getBluetoothDeviceName();
@@ -280,7 +282,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                                 if (registerResult != null) {
                                     //String txId = registerResult.txId;
                                     updateCurBluetoothWallet(account_name);
-                                    //TimeStampValidateJob.executedCreateLogic(account_name, public_key);
+                                    TimeStampValidateJob.executedCreateLogic(account_name, public_key);
                                     AppManager.getAppManager().finishActivity();
                                     UISkipMananger.launchEOSHome(getV());
                                     getV().dissmisProgressDialog();
@@ -333,7 +335,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                 List<String> account_names = new ArrayList<>();
                 account_names.add(account_name);
                 String jsonEosName = GsonUtils.objectToJson(account_names);
-                curEosWallet.setIsConfirmLib(ParamConstants.EOSNAME_ACTIVATED);
+                curEosWallet.setIsConfirmLib(ParamConstants.EOSACCOUNT_CONFIRMING);
                 curEosWallet.setEosNameJson(jsonEosName);
                 curEosWallet.save();
                 curBluetoothWallet.save();

@@ -117,11 +117,11 @@ public interface ParamConstants {
     int COIN_TYPE_TOKENS = 6;
 
     //EOS用户名状态
-    int EOSNAME_NOT_ACTIVATED = 0;
-    int EOSNAME_CONFIRMING = 1;
-    int EOSNAME_ACTIVATED = 2;
+    int EOSACCOUNT_NOT_ACTIVATED = 0;
+    int EOSACCOUNT_CONFIRMING = 1;
+    int EOSACCOUNT_ACTIVATED = 2;
 
-    int TRANSFER_HISTORY_SIZE = 5;//每次请求拿20条数据
+    int TRANSFER_HISTORY_SIZE = 10;//每次请求拿10条数据
 
     String SYMBOL_EOS = "EOS";
     String CONTRACT_EOS = "eosio.token";

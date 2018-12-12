@@ -36,7 +36,6 @@ import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.NetworkUtils;
 import com.hxlx.core.lib.utils.android.SysUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
@@ -273,7 +272,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
         //设置邀请码
         walletEntity.setInvCode(invCode);
         //设置EOS钱包状态为正在创建
-        walletEntity.setIsConfirmLib(ParamConstants.EOSNAME_CONFIRMING);
+        walletEntity.setIsConfirmLib(ParamConstants.EOSACCOUNT_CONFIRMING);
 
         //更新钱包
         eosWalletEntities.remove(0);

@@ -171,7 +171,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
         //设置为未备份
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
         //设置被链上确认状态位未被确认
-        walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
+       // walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
         //蓝牙设备类型
         walletEntity.setWalletType(CacheConstants.WALLET_TYPE_BLUETOOTH);
         //设置当前Transaction的Hash值

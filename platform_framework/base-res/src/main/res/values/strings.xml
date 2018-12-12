@@ -1454,6 +1454,7 @@
     <string name="eos_chain_unstable">EOS主网不稳定，请稍后再试</string>
     <string name="fp_error">指纹验证失败，请重新尝试</string>
     <string name="switch_sign_fail">切换验证方式失败，请重新尝试</string>
+    <string name="account_confirming">创建中</string>
 
 
 

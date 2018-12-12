@@ -53,6 +53,7 @@ public class EosCardView extends CardView{
     private TextView mTvAccountStatus;
     private TextView mTotalEosAmount;
     private LinearLayout mViewEosTokens;
+    private TextView mToken;
     private TextView mTvTokensNumber;
     private TextView mTvCurrencyType;
     private TextView mTotalPriceAmount;
@@ -83,6 +84,7 @@ public class EosCardView extends CardView{
         mTvCurrencyType = (TextView) rootview.findViewById(R.id.tv_currency_type);
         mTotalPriceAmount = (TextView) rootview.findViewById(R.id.total_price_amount);
         mRvTokenIcons = (RecyclerView) rootview.findViewById(R.id.rv_token_icons);
+        mToken = rootview.findViewById(R.id.tv_token);
     }
 
 
@@ -111,6 +113,12 @@ public class EosCardView extends CardView{
         mTvTokensNumber.setText(tokenList.size()+"");
         if(tokenList.size()>0){
             mViewEosTokens.setVisibility(View.VISIBLE);
+            if (tokenList.size() == 1){
+                mToken.setText("token");
+            }else {
+                mToken.setText("tokens");
+            }
+
         }else{
             mViewEosTokens.setVisibility(View.GONE);
         }
@@ -165,7 +173,9 @@ public class EosCardView extends CardView{
         if(state==STATE_WAIT_NOTIFY){
             mTvAccountStatus.setText(getResources().getText(R.string.card_eos_wait_notify));
         }else if(state==STATE_CREATING){
-            mTvAccountStatus.setText(String.format(this.getResources().getString(R.string.card_eos_creating_progress),createProgress));
+            //mTvAccountStatus.setText(String.format(this.getResources().getString(R.string
+                    //.card_eos_creating_progress),createProgress));
+            mTvAccountStatus.setText(getResources().getText(R.string.account_confirming));
         }else if(state==STATE_CREATED){
             mTvAccountStatus.setText(accountName);
         }

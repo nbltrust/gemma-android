@@ -125,7 +125,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         if (event.isSuccess()) {
             //创建成功
             if (curWallet != null && curEosWallet != null) {
-                curEosWallet.setIsConfirmLib(ParamConstants.EOSNAME_ACTIVATED);
+                curEosWallet.setIsConfirmLib(ParamConstants.EOSACCOUNT_ACTIVATED);
                 List<EosWalletEntity> list = curWallet.getEosWalletEntities();
                 list.remove(0);
                 list.add(curEosWallet);
@@ -496,10 +496,10 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             final int eosStatus = curEosWallet.getIsConfirmLib();
             //LoggerManager.d("eosStatus", eosStatus);
 
-            if (eosStatus == ParamConstants.EOSNAME_ACTIVATED) {
+            if (eosStatus == ParamConstants.EOSACCOUNT_ACTIVATED) {
                 //账户已被激活
                 mEosCardView.setAccountName(curEosWallet.getCurrentEosName());
-                mEosCardView.setState(ParamConstants.EOSNAME_ACTIVATED);
+                mEosCardView.setState(ParamConstants.EOSACCOUNT_ACTIVATED);
                 mEosCardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -507,10 +507,10 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                         UISkipMananger.launchEOSHome(WalletHomeActivity.this);
                     }
                 });
-            } else if (eosStatus == ParamConstants.EOSNAME_NOT_ACTIVATED) {
+            } else if (eosStatus == ParamConstants.EOSACCOUNT_NOT_ACTIVATED) {
                 //待激活
                 clearEosCardView();
-                mEosCardView.setState(ParamConstants.EOSNAME_NOT_ACTIVATED);
+                mEosCardView.setState(ParamConstants.EOSACCOUNT_NOT_ACTIVATED);
                 mEosCardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -520,7 +520,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                 });
             } else {
                 //正在激活
-                mEosCardView.setState(ParamConstants.EOSNAME_CONFIRMING);
+                mEosCardView.setState(ParamConstants.EOSACCOUNT_CONFIRMING);
                 mEosCardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

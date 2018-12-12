@@ -564,9 +564,6 @@ public class DeviceOperationManager {
     }
 
 
-
-
-
     public void jsonSerialization(
             String tag,
             String jsonTxStr,

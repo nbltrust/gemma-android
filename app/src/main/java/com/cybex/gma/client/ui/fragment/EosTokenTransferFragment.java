@@ -89,6 +89,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     EosTokenVO curToken;
     String TAG = this.toString();
     ReentrantLock uiLock = new ReentrantLock();
+    boolean isAbort = false;//abort是否在执行中
 
     public void setChain_id(String chain_id) {
         this.chain_id = chain_id;
@@ -166,6 +167,21 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     @Override
     public void onDestroyView() {
+        if (!isAbort){
+            DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
+                    new DeviceOperationManager.AbortSignCallback() {
+                        @Override
+                        public void onAbortSignSuccess() {
+
+                        }
+
+                        @Override
+                        public void onAbortSignFail() {
+
+                        }
+                    });
+        }
+
         DeviceOperationManager.getInstance().clearCallback(TAG);
         clearData();
         dissmisProgressDialog();
@@ -941,26 +957,36 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         verifyDialog = new CustomFullWithAlertDialog(getActivity(),
                 R.layout.eos_dialog_transfer_bluetooth_finger_sure, listenedItems, false, Gravity.BOTTOM);
 
+        verifyDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if (!isAbort){
+                    DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
+                            new DeviceOperationManager.AbortSignCallback() {
+                                @Override
+                                public void onAbortSignSuccess() {
+                                    isAbort = false;
+                                }
+
+                                @Override
+                                public void onAbortSignFail() {
+                                    isAbort = false;
+                                }
+                            });
+                }
+                isAbort = true;
+            }
+        });
+
+
+
         verifyDialog.setOnDialogItemClickListener(new CustomFullWithAlertDialog.OnCustomDialogItemClickListener() {
+
             @Override
             public void OnCustomDialogItemClick(CustomFullWithAlertDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.imv_back:
                         verifyDialog.cancel();
-                        //abort sign
-                        DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
-                                new DeviceOperationManager.AbortSignCallback() {
-                                    @Override
-                                    public void onAbortSignSuccess() {
-
-                                    }
-
-                                    @Override
-                                    public void onAbortSignFail() {
-
-                                    }
-                                });
-
                         break;
                     default:
                         break;
