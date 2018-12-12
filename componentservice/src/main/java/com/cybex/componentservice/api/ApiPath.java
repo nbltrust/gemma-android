@@ -70,6 +70,9 @@ public class ApiPath {
 
 
     /**------------URL 地址配置---------------*/
+    //bio 官网
+    public static final String URL_OF_BIO_HOME = "https://wooko.ng";
+
     //服务协议
     public static final String TERMS_OF_SERVICE_CN = "https://nebuladownload.oss-cn-beijing.aliyuncs"
             + ".com/gemma/gemma_policy_cn" + ".html";

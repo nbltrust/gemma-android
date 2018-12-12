@@ -97,36 +97,9 @@ public class BluetoothPairActivity extends BluetoothBaseActivity<BluetoothPairPr
         tvMoreWookong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                int savedLanguageType = LanguageManager.getInstance(context).getLanguageType();
-//                switch (savedLanguageType) {
-//                    case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
-//                        CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-//                                .string.terms_of_service));
-//                        break;
-//                    case LanguageManager.LanguageType.LANGUAGE_EN:
-//                        CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
-//                                .string.terms_of_service));
-//                        break;
-//                    case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
-//                        Locale systemLanguageType = LanguageManager.getInstance(context).getSysLocale();
-//                        switch (systemLanguageType.getDisplayLanguage()) {
-//                            case BaseConst.CN:
-//                                CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources()
-//                                        .getString(R.string.terms_of_service));
-//                                break;
-//                            case BaseConst.EN:
-//                                CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_EN, getResources()
-//                                        .getString(R.string.terms_of_service));
-//                                break;
-//                            default:
-//                                CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources()
-//                                        .getString(R.string.terms_of_service));
-//                        }
-//                        break;
-//                    default:
-//                        CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
-//                                .string.terms_of_service));
-//                }
+                CommonWebViewActivity.startWebView(context, ApiPath.URL_OF_BIO_HOME, getResources().getString(R
+                        .string.bio_official_website));
+
             }
         });
 
