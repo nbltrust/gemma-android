@@ -337,10 +337,18 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
      * @param quantity
      * @param memo
      */
-    public void executeBluetoothTransferLogic(String from, String to, String quantity, String memo) {
+    public void executeBluetoothTransferLogic(
+            String from,
+            String to,
+            String quantity,
+            String memo,
+            String tokenContract,
+            String tokenSymbol,
+            int accuracy) {
         //通过c++获取 abi json操作体
+        String format_quantity = AmountUtil.round(quantity.split(" ")[0], accuracy) + " " + tokenSymbol;
         String abijson = JNIUtil.create_abi_req_transfer(VALUE_CODE, VALUE_ACTION,
-                from, to, quantity, memo);
+                from, to, format_quantity, memo);
 
         //链上接口请求 abi_json_to_bin
         new AbiJsonToBeanRequest(AbiJsonToBeanResult.class)
@@ -383,7 +391,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                             String binargs = result.binargs;
                             LoggerManager.d("abiStr: " + binargs);
 
-                            bluetoothGetInfo(from, binargs);
+                            bluetoothGetInfo(from, binargs, tokenContract);
 
                         } else {
                             GemmaToastUtils.showShortToast(getV().getString(R.string.eos_tip_transfer_oprate_failed));
@@ -399,7 +407,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
      * @param from
      * @param abiStr
      */
-    public void bluetoothGetInfo(String from, String abiStr) {
+    public void bluetoothGetInfo(String from, String abiStr, String tokenContract) {
         new EOSConfigInfoRequest(String.class)
                 .getInfo(new StringCallback() {
 
@@ -452,7 +460,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                 String dumpPriKey = keyPair[1];
                                 //C++库获取Transaction交易体
                                 String transactionStr = JNIUtil.signTransaction_tranfer(dumpPriKey,
-                                        VALUE_CONTRACT, from, infostr, abiStr,
+                                        tokenContract, from, infostr, abiStr,
                                         0,
                                         0,
                                         120);

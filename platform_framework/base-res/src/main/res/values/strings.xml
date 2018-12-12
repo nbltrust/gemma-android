@@ -1457,6 +1457,7 @@
     <string name="fp_error">指纹验证失败，请重新尝试</string>
     <string name="switch_sign_fail">切换验证方式失败，请重新尝试</string>
     <string name="account_confirming">创建中</string>
+    <string name="input_psw_overtime">输入PIN验证超时，请重新尝试</string>
 
 
 

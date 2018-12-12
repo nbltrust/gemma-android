@@ -1305,6 +1305,7 @@ public class DeviceOperationManager {
         void onPinLocked();
 
         void onVerifyFail();
+
     }
 
     public interface AbortFPCallback {
@@ -1410,6 +1411,8 @@ public class DeviceOperationManager {
         void onVerifySuccess();
 
         void onVerifyFail();
+
+        void onVerifyOvertime();
     }
 
     public interface AbortSignCallback{
@@ -2551,7 +2554,7 @@ public class DeviceOperationManager {
 
                 case BlueToothWrapper.MSG_VERIFY_SIGN_PIN_FINISH:
                     LoggerManager.d(
-                            "MSG_VERIFY_SIGN_PIN_FINISH  ");
+                            "MSG_VERIFY_SIGN_PIN_FINISH  retValue =  " + msg.arg1);
                     //BlueToothWrapper.SignReturnValue verifySignPinResult = (BlueToothWrapper.SignReturnValue)msg.obj;
                     if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
                         iterator = tags.iterator();
@@ -2570,6 +2573,17 @@ public class DeviceOperationManager {
                             }
                         }
                     }
+//                    else if (msg.arg1 == MiddlewareInterface.PAEW_RET_DEV_STATE_INVALID){
+//                        iterator = tags.iterator();
+//                        while (iterator.hasNext()) {
+//                            String tag = iterator.next();
+//                            if (callbackMaps.get(tag).verifySignPinCallback != null) {
+//                                callbackMaps.get(tag).verifySignPinCallback.onVerifyOvertime();
+//                            }
+//                        }
+//                    }
+
+
                     break;
                 case BlueToothWrapper.MSG_ABORT_SIGN_START:
                     LoggerManager.d("MSG_ABORT_SIGN_START ");

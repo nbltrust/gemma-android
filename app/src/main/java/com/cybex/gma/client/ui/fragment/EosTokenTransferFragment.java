@@ -167,27 +167,32 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     @Override
     public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
         if (!isAbort){
             DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
                     new DeviceOperationManager.AbortSignCallback() {
                         @Override
                         public void onAbortSignSuccess() {
-
+                            DeviceOperationManager.getInstance().clearCallback(TAG);
                         }
 
                         @Override
                         public void onAbortSignFail() {
-
+                            DeviceOperationManager.getInstance().clearCallback(TAG);
                         }
                     });
         }
-
         DeviceOperationManager.getInstance().clearCallback(TAG);
         clearData();
         dissmisProgressDialog();
         if (getActivity() != null) { Alerter.clearCurrent(getActivity()); }
+
         unbinder.unbind();
-        super.onDestroyView();
+        super.onDestroy();
     }
 
     public void showInitData(String balance, String eosName, String tokenName) {
@@ -597,8 +602,17 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                                 if (connect_status == CacheConstants.STATUS_BLUETOOTH_CONNCETED) {
                                     //蓝牙卡已连接
-                                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-                                            getAmount() + " EOS", getNote());
+                                    if (curToken != null){
+                                        int accuracy = curToken.getAccurancy() > 0 ? curToken.getAccurancy() : 0;
+                                        getP().executeBluetoothTransferLogic(
+                                                currentEOSName,
+                                                getCollectionAccount(),
+                                                getAmount(),
+                                                memo,
+                                                curToken.getTokenName(),
+                                                curToken.getTokenSymbol(),
+                                                accuracy);
+                                    }
                                 } else {
                                     //蓝牙卡未连接
                                     connectBio();
@@ -765,9 +779,12 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             wookongConnectHelper.startConnectDevice(new WookongConnectHelper.ConnectWookongBioCallback() {
                 @Override
                 public void onConnectSuccess() {
-                    if (dialog != null) { dialog.cancel();}
-                    getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
-                            getAmount() + " EOS", getNote());
+                    if (curToken != null){
+                        if (dialog != null) { dialog.cancel();}
+                        int accuracy = curToken.getAccurancy() > 0 ? curToken.getAccurancy() : 0;
+                        getP().executeBluetoothTransferLogic(currentEOSName, getCollectionAccount(),
+                                getAmount(), memo, curToken.getTokenName(), curToken.getTokenSymbol(), accuracy);
+                    }
                 }
 
                 @Override
@@ -1079,7 +1096,18 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             pinDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
+                    DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
+                            new DeviceOperationManager.AbortSignCallback() {
+                                @Override
+                                public void onAbortSignSuccess() {
 
+                                }
+
+                                @Override
+                                public void onAbortSignFail() {
+
+                                }
+                            });
                 }
             });
             pinDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
@@ -1088,6 +1116,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     switch (view.getId()) {
                         case R.id.imc_cancel:
                             dialog.cancel();
+
+
                             break;
                         case R.id.btn_confirm_authorization:
                             TextView tv_password = dialog.findViewById(R.id.et_password);
@@ -1102,7 +1132,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                     new DeviceOperationManager.VerifySignPinCallback() {
                                         @Override
                                         public void onVerifySuccess() {
-                                            pinDialog.cancel();
+                                            pinDialog.dismiss();
                                             DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
                                                     MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_PIN,
                                                     new DeviceOperationManager.SetGetSignResultCallback() {
@@ -1150,6 +1180,15 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                             dissmisProgressDialog();
                                             GemmaToastUtils.showLongToast(getString(R
                                                     .string.baseservice_pass_validate_ip_wrong_password));
+                                        }
+
+                                        @Override
+                                        public void onVerifyOvertime() {
+                                            dissmisProgressDialog();
+                                            pinDialog.dismiss();
+                                            if (getActivity() != null){
+                                                AlertUtil.showLongUrgeAlert(getActivity(), getString(R.string.input_psw_overtime));
+                                            }
 
                                         }
                                     });
