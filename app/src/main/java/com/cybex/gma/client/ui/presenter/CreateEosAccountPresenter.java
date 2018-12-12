@@ -396,6 +396,12 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
             case (HttpConst.CREATE_ACCOUNT_FAIL):
                 GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
                 break;
+            case (HttpConst.PUBLICKEY_HEX_NOT_MATCH):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.key_sig_not_match));
+                break;
+            case (HttpConst.VERIFY_SIG_FAIL):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.verify_sig_fail));
+                break;
             default:
                 GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
                 break;

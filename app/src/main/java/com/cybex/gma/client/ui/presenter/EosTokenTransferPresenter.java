@@ -253,7 +253,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                                 .getMultiWalletEntityDao().getCurrentMultiWalletEntity();
 
                                         if (curWallet != null) {
-                                            String TAG = getV().toString();
+                                            String TAG = getV().getTAG();
                                             String deviceName = curWallet.getBluetoothDeviceName();
 
                                             DeviceOperationManager.getInstance().getCheckCode(TAG, deviceName,

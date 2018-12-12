@@ -1458,6 +1458,8 @@
     <string name="switch_sign_fail">切换验证方式失败，请重新尝试</string>
     <string name="account_confirming">创建中</string>
     <string name="input_psw_overtime">输入PIN验证超时，请重新尝试</string>
+    <string name="verify_sig_fail">验签失败，请重新尝试</string>
+    <string name="key_sig_not_match">公钥与hex不匹配，请重新尝试</string>
 
 
 

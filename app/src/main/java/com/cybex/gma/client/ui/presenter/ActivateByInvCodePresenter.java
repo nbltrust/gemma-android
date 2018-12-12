@@ -26,6 +26,7 @@ import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.tapadoo.alerter.Alert;
 import com.tapadoo.alerter.Alerter;
 
@@ -74,7 +75,7 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                                     UISkipMananger.launchHome(getV().getActivity());
                                 }
                             } else {
-                                LoggerManager.d("data.toString", data.toString());
+                                showOnErrorInfo(data.code);
                                 LoggerManager.d("err");
                             }
                         }
@@ -126,6 +127,53 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
 
         DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(multiWalletEntity);
 
+    }
+
+    /**
+     * 根据返回值不同Toast不同内容
+     *
+     * @param errorCode
+     */
+    public void showOnErrorInfo(int errorCode) {
+
+        switch (errorCode) {
+            case (HttpConst.INVCODE_USED):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_sn_used));
+                break;
+            case (HttpConst.INVCODE_NOTEXIST):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_invCode_not_exist));
+                break;
+            case (HttpConst.EOSNAME_USED):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_used));
+                break;
+            case (HttpConst.EOSNAME_INVALID):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_invalid));
+                break;
+            case (HttpConst.EOSNAME_LENGTH_INVALID):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_name_len_invalid));
+                break;
+            case (HttpConst.PARAMETERS_INVALID):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_params_invalid));
+                break;
+            case (HttpConst.PUBLICKEY_INVALID):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_pubKey_invalid));
+                break;
+            case (HttpConst.BALANCE_NOT_ENOUGH):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_no_balance));
+                break;
+            case (HttpConst.CREATE_ACCOUNT_FAIL):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
+                break;
+            case (HttpConst.PUBLICKEY_HEX_NOT_MATCH):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.key_sig_not_match));
+                break;
+            case (HttpConst.VERIFY_SIG_FAIL):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.verify_sig_fail));
+                break;
+            default:
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
+                break;
+        }
     }
 
 }

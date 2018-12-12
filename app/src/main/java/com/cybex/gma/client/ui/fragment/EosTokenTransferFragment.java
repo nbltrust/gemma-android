@@ -87,7 +87,16 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     Unbinder unbinder;
     CustomFullDialog dialog = null;
     EosTokenVO curToken;
-    String TAG = this.toString();
+
+    public String getTAG() {
+        return TAG;
+    }
+
+    public void setTAG(String TAG) {
+        this.TAG = TAG;
+    }
+
+    private String TAG = this.toString();
     ReentrantLock uiLock = new ReentrantLock();
     boolean isAbort = false;//abort是否在执行中
 
@@ -167,6 +176,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     @Override
     public void onDestroyView() {
+        unbinder.unbind();
         super.onDestroyView();
     }
 
@@ -190,8 +200,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         clearData();
         dissmisProgressDialog();
         if (getActivity() != null) { Alerter.clearCurrent(getActivity()); }
-
-        unbinder.unbind();
         super.onDestroy();
     }
 

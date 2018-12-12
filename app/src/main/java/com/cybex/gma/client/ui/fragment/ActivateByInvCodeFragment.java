@@ -12,6 +12,7 @@ import com.cybex.componentservice.db.entity.WalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.KeySendEvent;
 import com.cybex.gma.client.event.ValidateResultEvent;
@@ -25,6 +26,7 @@ import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
+import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.siberiadante.customdialoglib.CustomDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -104,4 +106,6 @@ public class ActivateByInvCodeFragment extends XFragment<ActivateByInvCodePresen
 
         return curEosWallet;
     }
+
+
 }
