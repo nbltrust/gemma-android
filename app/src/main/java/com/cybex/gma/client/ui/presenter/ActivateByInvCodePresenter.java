@@ -23,9 +23,11 @@ import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
 import com.cybex.gma.client.ui.model.response.UserRegisterResult;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
+import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.tapadoo.alerter.Alert;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +74,7 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                                     UISkipMananger.launchHome(getV().getActivity());
                                 }
                             } else {
-                                AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_tip_check_network));
+                                LoggerManager.d("data.toString", data.toString());
                                 LoggerManager.d("err");
                             }
                         }
@@ -125,4 +127,5 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
         DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(multiWalletEntity);
 
     }
+
 }

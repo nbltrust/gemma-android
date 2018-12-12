@@ -551,7 +551,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
         DelegateReqParams params = new DelegateReqParams();
         params.setApp_id(1);
         params.setGoods_id(1001);
-        params.setCode("serialNumber");
+        params.setCode(SN);
         params.setAccount_name(account_name);
 
         DelegateReqParams.DelegateValidation validation = new DelegateReqParams.DelegateValidation();
@@ -590,6 +590,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                     @Override
                     public void onError(Response<DelegateReqResult> response) {
                         if (getV() != null) {
+                            getV().dissmisProgressDialog();
                             AlertUtil.showShortUrgeAlert(getV().getActivity(),
                                     getV().getString(R.string.cpu_insufficient));
                         }
