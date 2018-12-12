@@ -515,20 +515,18 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                         if (delegationBean != null) {
 
                                             if (delegationBean.getActions() != null && delegationBean.getActions()
-                                                    .size() > 0) {
+                                                    .size() == 0){
                                                 //有抵押权益
                                                 String account_name = DBManager.getInstance().getMultiWalletEntityDao
                                                         ().getCurrentMultiWalletEntity().getEosWalletEntities().get
                                                         (0).getCurrentEosName();
 
                                                 doDelegate(account_name, SN, SN_Sig);
-
-                                            } else {
+                                            }else {
                                                 //无抵押权益
                                                 getV().dissmisProgressDialog();
                                                 AlertUtil.showShortUrgeAlert(getV().getActivity(),
                                                         getV().getString(R.string.cpu_insufficient));
-
                                             }
                                         }
                                     }

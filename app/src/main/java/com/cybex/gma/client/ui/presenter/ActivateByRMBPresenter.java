@@ -168,7 +168,6 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                             WXPayBillResult.ResultBean result = response.body().getResult();
                             getV().setFee(result);
                             getV().dissmisProgressDialog();
-                            AlertUtil.showLongUrgeAlert(getV().getActivity(), " 服务器错误,请稍后重试");
                         }
                     }
 
