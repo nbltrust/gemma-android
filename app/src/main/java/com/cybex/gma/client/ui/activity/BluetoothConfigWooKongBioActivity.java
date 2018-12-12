@@ -28,6 +28,7 @@ import com.cybex.componentservice.api.ApiPath;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
 import com.cybex.componentservice.ui.activity.CommonWebViewActivity;
 import com.cybex.componentservice.utils.AlertUtil;
@@ -94,37 +95,6 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
 
 
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
-//    @BindView(R.id.tv_in_bubble) TextView tvInBubble;
-//    @BindView(R.id.bubble) BubbleLayout bubble;
-//    @BindView(R.id.tv_set_pass) TextView tvSetPass;
-//    @NotEmpty(messageResId = R.string.eos_pass_not_empty, sequence = 2)
-//    @Password(min = 8, messageResId = R.string.eos_pass_lenth_invalid, sequence = 2)
-//    @BindView(R.id.edt_set_pass) EditText edtSetPass;
-//    @BindView(R.id.iv_set_pass_clear) ImageView ivSetPassClear;
-//    @BindView(R.id.iv_set_pass_mask) ImageView ivSetPassMask;
-//    @BindView(R.id.view_divider_setPass) View viewDividerSetPass;
-//    @BindView(R.id.tv_repeat_pass) TextView tvRepeatPass;
-//    @NotEmpty(messageResId = R.string.eos_repeat_input_pass, sequence = 1)
-//    @ConfirmPassword(messageResId = R.string.eos_password_no_match, sequence = 1)
-//    @BindView(R.id.et_repeat_pass) EditText edtRepeatPass;
-//    @BindView(R.id.iv_repeat_pass_clear) ImageView ivRepeatPassClear;
-//    @BindView(R.id.iv_repeat_pass_mask) ImageView ivRepeatPassMask;
-//    @BindView(R.id.view_divider_repeatPass) View viewDividerRepeatPass;
-//    @BindView(R.id.tv_pass_hint) TextView tvPassHint;
-//    @BindView(R.id.edt_pass_hint) EditText edtPassHint;
-//    @BindView(R.id.iv_pass_hint_clear) ImageView ivPassHintClear;
-//    @BindView(R.id.bt_create_wallet) Button btCreateWallet;
-//    @BindView(R.id.scroll_create_wallet) ScrollView scrollCreateWallet;
-//    @BindView(R.id.tv_wallet_name) TextView tvWalletName;
-//    @BindView(R.id.view_divider_passTip) View viewDividerPassTip;
-//    @Checked(messageResId = R.string.eos_check_agreement, sequence = 0)
-//    @BindView(R.id.checkbox_config) CheckBox checkboxConfig;
-//    @BindView(R.id.tv_service_agreement_config) TextView tvServiceAgreementConfig;
-//    @BindView(R.id.layout_checkBox) LinearLayout layoutCheckBox;
-//    private Validator validator;
-//    private boolean isMask;
-
-
 
     private String TAG = this.toString();
     private String deviceName;
@@ -132,114 +102,6 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
     private CustomFullDialog powerAlertDialog;
     private Bundle bd;
 
-
-
-
-
-
-
-//    @OnTextChanged(value = R.id.edt_set_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-//    public void afterPassChanged(Editable s) {
-//        if (EmptyUtils.isNotEmpty(getPassword())) {
-//            ivSetPassClear.setVisibility(View.VISIBLE);
-//        } else {
-//            ivSetPassClear.setVisibility(View.GONE);
-//        }
-//
-//        if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword()) && isPasswordMatch()
-//                && isPasswordLengthValid() && checkboxConfig.isChecked()) {
-//            setClickable(btCreateWallet);
-//        } else {
-//            setUnclickable(btCreateWallet);
-//        }
-//    }
-//
-//    @OnTextChanged(value = R.id.et_repeat_pass, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-//    public void afterRepeatPassChanged(Editable s) {
-//        if (EmptyUtils.isEmpty(getRepeatPassword())) {
-//            ivRepeatPassClear.setVisibility(View.GONE);
-//            if (edtRepeatPass.hasFocus()) { setRepeatPassFocusStyle(); }
-//        } else {
-//            ivRepeatPassClear.setVisibility(View.VISIBLE);
-//        }
-//
-//        if (EmptyUtils.isNotEmpty(getPassword()) && EmptyUtils.isNotEmpty(getRepeatPassword()) && isPasswordMatch()
-//                && isPasswordLengthValid() && checkboxConfig.isChecked()) {
-//            setClickable(btCreateWallet);
-//        } else {
-//            setUnclickable(btCreateWallet);
-//        }
-//
-//    }
-//
-//    @OnTextChanged(value = R.id.edt_pass_hint, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-//    public void afterPassHintChanged(Editable s) {
-//        if (EmptyUtils.isNotEmpty(getPassHint())) {
-//            ivPassHintClear.setVisibility(View.VISIBLE);
-//        } else {
-//            ivPassHintClear.setVisibility(View.GONE);
-//        }
-//    }
-//
-//    /**
-//     * 明文密文切换显示管理
-//     *
-//     * @param v
-//     */
-//    @OnClick({R.id.iv_set_pass_mask, R.id.iv_repeat_pass_mask})
-//    public void onMaskClicked(View v) {
-//        switch (v.getId()) {
-//            case R.id.iv_set_pass_mask:
-//                if (isMask) {
-//                    //如果当前为密文
-//                    isMask = false;
-//                    edtSetPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//                    ivSetPassMask.setImageResource(R.drawable.ic_invisible);
-//                    edtSetPass.setSelection(getPassword().length());
-//                } else {
-//                    isMask = true;
-//                    edtSetPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//                    ivSetPassMask.setImageResource(R.drawable.ic_visible);
-//                    edtSetPass.setSelection(getPassword().length());
-//                }
-//                break;
-//            case R.id.iv_repeat_pass_mask:
-//                if (isMask) {
-//                    //如果当前为密文
-//                    isMask = false;
-//                    edtRepeatPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//                    ivRepeatPassMask.setImageResource(R.drawable.ic_invisible);
-//                    edtRepeatPass.setSelection(getRepeatPassword().length());
-//                } else {
-//                    //如果当前为明文
-//                    isMask = true;
-//                    edtRepeatPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//                    ivRepeatPassMask.setImageResource(R.drawable.ic_visible);
-//                    edtRepeatPass.setSelection(getRepeatPassword().length());
-//                }
-//                break;
-//        }
-//    }
-//
-//    /**
-//     * 清除按钮点击事件
-//     *
-//     * @param v
-//     */
-//    @OnClick({R.id.iv_set_pass_clear, R.id.iv_repeat_pass_clear, R.id.iv_pass_hint_clear})
-//    public void onClearClicked(View v) {
-//        switch (v.getId()) {
-//            case R.id.iv_set_pass_clear:
-//                edtSetPass.setText("");
-//                break;
-//            case R.id.iv_pass_hint_clear:
-//                edtPassHint.setText("");
-//                break;
-//            case R.id.iv_repeat_pass_clear:
-//                edtRepeatPass.setText("");
-//                break;
-//        }
-//    }
 
     public void initView() {
         //动态设置hint样式
@@ -534,7 +396,7 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
 
     @Override
     protected void onDestroy() {
-        DeviceOperationManager.getInstance().clearCallback(this.toString());
+        DeviceOperationManager.getInstance().clearCallback(TAG);
         super.onDestroy();
         clearListeners();
     }
@@ -729,7 +591,6 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
 
     }
 
-    //----
     public void setWalletNameValidStyle() {
         tvWalletName.setTextColor(getResources().getColor(R.color.black_context));
         tvWalletName.setText(getResources().getString(R.string.title_wallet_name));
@@ -812,70 +673,6 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
     public String getPassHint() {
         return edtPassHint.getText().toString();
     }
-    //---------
-
-//    public void setRepeatPassValidStyle() {
-//        //两次输入密码匹配
-//        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
-//        tvRepeatPass.setTextColor(getResources().getColor(R.color.black_context));
-//        setDividerDefaultStyle(viewDividerRepeatPass);
-//        if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
-//            ivRepeatPassClear.setVisibility(View.VISIBLE);
-//        } else {
-//            ivRepeatPassClear.setVisibility(View.GONE);
-//        }
-//        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg));
-//    }
-
-//    public void setRepeatPassFocusStyle() {
-//        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_repeat_pass));
-//        tvRepeatPass.setTextColor(getResources().getColor(R.color.black_title));
-//        setDividerFocusStyle(viewDividerRepeatPass);
-//        if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
-//            ivRepeatPassClear.setVisibility(View.VISIBLE);
-//        } else {
-//            ivRepeatPassClear.setVisibility(View.GONE);
-//        }
-//        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg));
-//    }
-
-//    public void setRepeatPassInvalidStyle() {
-//        //两次输入密码不匹配
-//        tvRepeatPass.setText(getResources().getString(R.string.eos_tip_pass_no_match));
-//        tvRepeatPass.setTextColor(getResources().getColor(R.color.scarlet));
-//        setDividerAlertStyle(viewDividerRepeatPass);
-//        if (EmptyUtils.isNotEmpty(getRepeatPassword())) {
-//            ivRepeatPassClear.setVisibility(View.VISIBLE);
-//        } else {
-//            ivRepeatPassClear.setVisibility(View.GONE);
-//        }
-//        //edtRepeatPass.setBackground(getResources().getDrawable(R.drawable.eos_selector_edt_bg_scalet));
-//    }
-//
-//    public void setClickable(Button button) {
-//        //button.setClickable(true);
-//        button.setBackground(getDrawable(R.drawable.shape_corner_button_clickable));
-//        button.setTextColor(getResources().getColor(R.color.whiteTwo));
-//    }
-//
-//    public void setUnclickable(Button button) {
-//        // button.setClickable(false);
-//        //button.setBackground(getDrawable(R.drawable.shape_corner_with_black_stroke));
-//        button.setBackground(getDrawable(R.drawable.shape_corner_button_unclickable));
-//        // button.setTextColor(getResources().getColor(R.color.black_title));
-//    }
-
-//    public String getPassword() {
-//        return edtSetPass.getText().toString().trim();
-//    }
-//
-//    public String getRepeatPassword() {
-//        return edtRepeatPass.getText().toString().trim();
-//    }
-//
-//    public String getPassHint() {
-//        return edtPassHint.getText().toString().trim();
-//    }
 
     /**
      * 代替监听器检查是否所有edittext输入框都不为空值
@@ -1022,7 +819,7 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
                                         String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
                                         isInitingPin=true;
                                         DeviceOperationManager.getInstance()
-                                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
+                                                .initPin(TAG, currentDeviceName, password, passwordHint,
                                                         new DeviceOperationManager.InitPinCallback() {
                                                             @Override
                                                             public void onInitSuccess() {
@@ -1077,7 +874,7 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
                                         String currentDeviceName = DeviceOperationManager.getInstance().getCurrentDeviceName();
                                         isInitingPin=true;
                                         DeviceOperationManager.getInstance()
-                                                .initPin(this.toString(), currentDeviceName, password, passwordHint,
+                                                .initPin(TAG, currentDeviceName, password, passwordHint,
                                                         new DeviceOperationManager.InitPinCallback() {
                                                             @Override
                                                             public void onInitSuccess() {
@@ -1148,7 +945,7 @@ public class BluetoothConfigWooKongBioActivity extends BluetoothBaseActivity<Blu
             public void onCancel(DialogInterface dialog) {
                 if(isInitingPin){
                     isInitingPin=false;
-                    DeviceOperationManager.getInstance().abortButton(BluetoothConfigWooKongBioActivity.this.toString(),deviceName);
+                    DeviceOperationManager.getInstance().abortButton(TAG,deviceName);
                 }
             }
         });

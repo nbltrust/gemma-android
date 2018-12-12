@@ -1795,6 +1795,7 @@ public class DeviceOperationManager {
 
                                 if(deviceComm.isFreeContexting)return;
                                 deviceMaps.get(deviceName).currentState = CacheConstants.STATUS_BLUETOOTH_DISCONNCETED;
+                                deviceMaps.get(deviceName).contextHandle=0;
                                 queue.clear();
                                 boolean isManualFree = false;
                                 EventBusProvider.post(
@@ -2064,6 +2065,7 @@ public class DeviceOperationManager {
 //                    SPUtils.getInstance()
 //                            .put(CacheConstants.BIO_CONNECT_STATUS, CacheConstants.STATUS_BLUETOOTH_DISCONNCETED);
                     deviceMaps.get(deviceName).currentState = CacheConstants.STATUS_BLUETOOTH_DISCONNCETED;
+                    deviceMaps.get(deviceName).contextHandle=0;
                     queue.clear();
                     boolean isManualFree = deviceMaps.get(deviceName).isManualFree;
                     EventBusProvider.post(
