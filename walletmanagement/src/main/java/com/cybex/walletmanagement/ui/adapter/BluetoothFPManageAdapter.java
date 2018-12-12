@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.cybex.base.view.LabelLayout;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.ui.model.vo.BluetoothFPVO;
 
@@ -26,8 +27,9 @@ public class BluetoothFPManageAdapter extends BaseQuickAdapter<BluetoothFPVO, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, BluetoothFPVO item) {
-        SuperTextView fpCrad = helper.getView(R.id.superTextView_bluetooth_FPCard);
-        fpCrad.setLeftString(item.getFingerprintName());
+        LabelLayout fpCrad = helper.getView(R.id.superTextView_bluetooth_FPCard);
+        fpCrad.setLeftText(item.getFingerprintName());
+        fpCrad.setDividerVisible(false);
     }
 
 

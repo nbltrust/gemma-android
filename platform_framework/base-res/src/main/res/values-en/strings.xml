@@ -1141,7 +1141,7 @@
     <string name="walletmanage_tip_manage_resource_wookong">WOOKONG Bio does not support resource staking or RAM trading. To do this, please use another account. </string>
     <string name="walletmanage_title_wooKong_bio">WOOKONG Bio</string>
     <string name="walletmanage_delete_fingerprint">Delete fingerprint </string>
-    <string name="walletmanage_change_fp_name"> Modify the name </string>
+    <string name="walletmanage_change_fp_name"> Modify fingerprint\'s name </string>
     <string name="walletmanage_fingerprint">Fingerprint </string>
     <string name="walletmanage_add_fingerprint">Add fingerprint </string>
     <string name="walletmanage_change_pass">Change password </string>

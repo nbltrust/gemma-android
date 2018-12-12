@@ -12,28 +12,40 @@
 
     </include>
 
-    <com.allen.library.SuperTextView
+    <!--<com.allen.library.SuperTextView-->
+        <!--android:id="@+id/superTextView_change_fp_name"-->
+        <!--android:layout_margin="@dimen/dimen_20"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dimen_48"-->
+        <!--title:sLeftTextString="@string/walletmanage_name"-->
+        <!--title:sLeftTextColor="@color/black_title"-->
+        <!--title:sLeftTextSize="@dimen/font_4"-->
+        <!--title:sRightTextSize="@dimen/font_4"-->
+        <!--title:sRightTextColor="@color/very_light_pink"-->
+        <!--title:sUseShape="true"-->
+        <!--title:sRightTvDrawableRight="@drawable/ic_arrow"-->
+        <!--&gt;-->
+
+    <!--</com.allen.library.SuperTextView>-->
+
+    <com.cybex.base.view.LabelLayout
         android:id="@+id/superTextView_change_fp_name"
         android:layout_margin="@dimen/dimen_20"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_48"
-        title:sLeftTextString="@string/walletmanage_name"
-        title:sLeftTextColor="@color/black_title"
-        title:sLeftTextSize="@dimen/font_4"
-        title:sRightTextSize="@dimen/font_4"
-        title:sRightTextColor="@color/very_light_pink"
-        title:sUseShape="true"
-        title:sRightTvDrawableRight="@drawable/ic_arrow"
-        >
+        title:text_left="@string/walletmanage_name"
+        title:text_right_isShow="true"
+        />
 
-    </com.allen.library.SuperTextView>
 
     <Button
         android:id="@+id/bt_delete_fp"
         android:textColor="@color/scarlet"
         android:text="@string/walletmanage_delete_fingerprint"
         android:background="@drawable/shape_corner_button_red"
-        android:layout_margin="@dimen/dimen_20"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/common_view_margin"
+        android:layout_marginRight="@dimen/common_view_margin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_48"/>
 

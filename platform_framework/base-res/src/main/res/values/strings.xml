@@ -1117,7 +1117,7 @@
     <string name="walletmanage_title_wooKong_bio">WOOKONG Bio</string>
     <!-- 指纹管理 -->
     <string name="walletmanage_delete_fingerprint">删除指纹</string>
-    <string name="walletmanage_change_fp_name">修改名称</string>
+    <string name="walletmanage_change_fp_name">修改指纹名称</string>
     <string name="walletmanage_fingerprint">指纹</string>
     <string name="walletmanage_add_fingerprint">添加指纹</string>
     <string name="walletmanage_change_pass">修改密码</string>
