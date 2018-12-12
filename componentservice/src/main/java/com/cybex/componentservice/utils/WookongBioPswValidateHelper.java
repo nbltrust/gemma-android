@@ -48,6 +48,9 @@ public class WookongBioPswValidateHelper {
     private String confirmStr;
     private int iconRes;
 
+//    private CustomFullDialog confirmDialog;
+//    private boolean isFormating;
+
     public WookongBioPswValidateHelper(String tag,MultiWalletEntity walletEntity, Activity activity) {
         this.tag = tag;
         this.walletEntity = walletEntity;
@@ -82,6 +85,15 @@ public class WookongBioPswValidateHelper {
         int[] listenedItems = {R.id.baseservice_passwordvalidate_cancel_icon, R.id.baseservice_passwordvalidate_confirm};
         CustomFullDialog dialog = new CustomFullDialog(activity,
                 R.layout.baseservice_dialog_password_validate, listenedItems, false, false,Gravity.BOTTOM);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+//                if(isFormating){
+//                    isFormating=false;
+//                    DeviceOperationManager.getInstance().abortButton(activity.toString(),walletEntity.getBluetoothDeviceName());
+//                }
+            }
+        });
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -175,62 +187,81 @@ public class WookongBioPswValidateHelper {
                     dialog.cancel();
                 }else if(view.getId()== R.id.tv_confirm){
                     dialog.dismiss();
-                    if(activity instanceof XActivity){
-                        ((XActivity) activity).showProgressDialog("");
-                    }
-                    DeviceOperationManager.getInstance().startFormat(activity.toString(), walletEntity.getBluetoothDeviceName(), new DeviceOperationManager.DeviceFormatCallback() {
-                        @Override
-                        public void onFormatStart() {
 
-                        }
+                    //jump to  format page
+                    ARouter.getInstance().build(RouterConst.PATH_TO_FORMAT_PAGE).navigation();
 
-                        @Override
-                        public void onFormatSuccess() {
-                            DeviceOperationManager.getInstance().freeContext(activity.toString(), walletEntity.getBluetoothDeviceName(), null);
-                            //delete db data
-                            DBManager.getInstance().getMultiWalletEntityDao().deleteEntityAsync(walletEntity, new DBCallback() {
-                                @Override
-                                public void onSucceed() {
-                                    List<MultiWalletEntity> multiWalletEntityList = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
-                                    if(multiWalletEntityList.size()>0){
-                                        MultiWalletEntity walletEntity = multiWalletEntityList.get(0);
-                                        walletEntity.setIsCurrentWallet(1);
-                                        walletEntity.save();
-                                    }
-                                    //show dialog
-                                    int size = multiWalletEntityList.size();
-                                    if(size>0){
-                                        EventBusProvider.post(new WookongFormattedEvent(false));
-                                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
-                                                .navigation();
-                                    }else{
-                                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
-                                                .withInt(BaseConst.KEY_INIT_TYPE,BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE)
-                                                .navigation();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailed(Throwable error) {
-                                    LoggerManager.e("deleteEntityAsync error="+error.getMessage());
-                                }
-                            });
-
-
-                        }
-
-                        @Override
-                        public void onFormatUpdate(int state) {
-
-                        }
-
-                        @Override
-                        public void onFormatFailed() {
-                            if(activity instanceof XActivity){
-                                ((XActivity) activity).dissmisProgressDialog();
-                            }
-                        }
-                    });
+//                    if(isFormating)return;
+//                    isFormating=true;
+//                    if(activity instanceof XActivity){
+//                        ((XActivity) activity).showProgressDialog("");
+//                    }
+//                    DeviceOperationManager.getInstance().startFormat(activity.toString(), walletEntity.getBluetoothDeviceName(), new DeviceOperationManager.DeviceFormatCallback() {
+//                        @Override
+//                        public void onFormatStart() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onFormatSuccess() {
+//                            isFormating=false;
+//                            if(confirmDialog!=null&&confirmDialog.isShowing()){
+//                                confirmDialog.dismiss();
+//                            }
+//                            DeviceOperationManager.getInstance().freeContext(activity.toString(), walletEntity.getBluetoothDeviceName(), null);
+//                            //delete db data
+//                            DBManager.getInstance().getMultiWalletEntityDao().deleteEntityAsync(walletEntity, new DBCallback() {
+//                                @Override
+//                                public void onSucceed() {
+//                                    List<MultiWalletEntity> multiWalletEntityList = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
+//                                    if(multiWalletEntityList.size()>0){
+//                                        MultiWalletEntity walletEntity = multiWalletEntityList.get(0);
+//                                        walletEntity.setIsCurrentWallet(1);
+//                                        walletEntity.save();
+//                                    }
+//                                    //show dialog
+//                                    showFormatDoneDialog();
+////                                    int size = multiWalletEntityList.size();
+////                                    if(size>0){
+////                                        EventBusProvider.post(new WookongFormattedEvent(false));
+////                                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+////                                                .navigation();
+////                                    }else{
+////                                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+////                                                .withInt(BaseConst.KEY_INIT_TYPE,BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE)
+////                                                .navigation();
+////                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailed(Throwable error) {
+//                                    LoggerManager.e("deleteEntityAsync error="+error.getMessage());
+//                                }
+//                            });
+//
+//
+//                        }
+//
+//                        @Override
+//                        public void onFormatUpdate(int state) {
+//                            if(activity instanceof XActivity){
+//                                ((XActivity) activity).dissmisProgressDialog();
+//                            }
+//                            showConfirmFormatonCardDialog();
+//                        }
+//
+//                        @Override
+//                        public void onFormatFailed() {
+//                            isFormating=false;
+//                            if(confirmDialog!=null&&confirmDialog.isShowing()){
+//                                confirmDialog.dismiss();
+//                            }
+//                            if(activity instanceof XActivity){
+//                                ((XActivity) activity).dissmisProgressDialog();
+//                            }
+//                            GemmaToastUtils.showLongToast(activity.getString(R.string.walletmanage_format_fail));
+//                        }
+//                    });
 
                 }
             }
@@ -239,6 +270,90 @@ public class WookongBioPswValidateHelper {
 
 
     }
+
+
+    /**
+     * 显示确认格式化Dialog
+     */
+//    private void showFormatDoneDialog() {
+//        int[] listenedItems = {R.id.tv_cancel, R.id.tv_init};
+//        CustomDialog dialog = new CustomDialog(activity,
+//                R.layout.walletmanage_dialog_bluetooth_format_done, listenedItems, 0,false,false, Gravity.CENTER);
+//
+//        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+//
+//            @Override
+//            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+//                int size = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList().size();
+//                if (view.getId() == R.id.tv_cancel) {
+//                    dialog.cancel();
+//                    if(size>0){
+//                        activity.finish();
+//                        EventBusProvider.post(new WookongFormattedEvent(false));
+//                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+//                                .navigation();
+//
+//                    }else{
+//                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+//                                .withInt(BaseConst.KEY_INIT_TYPE,BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE)
+//                                .navigation();
+//                    }
+//
+//
+//
+//                } else if (view.getId() == R.id.tv_init) {
+//                    dialog.cancel();
+//                    //UISkipMananger.skipBluetoothPaireActivity(rootView, new Bundle());
+//                    if(size>0){
+//                        activity.finish();
+//                        EventBusProvider.post(new WookongFormattedEvent(true));
+//                    }else{
+//                        ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
+//                                .withInt(BaseConst.KEY_INIT_TYPE,BaseConst.APP_HOME_INITTYPE_TO_INITI_PAGE_WOOKONG_PAIR)
+//                                .navigation();
+//                    }
+//
+//                }
+//            }
+//        });
+//        dialog.show();
+//    }
+
+
+    /**
+     * 显示按电源键确认格式化Dialog
+     */
+//    private void showConfirmFormatonCardDialog() {
+//        if (confirmDialog != null) {
+//            if(!confirmDialog.isShowing()&&isFormating){
+//                confirmDialog.show();
+//            }
+//            return;
+//        }
+//        int[] listenedItems = {R.id.imv_back};
+//        confirmDialog = new CustomFullDialog(activity,
+//                R.layout.baseservice_dialog_bluetooth_button_confirm, listenedItems, false, Gravity.BOTTOM);
+//        confirmDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//            @Override
+//            public void onCancel(DialogInterface dialog) {
+//                if(isFormating){
+//                    isFormating=false;
+//                    DeviceOperationManager.getInstance().abortButton(activity.toString(),walletEntity.getBluetoothDeviceName());
+//                }
+//            }
+//        });
+//        confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+//            @Override
+//            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+//                if (view.getId() == R.id.imv_back) {
+//                    dialog.cancel();
+//                }
+//            }
+//        });
+//        confirmDialog.show();
+//        TextView tvTip = confirmDialog.getAllView().findViewById(R.id.tv_tip);
+//        tvTip.setText(activity.getString(R.string.walletmanage_tip_confirm_format));
+//    }
 
 
     /**
@@ -268,6 +383,13 @@ public class WookongBioPswValidateHelper {
             tv_pass_hint.setText(showInfo);
         }
     }
+
+//    public void release(){
+//        if(isFormating){
+//            isFormating=false;
+//            DeviceOperationManager.getInstance().abortButton(activity.toString(),walletEntity.getBluetoothDeviceName());
+//        }
+//    }
 
 
     public interface PasswordValidateCallback {
