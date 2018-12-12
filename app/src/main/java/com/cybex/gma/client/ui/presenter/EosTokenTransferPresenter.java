@@ -516,6 +516,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
 
                                             if (delegationBean.getActions() != null && delegationBean.getActions()
                                                     .size() == 0){
+                                                LoggerManager.d("do delegate");
                                                 //有抵押权益
                                                 String account_name = DBManager.getInstance().getMultiWalletEntityDao
                                                         ().getCurrentMultiWalletEntity().getEosWalletEntities().get
@@ -573,10 +574,11 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                 DelegateReqResult.ResultBean resultBean = result.getResult();
                                 if (resultBean != null) {
                                     String action_id = resultBean.getAction_id();
-                                    LoggerManager.d("action_id : ", action_id);
-
-                                    //抵押成功
-                                    pushTransaction(savedJsonParams);
+                                    if (action_id != null){
+                                        //抵押成功
+                                        LoggerManager.d("action_id : ", action_id);
+                                        pushTransaction(savedJsonParams);
+                                    }
                                 }
 
                             } else {

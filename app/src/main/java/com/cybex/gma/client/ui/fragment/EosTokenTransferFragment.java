@@ -176,6 +176,9 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     @Override
     public void onDestroyView() {
+        clearData();
+        dissmisProgressDialog();
+        if (getActivity() != null) { Alerter.clearCurrent(getActivity()); }
         unbinder.unbind();
         super.onDestroyView();
     }
@@ -187,19 +190,16 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     new DeviceOperationManager.AbortSignCallback() {
                         @Override
                         public void onAbortSignSuccess() {
-                            DeviceOperationManager.getInstance().clearCallback(TAG);
+
                         }
 
                         @Override
                         public void onAbortSignFail() {
-                            DeviceOperationManager.getInstance().clearCallback(TAG);
+
                         }
                     });
         }
         DeviceOperationManager.getInstance().clearCallback(TAG);
-        clearData();
-        dissmisProgressDialog();
-        if (getActivity() != null) { Alerter.clearCurrent(getActivity()); }
         super.onDestroy();
     }
 
@@ -1104,18 +1104,20 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             pinDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-                    DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
-                            new DeviceOperationManager.AbortSignCallback() {
-                                @Override
-                                public void onAbortSignSuccess() {
-
-                                }
-
-                                @Override
-                                public void onAbortSignFail() {
-
-                                }
-                            });
+//                    DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
+//                            new DeviceOperationManager.AbortSignCallback() {
+//                                @Override
+//                                public void onAbortSignSuccess() {
+//                                    LoggerManager.d("AbortSign Success");
+//
+//                                }
+//
+//                                @Override
+//                                public void onAbortSignFail() {
+//                                    LoggerManager.d("AbortSign Fail");
+//
+//                                }
+//                            });
                 }
             });
             pinDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
@@ -1124,8 +1126,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     switch (view.getId()) {
                         case R.id.imc_cancel:
                             dialog.cancel();
-
-
                             break;
                         case R.id.btn_confirm_authorization:
                             TextView tv_password = dialog.findViewById(R.id.et_password);
