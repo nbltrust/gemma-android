@@ -12,7 +12,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_mask_close"/>
+        android:src="@drawable/ic_back"/>
 
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/eos_shape_corner_button"
-        android:text="@string/eos_btn_create_new_wallet"
+        android:text="@string/eos_btn_init_type_create_wallet"
         android:textColor="@color/white"
         android:textSize="@dimen/font_3.5"/>
 

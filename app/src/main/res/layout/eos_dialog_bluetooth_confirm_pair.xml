@@ -9,7 +9,7 @@
         android:id="@+id/imc_cancel"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_mask_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -22,7 +22,7 @@
         android:layout_marginTop="16dp"
         android:textColor="@color/black_title"
         android:lineSpacingExtra="2sp"
-        android:text="@string/eos_gemma_password_hint"
+        android:text="@string/wookong_pair_input_pass_hint"
         />
 
     <LinearLayout

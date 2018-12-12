@@ -223,6 +223,7 @@
     <string name="eos_switch_account">Switch Account</string>
     <string name="eos_confirm_delegate">Confirm stake</string>
     <string name="eos_input_pass_hint">Enter Wookong Bio\'s password</string>
+    <string name="wookong_pair_input_pass_hint">Enter Wookong Bio\'s password to authorize pair</string>
     <string name="eos_gemma_password_hint">Enter account password to authorize operation</string>
     <string name="eos_confirm_author">Authorize</string>
     <string name="eos_confirm_buy">Confirm buy</string>
@@ -667,8 +668,8 @@
     <string name="eos_status_init_pair">Initialized, paired</string>
     <string name="eos_status_not_connected">Not Connected</string>
 
-    <string name="eos_tip_status_un_init">This WOOKONG Bio has not been initialized,
-        please initialize it first</string>
+    <string name="eos_btn_init_type_create_wallet">Create Wallet</string>
+    <string name="eos_tip_status_un_init">Please choose the type of initialization</string>
 
     <string name="eos_progress_set_pin">Setting PIN...</string>
 
