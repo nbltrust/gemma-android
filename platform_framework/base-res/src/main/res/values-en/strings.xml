@@ -940,6 +940,7 @@
     <string name="walletmanage_change_fp_name_hint">Enter new fingerprint name</string>
     <string name="walletmanage_fp_prefix">Fingerprints</string>
     <string name="walletmanage_fpname_notnull">Fingerprint name cannot be empty</string>
+    <string name="walletmanage_fpname_have">You have a fingerprint with the same name.</string>
     <string name="walletmanage_fpname_nochange">New fingerprint name is the same as the previous one</string>
     <string name="walletmanage_fpname_change_success">Fingerprint name changed</string>
 

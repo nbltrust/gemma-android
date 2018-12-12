@@ -92,6 +92,9 @@ public interface MultiWalletEntityDao {
 
     FPEntity getFpEntityByWalletIdAndIndex(int walletID,int index);
 
+
+    FPEntity getFpEntityListByWalletIdAndName(int walletID,String fpName);
+
     void deleteFpEntityAsync(FPEntity fpEntity, DBCallback dbCallback);
 
 }

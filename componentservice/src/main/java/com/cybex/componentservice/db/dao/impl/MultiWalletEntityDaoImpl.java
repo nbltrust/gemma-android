@@ -183,6 +183,15 @@ public class MultiWalletEntityDaoImpl implements MultiWalletEntityDao {
         return fpEntity;
     }
 
+    @Override
+    public FPEntity getFpEntityListByWalletIdAndName(int walletID, String fpName) {
+        FPEntity fpEntity = SQLite.select().from(FPEntity.class)
+                .where(FPEntity_Table.multiWalletEntity_id.eq(walletID))
+                .and(FPEntity_Table.name.eq(fpName))
+                .querySingle();
+        return fpEntity;
+    }
+
 
     @Override
     public void deleteFpEntityAsync(FPEntity fpEntity,DBCallback dbCallback) {

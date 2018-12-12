@@ -1177,6 +1177,7 @@
     <string name="walletmanage_fp_prefix">指纹</string>
     <string name="walletmanage_fpname_notnull">指纹名称不能为空</string>
     <string name="walletmanage_fpname_nochange">指纹名称与原名称一致</string>
+    <string name="walletmanage_fpname_have">您已拥有此名称的指纹</string>
     <string name="walletmanage_fpname_change_success">指纹名称修改成功</string>
 
 

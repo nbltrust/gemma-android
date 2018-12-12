@@ -69,6 +69,13 @@ public class BluetoothChangeFPNameFragment extends XFragment {
                     GemmaToastUtils.showLongToast(getString(R.string.walletmanage_fpname_nochange));
                     return;
                 }
+
+                FPEntity tempFp = DBManager.getInstance().getMultiWalletEntityDao().getFpEntityListByWalletIdAndName(multiWalletEntity.getId(), name);
+                if(tempFp !=null){
+                    GemmaToastUtils.showLongToast(getString(R.string.walletmanage_fpname_have));
+                    return;
+                }
+
                 if(fpEntity !=null){
                     fpEntity.setName(name);
                     fpEntity.save();
