@@ -1,21 +1,29 @@
 package com.cybex.walletmanagement.ui.adapter;
 
+import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.walletmanagement.R;
 
 import java.util.List;
 
+import me.jessyan.autosize.AutoSize;
+
 public class SelectCurrentWalletAdapter extends BaseQuickAdapter<MultiWalletEntity, BaseViewHolder> {
 
-    public SelectCurrentWalletAdapter(@Nullable List<MultiWalletEntity> data) {
+    private Activity activity;
+
+    public SelectCurrentWalletAdapter(@Nullable List<MultiWalletEntity> data,Activity activity) {
         super(R.layout.walletmanage_item_select_current_wallet, data);
+        this.activity=activity;
     }
 
     @Override
@@ -52,5 +60,22 @@ public class SelectCurrentWalletAdapter extends BaseQuickAdapter<MultiWalletEnti
                 tvWalletType.setText(R.string.walletmanage_wallet_type_eth);
             }
         }
+    }
+
+
+    @Override
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(activity!=null){
+            AutoSize.autoConvertDensityOfGlobal(activity);
+        }
+        return super.onCreateViewHolder(parent, viewType);
+    }
+
+    @Override
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
+        if(activity!=null){
+            AutoSize.autoConvertDensityOfGlobal(activity);
+        }
+        super.onBindViewHolder(holder, position);
     }
 }

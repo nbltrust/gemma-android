@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
+import me.jessyan.autosize.AutoSize;
 
 
 public class SelectCurrentWalletActivity extends XActivity {
@@ -70,8 +71,8 @@ public class SelectCurrentWalletActivity extends XActivity {
                 break;
             }
         }
-
-        adatper = new SelectCurrentWalletAdapter(wallets);
+//        AutoSize.autoConvertDensityOfGlobal(this);
+        adatper = new SelectCurrentWalletAdapter(wallets,this);
         rvWalletList.setAdapter(adatper);
         adatper.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override

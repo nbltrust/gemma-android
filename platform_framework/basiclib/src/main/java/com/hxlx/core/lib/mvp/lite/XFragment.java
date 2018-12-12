@@ -26,6 +26,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import me.framework.fragmentation.FragmentSupport;
+import me.jessyan.autosize.AutoSize;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 /**
@@ -54,6 +55,9 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         if (useEventBus()) {
             EventBusProvider.register(this);
         }
+        if(getActivity()!=null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
     }
 
     @Nullable
@@ -73,6 +77,22 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         }
         setImmersiveStyle();
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        if(getActivity()!=null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        if(getActivity()!=null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
+        super.onResume();
     }
 
     protected void setNavibarTitle(final String title, final boolean isShowBack) {

@@ -783,7 +783,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
         if (curWallet != null) {
             WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(
-                    EosTokenTransferFragment.this.toString(), curWallet, getActivity());
+                    TAG, curWallet, getActivity());
             wookongConnectHelper.startConnectDevice(new WookongConnectHelper.ConnectWookongBioCallback() {
                 @Override
                 public void onConnectSuccess() {

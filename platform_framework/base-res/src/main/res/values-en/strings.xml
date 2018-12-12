@@ -645,7 +645,7 @@
     <string name="eos_match_wookong_bio">Pairing WOOKONG Bio</string>
 
     <string name="eos_tip_card">The first wallet supports bluetooth hardware with fingerprints</string>
-    <string name="eos_desc_wookong_url">See more about WOOKONG Bio</string>
+    <string name="eos_desc_wookong_url"><u>See more about WOOKONG Bio</u></string>
     <string name="eos_bluetooth_scan_step_title">Ready WOOKONG Bio</string>
 
     <string name="eos_tip_bluetooth_scan_step_one">Make sure bluetooth is ready</string>

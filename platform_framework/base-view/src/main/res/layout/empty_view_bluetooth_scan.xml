@@ -11,6 +11,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/bluetooth_scan_no_result"
         android:textSize="@dimen/font_4"
+        android:textStyle="bold"
         android:textColor="@color/very_light_pink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

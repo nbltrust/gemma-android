@@ -90,7 +90,7 @@ dependencies {
     api 'com.alibaba:fastjson:1.1.63.android'
 
     //头条屏幕适配方案
-    api 'me.jessyan:autosize:1.0.0'
+    api 'me.jessyan:autosize:1.1.0'
 
     api project(':platform_framework:base-res')
 

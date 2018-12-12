@@ -40,6 +40,7 @@ import java.lang.reflect.Field;
 import java.util.Calendar;
 
 import me.framework.fragmentation.ActivitySupport;
+import me.jessyan.autosize.AutoSize;
 
 /**
  * Created by linwang on 2018/4/7.
@@ -67,7 +68,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-
+        AutoSize.autoConvertDensityOfGlobal(this);
         if (useEventBus()) {
             EventBusProvider.register(this);
         }
@@ -94,6 +95,14 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
 
         initData(savedInstanceState);
     }
+
+    @Override
+    protected void onStart() {
+        AutoSize.autoConvertDensityOfGlobal(this);
+        super.onStart();
+    }
+
+
 
 
     /**
@@ -250,6 +259,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     protected void onResume() {
         isResume=true;
         super.onResume();
+        AutoSize.autoConvertDensityOfGlobal(this);
         getvDelegate().resume();
        // if (OSUtils.checkDeviceHasNavigationBar(this)) {
        //     OSUtils.solveNavigationBar(getWindow());

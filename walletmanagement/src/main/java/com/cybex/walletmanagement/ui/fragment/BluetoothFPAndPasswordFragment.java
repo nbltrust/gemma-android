@@ -136,7 +136,7 @@ public class BluetoothFPAndPasswordFragment extends XFragment {
                     }
                 });
 
-        mAdapter = new BluetoothFPManageAdapter(fingerprints);
+        mAdapter = new BluetoothFPManageAdapter(fingerprints,getActivity());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager
                 .VERTICAL, false);
         recyclerFpManage.setLayoutManager(layoutManager);

@@ -10,8 +10,11 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.cybex.componentservice.api.ApiPath;
+import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
@@ -22,17 +25,20 @@ import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.manager.PermissionManager;
 import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
+import com.cybex.componentservice.ui.activity.CommonWebViewActivity;
 import com.cybex.componentservice.utils.listener.PermissionResultListener;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.dialog.WookongScanDialog;
 import com.cybex.gma.client.ui.presenter.BluetoothPairPresenter;
 
+import com.hxlx.core.lib.utils.LanguageManager;
 import com.yanzhenjie.permission.Permission;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +57,10 @@ public class BluetoothPairActivity extends BluetoothBaseActivity<BluetoothPairPr
 
     @BindView(R.id.btn_start_scan) Button btnStartScan;
     private WookongScanDialog wookongScanDialog;
+
+    @BindView(R.id.tv_more_wookong)
+    TextView tvMoreWookong;
+
 
     @Override
     public void bindUI(View rootView) {
@@ -81,6 +91,42 @@ public class BluetoothPairActivity extends BluetoothBaseActivity<BluetoothPairPr
 //                                                  GemmaToastUtils.showShortToast("");
                                               }
                                           },  Permission.ACCESS_COARSE_LOCATION, Manifest.permission.BLUETOOTH,Manifest.permission.BLUETOOTH_ADMIN);
+            }
+        });
+
+        tvMoreWookong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                int savedLanguageType = LanguageManager.getInstance(context).getLanguageType();
+//                switch (savedLanguageType) {
+//                    case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
+//                        CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
+//                                .string.terms_of_service));
+//                        break;
+//                    case LanguageManager.LanguageType.LANGUAGE_EN:
+//                        CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_EN, getResources().getString(R
+//                                .string.terms_of_service));
+//                        break;
+//                    case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+//                        Locale systemLanguageType = LanguageManager.getInstance(context).getSysLocale();
+//                        switch (systemLanguageType.getDisplayLanguage()) {
+//                            case BaseConst.CN:
+//                                CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources()
+//                                        .getString(R.string.terms_of_service));
+//                                break;
+//                            case BaseConst.EN:
+//                                CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_EN, getResources()
+//                                        .getString(R.string.terms_of_service));
+//                                break;
+//                            default:
+//                                CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources()
+//                                        .getString(R.string.terms_of_service));
+//                        }
+//                        break;
+//                    default:
+//                        CommonWebViewActivity.startWebView(context, ApiPath.TERMS_OF_SERVICE_CN, getResources().getString(R
+//                                .string.terms_of_service));
+//                }
             }
         });
 
