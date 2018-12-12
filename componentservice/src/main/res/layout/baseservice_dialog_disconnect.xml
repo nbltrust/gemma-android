@@ -20,7 +20,7 @@
         android:id="@+id/tv_no_screenshot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="失去连接"
+        android:text="@string/wookong_lose_connect_title"
         android:textColor="@color/black_title"
         android:layout_gravity="center"
         android:textSize="@dimen/font_4"
@@ -34,13 +34,13 @@
         android:textSize="@dimen/font_3.5"
         app:align="center"
         android:textColor="@color/black_context"
-        android:text="无法连接到WOOKONG Bio,请确保电源足够并且处于开机状态"
+        android:text="@string/wookong_lose_connect_desc"
         android:layout_marginTop="6dp"
         />
 
     <View
         android:layout_marginTop="10dp"
-        android:background="@color/black_content"
+        android:background="#dddddd"
         style="@style/common_divider">
     </View>
 
@@ -48,7 +48,7 @@
         android:id="@+id/tv_understand"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:text="确定"
+        android:text="@string/ok"
         android:gravity="center"
         android:textSize="@dimen/font_4"
         android:textColor="@color/black_content"

@@ -1353,5 +1353,7 @@
     <string name="walletmanage_export_mnemonic">Export Mnemonic</string>
     <string name="walletmanage_export_prikey">Export Private Key</string>
     <string name="walletmanage_change_psw">Change Passsword</string>
+    <string name="wookong_lose_connect_desc">Can\'t connect to WOOKONG Bio,please ensure Bio is power enough and power on</string>
+    <string name="wookong_lose_connect_title">Lose Connection</string>
 
 </resources>
