@@ -113,7 +113,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     public void onError(Response<WXPayQueryOrderInfoResult> response) {
                         super.onError(response);
                         getV().dissmisProgressDialog();
-                        AlertUtil.showLongUrgeAlert(getV().getActivity(), " 服务器错误,请稍后重试");
+                        AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.server_fail));
 
                     }
                 });
@@ -128,21 +128,25 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                 .getWXPayPlaceOrderInfo(new JsonCallback<WXPayPlaceOrderResult>() {
                     @Override
                     public void onSuccess(Response<WXPayPlaceOrderResult> response) {
-                        if (response != null && response.body() != null){
-                            WXPayPlaceOrderResult result = response.body();
+                        if (getV() != null){
+                            if (response != null && response.body() != null){
+                                WXPayPlaceOrderResult result = response.body();
 
-                            if (result.getResult() != null){
-                                WXPayPlaceOrderResult.ResultBean resultBean = result.getResult();
-                                getV().callWXPay(resultBean);
+                                if (result.getResult() != null){
+                                    WXPayPlaceOrderResult.ResultBean resultBean = result.getResult();
+                                    getV().callWXPay(resultBean);
+                                }
                             }
                         }
                     }
 
                     @Override
                     public void onError(Response<WXPayPlaceOrderResult> response) {
-                        super.onError(response);
-                        getV().dissmisProgressDialog();
-                        AlertUtil.showLongUrgeAlert(getV().getActivity(), " 服务器错误,请稍后重试");
+                        if (getV() != null){
+                            super.onError(response);
+                            getV().dissmisProgressDialog();
+                            AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.server_fail));
+                        }
                     }
                 });
     }
@@ -164,18 +168,22 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     @Override
                     public void onSuccess(Response<WXPayBillResult> response) {
 
-                        if (response != null && response.body() != null && response.body().getResult() != null){
-                            WXPayBillResult.ResultBean result = response.body().getResult();
-                            getV().setFee(result);
-                            getV().dissmisProgressDialog();
+                        if (getV() != null){
+                            if (response != null && response.body() != null && response.body().getResult() != null){
+                                WXPayBillResult.ResultBean result = response.body().getResult();
+                                getV().setFee(result);
+                                getV().dissmisProgressDialog();
+                            }
                         }
                     }
 
                     @Override
                     public void onError(Response<WXPayBillResult> response) {
-                        super.onError(response);
-                        getV().dissmisProgressDialog();
-                        AlertUtil.showLongUrgeAlert(getV().getActivity(), " 服务器错误,请稍后重试");
+                        if (getV() != null){
+                            super.onError(response);
+                            getV().dissmisProgressDialog();
+                            AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.server_fail));
+                        }
                     }
                 });
     }

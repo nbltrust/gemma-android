@@ -103,6 +103,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     @BindView(R.id.view_net) View viewNET;
     @BindView(R.id.view_ram) View viewRAM;
     @BindView(R.id.view_refresh_wallet) CommonRefreshLayout refreshLayout;
+    @BindView(R.id.tv_token_content) TextView tvTokenContent;
     private Bundle bundle;
 
     private ResourceInfoVO resourceInfoVO;
@@ -630,5 +631,15 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
         viewEosTokens.setVisibility(View.VISIBLE);
         tvNumberOfTokens.setText(String.valueOf(eosTokens.size()-1));
+
+        if (eosTokens.size() == 1){
+            //只有EOS没有其他Token
+            viewEosTokens.setVisibility(View.GONE);
+        }else if (eosTokens.size() == 2){
+            //只有一个Token
+            tvTokenContent.setText("token");
+        }else {
+            tvTokenContent.setText("tokens");
+        }
     }
 }

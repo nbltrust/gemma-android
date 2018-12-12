@@ -1034,25 +1034,34 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         int[] listenedItems = {R.id.imv_back};
         powerPressDialog = new CustomFullDialog(getActivity(),
                 R.layout.dialog_bluetooth_transfer_power_confirm, listenedItems, false, Gravity.BOTTOM);
+
+        powerPressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                //abort sign
+                DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
+                        new DeviceOperationManager.AbortSignCallback() {
+                            @Override
+                            public void onAbortSignSuccess() {
+
+                            }
+
+                            @Override
+                            public void onAbortSignFail() {
+
+                            }
+                        });
+            }
+        });
+
+
         powerPressDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.imv_back:
                         powerPressDialog.cancel();
-                        //abort sign
-                        DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
-                                new DeviceOperationManager.AbortSignCallback() {
-                                    @Override
-                                    public void onAbortSignSuccess() {
 
-                                    }
-
-                                    @Override
-                                    public void onAbortSignFail() {
-
-                                    }
-                                });
                         break;
                     default:
                         break;
@@ -1104,20 +1113,18 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
             pinDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-//                    DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
-//                            new DeviceOperationManager.AbortSignCallback() {
-//                                @Override
-//                                public void onAbortSignSuccess() {
-//                                    LoggerManager.d("AbortSign Success");
-//
-//                                }
-//
-//                                @Override
-//                                public void onAbortSignFail() {
-//                                    LoggerManager.d("AbortSign Fail");
-//
-//                                }
-//                            });
+                    DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
+                            new DeviceOperationManager.AbortSignCallback() {
+                                @Override
+                                public void onAbortSignSuccess() {
+
+                                }
+
+                                @Override
+                                public void onAbortSignFail() {
+
+                                }
+                            });
                 }
             });
             pinDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
@@ -1147,20 +1154,20 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                                         @Override
                                                         public void onGetSignResultStart() {
                                                             dissmisProgressDialog();
-                                                            pinDialog.cancel();
+                                                            pinDialog.dismiss();
                                                         }
 
                                                         @Override
                                                         public void onGetSignResultSuccess(String strSignature) {
                                                             buildTransaction(strSignature);
-                                                            powerPressDialog.cancel();
+                                                            powerPressDialog.dismiss();
                                                         }
 
                                                         @Override
                                                         public void onGetSignResultFail(int status) {
                                                             AlertUtil.showShortUrgeAlert(getActivity(), getString(R
                                                                     .string.tip_pin_verify_fail));
-                                                            powerPressDialog.cancel();
+                                                            powerPressDialog.dismiss();
                                                         }
 
                                                         @Override

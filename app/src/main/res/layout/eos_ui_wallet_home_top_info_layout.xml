@@ -108,7 +108,7 @@
 
                 <LinearLayout
                     android:layout_marginTop="6dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/view_eos_tokens"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,6 +132,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/tv_token_content"
                         android:textSize="@dimen/font_3.5"
                         android:textColor="@color/black_context"
                         android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.cybex.componentservice.api.callback.JsonCallback;
@@ -11,8 +12,10 @@ import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.componentservice.utils.ConvertUtils;
+import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.job.JobUtils;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
@@ -20,11 +23,13 @@ import com.cybex.gma.client.ui.fragment.EosTokenTransferFragment;
 import com.cybex.gma.client.ui.model.request.DelegateReqParams;
 import com.cybex.gma.client.ui.model.request.PushTransactionReqParams;
 import com.cybex.gma.client.ui.model.response.AbiJsonToBeanResult;
+import com.cybex.gma.client.ui.model.response.CheckActionStatusResult;
 import com.cybex.gma.client.ui.model.response.CheckGoodsCodeResult;
 import com.cybex.gma.client.ui.model.response.DelegateReqResult;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionTmpVO;
 import com.cybex.gma.client.ui.model.vo.TransferTransactionVO;
 import com.cybex.gma.client.ui.request.AbiJsonToBeanRequest;
+import com.cybex.gma.client.ui.request.CheckActionStatusRequest;
 import com.cybex.gma.client.ui.request.CheckGoodsCodeRequest;
 import com.cybex.gma.client.ui.request.DelegateRequest;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
@@ -50,6 +55,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.hypertrack.smart_scheduler.Job;
+import io.hypertrack.smart_scheduler.SmartScheduler;
+
 public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragment> {
 
     private static final String VALUE_ACTION = "transfer";
@@ -59,6 +67,14 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
     private static final String VALUE_CONTRACT = "eosio.token";
 
     private String savedJsonParams;
+    private String mFrom;
+    private String mTo;
+    private String mQuantity;
+    private String mMemo;
+    private String mTokenContract;
+    private String mTokenSymbol;
+    private int mAccuracy;
+    private String mActionId;
 
     /**
      * 执行EOS Token转账逻辑
@@ -345,6 +361,15 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
             String tokenContract,
             String tokenSymbol,
             int accuracy) {
+
+        mFrom = from;
+        mTo = to;
+        mQuantity = quantity;
+        mMemo = memo;
+        mTokenContract = tokenContract;
+        mTokenSymbol = tokenSymbol;
+        mAccuracy = accuracy;
+
         //通过c++获取 abi json操作体
         String format_quantity = AmountUtil.round(quantity.split(" ")[0], accuracy) + " " + tokenSymbol;
         String abijson = JNIUtil.create_abi_req_transfer(VALUE_CODE, VALUE_ACTION,
@@ -515,7 +540,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                         if (delegationBean != null) {
 
                                             if (delegationBean.getActions() != null && delegationBean.getActions()
-                                                    .size() == 0){
+                                                    .size() == 0) {
                                                 LoggerManager.d("do delegate");
                                                 //有抵押权益
                                                 String account_name = DBManager.getInstance().getMultiWalletEntityDao
@@ -523,7 +548,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                                         (0).getCurrentEosName();
 
                                                 doDelegate(account_name, SN, SN_Sig);
-                                            }else {
+                                            } else {
                                                 //无抵押权益
                                                 getV().dissmisProgressDialog();
                                                 AlertUtil.showShortUrgeAlert(getV().getActivity(),
@@ -574,10 +599,10 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                 DelegateReqResult.ResultBean resultBean = result.getResult();
                                 if (resultBean != null) {
                                     String action_id = resultBean.getAction_id();
-                                    if (action_id != null){
+                                    if (action_id != null) {
                                         //抵押成功
                                         LoggerManager.d("action_id : ", action_id);
-                                        pushTransaction(savedJsonParams);
+                                        checkActionStatus(action_id);
                                     }
                                 }
 
@@ -599,6 +624,50 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                     }
                 });
 
+    }
+
+    /**
+     * 检查抵押Action的状态
+     * 当返回值为3（pending）已上链正在等待确认的时候重新执行之前的转账操作
+     *
+     * @param action_id
+     */
+    public void checkActionStatus(String action_id) {
+        mActionId = action_id;
+        new CheckActionStatusRequest(CheckActionStatusResult.class, action_id)
+                .checkActionStatus(new JsonCallback<CheckActionStatusResult>() {
+                    @Override
+                    public void onSuccess(Response<CheckActionStatusResult> response) {
+                        if (getV() != null) {
+                            if (response != null && response.body() != null) {
+                                CheckActionStatusResult result = response.body();
+                                CheckActionStatusResult.ResultBean resultBean = result.getResult();
+                                if (resultBean != null) {
+                                    int status = resultBean.getStatus();
+                                    if (status == 3 || status == 4) {
+                                        removePollingJob();
+                                        executeBluetoothTransferLogic(mFrom, mTo, mQuantity, mMemo, mTokenContract,
+                                                mTokenSymbol, mAccuracy);
+
+                                    } else {
+                                        //开启轮询
+                                        startValidatePolling(5000);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<CheckActionStatusResult> response) {
+                        if (getV() != null) {
+                            super.onError(response);
+                            getV().dissmisProgressDialog();
+                            AlertUtil.showShortUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_chain_unstable));
+                        }
+                    }
+
+                });
     }
 
 
@@ -769,6 +838,38 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
             return res;
         }
         return false;
+    }
+
+    /**
+     * 移除轮询
+     */
+    private void removePollingJob() {
+        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+        if (smartScheduler != null && smartScheduler.contains(ParamConstants.POLLING_JOB)) {
+            smartScheduler.removeJob(ParamConstants.POLLING_JOB);
+        }
+    }
+
+    /**
+     * 开启一次比较时间戳验证轮询
+     * 时间单位毫秒
+     */
+    public void startValidatePolling(int intervalTime) {
+        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+        if (!smartScheduler.contains(ParamConstants.POLLING_JOB)) {
+            SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
+                @Override
+                public void onJobScheduled(Context context, Job job) {
+                    LoggerManager.d("validate polling executed");
+                    checkActionStatus(mActionId);
+                }
+
+            };
+
+            Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, intervalTime);
+            smartScheduler.addJob(job);
+        }
+
     }
 
 

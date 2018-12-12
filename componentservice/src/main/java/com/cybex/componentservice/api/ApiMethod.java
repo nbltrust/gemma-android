@@ -48,7 +48,7 @@ public interface ApiMethod {
 
     String API_BIO_DELEGATE = "/api/v2/account/delegate";
 
-    String API_QUERY_ACTION_STATUS = "/api/v2/action/:action_id";
+    String API_QUERY_ACTION_STATUS = "/api/v2/action/";
 
     String API_CHECK_GOOD_CODE = "/api/v2/goodscode/";
 

@@ -480,11 +480,11 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                             //正在确认
                             if (curTransfer.sender.equals(currentEosName)) {
                                 //转出 -
-                                curTransfer.status = "正在确认";
+                                curTransfer.status = getV().getString(R.string.status_confirming);
 
                             } else {
                                 //转入 +
-                                curTransfer.status = "正在确认";
+                                curTransfer.status =  getV().getString(R.string.status_confirming);;
                             }
                         } else if (status == ParamConstants.TRANSACTION_STATUS_CONFIRMED) {
                             //已经确认
