@@ -21,6 +21,7 @@ import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.AmountUtil;
+import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.componentservice.utils.listener.DecimalInputTextWatcher;
 import com.cybex.gma.client.R;
@@ -64,7 +65,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     private final int STATUS_UNKNOW_ERR = 6;
 
     private CustomFullDialog confirmDialog;
-    private CustomFullDialog confirmAuthorDialog;
+//    private CustomFullDialog confirmAuthorDialog;
 
     private String totalAvaiEos;
     private String totalUsedEos;
@@ -99,6 +100,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
     private int inputCount;
 
     private ResourceInfoVO resourceInfoVO;
+    private PasswordValidateHelper validateHelper;
 
     @OnClick(R.id.bt_delegate_cpu_net)
     public void showDialog() {
@@ -472,7 +474,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                         break;
                     case R.id.btn_delegate:
                         dialog.cancel();
-                        showConfirmAuthoriDialog(OPERATION_DELEGATE);
+//                        showConfirmAuthoriDialog(OPERATION_DELEGATE);
+                        startPswValidate(OPERATION_DELEGATE);
                         break;
                     default:
                         break;
@@ -540,7 +543,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
                         break;
                     case R.id.btn_confirm_refund:
                         dialog.cancel();
-                        showConfirmAuthoriDialog(OPERATION_UNDELEGATE);
+//                        showConfirmAuthoriDialog(OPERATION_UNDELEGATE);
+                        startPswValidate(OPERATION_UNDELEGATE);
                         break;
                     default:
                         break;
@@ -592,230 +596,344 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         }
     }
 
+
+    public void startPswValidate(int operation_type){
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
+        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+        if(validateHelper==null){
+            validateHelper = new PasswordValidateHelper(curWallet, this);
+        }
+        validateHelper.setIconRes(R.drawable.ic_back);
+        validateHelper.setDialogCallback(new PasswordValidateHelper.PasswordDialogCallback() {
+            @Override
+            public void onDialogCancel() {
+                if(validateHelper!=null){
+                    validateHelper.clearPsw();
+                }
+                switch (operation_type) {
+                    case OPERATION_DELEGATE:
+                        showConfirmDelegateiDialog();
+                        break;
+                    case OPERATION_UNDELEGATE:
+                        showConfirmUndelegateiDialog();
+                        break;
+                }
+            }
+        });
+        validateHelper.startValidatePassword(new PasswordValidateHelper.PasswordValidateCallback() {
+            @Override
+            public void onValidateSuccess(String password) {
+
+                final String saved_pri_key = curEosWallet.getPrivateKey();
+                final String private_key = Seed39.keyDecrypt(password, saved_pri_key);
+                //密码正确
+                final String curEOSName = curEosWallet.getCurrentEosName();
+
+                switch (operation_type) {
+                    case OPERATION_DELEGATE:
+                        try {
+                            String cpu_quantity;
+                            String net_quantity;
+                            if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty
+                                    (getDelegateNet())) {
+                                //抵押CPU和NET输入都不为空
+                                cpu_quantity = AmountUtil.round(getDelegateCpu(), 4);
+                                net_quantity = AmountUtil.round(getDelegateNet(), 4);
+                            } else if (EmptyUtils.isEmpty(getDelegateCpu())) {
+                                //抵押CPU输入为空
+                                cpu_quantity = "0.0000";
+                                net_quantity = AmountUtil.round(getDelegateNet(), 4);
+                            } else {
+                                //抵押NET输入为空
+                                cpu_quantity = AmountUtil.round(getDelegateCpu(), 4);
+                                net_quantity = "0.0000";
+                            }
+
+                            String stake_net_quantity = net_quantity + " EOS";
+                            String stake_cpu_quantity = cpu_quantity + " EOS";
+
+
+                            getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
+                                    stake_cpu_quantity, private_key);
+
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case OPERATION_UNDELEGATE:
+                        //密码正确
+                        try {
+                            String cpu_quantity;
+                            String net_quantity;
+                            if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty
+                                    (getunDelegateNet())) {
+                                //解除抵押CPU和NET输入都不为空
+                                cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
+                                net_quantity = AmountUtil.round(getunDelegateNet(), 4);
+                            } else if (EmptyUtils.isEmpty(getUndelegateCpu())) {
+                                //解除抵押CPU输入为空
+                                cpu_quantity = "0.0000";
+                                net_quantity = AmountUtil.round(getunDelegateNet(), 4);
+                            } else if (EmptyUtils.isEmpty(getunDelegateNet())) {
+                                //解除抵押NET输入为空
+                                cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
+                                net_quantity = "0.0000";
+                            } else {
+                                cpu_quantity = "0.0000";
+                                net_quantity = "0.0000";
+                            }
+
+                            String unstake_net_quantity = net_quantity + " EOS";
+                            String unstake_cpu_quantity = cpu_quantity + " EOS";
+
+                            getP().executeUndelegateLogic(curEOSName, curEOSName,
+                                    unstake_net_quantity,
+                                    unstake_cpu_quantity, private_key);
+
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+                if(confirmDialog!=null&&confirmDialog.isShowing()){
+                    confirmDialog.cancel();
+                }
+                confirmDialog = null;
+            }
+
+            @Override
+            public void onValidateFail(int failedCount) {
+
+            }
+        });
+
+    }
+
     /**
      * 显示确认授权dialog
      */
-    private void showConfirmAuthoriDialog(int operation_type) {
-        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-        confirmAuthorDialog = new CustomFullDialog(this,
-                R.layout.eos_dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
-        confirmAuthorDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
-            @Override
-            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.imc_cancel:
-                        dialog.cancel();
-                        switch (operation_type) {
-                            case OPERATION_DELEGATE:
-                                showConfirmDelegateiDialog();
-                                break;
-                            case OPERATION_UNDELEGATE:
-                                showConfirmUndelegateiDialog();
-                                break;
-                        }
-                        break;
-                    case R.id.btn_confirm_authorization:
-                        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao()
-                                .getCurrentMultiWalletEntity();
-                        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
-                        switch (operation_type) {
-                            case OPERATION_DELEGATE:
-                                //抵押操作
-                                if (EmptyUtils.isNotEmpty(curWallet)) {
-                                    EditText mPass = dialog.findViewById(R.id.et_password);
-                                    ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
-                                    iv_clear.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            mPass.setText("");
-                                        }
-                                    });
-                                    //验证密码
-
-                                    String inputPass = mPass.getText().toString();
-                                    final String cypher = curWallet.getCypher();
-                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
-                                            .TYPE_SHA256);
-                                    final String saved_pri_key = curEosWallet.getPrivateKey();
-                                    if (saved_pri_key != null) {
-                                        final String private_key = Seed39.keyDecrypt(inputPass, saved_pri_key);
-                                        if (hashPwd.equals(cypher)) {
-                                            //密码正确
-                                            final String curEOSName = curEosWallet.getCurrentEosName();
-                                            try {
-                                                String cpu_quantity;
-                                                String net_quantity;
-                                                if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty
-                                                        (getDelegateNet())) {
-                                                    //抵押CPU和NET输入都不为空
-                                                    cpu_quantity = AmountUtil.round(getDelegateCpu(), 4);
-                                                    net_quantity = AmountUtil.round(getDelegateNet(), 4);
-                                                } else if (EmptyUtils.isEmpty(getDelegateCpu())) {
-                                                    //抵押CPU输入为空
-                                                    cpu_quantity = "0.0000";
-                                                    net_quantity = AmountUtil.round(getDelegateNet(), 4);
-                                                } else {
-                                                    //抵押NET输入为空
-                                                    cpu_quantity = AmountUtil.round(getDelegateCpu(), 4);
-                                                    net_quantity = "0.0000";
-                                                }
-
-                                                String stake_net_quantity = net_quantity + " EOS";
-                                                String stake_cpu_quantity = cpu_quantity + " EOS";
-
-                                                confirmDialog = null;
-                                                getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
-                                                        stake_cpu_quantity, private_key);
-
-                                            } catch (NumberFormatException e) {
-                                                e.printStackTrace();
-                                            }
-                                            dialog.cancel();
-                                        } else {
-                                            //密码错误
-                                            iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(
-                                                    getResources().getString(R.string.eos_tip_wrong_password));
-
-                                            inputCount++;
-                                            if (inputCount > 3) {
-                                                dialog.cancel();
-                                                showPasswordHintDialog(OPERATION_DELEGATE);
-                                            }
-                                        }
-
-                                    }
-                                }
-                                break;
-                            case OPERATION_UNDELEGATE:
-                                //解除抵押操作
-                                if (EmptyUtils.isNotEmpty(curWallet)) {
-                                    EditText mPass = dialog.findViewById(R.id.et_password);
-                                    ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
-                                    iv_clear.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            mPass.setText("");
-                                        }
-                                    });
-                                    //验证密码
-
-                                    String inputPass = mPass.getText().toString();
-                                    final String cypher = curWallet.getCypher();
-                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
-                                            .TYPE_SHA256);
-                                    final String saved_pri_key = curEosWallet.getPrivateKey();
-                                    if (saved_pri_key != null) {
-                                        final String private_key = Seed39.keyDecrypt(inputPass, saved_pri_key);
-                                        if (hashPwd.equals(cypher)) {
-                                            //密码正确
-                                            final String curEOSName = curEosWallet.getCurrentEosName();
-                                            try {
-                                                String cpu_quantity;
-                                                String net_quantity;
-                                                if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty
-                                                        (getunDelegateNet())) {
-                                                    //解除抵押CPU和NET输入都不为空
-                                                    cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
-                                                    net_quantity = AmountUtil.round(getunDelegateNet(), 4);
-                                                } else if (EmptyUtils.isEmpty(getUndelegateCpu())) {
-                                                    //解除抵押CPU输入为空
-                                                    cpu_quantity = "0.0000";
-                                                    net_quantity = AmountUtil.round(getunDelegateNet(), 4);
-                                                } else if (EmptyUtils.isEmpty(getunDelegateNet())) {
-                                                    //解除抵押NET输入为空
-                                                    cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
-                                                    net_quantity = "0.0000";
-                                                } else {
-                                                    cpu_quantity = "0.0000";
-                                                    net_quantity = "0.0000";
-                                                }
-
-                                                String unstake_net_quantity = net_quantity + " EOS";
-                                                String unstake_cpu_quantity = cpu_quantity + " EOS";
-
-                                                confirmDialog = null;
-                                                getP().executeUndelegateLogic(curEOSName, curEOSName,
-                                                        unstake_net_quantity,
-                                                        unstake_cpu_quantity, private_key);
-
-                                            } catch (NumberFormatException e) {
-                                                e.printStackTrace();
-                                            }
-                                            dialog.cancel();
-                                        } else {
-                                            //密码错误
-                                            iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(
-                                                    getResources().getString(R.string.eos_tip_wrong_password));
-
-                                            inputCount++;
-                                            if (inputCount > 3) {
-                                                dialog.cancel();
-                                                showPasswordHintDialog(OPERATION_UNDELEGATE);
-                                            }
-                                        }
-
-                                    }
-                                }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        confirmAuthorDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                if (confirmDialog != null && !confirmDialog.isShowing()) {
-                    confirmDialog.show();
-                }
-            }
-        });
-        confirmAuthorDialog.show();
-        EditText inputPass = confirmAuthorDialog.findViewById(R.id.et_password);
-        EosWalletEntity curEosWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
-                .getEosWalletEntities().get(0);
-        if (EmptyUtils.isNotEmpty(curEosWallet)) {
-            inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint),
-                    curEosWallet.getCurrentEosName()));
-        }
-    }
+//    private void showConfirmAuthoriDialog(int operation_type) {
+//        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
+//        confirmAuthorDialog = new CustomFullDialog(this,
+//                R.layout.eos_dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
+//        confirmAuthorDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+//            @Override
+//            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+//                switch (view.getId()) {
+//                    case R.id.imc_cancel:
+//                        dialog.cancel();
+//                        switch (operation_type) {
+//                            case OPERATION_DELEGATE:
+//                                showConfirmDelegateiDialog();
+//                                break;
+//                            case OPERATION_UNDELEGATE:
+//                                showConfirmUndelegateiDialog();
+//                                break;
+//                        }
+//                        break;
+//                    case R.id.btn_confirm_authorization:
+//                        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao()
+//                                .getCurrentMultiWalletEntity();
+//                        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+//                        switch (operation_type) {
+//                            case OPERATION_DELEGATE:
+//                                //抵押操作
+//                                if (EmptyUtils.isNotEmpty(curWallet)) {
+//                                    EditText mPass = dialog.findViewById(R.id.et_password);
+//                                    ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
+//                                    iv_clear.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            mPass.setText("");
+//                                        }
+//                                    });
+//                                    //验证密码
+//
+//                                    String inputPass = mPass.getText().toString();
+//                                    final String cypher = curWallet.getCypher();
+//                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
+//                                            .TYPE_SHA256);
+//                                    final String saved_pri_key = curEosWallet.getPrivateKey();
+//                                    if (saved_pri_key != null) {
+//                                        final String private_key = Seed39.keyDecrypt(inputPass, saved_pri_key);
+//                                        if (hashPwd.equals(cypher)) {
+//                                            //密码正确
+//                                            final String curEOSName = curEosWallet.getCurrentEosName();
+//                                            try {
+//                                                String cpu_quantity;
+//                                                String net_quantity;
+//                                                if (EmptyUtils.isNotEmpty(getDelegateCpu()) && EmptyUtils.isNotEmpty
+//                                                        (getDelegateNet())) {
+//                                                    //抵押CPU和NET输入都不为空
+//                                                    cpu_quantity = AmountUtil.round(getDelegateCpu(), 4);
+//                                                    net_quantity = AmountUtil.round(getDelegateNet(), 4);
+//                                                } else if (EmptyUtils.isEmpty(getDelegateCpu())) {
+//                                                    //抵押CPU输入为空
+//                                                    cpu_quantity = "0.0000";
+//                                                    net_quantity = AmountUtil.round(getDelegateNet(), 4);
+//                                                } else {
+//                                                    //抵押NET输入为空
+//                                                    cpu_quantity = AmountUtil.round(getDelegateCpu(), 4);
+//                                                    net_quantity = "0.0000";
+//                                                }
+//
+//                                                String stake_net_quantity = net_quantity + " EOS";
+//                                                String stake_cpu_quantity = cpu_quantity + " EOS";
+//
+//                                                confirmDialog = null;
+//                                                getP().executeDelegateLogic(curEOSName, curEOSName, stake_net_quantity,
+//                                                        stake_cpu_quantity, private_key);
+//
+//                                            } catch (NumberFormatException e) {
+//                                                e.printStackTrace();
+//                                            }
+//                                            dialog.cancel();
+//                                        } else {
+//                                            //密码错误
+//                                            iv_clear.setVisibility(View.VISIBLE);
+//                                            GemmaToastUtils.showLongToast(
+//                                                    getResources().getString(R.string.eos_tip_wrong_password));
+//
+//                                            inputCount++;
+//                                            if (inputCount > 3) {
+//                                                dialog.cancel();
+//                                                showPasswordHintDialog(OPERATION_DELEGATE);
+//                                            }
+//                                        }
+//
+//                                    }
+//                                }
+//                                break;
+//                            case OPERATION_UNDELEGATE:
+//                                //解除抵押操作
+//                                if (EmptyUtils.isNotEmpty(curWallet)) {
+//                                    EditText mPass = dialog.findViewById(R.id.et_password);
+//                                    ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
+//                                    iv_clear.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            mPass.setText("");
+//                                        }
+//                                    });
+//                                    //验证密码
+//
+//                                    String inputPass = mPass.getText().toString();
+//                                    final String cypher = curWallet.getCypher();
+//                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
+//                                            .TYPE_SHA256);
+//                                    final String saved_pri_key = curEosWallet.getPrivateKey();
+//                                    if (saved_pri_key != null) {
+//                                        final String private_key = Seed39.keyDecrypt(inputPass, saved_pri_key);
+//                                        if (hashPwd.equals(cypher)) {
+//                                            //密码正确
+//                                            final String curEOSName = curEosWallet.getCurrentEosName();
+//                                            try {
+//                                                String cpu_quantity;
+//                                                String net_quantity;
+//                                                if (EmptyUtils.isNotEmpty(getUndelegateCpu()) && EmptyUtils.isNotEmpty
+//                                                        (getunDelegateNet())) {
+//                                                    //解除抵押CPU和NET输入都不为空
+//                                                    cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
+//                                                    net_quantity = AmountUtil.round(getunDelegateNet(), 4);
+//                                                } else if (EmptyUtils.isEmpty(getUndelegateCpu())) {
+//                                                    //解除抵押CPU输入为空
+//                                                    cpu_quantity = "0.0000";
+//                                                    net_quantity = AmountUtil.round(getunDelegateNet(), 4);
+//                                                } else if (EmptyUtils.isEmpty(getunDelegateNet())) {
+//                                                    //解除抵押NET输入为空
+//                                                    cpu_quantity = AmountUtil.round(getUndelegateCpu(), 4);
+//                                                    net_quantity = "0.0000";
+//                                                } else {
+//                                                    cpu_quantity = "0.0000";
+//                                                    net_quantity = "0.0000";
+//                                                }
+//
+//                                                String unstake_net_quantity = net_quantity + " EOS";
+//                                                String unstake_cpu_quantity = cpu_quantity + " EOS";
+//
+//                                                confirmDialog = null;
+//                                                getP().executeUndelegateLogic(curEOSName, curEOSName,
+//                                                        unstake_net_quantity,
+//                                                        unstake_cpu_quantity, private_key);
+//
+//                                            } catch (NumberFormatException e) {
+//                                                e.printStackTrace();
+//                                            }
+//                                            dialog.cancel();
+//                                        } else {
+//                                            //密码错误
+//                                            iv_clear.setVisibility(View.VISIBLE);
+//                                            GemmaToastUtils.showLongToast(
+//                                                    getResources().getString(R.string.eos_tip_wrong_password));
+//
+//                                            inputCount++;
+//                                            if (inputCount > 3) {
+//                                                dialog.cancel();
+//                                                showPasswordHintDialog(OPERATION_UNDELEGATE);
+//                                            }
+//                                        }
+//
+//                                    }
+//                                }
+//                        }
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
+//        confirmAuthorDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//            @Override
+//            public void onDismiss(DialogInterface dialog) {
+//                if (confirmDialog != null && !confirmDialog.isShowing()) {
+//                    confirmDialog.show();
+//                }
+//            }
+//        });
+//        confirmAuthorDialog.show();
+//        EditText inputPass = confirmAuthorDialog.findViewById(R.id.et_password);
+//        EosWalletEntity curEosWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+//                .getEosWalletEntities().get(0);
+//        if (EmptyUtils.isNotEmpty(curEosWallet)) {
+//            inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint),
+//                    curEosWallet.getCurrentEosName()));
+//        }
+//    }
 
     /**
      * 显示密码提示Dialog
      */
-    private void showPasswordHintDialog(int operation_type) {
-        confirmDialog.dismiss();
-        int[] listenedItems = {R.id.tv_i_understand};
-        CustomDialog dialog = new CustomDialog(this,
-                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
-        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
-
-            @Override
-            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.tv_i_understand:
-                        dialog.cancel();
-                        showConfirmAuthoriDialog(operation_type);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        dialog.show();
-
-        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
-        MultiWalletEntity walletEntity = DBManager.getInstance().getMultiWalletEntityDao()
-                .getCurrentMultiWalletEntity();
-        if (walletEntity != null) {
-            String passHint = walletEntity.getPasswordTip();
-            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
-            tv_pass_hint.setText(showInfo);
-        }
-    }
+//    private void showPasswordHintDialog(int operation_type) {
+//        confirmDialog.dismiss();
+//        int[] listenedItems = {R.id.tv_i_understand};
+//        CustomDialog dialog = new CustomDialog(this,
+//                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
+//        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+//
+//            @Override
+//            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+//                switch (view.getId()) {
+//                    case R.id.tv_i_understand:
+//                        dialog.cancel();
+//                        showConfirmAuthoriDialog(operation_type);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
+//        dialog.show();
+//
+//        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
+//        MultiWalletEntity walletEntity = DBManager.getInstance().getMultiWalletEntityDao()
+//                .getCurrentMultiWalletEntity();
+//        if (walletEntity != null) {
+//            String passHint = walletEntity.getPasswordTip();
+//            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
+//            tv_pass_hint.setText(showInfo);
+//        }
+//    }
 
     /**
      * cpu和net输入阈值判断
@@ -867,7 +985,7 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
 
     public void dismissDialog() {
         if (confirmDialog != null) { confirmDialog.dismiss(); }
-        if (confirmAuthorDialog != null) { confirmAuthorDialog.dismiss(); }
+//        if (confirmAuthorDialog != null) { confirmAuthorDialog.dismiss(); }
     }
 
     @Override
@@ -877,10 +995,10 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
             confirmDialog = null;
         }
 
-        if (confirmAuthorDialog != null) {
-            confirmAuthorDialog.dismiss();
-            confirmAuthorDialog = null;
-        }
+//        if (confirmAuthorDialog != null) {
+//            confirmAuthorDialog.dismiss();
+//            confirmAuthorDialog = null;
+//        }
         super.onDestroy();
     }
 }

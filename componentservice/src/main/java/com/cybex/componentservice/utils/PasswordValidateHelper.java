@@ -2,6 +2,7 @@ package com.cybex.componentservice.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -33,6 +34,12 @@ public class PasswordValidateHelper {
     private String etHintStr;
     private String confirmStr;
     private int iconRes;
+    private CustomFullDialog dialog;
+
+
+
+    private PasswordDialogCallback dialogCallback;
+    private EditText etPasword;
 
     public PasswordValidateHelper(MultiWalletEntity walletEntity,Activity activity) {
         this.walletEntity = walletEntity;
@@ -66,12 +73,24 @@ public class PasswordValidateHelper {
 
 
     public void startValidatePassword(PasswordValidateCallback callback){
-
-
-
+        if(dialog!=null){
+            if(!dialog.isShowing()){
+                dialog.show();
+            }
+            return;
+        }
         int[] listenedItems = {R.id.baseservice_passwordvalidate_cancel_icon, R.id.baseservice_passwordvalidate_confirm};
-        CustomFullDialog dialog = new CustomFullDialog(activity,
-                R.layout.baseservice_dialog_password_validate, listenedItems, false, false,Gravity.BOTTOM);
+        dialog = new CustomFullDialog(activity,
+                R.layout.baseservice_dialog_password_validate, listenedItems, false, false, Gravity.BOTTOM);
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(dialogCallback!=null){
+                    dialogCallback.onDialogCancel();
+                }
+            }
+        });
+
         dialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -107,7 +126,7 @@ public class PasswordValidateHelper {
 
                         } else {
                             //密码正确，
-                            dialog.cancel();
+                            dialog.dismiss();
                             if(callback!=null){
                                 callback.onValidateSuccess(pwd);
                             }
@@ -119,7 +138,7 @@ public class PasswordValidateHelper {
             }
         });
         dialog.show();
-        EditText etPasword = dialog.findViewById(R.id.baseservice_passwordvalidate_et_password);
+        etPasword = dialog.findViewById(R.id.baseservice_passwordvalidate_et_password);
         ImageView ivCancel = dialog.findViewById(R.id.baseservice_passwordvalidate_cancel_icon);
         Button  btnConfirm= dialog.findViewById(R.id.baseservice_passwordvalidate_confirm);
         TextView  tvHint= dialog.findViewById(R.id.baseservice_passwordvalidate_hint);
@@ -165,8 +184,34 @@ public class PasswordValidateHelper {
     }
 
 
+    public void dismissDialog(){
+        if(dialog!=null){
+            if(dialog.isShowing()){
+                dialog.dismiss();
+            }
+        }
+    }
+
+
+    public void clearPsw(){
+        if(dialog!=null){
+           etPasword.setText("");
+        }
+    }
+
+
+    public void setDialogCallback(PasswordDialogCallback dialogCallback) {
+        this.dialogCallback = dialogCallback;
+    }
+
+
     public interface PasswordValidateCallback {
         void onValidateSuccess(String password);
         void onValidateFail(int failedCount);
+    }
+
+
+    public interface PasswordDialogCallback {
+        void onDialogCancel();
     }
 }
