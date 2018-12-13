@@ -52,21 +52,34 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
     @BindView(R.id.tv_RAM) TextView tvRAM;
     @BindView(R.id.tv_rmb_amount) TextView tvRmbAmount;
     @BindView(R.id.bt_wechat_pay) Button btWechatPay;
+    private String newPrice;
+    private String orderId = "";
+    private String account_name;
+    private String public_key;
+    private String action_id;
+    private WXPayQueryOrderInfoResult.ResultBean resultBean;
+
+    public static ActivateByRMBFragment newInstance(Bundle args) {
+        ActivateByRMBFragment fragment = new ActivateByRMBFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public void setNewPrice(String newPrice) {
         this.newPrice = newPrice;
     }
 
-    private String newPrice;
-    private String orderId = "";
-    private String account_name;
-    private String public_key;
+    public String getAction_id() {
+        return action_id;
+    }
+
+    public void setAction_id(String action_id) {
+        this.action_id = action_id;
+    }
 
     public void setResultBean(WXPayQueryOrderInfoResult.ResultBean resultBean) {
         this.resultBean = resultBean;
     }
-
-    private WXPayQueryOrderInfoResult.ResultBean resultBean;
 
     @OnClick(R.id.bt_wechat_pay)
     public void initPayProcess() {
@@ -77,16 +90,8 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                 public_key = publicKey;
             }
 
-            //String rmbFee = tvRmbAmount.getText().toString().trim();
-            LoggerManager.d("newPrice", newPrice);
             getP().getPrepaidInfo(account_name, public_key, newPrice);
         }
-    }
-
-    public static ActivateByRMBFragment newInstance(Bundle args) {
-        ActivateByRMBFragment fragment = new ActivateByRMBFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     /**
@@ -112,10 +117,12 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                     //支付完成
                     AlertUtil.showLongCommonAlert(getActivity(), "支付成功");
                     //调真正创建账户接口
-                    LoggerManager.d("orderId", orderId);
-                    if (getArguments() != null) {
-                        getP().checkCreateAccountStatus(account_name, public_key, orderId);
-                    }
+//                    LoggerManager.d("orderId", orderId);
+//                    if (getArguments() != null) {
+//                        getP().checkCreateAccountStatus(account_name, public_key, orderId);
+//                    }
+                    AppManager.getAppManager().finishAllActivity();
+                    UISkipMananger.launchHome(getActivity());
                     break;
                 case ParamConstants.WX_SUCCESS_TOREFUND:
                     //支付完成但订单金额和现在的创建账户金额已经不符，需要退款
@@ -140,50 +147,20 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         }
     }
 
-    /**
-     * 时间戳比较验证状态判断
-     */
-//    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-//    public void onCreateStatusReceieved(ValidateResultEvent event){
-//        if (event != null){
-//            dissmisProgressDialog();
-//            if(event.isSuccess()){//创建成功
-//                //跳转到主界面
-//                UISkipMananger.launchHome(getActivity());
-//                /*
-//                if (curEosWallet != null && getArguments() != null){
-//                    final String private_key_cypher = curEosWallet.getPrivateKey();
-//                    final String private_key = Seed39.keyDecrypt(password, private_key_cypher);
-//
-//                    KeySendEvent keySendEvent = new KeySendEvent(private_key);
-//                    EventBusProvider.postSticky(keySendEvent);
-//                    WalletIDEvent walletIDEvent = new WalletIDEvent(curEosWallet.getId());
-//                    EventBusProvider.postSticky(walletIDEvent);
-//                    UISkipMananger.launchBakupGuide(getActivity());
-//                }
-//                */
-//
-//            }else {
-//                //创建失败,弹框，删除当前钱包，判断是否还有钱包，跳转
-//
-//                List<MultiWalletEntity> walletEntityList = DBManager.getInstance().getMultiWalletEntityDao()
-//                        .getMultiWalletEntityList();
-//                showFailDialog(EmptyUtils.isEmpty(walletEntityList));
-//
-//                /*
-//                WalletEntity curWallet = DBManager.getInstance().getWalletEntityDao().getCurrentWalletEntity();
-//                DBManager.getInstance().getWalletEntityDao().deleteEntity(curWallet);
-//                List<WalletEntity> walletEntityList = DBManager.getInstance().getWalletEntityDao()
-//                        .getWalletEntityList();
-//                showFailDialog(EmptyUtils.isEmpty(walletEntityList));
-//                */
-//            }
-//
-//        }
-//    }
+
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     @Override
@@ -217,9 +194,9 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                 PayReq req = new PayReq();
                 req.appId = ParamConstants.WXPAY_APPID;
                 req.partnerId = ParamConstants.WXPAY_PARTNER_ID;
-                req.prepayId = result.getPrepayid();
+                req.prepayId = result.getPrepay_id();
                 req.packageValue = ParamConstants.WXPAY_PACKAGE_VALUE;
-                req.nonceStr = result.getNonceStr();
+                req.nonceStr = result.getNonce_str();
                 req.timeStamp = String.valueOf(result.getTimestamp());
                 req.sign = result.getSign();
                 iwxapi.sendReq(req);
@@ -233,16 +210,6 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         tvCPU.setText(result.getCpu());
         tvNET.setText(result.getNet());
         tvRAM.setText(result.getRam());
-    }
-
-    @Override
-    public boolean useEventBus() {
-        return true;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 
     /**

@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cybex.componentservice.bean.TokenBean;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.ui.adapter.decoration.LeftSpaceItemDecoration;
 import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.componentservice.utils.SizeUtil;
@@ -55,6 +56,18 @@ public class EosCardView extends CardView{
     private LinearLayout mViewEosTokens;
     private TextView mToken;
     private TextView mTvTokensNumber;
+
+
+    public void setCurrencyType(int currencyType) {
+        if (currencyType == CacheConstants.CURRENCY_CNY){
+            mTvCurrencyType.setText("≈ ¥ ");
+        }else if (currencyType == CacheConstants.CURRENCY_USD){
+            mTvCurrencyType.setText("≈ $ ");
+        }else {
+            mTvCurrencyType.setText("≈ ¥ ");
+        }
+    }
+
     private TextView mTvCurrencyType;
     private TextView mTotalPriceAmount;
     private RecyclerView mRvTokenIcons;
@@ -173,9 +186,9 @@ public class EosCardView extends CardView{
         if(state==STATE_WAIT_NOTIFY){
             mTvAccountStatus.setText(getResources().getText(R.string.card_eos_wait_notify));
         }else if(state==STATE_CREATING){
-            //mTvAccountStatus.setText(String.format(this.getResources().getString(R.string
-                    //.card_eos_creating_progress),createProgress));
-            mTvAccountStatus.setText(getResources().getText(R.string.account_confirming));
+            mTvAccountStatus.setText(String.format(this.getResources().getString(R.string
+                    .card_eos_creating_progress),createProgress));
+            //mTvAccountStatus.setText(getResources().getText(R.string.account_confirming));
         }else if(state==STATE_CREATED){
             mTvAccountStatus.setText(accountName);
         }

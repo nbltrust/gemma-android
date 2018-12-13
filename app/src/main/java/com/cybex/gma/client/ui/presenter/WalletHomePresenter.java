@@ -1,5 +1,7 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.content.Context;
+
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.config.BaseConst;
@@ -7,19 +9,24 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.AmountUtil;
+import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.CybexPriceEvent;
+import com.cybex.gma.client.job.JobUtils;
 import com.cybex.gma.client.ui.activity.WalletHomeActivity;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.request.GetkeyAccountReqParams;
 import com.cybex.gma.client.ui.model.response.AccountInfo;
+import com.cybex.gma.client.ui.model.response.CheckActionStatusResult;
 import com.cybex.gma.client.ui.model.response.GetEosTokensResult;
 import com.cybex.gma.client.ui.model.response.GetKeyAccountsResult;
 import com.cybex.gma.client.ui.model.response.UnitPrice;
+import com.cybex.gma.client.ui.request.CheckActionStatusRequest;
 import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
 import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
 import com.cybex.gma.client.ui.request.GetEosTokensRequest;
@@ -38,6 +45,8 @@ import org.json.JSONArray;
 
 import java.util.List;
 
+import io.hypertrack.smart_scheduler.Job;
+import io.hypertrack.smart_scheduler.SmartScheduler;
 import io.reactivex.exceptions.Exceptions;
 
 public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
@@ -347,17 +356,17 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                         if (array.length() > 0) {
                                             String balance = array.optString(0);
                                             if (EmptyUtils.isNotEmpty(balance)) {
-                                                GemmaToastUtils.showLongToast(
-                                                        getV().getString(R.string.eos_loading_success));
-                                                getV().showEosBalance(balance);
-                                                //OkGo.getInstance().cancelAll();
+//                                                GemmaToastUtils.showLongToast(
+//                                                        getV().getString(R.string.eos_loading_success));
+                                                queryUnitPrice(balance);
+//                                                getV().showEosBalance(balance);
                                             }
                                         } else {
                                             //可用余额为0，链上返回空
                                             LoggerManager.d("case 2");
-                                            getV().showEosBalance("0.0000");
-                                            GemmaToastUtils.showLongToast(
-                                                    getV().getString(R.string.eos_loading_success));
+                                            queryUnitPrice("0.0000");
+//                                            getV().showEosBalance("0.0000");
+//
                                         }
                                     } else {
                                         //LoggerManager.d("case 3");
@@ -371,7 +380,8 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     GemmaToastUtils.showLongToast(
                                             getV().getString(R.string.eos_load_account_info_fail));
                                 }
-                                getV().dissmisProgressDialog();
+                                //getV().dissmisProgressDialog();
+
                             }
 
                         } catch (Throwable t) {
@@ -395,7 +405,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
      *
      * @return
      */
-    public String getCurEosname() {
+    private String getCurEosname() {
         MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         if (curWallet != null && curWallet.getEosWalletEntities().size() > 0) {
             EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
@@ -408,7 +418,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
     /**
      * 更新
      */
-    public void updateBluetoothWallet(String cur_eos_name, List<String> account_names) {
+    private void updateBluetoothWallet(String cur_eos_name, List<String> account_names) {
         MultiWalletEntity bluetoothMultiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao()
                 .getBluetoothWalletList().get(0);
 
@@ -433,7 +443,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
     /**
      * 更新EOS钱包状态
      */
-    public void updateEOSWallet(List<String> account_names) {
+    private void updateEOSWallet(List<String> account_names) {
         MultiWalletEntity curMultiWallet = DBManager.getInstance().getMultiWalletEntityDao()
                 .getCurrentMultiWalletEntity();
         List<EosWalletEntity> eosList = curMultiWallet.getEosWalletEntities();
@@ -456,6 +466,184 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                 DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(curMultiWallet);
             }
         }
+    }
+
+    public void queryUnitPrice(String balance){
+
+        try {
+
+            new UnitPriceRequest(UnitPrice.class)
+                    .getUnitPriceRequest(new JsonCallback<UnitPrice>() {
+
+                        @Override
+                        public void onError(Response<UnitPrice> response) {
+                            if (getV() != null){
+                                super.onError(response);
+                                getV().dissmisProgressDialog();
+                                GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                            }
+                        }
+
+                        @Override
+                        public void onSuccess(Response<UnitPrice> response) {
+                            if (response != null && response.body() != null) {
+                                UnitPrice unitPrice = response.body();
+                                List<UnitPrice.PricesBean> prices = unitPrice.getPrices();
+                                if (EmptyUtils.isNotEmpty(prices)) {
+
+                                    CybexPriceEvent event = new CybexPriceEvent();
+                                    String[] str = new String[2];
+                                    for (int i = 0; i < prices.size(); i++) {
+                                        UnitPrice.PricesBean bean = prices.get(i);
+
+                                        if (bean != null){
+                                            if (bean.getName().equals(VALUE_SYMBOL_EOS)){
+                                                str[1] = String.valueOf(bean.getValue());
+                                                event.setEosPrice(String.valueOf(bean.getValue()));
+                                            }
+                                            if (bean.getName().equals(VALUE_SYMBOL_USDT)){
+                                                str[0] = String.valueOf(bean.getValue());
+                                                event.setUsdtPrice(String.valueOf(bean.getValue()));
+                                            }
+                                        }
+
+                                    }
+
+                                    EventBusProvider.postSticky(event);
+                                    getV().showEosBalance(balance);
+                                    getV().dissmisProgressDialog();
+                                    GemmaToastUtils.showLongToast(getV().getString(R.string.eos_loading_success));
+
+                                }else {
+                                    getV().dissmisProgressDialog();
+                                    GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                                }
+                            }else {
+                                getV().dissmisProgressDialog();
+                                GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                            }
+                        }
+                    });
+        } catch (Throwable t) {
+            throw Exceptions.propagate(t);
+        }
+
+    }
+
+    /**
+     * 检查抵押Action的状态
+     * 当返回值为3（pending）已上链正在等待确认的时候重新执行之前的转账操作
+     *
+     * @param action_id
+     */
+    public void checkActionStatus(String action_id) {
+
+        new CheckActionStatusRequest(CheckActionStatusResult.class, action_id)
+                .checkActionStatus(new JsonCallback<CheckActionStatusResult>() {
+                    @Override
+                    public void onSuccess(Response<CheckActionStatusResult> response) {
+                        if (getV() != null) {
+                            if (response != null && response.body() != null) {
+                                CheckActionStatusResult result = response.body();
+                                CheckActionStatusResult.ResultBean resultBean = result.getResult();
+                                if (resultBean != null) {
+                                    int status = resultBean.getStatus();
+                                    if (status <= 3){
+                                        //轮询
+                                        startValidatePolling(action_id, 10000);
+                                        int block_num = resultBean.getBlock_num();
+                                        int lib = resultBean.getLast_irreversible_block();
+                                        double progress = getProgressPrecentage(block_num, lib);
+                                        getV().setmProgress((int)progress);
+                                        updateEosAccountStatus(ParamConstants.EOSACCOUNT_CONFIRMING);
+
+                                    }
+                                    else if (status == 4) {
+                                        //已完成
+
+                                        removePollingJob();
+                                        updateEosAccountStatus(ParamConstants.EOSACCOUNT_ACTIVATED);
+                                        getV().setActionId(null);
+
+                                    } else {
+                                      //失败
+
+                                        removePollingJob();
+                                        updateEosAccountStatus(ParamConstants.EOSACCOUNT_NOT_ACTIVATED);
+                                        getV().setActionId(null);
+
+                                    }
+                                    getV().updateEosCardView();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<CheckActionStatusResult> response) {
+                        if (getV() != null) {
+                            super.onError(response);
+                            getV().dissmisProgressDialog();
+                            AlertUtil.showShortUrgeAlert(getV(), getV().getString(R.string.eos_chain_unstable));
+                        }
+                    }
+
+                });
+    }
+
+    /**
+     * 更新数据库中当前EOS账号的状态
+     * @param status
+     */
+    public void updateEosAccountStatus(int status){
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        if (curWallet != null && curWallet.getEosWalletEntities().size() > 0){
+            EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+            curEosWallet.setIsConfirmLib(status);
+            curEosWallet.save();
+            curWallet.save();
+        }
+    }
+
+    /**
+     * 计算该Transaction确认中大致百分比
+     *
+     * @return
+     */
+    public double getProgressPrecentage(int block_num, int lib_num) {
+        return Math.min(1 - Math.min((block_num - lib_num) / 325, 1), 0.99) * 100;
+    }
+
+    /**
+     * 移除轮询
+     */
+    private void removePollingJob() {
+        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+        if (smartScheduler != null && smartScheduler.contains(ParamConstants.POLLING_JOB)) {
+            smartScheduler.removeJob(ParamConstants.POLLING_JOB);
+        }
+    }
+
+    /**
+     * 开启一次比较时间戳验证轮询
+     * 时间单位毫秒
+     */
+    public void startValidatePolling(String actionId, int intervalTime) {
+        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+        if (!smartScheduler.contains(ParamConstants.POLLING_JOB)) {
+            SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
+                @Override
+                public void onJobScheduled(Context context, Job job) {
+                    LoggerManager.d("validate polling executed");
+                    checkActionStatus(actionId);
+                }
+
+            };
+
+            Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, intervalTime);
+            smartScheduler.addJob(job);
+        }
+
     }
 
 }

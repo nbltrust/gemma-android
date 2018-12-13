@@ -98,7 +98,6 @@ public class WXPayEntryActivity extends XActivity<WXPayEntryPresenter> implement
     public void initData(Bundle savedInstanceState) {
         api = WXAPIFactory.createWXAPI(this, ParamConstants.WXPAY_APPID);
         api.handleIntent(getIntent(), this);
-        LoggerManager.d("we are at WXPayEntryActivity");
     }
 
     @Override

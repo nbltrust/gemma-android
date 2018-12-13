@@ -77,12 +77,14 @@
 
 
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="52dp"
         >
 
         <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_wallet_manage"
             android:layout_marginStart="@dimen/common_page_content_padding"
             android:id="@+id/tv_wallet_name"
             tools:text="WOOKONG Wallet 1"
@@ -90,10 +92,10 @@
             android:maxLines="1"
             android:textStyle="bold"
             android:layout_centerVertical="true"
-            android:layout_width="240dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black_title"
-            android:layout_marginEnd="106dp"
+            android:layout_marginEnd="10dp"
             android:textSize="@dimen/font_7"
             android:autoSizeTextType="uniform"
             android:autoSizeStepGranularity="2dp"
@@ -102,25 +104,24 @@
             />
 
         <ImageView
+            app:layout_constraintEnd_toStartOf="@id/iv_settings"
             android:src="@drawable/ic_add_wallet"
             android:id="@+id/iv_wallet_manage"
-            android:layout_toLeftOf="@+id/iv_settings"
-            android:layout_marginRight="24dp"
+            android:layout_marginEnd="24dp"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <ImageView
+            app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/ic_settings"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/common_page_content_padding"
-            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/common_page_content_padding"
             android:id="@+id/iv_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <com.cybex.base.view.refresh.CommonRefreshLayout
         android:id="@+id/view_refresh_wallet_home"

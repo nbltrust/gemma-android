@@ -40,6 +40,7 @@ public class WXPayEntryPresenter extends XPresenter<WXPayEntryActivity> {
                                 String order_state = result.getStatus();
                                 int confirm_status = getRealStatus(pay_state, order_state);
                                 LoggerManager.d("confirm_status", confirm_status);
+
                                 WXPayStatusEvent event = new WXPayStatusEvent();
                                 event.setStatus(confirm_status);
                                 EventBusProvider.postSticky(event);

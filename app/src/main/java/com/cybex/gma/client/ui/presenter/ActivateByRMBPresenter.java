@@ -11,6 +11,7 @@ import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.ActionIdEvent;
 import com.cybex.gma.client.event.OrderIdEvent;
 import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.componentservice.manager.DBManager;
@@ -134,6 +135,12 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
 
                                 if (result.getResult() != null){
                                     WXPayPlaceOrderResult.ResultBean resultBean = result.getResult();
+                                    String action_id = resultBean.getAction_id();
+
+                                    ActionIdEvent event = new ActionIdEvent();
+                                    event.setAction_id(action_id);
+                                    EventBusProvider.postSticky(event);
+
                                     getV().callWXPay(resultBean);
                                 }
                             }
@@ -188,6 +195,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                 });
     }
 
+
     /**
      * 查询创建账户状态
      */
@@ -229,7 +237,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                 }
                             } else if (data.code == 10022){
                                 //todo 上链失败,手动再调创建接口
-                                checkCreateAccountStatus(eos_username, public_key, orderId);
+                                //checkCreateAccountStatus(eos_username, public_key, orderId);
                             }else if (data.code == 10020){
                                 //todo 该Account被抢注
                                 AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_create_fail));
