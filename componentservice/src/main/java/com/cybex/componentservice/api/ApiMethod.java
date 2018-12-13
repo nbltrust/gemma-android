@@ -52,6 +52,7 @@ public interface ApiMethod {
 
     String API_CHECK_GOOD_CODE = "/api/v2/goodscode/";
 
+    String API_CREATE_ACCOUNT = "/api/v2/account/new";
 
     /*----------------链上服务器API Method-----------------------*/
 

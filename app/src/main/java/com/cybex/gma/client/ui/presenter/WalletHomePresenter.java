@@ -468,6 +468,10 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
         }
     }
 
+    /**
+     * 访问Cybex获取当前EOS和USDT的价格
+     * @param balance
+     */
     public void queryUnitPrice(String balance){
 
         try {
@@ -548,7 +552,8 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                 CheckActionStatusResult.ResultBean resultBean = result.getResult();
                                 if (resultBean != null) {
                                     int status = resultBean.getStatus();
-                                    if (status <= 3){
+                                    LoggerManager.d("Action status", status);
+                                    if (status == 3 || status == 2 || status == 1){
                                         //轮询
                                         startValidatePolling(action_id, 10000);
                                         int block_num = resultBean.getBlock_num();
@@ -595,7 +600,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
      * 更新数据库中当前EOS账号的状态
      * @param status
      */
-    public void updateEosAccountStatus(int status){
+    private void updateEosAccountStatus(int status){
         MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
         if (curWallet != null && curWallet.getEosWalletEntities().size() > 0){
             EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);

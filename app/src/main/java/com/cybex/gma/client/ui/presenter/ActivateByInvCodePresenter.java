@@ -19,14 +19,20 @@ import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.JNIUtil;
 import com.cybex.gma.client.ui.fragment.ActivateByInvCodeFragment;
+import com.cybex.gma.client.ui.model.request.CreateNewEosAccountReqParams;
 import com.cybex.gma.client.ui.model.request.UserRegisterReqParams;
 import com.cybex.gma.client.ui.model.response.UserRegisterResult;
+import com.cybex.gma.client.ui.request.CreateNewEosAccountRequest;
 import com.cybex.gma.client.ui.request.UserRegisterRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.tapadoo.alerter.Alert;
 import com.tapadoo.alerter.Alerter;
 
@@ -93,6 +99,40 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                     @Override
                     public void onComplete() {
 
+                    }
+                });
+    }
+
+    public void createEosAccount(String account_name, String public_key, String invCode){
+        CreateNewEosAccountReqParams params = new CreateNewEosAccountReqParams();
+
+        params.setApp_id(ParamConstants.APP_ID_GEMMA);
+        params.setGoods_id(ParamConstants.CODE_TYPE_ACTIVATE_CODE);
+        params.setCode(invCode);
+        params.setAccount_name(account_name);
+        params.setPublic_key(public_key);
+
+        String jsonParams = GsonUtils.objectToJson(params);
+
+        new CreateNewEosAccountRequest(String.class)
+                .setJsonParams(jsonParams)
+                .createNewAccount(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        if (getV() != null){
+                            if (response != null && response.body() != null){
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        if (getV() != null){
+                            super.onError(response);
+                            AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_tip_check_network));
+                            getV().dissmisProgressDialog();
+                        }
                     }
                 });
     }

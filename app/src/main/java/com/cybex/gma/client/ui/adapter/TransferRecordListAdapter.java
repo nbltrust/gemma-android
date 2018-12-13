@@ -39,6 +39,10 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
     @Retention(RetentionPolicy.SOURCE)
     public @interface TradeStatus { }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
     private String getCurrentStatus(@TradeStatus int STATUS) {
         String statusResult = "";
@@ -92,7 +96,7 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
 
 
             if (!TextUtils.isEmpty(currentEosName)) {
-                if (item.sender.equals(currentEosName)||adapterPosition%2==0) {
+                if (item.sender.equals(currentEosName)) {
                     //转出 -
                     account = item.receiver;
                     iconArrow.setImageResource(R.drawable.ic_tab_pay);

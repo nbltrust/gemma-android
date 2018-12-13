@@ -121,6 +121,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
 //                    if (getArguments() != null) {
 //                        getP().checkCreateAccountStatus(account_name, public_key, orderId);
 //                    }
+                    getP().updateWallet(account_name);
                     AppManager.getAppManager().finishAllActivity();
                     UISkipMananger.launchHome(getActivity());
                     break;
@@ -135,6 +136,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                 case ParamConstants.WX_CLOSED:
                     //订单已关闭
                     showUnfinishDialog();
+
                     break;
                 case ParamConstants.WX_USERPAYING:
                     //正在支付
@@ -194,9 +196,11 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                 PayReq req = new PayReq();
                 req.appId = ParamConstants.WXPAY_APPID;
                 req.partnerId = ParamConstants.WXPAY_PARTNER_ID;
-                req.prepayId = result.getPrepay_id();
+                req.prepayId = result.getPrepayid();
+//                LoggerManager.d("prepayId", req.prepayId);
                 req.packageValue = ParamConstants.WXPAY_PACKAGE_VALUE;
-                req.nonceStr = result.getNonce_str();
+                req.nonceStr = result.getNonceStr();
+//                LoggerManager.d("nonceStr", req.nonceStr);
                 req.timeStamp = String.valueOf(result.getTimestamp());
                 req.sign = result.getSign();
                 iwxapi.sendReq(req);

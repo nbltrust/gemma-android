@@ -34,7 +34,7 @@ public class ApiPath {
      */
 
     //中心化服务器host
-    public static String HOST_CENTER_SERVER = "http://faucetdev-eos-wookong.nbltrust.com:3002";
+    public static String HOST_CENTER_SERVER = "http://faucetdev-eos-wookong.nbltrust.com:3003";
     //"http://139.196.73.117:3002"微信支付沙盒测试环境
     //"http://139.196.73.117:3001"真实环境
     //"http://139.196.73.117:3005"灰度staging环境
@@ -43,7 +43,7 @@ public class ApiPath {
     //public static String HOST_CENTER_SERVER_V2 = "https://faucetdev-eos-wookong.nbltrust.com:7002";
 
     //链上服务器host
-    public static String HOST_ON_CHAIN = "http://47.75.154.248:50003";
+    public static String HOST_ON_CHAIN = "https://eos-node-wookong.cybex.io";
     //http://47.75.154.248:50003 北京团队测试链
     //http://52.77.177.200:8888 cybex eos 主链节点
 

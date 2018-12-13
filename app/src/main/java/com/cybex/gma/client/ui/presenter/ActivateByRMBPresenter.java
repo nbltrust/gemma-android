@@ -124,7 +124,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
      * 根据orderID再调中心化服务器支付订单API
      * @param orderId
      */
-    public void placeOrder(String orderId){
+    private void placeOrder(String orderId){
         new WXPayPlaceOrderRequest(WXPayPlaceOrderResult.class, orderId)
                 .getWXPayPlaceOrderInfo(new JsonCallback<WXPayPlaceOrderResult>() {
                     @Override
@@ -229,7 +229,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                 UserRegisterResult registerResult = data.result;
                                 if (registerResult != null) {
                                     String txId = registerResult.txId;
-                                    updateWallet(eos_username, txId, orderId);
+                                    //updateWallet(eos_username, txId, orderId);
                                     TimeStampValidateJob.executedCreateLogic(eos_username, public_key);
                                     AppManager.getAppManager().finishActivity(ActivateAccountMethodActivity.class);
                                     AppManager.getAppManager().finishActivity(CreateEosAccountActivity.class);
@@ -265,8 +265,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
     }
 
 
-    private void updateWallet(
-            final String eosUsername, final String txId, final String invCode) {
+    public void updateWallet(final String eosUsername) {
 
         MultiWalletEntity multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao()
                 .getCurrentMultiWalletEntity();
@@ -278,14 +277,10 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
         //设置eosNameJson
         List<String> account_names = new ArrayList<>();
         account_names.add(eosUsername);
-        //final String eosNameJson = GsonUtils.objectToJson(account_names);
-        //walletEntity.setEosNameJson(eosNameJson);
+        final String eosNameJson = GsonUtils.objectToJson(account_names);
+        walletEntity.setEosNameJson(eosNameJson);
         //设置currentEosName，创建钱包步骤中可以直接设置，因为默认eosNameJson中只会有一个用户名字符串
         walletEntity.setCurrentEosName(eosUsername);
-        //设置当前Transaction的Hash值
-        walletEntity.setTxId(txId);
-        //设置邀请码
-        walletEntity.setInvCode(invCode);
         //设置EOS钱包状态为正在创建
         walletEntity.setIsConfirmLib(ParamConstants.EOSACCOUNT_CONFIRMING);
 
@@ -295,6 +290,20 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
         multiWalletEntity.setEosWalletEntities(eosWalletEntities);
 
         DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(multiWalletEntity);
+    }
+
+    /**
+     * 更新数据库中当前EOS账号的状态
+     * @param status
+     */
+    public void updateEosAccountStatus(int status){
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        if (curWallet != null && curWallet.getEosWalletEntities().size() > 0){
+            EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+            curEosWallet.setIsConfirmLib(status);
+            curEosWallet.save();
+            curWallet.save();
+        }
     }
 
 }

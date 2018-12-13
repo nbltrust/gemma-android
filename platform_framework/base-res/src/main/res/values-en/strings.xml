@@ -840,7 +840,7 @@
     <!-- asset detail -->
     <string name="title_asset_detail">资产详情</string>
     <string name="income">收款</string>
-    <string name="status_accepted">已接受</string>
+    <string name="status_accepted">已接收</string>
     <string name="status_sent">已发送</string>
     <string name="status_sending">发送中...%1$s%</string>
 

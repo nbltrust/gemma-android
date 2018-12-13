@@ -275,11 +275,13 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
         if (DeviceOperationManager.getInstance().isDeviceConnectted(currentDeviceName)) {
             DeviceOperationManager.getInstance().freeContext(this.toString(), currentDeviceName, null);
         }
-        super.onDestroy();
+
         if (unbinder != null) {
             unbinder.unbind();
         }
+
         dissmisProgressDialog();
+        super.onDestroy();
     }
 
     @Override
@@ -533,7 +535,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
         if (curEosWallet != null) {
             final int eosStatus = curEosWallet.getIsConfirmLib();
-            //LoggerManager.d("eosStatus", eosStatus);
+            LoggerManager.d("eosStatus", eosStatus);
 
             if (eosStatus == ParamConstants.EOSACCOUNT_ACTIVATED) {
                 //账户已被激活

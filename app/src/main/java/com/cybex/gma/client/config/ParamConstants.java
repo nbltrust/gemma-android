@@ -22,6 +22,9 @@ public interface ParamConstants {
 
     int APP_ID_GEMMA = 1;
 
+    int CODE_TYPE_ACTIVATE_CODE = 1002;
+    int CODE_TYPE_SN = 1001;
+
     int ALARM_JOB = 1;
     int POLLING_JOB = 2;
     int BLUETOOTH_CONNECT_JOB = 3;

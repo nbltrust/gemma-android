@@ -339,6 +339,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         } else {
             //首次请求
             mAdapter = new TransferRecordListAdapter(curDataList, currentEosName);
+            mAdapter.setHasStableIds(true);
             mRecyclerView.setAdapter(mAdapter);
             getP().updateDataSource(curDataList);
         }
