@@ -61,7 +61,7 @@
         android:layout_marginEnd="@dimen/dimen_20"
         android:layout_marginStart="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_20"
-        android:background="@drawable/shape_corner"
+        android:background="@drawable/shape_corner_with_stroke"
         android:padding="@dimen/dimen_16">
 
         <TextView

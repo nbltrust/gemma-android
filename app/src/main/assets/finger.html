@@ -428,6 +428,11 @@
       console.log('next: ' + index)
         index += 1;
 
+        if (index > 16) {
+            index = 16;
+            return;
+        }
+
         var group = document.querySelector("#group" + index);
         group.classList.remove('animate-out');
         group.classList.add('animate-in');
@@ -446,6 +451,7 @@
 
     function prev() {
       console.log('prev: ' + index)
+      if(index === 0)return;
         var group = document.querySelector("#group" + index);
         group.classList.remove('animate-in');
         group.classList.add('animate-out');

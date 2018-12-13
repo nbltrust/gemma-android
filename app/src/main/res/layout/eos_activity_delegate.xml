@@ -28,15 +28,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_10"
-                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:layout_marginStart="@dimen/dimen_20"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10"
-                    android:layout_marginEnd="@dimen/dimen_10"
                     android:orientation="vertical">
 
                     <com.cybex.base.view.tablayout.CommonTabLayout
@@ -47,9 +45,8 @@
                         title:tl_indicator_gravity="BOTTOM"
                         title:tl_indicator_height="1dp"
                         title:tl_indicator_style="NORMAL"
-                        title:tl_indicator_width="140dp"
                         title:tl_indicator_width_equal_title="false"
-                        title:tl_tab_padding="6dp"
+                        title:tl_tab_padding="40dp"
                         title:tl_tab_space_equal="true"
                         title:tl_textBold="SELECT"
                         title:tl_textSelectColor="@color/colorTabTextSelect"
@@ -60,11 +57,15 @@
 
                     </com.cybex.base.view.tablayout.CommonTabLayout>
 
-                    <ImageView
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/eos_di_notify_bg"/>
+                        android:layout_height="1dp"
+                        android:background="#dddddd"
+                        android:layerType="software"
+                        android:layout_marginBottom="20dp"
+                        >
 
+                    </View>
                     <include
                         android:id="@+id/layout_tab_delegate"
                         layout="@layout/eos_ui_tab_delegte">

@@ -54,7 +54,7 @@
     <Button
         android:id="@+id/bt_next_step"
         style="@style/bt_long_in_linearLayout"
-        android:text="@string/eos_btn_start_input"
+        android:text="@string/eos_btn_complete_input"
         android:layout_marginStart="@dimen/common_view_margin"
         android:layout_marginEnd="@dimen/common_view_margin"
         android:layout_marginTop="38dp"/>

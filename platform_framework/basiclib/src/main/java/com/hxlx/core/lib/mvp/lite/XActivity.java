@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,6 +40,7 @@ import java.lang.reflect.Field;
 import java.util.Calendar;
 
 import me.framework.fragmentation.ActivitySupport;
+import me.jessyan.autosize.AutoSize;
 
 /**
  * Created by linwang on 2018/4/7.
@@ -66,7 +68,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-
+        AutoSize.autoConvertDensityOfGlobal(this);
         if (useEventBus()) {
             EventBusProvider.register(this);
         }
@@ -93,6 +95,14 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
 
         initData(savedInstanceState);
     }
+
+    @Override
+    protected void onStart() {
+        AutoSize.autoConvertDensityOfGlobal(this);
+        super.onStart();
+    }
+
+
 
 
     /**
@@ -249,6 +259,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     protected void onResume() {
         isResume=true;
         super.onResume();
+        AutoSize.autoConvertDensityOfGlobal(this);
         getvDelegate().resume();
        // if (OSUtils.checkDeviceHasNavigationBar(this)) {
        //     OSUtils.solveNavigationBar(getWindow());
@@ -349,6 +360,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     }
 
 
+
     public void showProgressDialog(final String prompt) {
         this.runOnUiThread(new Runnable() {
             @Override
@@ -365,8 +377,13 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
                             .setCustomView(imageView)
                             .setBackgroundColor(getResources().getColor(R.color.white))
                             .setDimAmount(0.5f);
+
                 }
-                kProgressHUD.setLabel(prompt, getResources().getColor(R.color.black_context));
+                if(!TextUtils.isEmpty(prompt)){
+                    kProgressHUD.setLabel(prompt, getResources().getColor(R.color.black_context));
+                }else{
+                    kProgressHUD.setLabel(null);
+                }
                 kProgressHUD.show();
             }
         });

@@ -10,19 +10,23 @@
     <include layout="@layout/ui_navibar"/>
 
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="160dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
-        android:background="@drawable/wookong_bio_card"
+        android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_marginRight="@dimen/common_page_content_padding"
+        android:background="@drawable/card_fingerprint"
         android:scaleType="centerInside"/>
 
 
     <TextView
-        android:text="将手指放在指纹识别区域上再移开，重复此步骤"
+        android:id="@+id/fp_enroll_hint"
+        android:text="@string/walletmanage_enroll_fp_hint1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
         android:lineSpacingExtra="2.7sp"
         android:textColor="@color/black_context"
         android:layout_marginTop="40dp"

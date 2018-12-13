@@ -116,7 +116,7 @@ ext {
                     'gms'                      : "com.google.android.gms:play-services-gcm:10.2.0",
                     'commonslang3'             : "org.apache.commons:commons-lang3:3.7",
                     'toasty'                   : "com.github.GrenderG:Toasty:1.2.5",
-                    'kprogresshud'             : "com.kaopiz:kprogresshud:1.1.0",
+                    'kprogresshud'             : "com.kaopiz:kprogresshud:1.2.0",
                     'androidjob'               : "com.evernote:android-job:1.2.2",
                     'tiny'                     : "com.zxy.android:tiny:0.1.0",
                     'recyclerviewadapterhelper': "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35",
@@ -147,6 +147,8 @@ ext {
                     "smartscheduler"    : "io.hypertrack:smart-scheduler:0.0.13",
                     "saripaar"          : "com.mobsandgeeks:android-saripaar:2.0.3",
                     "wechatpay"         : "com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+",
+                    "viewPagerIndicator" :  "com.github.LinweiJ:ViewPagerIndicator:0.1.0",
+                    "viewPagerTransforms" : 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
             ],
             'debug'       : [
                     'debugdb': "com.amitshekhar.android:debug-db:1.0.2",

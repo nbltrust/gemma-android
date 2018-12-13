@@ -17,22 +17,22 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="@dimen/common_page_content_padding"
+                android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_marginTop="30dp"
-                    android:layout_marginStart="30dp"
                     android:id="@+id/iv_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_mask_close"/>
 
                 <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="30dp"
-                    android:text="设置"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/setting"
                     android:textColor="@color/black_title"
                     android:textStyle="bold"
                     android:textSize="@dimen/font_7"
@@ -43,9 +43,7 @@
                     android:background="@color/whiteTwo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/dimen_10"
-                    android:layout_marginStart="@dimen/dimen_10"
-                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_20"
                     android:orientation="vertical">
 
                     <com.allen.library.SuperTextView
@@ -53,13 +51,12 @@
                         android:id="@+id/superTextView_general"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_48"
-                        android:layout_marginEnd="@dimen/dimen_10"
-                        android:layout_marginStart="@dimen/dimen_10"
                         android:layout_marginTop="@dimen/dimen_10"
                         title:sLeftTextColor="@color/black_title"
                         title:sLeftTextSize="@dimen/font_4"
                         title:sLeftTextString="@string/general"
                         title:sLeftIconRes="@drawable/ic_general"
+                        title:sLeftIconMarginLeft="0dp"
                         title:sLeftIconHeight="@dimen/dimen_24"
                         title:sLeftIconWidth="@dimen/dimen_24"
                         title:sRightTvDrawableRight="@drawable/ic_arrow"
@@ -70,11 +67,12 @@
                     </com.allen.library.SuperTextView>
 
                     <View
-                        android:background="@color/paleGrey"
+                        android:background="@color/very_light_pink"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="@dimen/dimen_50"
-                        android:layout_marginEnd="@dimen/dimen_20"
-                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/dimen_35"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="10dp"
                         android:layerType="software">
                     </View>
 
@@ -83,13 +81,12 @@
                         android:id="@+id/superTextView_security"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_48"
-                        android:layout_marginEnd="@dimen/dimen_10"
-                        android:layout_marginStart="@dimen/dimen_10"
                         android:layout_marginTop="@dimen/dimen_10"
                         title:sLeftTextColor="@color/black_title"
                         title:sLeftTextSize="@dimen/font_4"
                         title:sLeftTextString="@string/security"
                         title:sLeftIconRes="@drawable/ic_safe"
+                        title:sLeftIconMarginLeft="0dp"
                         title:sLeftIconHeight="@dimen/dimen_24"
                         title:sLeftIconWidth="@dimen/dimen_24"
                         title:sRightTvDrawableRight="@drawable/ic_arrow"
@@ -100,11 +97,12 @@
                     </com.allen.library.SuperTextView>
 
                     <View
-                        android:background="@color/paleGrey"
+                        android:background="@color/very_light_pink"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="@dimen/dimen_50"
-                        android:layout_marginEnd="@dimen/dimen_20"
-                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/dimen_35"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="10dp"
                         android:layerType="software">
                     </View>
 
@@ -118,11 +116,10 @@
                         title:sLeftTextColor="@color/black_title"
                         title:sLeftTextSize="@dimen/font_4"
                         title:sLeftTextString="@string/help"
+                        title:sLeftIconMarginLeft="0dp"
                         title:sLeftIconRes="@drawable/ic_help"
                         title:sLeftIconHeight="@dimen/dimen_24"
                         title:sLeftIconWidth="@dimen/dimen_24"
-                        android:layout_marginEnd="@dimen/dimen_10"
-                        android:layout_marginStart="@dimen/dimen_10"
                         android:layout_marginTop="@dimen/dimen_10"
                         title:sRightTvDrawableRight="@drawable/ic_arrow"
                         title:sLeftTextGravity="center"
@@ -131,11 +128,12 @@
                     </com.allen.library.SuperTextView>
 
                     <View
-                        android:background="@color/paleGrey"
+                        android:background="@color/very_light_pink"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="@dimen/dimen_50"
-                        android:layout_marginEnd="@dimen/dimen_20"
-                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/dimen_35"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="10dp"
                         android:layerType="software">
                     </View>
 
@@ -146,11 +144,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_48"
                         android:layout_marginEnd="@dimen/dimen_10"
-                        android:layout_marginStart="@dimen/dimen_10"
                         android:layout_marginTop="@dimen/dimen_10"
                         title:sLeftTextColor="@color/black_title"
                         title:sLeftTextSize="@dimen/font_4"
                         title:sLeftTextString="@string/terms_of_service"
+                        title:sLeftIconMarginLeft="0dp"
                         title:sLeftIconRes="@drawable/ic_terms_of_service"
                         title:sLeftIconHeight="@dimen/dimen_24"
                         title:sLeftIconWidth="@dimen/dimen_24"
@@ -162,11 +160,13 @@
                     </com.allen.library.SuperTextView>
 
                     <View
-                        android:background="@color/paleGrey"
+                        android:background="@color/very_light_pink"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="@dimen/dimen_50"
-                        android:layout_marginEnd="@dimen/dimen_20"
-                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/dimen_35"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="10dp"
+
                         android:layerType="software">
                     </View>
 
@@ -177,8 +177,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_48"
                         android:layout_marginEnd="@dimen/dimen_10"
-                        android:layout_marginStart="@dimen/dimen_10"
                         android:layout_marginTop="@dimen/dimen_10"
+                        title:sLeftIconMarginLeft="0dp"
                         title:sLeftTextColor="@color/black_title"
                         title:sLeftTextSize="@dimen/font_4"
                         title:sLeftTextString="@string/about_us"
@@ -192,11 +192,12 @@
                     </com.allen.library.SuperTextView>
 
                     <View
-                        android:background="@color/paleGrey"
+                        android:background="@color/very_light_pink"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="@dimen/dimen_50"
-                        android:layout_marginEnd="@dimen/dimen_20"
-                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/dimen_35"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="10dp"
                         android:layerType="software">
                     </View>
 

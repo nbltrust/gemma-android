@@ -67,7 +67,7 @@
 
     <LinearLayout
         android:id="@+id/view_eos_tokens"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/total_eos_amount"
@@ -92,6 +92,7 @@
             tools:text="2" />
 
         <TextView
+            android:id="@+id/tv_token"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_context"
@@ -148,7 +149,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="27dp">
+        android:layout_height="28dp">
 
     </android.support.v7.widget.RecyclerView>
 

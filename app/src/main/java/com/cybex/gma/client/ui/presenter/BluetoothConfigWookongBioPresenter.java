@@ -10,6 +10,7 @@ import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
 
 
+import com.cybex.componentservice.utils.FormatValidateUtils;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.activity.BluetoothConfigWooKongBioActivity;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
@@ -29,6 +30,29 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class BluetoothConfigWookongBioPresenter extends XPresenter<BluetoothConfigWooKongBioActivity> {
+
+
+    /**
+     * 钱包名称是否在数据库存在
+     *
+     * @return boolean
+     */
+    public boolean isWalletNameValid() {
+        String walletName = getV().getWalletName();
+        MultiWalletEntity multiWalletEntity = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntity(walletName);
+        return multiWalletEntity == null;
+    }
+
+    public boolean isPasswordMatch() {
+        return getV().getPassword().equals(getV().getRepeatPassword());
+    }
+
+
+    public boolean isPasswordValid() {
+        return FormatValidateUtils.isPasswordValid(getV().getPassword());
+    }
+
+
     /**
      * 创建本地蓝牙钱包
      */

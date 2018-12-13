@@ -1,6 +1,6 @@
 package com.cybex.gma.client;
 
-import com.amitshekhar.server.ClientServer;
+
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.componentservice.config.HttpConfig;
 import com.cybex.componentservice.db.GemmaDatabase;
@@ -11,6 +11,8 @@ import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowLog;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.runtime.DirectModelNotifier;
+import com.tencent.bugly.crashreport.CrashReport;
+
 import me.framework.fragmentation.Fragmentation;
 import me.framework.fragmentation.helper.ExceptionHandler;
 import me.jessyan.autosize.AutoSizeConfig;
@@ -32,6 +34,14 @@ public class GmaApplication extends BaseApplication {
 
         AutoSizeConfig.getInstance().setCustomFragment(true);
         BluetoothConnectKeepJob.getInstance();
+
+//        CrashReport.initCrashReport(getApplicationContext());
+
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext()); //...在这里设置strategy的属性，在bugly初始化时传入
+        strategy.setAppChannel("myChannel"); //设置渠道
+        strategy.setAppVersion("0.1"); //App的版本
+//        strategy.setAppPackageName("com.tencent.xx"); //App的包名
+        CrashReport.initCrashReport(getApplicationContext(), "9fd7c781c3", BuildConfig.DEBUG, strategy);
 
 //        if(BuildConfig.DEBUG){
 //            ClientServer clientServer = new ClientServer(this, 8080);

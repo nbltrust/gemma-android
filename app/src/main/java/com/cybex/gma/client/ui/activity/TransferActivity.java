@@ -4,15 +4,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
+import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
+import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.ui.fragment.EosTokenTransferFragment;
-import com.cybex.gma.client.ui.fragment.TransferFragment;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
 
-public class TransferActivity extends XActivity {
+public class TransferActivity extends BluetoothBaseActivity {
 
     @Override
     public void bindUI(View view) {
@@ -21,11 +26,12 @@ public class TransferActivity extends XActivity {
             if (findFragment(EosTokenTransferFragment.class) == null) {
                 loadRootFragment(R.id.fl_container_transfer, EosTokenTransferFragment.newInstance(bd));
             }
-        }else {
-            if (findFragment(TransferFragment.class) == null) {
-                loadRootFragment(R.id.fl_container_transfer, TransferFragment.newInstance());
-            }
         }
+//        else {
+//            if (findFragment(TransferFragment.class) == null) {
+//                loadRootFragment(R.id.fl_container_transfer, TransferFragment.newInstance());
+//            }
+//        }
 
         //让布局向上移来显示软键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -33,6 +39,7 @@ public class TransferActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        SoftHideKeyBoardUtil.assistActivity(TransferActivity.this);
     }
 
     @Override
@@ -45,6 +52,15 @@ public class TransferActivity extends XActivity {
         return null;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void receiveDeviceConnectEvent(DeviceConnectStatusUpdateEvent event){
+        fixDeviceDisconnectEvent(event);
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {

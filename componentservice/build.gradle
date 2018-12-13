@@ -58,6 +58,7 @@ android {
         debug {
             // 接口地址配置
             buildConfigField('int', 'API_PATH', "0")
+            buildConfigField 'boolean','ETH_ISSHOW','false'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
             buildConfigField "boolean", "DEVELOPER_MODE", "true"
@@ -66,6 +67,7 @@ android {
         release {
             // 接口地址配置
             buildConfigField('int', 'API_PATH', "2")
+            buildConfigField 'boolean','ETH_ISSHOW','false'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
@@ -111,14 +113,13 @@ dependencies {
     api deps.yanzhenjie.permission
 
 
-
     api deps.gma.saripaar
     api deps.gma.happybubble
     api deps.gma.alerter
     api deps.third.recyclerviewadapterhelper
     api deps.third.overscroll
 
-    api(name:'seed39', ext:'aar')
+    api(name:'seed39-1207', ext:'aar')
 
     api 'org.bitcoinj:bitcoinj-core:0.14.7'
     api 'org.web3j:core:3.3.1-android'
@@ -129,7 +130,11 @@ dependencies {
     api deps.gma.MaterialEditText
     api deps.gma.agentweb
 
-    api (name: 'bluetoothlib-release', ext: 'aar')
+    api (name: 'bluetoothlib-release-1206', ext: 'aar')
     api 'me.codeboy.android:align-text-view:2.3.2'
+    api 'de.hdodenhof:circleimageview:2.2.0'
+    api 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.1.5
+    api 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+
 
 }

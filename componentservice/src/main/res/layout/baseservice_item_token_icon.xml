@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootview"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_width="28dp"
+    android:layout_height="28dp"
     >
 
-    <ImageView
-        android:id="@+id/iv_token"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
-        android:src="@drawable/eos_ic_asset"
-        android:scaleType="matrix"
 
-        />
+    <RelativeLayout
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_outer_circle"
+            android:visibility="visible"
+            android:layout_centerInParent="true"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:scaleType="fitCenter"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:visibility="visible"
+            android:layout_centerInParent="true"
+            android:id="@+id/iv_token"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:src="@drawable/ic_token_unknown"
+            />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_token_number"
         android:visibility="gone"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:background="@drawable/shape_circle_token_icon_bg"
         android:text="+6"
         android:gravity="center"/>

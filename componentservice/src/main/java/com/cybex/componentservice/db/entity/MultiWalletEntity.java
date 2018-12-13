@@ -21,7 +21,17 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
     public static final Integer WALLET_TYPE_IMPORT_MNEMONIC=1;
     public static final Integer WALLET_TYPE_HARDWARE=2;
     public static final Integer WALLET_TYPE_PRI_KEY=3;
+    public static final Creator<MultiWalletEntity> CREATOR = new Creator<MultiWalletEntity>() {
+        @Override
+        public MultiWalletEntity createFromParcel(Parcel source) {
+            return new MultiWalletEntity(source);
+        }
 
+        @Override
+        public MultiWalletEntity[] newArray(int size) {
+            return new MultiWalletEntity[size];
+        }
+    };
     /**
      * 自增长主键id
      */
@@ -32,58 +42,57 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
      */
     @Column
     private String walletName;
-
     /**
      * 助记词（当钱包类型为1的时候，保存password加密过后的助记词）
      */
     @Column
     private String mnemonic;
-
     /**
      * 摘要信息（保存sha256之后password，用于校验用户输入密码的正确性）
      */
     @Column
     private String cypher;
-
     /**
      * 是否当前钱包  （1---是  0---否）
      */
     @Column
     private Integer isCurrentWallet;
-
     /**
      * 密码提示
      */
     @Column
     private String passwordTip;
-
     /**
      * 是否已经备份
      */
     @Column
     private Integer isBackUp;
-
     /**
      * 钱包类型 (0--新建助记词软件钱包 1-导入助记词类软钱包  2--硬件钱包  3-导入单个私钥类型的软钱包)
      */
     @Column(defaultValue = "0")
     private int walletType;
-
     /**
      * 是否设置蓝牙指纹 0--无   1--有
      */
     @Column(defaultValue = "0")
     private int isSetBluetoothFP;
-
     /**
      * 蓝牙卡硬件地址
      */
     @Column
     private String bluetoothDeviceName;
-
     private List<EthWalletEntity> ethWalletEntities;
     private List<EosWalletEntity> eosWalletEntities;
     private List<FPEntity> fpEntities;
+    /**
+     * 此张蓝牙卡的SN
+     */
+    @Column
+    private String serialNumber;
+
+    @ColumnIgnore
+    private boolean isChecked;
 
 
 
@@ -94,6 +103,35 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
 //    @Column
 //    @ForeignKey
 //    private EthWalletEntity ethWalletEntity;
+
+    public MultiWalletEntity() {
+    }
+
+    protected MultiWalletEntity(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.walletName = in.readString();
+        this.mnemonic = in.readString();
+        this.cypher = in.readString();
+        this.isCurrentWallet = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.passwordTip = in.readString();
+        this.isBackUp = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.walletType = in.readInt();
+        this.isSetBluetoothFP = in.readInt();
+        this.bluetoothDeviceName = in.readString();
+        this.ethWalletEntities = in.createTypedArrayList(EthWalletEntity.CREATOR);
+        this.eosWalletEntities = in.createTypedArrayList(EosWalletEntity.CREATOR);
+        this.fpEntities = in.createTypedArrayList(FPEntity.CREATOR);
+        this.isChecked = in.readByte() != 0;
+        this.serialNumber = in.readString();
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String SN) {
+        this.serialNumber = SN;
+    }
 
     public Integer getId() {
         return id;
@@ -175,19 +213,6 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         this.bluetoothDeviceName = bluetoothDeviceName;
     }
 
-
-    public void setEthWalletEntities(List<EthWalletEntity> ethWalletEntities) {
-        this.ethWalletEntities = ethWalletEntities;
-    }
-
-    public void setEosWalletEntities(List<EosWalletEntity> eosWalletEntities) {
-        this.eosWalletEntities = eosWalletEntities;
-    }
-
-    public void setFpEntities(List<FPEntity> fpEntities) {
-        this.fpEntities = fpEntities;
-    }
-
     public boolean isChecked() {
         return isChecked;
     }
@@ -207,6 +232,9 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         return ethWalletEntities;
     }
 
+    public void setEthWalletEntities(List<EthWalletEntity> ethWalletEntities) {
+        this.ethWalletEntities = ethWalletEntities;
+    }
 
     @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "eosWalletEntities")
     public List<EosWalletEntity> getEosWalletEntities() {
@@ -219,6 +247,9 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         return eosWalletEntities;
     }
 
+    public void setEosWalletEntities(List<EosWalletEntity> eosWalletEntities) {
+        this.eosWalletEntities = eosWalletEntities;
+    }
 
     @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "fpEntities")
     public List<FPEntity> getFpEntities() {
@@ -231,6 +262,9 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         return fpEntities;
     }
 
+    public void setFpEntities(List<FPEntity> fpEntities) {
+        this.fpEntities = fpEntities;
+    }
 
     @Override
     public String toString() {
@@ -249,16 +283,9 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
                 ", eosWalletEntities=" + eosWalletEntities +
                 ", fpEntities=" + fpEntities +
                 ", isChecked=" + isChecked +
+                ", SN=" + serialNumber +
                 '}';
     }
-
-
-
-
-
-    @ColumnIgnore
-    private boolean isChecked;
-
 
     @Override
     public int describeContents() {
@@ -281,37 +308,6 @@ public class MultiWalletEntity extends BaseModel implements Parcelable {
         dest.writeTypedList(this.eosWalletEntities);
         dest.writeTypedList(this.fpEntities);
         dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
+        dest.writeString(this.serialNumber);
     }
-
-    public MultiWalletEntity() {
-    }
-
-    protected MultiWalletEntity(Parcel in) {
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.walletName = in.readString();
-        this.mnemonic = in.readString();
-        this.cypher = in.readString();
-        this.isCurrentWallet = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.passwordTip = in.readString();
-        this.isBackUp = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.walletType = in.readInt();
-        this.isSetBluetoothFP = in.readInt();
-        this.bluetoothDeviceName = in.readString();
-        this.ethWalletEntities = in.createTypedArrayList(EthWalletEntity.CREATOR);
-        this.eosWalletEntities = in.createTypedArrayList(EosWalletEntity.CREATOR);
-        this.fpEntities = in.createTypedArrayList(FPEntity.CREATOR);
-        this.isChecked = in.readByte() != 0;
-    }
-
-    public static final Creator<MultiWalletEntity> CREATOR = new Creator<MultiWalletEntity>() {
-        @Override
-        public MultiWalletEntity createFromParcel(Parcel source) {
-            return new MultiWalletEntity(source);
-        }
-
-        @Override
-        public MultiWalletEntity[] newArray(int size) {
-            return new MultiWalletEntity[size];
-        }
-    };
 }

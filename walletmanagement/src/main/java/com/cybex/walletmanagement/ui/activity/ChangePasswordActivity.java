@@ -37,20 +37,25 @@ public class ChangePasswordActivity extends XActivity<ChangePasswordPresenter> {
 
     private ImageView ivSetPassMask;
     private ImageView ivRepeatPassMask;
+    private ImageView ivSetOldPassMask;
     private View viewDividerSetPass;
     private View viewDividerRepeatPass;
     private View viewDividerPassHint;
+    private View viewDividerSetOldPass;
 
     private ScrollView scrollViewCreateWallet;
     private ImageView ivSetPassClear;
     private ImageView ivRepeatPassClear;
     private ImageView ivPassHintClear;
+    private ImageView ivSetOldPassClear;
     private TextView tvSetPass;
     private EditText edtSetPass;
     private TextView tvRepeatPass;
     private EditText edtRepeatPass;
     private TextView tvPassHint;
     private EditText edtPassHint;
+    private TextView tvSetOldPass;
+    private EditText edtSetOldPass;
     private Button btnChangePsw;
 
     private boolean isMask;//true为密文显示密码
@@ -80,6 +85,12 @@ public class ChangePasswordActivity extends XActivity<ChangePasswordPresenter> {
         viewDividerPassHint = findViewById(R.id.view_divider_pass_hint);
         ivPassHintClear = (ImageView) findViewById(R.id.iv_pass_hint_clear);
         btnChangePsw = (Button) findViewById(R.id.bt_change_psw);
+
+        ivSetOldPassClear = findViewById(R.id.iv_set_old_pass_clear);
+        ivSetOldPassMask = findViewById(R.id.iv_set_old_pass_mask);
+        tvSetOldPass = findViewById(R.id.tv_old_pass);
+        edtSetOldPass = findViewById(R.id.edt_old_pass);
+
         setNavibarTitle(getResources().getString(R.string.walletmanage_title_change_pass), true);
 
         edtSetPass.addTextChangedListener(new TextWatcher() {
@@ -400,12 +411,14 @@ public class ChangePasswordActivity extends XActivity<ChangePasswordPresenter> {
         return edtSetPass.getText().toString();
     }
 
+
+
     public String getRepeatPassword() {
         return edtRepeatPass.getText().toString();
     }
 
     public String getPassHint() {
-        return edtPassHint.getText().toString().trim();
+        return edtPassHint.getText().toString();
     }
 
 

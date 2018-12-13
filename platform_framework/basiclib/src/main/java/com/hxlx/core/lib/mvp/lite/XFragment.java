@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import me.framework.fragmentation.FragmentSupport;
+import me.jessyan.autosize.AutoSize;
 import me.jessyan.autosize.internal.CustomAdapt;
 
 /**
@@ -53,6 +55,9 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         if (useEventBus()) {
             EventBusProvider.register(this);
         }
+        if(getActivity()!=null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
     }
 
     @Nullable
@@ -72,6 +77,22 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
         }
         setImmersiveStyle();
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        if(getActivity()!=null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        if(getActivity()!=null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
+        super.onResume();
     }
 
     protected void setNavibarTitle(final String title, final boolean isShowBack) {
@@ -302,7 +323,11 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
                                 .setBackgroundColor(getResources().getColor(R.color.white))
                                 .setDimAmount(0.5f);
                     }
-                    kProgressHUD.setLabel(prompt, getResources().getColor(R.color.black_context));
+                    if(!TextUtils.isEmpty(prompt)){
+                        kProgressHUD.setLabel(prompt, getResources().getColor(R.color.black_context));
+                    }else{
+                        kProgressHUD.setLabel(null);
+                    }
                     kProgressHUD.show();
                 }
             });

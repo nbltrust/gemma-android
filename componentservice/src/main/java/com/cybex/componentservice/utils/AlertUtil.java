@@ -14,6 +14,7 @@ public class AlertUtil {
      * @param info
      */
     public static void showShortCommonAlert(Activity context, String info){
+        if(context==null)return;
         Alerter.create(context)
                 .setText(info)
                 .showIcon(false)
@@ -25,6 +26,7 @@ public class AlertUtil {
     }
 
     public static void showLongCommonAlert(Activity context, String info){
+        if(context==null)return;
         Alerter.create(context)
                 .setText(info)
                 .showIcon(false)
@@ -42,6 +44,7 @@ public class AlertUtil {
      * @param info
      */
     public static void showShortSuccessAlert(Activity context, String info){
+        if(context==null)return;
         Alerter.create(context)
                 .setText(info)
                 .showIcon(false)
@@ -53,6 +56,7 @@ public class AlertUtil {
     }
 
     public static void showLongSuccessAlert(Activity context, String info){
+        if(context==null)return;
         Alerter.create(context)
                 .setText(info)
                 .showIcon(false)
@@ -69,6 +73,7 @@ public class AlertUtil {
      * @param info
      */
     public static void showShortUrgeAlert(Activity context, String info){
+        if(context==null)return;
         Alerter.create(context)
                 .setText(info)
                 .showIcon(false)
@@ -80,6 +85,7 @@ public class AlertUtil {
     }
 
     public static void showLongUrgeAlert(Activity context, String info){
+        if(context==null)return;
         Alerter.create(context)
                 .setText(info)
                 .showIcon(false)

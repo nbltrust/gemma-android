@@ -22,21 +22,18 @@ public class ChangeNodeFragment extends XFragment {
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.radioButton_node_cybex) RadioButton radioButtonNodeCybex;
     @BindView(R.id.radioButton_node_starteos) RadioButton radioButtonNodeStarteos;
-    @BindView(R.id.radioButton_node_eosnewyork) RadioButton radioButtonNodeEosnewyork;
     @BindView(R.id.radioButton_node_greymass) RadioButton radioButtonNodeGreymass;
-    @BindView(R.id.radioButton_node_eosasia) RadioButton radioButtonNodeEosasia;
     @BindView(R.id.radioButton_node_eosgravity) RadioButton radioButtonNodeEosgravity;
     @BindView(R.id.radioButton_node_helloeos) RadioButton radioButtonNodeHelloeos;
     @BindView(R.id.radioButton_node_hkeos) RadioButton radioButtonNodeHkeos;
-    @BindView(R.id.radioButton_node_eos42) RadioButton radioButtonNodeEos42;
-    @BindView(R.id.radioButton_node_cypherglass) RadioButton radioButtonNodeCypherglass;
+
     Unbinder unbinder;
     @BindView(R.id.radioButton_node_beijing_test) RadioButton radioButtonNodeBeijingTest;
 
-    @OnClick({R.id.radioButton_node_cybex, R.id.radioButton_node_cypherglass, R.id.radioButton_node_eos42,
-            R.id.radioButton_node_eosasia, R.id.radioButton_node_eosgravity, R.id.radioButton_node_eosnewyork,
-            R.id.radioButton_node_greymass, R.id.radioButton_node_helloeos, R.id.radioButton_node_hkeos, R.id
-            .radioButton_node_starteos, R.id.radioButton_node_beijing_test})
+    @OnClick({R.id.radioButton_node_cybex, R.id.radioButton_node_eosgravity,
+            R.id.radioButton_node_greymass, R.id.radioButton_node_helloeos,
+            R.id.radioButton_node_hkeos, R.id.radioButton_node_starteos,
+            R.id.radioButton_node_beijing_test})
     public void onChangeNodeListener(View v) {
         switch (v.getId()) {
             case R.id.radioButton_node_cybex:
@@ -46,33 +43,9 @@ public class ChangeNodeFragment extends XFragment {
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());
                 break;
-            case R.id.radioButton_node_cypherglass:
-                ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_CYPHER_GLASS);
-                SPUtils.getInstance().put("curNode", ApiPath.EOS_CYPHER_GLASS);
-                AppManager.getAppManager().finishAllActivity();
-                UISkipMananger.launchHomeSingle(getActivity());
-                break;
-            case R.id.radioButton_node_eos42:
-                ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_42);
-                SPUtils.getInstance().put("curNode", ApiPath.EOS_42);
-                AppManager.getAppManager().finishAllActivity();
-                UISkipMananger.launchHomeSingle(getActivity());
-                break;
-            case R.id.radioButton_node_eosasia:
-                ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_AISA);
-                SPUtils.getInstance().put("curNode", ApiPath.EOS_AISA);
-                AppManager.getAppManager().finishAllActivity();
-                UISkipMananger.launchHomeSingle(getActivity());
-                break;
             case R.id.radioButton_node_eosgravity:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_GRAVITY);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_GRAVITY);
-                AppManager.getAppManager().finishAllActivity();
-                UISkipMananger.launchHomeSingle(getActivity());
-                break;
-            case R.id.radioButton_node_eosnewyork:
-                ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_NEW_YORK);
-                SPUtils.getInstance().put("curNode", ApiPath.EOS_NEW_YORK);
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());
                 break;
@@ -161,9 +134,6 @@ public class ChangeNodeFragment extends XFragment {
             case ApiPath.EOS_CYBEX:
                 radioButtonNodeCybex.setChecked(true);
                 break;
-            case ApiPath.EOS_CYPHER_GLASS:
-                radioButtonNodeCypherglass.setChecked(true);
-                break;
             case ApiPath.EOS_GRAVITY:
                 radioButtonNodeEosgravity.setChecked(true);
                 break;
@@ -176,17 +146,8 @@ public class ChangeNodeFragment extends XFragment {
             case ApiPath.EOS_HK_EOS:
                 radioButtonNodeHkeos.setChecked(true);
                 break;
-            case ApiPath.EOS_NEW_YORK:
-                radioButtonNodeEosnewyork.setChecked(true);
-                break;
             case ApiPath.EOS_START_EOS:
                 radioButtonNodeStarteos.setChecked(true);
-                break;
-            case ApiPath.EOS_AISA:
-                radioButtonNodeEosasia.setChecked(true);
-                break;
-            case ApiPath.EOS_42:
-                radioButtonNodeEos42.setChecked(true);
                 break;
             case ApiPath.EOS_TEST_BEIJING:
                 radioButtonNodeBeijingTest.setChecked(true);

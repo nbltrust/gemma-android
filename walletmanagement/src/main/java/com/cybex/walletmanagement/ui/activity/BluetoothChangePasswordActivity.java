@@ -1,5 +1,6 @@
 package com.cybex.walletmanagement.ui.activity;
 
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.style.AbsoluteSizeSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,15 +24,18 @@ import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.event.DeviceConnectStatusUpdateEvent;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.ui.activity.BluetoothBaseActivity;
 import com.cybex.componentservice.utils.SoftHideKeyBoardUtil;
 import com.cybex.walletmanagement.R;
+import com.cybex.walletmanagement.ui.fragment.BluetoothWalletDetailFragment;
 import com.cybex.walletmanagement.ui.presenter.BluetoothChangePasswordPresenter;
 import com.cybex.walletmanagement.ui.presenter.ChangePasswordPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -412,12 +417,17 @@ public class BluetoothChangePasswordActivity extends BluetoothBaseActivity<Bluet
     }
 
     public String getPassHint() {
-        return edtPassHint.getText().toString().trim();
+        return edtPassHint.getText().toString();
     }
 
 
     @Override
     protected void onDestroy() {
+        if(getP().isChangingPassword()){
+            getP().setChangingPassword(false);
+            DeviceOperationManager.getInstance().abortButton(this.toString(),walletEntity.getBluetoothDeviceName());
+        }
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
         clearListeners();
         super.onDestroy();
     }
@@ -516,4 +526,47 @@ public class BluetoothChangePasswordActivity extends BluetoothBaseActivity<Bluet
     }
 
 
+    CustomFullDialog confirmDialog;
+
+    /**
+     * 显示按电源键确认格式化Dialog
+     */
+    public void showConfirmChangePswDialog() {
+        if (confirmDialog != null) {
+            if(!confirmDialog.isShowing()&&getP().isChangingPassword()){
+                confirmDialog.show();
+            }
+            return;
+        }
+        int[] listenedItems = {R.id.imv_back};
+        confirmDialog = new CustomFullDialog(this,
+                R.layout.baseservice_dialog_bluetooth_button_confirm, listenedItems, false, Gravity.BOTTOM);
+        confirmDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(getP().isChangingPassword()){
+                    getP().setChangingPassword(false);
+                    DeviceOperationManager.getInstance().abortButton(this.toString(),walletEntity.getBluetoothDeviceName());
+                }
+            }
+        });
+        confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                if (view.getId() == R.id.imv_back) {
+                    dialog.cancel();
+                }
+            }
+        });
+        confirmDialog.show();
+        TextView tvTip = confirmDialog.getAllView().findViewById(R.id.tv_tip);
+        tvTip.setText(getString(R.string.baseservice_hint_button_confirm_change_psw));
+    }
+
+
+    public void dissmisConfirmDialog() {
+        if(confirmDialog!=null&&confirmDialog.isShowing()){
+            confirmDialog.dismiss();
+        }
+    }
 }

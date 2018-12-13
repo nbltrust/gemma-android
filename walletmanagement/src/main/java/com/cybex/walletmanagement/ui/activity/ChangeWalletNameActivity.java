@@ -1,5 +1,6 @@
 package com.cybex.walletmanagement.ui.activity;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -181,7 +182,7 @@ public class ChangeWalletNameActivity extends XActivity {
             ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME).navigation();
             finish();
         }else{
-            ARouter.getInstance().build(RouterConst.PATH_TO_INIT).navigation();
+//            ARouter.getInstance().build(RouterConst.PATH_TO_INIT).navigation();
             finish();
         }
     }
@@ -192,6 +193,12 @@ public class ChangeWalletNameActivity extends XActivity {
         CustomDialog dialog = new CustomDialog(this,
                 com.cybex.componentservice.R.layout.baseservice_dialog_disconnect, listenedItems, false, Gravity.CENTER);
         dialog.setmWidth(SizeUtil.dp2px(259));
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                innerFixDisconnectEvent();
+            }
+        });
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override

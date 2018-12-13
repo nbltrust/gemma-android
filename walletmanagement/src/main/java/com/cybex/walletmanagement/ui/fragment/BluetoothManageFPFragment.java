@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.allen.library.SuperTextView;
+import com.cybex.base.view.LabelLayout;
 import com.cybex.componentservice.db.dao.MultiWalletEntityDao;
 import com.cybex.componentservice.db.entity.FPEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
@@ -25,7 +26,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class BluetoothManageFPFragment extends XFragment {
 
-   SuperTextView superTextViewChangeFpName;
+    LabelLayout superTextViewChangeFpName;
    Button btDeleteFp;
 
     private MultiWalletEntity multiWalletEntity ;
@@ -100,9 +101,9 @@ public class BluetoothManageFPFragment extends XFragment {
         fpEntity = DBManager.getInstance().getMultiWalletEntityDao().getFpEntityByWalletIdAndIndex(multiWalletEntity.getId(), fpIndex[0]);
 
         if(fpEntity !=null){
-            superTextViewChangeFpName.setRightString(fpEntity.getName());
+            superTextViewChangeFpName.setRightText(fpEntity.getName());
         }else{
-            superTextViewChangeFpName.setRightString(getString(R.string.walletmanage_fp_prefix)+(fpIndex[0]+1));
+            superTextViewChangeFpName.setRightText(getString(R.string.walletmanage_fp_prefix)+(fpIndex[0]+1));
         }
 
     }
@@ -121,7 +122,7 @@ public class BluetoothManageFPFragment extends XFragment {
             }else{
                 fpEntity = DBManager.getInstance().getMultiWalletEntityDao().getFpEntityByWalletIdAndIndex(multiWalletEntity.getId(), fpIndex[0]);
             }
-            superTextViewChangeFpName.setRightString(event.getFpName());
+            superTextViewChangeFpName.setRightText(event.getFpName());
         }
     }
 

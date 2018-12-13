@@ -19,6 +19,7 @@ import com.cybex.componentservice.utils.WookongConnectHelper;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.activity.CreateEosAccountActivity;
 import com.cybex.gma.client.ui.model.request.BluetoothCreateAccountReqParams;
@@ -35,6 +36,9 @@ import com.hxlx.core.lib.utils.common.utils.AppManager;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 
@@ -82,6 +86,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                             if (curWallet != null) {
                                 int walletType = curWallet.getWalletType();
                                 if (walletType == BaseConst.WALLET_TYPE_BLUETOOTH) {
+                                    //蓝牙钱包
                                     LoggerManager.d("Type Bluetooth");
                                     String deviceName = DBManager.getInstance().getMultiWalletEntityDao()
                                             .getCurrentMultiWalletEntity().getBluetoothDeviceName();
@@ -95,6 +100,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                                     } else {
                                         //连接蓝牙卡
 
+
                                         if (curWallet != null) {
                                             WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(
                                                     getV().toString(), curWallet, getV());
@@ -107,7 +113,9 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
 
                                                         @Override
                                                         public void onConnectFail() {
-
+                                                            AlertUtil.showShortUrgeAlert(getV(), getV().getString(R
+                                                                    .string.wookong_connect_fail));
+                                                            getV().dissmisProgressDialog();
                                                         }
                                                     });
                                         }
@@ -132,7 +140,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                         } else {
                             GemmaToastUtils.showLongToast(getV().getString(R.string.eos_tip_check_network));
                         }
-                        getV().dissmisProgressDialog();
+
                     }
                 });
 
@@ -145,6 +153,82 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
         }
         return null;
     }
+
+
+
+    public void getDeviceInfoAndRegister() {
+
+        getV().showProgressDialog(getV().getString(R.string.baseservice_wookong_bio_connecting));
+
+        if (getV() != null) {
+            String device_name = DeviceOperationManager.getInstance().getCurrentDeviceName();
+            String account_name = getV().getEOSUsername();
+            String TAG = getV().toString();
+
+            //getEosAddress
+            DeviceOperationManager.getInstance().getEosAddress(
+                    TAG,
+                    device_name,
+                    new DeviceOperationManager.GetAddressCallback() {
+                        @Override
+                        public void onGetSuccess(String address) {
+
+                            String[] addressSpilt = address.split("####");
+                            if (EmptyUtils.isNotEmpty(addressSpilt)) {
+
+                                String public_key = addressSpilt[0];
+                                String public_key_sign = addressSpilt[1];
+                                String public_key_hex = ConvertUtils.str2HexStr(public_key);
+
+                                LoggerManager.d("public_key: " + public_key);
+                                LoggerManager.d("public_key_hex: " + public_key_hex);
+                                LoggerManager.d("publick_key_sign: " + public_key_sign);
+
+
+                                //Check Code
+                                DeviceOperationManager.getInstance().getCheckCode(TAG,
+                                        device_name,
+                                        new DeviceOperationManager.GetCheckCodeCallback() {
+                                            @Override
+                                            public void onCheckCodeSuccess(byte[] checkedCode) {
+                                                if (checkedCode != null) {
+                                                    byte[] snbyte = ConvertUtils.subByte(
+                                                            checkedCode, 0, 16);
+
+                                                    String SN = CommonUtility.byte2hex(snbyte);
+                                                    String SN_sign = CommonUtility.byte2hex(
+                                                            checkedCode);
+                                                    SN_sign = SN_sign.substring(32);
+
+                                                    doAccountRegisterRequest(account_name, SN,
+                                                            SN_sign, public_key, public_key_hex,
+                                                            public_key_sign);
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onCheckCodeFail() {
+                                                getV().dissmisProgressDialog();
+                                                AlertUtil.showShortUrgeAlert(getV(), "SN 签名失败，请重新尝试");
+                                                LoggerManager.d("getCheckCode Fail");
+                                            }
+                                        });
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onGetFail() {
+                            getV().dissmisProgressDialog();
+                            AlertUtil.showShortUrgeAlert(getV(), "读取EOS公钥失败，请重新尝试");
+                        }
+                    }
+            );
+        }
+    }
+
 
     /**
      * 蓝牙钱包账户创建请求
@@ -191,18 +275,26 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                     @Override
                     public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
                         if (getV() != null) {
-                            getV().dissmisProgressDialog();
 
                             if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
+
                                 UserRegisterResult registerResult = data.result;
                                 if (registerResult != null) {
                                     //String txId = registerResult.txId;
-
-                                    //TimeStampValidateJob.executedCreateLogic(account_name, public_key);
-                                    AppManager.getAppManager().finishAllActivity();
+                                    updateCurBluetoothWallet(account_name);
+                                    TimeStampValidateJob.executedCreateLogic(account_name, public_key);
+                                    AppManager.getAppManager().finishActivity();
                                     UISkipMananger.launchEOSHome(getV());
+                                    getV().dissmisProgressDialog();
+
                                 }
-                            } else {
+                            } else if(data.code == HttpConst.INVCODE_USED){
+                                AppManager.getAppManager().finishActivity();
+                                Bundle bundle = new Bundle();
+                                String account_name = getV().getEOSUsername();
+                                bundle.putString(ParamConstants.EOS_USERNAME, account_name);
+                                UISkipMananger.launchChooseActivateMethod(getV(), bundle);
+                            } else{
                                 showOnErrorInfo(data.code);
                             }
                         }
@@ -224,6 +316,49 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                         }
                     }
                 });
+    }
+
+
+
+    /**
+     * 创建成功后将相关信息填入数据库
+     */
+    private void updateCurBluetoothWallet(String account_name){
+
+        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
+                .getBluetoothWalletList();
+        if (bluetoothWalletList != null && bluetoothWalletList.size() > 0){
+            MultiWalletEntity curBluetoothWallet = bluetoothWalletList.get(0);
+            if (curBluetoothWallet.getEosWalletEntities().size() > 0){
+                EosWalletEntity curEosWallet = curBluetoothWallet.getEosWalletEntities().get(0);
+                curEosWallet.setCurrentEosName(account_name);
+                List<String> account_names = new ArrayList<>();
+                account_names.add(account_name);
+                String jsonEosName = GsonUtils.objectToJson(account_names);
+                curEosWallet.setIsConfirmLib(ParamConstants.EOSACCOUNT_CONFIRMING);
+                curEosWallet.setEosNameJson(jsonEosName);
+                curEosWallet.save();
+                curBluetoothWallet.save();
+
+            }
+        }
+
+        /*
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+        if (curWallet != null){
+            List<EosWalletEntity> eosWalletEntities = curWallet.getEosWalletEntities();
+            if (eosWalletEntities != null && eosWalletEntities.size() > 0){
+                EosWalletEntity curEosWallet = eosWalletEntities.get(0);
+                curEosWallet.setCurrentEosName(account_name);
+                List<String> account_names = new ArrayList<>();
+                account_names.add(account_name);
+                String jsonEosName = GsonUtils.objectToJson(account_names);
+                curEosWallet.setEosNameJson(jsonEosName);
+                curEosWallet.save();
+                curWallet.save();
+            }
+        }
+        */
     }
 
     /**
@@ -261,75 +396,15 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
             case (HttpConst.CREATE_ACCOUNT_FAIL):
                 GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
                 break;
+            case (HttpConst.PUBLICKEY_HEX_NOT_MATCH):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.key_sig_not_match));
+                break;
+            case (HttpConst.VERIFY_SIG_FAIL):
+                GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.verify_sig_fail));
+                break;
             default:
                 GemmaToastUtils.showLongToast(getV().getResources().getString(R.string.eos_default_create_fail_info));
                 break;
-        }
-    }
-
-    public void getDeviceInfoAndRegister() {
-
-        if (getV() != null) {
-            String device_name = DeviceOperationManager.getInstance().getCurrentDeviceName();
-            String account_name = getV().getEOSUsername();
-            String TAG = getV().toString();
-
-            DeviceOperationManager.getInstance().getEosAddress(
-                    TAG,
-                    device_name,
-                    new DeviceOperationManager.GetAddressCallback() {
-                        @Override
-                        public void onGetSuccess(String address) {
-
-                            String[] addressSpilt = address.split("####");
-                            if (EmptyUtils.isNotEmpty(addressSpilt)) {
-
-                                String public_key = addressSpilt[0];
-                                String public_key_sign = addressSpilt[1];
-                                String public_key_hex = ConvertUtils.str2HexStr(public_key);
-
-                                LoggerManager.d("public_key: " + public_key);
-                                LoggerManager.d("public_key_hex: " + public_key_hex);
-                                LoggerManager.d("publick_key_sign: " + public_key_sign);
-
-
-                                DeviceOperationManager.getInstance().getCheckCode(TAG,
-                                        device_name,
-                                        new DeviceOperationManager.GetCheckCodeCallback() {
-                                            @Override
-                                            public void onCheckCodeSuccess(byte[] checkedCode) {
-                                                if (checkedCode != null) {
-                                                    byte[] snbyte = ConvertUtils.subByte(
-                                                            checkedCode, 0, 16);
-
-                                                    String SN = CommonUtility.byte2hex(snbyte);
-                                                    String SN_sign = CommonUtility.byte2hex(
-                                                            checkedCode);
-                                                    SN_sign = SN_sign.substring(32);
-
-                                                    doAccountRegisterRequest(account_name, SN,
-                                                            SN_sign, public_key, public_key_hex,
-                                                            public_key_sign);
-                                                }
-
-                                            }
-
-                                            @Override
-                                            public void onCheckCodeFail() {
-                                                LoggerManager.d("getCheckCode Fail");
-                                            }
-                                        });
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onGetFail() {
-
-                        }
-                    }
-            );
         }
     }
 

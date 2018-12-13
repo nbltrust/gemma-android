@@ -3,6 +3,7 @@ package com.cybex.componentservice.manager;
 import android.text.TextUtils;
 
 import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
@@ -15,7 +16,7 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 public class LoggerManager {
 
     private static String TAG;
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = BuildConfig.DEBUG;
 
     public static void init(String Tag) {
         init(Tag, true);

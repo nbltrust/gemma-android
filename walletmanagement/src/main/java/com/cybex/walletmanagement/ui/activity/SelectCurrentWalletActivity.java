@@ -1,9 +1,11 @@
 package com.cybex.walletmanagement.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -16,21 +18,21 @@ import com.cybex.componentservice.event.RefreshWalletPswEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.event.WookongFormattedEvent;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.manager.DeviceOperationManager;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.walletmanagement.R;
 import com.cybex.walletmanagement.ui.adapter.SelectCurrentWalletAdapter;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
+import com.siberiadante.customdialoglib.CustomDialog;
 
-import org.greenrobot.eventbus.Logger;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
+import me.jessyan.autosize.AutoSize;
 
 
 public class SelectCurrentWalletActivity extends XActivity {
@@ -51,6 +53,12 @@ public class SelectCurrentWalletActivity extends XActivity {
                 .VERTICAL, false);
         rvWalletList.setLayoutManager(layoutManager);
         setNavibarTitle(getResources().getString(R.string.walletmanage_select_wallet_title), true);
+        mTitleBar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkStatusAndFinish();
+            }
+        });
 
         List<MultiWalletEntity> allWallets = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
         wallets.addAll(allWallets);
@@ -63,8 +71,8 @@ public class SelectCurrentWalletActivity extends XActivity {
                 break;
             }
         }
-
-        adatper = new SelectCurrentWalletAdapter(wallets);
+//        AutoSize.autoConvertDensityOfGlobal(this);
+        adatper = new SelectCurrentWalletAdapter(wallets,this);
         rvWalletList.setAdapter(adatper);
         adatper.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -108,6 +116,53 @@ public class SelectCurrentWalletActivity extends XActivity {
 
     }
 
+    private void checkStatusAndFinish() {
+
+        if(originCheckedWallet!=null&&originCheckedWallet.getWalletType()==MultiWalletEntity.WALLET_TYPE_HARDWARE
+                &&checkedWallet.getId() != originCheckedWallet.getId()&& DeviceOperationManager.getInstance().isDeviceConnectted(originCheckedWallet.getBluetoothDeviceName())){
+            //show dialog
+            int[] listenedItems = {R.id.tv_cancel,R.id.tv_confirm};
+            CustomDialog dialog = new CustomDialog(this,
+                    R.layout.baseservice_dialog_change_bluetoothwallet, listenedItems,false, Gravity.CENTER);
+            dialog.setmWidth(SizeUtil.dp2px(259));
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+
+                }
+            });
+            dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+                @Override
+                public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                    if(view.getId()== R.id.tv_cancel){
+                        dialog.cancel();
+                    }else if(view.getId()== R.id.tv_confirm){
+                        DeviceOperationManager.getInstance().freeContext(SelectCurrentWalletActivity.this.toString(),originCheckedWallet.getBluetoothDeviceName(),null);
+                        saveCheckedWallet();
+                        finish();
+                    }
+                }
+            });
+            dialog.show();
+        }else{
+            //save current wallet
+            saveCheckedWallet();
+            finish();
+        }
+    }
+
+
+    private void saveCheckedWallet(){
+        if (checkedWallet != null && originCheckedWallet != null && checkedWallet.getId() != originCheckedWallet.getId()) {
+            originCheckedWallet.setIsCurrentWallet(0);
+            checkedWallet.setIsCurrentWallet(1);
+            originCheckedWallet.save();
+            checkedWallet.save();
+            EventBusProvider.post(new ChangeSelectedWalletEvent(checkedWallet));
+        }
+    }
+
     @Override
     public void initData(Bundle savedInstanceState) {
 
@@ -120,15 +175,14 @@ public class SelectCurrentWalletActivity extends XActivity {
 
     @Override
     protected void onDestroy() {
-        //save current wallet
-        if (checkedWallet != null && originCheckedWallet != null && checkedWallet.getId() != originCheckedWallet.getId()) {
-            originCheckedWallet.setIsCurrentWallet(0);
-            checkedWallet.setIsCurrentWallet(1);
-            originCheckedWallet.save();
-            checkedWallet.save();
-            EventBusProvider.post(new ChangeSelectedWalletEvent(checkedWallet));
-        }
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onBackPressedSupport() {
+        checkStatusAndFinish();
     }
 
     @Override

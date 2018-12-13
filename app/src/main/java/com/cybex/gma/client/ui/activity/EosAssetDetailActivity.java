@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
+import com.cybex.componentservice.db.entity.EosTransactionEntity;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
@@ -33,6 +34,7 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.tapadoo.alerter.Alerter;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -53,6 +55,29 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @BindView(R.id.tv_token_name) TextView tvTokenName;
     @BindView(R.id.view_asset_detail_bot) LinearLayout viewAssetDetailBot;
     private TransferRecordListAdapter mAdapter;
+    List<TransferHistory> curDataList;
+    List<EosTransactionEntity> curTransactionList;//给Adapter的数据源
+    List<EosTransactionEntity> updateTransactionList;//暂存的给Adapter的数据源，更新用
+
+    public String getCurHead() {
+        return curHead;
+    }
+
+    public void setCurHead(String curHead) {
+        this.curHead = curHead;
+    }
+
+    public String getCurLib() {
+        return curLib;
+    }
+
+    public void setCurLib(String curLib) {
+        this.curLib = curLib;
+        //getBlockNum(curTransactionList);
+    }
+
+    private String curHead;//当前head block num
+    private String curLib;//当前Lib num
 
     private String currentEosName = "";
     private Bundle bundle;
@@ -77,6 +102,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @Override
     public void bindUI(View rootView) {
         ButterKnife.bind(this);
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
 
@@ -90,94 +116,20 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @Override
     public void initData(Bundle savedInstanceState) {
         curPage = 1;
+        curDataList = new ArrayList<>();
         setNavibarTitle(getString(R.string.title_asset_detail), true);
         bundle = getIntent().getExtras();
-        /*
-        if (bundle != null) {
-            asset_type = bundle.getString(ParamConstants.EOS_TOKEN_TYPE);
-            if (asset_type != null) {
-                if (asset_type.equals(ParamConstants.SYMBOL_EOS)) {
-                    //EOS资产
-                    //资源管理
-                    tvResourceManage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UISkipMananger.launchResourceDetail(EosAssetDetailActivity.this, bundle);
-                        }
-                    });
 
-                    //投票
-                    tvVote.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            MultiWalletEntity curWallet = DBManager.getInstance()
-                                    .getMultiWalletEntityDao()
-                                    .getCurrentMultiWalletEntity();
-                            EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
-                            if (EmptyUtils.isNotEmpty(curWallet)) {
-                                bundle.putString("cur_eos_name", curEosWallet.getCurrentEosName());
-                                UISkipMananger.launchVote(EosAssetDetailActivity.this, bundle);
-                            }
-                        }
-                    });
-
-                    btnGoTransfer.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UISkipMananger.launchTransfer(EosAssetDetailActivity.this);
-                        }
-                    });
-
-                    btnCollect.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UISkipMananger.launchCollect(EosAssetDetailActivity.this);
-                        }
-                    });
-
-                } else {
-                    //EOS Tokens 资产
-                    curToken = bundle.getParcelable(ParamConstants.EOS_TOKENS);
-                    tvRmbAmount.setVisibility(View.GONE);
-                    tvCurrencyType.setVisibility(View.GONE);
-                    viewAssetDetailBot.setVisibility(View.GONE);
-                    if (curToken != null) {
-                        //设置Token相关UI
-                        tvTokenName.setText(curToken.getTokenSymbol());
-                        tvEosAmount.setText(curToken.getQuantity());
-                        String tokenUrl = curToken.getLogo_url();
-                        if (tokenUrl == null || tokenUrl.equals("")) {
-                            ivLogoEosAsset.setImageResource(R.drawable.ic_token_unknown);
-                        } else {
-                            Glide.with(ivLogoEosAsset.getContext())
-                                    .load(tokenUrl)
-                                    .into(ivLogoEosAsset);
-                        }
-                    }
-
-                    btnGoTransfer.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UISkipMananger.launchTransferWithBundle(EosAssetDetailActivity.this, bundle);
-                        }
-                    });
-
-                    btnCollect.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UISkipMananger.launchCollectWithBundle(EosAssetDetailActivity.this, bundle);
-                        }
-                    });
-                }
-
-            }
+        int walletType = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                .getWalletType();
+        if (walletType == MultiWalletEntity.WALLET_TYPE_HARDWARE) {
+            viewAssetDetailBot.setVisibility(View.GONE);
         }
-        */
 
         if (bundle != null) {
             curToken = bundle.getParcelable(ParamConstants.EOS_TOKENS);
 
-            if (curToken != null){
+            if (curToken != null) {
                 //EOS和TOKENS的公共逻辑
                 asset_type = curToken.getTokenSymbol();
                 btnGoTransfer.setOnClickListener(new View.OnClickListener() {
@@ -260,20 +212,22 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
             }
         });
 
+    }
+
+    public void setmRecyclerViewOnClick() {
         //设置点击事件
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mAdapter != null && EmptyUtils.isNotEmpty(mAdapter.getData())) {
                     Bundle bundle = new Bundle();
-                    TransferHistory curTransfer = mAdapter.getData().get(position);
+                    TransferHistory curTransfer = curDataList.get(position);
                     bundle.putParcelable(ParamConstants.KEY_CUR_TRANSFER, curTransfer);
                     UISkipMananger.launchTransferRecordDetail(EosAssetDetailActivity.this, bundle);
                 }
 
             }
         });
-
     }
 
     @Override
@@ -337,22 +291,22 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
         LoggerManager.d("curPage", page);
 
-        if (bundle != null){
-            if (asset_type.equals(ParamConstants.SYMBOL_EOS)){
+        if (bundle != null) {
+            if (asset_type.equals(ParamConstants.SYMBOL_EOS)) {
                 //EOS
-                getP().requestHistory(
-                            currentEosName,
-                            page,
-                            ParamConstants.TRANSFER_HISTORY_SIZE,//20
-                            ParamConstants.SYMBOL_EOS,
-                            ParamConstants.CONTRACT_EOS,
-                            true);
-            }else {
+                getP().getInfo(
+                        currentEosName,
+                        page,
+                        ParamConstants.TRANSFER_HISTORY_SIZE,//5
+                        ParamConstants.SYMBOL_EOS,
+                        ParamConstants.CONTRACT_EOS,
+                        true);
+            } else {
                 //Tokens
-                if (curToken != null){
+                if (curToken != null) {
                     String symbol = curToken.getTokenSymbol();
                     String contract = curToken.getTokenName();
-                    getP().requestHistory(currentEosName,
+                    getP().getInfo(currentEosName,
                             page,
                             ParamConstants.TRANSFER_HISTORY_SIZE,
                             symbol,
@@ -363,43 +317,59 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         }
     }
 
+    /**
+     * 第一次请求和刷新数据方法
+     *
+     * @param dataList
+     */
+    public void refreshData(List<TransferHistory> dataList) {
+
+        if (EmptyUtils.isEmpty(dataList)) {
+            dataList = new ArrayList<>();
+        }
+
+        curDataList = dataList;
+        getP().saveTransaction(dataList);
+        getP().queryStatus(curDataList);
+
+        if (mAdapter != null && EmptyUtils.isNotEmpty(mAdapter.getData())) {
+            mAdapter.getData().clear();
+            mAdapter.setNewData(curDataList);
+            getP().updateDataSource(curDataList);
+        } else {
+            //首次请求
+            mAdapter = new TransferRecordListAdapter(curDataList, currentEosName);
+            mRecyclerView.setAdapter(mAdapter);
+            getP().updateDataSource(curDataList);
+        }
+
+        viewRefresh.finishRefresh();
+        viewRefresh.setLoadmoreFinished(false);
+    }
+
+
     public void loadMoreData(List<TransferHistory> dataList) {
         if (EmptyUtils.isEmpty(dataList)) {
             dataList = new ArrayList<>();
         }
 
+        curDataList.addAll(dataList);
+        getP().saveTransaction(dataList);
+        getP().queryStatus(dataList);
+
         if (mAdapter == null) {
             //第一次请求
-            mAdapter = new TransferRecordListAdapter(dataList, currentEosName);
+            mAdapter = new TransferRecordListAdapter(curDataList, currentEosName);
             mRecyclerView.setAdapter(mAdapter);
+            getP().updateDataSource(curDataList);
         } else {
             //加载更多
             mAdapter.addData(dataList);
+            getP().updateDataSource(curDataList);
             viewRefresh.finishLoadmore();
         }
-
     }
 
-    public void finishRefresh() {
-        viewRefresh.finishRefresh();
-    }
-
-    public void refreshData(List<TransferHistory> dataList) {
-        if (EmptyUtils.isEmpty(dataList)) {
-            dataList = new ArrayList<>();
-        }
-
-        if (mAdapter != null && EmptyUtils.isNotEmpty(mAdapter.getData())) {
-            mAdapter.getData().clear();
-            mAdapter.setNewData(dataList);
-        } else {
-            mAdapter = new TransferRecordListAdapter(dataList, currentEosName);
-            mRecyclerView.setAdapter(mAdapter);
-        }
-        viewRefresh.finishRefresh();
-        viewRefresh.setLoadmoreFinished(false);
-
-    }
 
     public void setLoadMoreFinish() {
         viewRefresh.setLoadmoreFinished(true);
@@ -413,4 +383,15 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         }
     }
 
+    public void updateTransactionStatus(){
+        curDataList = getP().updateDataSource(curDataList);
+        mAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Alerter.clearCurrent(this);
+    }
 }

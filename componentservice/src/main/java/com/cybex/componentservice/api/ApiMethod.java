@@ -10,7 +10,7 @@ public interface ApiMethod {
      */
     String API_CHECK_VER = "";
 
-    /*----------------中心化服务器API Mehtod-----------------------*/
+    /*----------------中心化服务器API Method-----------------------*/
 
     /**
      * 注册
@@ -42,8 +42,18 @@ public interface ApiMethod {
      */
     String API_GET_EOS_TOKENS = "/api/v1/account/tokens/";
 
+    /**
+     * ------------------------------------------V2 接口--------------------------------------------------
+     */
 
-    /*----------------链上服务器API Mehtod-----------------------*/
+    String API_BIO_DELEGATE = "/api/v2/account/delegate";
+
+    String API_QUERY_ACTION_STATUS = "/api/v2/action/";
+
+    String API_CHECK_GOOD_CODE = "/api/v2/goodscode/";
+
+
+    /*----------------链上服务器API Method-----------------------*/
 
     /**
      * 获取账户信息
@@ -94,6 +104,9 @@ public interface ApiMethod {
      */
     String API_GET_RAM_MARKET = "/v1/chain/get_table_rows";
 
+    /*----------------链上服务器API Method-----------------------*/
+
+    /*----------------微信支付 Method-----------------------*/
     /**
      * 微信支付初始化订单
      */
@@ -113,4 +126,18 @@ public interface ApiMethod {
      * 微信支付支付下单接口
      */
     String WXPAY_PLACE_ORDER = "/api/v1/pay/order/";
+
+    /*----------------微信支付 Method-----------------------*/
+
+    /*----------------第三方 Method-----------------------*/
+
+    String EOS_SPARK_API_GET_TRANSACTION = "/api?action=get_transaction_detail_info&apikey=2d0b90f1d4b59d5b24369762608cf681&module=transaction&trx_id=";
+
+    String EOS_WEB_GET_TRANSACTION = "/api/v1/get_transaction/";
+
+    /*----------------第三方 Method-----------------------*/
+
+
+
+
 }

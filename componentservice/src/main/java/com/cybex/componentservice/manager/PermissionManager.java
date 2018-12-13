@@ -3,9 +3,11 @@ package com.cybex.componentservice.manager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cybex.componentservice.R;
@@ -18,6 +20,7 @@ import com.yanzhenjie.permission.Rationale;
 import com.yanzhenjie.permission.RequestExecutor;
 import com.yanzhenjie.permission.Setting;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -109,8 +112,7 @@ public class PermissionManager {
         List<String> permissionNames = Permission.transformText(context, permissions);
         String message = context.getString(R.string.baseservice_message_permission_always_failed,
                 TextUtils.join("\n", permissionNames));
-
-        new AlertDialog.Builder(context)
+        AlertDialog dialog = new AlertDialog.Builder(context, R.style.common_dialog_alert)
                 .setCancelable(false)
                 .setTitle(R.string.baseservice_title_dialog)
                 .setMessage(message)
@@ -126,6 +128,22 @@ public class PermissionManager {
                     }
                 })
                 .show();
+
+        try {
+            Field mAlert = AlertDialog.class.getDeclaredField("mAlert");
+            mAlert.setAccessible(true);
+            Object mAlertController = mAlert.get(dialog);
+            Field mMessage = mAlertController.getClass().getDeclaredField("mMessageView");
+            mMessage.setAccessible(true);
+            TextView mMessageView = (TextView) mMessage.get(mAlertController);
+            mMessageView.setTextColor(Color.parseColor("#333333"));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     /**

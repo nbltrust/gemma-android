@@ -29,11 +29,16 @@ public class SpalashActPresenter extends XPresenter<SpalashActivity> {
         List<MultiWalletEntity> entityList = dao.getMultiWalletEntityList();
         if (EmptyUtils.isNotEmpty(entityList)) {
             boolean isOpenGesture = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_GESTURE);
+            boolean isOpenFinger = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_FINGER_PRINT);
             if (isOpenGesture) {
                 Bundle bd = new Bundle();
                 bd.putInt(ParamConstants.GESTURE_SKIP_TYPE, ParamConstants.GESTURE_SKIP_TYPE_LOGIN_VERIFY);
                 UISkipMananger.launchVerifyGestureActivity(getV(), bd);
-            } else {
+
+            } else if (isOpenFinger) {
+                UISkipMananger.lauchFingerprintVerifyActivity(getV());
+
+            }else {
                 //跳转到主界面
                 UISkipMananger.launchHome(getV());
             }

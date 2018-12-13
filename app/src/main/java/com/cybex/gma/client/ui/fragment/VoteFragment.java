@@ -1,5 +1,6 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -356,6 +357,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                         }
                         Collections.sort(producers);
                         getP().executeVoteLogic(curEOSName, producers, key);
+
                     }
 
                     @Override
@@ -439,7 +441,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
                 switch (view.getId()) {
                     case R.id.tv_i_understand:
                         dialog.cancel();
-                        showConfirmAuthorDialog();
+                        //showConfirmAuthorDialog();
                         break;
                     default:
                         break;
@@ -455,5 +457,14 @@ public class VoteFragment extends XFragment<VotePresenter> {
             String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
             tv_pass_hint.setText(showInfo);
         }
+    }
+
+    public void clearSelectNodes(){
+        selectedNodes.clear();
+        tvVoteNumber.setText(String.format(getResources().getString(R.string.eos_amount_vote_num),
+                String.valueOf(selectedNodes.size())));
+        tvExecVote.setClickable(false);
+        tvExecVote.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_right_disable));
+        tvVoteNumber.setBackground(getResources().getDrawable(R.drawable.eos_btn_vote_left_disable));
     }
 }

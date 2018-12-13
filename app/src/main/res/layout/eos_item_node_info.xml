@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/eos_bg_shape_white_selector"
         android:orientation="horizontal"
-        android:padding="@dimen/dimen_16"
-        android:layout_marginTop="@dimen/dimen_12"
-        android:layout_marginEnd="@dimen/dimen_10"
-        android:layout_marginStart="@dimen/dimen_10">
+        android:paddingTop="@dimen/dimen_20"
+        android:paddingBottom="20dp"
+        android:layout_marginEnd="@dimen/dimen_28"
+        android:layout_marginStart="@dimen/dimen_32">
 
         <LinearLayout
             android:id="@+id/view_is_node_checked"
@@ -33,7 +33,6 @@
 
         <LinearLayout
             android:id="@+id/view_node_info"
-            android:padding="@dimen/dimen_10"
             android:layout_marginStart="@dimen/dimen_20"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -78,7 +77,7 @@
 
             <TextView
                 android:id="@+id/tv_node_alias"
-                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black_context"
@@ -88,7 +87,7 @@
 
             <TextView
                 android:id="@+id/tv_node_url"
-                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_3.5"
@@ -101,10 +100,9 @@
     </LinearLayout>
 
     <View
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         style="@style/common_divider">
-
     </View>
 
 </LinearLayout>

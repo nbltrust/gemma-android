@@ -14,6 +14,7 @@ public class LabelLayout extends RelativeLayout{
 
     private TextView tvLeft;
     private TextView tvRight;
+    private View divider;
     private View rootview;
     private boolean rightIsShow;
 
@@ -43,6 +44,7 @@ public class LabelLayout extends RelativeLayout{
 
         tvLeft = rootview.findViewById(R.id.tv_left_title);
         tvRight = rootview.findViewById(R.id.tv_right);
+        divider = rootview.findViewById(R.id.divider);
 
         addView(rootview);
 
@@ -69,5 +71,9 @@ public class LabelLayout extends RelativeLayout{
 
     public void setRootViewClickListener(OnClickListener listener){
         rootview.setOnClickListener(listener);
+    }
+
+    public void setDividerVisible(boolean isShow){
+        divider.setVisibility(isShow?View.VISIBLE:View.INVISIBLE);
     }
 }

@@ -25,7 +25,6 @@
             android:layout_above="@+id/view_vote_bot"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="0dp"
             android:layout_marginBottom="4dp"
             app:contentView="@layout/eos_content_recycler_view"
             app:emptyView="@layout/empty_view_nodes"
@@ -37,7 +36,7 @@
 
         <View
             android:layout_alignTop="@+id/view_vote_bot"
-            android:background="#1927347d"
+            android:background="#dddddd"
             android:layerType="software"
             android:layout_width="match_parent"
             android:layout_height="1dp">

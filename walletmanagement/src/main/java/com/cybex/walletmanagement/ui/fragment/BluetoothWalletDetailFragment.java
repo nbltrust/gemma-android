@@ -1,42 +1,38 @@
 package com.cybex.walletmanagement.ui.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.allen.library.SuperTextView;
+import com.cybex.base.view.LabelLayout;
 import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
-import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.db.util.DBCallback;
 import com.cybex.componentservice.event.HeartBeatRefreshDataEvent;
 import com.cybex.componentservice.event.WalletNameChangedEvent;
 import com.cybex.componentservice.event.WookongFormattedEvent;
-import com.cybex.componentservice.event.WookongInitialedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.walletmanagement.R;
-import com.cybex.walletmanagement.ui.activity.BluetoothWalletManageActivity;
 import com.cybex.walletmanagement.ui.activity.ChangeWalletNameActivity;
-import com.cybex.walletmanagement.ui.activity.SelectCurrentWalletActivity;
-import com.cybex.walletmanagement.ui.activity.WalletManageInnerActivity;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
-import org.greenrobot.eventbus.Logger;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -45,7 +41,7 @@ import java.util.List;
 public class BluetoothWalletDetailFragment extends XFragment {
 
     TitleBar btnNavibar;
-    SuperTextView superTextViewBWalletName;
+    LabelLayout superTextViewBWalletName;
     SuperTextView superTextViewBatteryLife;
 //    Button btToConnect;
     //Button btCancelPair;
@@ -60,6 +56,7 @@ public class BluetoothWalletDetailFragment extends XFragment {
 //    private FreeContextHandler freeContextHandler;
     private MultiWalletEntity multiWalletEntity ;
     private CustomFullDialog confirmDialog;
+    private boolean isFormating;
     //    private String deviceName;
     //private final String deviceName = "WOOKONG BIO####E7:D8:54:5C:33:82";
 
@@ -119,42 +116,27 @@ public class BluetoothWalletDetailFragment extends XFragment {
             }
         }); */
 
-        superTextViewBWalletName.setRightString(multiWalletEntity.getWalletName());
+        superTextViewBWalletName.setRightText(multiWalletEntity.getWalletName());
 
         //格式化
         btFormat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                showConfirmFormatDialog();
-
-                //1.wookong press confirm
-                showConfirmFormatonCardDialog();
-                DeviceOperationManager.getInstance().pressConfirm(BluetoothWalletDetailFragment.this.toString(), multiWalletEntity.getBluetoothDeviceName(), new DeviceOperationManager.PressConfirmCallback() {
-                    @Override
-                    public void onConfirmSuccess() {
-                        if(confirmDialog!=null&&confirmDialog.isShowing()){
-                            startFormat();
-                        }
-                        if(confirmDialog!=null){
-                            confirmDialog.dismiss();
-                        }
-
-                    }
-
-                    @Override
-                    public void onConfirmFailed() {
-                        DeviceOperationManager.getInstance().clearCallback(BluetoothWalletDetailFragment.this.toString());
-                    }
-                });
-                //2.do format
+                startFormat();
+//                if(confirmDialog!=null&&confirmDialog.isShowing()){
+//
+//                }
+//                if(confirmDialog!=null){
+//                    confirmDialog.dismiss();
+//                }
 
             }
         });
 
         //修改钱包名称
-        superTextViewBWalletName.setOnSuperTextViewClickListener(new SuperTextView.OnSuperTextViewClickListener() {
+        superTextViewBWalletName.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClickListener(SuperTextView superTextView) {
+            public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeWalletNameActivity.class);
                 intent.putExtra(BaseConst.KEY_WALLET_ENTITY,multiWalletEntity);
                 startActivity(intent);
@@ -186,6 +168,10 @@ public class BluetoothWalletDetailFragment extends XFragment {
 
     @Override
     public void onDestroy() {
+        if(isFormating){
+            isFormating=false;
+            DeviceOperationManager.getInstance().abortButton(BluetoothWalletDetailFragment.this.toString(),multiWalletEntity.getBluetoothDeviceName());
+        }
         DeviceOperationManager.getInstance().clearCallback(this.toString());
         super.onDestroy();
     }
@@ -211,7 +197,7 @@ public class BluetoothWalletDetailFragment extends XFragment {
     public void refreshWalletName(WalletNameChangedEvent event) {
         if (event.getWalletID()==multiWalletEntity.getId()) {
             multiWalletEntity.setWalletName(event.getWalletName());
-            superTextViewBWalletName.setRightString(multiWalletEntity.getWalletName());
+            superTextViewBWalletName.setRightText(multiWalletEntity.getWalletName());
         }
     }
 
@@ -236,66 +222,82 @@ public class BluetoothWalletDetailFragment extends XFragment {
 //            formatThread.start();
 //        }
 
+        if(isFormating)return;
+        isFormating=true;
         showProgressDialog(getString(R.string.walletmanage_formating));
         final String bluetoothDeviceName = multiWalletEntity.getBluetoothDeviceName();
         DeviceOperationManager.getInstance().startFormat(this.toString(),
                 bluetoothDeviceName,
                 new DeviceOperationManager.DeviceFormatCallback() {
-            @Override
-            public void onFormatStart() {
-
-            }
-
-            @Override
-            public void onFormatSuccess() {
-                dissmisProgressDialog();
-
-                DeviceOperationManager.getInstance().freeContext(BluetoothWalletDetailFragment.this.toString(), bluetoothDeviceName, new DeviceOperationManager.FreeContextCallback() {
                     @Override
-                    public void onFreeStart() {
+                    public void onFormatStart() {
 
                     }
 
                     @Override
-                    public void onFreeSuccess() {
-                        DeviceOperationManager.getInstance().clearCallback(BluetoothWalletDetailFragment.this.toString());
-                    }
-
-                    @Override
-                    public void onFreeFailed() {
-
-                    }
-                });
-
-                //delete db data
-                DBManager.getInstance().getMultiWalletEntityDao().deleteEntityAsync(multiWalletEntity, new DBCallback() {
-                    @Override
-                    public void onSucceed() {
-
-                        List<MultiWalletEntity> multiWalletEntityList = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
-                        if(multiWalletEntityList.size()>0){
-                            MultiWalletEntity walletEntity = multiWalletEntityList.get(0);
-                            walletEntity.setIsCurrentWallet(1);
-                            walletEntity.save();
+                    public void onFormatSuccess() {
+                        isFormating=false;
+                        if(confirmDialog!=null&&confirmDialog.isShowing()){
+                            confirmDialog.dismiss();
                         }
-                        //show dialog
-                        showFormatDoneDialog();
+                        dissmisProgressDialog();
+
+                        DeviceOperationManager.getInstance().freeContext(BluetoothWalletDetailFragment.this.toString(), bluetoothDeviceName, new DeviceOperationManager.FreeContextCallback() {
+                            @Override
+                            public void onFreeStart() {
+
+                            }
+
+                            @Override
+                            public void onFreeSuccess() {
+                                DeviceOperationManager.getInstance().clearCallback(BluetoothWalletDetailFragment.this.toString());
+                            }
+
+                            @Override
+                            public void onFreeFailed() {
+
+                            }
+                        });
+
+                        //delete db data
+                        DBManager.getInstance().getMultiWalletEntityDao().deleteEntityAsync(multiWalletEntity, new DBCallback() {
+                            @Override
+                            public void onSucceed() {
+
+                                List<MultiWalletEntity> multiWalletEntityList = DBManager.getInstance().getMultiWalletEntityDao().getMultiWalletEntityList();
+                                if (multiWalletEntityList.size() > 0) {
+                                    MultiWalletEntity walletEntity = multiWalletEntityList.get(0);
+                                    walletEntity.setIsCurrentWallet(1);
+                                    walletEntity.save();
+                                }
+                                //show dialog
+                                showFormatDoneDialog();
+                            }
+
+                            @Override
+                            public void onFailed(Throwable error) {
+                                LoggerManager.e("deleteEntityAsync error=" + error.getMessage());
+                                GemmaToastUtils.showLongToast(getString(R.string.walletmanage_format_fail));
+                            }
+                        });
                     }
 
                     @Override
-                    public void onFailed(Throwable error) {
-                        LoggerManager.e("deleteEntityAsync error="+error.getMessage());
+                    public void onFormatUpdate(int state) {
+                        dissmisProgressDialog();
+                        showConfirmFormatonCardDialog();
+                    }
+
+                    @Override
+                    public void onFormatFailed() {
+                        isFormating=false;
+                        if(confirmDialog!=null&&confirmDialog.isShowing()){
+                            confirmDialog.dismiss();
+                        }
+                        dissmisProgressDialog();
+                        DeviceOperationManager.getInstance().clearCallback(BluetoothWalletDetailFragment.this.toString());
                         GemmaToastUtils.showLongToast(getString(R.string.walletmanage_format_fail));
                     }
-                });
-            }
-
-            @Override
-            public void onFormatFailed() {
-                dissmisProgressDialog();
-                DeviceOperationManager.getInstance().clearCallback(BluetoothWalletDetailFragment.this.toString());
-                GemmaToastUtils.showLongToast(getString(R.string.walletmanage_format_fail));
-            }
         });
     }
 
@@ -376,9 +378,24 @@ public class BluetoothWalletDetailFragment extends XFragment {
      * 显示按电源键确认格式化Dialog
      */
     private void showConfirmFormatonCardDialog() {
+        if (confirmDialog != null) {
+            if(!confirmDialog.isShowing()&&isFormating){
+                confirmDialog.show();
+            }
+            return;
+        }
         int[] listenedItems = {R.id.imv_back};
         confirmDialog = new CustomFullDialog(getActivity(),
-                R.layout.walletmanage_dialog_bluetooth_power_confirm, listenedItems, false, Gravity.BOTTOM);
+                R.layout.baseservice_dialog_bluetooth_button_confirm, listenedItems, false, Gravity.BOTTOM);
+        confirmDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(isFormating){
+                    isFormating=false;
+                    DeviceOperationManager.getInstance().abortButton(BluetoothWalletDetailFragment.this.toString(),multiWalletEntity.getBluetoothDeviceName());
+                }
+            }
+        });
         confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
             @Override
             public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
@@ -388,6 +405,8 @@ public class BluetoothWalletDetailFragment extends XFragment {
             }
         });
         confirmDialog.show();
+        TextView tvTip = confirmDialog.getAllView().findViewById(R.id.tv_tip);
+        tvTip.setText(getString(R.string.walletmanage_tip_confirm_format));
     }
 
     /**

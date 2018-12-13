@@ -44,12 +44,13 @@
         />
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:src="@drawable/wookong_bio_card_power"/>
+        android:scaleType="centerInside"
+        android:src="@drawable/wookong_bio_card_power_attention"/>
 
 
 </LinearLayout>

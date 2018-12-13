@@ -1,24 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkSlateBlue"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/whiteTwo"
+    android:orientation="vertical"
     tools:context=".ui.activity.InitialActivity">
 
-    <ImageView
-        android:id="@+id/logo_gma"
-        android:layout_width="@dimen/dimen_160"
-        android:layout_height="@dimen/dimen_160"
-        android:layout_marginTop="@dimen/logo_marginTop"
-        android:background="@drawable/ic_login_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
 
+    <LinearLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/view_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="S E C U R E"
+            android:textAlignment="center"
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/font_7.5"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Y O U R"
+            android:textAlignment="center"
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/font_7.5"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="B I T"
+            android:textAlignment="center"
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/font_7.5"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="38.4dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:src="@drawable/wookong_logo_splash_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="2.6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="WOOKONG"
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/font_3"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

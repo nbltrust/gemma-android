@@ -9,6 +9,10 @@
         android:id="@+id/tv_left_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="210dp"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:gravity="start"
         android:text="zuobian"
         android:textColor="@color/black_content"
         android:textSize="@dimen/font_4"
@@ -41,6 +45,7 @@
         android:layout_centerVertical="true"/>
 
     <View
+        android:id="@+id/divider"
         android:layout_alignParentBottom="true"
         style="@style/common_divider_nopadding"
     />

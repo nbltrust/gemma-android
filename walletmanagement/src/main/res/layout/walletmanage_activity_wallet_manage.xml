@@ -45,7 +45,7 @@
         android:id="@+id/label_current_wallet"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        app:text_left="当前钱包"
+        app:text_left="@string/walletmanage_current_wallet"
         app:text_right="主钱包"
         app:text_right_isShow="true"
         android:layout_marginLeft="@dimen/common_page_content_padding"
@@ -59,7 +59,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="钱包管理"
+        android:text="@string/walletmanage_walletmanage"
         android:textSize="@dimen/font_3.5"
         android:textColor="@color/black_context"
         android:layout_marginTop="28dp"

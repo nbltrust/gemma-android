@@ -460,14 +460,16 @@
 
 
     <!-- 字体大小 -->
-    <dimen name="font_3.5">14sp</dimen>
-    <dimen name="font_3">12sp</dimen>
-    <dimen name="font_6">24sp</dimen>
-    <dimen name="font_4">16sp</dimen>
-    <dimen name="font_4.2">16.8sp</dimen>
-    <dimen name="font_4.5">18sp</dimen>
-    <dimen name="font_4.7">18.8sp</dimen>
-    <dimen name="font_7">28sp</dimen>
+    <dimen name="font_3.5">14dp</dimen>
+    <dimen name="font_3">12dp</dimen>
+    <dimen name="font_2.5">10dp</dimen>
+    <dimen name="font_6">24dp</dimen>
+    <dimen name="font_4">16dp</dimen>
+    <dimen name="font_4.2">16.8dp</dimen>
+    <dimen name="font_4.5">18dp</dimen>
+    <dimen name="font_4.7">18.8dp</dimen>
+    <dimen name="font_7">28dp</dimen>
+    <dimen name="font_7.5">30dp</dimen>
 
     <dimen name="bottombar_height">48dp</dimen>
     <dimen name="bottombar_gemma_height">52dp</dimen>
@@ -475,7 +477,7 @@
     <!-- 启动页面 -->
     <dimen name="bt_inInitPage_margin">32dp</dimen>
     <dimen name="bt_inInitPage_height">44dp</dimen>
-    <dimen name="bt_marginTop">16dp</dimen>
+    <dimen name="bt_marginTop">15dp</dimen>
     <dimen name="bt_marginBot">68dp</dimen>
     <dimen name="logo_length">129dp</dimen>
     <dimen name="logo_marginTop">120dp</dimen>

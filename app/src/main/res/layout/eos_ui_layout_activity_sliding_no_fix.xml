@@ -5,8 +5,8 @@
               android:layout_height="wrap_content"
               android:orientation="vertical"
               android:background="@color/whiteTwo"
-              android:paddingEnd="10dp"
-              android:paddingStart="10dp"
+              android:layout_marginStart="20dp"
+              android:layout_marginEnd="20dp"
     >
 
     <com.cybex.base.view.tablayout.SlidingTabLayout
@@ -15,18 +15,19 @@
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:background="@color/colorTabBackground"
-        app:tl_indicator_color="@color/black_title"
+        app:tl_indicator_color="@color/colorTabIndicator"
         app:tl_indicator_gravity="BOTTOM"
-        app:tl_indicator_height="1dp"
+        app:tl_indicator_height="1.2dp"
         app:tl_indicator_style="NORMAL"
-        app:tl_indicator_width_equal_title="true"
-        app:tl_tab_padding="10dp"
+        app:tl_indicator_width_equal_title="false"
+        app:tl_tab_padding="17dp"
         app:tl_tab_space_equal="false"
-        app:tl_textBold="SELECT"
+        app:tl_textBold="BOTH"
         app:tl_textSelectColor="@color/colorTabTextSelect"
         app:tl_textUnselectColor="@color/colorTabTextUnSelect"
-        app:tl_textsize="16dp"
-        app:tl_underline_color="@color/black_context"/>
+        app:tl_textsize="@dimen/font_4.5"
+        app:tl_underline_color="#E7E9F8"/>
+
     <!--
     app:tl_textBold="SELECT"
     app:tl_tab_width="140dp"

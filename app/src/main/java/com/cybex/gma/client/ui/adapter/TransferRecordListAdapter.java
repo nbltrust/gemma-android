@@ -89,23 +89,31 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
 
             ImageView iconArrow = helper.getView(R.id.imv_arrow);
             String account = "";
+
+
             if (!TextUtils.isEmpty(currentEosName)) {
                 if (item.sender.equals(currentEosName)||adapterPosition%2==0) {
                     //转出 -
                     account = item.receiver;
                     iconArrow.setImageResource(R.drawable.ic_tab_pay);
-                    helper.setText(R.id.tv_transfer_amount, "-" + item.quantity);
+                    helper.setText(R.id.tv_transfer_amount, "-"  + " " + item.quantity + " " + item.symbol);
                     helper.setTextColor(R.id.tv_transfer_amount, Color.parseColor("#ff3b30"));
 
                     helper.setText(R.id.tv_transfer_account,
                             mContext.getResources()
                                     .getString(R.string.transfer_to) + account);
 
+                    if (item.status == null){
+                        helper.setText(R.id.tv_transfer_status, R.string.status_unknown);
+                    }else {
+                        helper.setText(R.id.tv_transfer_status, item.status);
+                    }
+
                 } else {
                     //转入 +
                     account = item.sender;
                     iconArrow.setImageResource(R.drawable.ic_tab_income);
-                    helper.setText(R.id.tv_transfer_amount, "+" + item.quantity);
+                    helper.setText(R.id.tv_transfer_amount, "+" + " " + item.quantity + " " + item.symbol);
                     helper.setTextColor(R.id.tv_transfer_amount, Color.parseColor("#4cd964"));
 
                     helper.setText(R.id.tv_transfer_account,

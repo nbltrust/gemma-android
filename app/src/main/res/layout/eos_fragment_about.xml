@@ -16,16 +16,16 @@
         android:layout_height="@dimen/dimen_120"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dimen_30"
-        android:background="@drawable/ic_login_logo"/>
+        android:src="@drawable/wookong_logo_splash_page"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_16"
         android:textAlignment="center"
-        android:textColor="@color/darkSlateBlue"
+        android:textColor="@color/black_title"
         android:textSize="@dimen/font_4"
-        android:text="GEMMA 1.0.0"/>
+        android:text="WOOKONG Wallet 1.0.0"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,6 +40,8 @@
             android:id="@+id/superTextView_version_info"
             style="@style/eos_card_style"
             title:sLeftTextString="@string/version_info"
+            title:sLeftTextColor="@color/black_title"
+            title:sLeftTextSize="@dimen/font_4"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             title:sUseShape="true">
 
@@ -57,6 +59,8 @@
             android:id="@+id/superTextView_update"
             style="@style/eos_card_style"
             title:sLeftTextString="@string/version_update"
+            title:sLeftTextColor="@color/black_title"
+            title:sLeftTextSize="@dimen/font_4"
             title:sRightTvDrawableRight="@drawable/ic_arrow"
             title:sUseShape="true">
 

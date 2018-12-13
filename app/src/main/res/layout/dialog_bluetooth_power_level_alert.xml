@@ -19,7 +19,7 @@
         android:layout_marginTop="28dp"/>
 
     <TextView
-        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -28,8 +28,9 @@
         android:textColor="@color/black_title"/>
 
     <TextView
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/tv_power_alert_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +41,7 @@
         android:textSize="@dimen/font_4"/>
 
     <View
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="14dp"
         style="@style/common_divider">
     </View>
 

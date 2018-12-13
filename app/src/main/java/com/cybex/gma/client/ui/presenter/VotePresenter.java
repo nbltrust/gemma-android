@@ -262,6 +262,7 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                         super.onError(response);
 
                         if (EmptyUtils.isNotEmpty(getV())) {
+
                             AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.operate_deal_failed));
                             getV().dissmisProgressDialog();
                             if (response.body() != null && response.getRawResponse().body() != null){
@@ -286,10 +287,11 @@ public class VotePresenter extends XPresenter<VoteFragment> {
                     @Override
                     public void onSuccess(Response<String> response) {
                         if (EmptyUtils.isNotEmpty(getV())) {
-                            AlertUtil.showLongCommonAlert(getV().getActivity(),
-                                    getV().getString(R.string.operate_deal_success));
-                            getV().dissmisProgressDialog();
                             if (response != null && EmptyUtils.isNotEmpty(response.body())) {
+                                AlertUtil.showLongCommonAlert(getV().getActivity(),
+                                        getV().getString(R.string.operate_deal_success));
+                                getV().clearSelectNodes();
+                                getV().dissmisProgressDialog();
                                 String jsonStr = response.body();
                                 //停留在投票页面，更新数据
                                 LoggerManager.d("pushTransaction json:" + jsonStr);
@@ -323,41 +325,43 @@ public class VotePresenter extends XPresenter<VoteFragment> {
 
                         @Override
                         public void onSuccess(Response<AccountInfo> response) {
-                            if (response != null && response.body() != null) {
-                                AccountInfo info = response.body();
-                                if (EmptyUtils.isNotEmpty(info)) {
-                                    AccountInfo.SelfDelegatedBandwidthBean resource = info
-                                            .getSelf_delegated_bandwidth();
-                                    if (EmptyUtils.isNotEmpty(resource)) {
-                                        //有抵押资源
-                                        String delegated_cpu = resource.getCpu_weightX();
-                                        String delegated_net = resource.getNet_weightX();
+                            if (getV() != null){
+                                if (response != null && response.body() != null) {
+                                    AccountInfo info = response.body();
+                                    if (EmptyUtils.isNotEmpty(info)) {
+                                        AccountInfo.SelfDelegatedBandwidthBean resource = info
+                                                .getSelf_delegated_bandwidth();
+                                        if (EmptyUtils.isNotEmpty(resource)) {
+                                            //有抵押资源
+                                            String delegated_cpu = resource.getCpu_weightX();
+                                            String delegated_net = resource.getNet_weightX();
 
-                                        String[] cpu_amount_arr = delegated_cpu.split(" ");
-                                        String[] net_amount_arr = delegated_net.split(" ");
+                                            String[] cpu_amount_arr = delegated_cpu.split(" ");
+                                            String[] net_amount_arr = delegated_net.split(" ");
 
-                                        String cpu_amount = cpu_amount_arr[0];
-                                        String net_amount = net_amount_arr[0];
+                                            String cpu_amount = cpu_amount_arr[0];
+                                            String net_amount = net_amount_arr[0];
 
-                                        String total_resource = AmountUtil.add(cpu_amount, net_amount, 4) + " EOS";
-                                        if (EmptyUtils.isNotEmpty(getV())) {
-                                            getV().hasDelegatedRes(true);
-                                            getV().setTotalDelegatedResource(total_resource);
-                                            getV().showContent();
-                                        }
+                                            String total_resource = AmountUtil.add(cpu_amount, net_amount, 4) + " EOS";
+                                            if (EmptyUtils.isNotEmpty(getV())) {
+                                                getV().hasDelegatedRes(true);
+                                                getV().setTotalDelegatedResource(total_resource);
+                                                getV().showContent();
+                                            }
 
-                                    } else {
-                                        //该账号没有给自己抵押资源
-                                        if (EmptyUtils.isNotEmpty(getV())) {
-                                            getV().hasDelegatedRes(false);
-                                            getV().showEmptyOrFinish();
-                                            GemmaToastUtils.showLongToast(
-                                                    getV().getResources().getString(R.string.eos_not_enough_delegated_res));
+                                        } else {
+                                            //该账号没有给自己抵押资源
+                                            if (EmptyUtils.isNotEmpty(getV())) {
+                                                getV().hasDelegatedRes(false);
+                                                getV().showEmptyOrFinish();
+                                                GemmaToastUtils.showLongToast(
+                                                        getV().getResources().getString(R.string.eos_not_enough_delegated_res));
+                                            }
                                         }
                                     }
                                 }
+                                getV().dissmisProgressDialog();
                             }
-                            getV().dissmisProgressDialog();
                         }
 
                         @Override

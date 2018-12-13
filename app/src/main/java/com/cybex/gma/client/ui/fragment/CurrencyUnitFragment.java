@@ -94,6 +94,7 @@ public class CurrencyUnitFragment extends XFragment {
                 showLogic(false, true);
                 break;
             default:
+                showLogic(true, false);
             break;
         }
     }

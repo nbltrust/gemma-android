@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -134,5 +135,12 @@ public class CreateEosAccountActivity extends XActivity<CreateEosAccountPresente
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        DeviceOperationManager.getInstance().clearCallback(this.toString());
+        super.onDestroy();
     }
 }

@@ -9,16 +9,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cybex.componentservice.manager.DeviceOperationManager;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.manager.WookongBioManager;
-import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.cybex.base.view.flowlayout.FlowLayout;
 import com.cybex.base.view.flowlayout.TagAdapter;
 import com.cybex.base.view.flowlayout.TagFlowLayout;
-import com.cybex.gma.client.widget.LabelsView;
 import com.hxlx.core.lib.mvp.lite.XFragment;
-import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.siberiadante.customdialoglib.CustomDialog;
 
@@ -165,15 +162,16 @@ public class BluetoothBackupMneFragment extends XFragment {
      * 显示请勿截图Dialog
      */
     private void showAlertDialog() {
-        int[] listenedItems = {R.id.tv_i_understand};
+        int[] listenedItems = {R.id.tv_understand};
         CustomDialog dialog = new CustomDialog(getContext(),
                 R.layout.eos_dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);
+        dialog.setmWidth(SizeUtil.dp2px(259));
         dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
 
             @Override
             public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
                 switch (view.getId()) {
-                    case R.id.tv_i_understand:
+                    case R.id.tv_understand:
                         dialog.cancel();
                         break;
                     default:

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:title="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner_dialog"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_password_hint"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/walletmanage_ic_success"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="6dp"
+        android:text="@string/walletmanage_format_success"
+        android:textColor="@color/black_title"
+        android:textSize="@dimen/font_4"/>
+
+    <me.codeboy.android.aligntextview.AlignTextView
+        android:id="@+id/tv_tip_init"
+        app:align="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:text="@string/walletmanage_tip_to_init"
+        android:textColor="@color/black_context"
+        android:textSize="@dimen/font_3.5"
+        />
+
+    <View
+        android:layout_marginTop="@dimen/dimen_20"
+       style="@style/common_divider">
+
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_corner_left_bot"
+            android:gravity="center"
+            android:text="@string/cancel_cn"
+            android:textColor="@color/black_title"
+            android:textSize="17sp"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layerType="software"
+            android:background="@color/dddddd_grey_350">
+        </View>
+
+        <TextView
+            android:id="@+id/tv_init"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_corner_right_bot"
+            android:gravity="center"
+            android:text="@string/walletmanage_initialize"
+            android:textColor="@color/black_title"
+            android:textSize="17sp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

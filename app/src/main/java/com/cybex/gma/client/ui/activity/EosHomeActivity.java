@@ -64,6 +64,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.hypertrack.smart_scheduler.SmartScheduler;
+import me.jessyan.autosize.AutoSize;
 
 public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
@@ -102,6 +103,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
     @BindView(R.id.view_net) View viewNET;
     @BindView(R.id.view_ram) View viewRAM;
     @BindView(R.id.view_refresh_wallet) CommonRefreshLayout refreshLayout;
+    @BindView(R.id.tv_token_content) TextView tvTokenContent;
     private Bundle bundle;
 
     private ResourceInfoVO resourceInfoVO;
@@ -383,12 +385,12 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         switch (savedCurrency) {
             case CacheConstants.CURRENCY_CNY:
                 tvCurrencyType.setText("≈ ¥ ");
-                tvEosValue.setText(" ≈ " + balance);
+                tvEosValue.setText(balance);
                 totalCNYAmount.setText(getP().formatCurrency(totalCNY));
                 break;
             case CacheConstants.CURRENCY_USD:
                 tvCurrencyType.setText("≈ $ ");
-                totalCNYAmount.setText(" ≈ " + totalUSD);
+                totalCNYAmount.setText(totalUSD);
                 tvEosValue.setText(balance);
                 break;
             default:
@@ -423,7 +425,9 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        AutoSize.autoConvertDensityOfGlobal(this);
         viewResourceManage.setVisibility(View.GONE);
+        tvAssets.setVisibility(View.INVISIBLE);
 
         bundle = new Bundle();
         getP().requestHomeCombineDataVO();
@@ -499,17 +503,6 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
                 tvCurrencyType.setText("≈ ¥ ");
                 totalCNYAmount.setText(" -- ");
         }
-    }
-
-    @Override
-    protected void setNavibarTitle(String title, boolean isShowBack) {
-        super.setNavibarTitle(title, isShowBack);
-        ImageView mCollectView = (ImageView) mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.ic_add_wallet) {
-            @Override
-            public void performAction(View view) {
-                UISkipMananger.launchWalletManagement(EosHomeActivity.this);
-            }
-        });
     }
 
     @Override
@@ -614,6 +607,7 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
      */
     public void showTokens(List<EosTokenVO> eosTokens) {
 
+        tvAssets.setVisibility(View.VISIBLE);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager
                 .VERTICAL, false);
         recyclerTokenList.setLayoutManager(layoutManager);
@@ -637,5 +631,15 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
 
         viewEosTokens.setVisibility(View.VISIBLE);
         tvNumberOfTokens.setText(String.valueOf(eosTokens.size()-1));
+
+        if (eosTokens.size() == 1){
+            //只有EOS没有其他Token
+            viewEosTokens.setVisibility(View.GONE);
+        }else if (eosTokens.size() == 2){
+            //只有一个Token
+            tvTokenContent.setText(" token");
+        }else {
+            tvTokenContent.setText(" tokens");
+        }
     }
 }

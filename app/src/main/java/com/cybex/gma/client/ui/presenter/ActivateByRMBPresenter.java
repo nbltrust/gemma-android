@@ -36,7 +36,6 @@ import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.NetworkUtils;
 import com.hxlx.core.lib.utils.android.SysUtils;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
-import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
@@ -99,6 +98,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                     getV().dissmisProgressDialog();
                                     getV().setNewPrice(curRMBPrice);
                                     getV().showPriceChangedDialog();
+                                    getV().updatePrice();
 
                                 }else {
                                     //价格未变
@@ -113,6 +113,8 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     public void onError(Response<WXPayQueryOrderInfoResult> response) {
                         super.onError(response);
                         getV().dissmisProgressDialog();
+                        AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.server_fail));
+
                     }
                 });
     }
@@ -126,20 +128,25 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                 .getWXPayPlaceOrderInfo(new JsonCallback<WXPayPlaceOrderResult>() {
                     @Override
                     public void onSuccess(Response<WXPayPlaceOrderResult> response) {
-                        if (response != null && response.body() != null){
-                            WXPayPlaceOrderResult result = response.body();
+                        if (getV() != null){
+                            if (response != null && response.body() != null){
+                                WXPayPlaceOrderResult result = response.body();
 
-                            if (result.getResult() != null){
-                                WXPayPlaceOrderResult.ResultBean resultBean = result.getResult();
-                                getV().callWXPay(resultBean);
+                                if (result.getResult() != null){
+                                    WXPayPlaceOrderResult.ResultBean resultBean = result.getResult();
+                                    getV().callWXPay(resultBean);
+                                }
                             }
                         }
                     }
 
                     @Override
                     public void onError(Response<WXPayPlaceOrderResult> response) {
-                        super.onError(response);
-                        getV().dissmisProgressDialog();
+                        if (getV() != null){
+                            super.onError(response);
+                            getV().dissmisProgressDialog();
+                            AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.server_fail));
+                        }
                     }
                 });
     }
@@ -161,17 +168,22 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     @Override
                     public void onSuccess(Response<WXPayBillResult> response) {
 
-                        if (response != null && response.body() != null && response.body().getResult() != null){
-                            WXPayBillResult.ResultBean result = response.body().getResult();
-                            getV().setFee(result);
-                            getV().dissmisProgressDialog();
+                        if (getV() != null){
+                            if (response != null && response.body() != null && response.body().getResult() != null){
+                                WXPayBillResult.ResultBean result = response.body().getResult();
+                                getV().setFee(result);
+                                getV().dissmisProgressDialog();
+                            }
                         }
                     }
 
                     @Override
                     public void onError(Response<WXPayBillResult> response) {
-                        super.onError(response);
-                        getV().dissmisProgressDialog();
+                        if (getV() != null){
+                            super.onError(response);
+                            getV().dissmisProgressDialog();
+                            AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.server_fail));
+                        }
                     }
                 });
     }
@@ -196,7 +208,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                     @Override
                     public void onBeforeRequest(@NonNull Disposable disposable) {
                         if (getV() != null){
-                            getV().showProgressDialog("");
+                            //getV().showProgressDialog("");
                         }
                     }
 
@@ -220,9 +232,9 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
                                 checkCreateAccountStatus(eos_username, public_key, orderId);
                             }else if (data.code == 10020){
                                 //todo 该Account被抢注
-                                GemmaToastUtils.showLongToast(getV().getString(R.string.eos_create_fail));
+                                AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_create_fail));
                             }else {
-
+                                AlertUtil.showLongUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_tip_check_network));
                             }
                         }
 
@@ -267,7 +279,7 @@ public class ActivateByRMBPresenter extends XPresenter<ActivateByRMBFragment> {
         //设置邀请码
         walletEntity.setInvCode(invCode);
         //设置EOS钱包状态为正在创建
-        walletEntity.setIsConfirmLib(ParamConstants.EOSNAME_CONFIRMING);
+        walletEntity.setIsConfirmLib(ParamConstants.EOSACCOUNT_CONFIRMING);
 
         //更新钱包
         eosWalletEntities.remove(0);

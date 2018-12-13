@@ -1,6 +1,5 @@
 package com.cybex.gma.client.ui.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,21 +11,29 @@ import android.text.TextUtils;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.db.util.DBCallback;
+import com.cybex.componentservice.event.WookongFormattedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
+import com.cybex.componentservice.utils.SizeUtil;
 import com.cybex.componentservice.utils.bluetooth.BlueToothWrapper;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -36,13 +43,17 @@ import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.extropies.common.MiddlewareInterface;
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
+import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
+import com.cybex.componentservice.widget.CustomFullWithAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,13 +67,14 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.autosize.AutoSize;
+import rx.functions.Action1;
 
 public class WookongScanDialog extends Dialog {
 
 
     private static final String DEVICE_PREFIX = "WOOKONG";
     private XActivity activity;
-    private CustomFullDialog verifyDialog;
+    private CustomFullWithAlertDialog verifyDialog;
     private CustomFullDialog powerAlertDialog;
     private CustomFullDialog pinDialog;
 //    private CustomFullDialog connectDialog;
@@ -111,8 +123,8 @@ public class WookongScanDialog extends Dialog {
         ButterKnife.bind(this);
 
         //调起Activity时执行一次扫描
-        this.startScan();
         this.initView();
+        this.startScan();
     }
 
 
@@ -135,16 +147,15 @@ public class WookongScanDialog extends Dialog {
 
 
     private void startScan() {
+        if(deviceSelected)return;
+        viewSpinKit.setVisibility(View.VISIBLE);
+        ivRetry.setVisibility(View.GONE);
+        deviceNameList.clear();
+        statusView.showLoading();
+
         DeviceOperationManager.getInstance().scanDevice(TAG, new DeviceOperationManager.ScanDeviceCallback() {
             @Override
             public void onScanStart() {
-                viewSpinKit.setVisibility(View.VISIBLE);
-                ivRetry.setVisibility(View.GONE);
-//                deviceNameList.clear();
-//                mAdapter.notifyDataSetChanged();
-                if(deviceNameList.size()==0){
-                    statusView.showLoading();
-                }
             }
 
             @Override
@@ -345,10 +356,18 @@ public class WookongScanDialog extends Dialog {
                     }
 
                     @Override
-                    public void onVerifyFailed() {
-                        AlertUtil.showShortUrgeAlert(activity, getContext().getString(com.cybex.gma.client.R.string.tip_fp_verify_fail));
+                    public void onVerifyFailed(int state) {
+//                        AlertUtil.showShortUrgeAlert((ViewGroup) verifyDialog.getWindow().getDecorView(), getContext().getString(com.cybex.gma.client.R.string.tip_fp_verify_fail));
+                        if (verifyDialog != null) {
+                            if(state==MiddlewareInterface.PAEW_RET_DEV_TIMEOUT){
+                                verifyDialog.showShortUrgeAlert(getContext().getString(R.string.tip_fp_verify_timeout));
+                            }else{
+                                verifyDialog.showShortUrgeAlert(getContext().getString(R.string.tip_fp_verify_fail));
+                            }
+
+                        }
                         LoggerManager.d("onVerifyFailed   verifyFpCount=" + verifyFpCount);
-                        if (verifyFpCount < 4) {
+                        if (verifyFpCount < 3) {
                             doVerifyFp(status);
                         } else {
 //                            DeviceOperationManager.getInstance().abortEnrollFp(deviceName);
@@ -358,6 +377,11 @@ public class WookongScanDialog extends Dialog {
                             showConfirmAuthoriDialog(
                                     status == 1 ? BaseConst.STATE_SET_PIN_NOT_INIT : BaseConst.STATE_INIT_DONE);
                         }
+                    }
+
+                    @Override
+                    public void onVerifyCancelled() {
+
                     }
                 });
     }
@@ -416,8 +440,6 @@ public class WookongScanDialog extends Dialog {
                 return ethAddress + "&&&&&&" + eosAddress;
             }
         })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<String, String>() {
             @Override
             public String apply(String addresses) throws Exception {
@@ -482,7 +504,8 @@ public class WookongScanDialog extends Dialog {
                 return "";
             }
         })
-
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String addresses) throws Exception {
@@ -513,15 +536,19 @@ public class WookongScanDialog extends Dialog {
                         LoggerManager.d("deviceInfo life cycle", deviceInfo.ucLifeCycle);
                         LoggerManager.d("deviceInfo pin state", deviceInfo.ucPINState);
 
-                        if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE
-                                && deviceInfo.ucPINState == BaseConst.DEVICE_PIN_STATE_UNSET) {
+                        if (deviceInfo.ucPINState == BaseConst.DEVICE_PIN_STATE_LOCKED) {
+                            //未初始化
+                            LoggerManager.d("connect:PIN LOCKED");
+                            status=3;
+                            showPinLockedDialog();
+                        }else if (deviceInfo.ucPINState == BaseConst.DEVICE_PIN_STATE_UNSET) {
                             //未初始化
                             LoggerManager.d("not init");
                             status=0;
                             UISkipMananger.skipBluetoothConfigWookongBioActivity(activity,
                                     null);
                             dismiss();
-                        } else if (deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE
+                        } else if ((deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_PRODUCE||deviceInfo.ucLifeCycle == BaseConst.DEVICE_LIFE_CYCLE_AGREE)
                                 && deviceInfo.ucPINState != BaseConst.DEVICE_PIN_STATE_INVALID) {
                             //已设置PIN但未完成初始化
                             LoggerManager.d("not pair");
@@ -534,33 +561,6 @@ public class WookongScanDialog extends Dialog {
                                             if (fpListReturnValue.getFPCount() > 0) {
                                                 //已设置了指纹
                                                 //验证指纹以确认配对
-
-//                                            DeviceOperationManager.getInstance().startVerifyFP(TAG, deviceName,
-//                                                    new DeviceOperationManager.DeviceVerifyFPCallback() {
-//                                                        @Override
-//                                                        public void onVerifyStart() {
-//                                                            showVerifyFPDialog();
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onVerifySuccess() {
-//                                                            dialog.cancel();
-//                                                            //todo 验证电量
-//
-//                                                            int powerLevel = DeviceOperationManager.getInstance().getDevicePowerAmount(deviceName);
-//
-//                                                            Bundle bundle = new Bundle();
-//                                                            bundle.putBoolean(BaseConst.PIN_STATUS, true);
-//                                                            UISkipMananger.skipBluetoothConfigWookongBioActivity
-//                                                                    (BluetoothScanResultDialogActivity.this,bundle);
-//                                                            finish();
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onVerifyFailed() {
-//
-//                                                        }
-//                                                    });
                                                 verifyFpCount = 0;
                                                 doVerifyFp(status);
 
@@ -706,17 +706,29 @@ public class WookongScanDialog extends Dialog {
             return;
         }
         int[] listenedItems = {R.id.imv_back};
-        verifyDialog = new CustomFullDialog(activity,
-                R.layout.eos_dialog_transfer_bluetooth_finger_sure, listenedItems, false,false, Gravity.BOTTOM);
+        verifyDialog = new CustomFullWithAlertDialog(activity,
+                R.layout.eos_dialog_pair_bluetooth_finger_sure, listenedItems, false,false, Gravity.BOTTOM);
         verifyDialog.setOnCancelListener(new OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                freeContext();
+                DeviceOperationManager.getInstance().abortEnrollFp("verifyDialog", deviceName, new DeviceOperationManager.AbortFPCallback() {
+                    @Override
+                    public void onAbortSuccess() {
+                        DeviceOperationManager.getInstance().clearCallback("verifyDialog");
+                        freeContext();
+                    }
+
+                    @Override
+                    public void onAbortFail() {
+                        DeviceOperationManager.getInstance().clearCallback("verifyDialog");
+                        freeContext();
+                    }
+                });
             }
         });
-        verifyDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+        verifyDialog.setOnDialogItemClickListener(new CustomFullWithAlertDialog.OnCustomDialogItemClickListener() {
             @Override
-            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+            public void OnCustomDialogItemClick(CustomFullWithAlertDialog dialog, View view) {
                 switch (view.getId()) {
                     case R.id.imv_back:
                         verifyDialog.cancel();
@@ -782,7 +794,7 @@ public class WookongScanDialog extends Dialog {
                             EditText edt_PIN = dialog.findViewById(com.cybex.gma.client.R.id.et_password);
                             if (EmptyUtils.isNotEmpty(edt_PIN.getText())) {
                                 //输入不为空
-                                String pin = edt_PIN.getText().toString().trim();
+                                String pin = edt_PIN.getText().toString();
                                 DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, pin,
                                         new DeviceOperationManager.VerifyPinCallback() {
                                             @Override
@@ -797,6 +809,11 @@ public class WookongScanDialog extends Dialog {
                                                 dialog.dismiss();
                                                 //todo 验证电量
                                                 showInitWookongBioDialog();
+                                            }
+
+                                            @Override
+                                            public void onPinLocked() {
+                                                showPinLockedDialog();
                                             }
 
                                             @Override
@@ -815,7 +832,7 @@ public class WookongScanDialog extends Dialog {
                             EditText edt_PIN = dialog.findViewById(com.cybex.gma.client.R.id.et_password);
                             if (EmptyUtils.isNotEmpty(edt_PIN.getText())) {
                                 //输入不为空
-                                String pin = edt_PIN.getText().toString().trim();
+                                String pin = edt_PIN.getText().toString();
                                 DeviceOperationManager.getInstance().verifyPin(TAG, deviceName, pin,
                                         new DeviceOperationManager.VerifyPinCallback() {
                                             @Override
@@ -825,6 +842,11 @@ public class WookongScanDialog extends Dialog {
 //                                                finish();
                                                 dialog.dismiss();
                                                 createWookongWallet();
+                                            }
+
+                                            @Override
+                                            public void onPinLocked() {
+                                                showPinLockedDialog();
                                             }
 
                                             @Override
@@ -851,6 +873,8 @@ public class WookongScanDialog extends Dialog {
     }
 
 
+
+
     private void revertItemStatus(){
         for (BluetoothDeviceVO bluetoothDeviceVO : deviceNameList) {
             bluetoothDeviceVO.isShowProgress=false;
@@ -870,14 +894,143 @@ public class WookongScanDialog extends Dialog {
 
                     @Override
                     public void onFreeSuccess() {
-
                     }
 
                     @Override
                     public void onFreeFailed() {
-
                     }
                 });
+        DeviceOperationManager.getInstance().clearCallback(TAG);
+    }
+
+
+    private void showPinLockedDialog() {
+
+        int[] listenedItems = {R.id.tv_cancel, R.id.tv_confirm};
+        CustomDialog dialog = new CustomDialog(activity,
+                R.layout.baseservice_dialog_pin_locked, listenedItems,false, Gravity.CENTER);
+        dialog.setmWidth(SizeUtil.dp2px(259));
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(pinDialog!=null&&pinDialog.isShowing()){
+                }else{
+                    freeContext();
+                }
+            }
+        });
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                if(view.getId()== R.id.tv_cancel){
+                    dialog.cancel();
+                }else if(view.getId()== R.id.tv_confirm){
+                    dialog.dismiss();
+                    if(isFormating)return;
+                    isFormating=true;
+                    activity.showProgressDialog("");
+                    DeviceOperationManager.getInstance().startFormat(TAG, deviceName, new DeviceOperationManager.DeviceFormatCallback() {
+                        @Override
+                        public void onFormatStart() {
+
+                        }
+
+                        @Override
+                        public void onFormatSuccess() {
+                            isFormating=false;
+                            if(confirmDialog!=null&&confirmDialog.isShowing()){
+                                confirmDialog.dismiss();
+                            }
+                            activity.dissmisProgressDialog();
+                            GemmaToastUtils.showLongToast(getContext().getString(R.string.walletmanage_pair_format_success));
+                            if(pinDialog!=null&&pinDialog.isShowing()){
+                                pinDialog.cancel();
+                            }else{
+                                freeContext();
+                            }
+                        }
+
+                        @Override
+                        public void onFormatUpdate(int state) {
+                            activity.dissmisProgressDialog();
+                            showConfirmFormatonCardDialog();
+                        }
+
+                        @Override
+                        public void onFormatFailed() {
+                            isFormating=false;
+                            if(confirmDialog!=null&&confirmDialog.isShowing()){
+                                confirmDialog.dismiss();
+                            }
+                            activity.dissmisProgressDialog();
+                            GemmaToastUtils.showLongToast(getContext().getString(R.string.walletmanage_format_fail));
+                            if(pinDialog!=null&&pinDialog.isShowing()){
+                            }else{
+                                freeContext();
+                            }
+                        }
+                    });
+
+                }
+            }
+        });
+        dialog.show();
+
+
+    }
+
+
+
+    private CustomFullDialog confirmDialog;
+    private boolean isFormating;
+
+    /**
+     * 显示按电源键确认格式化Dialog
+     */
+    private void showConfirmFormatonCardDialog() {
+        if (confirmDialog != null) {
+            if(!confirmDialog.isShowing()&&isFormating){
+                confirmDialog.show();
+            }
+            return;
+        }
+        int[] listenedItems = {R.id.imv_back};
+        confirmDialog = new CustomFullDialog(activity,
+                R.layout.baseservice_dialog_bluetooth_button_confirm, listenedItems, false, Gravity.BOTTOM);
+        confirmDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(isFormating){
+                    isFormating=false;
+                    DeviceOperationManager.getInstance().abortButton(TAG,deviceName);
+                }
+                if(pinDialog!=null&&pinDialog.isShowing()){
+                }else{
+//                    Observable.timer(6, TimeUnit.SECONDS)
+//                            .observeOn(AndroidSchedulers.mainThread())
+//                            .subscribe(new Consumer<Long>() {
+//                                @Override
+//                                public void accept(Long addresses) throws Exception {
+//                                    freeContext();
+//                                }
+//                            });
+
+//                    freeContext();
+                }
+            }
+        });
+        confirmDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+            @Override
+            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+                if (view.getId() == R.id.imv_back) {
+                    dialog.cancel();
+                }
+            }
+        });
+        confirmDialog.show();
+        TextView tvTip = confirmDialog.getAllView().findViewById(R.id.tv_tip);
+        tvTip.setText(getContext().getString(R.string.walletmanage_tip_confirm_format));
     }
 
     /**

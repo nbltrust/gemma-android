@@ -58,76 +58,76 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
      * @param public_key
      * @param public_key_sig
      */
-    public void doAccountRegisterRequest(
-            String account_name,
-            String SN, String SN_sig,
-            String public_key,
-            String publick_key_hex,
-            String public_key_sig,
-            String password,
-            String password_tip, Bundle bd) {
-        BluetoothCreateAccountReqParams params = new BluetoothCreateAccountReqParams();
-
-        params.setApp_id(ParamConstants.TYPE_APP_ID_BLUETOOTH);
-        params.setAccount_name(account_name);
-        params.setPublic_key(public_key);
-
-        BluetoothCreateAccountReqParams.WookongValidation validation = new BluetoothCreateAccountReqParams
-                .WookongValidation();
-        validation.setSN(SN.toLowerCase());
-        validation.setSN_sig(SN_sig.toLowerCase());
-        validation.setPublic_key(publick_key_hex + "00");
-        validation.setPublic_key_sig(public_key_sig);
-        params.setValidation(validation);
-
-        String json = GsonUtils.objectToJson(params);
-        LoggerManager.d("Bluetooth Create Params", json);
-
-        new BluetoothAccountRegisterRequest(UserRegisterResult.class)
-                .setJsonParams(json)
-                .postJson(new CustomRequestCallback<UserRegisterResult>() {
-                    @Override
-                    public void onBeforeRequest(@NonNull Disposable disposable) {
-                        getV().showProgressDialog("正在创建账户...");
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
-                        if (getV() != null) {
-                            getV().dissmisProgressDialog();
-
-                            if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
-                                UserRegisterResult registerResult = data.result;
-                                if (registerResult != null) {
-                                    String txId = registerResult.txId;
-                                    saveAccount(public_key, public_key_sig, password, account_name, password_tip,
-                                     txId, SN);
-                                    TimeStampValidateJob.executedCreateLogic(account_name, public_key);
-                                    AppManager.getAppManager().finishAllActivity();
-                                    UISkipMananger.skipBluetoothSettingFPActivity(getV().getActivity(), bd);
-                                }
-                            } else {
-                                showOnErrorInfo(data.code);
-                            }
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        getV().dissmisProgressDialog();
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        getV().dissmisProgressDialog();
-                    }
-                });
-
-
-    }
+//    public void doAccountRegisterRequest(
+//            String account_name,
+//            String SN, String SN_sig,
+//            String public_key,
+//            String publick_key_hex,
+//            String public_key_sig,
+//            String password,
+//            String password_tip, Bundle bd) {
+//        BluetoothCreateAccountReqParams params = new BluetoothCreateAccountReqParams();
+//
+//        params.setApp_id(ParamConstants.TYPE_APP_ID_BLUETOOTH);
+//        params.setAccount_name(account_name);
+//        params.setPublic_key(public_key);
+//
+//        BluetoothCreateAccountReqParams.WookongValidation validation = new BluetoothCreateAccountReqParams
+//                .WookongValidation();
+//        validation.setSN(SN.toLowerCase());
+//        validation.setSN_sig(SN_sig.toLowerCase());
+//        validation.setPublic_key(publick_key_hex + "00");
+//        validation.setPublic_key_sig(public_key_sig);
+//        params.setValidation(validation);
+//
+//        String json = GsonUtils.objectToJson(params);
+//        LoggerManager.d("Bluetooth Create Params", json);
+//
+//        new BluetoothAccountRegisterRequest(UserRegisterResult.class)
+//                .setJsonParams(json)
+//                .postJson(new CustomRequestCallback<UserRegisterResult>() {
+//                    @Override
+//                    public void onBeforeRequest(@NonNull Disposable disposable) {
+//                        getV().showProgressDialog("正在创建账户...");
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
+//                        if (getV() != null) {
+//                            getV().dissmisProgressDialog();
+//
+//                            if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
+//                                UserRegisterResult registerResult = data.result;
+//                                if (registerResult != null) {
+//                                    String txId = registerResult.txId;
+//                                    saveAccount(public_key, public_key_sig, password, account_name, password_tip,
+//                                     txId, SN);
+//                                    TimeStampValidateJob.executedCreateLogic(account_name, public_key);
+//                                    AppManager.getAppManager().finishAllActivity();
+//                                    UISkipMananger.skipBluetoothSettingFPActivity(getV().getActivity(), bd);
+//                                }
+//                            } else {
+//                                showOnErrorInfo(data.code);
+//                            }
+//                        }
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//                        getV().dissmisProgressDialog();
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        getV().dissmisProgressDialog();
+//                    }
+//                });
+//
+//
+//    }
 
 
     /**
@@ -171,7 +171,7 @@ public class BluetoothVerifyPresenter extends XPresenter<BluetoothVerifyMneFragm
         //设置为未备份
         walletEntity.setIsBackUp(CacheConstants.NOT_BACKUP);
         //设置被链上确认状态位未被确认
-        walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
+       // walletEntity.setIsConfirmLib(CacheConstants.NOT_CONFIRMED);
         //蓝牙设备类型
         walletEntity.setWalletType(CacheConstants.WALLET_TYPE_BLUETOOTH);
         //设置当前Transaction的Hash值

@@ -49,6 +49,7 @@
                         android:layout_weight="1"
                         android:inputType="text"
                         android:ellipsize="end"
+                        android:maxLength="12"
                         android:hint="@string/eos_tip_eos_username"
                         />
 

@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.cybex.base.view.progress.RoundCornerProgressBar;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
+import com.cybex.componentservice.db.entity.MultiWalletEntity;
+import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.AmountUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -39,6 +41,7 @@ public class ResourceDetailActivity extends XActivity<ResourceDetailPresenter> {
     @BindView(R.id.superTV_buy_sell_ram) SuperTextView superTVBuySellRam;
     @BindView(R.id.view_resource_manage_area) LinearLayout viewResourceManageArea;
     @BindView(R.id.view_refresh_resource_detail) CommonRefreshLayout viewRefreshResourceDetail;
+    @BindView(R.id.tv_wookong_resource_manage_tip) TextView tvwWookongResourceManageTip;
     private Bundle bundle;
 
     private ResourceInfoVO curResourceInfoVO;
@@ -74,6 +77,17 @@ public class ResourceDetailActivity extends XActivity<ResourceDetailPresenter> {
     public void initData(Bundle savedInstanceState) {
         bundle = new Bundle();
         setNavibarTitle(getString(R.string.eos_title_resource_detail), true);
+
+        int walletType = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity()
+                .getWalletType();
+        if (walletType == MultiWalletEntity.WALLET_TYPE_HARDWARE){
+            viewResourceManageArea.setVisibility(View.GONE);
+            tvwWookongResourceManageTip.setVisibility(View.VISIBLE);
+        }else {
+            viewResourceManageArea.setVisibility(View.VISIBLE);
+            tvwWookongResourceManageTip.setVisibility(View.GONE);
+        }
+
         getP().requestBalanceInfo();
 
         viewRefreshResourceDetail.setEnableLoadmore(false);

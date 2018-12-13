@@ -57,10 +57,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 
-        <View
-            style="@style/common_divider"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -95,7 +92,6 @@
             <TextView
                 android:id="@+id/tv_dialog_unDelegate_amount"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/tv_undelegate_amount"
                 android:textSize="@dimen/font_3"
                 android:layout_marginTop="18dp"
@@ -103,11 +99,15 @@
                 android:layout_marginEnd="16dp"
                 android:textColor="@color/black_title"
                 android:text=" EOS"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="1dp"
                 android:layout_height="wrap_content"/>
 
 
         </android.support.constraint.ConstraintLayout>
+        <View
+            style="@style/common_divider"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

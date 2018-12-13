@@ -155,7 +155,8 @@ public class TimeStampValidateJob {
                                         MultiWalletEntity successWallet = DBManager.getInstance().getMultiWalletEntityDao()
                                                 .getCurrentMultiWalletEntity();
                                         EosWalletEntity successEosWallet = successWallet.getEosWalletEntities().get(0);
-                                        successEosWallet.setIsConfirmLib(CacheConstants.IS_CONFIRMED);
+                                        //successEosWallet.setIsConfirmLib(CacheConstants.IS_CONFIRMED);
+                                        successEosWallet.setIsConfirmLib(ParamConstants.EOSACCOUNT_ACTIVATED);
                                         DBManager.getInstance().getMultiWalletEntityDao().saveOrUpateEntitySync(successWallet);
 
                                         //Post成功事件

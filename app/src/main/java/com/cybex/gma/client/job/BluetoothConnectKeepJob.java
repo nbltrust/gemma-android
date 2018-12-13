@@ -9,7 +9,6 @@ import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.componentservice.manager.LoggerManager;
-import com.cybex.gma.client.utils.bluetooth.BlueToothWrapper;
 import com.extropies.common.MiddlewareInterface;
 import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 
@@ -87,7 +86,7 @@ public class BluetoothConnectKeepJob {
                 boolean deviceConnectted = DeviceOperationManager.getInstance().isDeviceConnectted(currentDeviceName);
                 LoggerManager.e("heart beat onGetFail deviceConnectted:"+deviceConnectted);
                 if(deviceConnectted&&errorCount>=2){
-                    DeviceOperationManager.getInstance().freeContext(instance.toString(),false,currentDeviceName,null);
+//                    DeviceOperationManager.getInstance().freeContext(instance.toString(),false,currentDeviceName,null);
 //                    EventBusProvider.post(new DeviceConnectStatusUpdateEvent());
                 }
 

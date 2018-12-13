@@ -1,16 +1,22 @@
 package com.cybex.componentservice.utils;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cybex.componentservice.R;
+import com.cybex.componentservice.config.BaseConst;
+import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DeviceOperationManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.extropies.common.MiddlewareInterface;
+import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 
 import me.jessyan.autosize.AutoSize;
@@ -97,6 +103,11 @@ public class WookongConnectHelper {
                         if(callback!=null){
                             callback.onConnectSuccess();
                         }
+
+                        if (deviceInfo.ucPINState == BaseConst.DEVICE_PIN_STATE_LOCKED) {
+                            LoggerManager.d("direct connect:PIN LOCKED");
+                            showPinLockedDialog();
+                        }
                     }
 
                     @Override
@@ -123,6 +134,35 @@ public class WookongConnectHelper {
         widgetLoading.setVisibility(View.VISIBLE);
         tv_connecting.setText(activity.getString(R.string.baseservice_wookong_bio_connecting)+walletEntity.getWalletName());
         tvHint.setText(activity.getString(R.string.baseservice_wookong_connect_tip));
+    }
+
+
+    private void showPinLockedDialog() {
+
+        int[] listenedItems = {R.id.tv_cancel, R.id.tv_confirm};
+        CustomDialog dialog = new CustomDialog(activity,
+                R.layout.baseservice_dialog_pin_locked, listenedItems, false, Gravity.CENTER);
+        dialog.setmWidth(SizeUtil.dp2px(259));
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+
+            @Override
+            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+                if (view.getId() == R.id.tv_cancel) {
+                    dialog.cancel();
+                } else if (view.getId() == R.id.tv_confirm) {
+                    dialog.dismiss();
+                    //jump to  format page
+                    ARouter.getInstance().build(RouterConst.PATH_TO_FORMAT_PAGE).navigation();
+                }
+            }
+        });
+        dialog.show();
     }
 
 

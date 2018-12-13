@@ -108,7 +108,7 @@
 
                 <LinearLayout
                     android:layout_marginTop="6dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/view_eos_tokens"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,6 +132,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/tv_token_content"
                         android:textSize="@dimen/font_3.5"
                         android:textColor="@color/black_context"
                         android:layout_width="wrap_content"
@@ -234,11 +235,11 @@
                 <com.cybex.base.view.progress.RoundCornerProgressBar
                     android:id="@+id/progressbar_cpu_small"
                     style="@style/eos_progressBar_cpu_net_ram"
-                    title:rcBackgroundColor="@color/cloudyBlue"
+                    title:rcBackgroundColor="@color/dddddd_grey_350"
                     title:rcBackgroundPadding="0dp"
                     title:rcMax="100"
                     title:rcProgress="0"
-                    title:rcProgressColor="@color/dark_sky_blue"
+                    title:rcProgressColor="@color/black_context"
                     title:rcRadius="10dp"
                     >
 
@@ -260,11 +261,11 @@
                 <com.cybex.base.view.progress.RoundCornerProgressBar
                     android:id="@+id/progressbar_net_small"
                     style="@style/eos_progressBar_cpu_net_ram"
-                    title:rcBackgroundColor="@color/cloudyBlue"
+                    title:rcBackgroundColor="@color/dddddd_grey_350"
                     title:rcBackgroundPadding="0dp"
                     title:rcMax="100"
                     title:rcProgress="0"
-                    title:rcProgressColor="@color/dark_sky_blue"
+                    title:rcProgressColor="@color/black_context"
                     title:rcRadius="10dp"
                     >
 
@@ -285,11 +286,11 @@
                 <com.cybex.base.view.progress.RoundCornerProgressBar
                     android:id="@+id/progressbar_ram_small"
                     style="@style/eos_progressBar_cpu_net_ram"
-                    title:rcBackgroundColor="@color/cloudyBlue"
+                    title:rcBackgroundColor="@color/dddddd_grey_350"
                     title:rcBackgroundPadding="0dp"
                     title:rcMax="100"
                     title:rcProgress="0"
-                    title:rcProgressColor="@color/dark_sky_blue"
+                    title:rcProgressColor="@color/black_context"
                     title:rcRadius="10dp"
                     >
 

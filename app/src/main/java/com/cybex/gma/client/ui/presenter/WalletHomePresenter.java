@@ -3,7 +3,6 @@ package com.cybex.gma.client.ui.presenter;
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.config.BaseConst;
-import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
@@ -31,7 +30,6 @@ import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
-import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
@@ -80,7 +78,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
 
                                 GetKeyAccountsResult result = response.body();
                                 List<String> account_names = result.account_names;
-                                if (account_names.size() > 0) {
+                                if (account_names != null && account_names.size() > 0) {
                                     final String firstEosName = account_names.get(0);
                                     LoggerManager.d("firstEosname", firstEosName);
 
@@ -113,7 +111,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     if (wallet_type == BaseConst.WALLET_TYPE_BLUETOOTH) {
 
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_PRIKEY_IMPORT) {
-                                        GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_CREATE) {
 
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_IMPORT) {
@@ -143,6 +141,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                     }
                 });
     }
+
     /**
      * 从中心化服务器调取Tokens
      */
@@ -164,12 +163,21 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     GetEosTokensResult.ResultBean resultBean = response.getResult();
                                     List<TokenBean> tokens = resultBean.getTokens();
                                     //更新UI
-                                    getV().setEosTokens(tokens);
-                                    getV().updateEosTokensUI(tokens);
-
+                                    if (tokens != null){
+                                        getV().setEosTokens(tokens);
+                                        getV().updateEosTokensUI(tokens);
+                                    }else {
+                                        GemmaToastUtils.showShortToast(getV().getString(R.string.eos_load_tokens_fail));
+                                        getV().dissmisProgressDialog();
+                                    }
                                     requestUnitPrice();
-
+                                }else {
+                                    GemmaToastUtils.showShortToast(getV().getString(R.string.eos_load_tokens_fail));
+                                    getV().dissmisProgressDialog();
                                 }
+                            }else {
+                                GemmaToastUtils.showShortToast(getV().getString(R.string.eos_load_tokens_fail));
+                                getV().dissmisProgressDialog();
                             }
                         }
                     }
@@ -219,7 +227,6 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     String[] str = new String[2];
                                     for (int i = 0; i < prices.size(); i++) {
                                         UnitPrice.PricesBean bean = prices.get(i);
-
                                         if (bean != null) {
                                             if (bean.getName().equals(VALUE_SYMBOL_EOS)) {
                                                 str[1] = String.valueOf(bean.getValue());
@@ -230,15 +237,11 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                             if (bean.getName().equals(VALUE_SYMBOL_USDT)) {
                                                 str[0] = String.valueOf(bean.getValue());
                                             }
-
-                                            getAccount();
                                         }
-
                                     }
+                                    getAccount();
                                 }
-
                             }
-
                         }
                     });
         } catch (Throwable t) {
@@ -251,7 +254,10 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
      * 获取账户信息中是否有抵押资产
      * 如果有，需要把抵押资产也算进总资产估值中
      */
+    private boolean isRequesting;
+
     public void getAccount() {
+        if (isRequesting)return;
         try {
             MultiWalletEntity entity = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
             EosWalletEntity eosEntity = entity.getEosWalletEntities().get(0);
@@ -267,6 +273,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                     .getAccountInfo(new JsonCallback<AccountInfo>() {
                         @Override
                         public void onStart(Request<AccountInfo, ? extends Request> request) {
+                            isRequesting = true;
                             if (getV() != null) {
                                 super.onStart(request);
                             }
@@ -279,12 +286,13 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                 GemmaToastUtils.showLongToast(getV().getString(R.string
                                         .eos_load_account_info_fail));
                             }
+                            isRequesting = false;
                         }
 
                         @Override
                         public void onSuccess(Response<AccountInfo> response) {
                             if (getV() != null) {
-                                LoggerManager.d("getAccount");
+                                LoggerManager.d("getAccount Success");
                                 if (response != null && response.body() != null) {
                                     AccountInfo info = response.body();
                                     AccountInfo.SelfDelegatedBandwidthBean selfDelegatedBandwidth = info
@@ -299,9 +307,11 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                     }
                                     requestBalanceInfo();
                                 }
+                                isRequesting = false;
                             }
                         }
                     });
+
         } catch (Throwable t) {
             throw Exceptions.propagate(t);
         }
@@ -342,7 +352,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                                 getV().showEosBalance(balance);
                                                 //OkGo.getInstance().cancelAll();
                                             }
-                                        }else {
+                                        } else {
                                             //可用余额为0，链上返回空
                                             LoggerManager.d("case 2");
                                             getV().showEosBalance("0.0000");
@@ -355,7 +365,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
 //                                        GemmaToastUtils.showLongToast(
 //                                                getV().getString(R.string.eos_load_account_info_fail));
                                     }
-                                }else {
+                                } else {
                                     //LoggerManager.d("case 4");
                                     getV().clearEosCardView();
                                     GemmaToastUtils.showLongToast(
@@ -406,7 +416,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
             EosWalletEntity eosWalletEntity = bluetoothMultiWalletEntity.getEosWalletEntities().get(0);
 
             if (eosWalletEntity != null) {
-                eosWalletEntity.setIsConfirmLib(ParamConstants.EOSNAME_ACTIVATED);
+                eosWalletEntity.setIsConfirmLib(ParamConstants.EOSACCOUNT_ACTIVATED);
                 eosWalletEntity.setCurrentEosName(cur_eos_name);
                 String eos_name_json = GsonUtils.objectToJson(account_names);
                 eosWalletEntity.setEosNameJson(eos_name_json);
@@ -431,7 +441,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
         if (eosList.size() > 0) {
             EosWalletEntity curEosWallet = eosList.get(0);
             if (curEosWallet != null) {
-                curEosWallet.setIsConfirmLib(ParamConstants.EOSNAME_ACTIVATED);
+                curEosWallet.setIsConfirmLib(ParamConstants.EOSACCOUNT_ACTIVATED);
                 String curEosName = "";
                 if (EmptyUtils.isEmpty(getCurEosname())) {
                     curEosName = account_names.get(0);
@@ -448,20 +458,4 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
         }
     }
 
-    /**
-     * 获取当前蓝牙钱包对应的设备名称
-     * @return
-     */
-    public String getBluetoothDeviceName() {
-
-        List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
-                .getBluetoothWalletList();
-
-        if (bluetoothWalletList != null && bluetoothWalletList.size() > 0) {
-            return bluetoothWalletList.get(0).getBluetoothDeviceName();
-        }
-
-        return "list empty err";
-
-    }
 }

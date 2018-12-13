@@ -34,10 +34,13 @@ public class ApiPath {
      */
 
     //中心化服务器host
-    public static String HOST_CENTER_SERVER = "http://139.196.73.117:3002";
+    public static String HOST_CENTER_SERVER = "http://faucetdev-eos-wookong.nbltrust.com:3002";
     //"http://139.196.73.117:3002"微信支付沙盒测试环境
     //"http://139.196.73.117:3001"真实环境
     //"http://139.196.73.117:3005"灰度staging环境
+
+    //V2中心化服务器
+    //public static String HOST_CENTER_SERVER_V2 = "https://faucetdev-eos-wookong.nbltrust.com:7002";
 
     //链上服务器host
     public static String HOST_ON_CHAIN = "http://47.75.154.248:50003";
@@ -67,6 +70,9 @@ public class ApiPath {
 
 
     /**------------URL 地址配置---------------*/
+    //bio 官网
+    public static final String URL_OF_BIO_HOME = "https://wooko.ng";
+
     //服务协议
     public static final String TERMS_OF_SERVICE_CN = "https://nebuladownload.oss-cn-beijing.aliyuncs"
             + ".com/gemma/gemma_policy_cn" + ".html";
@@ -95,22 +101,21 @@ public class ApiPath {
 
     /**------------节点 地址配置---------------*/
 
-    public static final String EOS_CYBEX = "http://52.77.177.200:8888";
-    public static final String EOS_START_EOS = "http://api-mainnet.starteos.io";
-    public static final String EOS_NEW_YORK = "https://api.eosnewyork.io";
-    public static final String EOS_GREY_MASS = "https://eos.greymass.com";
-    public static final String EOS_AISA = "https://api-direct.eosasia.one";
-    public static final String EOS_GRAVITY = "https://api-mainnet.eosgravity.com";
+    public static final String EOS_CYBEX = "https://eos-node-wookong.cybex.io";
     public static final String EOS_HELLOEOS = "https://api.helloeos.com.cn";
+    public static final String EOS_START_EOS = "http://api-mainnet.starteos.io";
     public static final String EOS_HK_EOS = "https://api.hkeos.com";
-    public static final String EOS_42 = "https://nodes.eos42.io";
-    public static final String EOS_CYPHER_GLASS = "https://api.cypherglass.com";
+    public static final String EOS_GREY_MASS = "https://eos.greymass.com";
+    public static final String EOS_GRAVITY = "https://api-mainnet.eosgravity.com";
+
+//    public static final String EOS_NEW_YORK = "https://api.eosnewyork.io";
+//    public static final String EOS_AISA = "https://api-direct.eosasia.one";
+//    public static final String EOS_42 = "https://nodes.eos42.io";
+//    public static final String EOS_CYPHER_GLASS = "https://api.cypherglass.com";
     public static final String EOS_TEST_BEIJING = "http://47.75.154.248:50003";
 
-    public static final String EOS_SERVER_PORT_TEST = "http://139.196.73.117:3002";
-    public static final String EOS_SERVER_PORT_STAGING = "http://139.196.73.117:3005";
-
-
+    public static final String EOS_SERVER_PORT_TEST = "http://faucetdev-eos-wookong.nbltrust.com:3002";
+    public static final String EOS_SERVER_PORT_STAGING = "http://faucetstaging-eos-wookong.nbltrust.com:3003";
 
     /**------------节点 地址配置---------------*/
 
@@ -128,4 +133,7 @@ public class ApiPath {
 
     //收支详情页面使用默认memo时使用的推荐下载连接
     public static final String WOOKONG_HOME_PAGE = "https://wooko.ng";
+    public static final String EOS_SPARK = "https://api.eospark.com";
+    public static final String EOS_WEB = "https://eosweb.net";
+
 }

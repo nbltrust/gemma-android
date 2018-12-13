@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textColor="@color/black_context"
-        android:layout_marginLeft="@dimen/common_page_content_padding"
+        android:layout_marginStart="@dimen/common_page_content_padding"
         android:textSize="@dimen/font_3.5"
         tools:text="09-10 2018"
         />
@@ -80,19 +80,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginRight="38dp"
+                android:layout_marginEnd="38dp"
+                android:layout_marginTop="14dp"
                 android:singleLine="true"
                 android:textColor="@color/black_context"
                 android:textSize="@dimen/font_3.5"
                 android:ellipsize="middle"
-                tools:text="To:0xsjfsldjfasdfasdfsdfsdfsfasdfdsafsldfsdfsadfs"
+                tools:text="To:0x9ECAC8da91…5b29baC2691BAdca"
                 />
         </LinearLayout>
 
         <View
+            android:layout_marginTop="18dp"
             style="@style/common_divider"
-            android:layout_marginLeft="57dp"
-            android:layout_marginRight="@dimen/common_page_content_padding"
+            android:layout_marginStart="57dp"
+            android:layout_marginEnd="@dimen/common_page_content_padding"
             android:layout_alignParentBottom="true"
             />
 

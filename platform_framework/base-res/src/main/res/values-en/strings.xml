@@ -1,8 +1,754 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="collect">Collect</string>
+    <string name="reconnect">Reconnect</string>
+    <string name="btn_connect">Connect</string>
+    <string name="btn_disconnect">Disconnect</string>
+
+
+    <!--app******-->
+    <!-- Alert -->
+    <string name="eos_please_confirm_alert">Pending...The account is still in the air until 100% confirmed.</string>
+
+    <!-- Common -->
+    <string name="eos_app_name">WOOKONG</string>
+    <string name="eos_eos">EOS</string>
+
+    <!-- Initial Activity -->
+    <string name="eos_btn_create_new_wallet">Create Wallet</string>
+    <string name="eos_btn_restore_wallet">Import Wallet</string>
+
+    <!-- Create Wallet Activity-->
+    <string name="eos_tip_set_password">Password</string>
+    <string name="eos_tip_create_wallet">Create Wallet</string>
+    <string name="eos_tip_repeat_pass">Confirm password</string>
+    <string name="eos_title_eos_username">EOS account name</string>
+    <string name="eos_tip_eos_username">12 characters long: a-z and 1-5</string>
+    <string name="eos_tip_input_password">8 or more characters. Prefer a mix of letters, numbers &amp; symbols</string>
+    <string name="eos_tip_repeat_password">Enter password again</string>
+    <string name="eos_tip_input_password_hint">Please input password hint</string>
+    <string name="eos_title_invitation_code">Invite code</string>
+    <string name="eos_tip_input_inv_code">Enter invite code</string>
+    <string name="eos_btn_get_invitation">Get invite code</string>
+    <string name="eos_tip_agree">Agree on </string>
+    <string name="eos_tip_terms_of_service"><u>Terms of Service and Privacy Policy</u></string>
+    <string name="eos_title_password_hint_optional">Password hint(optional)</string>
+    <string name="eos_tip_password_hint">Password hint</string>
+    <string name="eos_tip_password_input_part2">Password is very important. It\'s used to encrypt your wallets and other
+        private data. You are responsible for saving your password carefully. Password can not be recovered if lost.</string>
+    <string name="eos_tip_security_hint">Password is very important. It\'s used to encrypt your wallets and other private
+        data. You are responsible for saving your password carefully. Password can not be recovered if lost.</string>
+    <string name="eos_username">EOS account name</string>
+    <string name="eos_wallet_name">Wallet Name</string>
+
+
+    <!-- Main Tab Activity-->
+    <string name="eos_tab_wallet">Wallet</string>
+    <string name="eos_tab_transfer">Send</string>
+    <string name="eos_tab_mine">Me</string>
+
+    <!-- Transfer Record Detail Fragment-->
+    <string name="eos_tip_income">Received</string>
+    <string name="eos_tip_payment">Sent</string>
+    <string name="eos_amount_income">+ %1$s</string>
+    <string name="eos_amount_outcome">- %1$s</string>
+    <string name="eos_title_transfer_status">State</string>
+    <string name="eos_title_transfer_id">TxID</string>
+    <string name="eos_title_block_num">Block Number</string>
+    <string name="eos_title_block_time">Block Time</string>
+    <string name="eos_btn_see_in_explorer">View on blockchain</string>
+
+    <!-- Transfer Fragment-->
+    <string name="eos_title_receiver">From</string>
+    <string name="eos_title_payer">To</string>
+    <string name="eos_title_payer_account">From</string>
+    <string name="eos_title_fund">Amount</string>
+    <string name="eos_title_memo">Memo</string>
+    <string name="eos_title_memo_optional">(Optional)</string>
+    <string name="eos_btn_confirm_transfer">Confirm send</string>
+    <string name="eos_at_char">\ufeff@</string>
+    <string name="eos_title_transfer">Send</string>
+
+    <!-- Delegate -->
+    <string name="eos_title_brief_info">Overview</string>
+    <string name="eos_title_used">used </string>
+    <string name="eos_title_total_amount">total </string>
+    <string name="eos_title_delegate">Delegate</string>
+    <string name="eos_tip_operation">Operation</string>
+    <string name="eos_title_delegate_cpu">CPU</string>
+    <string name="eos_amount_delegate">Enter amount to delegate</string>
+    <string name="eos_amount_undelegate">Enter amount to undelegate</string>
+    <string name="eos_title_delegate_net">NET</string>
+    <string name="eos_delegate">Delegate</string>
+    <string name="eos_title_resource_management">Manage Resources</string>
+    <string name="eos_title_resource_detail">Resource Detail</string>
+    <string name="eos_balance">Balance</string>
+    <string name="eos_title_delegate_undelegate">Delegate/Undelegate</string>
+
+    <string name="eos_amount_cpu_used">used %1$s ms</string>
+    <string name="eos_amount_cpu_total">total %1$s ms</string>
+    <string name="eos_amount_net_used">used %1$s KB</string>
+    <string name="eos_amount_net_total">total %1$s KB</string>
+    <string name="eos_amount_balance">%1$s available</string>
+
+
+    <!-- Buy Sell Ram-->
+    <string name="eos_buy_sell_ram">RAM Trading</string>
+    <string name="eos_buy_ram">Buy RAM</string>
+    <string name="eos_sell_ram">Sell RAM</string>
+    <string name="eos_transaction">Buy / Sell</string>
+    <string name="eos_title_eos_quantity">Enter EOS amount</string>
+    <string name="eos_ram_quantity">Enter RAM amount</string>
+    <string name="eos_available">Available</string>
+    <string name="eos_price">Price</string>
+    <string name="eos_input_ram_amount">Enter RAM amount</string>
+    <string name="eos_input_eos_amount">Enter EOS amount</string>
+    <string name="eos_amount_ram_approxi">Estimated %1$s KB</string>
+    <string name="eos_amount_eos_approxi">Estimated %1$s EOS</string>
+    <string name="eos_amount_available_eos">available %1$s</string>
+    <string name="eos_amount_available_ram">available %1$s KB</string>
+    <string name="eos_amount_ram">≈ %1$s</string>
+    <string name="eos_amount_ram_unit_price">≈ %1$s EOS/KB</string>
+    <string name="eos_tip_quantity_approxi">Estimated</string>
+
+
+
+    <!-- Import Wallet-->
+    <string name="eos_import_wallet">Import Wallet</string>
+    <string name="eos_tip_input_key">Enter private key</string>
+    <string name="eos_tip_input_key_part2">You can copy and paste the private key here, or scan a QR Code generated with private key.</string>
+    <string name="eos_tip_prikey_copied">Private key copied, Remember to clear the clipboard after use.</string>
+    <string name="eos_btn_start_input">Ready to import</string>
+    <string name="eos_btn_complete_input">Done</string>
+
+    <!-- Export(BackUp) Wallet-->
+    <string name="eos_tip_look_around">Are you being watched?\nPlease make sure backup under secured condition</string>
+    <string name="eos_look_around_import">Look out\nPlease import under secured condition</string>
+    <string name="eos_back_up_wallet">Backup</string>
+    <string name="eos_tip_back_safely">Under secured condition\nAirplane mode preferred</string>
+    <string name="eos_btn_show_mnemonic">Got it. Show me the mnemonic</string>
+    <string name="eos_btn_show_PriKey">Got it. Show me the private key</string>
+    <string name="eos_btn_start_import">Got it. Ready to import.</string>
+    <string name="eos_btn_backup_later">Backup later</string>
+
+    <string name="eos_tip_no_screenshot">Screenshots are not secure</string>
+    <string name="eos_tip_no_screenshot_hint">Screenshots may be leak via photo album. You can backup under airplane mode.</string>
+    <string name="eos_tip_i_understand">Got it</string>
+    <string name="eos_safety_first">Safety First</string>
+    <string name="eos_tip_safety_first">Airplane mode preferred. Avoid transfer through internet to leak private key.</string>
+    <string name="eos_save_offline">Save offline</string>
+    <string name="eos_tip_save_offline">You can make a old mobile phone offline as a cold storage to scan QR Code then save the private key.</string>
+    <string name="eos_tip_encrypto_save">Secure Storage</string>
+    <string name="eos_tip_encrypto_save_hint">Otherwise, use a password manage software to save the private key with encryption. Remember to clear the clipboard once saved.</string>
+
+    <string name="eos_look_around">Look out</string>
+    <string name="eos_tip_look_around_hint">Please make sure to scan QR code under secured condition</string>
+    <string name="eos_tip_no_screenshot_part2">It recommanded to use a device with camera to scan the QR Code to read private key offline</string>
+    <string name="eos_tip_show_QR">Show QR Code</string>
+
+    <!-- Change Password Fragment-->
+    <string name="eos_new_password">Enter new password</string>
+    <string name="eos_btn_confirm_change">Save</string>
+    <string name="eos_title_change_pass">Change Password</string>
+    <string name="eos_tip_pass_no_match">Not match</string>
+
+    <!-- Wallet Fragment-->
+    <string name="eos_total_assets">Total assets</string>
+    <string name="eos_available_balance">Balance</string>
+    <string name="eos_tip_redeem_ing">Refunding</string>
+    <string name="eos_transfer_records">Transactions</string>
+    <string name="resource">Manage Resources</string>
+    <string name="eos_get_cpu_net">Manage CPU / NET</string>
+    <string name="eos_CPU">CPU</string>
+    <string name="eos_NET">NET</string>
+    <string name="eos_RAM">RAM</string>
+
+    <!-- Manage Wallet fragment-->
+    <string name="eos_title_wallet">Wallet</string>
+
+    <!-- create methods -->
+    <string name="title_invite_friend">Request from a friend</string>
+    <!--
+    <string name="method_one">Recommend</string>
+    <string name="method_two">Alternatively</string>
+    <string name="method_one_hint">Requst an EOS account from a friend: ask the friend to send a transaction to the
+        smart contact account called \'signupeoseos\', which transaction should be with a memo filled with the
+        content below. Your account will be valid once the transaction confirmed by EOS blockchain.</string>
+    <string name="method_one_hint_2">It\'s highly recommended to send 2 EOS at least thus your account being created
+        successfully. For example, 0.1 EOS will be staked as CPU, and 0.1 EOS will be staked as NET, 1.8 EOS will used to buy ram for the account.</string>
+    -->
+    <string name="eos_tip_give_out_pubkey">If some friend is an EOS master, you can give him / her private key to help you creating the account.</string>
+    <string name="eos_show_priKey">View private key</string>
+    <string name="eos_tip_priKey_encrypted">Enter wallet password to decrypt private key and view it</string>
+    <string name="eos_copy">Copy</string>
+    <string name="eos_priKey_en">Private Key</string>
+
+    <string name="eos_btn_backup_prikey">Backup</string>
+    <string name="eos_tip_please_input_pass">Enter password</string>
+    <string name="eos_tip_wrong_password">Wrong password</string>
+    <string name="eos_title_manage_wallet">Manage Wallets</string>
+    <string name="eos_btn_save">Save</string>
+
+    <!-- Vote activity-->
+    <string name="eos_title_vote">Vote</string>
+    <string name="eos_tip_vote">Vote</string>
+    <string name="eos_amount_vote_num">%1$s/30</string>
+    <string name="eos_vote_num_init">0/30</string>
+    <string name="eos_nodes_selected_num">Selected(%1$s/30)</string>
+    <string name="eos_delegate_res">Staked</string>
+    <string name="eos_zero_balance">0.0000 EOS</string>
+    <string name="eos_tip_no_avail_votes">No Stake</string>
+
+    <!-- Transfer activity-->
+    <string name="eos_account_name">Account name</string>
+    <string name="eos_remain_balance_zero">Balance: 0.0000 EOS</string>
+    <string name="eos_tip_transfer">Enter amount</string>
+    <string name="eos_input_transfer_hint">(Optional)</string>
+    <string name="eos_show_remain_balance">Balance: </string>
+    <string name="eos_tip_cant_transfer_to_yourself">Recipient\'s name can not be same as sender\'s name</string>
+    <string name="eos_tip_balance_not_enough">Insufficient balance</string>
+
+    <!-- Transfer Record -->
+    <string name="eos_title_transfer_record">Transactions</string>
+
+    <!-- Transfer Detail -->
+    <string name="eos_title_transfer_detail">Details</string>
+
+    <!-- Delegate activity-->
+    <string name="eos_tip_balance_default">Balance: -- EOS</string>
+
+    <!-- Dialogs -->
+    <string name="eos_delegate_memo">Delegate %1$s EOS for CPU, %2$s EOS for NET</string>
+    <string name="eos_unDelegate_memo">Undelegate %1$s EOS for CPU, %2$s EOS for NET</string>
+    <string name="eos_switch_account">Switch Account</string>
+    <string name="eos_confirm_delegate">Confirm stake</string>
+    <string name="eos_input_pass_hint">Enter Wookong Bio\'s password</string>
+    <string name="wookong_pair_input_pass_hint">Enter Wookong Bio\'s password to authorize pair</string>
+    <string name="eos_gemma_password_hint">Enter account password to authorize operation</string>
+    <string name="eos_confirm_author">Authorize</string>
+    <string name="eos_confirm_buy">Confirm buy</string>
+    <string name="eos_confirm_sell">Confirm sell</string>
+    <string name="eos_explanation">Description</string>
+    <string name="eos_tip_buy_ram">buy ram</string>
+    <string name="eos_tip_sell_ram">sell ram</string>
+    <string name="eos_quantity">Amount</string>
+    <string name="eos_input_original_pass">Enter original password</string>
+    <string name="eos_verify_password">Verify</string>
+    <string name="eos_input_password">Enter @\'s password</string>
+
+    <!-- Barcode scan activity -->
+    <string name="barcode_scan_hint">Align Bar Code within frame to scan</string>
+    <string name="qr_scan_hint">Align QR Code within frame to scan</string>
+    <string name="scan_qr_code">Scan</string>
+
+    <!-- Change Node Setting -->
+    <string name="eos_node_cybex">http://52.77.177.200:8888(eoscybex)</string>
+    <string name="eos_node_starteos">http://api-mainnet.starteos.io</string>
+    <string name="eos_node_eosnewyork">https://api.eosnewyork.io</string>
+    <string name="eos_node_greymass">https://eos.greymass.com</string>
+    <string name="eos_node_eosasia">https://api-direct.eosasia.one</string>
+    <string name="eos_node_eosgravity">https://api-mainnet.eosgravity.com</string>
+    <string name="eos_node_helloeos">https://api.helloeos.com.cn</string>
+    <string name="eos_node_hkeos">https://api.hkeos.com</string>
+    <string name="eos_node_eos42">https://nodes.eos42.io</string>
+    <string name="eos_node_cypherglass">https://api.cypherglass.com</string>
+    <string name="eos_node_test_beijing">http://47.75.154.248:50003(北京测试链)</string>
+    <string name="eos_node_select">EOS Nodes</string>
+
+    <string name="eos_alias_eos_cybex">EOS CYBEX</string>
+    <string name="eos_alias_start_eos">START EOS</string>
+    <string name="eos_alias_eos_newyork">EOS NEW YORK</string>
+    <string name="eos_alias_eos_greymass">EOS GREYMASS</string>
+    <string name="eos_alias_eos_asia">EOS ASIA</string>
+    <string name="eos_alias_eos_gravity">EOS GRAVITY</string>
+    <string name="eos_alias_hello_eos">HELLO EOS</string>
+    <string name="eos_alias_hk_eos">HK EOS</string>
+    <string name="eos_alias_eos_42">EOS 42</string>
+    <string name="eos_alias_eos_cypher_glass">CYPHER GLASS</string>
+    <string name="eos_alias_eos_test_beijing">北京测试链</string>
+
+    <!-- Change Wallet Name fragment-->
+    <string name="eos_wallet_name_short">Wallet name</string>
+    <string name="eos_change_wallet_name_hint">Enter a new wallet name</string>
+
+    <!-- Wallet Detail fragment -->
+    <string name="eos_changePass">Change Password</string>
+    <string name="eos_export_privateKey">Export Private Key</string>
+
+    <!-- Creating Wallet fragment -->
+    <string name="eos_backup_hint">The private key is the identity of your assets. Please backup it as soon as possible. So you can recover your assets even accidents happened like phone lost, password forgotten, etc.</string>
+
+
+    <!-- Toast -->
+    <string name="eos_copy_success">Copied</string>
+    <string name="eos_change_pass_success">Password changed successfully</string>
+    <string name="eos_set_camera_permission">Please allow Gemma to access camera</string>
+    <string name="eos_agree_terms_of_service">Agree on Terms of Service and Privacy Policy</string>
+    <string name="eos_invalid_eos_username">Invalid account name</string>
+
+    <string name="eos_invCode_used">Invalid invite code: used</string>
+    <string name="eos_invCode_not_exist">Invalid invite code</string>
+    <string name="eos_name_used">Account registered</string>
+    <string name="eos_name_invalid">Illegal character(s) found in account name</string>
+    <string name="eos_name_len_invalid">The length of account name should be 12</string>
+    <string name="eos_params_invalid">Request params error</string>
+    <string name="eos_pubKey_invalid">Invalid public key</string>
+    <string name="eos_no_balance">Balance not enough</string>
+    <string name="eos_default_create_fail_info">Request failed</string>
+    <string name="eos_loading_success">Loading success</string>
+
+    <!-- Annotation -->
+    <string name="eos_name_not_empty">Invalid EOS account name</string>
+    <string name="eos_pass_not_empty">Invalid password</string>
+    <string name="eos_pass_lenth_invalid">8 or more characters. Prefer a mix of letters, numbers &amp; symbols</string>
+    <string name="eos_password_no_match">Password not match</string>
+    <string name="eos_repeat_input_pass">Enter password again</string>
+    <string name="eos_check_agreement">Please agree on Terms of Service and Privacy Policy</string>
+
+
+
+
+    <!--others-->
+    <string name="eos_tip_lock_pattern_1">Draw new pattern</string>
+    <string name="eos_tip_lock_pattern_2">Draw again to confirm</string>
+    <string name="eos_tip_lock_pattern_3">Draw original pattern</string>
+    <string name="eos_change_pattern">Change Pattern</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_me">Me</string>
+    <string name="press_again_exit">Back again to exit</string>
+
+    <string name="eos_creating">Pending...</string>
+    <string name="eos_please_confirm">The account is still in the air until 100% confirmed.</string>
+
+    <!--<string name="eos_refund_detail"></string>-->
+    <string name="eos_btn_confirm_refund">Confirm unstake</string>
+    <string name="eos_undelegate">Undelegate</string>
+    <string name="eos_refund_username">To</string>
+
+    <string name="eos_curwallets">Wallets</string>
+    <string name="eos_wallet_manege">More</string>
+
+    <string name="eos_click_to_copy">Copy</string>
+    <string name="eos_key_saved">It has been securely saved</string>
+
+    <string name="eos_get_inv_from_friend">Request from a friend</string>
+    <string name="eos_use_cybex">Via exchange withdraw</string>
+    <string name="eos_use_invCode">Via VIP invite code</string>
+    <string name="eos_choose_create_method">Choose a way to create</string>
+    <string name="eos_create_use_invCode">Via VIP invite code</string>
+    <string name="eos_how_to_get_invCode">Get an invite code</string>
+    <string name="eos_input_invCode_hint">Enter invite code</string>
+
+
+    <string name="eos_import_wallet_failed">Failed to import wallet</string>
+
+    <string name="eos_tip_transfer_trade_ing">Sending...</string>
+    <string name="eos_tip_transfer_oprate_failed">Failed to transfer</string>
+    <string name="eos_tip_transfer_oprate_success">Transaction sent</string>
+
+    <string name="eos_tip_loading_in">Loading...</string>
+    <string name="eos_tip_remaining_zero_zero_day_zero">Remaining </string>
+    <string name="eos_tip_remaining_zero_zero_day">Remaining </string>
+    <string name="eos_unit_hours">hour(s)</string>
+    <string name="eos_tip_remain">Remaining </string>
+    <string name="eos_tip_day_zero"></string>
+    <string name="eos_tip_day">days(s)</string>
+
+    <string name="eos_loading_avail_resource">Loading available resources</string>
+    <string name="eos_load_node_info_fail">Load nodes information fail，please check your network or switch
+        nodes</string>
+    <string name="eos_load_avail_res_fail">Load available resource fail，please check your network or switch
+        nodes</string>
+    <string name="eos_loading_account_info">Loading account information</string>
+    <string name="eos_load_account_info_fail">Load account information fail，please check your network or switch
+        nodes</string>
+    <string name="eos_not_enough_delegated_res">No resource available for vote，please delegate eos first</string>
+    <string name="eos_loading_cur_ram_price">Acquiring current estimate RAM price</string>
+    <string name="eos_load_cur_ram_price_fail">Acquiring RAM price fail，please check your network or switch
+        nodes</string>
+    <string name="eos_title_config_wallet">Wallet Configuration</string>
+    <string name="eos_prikey_format_invalid">Private Key format invalid，please check it</string>
+    <string name="eos_loading_pretransfer_info">Loading account information</string>
+    <string name="eos_dont_import_same_wallet">This wallet is already existed in Gemma</string>
+    <string name="eos_default_memo">This transaction was sent by %1$s via GEMMA wallet. We invite you to install the app and join us for EOS era: https://wooko.ng</string>
+
+    <string name="eos_tab_title_private_key">Private key</string>
+    <string name="eos_tab_title_qr_code">Qr code</string>
+
+    <string name="eos_tab_title_delegate">Delegate</string>
+    <string name="eos_tab_title_un_delegate">Undelegate</string>
+
+    <string name="eos_tab_title_buy">Buy</string>
+    <string name="eos_tab_title_sell">Sell</string>
+
+    <string name="eos_tip_selected_nodes_limit">Please choose less than 30 nodes</string>
+
+    <string name="eos_tip_account_name_err">EOS Username Invalid</string>
+    <string name="eos_tip_transfer_detail">Transfer Detail</string>
+    <string name="eos_tip_eos_amount_format_invalid">Please enter four decimal at most</string>
+
+    <!-- 账户激活 -->
+    <string name="eos_title_choose_activate_method">Choose a way to activate</string>
+    <string name="eos_tab_title_activate_by_RMB">By RMB</string>
+    <string name="eos_tab_title_activate_by_friend">By friend</string>
+    <string name="eos_tab_title_activate_by_exchanges">By exchange</string>
+    <string name="eos_tab_title_activate_by_invCode">By invite code</string>
+    <string name="eos_tip_activate_by_rmb">You need to pay for resources like CPU, NET and RAM in order to activate your
+        account</string>
+    <string name="eos_tip_need_to_pay">Fee</string>
+    <string name="eos_wechat_pay">Wechat Pay</string>
+
+
+    <string name="eos_tip_backup_prikey_friend">Please make sure to back up your private key, when your friend finishes the transfer, you will need to import the
+    private key into Gemma once again to use your account. Account can not be restored if the private key was lost.</string>
+    <string name="eos_tip_backup_prikey_exchange">Please make sure to back up your private key, when your finish the transfer at any exchange that support memo, you
+    will need to import the private key into Gemma once again to use your account. Account can not be restored if the private key was lost.</string>
+
+    <string name="eos_tip_activate_by_exchange_part_one">Please transfer in any exchange that support memo into smart code </string>
+    <string name="eos_tip_activate_by_exchange_part_two">signupeoseos </string>
+    <string name="eos_tip_activate_by_exchange_part_three"><Data><![CDATA[and<font color = "#ff5500">use words followed as memo
+    </font>]]></Data>，to finish creating.</string>
+
+    <string name="eos_tip_activate_by_friend_part_one">Please let your friend transfer into smart code </string>
+    <string name="eos_tip_activate_by_friend_part_two">signupeoseos </string>
+    <string
+        name="eos_tip_activate_by_friend_part_three"><Data><![CDATA[and<font color = "#ff5500">use words followed as memo
+    </font>]]></Data>，to finish creating.</string>
+
+    <string
+        name="eos_tip_use_eos_to_activate"><Data><![CDATA[In order to create your account, please transfer at least<font color="#ff5500"> 2 EOS </font>
+        ：your account will delegate <font color = "#426bd4"> 0.1 EOS</font>
+        for CPU，<font color = "#ff5500"> 0.1 EOS</font> for NET，
+        the remaining<font color="#ff5500"> 1.8 EOS </font>will be used for purchasing RAM at current
+        price。]]></Data></string>
+
+    <string name="eos_click_to_copy_priKey">copy</string>
+    <string name="eos_activate">Activate</string>
+    <string name="eos_activate_account">Activate EOS account</string>
+    <string name="eos_payment_fail">Payment fail</string>
+    <string name="eos_payment_overtime">Payment overtime</string>
+    <string name="eos_tip_payment_overtime">The money will be refunded within 24 hours if you
+        have paid</string>
+    <string name="eos_price_changed">Price changed</string>
+    <string name="eos_payment_price_changed">Due to EOS price change, the fee for creating this
+        account turns into  %1$s RMB</string>
+    <string name="eos_tip_payment_time">Please finish the payment in 10 minutes</string>
+    <string name="eos_ok">OK</string>
+    <string name="eos_tip_loading_fee">Calculating Fee</string>
+    <string name="eos_rmb_fee">%1$s RMB</string>
+    <string name="eos_cancel_cn">Cancel</string>
+    <string name="eos_confirm_payment">Confirm Pay</string>
+    <string name="eos_verify">Verify</string>
+    <string name="eos_verify_priKey">Verify Private Key</string>
+    <string name="eos_tip_verify_prikey">Please enter your private key to verify</string>
+    <string name="eos_memo_copied">Memo copied</string>
+    <string name="eos_verifying_account">verifying if account name is usable</string>
+    <string name="eos_tip_check_network">Failed，please check network</string>
+    <string name="eos_tip_username_valid">Congrats, eos username is usable</string>
+    <string name="eos_import_wallet_success">Import Wallet Done</string>
+    <string name="eos_create_fail">Create fail, the account name has been taken by another user</string>
+    <string name="eos_tip_cant_input_zero">CPU and NET can not all be zero</string>
+    <string name="eos_unknow_err">Unknown Error</string>
+
+
+
+    <!-- EOS Err Code-->
+
+    <string name="eos_err_code_3000000">Blockchain exception: 3000000. Please try again later.</string>
+    <string name="eos_err_code_3010001">Invalid name</string>
+    <string name="eos_err_code_3010002">Invalid public key</string>
+    <string name="eos_err_code_3010003">Invalid private key</string>
+    <string name="eos_err_code_3010004">Invalid authority</string>
+    <string name="eos_err_code_3010005">Blockchain exception: 3010005. Please try again later.</string>
+    <string name="eos_err_code_3010006">Blockchain exception: 3010006. Please try again later.</string>
+    <string name="eos_err_code_3010007">Blockchain exception: 3010007. Please try again later.</string>
+    <string name="eos_err_code_3010008">Blockchain exception: 3010008. Please try again later.</string>
+    <string name="eos_err_code_3010009">Blockchain exception: 3010009. Please try again later.</string>
+    <string name="eos_err_code_3010010">Blockchain exception: 3010010. Please try again later.</string>
+    <string name="eos_err_code_3010011">Blockchain exception: 3010011. Please try again later.</string>
+    <string name="eos_err_code_3010012">Blockchain exception: 3010012. Please try again later.</string>
+    <string name="eos_err_code_3010013">Blockchain exception: 3010013. Please try again later.</string>
+    <string name="eos_err_code_3010014">Blockchain exception: 3010014. Please try again later.</string>
+    <string name="eos_err_code_3020000">Blockchain exception: 3020000. Please try again later.</string>
+    <string name="eos_err_code_3020001">Blockchain exception: 3020001. Please try again later.</string>
+    <string name="eos_err_code_3030000">Block exception: 3030000. Please try again later.</string>
+    <string name="eos_err_code_3030001">Block exception: 3030001. Please try again later.</string>
+    <string name="eos_err_code_3030002">Block exception: 3030002. Please try again later.</string>
+    <string name="eos_err_code_3030003">Block exception: 3030003. Please try again later.</string>
+    <string name="eos_err_code_3030004">Block exception: 3030004. Please try again later.</string>
+    <string name="eos_err_code_3030005">Block exception: 3030005. Please try again later.</string>
+    <string name="eos_err_code_3030006">Block exception: 3030006. Please try again later.</string>
+    <string name="eos_err_code_3030007">Block exception: 3030007. Please try again later.</string>
+    <string name="eos_err_code_3030008">Block exception: 3030008. Please try again later.</string>
+    <string name="eos_err_code_3030009">Block exception: 3030009. Please try again later.</string>
+    <string name="eos_err_code_3040000">Transaction exception: 3040000. Please try again later.</string>
+    <string name="eos_err_code_3040001">Transaction exception: 3040001. Please try again later.</string>
+    <string name="eos_err_code_3040002">Transaction exception: 3040002. Please try again later.</string>
+    <string name="eos_err_code_3040003">Transaction exception: 3040003. Please try again later.</string>
+    <string name="eos_err_code_3040004">Transaction exception: 3040004. Please try again later.</string>
+    <string name="eos_err_code_3040005">Expired Transaction</string>
+    <string name="eos_err_code_3040006">Transaction Expiration Too Far</string>
+    <string name="eos_err_code_3040007">Transaction exception: 3040007. Please try again later.</string>
+    <string name="eos_err_code_3040008">Duplicate transaction</string>
+    <string name="eos_err_code_3040009">Duplicate deferred transaction</string>
+    <string name="eos_err_code_3040010">Transaction exception: 3040010. Please try again later.</string>
+    <string name="eos_err_code_3040011">The transaction can not be found</string>
+    <string name="eos_err_code_3040012">Pushing too many transactions at once</string>
+    <string name="eos_err_code_3040013">Transaction is too big</string>
+    <string name="eos_err_code_3040014">Transaction exception: 3040014. Please try again later.</string>
+    <string name="eos_err_code_3050000">Action validate exception: 3050000. Please try again later.</string>
+    <string name="eos_err_code_3050001">Account name already exists</string>
+    <string name="eos_err_code_3050002">Invalid Action Arguments</string>
+    <string name="eos_err_code_3050003">Action exception: 3050003. Please try again later.</string>
+    <string name="eos_err_code_3050004">Action exception: 3050004. Please try again later.</string>
+    <string name="eos_err_code_3050005">Action exception: 3050005. Please try again later.</string>
+    <string name="eos_err_code_3050006">Action exception: 3050006. Please try again later.</string>
+    <string name="eos_err_code_3050007">Attempt to use unaccessible API</string>
+    <string name="eos_err_code_3050008">Abort Called</string>
+    <string name="eos_err_code_3050009">Action exception: 3050009. Please try again later.</string>
+    <string name="eos_err_code_3060000">Data exception: 3060000. Please try again later.</string>
+    <string name="eos_err_code_3060001">Data exception: 3060001. Please try again later.</string>
+    <string name="eos_err_code_3060002">Data exception: 3060002. Please try again later.</string>
+    <string name="eos_err_code_3060003">Data exception: 3060003. Please try again later.</string>
+    <string name="eos_err_code_3060004">Data exception: 3060004. Please try again later.</string>
+    <string name="eos_err_code_3060100">Data exception: 3060100. Please try again later.</string>
+    <string name="eos_err_code_3060101">Data exception: 3060101. Please try again later.</string>
+    <string name="eos_err_code_3060102">Data exception: 3060102. Please try again later.</string>
+    <string name="eos_err_code_3070000">Instruction exception: 3070000. Please try again later.</string>
+    <string name="eos_err_code_3070001">Instruction exception: 3070001. Please try again later.</string>
+    <string name="eos_err_code_3070002">Instruction exception: 3070002. Please try again later.</string>
+    <string name="eos_err_code_3070003">Instruction exception: 3070003. Please try again later.</string>
+    <string name="eos_err_code_3070004">Instruction exception: 3070004. Please try again later.</string>
+    <string name="eos_err_code_3070005">Instruction exception: 3070005. Please try again later.</string>
+    <string name="eos_err_code_3080000">Resource exhausted</string>
+    <string name="eos_err_code_3080001">Account using more than allotted RAM usage</string>
+    <string name="eos_err_code_3080002">Transaction exceeded the current network usage limit imposed on the transaction</string>
+    <string name="eos_err_code_3080003">Transaction network usage is too much for the remaining allowable usage of the current block</string>
+    <string name="eos_err_code_3080004">Transaction exceeded the current CPU usage limit imposed on the transaction</string>
+    <string name="eos_err_code_3080005">Transaction CPU usage is too much for the remaining allowable usage of the current block</string>
+    <string name="eos_err_code_3080006">Transaction took too long</string>
+    <string name="eos_err_code_3080007">Transaction exceeded the current greylisted account network usage limit</string>
+    <string name="eos_err_code_3081001">Transaction reached the deadline set due to leeway on account CPU limits</string>
+    <string name="eos_err_code_3090000">Authorization exception: 3090000. Please try again later.</string>
+    <string name="eos_err_code_3090001">Authorization exception: 3090001. Please try again later.</string>
+    <string name="eos_err_code_3090002">Authorization exception: 3090002. Please try again later.</string>
+    <string name="eos_err_code_3090003">Authorization exception: 3090003. Please try again later.</string>
+    <string name="eos_err_code_3090004">Authorization exception: 3090004. Please try again later.</string>
+    <string name="eos_err_code_3090005">Authorization exception: 3090005. Please try again later.</string>
+    <string name="eos_err_code_3090006">Authorization exception: 3090006. Please try again later.</string>
+    <string name="eos_err_code_3090007">Invalid Permission</string>
+    <string name="eos_err_code_3090008">The action is not allowed to be linked with minimum permission</string>
+    <string name="eos_err_code_3090009">The parent permission is invalid</string>
+    <string name="eos_err_code_3100000">Blockchain exception: 3100000. Please try again later.</string>
+    <string name="eos_err_code_3100001">Blockchain exception: 3100001. Please try again later.</string>
+    <string name="eos_err_code_3100002">Unknown block</string>
+    <string name="eos_err_code_3100003">Unknown transaction</string>
+    <string name="eos_err_code_3100004">Blockchain exception: 3100004. Please try again later.</string>
+    <string name="eos_err_code_3100005">Blockchain exception: 3100005. Please try again later.</string>
+    <string name="eos_err_code_3100006">Blockchain exception: 3100006. Please try again later.</string>
+    <string name="eos_err_code_3100007">Blockchain exception: 3100007. Please try again later.</string>
+    <string name="eos_err_code_3100008">Feature is currently unsupported</string>
+    <string name="eos_err_code_3100009">Blockchain exception: 3100009. Please try again later.</string>
+    <string name="eos_err_code_3110000">Node exception: 3110000. Please try again later.</string>
+    <string name="eos_err_code_3110001">Node exception: Missing Chain API Plugin</string>
+    <string name="eos_err_code_3110002">Node exception: Missing Wallet API Plugin</string>
+    <string name="eos_err_code_3110003">Node exception: Missing History API Plugin</string>
+    <string name="eos_err_code_3110004">Node exception: Missing Net API Plugin</string>
+    <string name="eos_err_code_3110005">Node exception: Missing Chain Plugin</string>
+    <string name="eos_err_code_3110006">Node exception: Incorrect plugin configuration</string>
+    <string name="eos_err_code_3120000">Wallet exception</string>
+    <string name="eos_err_code_3120001">Wallet already exists</string>
+    <string name="eos_err_code_3120002">Nonexistent wallet</string>
+    <string name="eos_err_code_3120003">Locked wallet</string>
+    <string name="eos_err_code_3120004">Missing public key</string>
+    <string name="eos_err_code_3120005">Invalid wallet password</string>
+    <string name="eos_err_code_3120006">No available wallet</string>
+    <string name="eos_err_code_3120007">Already unlocked</string>
+    <string name="eos_err_code_3120008">Key already exists</string>
+    <string name="eos_err_code_3120009">Nonexistent key</string>
+    <string name="eos_err_code_3120010">Wallet exception: 3120010. Please try again later.</string>
+    <string name="eos_err_code_3120011">Wallet exception: 3120011. Please try again later.</string>
+    <string name="eos_err_code_3120012">Wallet exception: 3120012. Please try again later.</string>
+    <string name="eos_err_code_3130000">Actor or code whitelist/blacklist exception</string>
+    <string name="eos_err_code_3130001">Authorizing actor of transaction is not on the whitelist</string>
+    <string name="eos_err_code_3130002">Authorizing actor of transaction is on the blacklist</string>
+    <string name="eos_err_code_3130003">Contract to execute is not on the whitelist</string>
+    <string name="eos_err_code_3130004">Contract to execute is on the blacklist</string>
+    <string name="eos_err_code_3130005">Action to execute is on the blacklist</string>
+    <string name="eos_err_code_3130006">Public key in authority is on the blacklist</string>
+    <string name="eos_err_code_3140000">Blockchain exception: 3140000. Please try again later.</string>
+    <string name="eos_err_code_3140001">Blockchain exception: 3140001. Please try again later.</string>
+    <string name="eos_err_code_3150000">ABI exception: 3150000</string>
+    <string name="eos_err_code_3150001">No ABI found</string>
+    <string name="eos_err_code_3150002">ABI exception: 3150002</string>
+    <string name="eos_err_code_3150003">ABI exception: 3150003</string>
+    <string name="eos_err_code_3150004">ABI exception: 3150004</string>
+    <string name="eos_err_code_3150005">ABI exception: 3150005</string>
+    <string name="eos_err_code_3150006">ABI exception: 3150006</string>
+    <string name="eos_err_code_3150007">ABI exception: 3150007</string>
+    <string name="eos_err_code_3150008">ABI exception: 3150008</string>
+    <string name="eos_err_code_3150009">ABI exception: 3150009</string>
+    <string name="eos_err_code_3150010">ABI exception: 3150010</string>
+    <string name="eos_err_code_3150011">ABI exception: 3150011</string>
+    <string name="eos_err_code_3150012">ABI exception: 3150012</string>
+    <string name="eos_err_code_3150013">ABI exception: 3150013</string>
+    <string name="eos_err_code_3150014">ABI exception: 3150014</string>
+    <string name="eos_err_code_3160000">Contract exception: 3160000</string>
+    <string name="eos_err_code_3160001">Contract exception: 3160001</string>
+    <string name="eos_err_code_3160002">Contract exception: 3160002</string>
+    <string name="eos_err_code_3160003">Contract exception: 3160003</string>
+    <string name="eos_err_code_3160004">Contract exception: 3160004</string>
+    <string name="eos_err_code_3160005">Contract exception: 3160005</string>
+    <string name="eos_err_code_3160006">Contract exception: 3160006</string>
+    <string name="eos_err_code_3160007">Contract exception: 3160007</string>
+    <string name="eos_err_code_3160008">Contract exception: 3160008</string>
+    <string name="eos_err_code_3160009">Contract exception: 3160009</string>
+    <string name="eos_err_code_3160010">Contract exception: 3160010</string>
+    <string name="eos_err_code_3170000">Producer exception</string>
+    <string name="eos_err_code_3170001">Producer private key is not available</string>
+    <string name="eos_err_code_3170002">Pending block state is missing</string>
+    <string name="eos_err_code_3170003">Producer is double confirming known rang</string>
+    <string name="eos_err_code_3170004">Producer schedule exception</string>
+    <string name="eos_err_code_3170006">The producer is not part of current schedule</string>
+    <string name="eos_err_code_3180000">Reversible Blocks exception</string>
+    <string name="eos_err_code_3180001">Invalid reversible blocks directory</string>
+    <string name="eos_err_code_3180002">Backup directory for reversible blocks already existg</string>
+    <string name="eos_err_code_3180003">Gap in the reversible blocks database</string>
+    <string name="eos_err_code_3190000">Blockchain exception: 3190000</string>
+    <string name="eos_err_code_3190001">Blockchain exception: 3190001</string>
+    <string name="eos_err_code_3190002">Blockchain exception: 3190002</string>
+    <string name="eos_err_code_3190003">Blockchain exception: 3190003</string>
+    <string name="eos_err_code_3190004">Blockchain exception: 3190004</string>
+    <string name="eos_err_code_3200000">EOS network exception: 3200000</string>
+    <string name="eos_err_code_3200001">EOS network exception: 3200001</string>
+    <string name="eos_err_code_3200002">EOS network exception: invalid response</string>
+    <string name="eos_err_code_3200003">EOS network exception: 3200003</string>
+    <string name="eos_err_code_3200004">EOS network exception: 3200004</string>
+    <string name="eos_err_code_3200005">EOS network exception: request fail</string>
+    <string name="eos_err_code_3200006">EOS network exception: invalid request</string>
+    <string name="eos_err_code_3210000">EOS resouces exception: 3210000</string>
+    <string name="eos_err_code_3220000">Blockchain exception: 3220000</string>
+    <string name="eos_err_code_3220001">Blockchain exception: 3220001</string>
+    <string name="eos_err_code_3220002">Blockchain exception: 3220002</string>
+    <string name="eos_err_code_3230000">Blockchain exception: 3230000</string>
+    <string name="eos_err_code_3230001">Blockchain exception: 3220001</string>
+    <string name="eos_err_code_3230002">Blockchain exception: 3220002</string>
+    <string name="eos_err_code_3230003">Blockchain exception: 3220003</string>
+
+    <!-- EOS Err Code End -->
+
+
+
+    <!--蓝牙钱包配置start -->
+    <string name="eos_title_wookong_bio">WOOKONG Bio</string>
+    <string name="eos_match_wookong_bio">Pairing WOOKONG Bio</string>
+
+    <string name="eos_tip_card">The first wallet supports bluetooth hardware with fingerprints</string>
+    <string name="eos_desc_wookong_url"><u>See more about WOOKONG Bio</u></string>
+    <string name="eos_bluetooth_scan_step_title">Ready WOOKONG Bio</string>
+
+    <string name="eos_tip_bluetooth_scan_step_one">Make sure bluetooth is ready</string>
+    <string name="eos_tip_bluetooth_scan_step_two">WOOKONG Bio is power on</string>
+
+    <string name="eos_btn_start_pair">Start pair</string>
+    <string name="eos_title_scan_result">Choose the WOOKONG Bio you want to connect.Please check your bluetooth and
+        Bio\'s power if the device is not seen</string>
+    <string name="eos_title_paire_bluetooth">WOOKONG Bio</string>
+    <string name="eos_empty_no_device">click picture to rescan</string>
+
+    <string name="eos_title_set_wookong_password">set WOOKONG Bio\'s password</string>
+    <string name="eos_hint_set_wookong_password">8 or more characters. Prefer a mix of letters, numbers &amp; symbols</string>
+
+    <string name="eos_tip_confirm_wookong_init">请在WOOKONG Bio上按键以确认初始化</string>
+
+    <string name="eos_status_un_init">Uninitialized</string>
+    <string name="eos_status_init_no_pair">Initialized, not paired</string>
+    <string name="eos_status_init_pair">Initialized, paired</string>
+    <string name="eos_status_not_connected">Not Connected</string>
+
+    <string name="eos_btn_init_type_create_wallet">Create Wallet</string>
+    <string name="eos_tip_status_un_init">Please choose the type of initialization</string>
+
+    <string name="eos_progress_set_pin">Setting PIN...</string>
+
+    <string name="eos_title_create_eos_account">Create account</string>
+
+    <string name="eos_mne_validate_success">Validation success</string>
+    <string name="eos_mne_validate_failed">Validation fail</string>
+    <string name="eos_mne_validate_warn">The Bluetooth is disconnected, please reconnect</string>
+    <string name="eos_do_get_init_info">Initializing...</string>
+    <string name="eos_title_setting_fp">Setting fingerprint</string>
+    <string name="eos_btn_title_skip">Jump</string>
+    <string name="eos_finger_set_success">Gather fingerprint information done</string>
+    <string name="eos_wookong_password_hint">Please input WOOKONG Bio password to authorize</string>
+    <string name="eos_transfer_error">Transfer Error</string>
+    <string name="eos_transfer_eosname_hint">Please input@</string>
+    <string name="eos_transfer_eosname_hint_last">\'s password</string>
+    <string name="eos_transefer_bluetooth_connect_tip">Please check your bluetooth and Bio\'s power if the device is
+        not seen</string>
+    <string name="eos_transfer_bluetooth_tip">Connecting WOOKONG Bio</string>
+    <string name="eos_connect_sure_tip">Please verify your fingerprint on WOOKONG Bio to authorize</string>
+    <string name="eos_connect_sure_battery_tip">Please press button on WOOKONG Bio to confirm transfer</string>
+    <string name="eos_connect_failed_tip">Connect Fail. Please check your bluetooth and Bio\'s power.</string>
+    <string name="eos_btn_connect_retry">Reconnect</string>
+    <string name="eos_btn_connect">Connect</string>
+    <string name="eos_btn_disconnect">Disconnect</string>
+    <string name="eos_tip_bio_sign_fail">Sign Fail，Please try again</string>
+    <string name="eos_fingerprint">Fingerprint</string>
+    <string name="eos_add_fingerprint">Add Fingerprint</string>
+
+
+    <!-- WOOKONG BIO 详情页面-->
+    <string name="eos_name">Name</string>
+    <string name="eos_public_key">Public key</string>
+    <string name="eos_battery_left">Power Level</string>
+    <string name="eos_btn_to_connect">Connect</string>
+    <string name="eos_btn_to_format">Format</string>
+    <string name="eos_to_cancel_pair">Cancel Pair</string>
+    <string name="eos_confirm_format">Confirm format</string>
+    <string name="eos_tip_format">Once format，WOOKONG Bio will clear the private key, please
+        backup your mnemonic or transfer your asset before format</string>
+    <string name="eos_confirm">Confirm</string>
+    <string name="eos_format_success">Format Done</string>
+    <string name="eos_initialize">Initialize</string>
+    <string name="eos_tip_to_init">Go initialize WOOKONG Bio again？</string>
+    <string name="eos_fp_and_password">Fingerprint and Password</string>
+    <string name="eos_tip_bluetooth_transfer">Please check your bluetooth and Bio\'s power is the device is not
+    seen</string>
+    <string name="eos_connecting_bio">Connecting WOOKONG Bio</string>
+
+    <!--蓝牙钱包配置end -->
+
+    <!-- 助记词相关-->
+    <string name="eos_backup_mne">Backup mnemonic</string>
+    <string name="eos_btn_show_mne">Understood, show mnemonic</string>
+    <string name="eos_hint_no_screenshot_mne">The one who knows your mnemonic will have no limits to get access to your asset.Please write it down and
+        save it in secure</string>
+    <string name="eos_mne_copied">copied</string>
+    <string name="eos_tip_memory_your_mne">Please write your mnemonic down and save it in secure</string>
+    <string name="eos_tip_use_your_mne">
+        Mnemonic is used to restore wallet private key, when comes to restore wallet, like import a PC version EOS
+        wallet, reinstall APP, lost of phone and forget your password, etc, please use your mnemonic to restore your
+        private key.</string>
+    <string name="eos_tip_verify_mne">Please click the mnemonic in the right order to verify it.</string>
+    <string name="eos_tip_import_mne">Copy and paste mnemonic to input area, or use a QR code</string>
+    <string name="eos_import_mne">Input Mnemonic，use space to spilt</string>
+    <string name="eos_title_verify_mne">Verify Mnemonic</string>
+    <string name="eos_btn_import_mne">Import Mnemonic</string>
+
+    <!-- 指纹管理 -->
+    <string name="eos_delete_fingerprint">Delete Fingerprint</string>
+    <string name="eos_change_fp_name">Change Name</string>
+
+    <!-- ==================================================================== -->
+
     <!-- Me/General/About -->
     <string name="general">General</string>
     <string name="security">Security Settings</string>
     <string name="help">Help &amp; Feedback</string>
+    <string name="bio_official_website">WOOKONG Bio Official Website</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="about_us">About</string>
     <string name="about">About</string>
@@ -100,11 +846,516 @@
 
     <string name="next_step">下一步</string>
     <string name="manage">管理</string>
-    <string name="collect">收款</string>
 
-    <string name="tip_back_wallet">请务必备份私钥，私钥掌管着数字资产的控制权及所有权。当意外发生时，这是唯一找回资产的途径。</string>
+    <string name="tip_back_wallet">Please do back up the private key. It stands for the control and ownership of the crypto-assets. When accidents happen, this is your only way to retrieve your assets.</string>
 
-    <string name="reconnect">Reconnect</string>
-    <string name="btn_connect">连接</string>
-    <string name="btn_disconnect">断开连接</string>
+    <!--app******-->
+
+
+    <!--componentservice******-->
+    <string name="baseservice_title_dialog">Tips</string>
+    <string name="baseservice_message_permission_rationale">Grant the following permissions to continue the program:\n\n%1$s</string>
+    <string name="baseservice_message_permission_always_failed">Please give us permission in the settings:\n\n%1$s</string>
+    <string name="baseservice_message_setting_comeback">The user comes back from the settings page.</string>
+    <string name="baseservice_message_install_failed">Your phone is not allowed us to install apps.</string>
+    <string name="baseservice_message_overlay_failed">Your phone is not allowed us to draw on other applications.</string>
+    <string name="baseservice_message_error_storage">Please check the external storage device.</string>
+    <string name="baseservice_successfully">Successful</string>
+    <string name="baseservice_failure">Failure</string>
+
+    <string name="baseservice_setting">Setting</string>
+    <string name="baseservice_resume">Resume</string>
+    <string name="baseservice_cancel">Cancel</string>
+    <string name="baseservice_format">Formatting</string>
+    <string name="baseservice_hint_button_confirm_init_pin">Press the button on WOOKONG Bio to confirm formatting</string>
+    <string name="baseservice_hint_button_confirm_change_psw">Press the button on WOOKONG Bio to confirm changing the password</string>
+
+
+    <!--componentservice******-->
+
+
+    <!--baselib******-->
+    <string name="setting_language_auto">System</string>
+    <string name="setting_language_english">English</string>
+    <string name="setting_simplified_chinese">简体中文</string>
+    <string name="setting_traditional_chinese">繁體中文</string>
+    <!--baselib******-->
+
+
+    <!--baseview******-->
+    <string name="empty_view_hint">No transactions found</string>
+    <string name="empty_view_nodes_hint">No BP information</string>
+    <string name="error_view_hint">Failed to load</string>
+    <string name="no_network_view_hint">Network error</string>
+    <string name="fingerprint_not_recognized">Not Recognized. Try again.</string>
+    <string name="fingerprint_hint">Touch the fingerprint scanner</string>
+    <string name="fingerprint_success">Success</string>
+    <string name="sign_in">Tap to verify</string>
+    <string name="fingerprint_description">Touch the fingerprint scanner</string>
+    <string name="password_description">Please enter your password for verification</string>
+    <string name="new_fingerprint_enrolled_description">New input fingerprint, need password to verify</string>
+    <string name="password">password</string>
+    <string name="use_fingerprint_in_future">Fingerprint verification will be used later</string>
+    <string name="finger_auth_cancel">Cancel</string>
+    <string name="use_password">Draw your pattern</string>
+    <string name="finger_ok">OK</string>
+
+    <string name="set_password_first">Please set the lock screen password first</string>
+    <string name="one_fingerprint_at_least">Please enter at least one fingerprint</string>
+
+    <string name="no_more_data">No more data</string>
+    <string name="load_more">Load more</string>
+    <string name="finish_loading">Loaded</string>
+    <string name="loading">Loading</string>
+    <string name="unleash_refresh">Pull to refresh</string>
+    <string name="unleash_to_refresh">Release to refresh</string>
+    <string name="finish_refresh">Refreshed</string>
+    <string name="pull_to_refresh">Pull to refresh</string>
+
+    <string name="scanning_bio">Scanning available WOOKONG Bio(s)</string>
+
+    <string name="transefer_bluetooth_connect_tip">Check your bluetooth and device power if the device is not shown</string>
+    <string name="transfer_bluetooth_tip">Connecting WOOKONG Bio</string>
+
+    <!--baseview******-->
+
+
+
+
+    <!--walletmanage-->
+    <string name="walletmanage_title_add_fp">Add a fingerprint</string>
+    <string name="walletmanage_tip_confirm_format">Press the button on WOOKONG Bio to confirm formatting. Once formatted, WOOKONG Bio will erase the private key. Please transfer your assets elsewhere before formatting.</string>
+
+    <string name="walletmanage_key_saved_qr">I\'ve stored my private keys.</string>
+    <string name="walletmanage_wallet">Wallet</string>
+
+    <!--wallet manage home -->
+    <string name="walletmanage_create_wallet">Create a wallet</string>
+    <string name="walletmanage_connect_wookong_bio">Pairing WOOKONG Bio</string>
+    <string name="walletmanage_formating">Formatting</string>
+    <string name="walletmanage_pair_format_success">Formatting Successed,Please Retry</string>
+    <string name="walletmanage_format_fail">Formatting failed</string>
+    <string name="walletmanage_loading">Loading</string>
+    <string name="walletmanage_manage_fp">Manage fingerprints</string>
+    <string name="walletmanage_fp_delete_success">Fingerprint deleted</string>
+    <string name="walletmanage_fp_delete_fail">Failed to delete fingerprint</string>
+    <string name="walletmanage_change_fp_name_hint">Enter new fingerprint name</string>
+    <string name="walletmanage_fp_prefix">Fingerprints</string>
+    <string name="walletmanage_fpname_notnull">Fingerprint name cannot be empty</string>
+    <string name="walletmanage_fpname_have">You have a fingerprint with the same name.</string>
+    <string name="walletmanage_fpname_nochange">New fingerprint name is the same as the previous one</string>
+    <string name="walletmanage_fpname_change_success">Fingerprint name changed</string>
+
+
+    <string name="walletmanage_multi_coin_hard_wallet">Multi-currency hardware wallet</string>
+    <string name="walletmanage_enroll_fp_overtime">Fingerprint setup timed out</string>
+    <string name="walletmanage_jump">Skip</string>
+    <string name="walletmanage_retry">Retry</string>
+    <string name="walletmanage_enroll_fp_hint1">Put your finger on the recognition zone and lift it, \n and repeat for several times.</string>
+    <string name="walletmanage_enroll_fp_hint2">Adjust holding gestures\nto collect marginal fingerprint</string>
+
+
+    <!--walletmanage****-->
+
+
+    <!--wallet copy start-->
+
+    <string name="walletmanage_backup_mne"> Backup wallet </string>
+    <string name="walletmanage_show_mne">Got it, display mnemonic </string>
+    <string name="walletmanage_hint_no_screenshot_mne">If someone gets your mnemonic, s/he will access your assets directly! Please transcribe the mnemonic and store it in a safe place! </string>
+    <string name="walletmanage_mne_copied"> transcribed </string>
+    <string name="walletmanage_tip_memory_your_mne">Please write down your wallet private key mnemonic and save it in a safe place. </string>
+    <string name="walletmanage_tip_use_your_mne">The mnemonic is used to restore the wallet private key. When you need to restore the wallet, such as importing the PC version of the EOS wallet, reinstalling the app, losing the phone, forgetting the password, etc., please use the mnemonic To restore the wallet private key</string>
+    <string name="walletmanage_tip_verify_mne">Please click on the mnemonic you have copied by sequence to verify that the transcript is correct. </string>
+    <string name="walletmanage_tip_import_mne">Copy and paste the mnemonic to the input box, or scan the QR code generated by the mnemonic </string>
+    <string name="walletmanage_import_mne">Enter the mnemonic, delimited by a space </string>
+    <string name="walletmanage_title_verify_mne">Verify mnemonic </string>
+    <string name="walletmanage_btn_import_mne">Import mnemonic </string>
+    <string name="walletmanage_backup_title"> Backup mnemonic </string>
+    <string name="walletmanage_backup_hint">Be sure to back up the mnemonic. The mnemonic can restore the private key, and the private key represents the control and ownership of the digital asset. When an accident occurs, this is the only way to get back the assets. </string>
+    <string name="walletmanage_lookAround">Please beware of your surroundings\n Make sure to back up in a safe environment</string>
+    <string name="walletmanage_lookAround_import">Please check your surroundings\n Make sure to start importing in a safe environment</string>
+    <string name="walletmanage_backUp_wallet"> Backup wallet </string>
+    <string name="walletmanage_backupSafely">Please backup your phone in a safe environment\nYou could switch to flight mode during backup</string>
+    <string name="walletmanage_showMnemonic"> I see, display mnemonic </string>
+    <string name="walletmanage_showPriKey"> I see, display the private key </string>
+    <string name="walletmanage_start_import"> I see, start importing </string>
+    <string name="walletmanage_backupLater">Backup later </string>
+    <string name="walletmanage_no_screenshot">Do not take screenshots </string>
+    <string name="walletmanage_no_screenshot_hint">The system screenshot may be viewed by other apps in the album, and the flight mode can be turned on before backup! </string>
+    <string name="walletmanage_i_understand">I understand </string>
+    <string name="walletmanage_safety_first_hint">It is recommended to enable the flight mode, do not use network transmission, in case the hacker captures the private key. </string>
+    <string name="walletmanage_encrypto_save">Encrypted storage</string>
+    <string name="walletmanage_encrypto_save_hint">If you do not have a backup phone, you can also copy the private key and use the encryption software or password management tool to store it. Please clear the system clipboard in time after storage. </string>
+    <string name="walletmanage_look_around">Watch out</string>
+    <string name="walletmanage_look_around_hint">Please scan the QR code in an environment where no one or camera is around to prevent the QR code from leaking. </string>
+    <string name="walletmanage_no_screenshot_hint2">It is recommended to use an offline device with a camera to scan the QR code to obtain the private key and store it in a reasonable manner. </string>
+    <string name="walletmanage_show_QR">Display QR code </string>
+    <string name="walletmanage_tip_next_step">Next </string>
+    <string name="walletmanage_tip_set_password">Set password </string>
+    <string name="walletmanage_tip_create_wallet">Create a wallet</string>
+    <string name="walletmanage_tip_repeat_pass">Repeat password</string>
+    <string name="walletmanage_title_wallet_name">Wallet name</string>
+    <string name="walletmanage_tip_walletname_hint">Please enter the name of the created wallet</string>
+    <string name="walletmanage_tip_walletname_error">The wallet name has been used, please modify </string>
+    <string name="walletmanage_tip_input_password">minimum 8 places, prefer mixing uppercase and lowercase letters, numbers and symbols</string>
+    <string name="walletmanage_tip_repeat_password">Please enter your password again</string>
+    <string name="walletmanage_tip_input_password_hint">Please enter a password hint </string>
+    <string name="walletmanage_title_invitation_code">invitation code </string>
+    <string name="walletmanage_tip_input_inv_code">Please enter the invitation code </string>
+    <string name="walletmanage_btn_get_invitation">Get the invitation code</string>
+    <string name="walletmanage_tip_agree"> I have read and agreed to </string>
+    <string name="walletmanage_tip_terms_of_service"><u>Service agreement</u></string>
+    <string name="walletmanage_title_password_hint">Password hint (optional) </string>
+    <string name="walletmanage_tip_password_hint">Password hint </string>
+    <string name="walletmanage_tip_password_input_part2">Passwords are used to protect confidential information such as wallets, so be sure to remember or use password management tools to store them. Gemma does not store passwords so cannot provide password recovery services</string>
+    <string name="walletmanage_tip_security_hint">Passwords are used to encrypt confidential information such as wallets, so be sure to remember or use password management tools to store them. Gemma does not store passwords and cannot provide password recovery services</string>
+    <string name="walletmanage_name_not_empty">EOS account name cannot be empty</string>
+    <string name="walletmanage_pass_not_empty"> Password cannot be empty</string>
+    <string name="walletmanage_pass_lenth_invalid">Password must be at least 8 digits </string>
+    <string name="walletmanage_password_no_match">Two passwords are inconsistent, please re-enter </string>
+    <string name="walletmanage_repeat_input_pass">Please enter your password again</string>
+    <string name="walletmanage_check_agreement">Please agree to our service agreement </string>
+    <string name="walletmanage_copy_success">Copied </string>
+    <string name="walletmanage_change_pass_success">Password changed </string>
+    <string name="walletmanage_set_camera_permission">Please give permission to using camera</string>
+    <string name="walletmanage_agree_terms_of_service">Please read and agree to our service agreement</string>
+    <string name="walletmanage_invalid_walletname">This wallet name already exists, please re-enter </string>
+    <string name="walletmanage_invCode_used">Create failed, the invitation code has been used! </string>
+    <string name="walletmanage_invCode_not_exist">Failed, the invitation code does not exist! </string>
+    <string name="walletmanage_name_used">Failed, the EOS account name already exists! </string>
+    <string name="walletmanage_name_invalid">Failed, wallet name already exists</string>
+    <string name="walletmanage_name_len_invalid">Failed, the length of the eos account name must be 12! </string>
+    <string name="walletmanage_params_invalid">Failed, argument error! </string>
+    <string name="walletmanage_pubKey_invalid">Failed, invalid public key! </string>
+    <string name="walletmanage_no_balance">Failed, account balance is insufficient! </string>
+    <string name="walletmanage_default_create_fail_info">Failed, please try again</string>
+    <string name="walletmanage_loading_success">Loaded</string>
+    <string name="walletmanage_tip_pass_no_match">Inconsistent passwords</string>
+    <string name="walletmanage_mnemonic_validate_error">Verification failed</string>
+    <string name="walletmanage_mnemonic_validate_success">Verification success </string>
+    <string name="walletmanage_import_wallet">Import wallet</string>
+    <string name="walletmanage_tip_input_key">Please enter the private key of the backup </string>
+    <string name="walletmanage_tip_input_key_part2">Copy and paste the private key to the input box, or enter the QR code generated by scanning the private key </string>
+    <string name="walletmanage_tip_prikey_copied">The private key has been copied. Please clear the system clipboard in time after use! </string>
+    <string name="walletmanage_btn_start_input">Start importing</string>
+    <string name="walletmanage_btn_complete_input">Complete import </string>
+    <string name="walletmanage_mnemonic"> mnemonic </string>
+    <string name="walletmanage_privatekey"> private key </string>
+    <string name="walletmanage_tip_look_around">Please check your surroundings\n Make sure to back up in a safe environment</string>
+    <string name="walletmanage_look_around_import">Please check your surroundings\n Make sure to start importing in a safe environment</string>
+    <string name="walletmanage_back_up_wallet"> backup wallet </string>
+    <string name="walletmanage_tip_back_safely">Please backup your phone in a safe environment\nYou can switch to flight mode during backup</string>
+    <string name="walletmanage_btn_show_mnemonic">I see, display mnemonic </string>
+    <string name="walletmanage_btn_show_PriKey">I see, display the private key </string>
+    <string name="walletmanage_btn_start_import">I see, start importing </string>
+    <string name="walletmanage_btn_backup_later">Backup later </string>
+    <string name="walletmanage_tip_no_screenshot">Do not take screenshots </string>
+    <string name="walletmanage_tip_no_screenshot_hint">The system screenshot may be viewed by other apps in the album, and the flight mode can be turned on before backup! </string>
+    <string name="walletmanage_tip_i_understand">I see</string>
+    <string name="walletmanage_tip_look_around_hint">Please scan the QR code in an environment where no one or camera is around to prevent the QR code from leaking. </string>
+    <string name="walletmanage_tip_no_screenshot_part2">It is recommended to use an offline device with a camera to scan and recognize the QR code to obtain the private key and store it in a reasonable manner. </string>
+    <string name="walletmanage_tip_show_QR">Display QR code </string>
+    <string name="walletmanage_tip_input_pri_key">Copy and paste the private key to the input box, or enter the QR code generated by scanning the private key </string>
+    <string name="walletmanage_input_pri_key_hint">Please enter the back-uped private key</string>
+    <string name="walletmanage_tip_input_mnemonic">Copy and paste the mnemonic to the input box, or scan the QR code generated by the mnemonic </string>
+    <string name="walletmanage_input_mnemonic_hint">Support BIP39 mnemonic, delimited by spaces </string>
+    <string name="walletmanage_wallet_cointype">Wallet currencies</string>
+    <string name="walletmanage_cointype_eos">EOS</string>
+    <string name="walletmanage_title_import_which_wallet">Import to wallet</string>
+    <string name="walletmanage_create_new_wallet">New wallet</string>
+    <string name="walletmanage_barcode_scan_hint">put the barcode into the frame to scan it </string>
+    <string name="walletmanage_qr_scan_hint">Put the QR code in the box to scan it</string>
+    <string name="walletmanage_scan_qr_code">Scan QR code</string>
+    <string name="walletmanage_coin_type_title">Wallet currencies</string>
+    <string name="walletmanage_import_which_wallet_title">Import to wallet</string>
+    <string name="walletmanage_import_wallet_title">Import wallet</string>
+    <string name="walletmanage_finish_import">Complete import </string>
+    <string name="walletmanage_import_pri_key_invalid">The private key is wrong in format, please check the private key </string>
+    <string name="walletmanage_import_mnemonic_invalid">The mnemonic is wrong in format, please check the mnemonic </string>
+    <string name="walletmanage_eos_account_exist">EOS</string> already exists in the wallet
+    <string name="walletmanage_eth_account_exist">There is already ETH</string> in the wallet
+    <string name="walletmanage_import_success">Imported</string>
+    <string name="walletmanage_import_fail">Import failed</string>
+    <string name="walletmanage_config_wallet_title">Configure the wallet</string>
+    <string name="walletmanage_exist_wallet">Existing wallet</string>
+    <string name="walletmanage_fp_and_password">Fingerprint and password</string>
+    <string name="walletmanage_new_password">New password</string>
+    <string name="walletmanage_btn_confirm_change">Confirm changes</string>
+    <string name="walletmanage_title_change_pass">Change password</string>
+    <string name="walletmanage_psw_change_success">The password was successfully modified </string>
+    <string name="walletmanage_psw_change_fail">Password modification failed</string>
+    <string name="walletmanage_title_wookong_bio">WOOKONG Bio</string>
+    <string name="walletmanage_match_wookong_bio">Pair WOOKONG Bio</string>
+    <string name="walletmanage_tip_card">World\'s first Bluetooth fingerprint hardware wallet that supports multiple currencies</string>
+    <string name="walletmanage_desc_wookong_url">Click to view more WOOKONG Bio introduction</string>
+    <string name="walletmanage_bluetooth_scan_step_title">Prepare to use WOOKONG Bio</string>
+    <string name="walletmanage_tip_bluetooth_scan_step_one">Make sure the phone is turned on </string>
+    <string name="walletmanage_tip_bluetooth_scan_step_two">Start WOOKONG Bio</string>
+    <string name="walletmanage_btn_start_pair">Start pairing</string>
+    <string name="walletmanage_title_scan_result">Select WOOKONG Bio to connect. If not found, please check Bluetooth and device power </string>
+    <string name="walletmanage_title_paire_bluetooth">WOOKONG Bio</string>
+    <string name="walletmanage_empty_no_device">Please click on the image to rescan </string>
+    <string name="walletmanage_title_set_wookong_password">Set WOOKONG Bio password</string>
+    <string name="walletmanage_hint_set_wookong_password">length 8-16, it is recommended to mix uppercase and lowercase letters, numbers and symbols</string>
+    <string name="walletmanage_tip_confirm_wookong_init">Please press the button on WOOKONG Bio to confirm initialization </string>
+    <string name="walletmanage_status_un_init">Uninitialized </string>
+    <string name="walletmanage_status_not_connected">Not connected</string>
+    <string name="walletmanage_status_init_no_pair">Initialized but no pairing information </string>
+    <string name="walletmanage_status_init_pair"> Initialized but no pairing information </string>
+    <string name="walletmanage_tip_status_un_init">This WOOKONG Bio has not been initialized, please initialize </string>
+    <string name="walletmanage_progress_set_pin">Setting PIN...</string>
+    <string name="walletmanage_title_create_eos_account">Create an EOS account</string>
+    <string name="walletmanage_mne_validate_success">Verification success </string>
+    <string name="walletmanage_mne_validate_failed"> verification failed </string>
+    <string name="walletmanage_mne_validate_warn">Bluetooth connection has been disconnected, please reconnect </string>
+    <string name="walletmanage_do_get_init_info">Accessing initialization information...</string>
+    <string name="walletmanage_title_setting_fp">Set fingerprint </string>
+    <string name="walletmanage_btn_title_skip">Skip</string>
+    <string name="walletmanage_finger_set_success">Fingerprint recorded</string>
+    <string name="walletmanage_wookong_password_hint">Please enter the password of WOOKONG Bio to confirm the authorization </string>
+    <string name="walletmanage_transfer_error">The current account transfer is abnormal </string>
+    <string name="walletmanage_transfer_eosname_hint">Please enter @</string>
+    <string name="walletmanage_transfer_eosname_hint_last"> password </string>
+    <string name="walletmanage_transefer_bluetooth_connect_tip">If not found, please check your phone\'s Bluetooth and device power. </string>
+    <string name="walletmanage_transfer_bluetooth_tip">Connecting WOOKONG Bio</string>
+    <string name="walletmanage_connect_sure_tip">Please press the fingerprint on WOOKONG Bio to confirm the authorization </string>
+    <string name="walletmanage_connect_sure_battery_tip">Please press the button on WOOKONG Bio to confirm the transfer </string>
+    <string name="walletmanage_connect_failed_tip">Connection failed. Please check your phone\'s Bluetooth and device power. </string>
+    <string name="walletmanage_btn_connect_retry">Retry connection </string>
+    <string name="walletmanage_btn_connect">Connect </string>
+    <string name="walletmanage_btn_disconnect">Disconnect</string>
+    <string name="walletmanage_tip_bio_sign_fail">Signature failed, please try again</string>
+    <string name="walletmanage_name">Name</string>
+    <string name="walletmanage_public_key">Public key </string>
+    <string name="walletmanage_battery_left">Battery</string>
+    <string name="walletmanage_btn_to_connect">Click to connect</string>
+    <string name="walletmanage_btn_to_format">Format</string>
+    <string name="walletmanage_to_cancel_pair">Unpair </string>
+    <string name="walletmanage_confirm_format">confirm formatting</string>
+    <string name="walletmanage_tip_format">When formatted, WOOKONG Bio will clear the private key, please backup the mnemonic or transfer the asset before formatting. </string>
+    <string name="walletmanage_confirm">Confirm</string>
+    <string name="walletmanage_format_success">Formatted</string>
+    <string name="walletmanage_initialize">Initialize </string>
+    <string name="walletmanage_tip_to_init">Sure to reinitialize WOOKONG Bio? </string>
+    <string name="walletmanage_tip_bluetooth_transfer">If not found, check your phone\'s Bluetooth and device power. </string>
+    <string name="walletmanage_connecting_bio">Connecting WOOKONG Bio</string>
+    <string name="walletmanage_tip_manage_resource_wookong">WOOKONG Bio does not support resource staking or RAM trading. To do this, please use another account. </string>
+    <string name="walletmanage_title_wooKong_bio">WOOKONG Bio</string>
+    <string name="walletmanage_delete_fingerprint">Delete fingerprint </string>
+    <string name="walletmanage_change_fp_name"> Modify fingerprint\'s name </string>
+    <string name="walletmanage_fingerprint">Fingerprint </string>
+    <string name="walletmanage_add_fingerprint">Add fingerprint </string>
+    <string name="walletmanage_change_pass">Change password </string>
+    <string name="walletmanage_password">Password</string>
+    <string name="walletmanage_wallet_name_short">Wallet name</string>
+    <string name="walletmanage_wallet_name">Wallet name</string>
+    <string name="walletmanage_select_wallet_title">Select wallet </string>
+    <string name="walletmanage_wallet_type_multi">Multi-currency wallet</string>
+    <string name="walletmanage_wallet_type_eos">EOS wallet </string>
+    <string name="walletmanage_wallet_type_eth">ETH wallet</string>
+    <string name="walletmanage_wallet_type_hardware">Multi-currency hardware wallet</string>
+    <string name="walletmanage_manage_wallet_title">Manage Wallets</string>
+    <string name="walletmanage_wookong_bio_description">WOOKONG Bio is a portable Bluetooth \nhardware wallet for individual users that provides more \nsecure protection for digital assets. </string>
+    <string name="walletmanage_change_wallet_name_title">Modify the wallet name</string>
+    <string name="walletmanage_change_wallet_name_hint">Please enter a new wallet name</string>
+    <string name="walletmanage_same_wallet_name">The wallet name cannot be the same as the existing wallet name</string>
+    <string name="walletmanage_empty_wallet_name">The wallet name cannot be empty! </string>
+    <string name="walletmanage_change_name_success">Changed</string>
+    <string name="walletmanage_change_name_fail">Change failed</string>
+    <string name="walletmanage_pri_key_backup_title">Backup private key</string>
+    <string name="walletmanage_pri_key_backup_hint">Be sure to back up the private key,which represents the control and ownership of digital assets. When an accident occurs, this is the only way to get back the assets. </string>
+    <string name="walletmanage_pri_key_lookAround">Please check your surroundings\n Make sure to back up in a safe environment</string>
+    <string name="walletmanage_pri_key_backup_safely">Please backup your phone in a safe environment\nyou may switch to flight mode during backup</string>
+    <string name="walletmanage_pri_key_show_pri"> I see, display the private key </string>
+    <string name="walletmanage_barcode">QR code </string>
+    <string name="walletmanage_click_to_copy_priKey">Copy private key </string>
+    <string name="walletmanage_safety_first">Safety first </string>
+    <string name="walletmanage_tip_safety_first">It is recommended to enable the flight mode, do not use network transmission, in case the hacker captures the private key. </string>
+    <string name="walletmanage_save_offline"> Offline storage </string>
+    <string name="walletmanage_tip_save_offline">You can use an offline back-up phone as a cold storage, scan the QR code to get the private key and store it. </string>
+    <string name="walletmanage_tip_encrypto_save">Encrypted storage</string>
+    <string name="walletmanage_tip_encrypto_save_hint">If you don\'t have a backup phone, you can copy the private key and use the encryption software or password management tool to store it. Please clear the system clipboard in time after storage. </string>
+    <string name="walletmanage_key_saved">I have safely stored the private key</string>
+
+    <!--end-->
+
+
+    <!--app copy-->
+    <string name="eos_title_password_hint">Password hint(optional)</string>
+    <!--app end-->
+
+    <!--chinese all copy start-->
+    <string name="wookong_charging">Charging</string>
+    <string name="walletmanage_status_connected">connected</string>
+    <string name="eos_btn_wookong">Pair WOOKONG Bio</string>
+    <string name="eos_refund_detail">Refund details</string>
+    <string name="eos_backup_your_mne">Please record down mnemonic phrases of your wallet\'s private key and store it apprepriately</string>
+    <string name="eos_backup_hint2">Mnemonic phrases are used to recover the private key of your wallet. When circumstances such as importing EOS wallet on the PC end, re-install APP, phone lost, password forgotten, etc. happen, please use mnemonic phrases to recover the private key to your wallet.</string>
+    <string name="eos_sn_used">Creation failed. SN has been used!</string>
+
+    <!-- activate account -->
+    <string name="eos_tip_activate_by_friend">Please ask one of your friend in possess of EOS to transfer to smart contract signupeoseos with the following memo to complete the account creation.</string>
+    <!--others-->
+    <string name="eos_load_tokens_fail">Failed to acquire EOS tokens. Please check the network or switch nodes.</string>
+    <string name="eos_pair_fp_sure_tip">Verify your fingerprint on WOOKONG Bio to confirm pairing</string>
+    <!-- WOOKONG BIO 详情页面-->
+    <string name="eos_tip_manage_resource_wookong">WOOKONG Bio does not support resource staking or RAM trading currently. Please use other accounts for aforesaid actions.</string>
+    <string name="eos_activate_your_account">Please activate your EOS account before using EOS-related functions.</string>
+    <string name="eos_token_tip_transfer">Enter transfer amount. At most %1$s digits behind the decimal number</string>
+    <string name="eos_token_tip_transfer_no_decimal">Enter transfer amount</string>
+    <string name="eos_valid_username_digits">12345.qwertyuioplkjhgfdsazxcvbnm</string>
+
+    <string name="eos_activate_by_friend_one">Please ask one of your friends in possess of EOS do a transfer to</string>
+    <string name="eos_activate_by_friend_two">signupeoseos</string>
+    <string name="eos_activate_by_friend_three"> , </string>
+    <string name="eos_activate_by_friend_four">with the following memo</string>
+    <string name="eos_activate_by_friend_five"> to complete the account creation</string>
+
+    <string name="eos_activate_by_exchange_one">Please use an exchange that supports memo attachment do a transfer to</string>
+    <string name="eos_activate_by_exchange_two">signupeoseos</string>
+    <string name="eos_activate_by_exchange_three"> , </string>
+    <string name="eos_activate_by_exchange_four">with the following memo</string>
+    <string name="eos_activate_by_exchange_five"> to complete the account creation</string>
+    <string name="status_send_fail">Failed to send</string>
+    <string name="status_accept_fail">Failed to receive</string>
+    <string name="status_unknown">To be queried</string>
+
+    <!--eos home card-->
+    <string name="card_eos_creating_progress">Account creating...%1$d%%</string>
+    <string name="card_eos_wait_notify">To be activated</string>
+    <string name="wookong_init_pin_fail">Failed to initialize PIN</string>
+    <string name="initing_wookong_bio_wallet">Initializing WOOKONG Bio WALLET</string>
+
+    <!--home -->
+    <string name="home_not_backup">To be backed up</string>
+    <string name="mnemonic_checking">Verifying</string>
+    <string name="eos_mnenonic_invalid">Invalid mnemonic phrases. Please check them.</string>
+    <string name="eos_mnenonic_import_fail">Failed to import mnemonic phrases to the device</string>
+    <string name="eos_mnemonic_importing">Importing mnemonic phrases</string>
+    <string name="wookong_init_fail">Failed to initialize WOOKONG Bio. Please retry.</string>
+    <string name="creating_wookong_wallet">Creating WOOKONG Wallet</string>
+    <string name="wookong_connect_fail">Failed to connect the device. Please retry.</string>
+    <string name="exit_wait_for_connect">Connecting the device. Please do not leave this page for now.</string>
+
+    <string name="power_level">Battery%1$s%%</string>
+
+    <string name="confirm_pair">Confirm pairing</string>
+    <string name="enroll_fp_overtime">Fingerprint collection timed out</string>
+    <string name="jump">Skip</string>
+    <string name="retry">Retry</string>
+    <string name="power_level_alert">Low battery</string>
+    <string name="power_level_alert_too_low">Battery too low</string>
+    <string name="tip_power_level_alert">Please fully charge WOOKONG Bio first to ensure a successful initialization</string>
+    <string name="tip_power_level_alert_charge">Please charge WOOKONG Bio before following procedures</string>
+    <string name="tip_fp_verify_fail">Failed to verify fingerprint. Please adjust contact area</string>
+    <string name="tip_fp_verify_timeout">Finger verification timed out</string>
+
+
+    <string name="tip_fp_sign_fail">Failed to sign with fingerprint. Please retry.</string>
+    <string name="tip_set_tx_fail">Failed to store transaction details on Bio. Please retry.</string>
+    <string name="tip_pin_verify_fail">Failed to verify. Please retry.</string>
+    <string name="tip_press_fp_confirm_transfer">Please carefully check transaction info. on WOOKONG Bio then confirm with fingerprint</string>
+    <string name="tip_press_confirm_transfer">Please carefully check transaction info. on WOOKONG Bio then confirm by pressing the power button</string>
+
+    <string name="tip_bio_memo_invalid">Memo must be within 15 bit with only letters, numbers and symbols.</string>
+    <string name="tip_cant_find_transaction">Failed to query part of transaction history. Please try again later.</string>
+    <!--app end-->
+
+    <!--walletmanage-->
+
+    <string name="walletmanage_save_offline_hint">You can use an offline backup device as a cold storage. Scan the QR Code to extract private key and store it.</string>
+
+
+    <string name="baseservice_app_name">GEMMA</string>
+    <string name="baseservice_title">Title</string>
+    <string name="baseservice_eos">EOS</string>
+
+    <string name="name_invalid" tools:ignore="ResourceName">Failed to create. Existing wallet name</string>
+    <string name="name_not_empty" tools:ignore="ResourceName">Wallet name cannot be empty</string>
+    <string name="pass_not_empty" tools:ignore="ResourceName">Password cannot be empty</string>
+    <string name="pass_lenth_invalid" tools:ignore="ResourceName">Password not allowed</string>
+    <string name="password_no_match" tools:ignore="ResourceName">Inconsistent passwords. Please try again.</string>
+    <string name="repeat_input_pass" tools:ignore="ResourceName">Please re-enter password</string>
+    <string name="check_agreement" tools:ignore="ResourceName">Please read and agree to our Service Agreement</string>
+    <string name="tip_next_step" tools:ignore="ResourceName">Next</string>
+    <string name="tip_set_password" tools:ignore="ResourceName">Set password</string>
+    <string name="tip_create_wallet" tools:ignore="ResourceName">Create a wallet</string>
+    <string name="tip_repeat_pass" tools:ignore="ResourceName">Repeat password</string>
+    <string name="title_wallet_name" tools:ignore="ResourceName">Wallet name</string>
+    <string name="tip_walletname_hint" tools:ignore="ResourceName">Enter wallet name</string>
+    <string name="tip_walletname_error" tools:ignore="ResourceName">Existing wallet name. Please try again.</string>
+    <string name="tip_input_password" tools:ignore="ResourceName">At least 8 bits. Prefer a mix of upper and lower cases, numbers and symbols.</string>
+    <string name="tip_repeat_password" tools:ignore="ResourceName">Please re-enter your password</string>
+    <string name="tip_input_password_hint" tools:ignore="ResourceName">Password hint</string>
+    <string name="tip_pass_no_match" tools:ignore="ResourceName">Inconsistent passwords</string>
+    <string name="title_password_hint" tools:ignore="ResourceName">Password hint (Optional)</string>
+    <string name="tip_agree" tools:ignore="ResourceName">Read and agreed</string>
+    <string name="tip_terms_of_service" tools:ignore="ResourceName"><u>Service Agreement</u></string>
+
+    <!--password validate-->
+    <string name="baseservice_pass_validate_hint">Enter wallet password to authorize</string>
+    <string name="baseservice_bluetooth_pass_validate_hint">Enter WOOKONG Bio password to authorize</string>
+    <string name="baseservice_pass_validate_next">Next</string>
+    <string name="baseservice_pass_validate_confirm">Confirm authorization</string>
+    <string name="baseservice_pass_validate_tip_please_input_pass">Enter password</string>
+    <string name="baseservice_pass_validate_ip_wrong_password">Wrong password. Enter again.</string>
+    <string name="baseservice_pass_validate_et_hint">Please enter %1$s \'s password</string>
+    <string name="baseservice_pass_validate_wallet_error">Abnormal wallet</string>
+    <string name="baseservice_dialog_password_tip_title">Password hint</string>
+
+    <string name="baseservice_tip_password_hint">Password hint</string>
+    <string name="baseservice_tip_i_understand">Got it</string>
+    <string name="baseservice_reconnect">Reconnect</string>
+    <string name="baseservice_wookong_bio_connecting">Connecting</string>
+    <string name="baseservice_wookong_connect_tip">If not found. Please check Bluetooth and device power</string>
+    <string name="baseservice_wookong_connect_error_tip">Failed to connect. Please check Bluetooth and device power</string>
+    <string name="baseservice_dialog_change_bluetoothwallet_hint">You will be disconnected to WOOKONG Bio before switching wallet\nSure to disconnect?</string>
+    <string name="baseservice_dialog_change_bluetoothwallet_title">Warning</string>
+    <string name="baseservice_dialog_pin_locked_title">Device is locked</string>
+    <string name="baseservice_dialog_pin_locked_hint">You have to format the device first</string>
+    <!--component end-->
+
+
+
+
+
+
+    <!-- Me/General/About -->
+    <string name="eos_title_me">My</string>
+
+
+    <!-- Barcode scan activity -->
+    <string name="eos_barcode_scan_hint">Put Barcode into the frame to scan it</string>
+    <string name="eos_qr_scan_hint">Put QR Code into the frame to scan it</string>
+    <string name="eos_scan_qr_code">Scan QR Code</string>
+
+    <!-- Permission Manage-->
+    <string name="eos_press_again_exit">Back again to exit</string>
+    <item name="tag_key_data" type="id"/>
+    <item name="tag_key_position" type="id"/>
+    <string name="transfer">transfer</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel_cn">Cancel</string>
+
+    <string name="save">Save</string>
+    <string name="eth_eth">ETH</string>
+    <string name="transfer_from">From :&#160;</string>
+    <string name="transfer_to">To :&#160;</string>
+
+    <!--baseres gma end-->
+    <!--baseview****-->
+    <string name="bluetooth_scan_no_result">No available WOOKONG Bio</string>
+    <!--chinese all copy end-->
+
+    <string name="click_to_verify">Please Click To Verify</string>
+    <string name="walletmanage_walletmanage">Wallet Management</string>
+    <string name="walletmanage_current_wallet">Current Wallet</string>
+    <string name="walletmanage_export_mnemonic">Export Mnemonic</string>
+    <string name="walletmanage_export_prikey">Export Private Key</string>
+    <string name="walletmanage_change_psw">Change Passsword</string>
+    <string name="wookong_lose_connect_desc">Can\'t connect to WOOKONG Bio,please ensure Bio is power enough and power on</string>
+    <string name="wookong_lose_connect_title">Lose Connection</string>
+
 </resources>

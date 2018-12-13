@@ -230,13 +230,13 @@ public class LockPatternView extends View {
      */
     private void initPaints() {
         defaultPaint = new Paint();
-        defaultPaint.setColor(getResources().getColor(R.color.dark_sky_blue));
+        defaultPaint.setColor(getResources().getColor(R.color.black_content));
         defaultPaint.setStrokeWidth(2.0f);
         defaultPaint.setStyle(Style.STROKE);
         defaultPaint.setAntiAlias(true);
 
         selectPaint = new Paint();
-        selectPaint.setColor(getResources().getColor(R.color.dark_sky_blue));
+        selectPaint.setColor(getResources().getColor(R.color.black_content));
         selectPaint.setStrokeWidth(3.0f);
         //selectPaint.setStyle(Style.STROKE);
         selectPaint.setAntiAlias(true);

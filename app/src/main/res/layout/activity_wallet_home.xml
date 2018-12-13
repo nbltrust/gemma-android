@@ -93,6 +93,7 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black_title"
+            android:layout_marginEnd="106dp"
             android:textSize="@dimen/font_7"
             android:autoSizeTextType="uniform"
             android:autoSizeStepGranularity="2dp"
@@ -104,7 +105,7 @@
             android:src="@drawable/ic_add_wallet"
             android:id="@+id/iv_wallet_manage"
             android:layout_toLeftOf="@+id/iv_settings"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="24dp"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

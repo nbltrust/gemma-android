@@ -116,7 +116,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
         edtWalletName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                
+
             }
 
             @Override
@@ -629,7 +629,7 @@ public class CreateMnemonicWalletActivity extends XActivity<CreateMnemonicWallet
     }
 
     public String getPassHint() {
-        return edtPassHint.getText().toString().trim();
+        return edtPassHint.getText().toString();
     }
 
 

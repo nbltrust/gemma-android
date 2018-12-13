@@ -56,14 +56,14 @@ android {
     applicationVariants.all { variant ->
         if (variant.buildType.name.equals('release')) {
             variant.outputs.all { output ->
-                def buildName = "Gemma"
+                def buildName = "Wookong"
                 def type = variant.buildType.name
                 def releaseApkName = buildName + '_' + type + "_" + versionName + '_' + releaseTime() + '.apk'
                 outputFileName = releaseApkName
             }
         } else {
             variant.outputs.all { output ->
-                def buildName = "Gemma"
+                def buildName = "Wookong"
                 def releaseApkName = buildName + '_' + "test" + "_" + versionName + '_' + releaseTime() + '.apk'
                 outputFileName = releaseApkName
             }
@@ -207,6 +207,7 @@ android {
 
 }
 
+
 dependencies {
     configurations.all {
         resolutionStrategy.force deps.support.design
@@ -239,8 +240,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation deps.gma.svgImageViewer
     implementation deps.gma.SuperTextView
-
-
+    implementation deps.gma.viewPagerIndicator
+    implementation deps.gma.viewPagerTransforms
 
 
     implementation project(':componentservice')
@@ -251,6 +252,11 @@ dependencies {
 
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
+
+//    implementation('com.crashlytics.sdk.android:crashlytics:2.9.7@aar') {
+//        transitive = true;
+//    }
+
 
 
 }

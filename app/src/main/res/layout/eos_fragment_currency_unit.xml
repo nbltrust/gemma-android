@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_20"
-        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginStart="@dimen/common_page_content_padding"
         android:layout_marginTop="@dimen/dimen_10"
         android:elevation="@dimen/dimen_3"
         android:orientation="vertical">
@@ -30,20 +30,18 @@
                 android:text="@string/CNY"/>
 
             <View
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
                 style="@style/common_divider">
             </View>
 
             <RadioButton
+                android:layout_marginTop="10dp"
                 android:id="@+id/radioButton_USD"
                 android:text="@string/USD"
                 style="@style/mRadioButton"/>
 
             <View
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-
+                android:layout_marginTop="10dp"
                 style="@style/common_divider">
             </View>
 
