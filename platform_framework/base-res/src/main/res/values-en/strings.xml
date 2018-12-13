@@ -1295,14 +1295,17 @@
 
     <!--password validate-->
     <string name="baseservice_pass_validate_hint">Enter wallet password to authorize</string>
-    <string name="baseservice_bluetooth_pass_validate_hint">Enter WOOKONG Bio password to authorize</string>
     <string name="baseservice_pass_validate_next">Next</string>
     <string name="baseservice_pass_validate_confirm">Confirm authorization</string>
     <string name="baseservice_pass_validate_tip_please_input_pass">Enter password</string>
     <string name="baseservice_pass_validate_ip_wrong_password">Wrong password. Enter again.</string>
     <string name="baseservice_pass_validate_et_hint">Please enter %1$s \'s password</string>
+    <!--<string name="baseservice_pass_validate_et_new_hint">Please enter current wallet\'s password</string>-->
     <string name="baseservice_pass_validate_wallet_error">Abnormal wallet</string>
     <string name="baseservice_dialog_password_tip_title">Password hint</string>
+
+    <string name="baseservice_bluetooth_pass_validate_hint">Enter WOOKONG Bio password to authorize</string>
+    <string name="baseservice_bio_pass_validate_et_hint">Please enter WOOKONG Bio password</string>
 
     <string name="baseservice_tip_password_hint">Password hint</string>
     <string name="baseservice_tip_i_understand">Got it</string>

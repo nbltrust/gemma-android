@@ -38,6 +38,7 @@ public class PasswordValidateHelper {
         this.walletEntity = walletEntity;
         this.activity = activity;
         hintStr= this.activity.getString(R.string.baseservice_pass_validate_hint);
+//        etHintStr= this.activity.getString(R.string.baseservice_pass_validate_et_new_hint);
         confirmStr= this.activity.getString(R.string.baseservice_pass_validate_next);
         iconRes=R.drawable.ic_mask_close;
         AutoSize.autoConvertDensityOfGlobal(activity);

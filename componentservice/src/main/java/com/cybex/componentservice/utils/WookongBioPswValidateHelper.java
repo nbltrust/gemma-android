@@ -55,7 +55,8 @@ public class WookongBioPswValidateHelper {
         this.tag = tag;
         this.walletEntity = walletEntity;
         this.activity = activity;
-        hintStr= this.activity.getString(R.string.baseservice_pass_validate_hint);
+        hintStr= this.activity.getString(R.string.baseservice_bluetooth_pass_validate_hint);
+        etHintStr= this.activity.getString(R.string.baseservice_bio_pass_validate_et_hint);
         confirmStr= this.activity.getString(R.string.baseservice_pass_validate_next);
         iconRes=R.drawable.ic_mask_close;
         AutoSize.autoConvertDensityOfGlobal(activity);
@@ -158,7 +159,8 @@ public class WookongBioPswValidateHelper {
         TextView  tvHint= dialog.findViewById(R.id.baseservice_passwordvalidate_hint);
 
         if(TextUtils.isEmpty(etHintStr)){
-            etPasword.setHint(String.format(activity.getString(R.string.baseservice_pass_validate_et_hint),walletEntity.getWalletName()));
+//            etPasword.setHint(String.format(activity.getString(R.string.baseservice_pass_validate_et_hint),walletEntity.getWalletName()));
+            etPasword.setHint(R.string.baseservice_bio_pass_validate_et_hint);
         }else{
             etPasword.setHint(etHintStr);
         }
