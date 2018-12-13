@@ -388,7 +388,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         if(validateHelper==null){
             validateHelper = new PasswordValidateHelper(curWallet, getActivity());
         }
-        validateHelper.setIconRes(R.drawable.ic_back);
+//        validateHelper.setIconRes(R.drawable.ic_back);
+        validateHelper.setIsLastStep(true);
         validateHelper.setDialogCallback(new PasswordValidateHelper.PasswordDialogCallback() {
             @Override
             public void onDialogCancel() {

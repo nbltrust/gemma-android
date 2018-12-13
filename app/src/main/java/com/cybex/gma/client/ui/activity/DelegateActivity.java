@@ -604,7 +604,8 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         if(validateHelper==null){
             validateHelper = new PasswordValidateHelper(curWallet, this);
         }
-        validateHelper.setIconRes(R.drawable.ic_back);
+//        validateHelper.setIconRes(R.drawable.ic_back);
+        validateHelper.setIsLastStep(true);
         validateHelper.setDialogCallback(new PasswordValidateHelper.PasswordDialogCallback() {
             @Override
             public void onDialogCancel() {

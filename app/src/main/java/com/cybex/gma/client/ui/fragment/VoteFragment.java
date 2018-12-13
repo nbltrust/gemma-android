@@ -343,6 +343,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
         MultiWalletEntity wallet = DBManager.getInstance().getMultiWalletEntityDao()
                 .getCurrentMultiWalletEntity();
         PasswordValidateHelper passwordValidateHelper = new PasswordValidateHelper(wallet, context);
+        passwordValidateHelper.setIsLastStep(true);
         passwordValidateHelper.startValidatePassword(
                 new PasswordValidateHelper.PasswordValidateCallback() {
                     @Override

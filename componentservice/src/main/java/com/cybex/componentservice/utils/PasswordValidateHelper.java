@@ -71,6 +71,16 @@ public class PasswordValidateHelper {
         this.etHintStr = etHintStr;
     }
 
+    public void setIsLastStep(boolean isLastStep){
+        if(isLastStep){
+            iconRes=R.drawable.ic_back;
+            confirmStr= this.activity.getString(R.string.baseservice_pass_validate_confirm);
+        }else{
+            iconRes=R.drawable.ic_mask_close;
+            confirmStr= this.activity.getString(R.string.baseservice_pass_validate_next);
+        }
+    }
+
 
     public void startValidatePassword(PasswordValidateCallback callback){
         if(dialog!=null){

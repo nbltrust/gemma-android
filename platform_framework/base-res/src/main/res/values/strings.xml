@@ -1243,7 +1243,7 @@
     <!--password validate-->
     <string name="baseservice_pass_validate_hint">请输入钱包密码以授权</string>
     <string name="baseservice_pass_validate_next">下一步</string>
-    <string name="baseservice_pass_validate_confirm">确认已授权</string>
+    <string name="baseservice_pass_validate_confirm">确认以授权</string>
     <string name="baseservice_pass_validate_tip_please_input_pass">请输入密码</string>
     <string name="baseservice_pass_validate_ip_wrong_password">密码错误请重新输入！</string>
     <string name="baseservice_pass_validate_et_hint">请输入%1$s的密码</string>
