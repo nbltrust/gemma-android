@@ -23,6 +23,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!--<RadioButton-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:id="@+id/radioButton_followsystem"-->
+                <!--style="@style/mRadioButton"-->
+                <!--android:text="@string/follow_system"/>-->
+
+            <!--<View-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginEnd="@dimen/dimen_10"-->
+                <!--android:layout_marginStart="@dimen/dimen_10"-->
+                <!--style="@style/common_divider">-->
+            <!--</View>-->
+
             <RadioButton
                 android:id="@+id/radioButton_simC"
                 style="@style/mRadioButton"

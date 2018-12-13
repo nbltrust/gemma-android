@@ -15,9 +15,13 @@ import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.cybex.gma.client.config.ParamConstants.CN;
 
 /**
  * 通用设置界面
@@ -82,11 +86,9 @@ public class GeneralSettingFragment extends XFragment {
     private void showLanguage() {
         int savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
         switch (savedLanguageType) {
-            /*
-            case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
-                superTextViewChangeLanguage.setRightString(getString(R.string.follow_system));
-                break;
-                */
+//            case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+//                superTextViewChangeLanguage.setRightString(getString(R.string.follow_system));
+//                break;
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
                 superTextViewChangeLanguage.setRightString(getString(R.string.simplified_C));
                 break;
@@ -94,7 +96,16 @@ public class GeneralSettingFragment extends XFragment {
                 superTextViewChangeLanguage.setRightString(getString(R.string.english));
                 break;
             default:
-                superTextViewChangeLanguage.setRightString(getString(R.string.simplified_C));
+                Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
+                switch (systemLanguageType.getDisplayLanguage()){
+                    case CN:
+                        superTextViewChangeLanguage.setRightString(getString(R.string.simplified_C));
+                        break;
+                    default:
+                        //英文
+                        superTextViewChangeLanguage.setRightString(getString(R.string.english));
+                        break;
+                }
                 break;
         }
     }

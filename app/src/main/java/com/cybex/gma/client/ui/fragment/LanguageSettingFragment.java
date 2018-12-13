@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 
+import com.cybex.componentservice.api.ApiPath;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.manager.UISkipMananger;
@@ -11,10 +12,15 @@ import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.common.utils.AppManager;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.cybex.gma.client.config.ParamConstants.CN;
+import static com.cybex.gma.client.config.ParamConstants.EN;
 
 /**
  * 更改APP显示语言界面
@@ -23,7 +29,7 @@ import butterknife.Unbinder;
 public class LanguageSettingFragment extends XFragment {
 
     Unbinder unbinder;
-    //@BindView(R.id.radioButton_follow_system) RadioButton radioButtonFollowSystem;
+//    @BindView(R.id.radioButton_followsystem) RadioButton radioButtonFollowSystem;
     @BindView(R.id.radioButton_simC) RadioButton radioButtonSimC;
     @BindView(R.id.radioButton_EN) RadioButton radioButtonEN;
 
@@ -62,11 +68,9 @@ public class LanguageSettingFragment extends XFragment {
     public void setLanguageListener(View v) {
         int selectedLanguage = -1;
         switch (v.getId()) {
-            /*
-            case R.id.radioButton_follow_system:
-                selectedLanguage = LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM;
-                break;
-                */
+//            case R.id.radioButton_followsystem:
+//                selectedLanguage = LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM;
+//                break;
             case R.id.radioButton_simC:
                 selectedLanguage = LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED;
                 break;
@@ -85,12 +89,10 @@ public class LanguageSettingFragment extends XFragment {
 
     private void showCheckedLanguage() {
         switch (savedLanguageType) {
-            /*
-            case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
-                //跟随系统
-                showCheckedLogic(true, false, false);
-                break;
-                */
+//            case LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+//                //跟随系统
+//                showCheckedLogic(true, false, false);
+//                break;
             case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
                 //简体中文
                 showCheckedLogic(false, true, false);
@@ -101,6 +103,16 @@ public class LanguageSettingFragment extends XFragment {
 
                 break;
             default:
+                Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
+                switch (systemLanguageType.getDisplayLanguage()){
+                    case CN:
+                        showCheckedLogic(false, true, false);
+                        break;
+                    default:
+                        //英文
+                        showCheckedLogic(false, false, true);
+                        break;
+                }
                 break;
         }
 
@@ -116,7 +128,7 @@ public class LanguageSettingFragment extends XFragment {
      * @return
      */
     private void showCheckedLogic(boolean followSystem, boolean chineseSimolified, boolean languageEn) {
-        //radioButtonFollowSystem.setChecked(followSystem);
+//        radioButtonFollowSystem.setChecked(followSystem);
         radioButtonSimC.setChecked(chineseSimolified);
         radioButtonEN.setChecked(languageEn);
     }

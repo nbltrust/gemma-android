@@ -149,6 +149,8 @@ public class LanguageManager {
                 .getInt(LanguageManager.SAVE_LANGUAGE, LanguageType.LANGUAGE_FOLLOW_SYSTEM);
         if (languageType == LanguageType.LANGUAGE_CHINESE_SIMPLIFIED) {
             return LanguageType.LANGUAGE_CHINESE_SIMPLIFIED;
+        }else if (languageType == LanguageType.LANGUAGE_EN) {
+            return LanguageType.LANGUAGE_EN;
         } else if (languageType == LanguageType.LANGUAGE_CHINESE_TRADITIONAL) {
             return LanguageType.LANGUAGE_CHINESE_TRADITIONAL;
         } else if (languageType == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
