@@ -45,30 +45,35 @@ public class ChangeNodeFragment extends XFragment {
                 break;
             case R.id.radioButton_node_eosgravity:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_GRAVITY);
+                ApiPath.setHostCenterServer(ApiPath.EOS_SERVER_PORT_STAGING);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_GRAVITY);
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());
                 break;
             case R.id.radioButton_node_greymass:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_GREY_MASS);
+                ApiPath.setHostCenterServer(ApiPath.EOS_SERVER_PORT_STAGING);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_GREY_MASS);
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());
                 break;
             case R.id.radioButton_node_helloeos:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_HELLOEOS);
+                ApiPath.setHostCenterServer(ApiPath.EOS_SERVER_PORT_STAGING);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_HELLOEOS);
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());
                 break;
             case R.id.radioButton_node_hkeos:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_HK_EOS);
+                ApiPath.setHostCenterServer(ApiPath.EOS_SERVER_PORT_STAGING);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_HK_EOS);
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());
                 break;
             case R.id.radioButton_node_starteos:
                 ApiPath.setHOST_ON_CHAIN(ApiPath.EOS_START_EOS);
+                ApiPath.setHostCenterServer(ApiPath.EOS_SERVER_PORT_STAGING);
                 SPUtils.getInstance().put("curNode", ApiPath.EOS_START_EOS);
                 AppManager.getAppManager().finishAllActivity();
                 UISkipMananger.launchHomeSingle(getActivity());

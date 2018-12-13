@@ -146,6 +146,9 @@ public class GeneralSettingFragment extends XFragment {
                 case ApiPath.EOS_START_EOS:
                     superTextViewChangeNode.setRightString(getString(R.string.eos_alias_start_eos));
                     break;
+                case ApiPath.EOS_TEST_BEIJING:
+                    superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_test_beijing));
+                    break;
                 default:
                     superTextViewChangeNode.setRightString(getString(R.string.eos_alias_eos_cybex));
         }
