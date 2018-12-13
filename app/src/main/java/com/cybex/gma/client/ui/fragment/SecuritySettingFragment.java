@@ -3,6 +3,7 @@ package com.cybex.gma.client.ui.fragment;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.allen.library.SuperTextView;
 import com.cybex.base.view.switchbutton.SwitchButton;
@@ -40,6 +41,9 @@ public class SecuritySettingFragment extends XFragment {
     @BindView(R.id.switch_pattern) SwitchButton switchGesture;
     //修改手势密码
     @BindView(R.id.superTextView_change_pattern) SuperTextView tvChangePattern;
+
+    @BindView(R.id.container_change_pattern)
+    ViewGroup containerChangePattern;
 
     public static SecuritySettingFragment newInstance() {
         Bundle args = new Bundle();
@@ -174,9 +178,9 @@ public class SecuritySettingFragment extends XFragment {
         boolean isopenGesture = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_GESTURE);
         switchGesture.setChecked(isopenGesture);
         if (isopenGesture) {
-            tvChangePattern.setVisibility(View.VISIBLE);
+            containerChangePattern.setVisibility(View.VISIBLE);
         } else {
-            tvChangePattern.setVisibility(View.GONE);
+            containerChangePattern.setVisibility(View.GONE);
         }
         switchFingerprint.setEnableCheckedListener(false);
         boolean isopenFinger = SPUtils.getInstance().getBoolean(CacheConstants.KEY_OPEN_FINGER_PRINT);

@@ -80,6 +80,37 @@ public class AboutFragment extends XFragment {
             @Override
             public void onClickListener(SuperTextView superTextView) {
 
+                int savedLanguageType = LanguageManager.getInstance(getContext()).getLanguageType();
+                switch (savedLanguageType){
+                    case LanguageManager.LanguageType.LANGUAGE_CHINESE_SIMPLIFIED:
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.URL_UPDATE_CN, getResources().getString(R.string.version_update));
+                        break;
+                    case LanguageManager.LanguageType.LANGUAGE_EN:
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.URL_UPDATE_EN, getResources().getString(R.string
+                                .version_update));
+                        break;
+                    case  LanguageManager.LanguageType.LANGUAGE_FOLLOW_SYSTEM:
+                        Locale systemLanguageType = LanguageManager.getInstance(getContext()).getSysLocale();
+                        switch (systemLanguageType.getDisplayLanguage()){
+                            case CN:
+                                CommonWebViewActivity.startWebView(getActivity(), ApiPath.URL_UPDATE_CN, getResources()
+                                        .getString(R
+                                                .string.version_update));
+                                break;
+                            case EN:
+                                CommonWebViewActivity.startWebView(getActivity(), ApiPath.URL_UPDATE_EN, getResources().getString(R
+                                        .string.version_update));
+                                break;
+                        }
+                        break;
+                    default:
+                        CommonWebViewActivity.startWebView(getActivity(), ApiPath.VERSION_NOTE_CN, getResources().getString(R
+                                .string.version_info));
+                        break;
+                }
+
+
+
             }
         });
 
