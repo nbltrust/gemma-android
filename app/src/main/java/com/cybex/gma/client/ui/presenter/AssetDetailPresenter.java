@@ -47,6 +47,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
     private static final String VALUE_CODE_EOS = "eosio.token";
     private static final String VALUE_SYMBOL_EOS = "EOS";
     private static String curLib = null;
+    private boolean isSet;
 
     /**
      * 获取链上配置信息
@@ -113,7 +114,11 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 //                                        LoggerManager.d("lib", lib_num);
 //                                        LoggerManager.d("head_block_num", head_block_num);
                                         getV().setCurLib(lib_num);
-                                        getV().setmRecyclerViewOnClick();
+                                        if (!isSet){
+                                            getV().setmRecyclerViewOnClick();
+                                            isSet = true;
+                                        }
+
                                         requestHistory(account_name, page, size, symbol, contract, isEos);
 
                                     }

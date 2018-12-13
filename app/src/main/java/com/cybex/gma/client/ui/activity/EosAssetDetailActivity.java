@@ -216,6 +216,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
 
     public void setmRecyclerViewOnClick() {
         //设置点击事件
+
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -354,7 +355,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
             dataList = new ArrayList<>();
         }
 
-        curDataList.addAll(dataList);
+        //curDataList.addAll(dataList);
         getP().saveTransaction(dataList);
         getP().queryStatus(dataList);
 

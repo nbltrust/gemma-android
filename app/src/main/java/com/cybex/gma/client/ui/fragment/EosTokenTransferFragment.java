@@ -724,40 +724,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     }
 
-    /**
-     * 显示密码提示Dialog
-     */
-//    private void showPasswordHintDialog() {
-//        int[] listenedItems = {R.id.tv_i_understand};
-//        if (getActivity() != null) { AutoSize.autoConvertDensityOfGlobal(getActivity()); }
-//
-//        CustomDialog dialog = new CustomDialog(getContext(),
-//                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
-//        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
-//
-//            @Override
-//            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-//                switch (view.getId()) {
-//                    case R.id.tv_i_understand:
-//                        dialog.cancel();
-//                        showConfirmAuthoriDialog();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
-//        dialog.show();
-//
-//        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
-//        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-//        if (EmptyUtils.isNotEmpty(curWallet)) {
-//            String passHint = curWallet.getPasswordTip();
-//            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
-//            tv_pass_hint.setText(showInfo);
-//        }
-//    }
-
     public void clearData() {
         if (dialog != null) {
             dialog.cancel();
