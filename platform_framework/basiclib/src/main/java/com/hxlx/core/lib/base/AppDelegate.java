@@ -90,17 +90,17 @@ class AppDelegate implements Application.ActivityLifecycleCallbacks {
 
         if (appCreateCount == 0) {
             // 配置文件系统
-            new FileConfig().init(activity, new FileConfig.OnFileCreatedListener() {
-                @Override
-                public void onCreated() {
-                    // 配置WebView,预先加载WEBVIEW提高反应速度，如果不使用weView可以忽略
-
-                }
-
-                @Override
-                public void onFailure() {
-                }
-            });
+//            new FileConfig().init(activity, new FileConfig.OnFileCreatedListener() {
+//                @Override
+//                public void onCreated() {
+//                    // 配置WebView,预先加载WEBVIEW提高反应速度，如果不使用weView可以忽略
+//
+//                }
+//
+//                @Override
+//                public void onFailure() {
+//                }
+//            });
 
             if (SysUtils.hasNougat()) {
                 // 配置网络监听
