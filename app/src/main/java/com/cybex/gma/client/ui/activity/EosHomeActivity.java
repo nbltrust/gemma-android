@@ -385,12 +385,12 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
         switch (savedCurrency) {
             case CacheConstants.CURRENCY_CNY:
                 tvCurrencyType.setText("≈ ¥ ");
-                tvEosValue.setText(" ≈ " + balance);
+                tvEosValue.setText(balance);
                 totalCNYAmount.setText(getP().formatCurrency(totalCNY));
                 break;
             case CacheConstants.CURRENCY_USD:
                 tvCurrencyType.setText("≈ $ ");
-                totalCNYAmount.setText(" ≈ " + totalUSD);
+                totalCNYAmount.setText(totalUSD);
                 tvEosValue.setText(balance);
                 break;
             default:
@@ -637,9 +637,9 @@ public class EosHomeActivity extends XActivity<EosHomePresenter> {
             viewEosTokens.setVisibility(View.GONE);
         }else if (eosTokens.size() == 2){
             //只有一个Token
-            tvTokenContent.setText("token");
+            tvTokenContent.setText(" token");
         }else {
-            tvTokenContent.setText("tokens");
+            tvTokenContent.setText(" tokens");
         }
     }
 }

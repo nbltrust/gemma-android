@@ -1463,7 +1463,7 @@
     <string name="input_psw_overtime">输入PIN验证超时，请重新尝试</string>
     <string name="verify_sig_fail">验签失败，请重新尝试</string>
     <string name="key_sig_not_match">公钥与hex不匹配，请重新尝试</string>
-    
+
     <string name="wookong_lose_connect_desc">无法连接到WOOKONG Bio,请确保电源足够并且处于开机状态</string>
     <string name="wookong_lose_connect_title">失去连接</string>
     <string name="server_fail">服务器错误,请稍后重试</string>

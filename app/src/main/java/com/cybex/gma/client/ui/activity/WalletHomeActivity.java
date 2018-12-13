@@ -560,7 +560,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     public void showEosBalance(String rawBalance) {
         String balance = rawBalance.split(" ")[0];
-        if (balance.equals("0")) { ; }
+        if (balance.equals("0")) {  }
         String eosAssetsQuantity = AmountUtil.add(balance, delegatedResourceQuantity, 4);
         mEosCardView.setEosNumber(Float.valueOf(eosAssetsQuantity));
         if (eosUnitPriceRMB != null) {
@@ -568,7 +568,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
             //LoggerManager.d("eosAssetsValue",eosAssetsValue);
             mEosCardView.setTotlePrice(eosAssetsValue);
         }
-        OkGo.getInstance().cancelAll();
     }
 
     public void clearEosCardView() {
