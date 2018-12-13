@@ -867,7 +867,7 @@
     <string name="baseservice_resume">Resume</string>
     <string name="baseservice_cancel">Cancel</string>
     <string name="baseservice_format">Formatting</string>
-    <string name="baseservice_hint_button_confirm_init_pin">Press the button on WOOKONG Bio to confirm formatting</string>
+    <string name="baseservice_hint_button_confirm_init_pin">Press the button on WOOKONG Bio to confirm initing</string>
     <string name="baseservice_hint_button_confirm_change_psw">Press the button on WOOKONG Bio to confirm changing the password</string>
 
 
