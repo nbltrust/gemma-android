@@ -20,6 +20,7 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.componentservice.utils.PasswordValidateHelper;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.ui.model.vo.ResourceInfoVO;
@@ -74,6 +75,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
 
     private CustomFullDialog confirmDialog;
     private CustomFullDialog confirmAuthorDialog;
+
+    private PasswordValidateHelper validateHelper;
 
     public static BuySellRamFragment newInstance(Bundle args) {
         BuySellRamFragment fragment = new BuySellRamFragment();
@@ -325,7 +328,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                         break;
                     case R.id.btn_confirm_buy_ram:
                         dialog.cancel();
-                        showConfirmAuthorDialog(OPERATION_BUY_RAM);
+//                        showConfirmAuthorDialog(OPERATION_BUY_RAM);
+                        startPswValidate(OPERATION_BUY_RAM);
                         break;
                     default:
                         break;
@@ -359,7 +363,8 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
                         break;
                     case R.id.btn_confirm_sell_ram:
                         dialog.cancel();
-                        showConfirmAuthorDialog(OPERATION_SELL_RAM);
+//                        showConfirmAuthorDialog(OPERATION_SELL_RAM);
+                        startPswValidate(OPERATION_SELL_RAM);
                         break;
                     default:
                         break;
@@ -375,196 +380,261 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         memo.setText(getResources().getString(R.string.eos_tip_sell_ram));
     }
 
+
+    public void startPswValidate(int operation_type){
+        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao()
+                .getCurrentMultiWalletEntity();
+        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+        if(validateHelper==null){
+            validateHelper = new PasswordValidateHelper(curWallet, getActivity());
+        }
+        validateHelper.setIconRes(R.drawable.ic_back);
+        validateHelper.setDialogCallback(new PasswordValidateHelper.PasswordDialogCallback() {
+            @Override
+            public void onDialogCancel() {
+                if(validateHelper!=null){
+                    validateHelper.clearPsw();
+                }
+                switch (operation_type) {
+                    case OPERATION_BUY_RAM:
+                        showConfirmBuyRamDialog();
+                        break;
+                    case OPERATION_SELL_RAM:
+                        showConfirmSellRamDialog();
+                        break;
+                }
+            }
+        });
+        validateHelper.startValidatePassword(new PasswordValidateHelper.PasswordValidateCallback() {
+            @Override
+            public void onValidateSuccess(String password) {
+
+                final String saved_pri_key = curEosWallet.getPrivateKey();
+                //密码正确
+                final String key = Seed39.keyDecrypt(password, saved_pri_key);
+                final String curEOSName = curEosWallet.getCurrentEosName();
+
+                switch (operation_type) {
+                    case OPERATION_BUY_RAM:
+
+                        String quantity = AmountUtil.add(getEOSAmount(), "0", 4) + " EOS";
+                        confirmDialog = null;
+                        getP().executeBuyRamLogic(curEOSName, curEOSName, quantity, key);
+                        break;
+                    case OPERATION_SELL_RAM:
+                        String ramAmountInStr = AmountUtil.mul(String.valueOf(getRamAmount()),
+                                "1024", 0);
+                        String bytesInStr = AmountUtil.round(ramAmountInStr, 0);
+                        long bytes = Long.parseLong(bytesInStr);
+                        LoggerManager.d("bytes", bytes);
+                        getP().executeSellRamLogic(curEOSName, bytes, key);
+                        break;
+                }
+                if(confirmDialog!=null&&confirmDialog.isShowing()){
+                    confirmDialog.cancel();
+                }
+                confirmDialog = null;
+            }
+
+            @Override
+            public void onValidateFail(int failedCount) {
+
+            }
+        });
+
+    }
+
+
     /**
      * 显示确认买入授权dialog
      */
-    private void showConfirmAuthorDialog(int operation_type) {
-        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
-        if (getActivity() != null){
-            AutoSize.autoConvertDensityOfGlobal(getActivity());
-        }
-        confirmAuthorDialog = new CustomFullDialog(getContext(),
-                R.layout.eos_dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
-
-        confirmAuthorDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
-            @Override
-            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.imc_cancel:
-                        switch (operation_type) {
-                            case OPERATION_BUY_RAM:
-                                showConfirmBuyRamDialog();
-                                break;
-                            case OPERATION_SELL_RAM:
-                                showConfirmSellRamDialog();
-                                break;
-                        }
-                        dialog.cancel();
-                        break;
-                    case R.id.btn_confirm_authorization:
-                        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-                        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
-
-                        switch (operation_type) {
-                            case OPERATION_BUY_RAM:
-                                //买入RAM操作
-                                if (EmptyUtils.isNotEmpty(curWallet)) {
-                                    EditText mPass = dialog.findViewById(R.id.et_password);
-                                    ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
-                                    iv_clear.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            mPass.setText("");
-                                        }
-                                    });
-
-                                    //验证密码
-                                    String inputPass = mPass.getText().toString();
-                                    final String cypher = curWallet.getCypher();
-                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
-                                            .TYPE_SHA256);
-                                    final String saved_pri_key = curEosWallet.getPrivateKey();
-                                    if (EmptyUtils.isNotEmpty(inputPass)) {
-
-                                        if (!cypher.equals(hashPwd)) {
-                                            //密码错误
-                                            inputCount++;
-                                            iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(
-                                                    getResources().getString(R.string.eos_tip_wrong_password));
-                                            if (inputCount > 3) {
-                                                dialog.cancel();
-                                                showPasswordHintDialog(OPERATION_BUY_RAM);
-                                            }
-                                        } else {
-                                            //密码正确
-                                            final String key = Seed39.keyDecrypt(inputPass, saved_pri_key);
-                                            final String curEOSName = curEosWallet.getCurrentEosName();
-                                            String quantity = AmountUtil.add(getEOSAmount(), "0", 4) + " EOS";
-
-                                            confirmDialog = null;
-                                            getP().executeBuyRamLogic(curEOSName, curEOSName, quantity, key);
-                                            dialog.cancel();
-                                        }
-                                    } else {
-                                        GemmaToastUtils.showLongToast(
-                                                getResources().getString(R.string.eos_tip_please_input_pass));
-                                    }
-
-                                }
-                                break;
-                            //卖出RAM操作
-                            case OPERATION_SELL_RAM:
-                                if (EmptyUtils.isNotEmpty(curWallet)) {
-
-                                    EditText mPass = dialog.findViewById(R.id.et_password);
-                                    ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
-                                    iv_clear.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            mPass.setText("");
-                                        }
-                                    });
-                                    String inputPass = mPass.getText().toString();
-                                    final String cypher = curWallet.getCypher();
-                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
-                                            .TYPE_SHA256);
-                                    final String saved_pri_key = curEosWallet.getPrivateKey();
-
-                                    if (EmptyUtils.isNotEmpty(inputPass)) {
-                                        if (!cypher.equals(hashPwd)) {
-                                            //密码错误
-                                            inputCount++;
-                                            iv_clear.setVisibility(View.VISIBLE);
-                                            GemmaToastUtils.showLongToast(
-                                                    getResources().getString(R.string.eos_tip_wrong_password));
-
-                                            if (inputCount > 3) {
-                                                dialog.cancel();
-                                                showPasswordHintDialog(OPERATION_SELL_RAM);
-                                            }
-                                        } else {
-                                            //密码正确
-                                            final String key = Seed39.keyDecrypt(inputPass, saved_pri_key);
-                                            final String curEOSName = curEosWallet.getCurrentEosName();
-                                            String ramAmountInStr = AmountUtil.mul(String.valueOf(getRamAmount()),
-                                                    "1024", 0);
-                                            String bytesInStr = AmountUtil.round(ramAmountInStr, 0);
-                                            long bytes = Long.parseLong(bytesInStr);
-                                            LoggerManager.d("bytes", bytes);
-
-                                            confirmDialog = null;
-                                            getP().executeSellRamLogic(curEOSName, bytes, key);
-                                            dialog.cancel();
-                                        }
-                                    } else {
-                                        GemmaToastUtils.showLongToast(
-                                                getResources().getString(R.string.eos_tip_please_input_pass));
-                                    }
-                                }
-                                break;
-                            default:
-                                LoggerManager.d("参数错误");
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-
-        confirmAuthorDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                if (confirmDialog != null && !confirmDialog.isShowing()){
-                    confirmDialog.show();
-                }
-            }
-        });
-        confirmAuthorDialog.show();
-        EditText inputPass = confirmAuthorDialog.findViewById(R.id.et_password);
-        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
-        if (EmptyUtils.isNotEmpty(curWallet) && curEosWallet != null) {
-            inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint),
-                    curEosWallet.getCurrentEosName()));
-        }
-    }
+//    private void showConfirmAuthorDialog(int operation_type) {
+//        int[] listenedItems = {R.id.imc_cancel, R.id.btn_confirm_authorization};
+//        if (getActivity() != null){
+//            AutoSize.autoConvertDensityOfGlobal(getActivity());
+//        }
+//        confirmAuthorDialog = new CustomFullDialog(getContext(),
+//                R.layout.eos_dialog_input_transfer_password, listenedItems, false, Gravity.BOTTOM);
+//
+//        confirmAuthorDialog.setOnDialogItemClickListener(new CustomFullDialog.OnCustomDialogItemClickListener() {
+//            @Override
+//            public void OnCustomDialogItemClick(CustomFullDialog dialog, View view) {
+//                switch (view.getId()) {
+//                    case R.id.imc_cancel:
+//                        switch (operation_type) {
+//                            case OPERATION_BUY_RAM:
+//                                showConfirmBuyRamDialog();
+//                                break;
+//                            case OPERATION_SELL_RAM:
+//                                showConfirmSellRamDialog();
+//                                break;
+//                        }
+//                        dialog.cancel();
+//                        break;
+//                    case R.id.btn_confirm_authorization:
+//                        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+//                        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+//
+//                        switch (operation_type) {
+//                            case OPERATION_BUY_RAM:
+//                                //买入RAM操作
+//                                if (EmptyUtils.isNotEmpty(curWallet)) {
+//                                    EditText mPass = dialog.findViewById(R.id.et_password);
+//                                    ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
+//                                    iv_clear.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            mPass.setText("");
+//                                        }
+//                                    });
+//
+//                                    //验证密码
+//                                    String inputPass = mPass.getText().toString();
+//                                    final String cypher = curWallet.getCypher();
+//                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
+//                                            .TYPE_SHA256);
+//                                    final String saved_pri_key = curEosWallet.getPrivateKey();
+//                                    if (EmptyUtils.isNotEmpty(inputPass)) {
+//
+//                                        if (!cypher.equals(hashPwd)) {
+//                                            //密码错误
+//                                            inputCount++;
+//                                            iv_clear.setVisibility(View.VISIBLE);
+//                                            GemmaToastUtils.showLongToast(
+//                                                    getResources().getString(R.string.eos_tip_wrong_password));
+//                                            if (inputCount > 3) {
+//                                                dialog.cancel();
+//                                                showPasswordHintDialog(OPERATION_BUY_RAM);
+//                                            }
+//                                        } else {
+//                                            //密码正确
+//                                            final String key = Seed39.keyDecrypt(inputPass, saved_pri_key);
+//                                            final String curEOSName = curEosWallet.getCurrentEosName();
+//                                            String quantity = AmountUtil.add(getEOSAmount(), "0", 4) + " EOS";
+//
+//                                            confirmDialog = null;
+//                                            getP().executeBuyRamLogic(curEOSName, curEOSName, quantity, key);
+//                                            dialog.cancel();
+//                                        }
+//                                    } else {
+//                                        GemmaToastUtils.showLongToast(
+//                                                getResources().getString(R.string.eos_tip_please_input_pass));
+//                                    }
+//
+//                                }
+//                                break;
+//                            //卖出RAM操作
+//                            case OPERATION_SELL_RAM:
+//                                if (EmptyUtils.isNotEmpty(curWallet)) {
+//
+//                                    EditText mPass = dialog.findViewById(R.id.et_password);
+//                                    ImageView iv_clear = dialog.findViewById(R.id.iv_password_clear);
+//                                    iv_clear.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            mPass.setText("");
+//                                        }
+//                                    });
+//                                    String inputPass = mPass.getText().toString();
+//                                    final String cypher = curWallet.getCypher();
+//                                    final String hashPwd = HashGenUtil.generateHashFromText(inputPass, HashGenUtil
+//                                            .TYPE_SHA256);
+//                                    final String saved_pri_key = curEosWallet.getPrivateKey();
+//
+//                                    if (EmptyUtils.isNotEmpty(inputPass)) {
+//                                        if (!cypher.equals(hashPwd)) {
+//                                            //密码错误
+//                                            inputCount++;
+//                                            iv_clear.setVisibility(View.VISIBLE);
+//                                            GemmaToastUtils.showLongToast(
+//                                                    getResources().getString(R.string.eos_tip_wrong_password));
+//
+//                                            if (inputCount > 3) {
+//                                                dialog.cancel();
+//                                                showPasswordHintDialog(OPERATION_SELL_RAM);
+//                                            }
+//                                        } else {
+//                                            //密码正确
+//                                            final String key = Seed39.keyDecrypt(inputPass, saved_pri_key);
+//                                            final String curEOSName = curEosWallet.getCurrentEosName();
+//                                            String ramAmountInStr = AmountUtil.mul(String.valueOf(getRamAmount()),
+//                                                    "1024", 0);
+//                                            String bytesInStr = AmountUtil.round(ramAmountInStr, 0);
+//                                            long bytes = Long.parseLong(bytesInStr);
+//                                            LoggerManager.d("bytes", bytes);
+//
+//                                            confirmDialog = null;
+//                                            getP().executeSellRamLogic(curEOSName, bytes, key);
+//                                            dialog.cancel();
+//                                        }
+//                                    } else {
+//                                        GemmaToastUtils.showLongToast(
+//                                                getResources().getString(R.string.eos_tip_please_input_pass));
+//                                    }
+//                                }
+//                                break;
+//                            default:
+//                                LoggerManager.d("参数错误");
+//                        }
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
+//
+//        confirmAuthorDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//            @Override
+//            public void onDismiss(DialogInterface dialog) {
+//                if (confirmDialog != null && !confirmDialog.isShowing()){
+//                    confirmDialog.show();
+//                }
+//            }
+//        });
+//        confirmAuthorDialog.show();
+//        EditText inputPass = confirmAuthorDialog.findViewById(R.id.et_password);
+//        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+//        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+//        if (EmptyUtils.isNotEmpty(curWallet) && curEosWallet != null) {
+//            inputPass.setHint(String.format(getResources().getString(R.string.eos_input_pass_hint),
+//                    curEosWallet.getCurrentEosName()));
+//        }
+//    }
 
     /**
      * 显示密码提示Dialog
      */
-    private void showPasswordHintDialog(int operation_type) {
-        int[] listenedItems = {R.id.tv_i_understand};
-        if (getActivity() != null){
-            AutoSize.autoConvertDensityOfGlobal(getActivity());
-        }
-        CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
-        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
-
-            @Override
-            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.tv_i_understand:
-                        dialog.cancel();
-                        showConfirmAuthorDialog(operation_type);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        dialog.show();
-
-        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
-        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
-        if (EmptyUtils.isNotEmpty(curWallet) && curEosWallet != null) {
-            String passHint = curWallet.getPasswordTip();
-            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
-            tv_pass_hint.setText(showInfo);
-        }
-    }
+//    private void showPasswordHintDialog(int operation_type) {
+//        int[] listenedItems = {R.id.tv_i_understand};
+//        if (getActivity() != null){
+//            AutoSize.autoConvertDensityOfGlobal(getActivity());
+//        }
+//        CustomDialog dialog = new CustomDialog(getContext(),
+//                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
+//        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+//
+//            @Override
+//            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+//                switch (view.getId()) {
+//                    case R.id.tv_i_understand:
+//                        dialog.cancel();
+//                        showConfirmAuthorDialog(operation_type);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
+//        dialog.show();
+//
+//        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
+//        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+//        EosWalletEntity curEosWallet = curWallet.getEosWalletEntities().get(0);
+//        if (EmptyUtils.isNotEmpty(curWallet) && curEosWallet != null) {
+//            String passHint = curWallet.getPasswordTip();
+//            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
+//            tv_pass_hint.setText(showInfo);
+//        }
+//    }
 
 }
