@@ -362,7 +362,7 @@ public class VoteFragment extends XFragment<VotePresenter> {
 
                     @Override
                     public void onValidateFail(int failedCount) {
-                            showPasswordHintDialog();
+//                            showPasswordHintDialog();
                     }
                 });
 
@@ -430,34 +430,34 @@ public class VoteFragment extends XFragment<VotePresenter> {
     /**
      * 显示密码提示Dialog
      */
-    private void showPasswordHintDialog() {
-        int[] listenedItems = {R.id.tv_i_understand};
-        CustomDialog dialog = new CustomDialog(getContext(),
-                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
-        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
-
-            @Override
-            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.tv_i_understand:
-                        dialog.cancel();
-                        //showConfirmAuthorDialog();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        dialog.show();
-
-        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
-        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-        if (EmptyUtils.isNotEmpty(curWallet)) {
-            String passHint = curWallet.getPasswordTip();
-            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
-            tv_pass_hint.setText(showInfo);
-        }
-    }
+//    private void showPasswordHintDialog() {
+//        int[] listenedItems = {R.id.tv_i_understand};
+//        CustomDialog dialog = new CustomDialog(getContext(),
+//                R.layout.eos_dialog_password_hint, listenedItems, false, Gravity.CENTER);
+//        dialog.setOnDialogItemClickListener(new CustomDialog.OnCustomDialogItemClickListener() {
+//
+//            @Override
+//            public void OnCustomDialogItemClick(CustomDialog dialog, View view) {
+//                switch (view.getId()) {
+//                    case R.id.tv_i_understand:
+//                        dialog.cancel();
+//                        //showConfirmAuthorDialog();
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
+//        dialog.show();
+//
+//        TextView tv_pass_hint = dialog.findViewById(R.id.tv_password_hint_hint);
+//        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
+//        if (EmptyUtils.isNotEmpty(curWallet)) {
+//            String passHint = curWallet.getPasswordTip();
+//            String showInfo = getString(R.string.eos_tip_password_hint) + " : " + passHint;
+//            tv_pass_hint.setText(showInfo);
+//        }
+//    }
 
     public void clearSelectNodes(){
         selectedNodes.clear();
