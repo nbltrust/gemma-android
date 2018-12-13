@@ -96,6 +96,9 @@ public abstract class XFragment<P extends BasePresenter> extends FragmentSupport
     }
 
     protected void setNavibarTitle(final String title, final boolean isShowBack) {
+        if(getActivity()!=null){
+            AutoSize.autoConvertDensityOfGlobal(getActivity());
+        }
         mTitleBar = rootView.findViewById(R.id.btn_navibar);
         mTitleBar.setTitle(title);
         mTitleBar.setTitleColor(R.color.black_title);

@@ -117,6 +117,7 @@ public abstract class XActivity<P extends BasePresenter> extends ActivitySupport
     }
 
     protected void setNavibarTitle(String title, boolean isShowBack) {
+        AutoSize.autoConvertDensityOfGlobal(this);
         if (EmptyUtils.isEmpty(title)) { return; }
         mTitleBar = findViewById(R.id.btn_navibar);
         mTitleBar.setTitle(title);
