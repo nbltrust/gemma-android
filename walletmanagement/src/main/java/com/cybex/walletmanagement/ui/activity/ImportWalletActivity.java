@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.tablayout.SlidingTabLayout;
 import com.cybex.componentservice.manager.PermissionManager;
 import com.cybex.componentservice.manager.TabLayoutManager;
@@ -41,6 +42,7 @@ public class ImportWalletActivity extends XActivity {
 
     ViewPager vpContent;
     SlidingTabLayout mSlidingTab;
+    CommonRefreshLayout mResresh;
 
     private List<Fragment> listFragment = new ArrayList<>();
 
@@ -48,6 +50,7 @@ public class ImportWalletActivity extends XActivity {
     public void bindUI(View view) {
         vpContent = findViewById(R.id.vp_content);
         mSlidingTab =  findViewById(R.id.view_sliding_tab);
+        mResresh = findViewById(R.id.view_refresh_import);
         setNavibarTitle(getResources().getString(R.string.walletmanage_import_wallet_title), true);
 
         ImageView mCollectView = (ImageView) mTitleBar.addAction(new TitleBar.ImageAction(R.drawable.ic_notify_scan) {
@@ -81,6 +84,7 @@ public class ImportWalletActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        mResresh.setEnablePureScrollMode(true);
         this.setTab();
     }
 
