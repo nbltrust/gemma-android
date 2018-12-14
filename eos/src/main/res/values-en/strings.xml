@@ -233,7 +233,7 @@
     <string name="eos_scan_qr_code">Scan</string>
 
     <!-- Change Node Setting -->
-    <string name="eos_node_cybex">http://52.77.177.200:8888(eoscybex)</string>
+    <string name="eos_node_cybex">https://eos-node-wookong.cybex.io</string>
     <string name="eos_node_starteos">http://api-mainnet.starteos.io</string>
     <string name="eos_node_eosnewyork">https://api.eosnewyork.io</string>
     <string name="eos_node_greymass">https://eos.greymass.com</string>

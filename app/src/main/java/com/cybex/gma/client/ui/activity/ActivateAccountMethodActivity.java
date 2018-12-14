@@ -50,7 +50,7 @@ public class ActivateAccountMethodActivity extends XActivity {
         listFragment.add(ActivateByRMBFragment.newInstance(bundle));
         listFragment.add(ActivateByFriendFragment.newInstance(bundle));
         listFragment.add(ActivateByExchangeFragment.newInstance(bundle));
-        listFragment.add(ActivateByInvCodeFragment.newInstance(bundle));
+        //listFragment.add(ActivateByInvCodeFragment.newInstance(bundle));
 
         TabLayoutManager.getInstance().setSlidingTabData(this, mSlidingTab, vpContent,
                 getTitles(), listFragment);
@@ -62,7 +62,7 @@ public class ActivateAccountMethodActivity extends XActivity {
         list.add(getResources().getString(R.string.eos_tab_title_activate_by_RMB));
         list.add(getResources().getString(R.string.eos_tab_title_activate_by_friend));
         list.add(getResources().getString(R.string.eos_tab_title_activate_by_exchanges));
-        list.add(getResources().getString(R.string.eos_tab_title_activate_by_invCode));
+        //list.add(getResources().getString(R.string.eos_tab_title_activate_by_invCode));
 
         return list;
     }

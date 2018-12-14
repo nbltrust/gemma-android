@@ -1,6 +1,10 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -244,7 +248,14 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         });
         dialog.show();
         TextView tv_price_changed = dialog.findViewById(R.id.tv_price_changed);
-        tv_price_changed.setText(String.format(getString(R.string.eos_payment_price_changed), newPrice));
+
+        String text = String.format(getString(R.string.eos_payment_price_changed), newPrice);
+
+        SpannableStringBuilder styleText = new SpannableStringBuilder(text);
+        styleText.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.highlight)),20, text.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        tv_price_changed.setText(styleText);
     }
 
     /**

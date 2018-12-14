@@ -651,7 +651,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
      */
     public String formatCurrency(String value) {
 
-        if (value.equals("0.00")) { return value; }
+        if (value.equals("0.00") || value.split("\\.")[0].equals("0")) { return value; }
 
         DecimalFormat df = new DecimalFormat("#,###.00");
         BigDecimal bigDecimal = new BigDecimal(value);

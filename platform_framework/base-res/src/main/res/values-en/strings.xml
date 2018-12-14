@@ -56,7 +56,7 @@
     <string name="eos_title_transfer_id">TxID</string>
     <string name="eos_title_block_num">Block Number</string>
     <string name="eos_title_block_time">Block Time</string>
-    <string name="eos_btn_see_in_explorer">View on blockchain</string>
+    <string name="eos_btn_see_in_explorer">View on blockchain browser</string>
 
     <!-- Transfer Fragment-->
     <string name="eos_title_receiver">From</string>
@@ -64,7 +64,7 @@
     <string name="eos_title_payer_account">From</string>
     <string name="eos_title_fund">Amount</string>
     <string name="eos_title_memo">Memo</string>
-    <string name="eos_title_memo_optional">(Optional)</string>
+    <string name="eos_title_memo_optional">Memo(Optional)</string>
     <string name="eos_btn_confirm_transfer">Confirm send</string>
     <string name="eos_at_char">\ufeff@</string>
     <string name="eos_title_transfer">Send</string>
@@ -73,17 +73,17 @@
     <string name="eos_title_brief_info">Overview</string>
     <string name="eos_title_used">used </string>
     <string name="eos_title_total_amount">total </string>
-    <string name="eos_title_delegate">Delegate</string>
+    <string name="eos_title_delegate">Stake</string>
     <string name="eos_tip_operation">Operation</string>
     <string name="eos_title_delegate_cpu">CPU</string>
-    <string name="eos_amount_delegate">Enter amount to delegate</string>
-    <string name="eos_amount_undelegate">Enter amount to undelegate</string>
+    <string name="eos_amount_delegate">Enter amount to stake</string>
+    <string name="eos_amount_undelegate">Enter amount to unstake</string>
     <string name="eos_title_delegate_net">NET</string>
-    <string name="eos_delegate">Delegate</string>
+    <string name="eos_delegate">Stake</string>
     <string name="eos_title_resource_management">Manage Resources</string>
     <string name="eos_title_resource_detail">Resource Detail</string>
     <string name="eos_balance">Balance</string>
-    <string name="eos_title_delegate_undelegate">Delegate/Undelegate</string>
+    <string name="eos_title_delegate_undelegate">Stake/UnStake</string>
 
     <string name="eos_amount_cpu_used">used %1$s ms</string>
     <string name="eos_amount_cpu_total">total %1$s ms</string>
@@ -242,7 +242,7 @@
     <string name="scan_qr_code">Scan</string>
 
     <!-- Change Node Setting -->
-    <string name="eos_node_cybex">http://52.77.177.200:8888(eoscybex)</string>
+    <string name="eos_node_cybex">https://eos-node-wookong.cybex.io</string>
     <string name="eos_node_starteos">http://api-mainnet.starteos.io</string>
     <string name="eos_node_eosnewyork">https://api.eosnewyork.io</string>
     <string name="eos_node_greymass">https://eos.greymass.com</string>
@@ -838,14 +838,14 @@
     <string name="config_wallet_ing">Configuring...</string>
 
     <!-- asset detail -->
-    <string name="title_asset_detail">资产详情</string>
-    <string name="income">收款</string>
-    <string name="status_accepted">已接收</string>
-    <string name="status_sent">已发送</string>
-    <string name="status_sending">发送中...%1$s%</string>
+    <string name="title_asset_detail">Asset Detail</string>
+    <string name="income">Collect</string>
+    <string name="status_accepted">Received</string>
+    <string name="status_sent">Sent</string>
+    <string name="status_sending">Sending...%1$s%</string>
 
-    <string name="next_step">下一步</string>
-    <string name="manage">管理</string>
+    <string name="next_step">Next Step</string>
+    <string name="manage">Manage</string>
 
     <string name="tip_back_wallet">Please do back up the private key. It stands for the control and ownership of the crypto-assets. When accidents happen, this is your only way to retrieve your assets.</string>
 
@@ -998,14 +998,15 @@
     <string name="walletmanage_title_wallet_name">Wallet name</string>
     <string name="walletmanage_tip_walletname_hint">Please enter the name of the created wallet</string>
     <string name="walletmanage_tip_walletname_error">The wallet name has been used, please modify </string>
-    <string name="walletmanage_tip_input_password">minimum 8 places, prefer mixing uppercase and lowercase letters, numbers and symbols</string>
+    <string name="walletmanage_tip_input_password">8-16 characters, preferring uppercase and lowercase letters,
+        numbers and symbols mixed</string>
     <string name="walletmanage_tip_repeat_password">Please enter your password again</string>
     <string name="walletmanage_tip_input_password_hint">Please enter a password hint </string>
     <string name="walletmanage_title_invitation_code">invitation code </string>
     <string name="walletmanage_tip_input_inv_code">Please enter the invitation code </string>
     <string name="walletmanage_btn_get_invitation">Get the invitation code</string>
     <string name="walletmanage_tip_agree"> I have read and agreed to </string>
-    <string name="walletmanage_tip_terms_of_service"><u>Service agreement</u></string>
+    <string name="walletmanage_tip_terms_of_service"><u>Terms of Service</u></string>
     <string name="walletmanage_title_password_hint">Password hint (optional) </string>
     <string name="walletmanage_tip_password_hint">Password hint </string>
     <string name="walletmanage_tip_password_input_part2">Passwords are used to protect confidential information such as wallets, so be sure to remember or use password management tools to store them. Gemma does not store passwords so cannot provide password recovery services</string>
@@ -1228,7 +1229,7 @@
     <string name="initing_wookong_bio_wallet">Initializing WOOKONG Bio WALLET</string>
 
     <!--home -->
-    <string name="home_not_backup">To be backed up</string>
+    <string name="home_not_backup">Not back up</string>
     <string name="mnemonic_checking">Verifying</string>
     <string name="eos_mnenonic_invalid">Invalid mnemonic phrases. Please check them.</string>
     <string name="eos_mnenonic_import_fail">Failed to import mnemonic phrases to the device</string>
@@ -1299,7 +1300,7 @@
     <string name="baseservice_pass_validate_confirm">Confirm authorization</string>
     <string name="baseservice_pass_validate_tip_please_input_pass">Enter password</string>
     <string name="baseservice_pass_validate_ip_wrong_password">Wrong password. Enter again.</string>
-    <string name="baseservice_pass_validate_et_hint">Please enter %1$s \'s password</string>
+    <string name="baseservice_pass_validate_et_hint">%1$s \'s password</string>
     <!--<string name="baseservice_pass_validate_et_new_hint">Please enter current wallet\'s password</string>-->
     <string name="baseservice_pass_validate_wallet_error">Abnormal wallet</string>
     <string name="baseservice_dialog_password_tip_title">Password hint</string>
@@ -1360,5 +1361,22 @@
     <string name="walletmanage_change_psw">Change Passsword</string>
     <string name="wookong_lose_connect_desc">Can\'t connect to WOOKONG Bio,please ensure Bio is power enough and power on</string>
     <string name="wookong_lose_connect_title">Lose Connection</string>
+
+    <!-- new strings-->
+    <string name="status_confirming">Confirming</string>
+    <string name="original_pass">Origin Password</string>
+    <string name="get_sn_fail">Read SN from Bio failed, please try again.</string>
+    <string name="cpu_insufficient">CPU exceeded</string>
+    <string name="eos_chain_unstable">EEOS network unstable, please try again later.</string>
+    <string name="fp_error">Fingerprint verification fail, try again please.</string>
+    <string name="switch_sign_fail">Switch authorization type fail, please try again.</string>
+    <string name="account_confirming">Creating</string>
+    <string name="input_psw_overtime">输Input PIN overtime, please try again.</string>
+    <string name="verify_sig_fail">Verify signature fail, please try again.</string>
+    <string name="key_sig_not_match">Public key and hex does not match, please try again.</string>
+
+    <string name="server_fail">Server error, please try again.</string>Server error, please try again.
+    <string name="title_income">Income Detail</string>
+    <string name="title_outcome">Payment Detail</string>
 
 </resources>

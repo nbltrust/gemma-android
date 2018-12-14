@@ -170,10 +170,10 @@
 
     <!-- create methods -->
     <string
-        name="eos_tip_use_eos_to_activate"><Data><![CDATA[为保证顺利创建账户，建议至少转<font color="#426bd4"> 2 EOS </font>
-        ：账户将抵押 <font color = "#426bd4"> 0.1 EOS</font>
-        作为CPU，<font color = "#426bd4"> 0.1 EOS</font> 作为NET，
-        剩余<font color="#426bd4"> 1.8 EOS </font>将按现价购买RAM。]]></Data></string>
+        name="eos_tip_use_eos_to_activate"><Data><![CDATA[为保证顺利创建账户，建议至少转<font color="#ff5500"> 2 EOS </font>
+        ：账户将抵押 <font color = "#ff5500"> 0.1 EOS</font>
+        作为CPU，<font color = "#ff5500"> 0.1 EOS</font> 作为NET，
+        剩余<font color="#ff5500"> 1.8 EOS </font>将按现价购买RAM。]]></Data></string>
 
     <string name="eos_tip_give_out_pubkey">若你的好友对EOS创建账户机制十分了解，可给予其公钥。</string>
     <string name="eos_show_priKey">查看私钥</string>
@@ -227,7 +227,7 @@
     <string name="eos_input_password">请输入@账户名的密码</string>
 
     <!-- Change Node Setting -->
-    <string name="eos_node_cybex">http://52.77.177.200:8888(eoscybex)</string>
+    <string name="eos_node_cybex">https://eos-node-wookong.cybex.io</string>
     <string name="eos_node_starteos">http://api-mainnet.starteos.io</string>
     <string name="eos_node_eosnewyork">https://api.eosnewyork.io</string>
     <string name="eos_node_greymass">https://eos.greymass.com</string>

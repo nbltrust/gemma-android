@@ -40,7 +40,7 @@
 
     <View
         android:layout_marginTop="10dp"
-        android:background="#dddddd"
+        android:background="@color/very_light_pink"
         style="@style/common_divider">
     </View>
 

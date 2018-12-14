@@ -29,8 +29,9 @@
         android:layout_marginTop="6dp"/>
 
     <TextView
+        android:textAlignment="center"
         android:id="@+id/tv_price_changed"
-        android:layout_width="wrap_content"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:text="@string/eos_payment_price_changed"
         android:layout_gravity="center"
@@ -64,6 +65,14 @@
             android:textColor="@color/black_title"
             android:background="@drawable/shape_corner_left_bot"
             />
+
+        <View
+            android:background="@color/very_light_pink_two"
+            android:layerType="software"
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent">
+
+        </View>
 
         <TextView
             android:id="@+id/tv_ok"
