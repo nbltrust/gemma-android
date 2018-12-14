@@ -366,8 +366,9 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
             getP().updateDataSource(curDataList);
         } else {
             //加载更多
+            dataList = getP().updateDataSource(dataList);
             mAdapter.addData(dataList);
-            getP().updateDataSource(curDataList);
+            mAdapter.notifyDataSetChanged();
             viewRefresh.finishLoadmore();
         }
     }

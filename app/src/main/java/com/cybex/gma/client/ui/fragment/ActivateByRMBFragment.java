@@ -1,6 +1,5 @@
 package com.cybex.gma.client.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -15,7 +14,6 @@ import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
-import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -121,13 +119,11 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                     //支付完成
                     AlertUtil.showLongCommonAlert(getActivity(), "支付成功");
                     //调真正创建账户接口
-//                    LoggerManager.d("orderId", orderId);
-//                    if (getArguments() != null) {
-//                        getP().checkCreateAccountStatus(account_name, public_key, orderId);
-//                    }
+
                     getP().updateWallet(account_name);
                     AppManager.getAppManager().finishAllActivity();
                     UISkipMananger.launchHome(getActivity());
+
                     break;
                 case ParamConstants.WX_SUCCESS_TOREFUND:
                     //支付完成但订单金额和现在的创建账户金额已经不符，需要退款
@@ -252,7 +248,7 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         String text = String.format(getString(R.string.eos_payment_price_changed), newPrice);
 
         SpannableStringBuilder styleText = new SpannableStringBuilder(text);
-        styleText.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.highlight)),20, text.length(),
+        styleText.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.highlight)), 20, text.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         tv_price_changed.setText(styleText);

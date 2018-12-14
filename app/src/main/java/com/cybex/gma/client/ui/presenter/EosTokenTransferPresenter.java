@@ -651,10 +651,10 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                 CheckActionStatusResult.ResultBean resultBean = result.getResult();
                                 if (resultBean != null) {
                                     int status = resultBean.getStatus();
-                                    if (status == 3 || status == 4) {
+                                    if (status == 2 || status == 3 || status == 4) {
                                         removePollingJob();
-                                        executeBluetoothTransferLogic(mFrom, mTo, mQuantity, mMemo, mTokenContract,
-                                                mTokenSymbol, mAccuracy);
+
+                                        executeDelayPush(2000);
 
                                     } else {
                                         //开启轮询
@@ -858,6 +858,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
         }
     }
 
+
     /**
      * 开启一次比较时间戳验证轮询
      * 时间单位毫秒
@@ -875,6 +876,24 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
             };
 
             Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, intervalTime);
+            smartScheduler.addJob(job);
+        }
+
+    }
+
+    public void executeDelayPush(int intervalTime) {
+        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+        if (!smartScheduler.contains(ParamConstants.ALARM_JOB)) {
+            SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
+                @Override
+                public void onJobScheduled(Context context, Job job) {
+                    LoggerManager.d(" alarm job executed");
+                    pushTransaction(savedJsonParams);
+                }
+
+            };
+
+            Job job = JobUtils.createAlarmJob(ParamConstants.ALARM_JOB, callback, intervalTime);
             smartScheduler.addJob(job);
         }
 

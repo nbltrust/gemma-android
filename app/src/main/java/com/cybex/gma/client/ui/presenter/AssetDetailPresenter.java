@@ -544,7 +544,8 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                     .getEosTransactionEntityByHash(curHash);
 
             if (curTransaction != null) {
-                if (curTransaction.getStatus() == null) {
+                if (curTransaction.getStatus() == null || curTransaction.getStatus() == ParamConstants
+                        .TRANSACTION_STATUS_CONFIRMED) {
                     //如果数据库中有Transaction且状态未确定
                     getTransaction(curHash);
                 }

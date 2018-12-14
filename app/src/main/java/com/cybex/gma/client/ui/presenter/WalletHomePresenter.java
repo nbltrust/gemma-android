@@ -560,22 +560,21 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                         int lib = resultBean.getLast_irreversible_block();
                                         double progress = getProgressPrecentage(block_num, lib);
                                         getV().setmProgress((int)progress);
-                                        updateEosAccountStatus(ParamConstants.EOSACCOUNT_CONFIRMING);
 
                                     }
                                     else if (status == 4) {
                                         //已完成
 
                                         removePollingJob();
-                                        updateEosAccountStatus(ParamConstants.EOSACCOUNT_ACTIVATED);
                                         getV().setActionId(null);
+                                        updateEosAccountStatus(ParamConstants.EOSACCOUNT_ACTIVATED);
 
                                     } else {
                                       //失败
 
                                         removePollingJob();
-                                        updateEosAccountStatus(ParamConstants.EOSACCOUNT_NOT_ACTIVATED);
                                         getV().setActionId(null);
+                                        updateEosAccountStatus(ParamConstants.EOSACCOUNT_NOT_ACTIVATED);
 
                                     }
                                     getV().updateEosCardView();
@@ -589,6 +588,8 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                         if (getV() != null) {
                             super.onError(response);
                             getV().dissmisProgressDialog();
+                            removePollingJob();
+                            updateEosAccountStatus(ParamConstants.EOSACCOUNT_NOT_ACTIVATED);
                             AlertUtil.showShortUrgeAlert(getV(), getV().getString(R.string.eos_chain_unstable));
                         }
                     }
