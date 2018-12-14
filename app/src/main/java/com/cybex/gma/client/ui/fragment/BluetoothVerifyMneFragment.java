@@ -133,7 +133,8 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
                     answerLabels.addAll(tempLabels);
 
                     //打乱顺序
-//                    Collections.shuffle(tempLabels);
+                    if(!BuildConfig.DEBUG)
+                    Collections.shuffle(tempLabels);
 
                     viewShowMne.setLabels(tempLabels);
                     unSelectedLabels.addAll(tempLabels);
@@ -180,7 +181,8 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         List<String> tempLabels = new ArrayList<>();
         tempLabels.addAll(answerLabels);
         //打乱顺序
-//        Collections.shuffle(tempLabels);
+        if(!BuildConfig.DEBUG)
+        Collections.shuffle(tempLabels);
         viewShowMne.setLabels(tempLabels);
         unSelectedLabels.clear();
         unSelectedLabels.addAll(tempLabels);

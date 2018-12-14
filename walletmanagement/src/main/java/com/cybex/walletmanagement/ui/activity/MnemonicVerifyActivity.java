@@ -13,6 +13,7 @@ import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.componentservice.utils.CollectionUtils;
 import com.cybex.componentservice.utils.SizeUtil;
+import com.cybex.walletmanagement.BuildConfig;
 import com.cybex.walletmanagement.R;
 import com.cybex.componentservice.widget.LabelsView;
 import com.hxlx.core.lib.mvp.lite.XActivity;
@@ -79,7 +80,8 @@ public class MnemonicVerifyActivity extends XActivity {
             answerLabels.addAll(tempLabels);
 
             //打乱顺序
-            //Collections.shuffle(tempLabels);
+            if(!BuildConfig.DEBUG)
+            Collections.shuffle(tempLabels);
 
 
             viewShowMne.setLabels(tempLabels);
@@ -127,6 +129,7 @@ public class MnemonicVerifyActivity extends XActivity {
         List<String> tempLabels = new ArrayList<>();
         tempLabels.addAll(answerLabels);
         //打乱顺序
+        if(!BuildConfig.DEBUG)
         Collections.shuffle(tempLabels);
         viewShowMne.setLabels(tempLabels);
         unSelectedLabels.clear();
