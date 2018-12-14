@@ -80,6 +80,7 @@
                     title:layout_constraintTop_toBottomOf="@+id/tv_income_or_out"/>
 
                 <TextView
+                    android:id="@+id/tv_token_symbol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -199,6 +200,13 @@
                         tools:text="资金用途随便写几行，资金用途随便写几行，资金用途随便写几行，资金用途随便写几行，资金用途随便写几行，资金用途随便写几行"
                         />
                 </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="#e7e9f8"/>
 
             </LinearLayout>
 

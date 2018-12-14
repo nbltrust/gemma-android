@@ -269,42 +269,49 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                                 .getMultiWalletEntityDao().getCurrentMultiWalletEntity();
 
                                         if (curWallet != null) {
-                                            String TAG = getV().getTAG();
-                                            String deviceName = curWallet.getBluetoothDeviceName();
 
-                                            DeviceOperationManager.getInstance().getCheckCode(TAG, deviceName,
-                                                    new DeviceOperationManager.GetCheckCodeCallback() {
-                                                        @Override
-                                                        public void onCheckCodeSuccess(byte[] checkCode) {
-                                                            byte[] snbyte = ConvertUtils.subByte(
-                                                                    checkCode, 0, 16);
+                                            if (curWallet.getWalletType() == MultiWalletEntity.WALLET_TYPE_HARDWARE) {
+                                                //蓝牙钱包 走自动抵押逻辑
+                                                String TAG = getV().getTAG();
+                                                String deviceName = curWallet.getBluetoothDeviceName();
 
-                                                            String SN = CommonUtility.byte2hex(snbyte);
-                                                            String SN_sign = CommonUtility.byte2hex(
-                                                                    checkCode);
-                                                            SN_sign = SN_sign.substring(32);
+                                                DeviceOperationManager.getInstance().getCheckCode(TAG, deviceName,
+                                                        new DeviceOperationManager.GetCheckCodeCallback() {
+                                                            @Override
+                                                            public void onCheckCodeSuccess(byte[] checkCode) {
+                                                                byte[] snbyte = ConvertUtils.subByte(
+                                                                        checkCode, 0, 16);
 
-                                                            LoggerManager.d("SN : ", SN);
+                                                                String SN = CommonUtility.byte2hex(snbyte);
+                                                                String SN_sign = CommonUtility.byte2hex(
+                                                                        checkCode);
+                                                                SN_sign = SN_sign.substring(32);
 
-                                                            curWallet.setSerialNumber(SN);
-                                                            curWallet.save();
+                                                                LoggerManager.d("SN : ", SN);
 
-                                                            //获取到，查询SN对应的权益
-                                                            checkGoodsCode(SN, SN_sign);
+                                                                curWallet.setSerialNumber(SN);
+                                                                curWallet.save();
 
-                                                        }
+                                                                //获取到，查询SN对应的权益
+                                                                checkGoodsCode(SN, SN_sign);
 
-                                                        @Override
-                                                        public void onCheckCodeFail() {
-                                                            if (getV() != null) {
-                                                                LoggerManager.d("onCheckCodeFail");
-                                                                getV().dissmisProgressDialog();
-                                                                AlertUtil.showShortUrgeAlert(getV().getActivity(),
-                                                                        getV().getString(R.string.get_sn_fail));
                                                             }
-                                                        }
-                                                    });
 
+                                                            @Override
+                                                            public void onCheckCodeFail() {
+                                                                if (getV() != null) {
+                                                                    LoggerManager.d("onCheckCodeFail");
+                                                                    getV().dissmisProgressDialog();
+                                                                    AlertUtil.showShortUrgeAlert(getV().getActivity(),
+                                                                            getV().getString(R.string.get_sn_fail));
+                                                                }
+                                                            }
+                                                        });
+                                            }else {
+                                                //软钱包
+                                                getV().dissmisProgressDialog();
+                                                handleEosErrorCode(err_code);
+                                            }
 
                                         }
 
@@ -663,7 +670,8 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                         if (getV() != null) {
                             super.onError(response);
                             getV().dissmisProgressDialog();
-                            AlertUtil.showShortUrgeAlert(getV().getActivity(), getV().getString(R.string.eos_chain_unstable));
+                            AlertUtil.showShortUrgeAlert(getV().getActivity(),
+                                    getV().getString(R.string.eos_chain_unstable));
                         }
                     }
 

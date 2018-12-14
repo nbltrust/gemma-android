@@ -87,38 +87,16 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     Unbinder unbinder;
     CustomFullDialog dialog = null;
     EosTokenVO curToken;
-
-    public String getTAG() {
-        return TAG;
-    }
-
-    public void setTAG(String TAG) {
-        this.TAG = TAG;
-    }
-
-    private String TAG = this.toString();
-    ReentrantLock uiLock = new ReentrantLock();
     boolean isAbort = false;//abort是否在执行中
-
-    public void setChain_id(String chain_id) {
-        this.chain_id = chain_id;
-    }
-
-    private String chain_id = "";
-
-    public void setTransactionVO(TransferTransactionVO transactionVO) {
-        this.transactionVO = transactionVO;
-    }
-
+    private String TAG = this.toString();
     private TransferTransactionVO transactionVO;
-
+    private String chain_id = "";
     private String maxValue = "";
     private String currentEOSName = "";
     private String collectionAccount = "";
     private String amount = "";
     private String memo = "";
     private MultiWalletEntity curWallet;
-
     private CustomFullDialog pinDialog;
     private CustomFullWithAlertDialog verifyDialog;
     private CustomFullDialog powerPressDialog;
@@ -128,6 +106,22 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         EosTokenTransferFragment fragment = new EosTokenTransferFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public String getTAG() {
+        return TAG;
+    }
+
+    public void setTAG(String TAG) {
+        this.TAG = TAG;
+    }
+
+    public void setChain_id(String chain_id) {
+        this.chain_id = chain_id;
+    }
+
+    public void setTransactionVO(TransferTransactionVO transactionVO) {
+        this.transactionVO = transactionVO;
     }
 
     @OnClick({R.id.iv_transfer_account_clear, R.id.iv_transfer_amount_clear, R.id.iv_transfer_memo_clear})
@@ -749,6 +743,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         return curToken;
     }
 
+    public void setCurToken(EosTokenVO curToken) {
+        this.curToken = curToken;
+    }
+
     /**
      * 连接指定设备
      */
@@ -913,12 +911,14 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     public void onSetTxFail() {
                         dissmisProgressDialog();
                         GemmaToastUtils.showShortToast(getString(R.string.tip_set_tx_fail));
-                        //AlertUtil.showShortUrgeAlert(getActivity(), getString(R.string.tip_set_tx_fail));
                     }
-
                 });
     }
 
+    /**
+     * 构建PushTransaction需要的参数并执行PushTransaction
+     * @param strSignature
+     */
     public void buildTransaction(String strSignature) {
         showProgressDialog(getString(R.string.eos_tip_transfer_trade_ing));
         List<String> signatures = new ArrayList<>();

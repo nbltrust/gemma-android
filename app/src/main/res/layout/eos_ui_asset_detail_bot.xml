@@ -28,10 +28,11 @@
             android:textColor="@color/black_context"
             android:layout_weight="1"
             android:id="@+id/tv_vote"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:textAlignment="center"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
+
 
         <View
             android:background="#dddddd"
@@ -49,7 +50,7 @@
             android:textColor="@color/black_context"
             android:layout_weight="1"
             android:id="@+id/tv_resource_manage"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:textAlignment="center"
             android:layout_gravity="center"
             android:layout_height="wrap_content"/>

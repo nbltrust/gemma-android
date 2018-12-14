@@ -57,6 +57,7 @@ public class TransferRecordDetailFragment extends XFragment {
     @BindView(R.id.layout_detail_2) LinearLayout layoutDetail2;
     @BindView(R.id.tv_see_in_explorer) TextView tvSeeInExplorer;
     @BindView(R.id.view_scroll) ScrollView mScrollView;
+    @BindView(R.id.tv_token_symbol) TextView tvTokenSymbol;
 
     Unbinder unbinder;
     @OnClick(R.id.tv_see_in_explorer)
@@ -85,7 +86,7 @@ public class TransferRecordDetailFragment extends XFragment {
     @Override
     public void bindUI(View rootView) {
         unbinder = ButterKnife.bind(this, rootView);
-        setNavibarTitle(getResources().getString(R.string.eos_title_transfer_detail), true, true);
+
         OverScrollDecoratorHelper.setUpOverScroll(mScrollView);
     }
 
@@ -105,6 +106,7 @@ public class TransferRecordDetailFragment extends XFragment {
                     //设置收入&支出页面不同的值(箭头，加减号，收入/支出)
                     if (curTransfer.sender.equals(curEosName)) {
                         //转出操作
+                        setNavibarTitle(getResources().getString(R.string.title_outcome), true, true);
                         arrow.setImageResource(R.drawable.ic_tab_pay);
                         tvAmount.setText(
                                 String.format(getResources().getString(R.string.eos_amount_outcome), curTransfer
@@ -114,6 +116,7 @@ public class TransferRecordDetailFragment extends XFragment {
                         superTextViewReceiver.setRightString(curTransfer.receiver);
                     } else {
                         //收入操作
+                        setNavibarTitle(getResources().getString(R.string.title_income), true, true);
                         tvAmount.setText(
                                 String.format(getResources().getString(R.string.eos_amount_income), curTransfer.quantity
                                         .split(" ")[0]));
@@ -124,6 +127,7 @@ public class TransferRecordDetailFragment extends XFragment {
 
                     }
                     //设置固定的值
+                    tvTokenSymbol.setText(curTransfer.symbol);
                     String time_arr[] = curTransfer.timestamp.split("T");
                     String transferTime = time_arr[0] + " " + time_arr[1].substring(0,8);
                     superTextViewBlockTime.setRightString(transferTime);
