@@ -1191,7 +1191,9 @@ public class DeviceOperationManager {
     public void abortSign(String tag, String deviceName, AbortSignCallback abortSignCallback){
 
         if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
-            abortSignCallback.onAbortSignFail();
+            if(abortSignCallback!=null){
+                abortSignCallback.onAbortSignFail();
+            }
             return;
         }
 
