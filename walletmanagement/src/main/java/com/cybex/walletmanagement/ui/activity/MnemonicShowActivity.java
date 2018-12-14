@@ -20,7 +20,7 @@ import com.siberiadante.customdialoglib.CustomDialog;
 
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
-
+import me.jessyan.autosize.AutoSize;
 
 
 public class MnemonicShowActivity extends XActivity {
@@ -93,6 +93,7 @@ public class MnemonicShowActivity extends XActivity {
      * 显示请勿截图Dialog
      */
     private void showAlertDialog() {
+        AutoSize.autoConvertDensityOfGlobal(this);
         int[] listenedItems = {R.id.tv_understand};
         CustomDialog dialog = new CustomDialog(this,
                 R.layout.walletmanage_dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);

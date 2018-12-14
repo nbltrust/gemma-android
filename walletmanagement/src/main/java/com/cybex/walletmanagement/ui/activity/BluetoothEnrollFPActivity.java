@@ -131,7 +131,7 @@ public class BluetoothEnrollFPActivity extends BluetoothBaseActivity {
         DeviceOperationManager.getInstance().clearCallback(this.toString());
         if (isEnrolling) {
             DeviceOperationManager.getInstance()
-                    .abortEnrollFp(this.toString(),DeviceOperationManager.getInstance().getCurrentDeviceName());
+                    .abortEnrollFp("abortEnrollFp",DeviceOperationManager.getInstance().getCurrentDeviceName());
         }
         super.onDestroy();
 

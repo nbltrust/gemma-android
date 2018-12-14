@@ -43,6 +43,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import me.framework.fragmentation.anim.DefaultHorizontalAnimator;
 import me.framework.fragmentation.anim.FragmentAnimator;
+import me.jessyan.autosize.AutoSize;
 
 
 public class BluetoothChangePasswordActivity extends BluetoothBaseActivity<BluetoothChangePasswordPresenter> {
@@ -538,6 +539,7 @@ public class BluetoothChangePasswordActivity extends BluetoothBaseActivity<Bluet
             }
             return;
         }
+        AutoSize.autoConvertDensityOfGlobal(this);
         int[] listenedItems = {R.id.imv_back};
         confirmDialog = new CustomFullDialog(this,
                 R.layout.baseservice_dialog_bluetooth_button_confirm, listenedItems, false, Gravity.BOTTOM);
@@ -546,7 +548,7 @@ public class BluetoothChangePasswordActivity extends BluetoothBaseActivity<Bluet
             public void onCancel(DialogInterface dialog) {
                 if(getP().isChangingPassword()){
                     getP().setChangingPassword(false);
-                    DeviceOperationManager.getInstance().abortButton(this.toString(),walletEntity.getBluetoothDeviceName());
+                    DeviceOperationManager.getInstance().abortButton(BluetoothChangePasswordActivity.this.toString(),walletEntity.getBluetoothDeviceName());
                 }
             }
         });

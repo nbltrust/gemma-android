@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.jessyan.autosize.AutoSize;
 
 /**
  * 备份助记词页面
@@ -162,6 +163,7 @@ public class BluetoothBackupMneFragment extends XFragment {
      * 显示请勿截图Dialog
      */
     private void showAlertDialog() {
+        AutoSize.autoConvertDensityOfGlobal(getActivity());
         int[] listenedItems = {R.id.tv_understand};
         CustomDialog dialog = new CustomDialog(getContext(),
                 R.layout.eos_dialog_no_screenshot_mne, listenedItems, false, Gravity.CENTER);

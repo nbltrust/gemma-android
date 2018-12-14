@@ -115,6 +115,14 @@ public class DeviceOperationManager {
     }
 
 
+    public boolean isDeviceFreeContext(String deviceName) {
+        if (deviceName == null || deviceMaps.get(deviceName) == null) {
+            return false;
+        }
+        return deviceMaps.get(deviceName).isFreeContexting;
+    }
+
+
     public int getDeviceBatteryChargeMode(String deviceName) {
         if (deviceMaps.get(deviceName) == null) {
             return -1;
@@ -130,7 +138,12 @@ public class DeviceOperationManager {
     }
 
     public void clearCallback(String tag) {
+        LoggerManager.d("clearCallback callbackMaps.size="+callbackMaps.size()+"   tag="+tag+"    containerTag?="+(callbackMaps.get(tag)!=null));
         callbackMaps.remove(tag);
+        if(callbackMaps.size()>0){
+            Set<String> strings = callbackMaps.keySet();
+            LoggerManager.d("clearCallback keys="+Arrays.toString(strings.toArray()));
+        }
     }
 
     public void scanDevice(String tag, ScanDeviceCallback scanDeviceCallback) {
@@ -192,7 +205,7 @@ public class DeviceOperationManager {
     }
 
     public void getDeviceInfo(String tag, String deviceName, GetDeviceInfoCallback getDeviceInfoCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             getDeviceInfoCallback.onGetFail();
             return;
         }
@@ -231,7 +244,7 @@ public class DeviceOperationManager {
 
     public void getHeartDeviceInfo(String tag, String deviceName, GetDeviceInfoCallback getHeartDeviceInfoCallback) {
 
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             getHeartDeviceInfoCallback.onGetFail();
             return;
         }
@@ -252,10 +265,14 @@ public class DeviceOperationManager {
             deviceMaps.put(deviceName, deviceComm);
         }
 
-        if ((heartBeatThread == null) || (heartBeatThread.getState() == Thread.State.TERMINATED)) {
-
-        } else {
-            heartBeatThread.interrupt();
+//        if ((heartBeatThread == null) || (heartBeatThread.getState() == Thread.State.TERMINATED)) {
+//
+//        } else {
+//            heartBeatThread.interrupt();
+//        }
+//        queue.remove(heartBeatThread);
+        if(heartBeatThread!=null&&queue.contains(heartBeatThread)){
+            return;
         }
         heartBeatThread = new BlueToothWrapper(heartBeatHandler);
         heartBeatThread.setGetInfoWrapper(deviceComm.contextHandle,
@@ -266,12 +283,13 @@ public class DeviceOperationManager {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 
 
     public void importMnemonics(String tag, String deviceName, String mnemonics, ImportMnemonicCallback importMnemonicCallback) {
 
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             importMnemonicCallback.onImportFailed();
             return;
         }
@@ -304,7 +322,7 @@ public class DeviceOperationManager {
 
 
     public void startFormat(String tag, String deviceName, DeviceFormatCallback formatCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             formatCallback.onFormatFailed();
             return;
         }
@@ -375,7 +393,7 @@ public class DeviceOperationManager {
 
 
     public void startVerifyFP(String tag, String deviceName, DeviceVerifyFPCallback verifyFPCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             verifyFPCallback.onVerifyFailed(-1);
             return;
         }
@@ -457,7 +475,7 @@ public class DeviceOperationManager {
 
 
     public void enrollFP(String tag, String deviceName, EnrollFPCallback enrollFPCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             enrollFPCallback.onEnrollFinish(-1);
             return;
         }
@@ -496,7 +514,7 @@ public class DeviceOperationManager {
     }
 
     public void abortEnrollFp(String tag,String deviceName,AbortFPCallback abortFPCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             if(abortFPCallback!=null)
                 abortFPCallback.onAbortFail();
             return;
@@ -534,7 +552,7 @@ public class DeviceOperationManager {
     }
 
     public void abortButton(String tag,String deviceName,AbortButtonCallback abortButtonCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             if(abortButtonCallback!=null)
                 abortButtonCallback.onAbortFail();
             return;
@@ -573,7 +591,7 @@ public class DeviceOperationManager {
             String deviceName,
             JsonSerilizeCallback jsonSerilizeCallback) {
 
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             jsonSerilizeCallback.onSerilizeFail();
             return;
         }
@@ -609,7 +627,7 @@ public class DeviceOperationManager {
 
     public void initPin(String tag, String deviceName, String password, String passwordHint, InitPinCallback initPinCallback) {
 
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             initPinCallback.onInitFail();
             return;
         }
@@ -646,7 +664,7 @@ public class DeviceOperationManager {
 
 
     public void verifyPin(String tag, String deviceName, String password, VerifyPinCallback verifyPinCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             verifyPinCallback.onVerifyFail();
             return;
         }
@@ -688,7 +706,7 @@ public class DeviceOperationManager {
             String oldPsw,
             String newPsw,
             ChangePinCallback changePinCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             changePinCallback.onChangePinFail();
             return;
         }
@@ -728,7 +746,7 @@ public class DeviceOperationManager {
      * 调用中间件setGenerateSeedGetMnesWrapper来产生种子并由种子生成助记词
      */
     public void generateMnemonic(String tag, String deviceName, GenerateMnemonicCallback generateMnemonicCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             generateMnemonicCallback.onGenerateFail();
             return;
         }
@@ -763,7 +781,7 @@ public class DeviceOperationManager {
 
 
     public int checkMnemonic(String deviceName, String strDestMnes) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             return -1;
         }
         DeviceComm deviceComm = deviceMaps.get(deviceName);
@@ -777,7 +795,7 @@ public class DeviceOperationManager {
     }
 
     public void checkMnemonic(String tag, String deviceName, String strDestMnes,CheckMnemonicCallback checkMnemonicCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             checkMnemonicCallback.onCheckFail(-1);
             return;
         }
@@ -808,7 +826,7 @@ public class DeviceOperationManager {
 
 
     public void getFPList(String tag, String deviceName, GetFPListCallback getFPListCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             getFPListCallback.onFail();
             return;
         }
@@ -848,7 +866,7 @@ public class DeviceOperationManager {
             MiddlewareInterface.FingerPrintID[] fpList,
             DeleteFPCallback deleteFPCallback) {
 
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             deleteFPCallback.onFail();
             return;
         }
@@ -891,7 +909,7 @@ public class DeviceOperationManager {
             EosSignCallback eosSignCallback
     ) {
 
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             eosSignCallback.onEosSignFail();
             return;
         }
@@ -928,7 +946,7 @@ public class DeviceOperationManager {
 
 
     public void getEthAddress(String tag, String deviceName, GetAddressCallback getAddressCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             getAddressCallback.onGetFail();
             return;
         }
@@ -961,7 +979,7 @@ public class DeviceOperationManager {
 
 
     public void getEosAddress(String tag, String deviceName, GetAddressCallback getAddressCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             getAddressCallback.onGetFail();
             return;
         }
@@ -993,7 +1011,7 @@ public class DeviceOperationManager {
     }
 
     public void getCheckCode(String tag, String deviceName, GetCheckCodeCallback getCheckCodeCallback) {
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             getCheckCodeCallback.onCheckCodeFail();
             return;
         }
@@ -1026,7 +1044,7 @@ public class DeviceOperationManager {
 
     //todo 目前写死了只set EOS tx
     public void setTx(String tag, String deviceName, byte[] transaction, SetTxCallback setTxCallback){
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             setTxCallback.onSetTxFail();
             return;
         }
@@ -1060,7 +1078,7 @@ public class DeviceOperationManager {
     //todo 目前写死了只获取EOS Sign res
     public void getSignResult(String tag, String deviceName, byte signType, SetGetSignResultCallback
             setGetSignResultCallback){
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             setGetSignResultCallback.onGetSignResultFail(BaseConst.STATUS_NO_DEVICE_NAME);
             return;
         }
@@ -1093,7 +1111,7 @@ public class DeviceOperationManager {
 
     public void switchSignType(String tag, String deviceName, SwitchSignCallback switchSignCallback){
 
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             switchSignCallback.onSwitchSignFail();
             return;
         }
@@ -1135,7 +1153,7 @@ public class DeviceOperationManager {
     public void verifySignPin(String tag, String deviceName, String strPIN,
             VerifySignPinCallback verifySignPinCallback){
 
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             verifySignPinCallback.onVerifyFail();
             return;
         }
@@ -1172,7 +1190,7 @@ public class DeviceOperationManager {
      */
     public void abortSign(String tag, String deviceName, AbortSignCallback abortSignCallback){
 
-        if (!isDeviceConnectted(deviceName)) {
+        if (!isDeviceConnectted(deviceName)||isDeviceFreeContext(deviceName)) {
             abortSignCallback.onAbortSignFail();
             return;
         }
@@ -1447,10 +1465,10 @@ public class DeviceOperationManager {
 
             switch (msg.what) {
                 case BlueToothWrapper.MSG_GET_DEV_INFO_START:
-//                    LoggerManager.d("MSG_GET_DEV_INFO_START heart");
+                    LoggerManager.e("heart MSG_GET_DEV_INFO_START heart");
                     break;
                 case BlueToothWrapper.MSG_GET_DEV_INFO_FINISH:
-
+                    LoggerManager.e("heart MSG_GET_DEV_INFO_FINISH heart");
                     //获得设备信息
                     BlueToothWrapper.GetDevInfoReturnValue reValue = (BlueToothWrapper.GetDevInfoReturnValue) msg.obj;
 //                    LoggerManager.d("MSG_GET_DEV_INFO_FINISH  heart rtValue=" + MiddlewareInterface.getReturnString(
