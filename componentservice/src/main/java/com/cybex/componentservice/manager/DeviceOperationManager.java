@@ -1016,7 +1016,7 @@ public class DeviceOperationManager {
             return;
         }
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
-        if (getCheckCodeCallback == null) {
+        if (deviceCallbacks == null) {
             deviceCallbacks = new DeviceCallbacsBean();
             callbackMaps.put(tag, deviceCallbacks);
         }
@@ -1050,7 +1050,7 @@ public class DeviceOperationManager {
         }
 
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
-        if (setTxCallback == null) {
+        if (deviceCallbacks == null) {
             deviceCallbacks = new DeviceCallbacsBean();
             callbackMaps.put(tag, deviceCallbacks);
         }
@@ -1084,7 +1084,7 @@ public class DeviceOperationManager {
         }
 
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
-        if (setGetSignResultCallback == null) {
+        if (deviceCallbacks == null) {
             deviceCallbacks = new DeviceCallbacsBean();
             callbackMaps.put(tag, deviceCallbacks);
         }
@@ -1117,7 +1117,7 @@ public class DeviceOperationManager {
         }
 
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
-        if (switchSignCallback == null) {
+        if (deviceCallbacks == null) {
             deviceCallbacks = new DeviceCallbacsBean();
             callbackMaps.put(tag, deviceCallbacks);
         }
@@ -1159,7 +1159,7 @@ public class DeviceOperationManager {
         }
 
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
-        if (verifySignPinCallback == null) {
+        if (deviceCallbacks == null) {
             deviceCallbacks = new DeviceCallbacsBean();
             callbackMaps.put(tag, deviceCallbacks);
         }
@@ -1198,7 +1198,7 @@ public class DeviceOperationManager {
         }
 
         DeviceCallbacsBean deviceCallbacks = callbackMaps.get(tag);
-        if (abortSignCallback == null) {
+        if (deviceCallbacks == null) {
             deviceCallbacks = new DeviceCallbacsBean();
             callbackMaps.put(tag, deviceCallbacks);
         }
