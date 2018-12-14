@@ -46,13 +46,19 @@ public class PermissionManager {
                 }
             }
         }
+        instance.setmContext(mContext);
         return instance;
+    }
+
+    public void setmContext(Activity mContext) {
+        this.mContext = mContext;
     }
 
     /**
      * Request permissions.
      */
     public void requestPermission(final PermissionResultListener resultListener, String... permissions) {
+
         AndPermission.with(mContext)
                 .runtime()
                 .permission(permissions)
@@ -110,9 +116,9 @@ public class PermissionManager {
      */
     public void showSettingDialog(Context context, final List<String> permissions) {
         List<String> permissionNames = Permission.transformText(context, permissions);
-        String message = context.getString(R.string.baseservice_message_permission_always_failed,
+        String message = mContext.getString(R.string.baseservice_message_permission_always_failed,
                 TextUtils.join("\n", permissionNames));
-        AlertDialog dialog = new AlertDialog.Builder(context, R.style.common_dialog_alert)
+        AlertDialog dialog = new AlertDialog.Builder(mContext, R.style.common_dialog_alert)
                 .setCancelable(false)
                 .setTitle(R.string.baseservice_title_dialog)
                 .setMessage(message)
@@ -171,7 +177,26 @@ public class PermissionManager {
             String message = context.getString(R.string.baseservice_message_permission_rationale,
                     TextUtils.join("\n", permissionNames));
 
-            new android.app.AlertDialog.Builder(context)
+//            new android.app.AlertDialog.Builder(context)
+//                    .setCancelable(false)
+//                    .setTitle(R.string.baseservice_title_dialog)
+//                    .setMessage(message)
+//                    .setPositiveButton(R.string.baseservice_resume, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            executor.execute();
+//                        }
+//                    })
+//                    .setNegativeButton(R.string.baseservice_cancel, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            executor.cancel();
+//                        }
+//                    })
+//                    .show();
+
+
+            AlertDialog dialog = new AlertDialog.Builder(context, R.style.common_dialog_alert)
                     .setCancelable(false)
                     .setTitle(R.string.baseservice_title_dialog)
                     .setMessage(message)
@@ -188,6 +213,20 @@ public class PermissionManager {
                         }
                     })
                     .show();
+
+            try {
+                Field mAlert = AlertDialog.class.getDeclaredField("mAlert");
+                mAlert.setAccessible(true);
+                Object mAlertController = mAlert.get(dialog);
+                Field mMessage = mAlertController.getClass().getDeclaredField("mMessageView");
+                mMessage.setAccessible(true);
+                TextView mMessageView = (TextView) mMessage.get(mAlertController);
+                mMessageView.setTextColor(Color.parseColor("#333333"));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
         }
     }
 
