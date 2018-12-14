@@ -172,7 +172,6 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     public void onDestroyView() {
         clearData();
         dissmisProgressDialog();
-        if (getActivity() != null) { Alerter.clearCurrent(getActivity()); }
         unbinder.unbind();
         super.onDestroyView();
     }
