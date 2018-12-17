@@ -409,7 +409,9 @@ public class BuySellRamFragment extends XFragment<BuySellRamPresenter> {
         validateHelper.startValidatePassword(new PasswordValidateHelper.PasswordValidateCallback() {
             @Override
             public void onValidateSuccess(String password) {
-
+                if(validateHelper!=null){
+                    validateHelper.clearPsw();
+                }
                 final String saved_pri_key = curEosWallet.getPrivateKey();
                 //密码正确
                 final String key = Seed39.keyDecrypt(password, saved_pri_key);

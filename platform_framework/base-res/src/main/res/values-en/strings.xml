@@ -998,8 +998,12 @@
     <string name="walletmanage_title_wallet_name">Wallet name</string>
     <string name="walletmanage_tip_walletname_hint">Please enter the name of the created wallet</string>
     <string name="walletmanage_tip_walletname_error">The wallet name has been used, please modify </string>
-    <string name="walletmanage_tip_input_password">8-16 characters, preferring uppercase and lowercase letters,
-        numbers and symbols mixed</string>
+    <!--<string name="walletmanage_tip_input_password">8-16 characters, preferring uppercase and lowercase letters,-->
+        <!--numbers and symbols mixed</string>-->
+    <string name="walletmanage_tip_input_password">8+ bits, prefer letters, numbers &amp; symbols.</string>
+
+
+
     <string name="walletmanage_tip_repeat_password">Please enter your password again</string>
     <string name="walletmanage_tip_input_password_hint">Please enter a password hint </string>
     <string name="walletmanage_title_invitation_code">invitation code </string>

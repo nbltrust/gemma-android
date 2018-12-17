@@ -625,7 +625,9 @@ public class DelegateActivity extends XActivity<DelegatePresenter> {
         validateHelper.startValidatePassword(new PasswordValidateHelper.PasswordValidateCallback() {
             @Override
             public void onValidateSuccess(String password) {
-
+                if(validateHelper!=null){
+                    validateHelper.clearPsw();
+                }
                 final String saved_pri_key = curEosWallet.getPrivateKey();
                 final String private_key = Seed39.keyDecrypt(password, saved_pri_key);
                 //密码正确
