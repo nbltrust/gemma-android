@@ -16,6 +16,7 @@ import com.cybex.gma.client.ui.activity.BluetoothConfigWooKongBioActivity;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 
 
 import java.util.ArrayList;
@@ -116,6 +117,7 @@ public class BluetoothConfigWookongBioPresenter extends XPresenter<BluetoothConf
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(getV().bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String mnemonic) {

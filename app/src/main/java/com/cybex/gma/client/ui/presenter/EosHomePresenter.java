@@ -29,6 +29,7 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import org.json.JSONArray;
 
@@ -180,6 +181,7 @@ public class EosHomePresenter extends XPresenter<EosHomeActivity> {
                     }
 
                 }).observeOn(AndroidSchedulers.mainThread())
+                .compose(getV().bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Consumer<HomeCombineDataVO>() {
                     @Override
                     public void accept(HomeCombineDataVO vo) {

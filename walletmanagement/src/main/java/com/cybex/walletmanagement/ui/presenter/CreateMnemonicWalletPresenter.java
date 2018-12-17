@@ -21,6 +21,7 @@ import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,8 +107,7 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
 
         Disposable subscribe = Observable.create(new ObservableOnSubscribe<MultiWalletEntity>() {
             @Override
-            public void subscribe(final ObservableEmitter<MultiWalletEntity> emitter) throws Exception {
-
+            public void subscribe(final ObservableEmitter<MultiWalletEntity> emitter)  {
 
                 final MultiWalletEntity multiWalletEntity = new MultiWalletEntity();
 
@@ -198,6 +198,7 @@ public class CreateMnemonicWalletPresenter extends XPresenter<CreateMnemonicWall
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(getV().<MultiWalletEntity>bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Consumer<MultiWalletEntity>() {
                     @Override
                     public void accept(MultiWalletEntity walletEntity) {

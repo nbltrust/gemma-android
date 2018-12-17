@@ -33,6 +33,8 @@ import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.trello.rxlifecycle2.android.FragmentEvent;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -344,6 +346,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<String>bindUntilEvent(FragmentEvent.DESTROY))
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String mnemonic) {

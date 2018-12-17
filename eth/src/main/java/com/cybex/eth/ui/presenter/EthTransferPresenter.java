@@ -12,6 +12,7 @@ import com.cybex.eth.ui.request.GetGasPriceRequest;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.lzy.okgo.model.Response;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.FunctionReturnDecoder;
@@ -95,6 +96,7 @@ public class EthTransferPresenter extends XPresenter<EthTransferActivity> {
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(getV().<String>bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String balance) {

@@ -11,24 +11,19 @@ import android.text.TextUtils;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cybex.base.view.statusview.MultipleStatusView;
 import com.cybex.componentservice.WookongUtils;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
-import com.cybex.componentservice.config.RouterConst;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.EthWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
-import com.cybex.componentservice.db.util.DBCallback;
-import com.cybex.componentservice.event.WookongFormattedEvent;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.DeviceOperationManager;
 import com.cybex.componentservice.manager.LoggerManager;
@@ -43,7 +38,6 @@ import com.cybex.gma.client.ui.adapter.BluetoothScanDeviceListAdapter;
 import com.cybex.gma.client.ui.model.vo.BluetoothDeviceVO;
 import com.extropies.common.MiddlewareInterface;
 import com.github.ybq.android.spinkit.SpinKitView;
-import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
@@ -53,7 +47,6 @@ import com.cybex.componentservice.widget.CustomFullWithAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +60,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.autosize.AutoSize;
-import rx.functions.Action1;
 
 public class WookongScanDialog extends Dialog {
 
@@ -98,6 +90,7 @@ public class WookongScanDialog extends Dialog {
     private List<BluetoothDeviceVO> deviceNameList = new ArrayList<>();
     //    private ScanDeviceHandler mHandler;
     private int updatePosition = 0;
+    private Disposable mCreateWookongDisposable;
 
     public WookongScanDialog(
             XActivity activity,
@@ -133,6 +126,9 @@ public class WookongScanDialog extends Dialog {
     @Override
     public void onDetachedFromWindow() {
         DeviceOperationManager.getInstance().clearCallback(TAG);
+        if(mCreateWookongDisposable!=null&&!mCreateWookongDisposable.isDisposed()){
+            mCreateWookongDisposable.dispose();
+        }
 //        if (connectDialog != null && connectDialog.isShowing()) {
 //            connectDialog.cancel();
 //        }
@@ -434,7 +430,8 @@ public class WookongScanDialog extends Dialog {
                                 });
             }
         }).subscribeOn(Schedulers.io());
-        Disposable subscribe = Observable.zip(observable1, observable2, new BiFunction<String, String, String>() {
+        
+        mCreateWookongDisposable = Observable.zip(observable1, observable2, new BiFunction<String, String, String>() {
             @Override
             public String apply(String ethAddress, String eosAddress) throws Exception {
                 return ethAddress + "&&&&&&" + eosAddress;
@@ -518,7 +515,7 @@ public class WookongScanDialog extends Dialog {
                     public void accept(Throwable throwable) {
                         LoggerManager.e("create wookong wallet fail throwable="+throwable);
                         activity.dissmisProgressDialog();
-                        GemmaToastUtils.showLongToast(getContext().getString(com.cybex.gma.client.R.string.wookong_init_fail));
+                        GemmaToastUtils.showLongToast(getContext().getString(R.string.wookong_init_fail));
                     }
                 });
 

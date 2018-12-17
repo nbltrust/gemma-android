@@ -35,6 +35,7 @@ import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 
@@ -298,6 +299,7 @@ public class BluetoothImportMneFragment extends XFragment {
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<String>bindUntilEvent(FragmentEvent.DESTROY))
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String mnemonic) {

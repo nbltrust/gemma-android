@@ -23,6 +23,7 @@ import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,7 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
 
         Disposable subscribe = Observable.create(new ObservableOnSubscribe<Object>() {
             @Override
-            public void subscribe(final ObservableEmitter<Object> emitter) throws Exception {
+            public void subscribe(final ObservableEmitter<Object> emitter) {
                 MultiWalletEntity multiWalletEntity = new MultiWalletEntity();
 
                 int walletType = configBean.getWalletType();
@@ -182,12 +183,11 @@ public class ConfigNewWalletPresenter extends XPresenter<ConfigNewWalletActivity
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(getV().bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object mnemonic) {
                         getV().dissmisProgressDialog();
-
-
 
                         ARouter.getInstance().build(RouterConst.PATH_TO_WALLET_HOME)
                                 .navigation();

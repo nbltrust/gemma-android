@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.animation.Animation;
 
+import com.trello.rxlifecycle2.components.support.RxFragment;
+
 import me.framework.fragmentation.anim.FragmentAnimator;
 
 
@@ -18,7 +20,7 @@ import me.framework.fragmentation.anim.FragmentAnimator;
  * {@link Fragment} APIs.
  * Created by YoKey on 17/6/22.
  */
-public class FragmentSupport extends Fragment implements ISupportFragment {
+public class FragmentSupport extends RxFragment implements ISupportFragment {
     final SupportFragmentDelegate mDelegate = new SupportFragmentDelegate(this);
     protected FragmentActivity _mActivity;
 

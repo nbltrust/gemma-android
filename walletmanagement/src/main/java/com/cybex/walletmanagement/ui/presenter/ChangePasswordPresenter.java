@@ -18,6 +18,7 @@ import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.common.utils.HashGenUtil;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.List;
 
@@ -104,6 +105,7 @@ public class ChangePasswordPresenter extends XPresenter<ChangePasswordActivity> 
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(getV().<MultiWalletEntity>bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Consumer<MultiWalletEntity>() {
                     @Override
                     public void accept(MultiWalletEntity walletEntity) {
