@@ -13,6 +13,7 @@ import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.job.JobUtils;
 import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
@@ -21,11 +22,14 @@ import com.cybex.gma.client.ui.model.response.GetEosTransactionResult;
 import com.cybex.gma.client.ui.model.response.TransferHistory;
 import com.cybex.gma.client.ui.model.response.TransferHistoryList;
 import com.cybex.gma.client.ui.model.response.TransferHistoryListData;
+import com.cybex.gma.client.ui.model.response.UnitPrice;
 import com.cybex.gma.client.ui.request.EOSConfigInfoRequest;
 import com.cybex.gma.client.ui.request.GetCurrencyBalanceRequest;
 import com.cybex.gma.client.ui.request.GetEosTokensRequest;
 import com.cybex.gma.client.ui.request.GetEosTransactionRequest;
 import com.cybex.gma.client.ui.request.TransferHistoryListRequest;
+import com.cybex.gma.client.ui.request.UnitPriceRequest;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -52,6 +56,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
     private static final String VALUE_CODE_EOS = "eosio.token";
     private static final String VALUE_SYMBOL_EOS = "EOS";
+    private static final String VALUE_SYMBOL_USDT = "USDT";
     private static String curLib = null;
     private boolean isSet;
 
@@ -296,7 +301,8 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
                                         }
                                     }
-                                    getV().showContent();
+//                                    getV().showContent();
+                                    requestUnitPrice();
                                 } else {
                                     getV().showEmptyOrFinish();
                                 }
@@ -600,6 +606,66 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
             smartScheduler.addJob(job);
         }
 
+    }
+
+    /**
+     * 从接口获取Cybex上主要币种的法币估值
+     */
+    private void requestUnitPrice() {
+        try {
+            new UnitPriceRequest(UnitPrice.class)
+                    .getUnitPriceRequest(new JsonCallback<UnitPrice>() {
+                        @Override
+                        public void onStart(Request<UnitPrice, ? extends Request> request) {
+                            if (getV() != null) {
+                                super.onStart(request);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Response<UnitPrice> response) {
+                            if (getV() != null) {
+                                super.onError(response);
+                                getV().dissmisProgressDialog();
+                                getV().showError();
+                                GemmaToastUtils.showLongToast(getV().getString(R.string.eos_load_account_info_fail));
+                            }
+                        }
+
+                        @Override
+                        public void onSuccess(Response<UnitPrice> response) {
+                            if (response != null && response.body() != null) {
+                                LoggerManager.d("requestUnitPrice");
+                                UnitPrice unitPrice = response.body();
+                                List<UnitPrice.PricesBean> prices = unitPrice.getPrices();
+                                if (EmptyUtils.isNotEmpty(prices)) {
+                                    CybexPriceEvent event = new CybexPriceEvent();
+                                    for (int i = 0; i < prices.size(); i++) {
+                                        UnitPrice.PricesBean bean = prices.get(i);
+                                        if (bean != null) {
+
+                                            if (bean.getName().equals(VALUE_SYMBOL_EOS)) {
+                                                event.setEosPrice(String.valueOf(bean.getValue()));
+
+                                            }
+                                            if (bean.getName().equals(VALUE_SYMBOL_USDT)) {
+                                                event.setUsdtPrice(String.valueOf(bean.getValue()));
+                                            }
+                                        }
+                                    }
+                                    getV().showContent();
+                                    EventBusProvider.postSticky(event);
+                                } else {
+                                    getV().showEmptyOrFinish();
+                                }
+                            } else {
+                                getV().showEmptyOrFinish();
+                            }
+                        }
+                    });
+        } catch (Throwable t) {
+            throw Exceptions.propagate(t);
+        }
     }
 
 

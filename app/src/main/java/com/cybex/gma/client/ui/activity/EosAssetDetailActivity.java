@@ -85,6 +85,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     private String asset_type;
     private int curPage;//交易记录当前页数
     private String curEosPrice;
+    private String curUSDTPrice;
     private boolean isSet;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.iv_logo_eos_asset) ImageView ivLogoEosAsset;
