@@ -1,6 +1,6 @@
 // local.properties
 Properties localProperties = new Properties()
-localProperties.load(project.rootProject.file('config/gradle.properties').newDataInputStream())
+localProperties.load(project.rootProject.file('config/keystore.properties').newDataInputStream())
 
 // root/gradle.properties
 Map rootProperties = project.getProperties()
