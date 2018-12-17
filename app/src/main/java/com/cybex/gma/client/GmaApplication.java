@@ -38,8 +38,8 @@ public class GmaApplication extends BaseApplication {
 //        CrashReport.initCrashReport(getApplicationContext());
 
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext()); //...在这里设置strategy的属性，在bugly初始化时传入
-        strategy.setAppChannel("release_0.1.1"); //设置渠道
-        strategy.setAppVersion("0.1.1"); //App的版本
+        strategy.setAppChannel("debug_0.1.2"); //设置渠道
+        strategy.setAppVersion("0.1.2"); //App的版本
 //        strategy.setAppPackageName("com.tencent.xx"); //App的包名
         CrashReport.initCrashReport(getApplicationContext(), "9fd7c781c3", BuildConfig.DEBUG, strategy);
 
