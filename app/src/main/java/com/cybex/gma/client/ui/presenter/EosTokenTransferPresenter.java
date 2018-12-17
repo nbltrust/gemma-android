@@ -312,7 +312,6 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                                 getV().dissmisProgressDialog();
                                                 handleEosErrorCode(err_code);
                                             }
-
                                         }
 
                                     } else {
@@ -651,10 +650,12 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
                                 CheckActionStatusResult.ResultBean resultBean = result.getResult();
                                 if (resultBean != null) {
                                     int status = resultBean.getStatus();
+                                    LoggerManager.d("action status", status);
                                     if (status == 2 || status == 3 || status == 4) {
+
                                         removePollingJob();
 
-                                        executeDelayPush(2000);
+                                        executeDelayPush(1000);
 
                                     } else {
                                         //开启轮询

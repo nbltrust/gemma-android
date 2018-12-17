@@ -14,6 +14,7 @@ import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
+import com.cybex.componentservice.manager.LoggerManager;
 import com.cybex.componentservice.utils.AlertUtil;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
@@ -109,10 +110,12 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
             switch (event.getStatus()) {
                 case ParamConstants.WX_NOTPAY_INIT:
                     //未支付，等待支付
+                    LoggerManager.d("status WX_NOTPAY_INIT");
                     showUnfinishDialog();
                     break;
                 case ParamConstants.WX_NOTPAY_CLOSED:
                     //订单超时，已关闭
+                    LoggerManager.d("status WX_NOTPAY_CLOSED");
                     showOvertimeDialog();
                     break;
                 case ParamConstants.WX_SUCCESS_DONE:
@@ -127,22 +130,27 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                     break;
                 case ParamConstants.WX_SUCCESS_TOREFUND:
                     //支付完成但订单金额和现在的创建账户金额已经不符，需要退款
+                    LoggerManager.d("status WX_SUCCESS_TOREFUND");
                     showOvertimeDialog();
                     break;
                 case ParamConstants.WX_REFUND:
                     //已退款
+                    LoggerManager.d("status WX_REFUND");
                     showUnfinishDialog();
                     break;
                 case ParamConstants.WX_CLOSED:
                     //订单已关闭
+                    LoggerManager.d("status WX_CLOSED");
                     showUnfinishDialog();
 
                     break;
                 case ParamConstants.WX_USERPAYING:
                     //正在支付
+                    LoggerManager.d("status WX_USERPAYING");
                     break;
                 case ParamConstants.WX_PAYERROR:
                     //支付错误
+                    LoggerManager.d("status WX_PAYERROR");
                     showUnfinishDialog();
                     break;
             }
@@ -197,12 +205,11 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                 req.appId = ParamConstants.WXPAY_APPID;
                 req.partnerId = ParamConstants.WXPAY_PARTNER_ID;
                 req.prepayId = result.getPrepayid();
-//                LoggerManager.d("prepayId", req.prepayId);
                 req.packageValue = ParamConstants.WXPAY_PACKAGE_VALUE;
                 req.nonceStr = result.getNonceStr();
-//                LoggerManager.d("nonceStr", req.nonceStr);
                 req.timeStamp = String.valueOf(result.getTimestamp());
                 req.sign = result.getSign();
+                LoggerManager.d("checkArgs", req.checkArgs());
                 iwxapi.sendReq(req);
             }
         });
@@ -370,4 +377,9 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        dissmisProgressDialog();
+    }
 }

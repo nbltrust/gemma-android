@@ -1,5 +1,7 @@
 package com.cybex.gma.client.ui.presenter;
 
+import android.content.Context;
+
 import com.cybex.componentservice.api.callback.JsonCallback;
 import com.cybex.componentservice.bean.TokenBean;
 import com.cybex.componentservice.db.entity.EosTransactionEntity;
@@ -7,9 +9,11 @@ import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
 import com.cybex.componentservice.manager.DBManager;
 import com.cybex.componentservice.manager.LoggerManager;
+import com.cybex.gma.client.GmaApplication;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
+import com.cybex.gma.client.job.JobUtils;
 import com.cybex.gma.client.ui.activity.EosAssetDetailActivity;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
 import com.cybex.gma.client.ui.model.response.GetEosTokensResult;
@@ -40,6 +44,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.hypertrack.smart_scheduler.Job;
+import io.hypertrack.smart_scheduler.SmartScheduler;
 import io.reactivex.exceptions.Exceptions;
 
 public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
@@ -477,7 +483,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
             */
 
             if (curTransaction != null) {
-                //todo 根据不同类型设置status的值
+
                 String currentEosName = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity
                         ().getEosWalletEntities().get(0).getCurrentEosName();
 
@@ -496,6 +502,10 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                 curTransfer.status = getV().getString(R.string.status_confirming);
                                 ;
                             }
+
+                            //todo 查询计算百分比入口
+                            //startQueryPolling(10000, curTransfer.trx_id);
+
                         } else if (status == ParamConstants.TRANSACTION_STATUS_CONFIRMED) {
                             //已经确认
                             if (curTransfer.sender.equals(currentEosName)) {
@@ -506,6 +516,8 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                 //转入 +
                                 curTransfer.status = getV().getString(R.string.status_accepted);
                             }
+
+                            //removePollingJob();
                         } else if (status == ParamConstants.TRANSACTION_STATUS_FAIL) {
                             //已经失败
                             if (curTransfer.sender.equals(currentEosName)) {
@@ -516,6 +528,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                 //转入 +
                                 curTransfer.status = getV().getString(R.string.status_accept_fail);
                             }
+                            //removePollingJob();
                         }
                     }
 
@@ -555,6 +568,38 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
             }
 
         }
+    }
+
+    /**
+     * 移除轮询
+     */
+    private void removePollingJob() {
+        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+        if (smartScheduler != null && smartScheduler.contains(ParamConstants.POLLING_JOB)) {
+            smartScheduler.removeJob(ParamConstants.POLLING_JOB);
+        }
+    }
+
+    /**
+     * 开启一次比较时间戳验证轮询
+     * 时间单位毫秒
+     */
+    public void startQueryPolling(int intervalTime, String txId) {
+        SmartScheduler smartScheduler = SmartScheduler.getInstance(GmaApplication.getAppContext());
+        if (!smartScheduler.contains(ParamConstants.POLLING_JOB)) {
+            SmartScheduler.JobScheduledCallback callback = new SmartScheduler.JobScheduledCallback() {
+                @Override
+                public void onJobScheduled(Context context, Job job) {
+                    LoggerManager.d("query polling executed");
+                    getTransaction(txId);
+                }
+
+            };
+
+            Job job = JobUtils.createPeriodicHandlerJob(ParamConstants.POLLING_JOB, callback, intervalTime);
+            smartScheduler.addJob(job);
+        }
+
     }
 
 
