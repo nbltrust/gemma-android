@@ -583,7 +583,7 @@ public class BluetoothVerifyMneFragment extends XFragment<BluetoothVerifyPresent
 //                AppManager.getAppManager().finishActivity(BluetoothPairActivity.class);
 //                AppManager.getAppManager().finishActivity(BluetoothSettingFPActivity.class);
 //                AppManager.getAppManager().finishActivity(BluetoothScanResultDialogActivity.class);
-//                AppManager.getAppManager().finishActivity(BluetoothCreatEosAccountActivity.class);
+//
 //
 //                UISkipMananger.launchHome(getActivity());
 //            }

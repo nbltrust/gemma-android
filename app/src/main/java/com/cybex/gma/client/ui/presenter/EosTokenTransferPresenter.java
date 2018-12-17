@@ -583,7 +583,7 @@ public class EosTokenTransferPresenter extends XPresenter<EosTokenTransferFragme
     public void doDelegate(String account_name, String SN, String SN_Sig) {
         DelegateReqParams params = new DelegateReqParams();
         params.setApp_id(1);
-        params.setGoods_id(1001);
+        params.setGoods_id(ParamConstants.CODE_TYPE_SN);
         params.setCode(SN);
         params.setAccount_name(account_name);
 

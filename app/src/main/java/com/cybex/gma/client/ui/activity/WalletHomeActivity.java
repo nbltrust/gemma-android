@@ -107,6 +107,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
     public void setActionId(String actionId) {
         this.actionId = actionId;
+
     }
 
     private String actionId;
@@ -362,6 +363,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
 
 
     public void updateWallet(MultiWalletEntity multiWalletEntity) {
+        if (actionId != null)LoggerManager.d("action_id in Wallet Home", actionId);
         if (multiWalletEntity != null) {
             boolean isEthShow = false;
             mTvWalletName.setText(multiWalletEntity.getWalletName());

@@ -1,11 +1,8 @@
 package com.cybex.gma.client.ui.presenter;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
-import com.cybex.componentservice.api.callback.CustomRequestCallback;
 import com.cybex.componentservice.api.callback.JsonCallback;
-import com.cybex.componentservice.api.data.response.CustomData;
 import com.cybex.componentservice.config.BaseConst;
 import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
@@ -19,7 +16,7 @@ import com.cybex.componentservice.utils.WookongConnectHelper;
 import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
-import com.cybex.gma.client.job.TimeStampValidateJob;
+import com.cybex.gma.client.event.ActionIdEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
 import com.cybex.gma.client.ui.activity.CreateEosAccountActivity;
 import com.cybex.gma.client.ui.model.request.BluetoothCreateAccountReqParams;
@@ -29,6 +26,7 @@ import com.cybex.gma.client.ui.model.response.UserRegisterResult;
 import com.cybex.gma.client.ui.request.BluetoothAccountRegisterRequest;
 import com.cybex.gma.client.ui.request.GetAccountinfoRequest;
 import com.extropies.common.CommonUtility;
+import com.hxlx.core.lib.common.eventbus.EventBusProvider;
 import com.hxlx.core.lib.mvp.lite.XPresenter;
 import com.hxlx.core.lib.utils.EmptyUtils;
 import com.hxlx.core.lib.utils.GsonUtils;
@@ -39,8 +37,6 @@ import com.lzy.okgo.request.base.Request;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.disposables.Disposable;
 
 public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivity> {
 
@@ -154,7 +150,6 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
     }
 
 
-
     public void getDeviceInfoAndRegister() {
 
         getV().showProgressDialog(getV().getString(R.string.baseservice_wookong_bio_connecting));
@@ -247,8 +242,10 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
         BluetoothCreateAccountReqParams params = new BluetoothCreateAccountReqParams();
 
         params.setApp_id(ParamConstants.TYPE_APP_ID_BLUETOOTH);
+        params.setGoods_id(ParamConstants.CODE_TYPE_SN);
         params.setAccount_name(account_name);
         params.setPublic_key(public_key);
+        params.setCode(SN);
 
         BluetoothCreateAccountReqParams.WookongValidation validation = new BluetoothCreateAccountReqParams
                 .WookongValidation();
@@ -258,9 +255,46 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
         validation.setPublic_key_sig(public_key_sig);
         params.setValidation(validation);
 
-        String json = GsonUtils.objectToJson(params);
-        LoggerManager.d("Bluetooth Create Params", json);
+        String jsonParams = GsonUtils.objectToJson(params);
+        LoggerManager.d("Bluetooth Create Params", jsonParams);
 
+
+        new BluetoothAccountRegisterRequest(String.class)
+                .setJsonParams(jsonParams)
+                .registerAccount(new JsonCallback<UserRegisterResult>() {
+                    @Override
+                    public void onSuccess(Response<UserRegisterResult> response) {
+                        if (getV() != null) {
+                            if (response != null && response.body() != null) {
+                                UserRegisterResult.ResultBean resultBean = response.body().getResult();
+                                if (resultBean != null) {
+                                    String action_id = resultBean.getAction_id();
+                                    LoggerManager.d("action_id", action_id);
+
+                                    ActionIdEvent event = new ActionIdEvent();
+                                    event.setAction_id(action_id);
+                                    EventBusProvider.postSticky(event);
+
+                                    updateCurBluetoothWallet(account_name);
+                                    AppManager.getAppManager().finishActivity();
+                                    UISkipMananger.launchHome(getV());
+                                    getV().dissmisProgressDialog();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<UserRegisterResult> response) {
+                        if (getV() != null) {
+                            super.onError(response);
+                            getV().dissmisProgressDialog();
+                        }
+                    }
+                });
+
+
+        /*
         new BluetoothAccountRegisterRequest(UserRegisterResult.class)
                 .setJsonParams(json)
                 .postJson(new CustomRequestCallback<UserRegisterResult>() {
@@ -279,23 +313,33 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
 
                                 UserRegisterResult registerResult = data.result;
                                 if (registerResult != null) {
-                                    //String txId = registerResult.txId;
-                                    updateCurBluetoothWallet(account_name);
-                                    TimeStampValidateJob.executedCreateLogic(account_name, public_key);
-                                    AppManager.getAppManager().finishActivity();
-                                    UISkipMananger.launchEOSHome(getV());
-                                    getV().dissmisProgressDialog();
 
+                                    UserRegisterResult.ResultBean resultBean = registerResult.getResult();
+                                    if (resultBean != null){
+
+                                        String action_id = resultBean.getAction_id();
+                                        LoggerManager.d("action_id",  action_id);
+                                        ActionIdEvent event = new ActionIdEvent();
+                                        event.setAction_id(action_id);
+                                        EventBusProvider.postSticky(event);
+
+                                        updateCurBluetoothWallet(account_name);
+//                                        TimeStampValidateJob.executedCreateLogic(account_name, public_key);
+                                        AppManager.getAppManager().finishActivity();
+                                        UISkipMananger.launchEOSHome(getV());
+                                        getV().dissmisProgressDialog();
+                                    }
                                 }
-                            } else if(data.code == HttpConst.INVCODE_USED){
+                            } else if (data.code == HttpConst.INVCODE_USED) {
                                 AppManager.getAppManager().finishActivity();
                                 Bundle bundle = new Bundle();
                                 String account_name = getV().getEOSUsername();
                                 bundle.putString(ParamConstants.EOS_USERNAME, account_name);
                                 UISkipMananger.launchChooseActivateMethod(getV(), bundle);
-                            } else{
+                            } else {
                                 showOnErrorInfo(data.code);
                             }
+
                         }
 
 
@@ -315,20 +359,20 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                         }
                     }
                 });
+                */
     }
-
 
 
     /**
      * 创建成功后将相关信息填入数据库
      */
-    private void updateCurBluetoothWallet(String account_name){
+    private void updateCurBluetoothWallet(String account_name) {
 
         List<MultiWalletEntity> bluetoothWalletList = DBManager.getInstance().getMultiWalletEntityDao()
                 .getBluetoothWalletList();
-        if (bluetoothWalletList != null && bluetoothWalletList.size() > 0){
+        if (bluetoothWalletList != null && bluetoothWalletList.size() > 0) {
             MultiWalletEntity curBluetoothWallet = bluetoothWalletList.get(0);
-            if (curBluetoothWallet.getEosWalletEntities().size() > 0){
+            if (curBluetoothWallet.getEosWalletEntities().size() > 0) {
                 EosWalletEntity curEosWallet = curBluetoothWallet.getEosWalletEntities().get(0);
                 curEosWallet.setCurrentEosName(account_name);
                 List<String> account_names = new ArrayList<>();

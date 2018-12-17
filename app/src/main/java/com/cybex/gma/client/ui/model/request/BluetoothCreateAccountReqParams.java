@@ -3,7 +3,6 @@ package com.cybex.gma.client.ui.model.request;
 /**
  * 创建蓝牙账户，用户注册接口
  *
- * Created by wanglin on 2018/9/11.
  */
 public class BluetoothCreateAccountReqParams {
 
@@ -12,24 +11,46 @@ public class BluetoothCreateAccountReqParams {
      */
     private int app_id;
     /**
+     * 序列号 1001，激活码 1002
+     */
+    private int goods_id;
+    /**
      * 用户名
      */
     private String account_name;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    /**
+     * 商品序列码(SN)，序列号/激活码等字符串
+     */
+    private String code;
     /**
      * 邀请码
      */
     private String invitation_code;
-
     /**
      * 公钥
      */
     private String public_key;
-
-
     /**
      * 和wookong的验签
      */
     private WookongValidation validation;
+
+    public int getGoods_id() {
+        return goods_id;
+    }
+
+    public void setGoods_id(int goods_id) {
+        this.goods_id = goods_id;
+    }
 
     public int getApp_id() {
         return app_id;

@@ -74,8 +74,8 @@ public class ActivateByInvCodePresenter extends XPresenter<ActivateByInvCodeFrag
                             if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
                                 UserRegisterResult registerResult = data.result;
                                 if (registerResult != null) {
-                                    String txId = registerResult.txId;
-                                    updateWallet(eos_username, txId, invCode);
+                                    //String txId = registerResult.txId;
+                                    //updateWallet(eos_username, txId, invCode);
                                     TimeStampValidateJob.executedCreateLogic(eos_username, public_key);
                                     AppManager.getAppManager().finishAllActivity();
                                     UISkipMananger.launchHome(getV().getActivity());

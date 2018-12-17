@@ -552,38 +552,48 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                     @Override
                     public void onSuccess(Response<CheckActionStatusResult> response) {
                         if (getV() != null) {
-                            if (response != null && response.body() != null) {
-                                CheckActionStatusResult result = response.body();
-                                CheckActionStatusResult.ResultBean resultBean = result.getResult();
-                                if (resultBean != null) {
-                                    int status = resultBean.getStatus();
-                                    LoggerManager.d("Action status", status);
-                                    if (status == 3 || status == 2 || status == 1){
-                                        //轮询
-                                        startValidatePolling(action_id, 10000);
-                                        int block_num = resultBean.getBlock_num();
-                                        int lib = resultBean.getLast_irreversible_block();
-                                        double progress = getProgressPrecentage(block_num, lib);
-                                        getV().setmProgress((int)progress);
 
+                            MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao()
+                                    .getCurrentMultiWalletEntity();
+
+                            if (curWallet != null){
+                                if (response != null && response.body() != null) {
+                                    CheckActionStatusResult result = response.body();
+                                    CheckActionStatusResult.ResultBean resultBean = result.getResult();
+                                    if (resultBean != null) {
+                                        int status = resultBean.getStatus();
+                                        LoggerManager.d("Action status", status);
+                                        if (status == 3 || status == 2 || status == 1){
+                                            //轮询
+                                            startValidatePolling(action_id, 10000);
+                                            int block_num = resultBean.getBlock_num();
+                                            int lib = resultBean.getLast_irreversible_block();
+                                            double progress = getProgressPrecentage(block_num, lib);
+                                            getV().setmProgress((int)progress);
+
+                                            getV().updateEosCardView();
+
+                                        }
+                                        else if (status == 4) {
+                                            //已完成
+
+                                            removePollingJob();
+                                            getV().setActionId(null);
+                                            updateEosAccountStatus(ParamConstants.EOSACCOUNT_ACTIVATED);
+                                            getV().updateWallet(curWallet);
+
+                                        } else {
+                                            //失败
+
+                                            removePollingJob();
+                                            getV().setActionId(null);
+                                            updateEosAccountStatus(ParamConstants.EOSACCOUNT_NOT_ACTIVATED);
+                                            getV().updateWallet(curWallet);
+
+                                        }
                                     }
-                                    else if (status == 4) {
-                                        //已完成
-
-                                        removePollingJob();
-                                        getV().setActionId(null);
-                                        updateEosAccountStatus(ParamConstants.EOSACCOUNT_ACTIVATED);
-
-                                    } else {
-                                      //失败
-
-                                        removePollingJob();
-                                        getV().setActionId(null);
-                                        updateEosAccountStatus(ParamConstants.EOSACCOUNT_NOT_ACTIVATED);
-
-                                    }
-                                    getV().updateEosCardView();
                                 }
+
                             }
                         }
                     }
