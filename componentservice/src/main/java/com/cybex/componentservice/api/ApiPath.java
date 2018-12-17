@@ -34,7 +34,7 @@ public class ApiPath {
      */
 
     //中心化服务器host
-    public static String HOST_CENTER_SERVER = "http://faucetdev-eos-wookong.nbltrust.com:3002";
+    public static String HOST_CENTER_SERVER = "https://faucetstaging-eos-wookong.nbltrust.com";
     //test
     //http://faucetdev-eos-wookong.nbltrust.com:3002
     //https://faucetdev-eos-wookong.nbltrust.com
@@ -46,7 +46,7 @@ public class ApiPath {
     //https://faucet-eos-wookong.nbltrust.com
 
     //链上服务器host
-    public static String HOST_ON_CHAIN = "http://47.75.154.248:50003";
+    public static String HOST_ON_CHAIN = "https://eos-node-wookong.cybex.io";
     //test
     //http://47.75.154.248:50003
 
