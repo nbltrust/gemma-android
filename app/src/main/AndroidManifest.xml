@@ -168,11 +168,11 @@
         </activity>
         <!-- Token资产详情界面 -->
         <!-- 钱包管理界面 -->
-        <activity
-            android:name=".ui.activity.ManageWalletActivity"
-            android:configChanges="layoutDirection|locale"
-            android:screenOrientation="portrait">
-        </activity>
+        <!--<activity-->
+            <!--android:name=".ui.activity.ManageWalletActivity"-->
+            <!--android:configChanges="layoutDirection|locale"-->
+            <!--android:screenOrientation="portrait">-->
+        <!--</activity>-->
         <!-- 钱包详情界面 -->
         <activity
             android:name=".ui.activity.WalletDetailActivity"
