@@ -1476,8 +1476,7 @@
     <string name="title_outcome">支出详情</string>
 
     <string name="package_version_info">WOOKONG Wallet %1$s</string>
-
-
+    <string name="activating_eos_account">正在激活EOS账号</string>
 
 
 

@@ -17,6 +17,7 @@ import com.cybex.gma.client.config.HttpConst;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.CybexPriceEvent;
 import com.cybex.gma.client.job.JobUtils;
+import com.cybex.gma.client.job.TimeStampValidateJob;
 import com.cybex.gma.client.ui.activity.WalletHomeActivity;
 import com.cybex.gma.client.ui.model.request.GetAccountInfoReqParams;
 import com.cybex.gma.client.ui.model.request.GetCurrencyBalanceReqParams;
@@ -95,15 +96,19 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                             .getCurrentMultiWalletEntity().getWalletType();
 
                                     //todo 添加其他钱包种类的处理逻辑
+                                    //todo 更改为V2接口后查询进度方式改变
                                     if (wallet_type == BaseConst.WALLET_TYPE_BLUETOOTH) {
                                         updateBluetoothWallet(firstEosName, account_names);
+                                        TimeStampValidateJob.executeValidateLogic(firstEosName, public_key);
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_PRIKEY_IMPORT) {
                                         LoggerManager.d("case pri key import");
+                                        TimeStampValidateJob.executeValidateLogic(firstEosName, public_key);
                                         updateEOSWallet(account_names);
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_CREATE) {
                                         updateEOSWallet(account_names);
                                     } else if (wallet_type == BaseConst.WALLET_TYPE_MNE_IMPORT) {
                                         updateEOSWallet(account_names);
+                                        TimeStampValidateJob.executeValidateLogic(firstEosName, public_key);
                                     }
 
                                     getV().updateEosCardView();
@@ -426,7 +431,6 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
             EosWalletEntity eosWalletEntity = bluetoothMultiWalletEntity.getEosWalletEntities().get(0);
 
             if (eosWalletEntity != null) {
-                eosWalletEntity.setIsConfirmLib(ParamConstants.EOSACCOUNT_ACTIVATED);
                 eosWalletEntity.setCurrentEosName(cur_eos_name);
                 String eos_name_json = GsonUtils.objectToJson(account_names);
                 eosWalletEntity.setEosNameJson(eos_name_json);
@@ -451,7 +455,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
         if (eosList.size() > 0) {
             EosWalletEntity curEosWallet = eosList.get(0);
             if (curEosWallet != null) {
-                curEosWallet.setIsConfirmLib(ParamConstants.EOSACCOUNT_ACTIVATED);
+//                curEosWallet.setIsConfirmLib(ParamConstants.EOSACCOUNT_ACTIVATED);
                 String curEosName = "";
                 if (EmptyUtils.isEmpty(getCurEosname())) {
                     curEosName = account_names.get(0);

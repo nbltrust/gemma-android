@@ -100,7 +100,6 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                                     } else {
                                         //连接蓝牙卡
 
-
                                         if (curWallet != null) {
                                             WookongConnectHelper wookongConnectHelper = new WookongConnectHelper(
                                                     getV().toString(), curWallet, getV());
@@ -268,7 +267,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                     @Override
                     public void onBeforeRequest(@NonNull Disposable disposable) {
                         if (getV() != null) {
-                            getV().showProgressDialog("正在创建账户...");
+                            getV().showProgressDialog(getV().getString(R.string.activating_eos_account));
                         }
                     }
 

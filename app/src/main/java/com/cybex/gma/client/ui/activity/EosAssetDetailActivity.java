@@ -85,6 +85,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     private String asset_type;
     private int curPage;//交易记录当前页数
     private String curEosPrice;
+    private boolean isSet;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.iv_logo_eos_asset) ImageView ivLogoEosAsset;
     @BindView(R.id.tv_eos_amount) TextView tvEosAmount;
@@ -298,7 +299,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                 getP().getInfo(
                         currentEosName,
                         page,
-                        ParamConstants.TRANSFER_HISTORY_SIZE,//5
+                        ParamConstants.TRANSFER_HISTORY_SIZE,//10
                         ParamConstants.SYMBOL_EOS,
                         ParamConstants.CONTRACT_EOS,
                         true);
@@ -340,13 +341,18 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         } else {
             //首次请求
             mAdapter = new TransferRecordListAdapter(curDataList, currentEosName);
-            mAdapter.setHasStableIds(true);
+            //mAdapter.setHasStableIds(true);
             mRecyclerView.setAdapter(mAdapter);
             getP().updateDataSource(curDataList);
         }
 
         viewRefresh.finishRefresh();
         viewRefresh.setLoadmoreFinished(false);
+
+        if (!isSet){
+            setmRecyclerViewOnClick();
+            isSet = true;
+        }
     }
 
 
@@ -355,9 +361,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
             dataList = new ArrayList<>();
         }
 
-        //curDataList.addAll(dataList);
         getP().saveTransaction(dataList);
-        getP().queryStatus(dataList);
 
         if (mAdapter == null) {
             //第一次请求
@@ -367,8 +371,10 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         } else {
             //加载更多
             dataList = getP().updateDataSource(dataList);
-            mAdapter.addData(dataList);
+//            mAdapter.addData(dataList);
+            curDataList.addAll(dataList);
             mAdapter.notifyDataSetChanged();
+            getP().queryStatus(dataList);
             viewRefresh.finishLoadmore();
         }
     }

@@ -39,10 +39,10 @@ public class TransferRecordListAdapter extends BaseQuickAdapter<TransferHistory,
     @Retention(RetentionPolicy.SOURCE)
     public @interface TradeStatus { }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+//    @Override
+//    public long getItemId(int position) {
+//        return position;
+//    }
 
     private String getCurrentStatus(@TradeStatus int STATUS) {
         String statusResult = "";

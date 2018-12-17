@@ -108,16 +108,10 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                 try {
                                     JSONObject obj = new JSONObject(infoJson);
                                     if (obj != null) {
-//                                        String head_block_num = obj.optString("head_block_num");
+
                                         String lib_num = obj.optString("last_irreversible_block_num");
                                         curLib = lib_num;
-//                                        LoggerManager.d("lib", lib_num);
-//                                        LoggerManager.d("head_block_num", head_block_num);
                                         getV().setCurLib(lib_num);
-                                        if (!isSet){
-                                            getV().setmRecyclerViewOnClick();
-                                            isSet = true;
-                                        }
 
                                         requestHistory(account_name, page, size, symbol, contract, isEos);
 
@@ -193,7 +187,6 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                         } else {
                                             requestTokenBalance(account_name, contract, symbol);
                                         }
-
 
                                     } else {
                                         getV().showEmptyOrFinish();
@@ -456,8 +449,8 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
         }
     }
 
-    public List<TransferHistory> clearListStatus(List<TransferHistory> list){
-        for (TransferHistory curTransfer : list){
+    public List<TransferHistory> clearListStatus(List<TransferHistory> list) {
+        for (TransferHistory curTransfer : list) {
             curTransfer.status = null;
         }
         return list;
@@ -472,12 +465,23 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
             EosTransactionEntity curTransaction = DBManager.getInstance().getEosTransactionEntityDao()
                     .getEosTransactionEntityByHash(curTransfer.trx_id);
 
+            /*
+            if (curTransfer.status != null &&
+                    (curTransfer.status.equals(getV().getString(R.string.status_sent))
+                            || curTransfer.status.equals(getV().getString(R.string.status_accepted))
+                            || curTransfer.status.equals(getV().getString(R.string.status_send_fail))
+                            || curTransfer.status.equals(getV().getString(R.string.status_accept_fail)))) {
+                newDataList.add(curTransfer);
+                continue;
+            }
+            */
+
             if (curTransaction != null) {
                 //todo 根据不同类型设置status的值
                 String currentEosName = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity
                         ().getEosWalletEntities().get(0).getCurrentEosName();
 
-                if(EmptyUtils.isNotEmpty(curTransaction.getStatus())){
+                if (EmptyUtils.isNotEmpty(curTransaction.getStatus())) {
                     int status = curTransaction.getStatus();
                     if (currentEosName != null) {
 
@@ -489,7 +493,8 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
 
                             } else {
                                 //转入 +
-                                curTransfer.status =  getV().getString(R.string.status_confirming);;
+                                curTransfer.status = getV().getString(R.string.status_confirming);
+                                ;
                             }
                         } else if (status == ParamConstants.TRANSACTION_STATUS_CONFIRMED) {
                             //已经确认
@@ -501,7 +506,7 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                 //转入 +
                                 curTransfer.status = getV().getString(R.string.status_accepted);
                             }
-                        }else if (status == ParamConstants.TRANSACTION_STATUS_FAIL){
+                        } else if (status == ParamConstants.TRANSACTION_STATUS_FAIL) {
                             //已经失败
                             if (curTransfer.sender.equals(currentEosName)) {
                                 //转出 -
@@ -512,14 +517,12 @@ public class AssetDetailPresenter extends XPresenter<EosAssetDetailActivity> {
                                 curTransfer.status = getV().getString(R.string.status_accept_fail);
                             }
                         }
-
                     }
 
-                }else {
+                } else {
                     //status为空
                     curTransfer.status = getV().getString(R.string.status_unknown);
                 }
-
 
                 newDataList.add(curTransfer);
             }
