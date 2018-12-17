@@ -494,6 +494,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
 
                         @Override
                         public void onSuccess(Response<UnitPrice> response) {
+                            if (getV() == null)return;
                             if (response != null && response.body() != null) {
                                 UnitPrice unitPrice = response.body();
                                 List<UnitPrice.PricesBean> prices = unitPrice.getPrices();
