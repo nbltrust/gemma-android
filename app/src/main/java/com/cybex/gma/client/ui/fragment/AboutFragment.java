@@ -1,12 +1,16 @@
 package com.cybex.gma.client.ui.fragment;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.cybex.gma.client.R;
 import com.cybex.componentservice.api.ApiPath;
 import com.cybex.componentservice.ui.activity.CommonWebViewActivity;
+import com.cybex.gma.client.ui.activity.AboutActivity;
 import com.hxlx.core.lib.mvp.lite.XFragment;
 import com.hxlx.core.lib.utils.LanguageManager;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
@@ -25,6 +29,7 @@ public class AboutFragment extends XFragment {
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.superTextView_version_info) SuperTextView superTextViewVersionInfo;
     @BindView(R.id.superTextView_update) SuperTextView superTextViewUpdate;
+    @BindView(R.id.tv_package_name_and_version) TextView tvPackageNameAndVersion;
     Unbinder unbinder;
     public static AboutFragment newInstance() {
         Bundle args = new Bundle();
@@ -108,12 +113,21 @@ public class AboutFragment extends XFragment {
                                 .string.version_info));
                         break;
                 }
-
-
-
             }
         });
 
+
+        if (getActivity() != null) {
+            PackageManager manager = getActivity().getPackageManager();
+            try {
+               PackageInfo pi = manager.getPackageInfo(getActivity().getPackageName(), 0);
+               String version = pi.versionName;
+               tvPackageNameAndVersion.setText(String.format(getString(R.string.package_version_info), version));
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     @Override

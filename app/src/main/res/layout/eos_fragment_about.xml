@@ -19,13 +19,14 @@
         android:src="@drawable/wookong_logo_splash_page"/>
 
     <TextView
+        android:id="@+id/tv_package_name_and_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_16"
         android:textAlignment="center"
         android:textColor="@color/black_title"
         android:textSize="@dimen/font_4"
-        android:text="WOOKONG Wallet 1.0.0"/>
+        android:text="WOOKONG Wallet 0.1.1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
