@@ -279,6 +279,14 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                                     AppManager.getAppManager().finishActivity();
                                     UISkipMananger.launchHome(getV());
                                     getV().dissmisProgressDialog();
+                                } else if (response.body().getCode() == HttpConst.INVCODE_USED) {
+                                    AppManager.getAppManager().finishActivity();
+                                    Bundle bundle = new Bundle();
+                                    String account_name = getV().getEOSUsername();
+                                    bundle.putString(ParamConstants.EOS_USERNAME, account_name);
+                                    UISkipMananger.launchChooseActivateMethod(getV(), bundle);
+                                }else {
+                                    showOnErrorInfo(response.code());
                                 }
                             }
                         }
@@ -292,74 +300,6 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                         }
                     }
                 });
-
-
-        /*
-        new BluetoothAccountRegisterRequest(UserRegisterResult.class)
-                .setJsonParams(json)
-                .postJson(new CustomRequestCallback<UserRegisterResult>() {
-                    @Override
-                    public void onBeforeRequest(@NonNull Disposable disposable) {
-                        if (getV() != null) {
-                            getV().showProgressDialog(getV().getString(R.string.activating_eos_account));
-                        }
-                    }
-
-                    @Override
-                    public void onSuccess(@NonNull CustomData<UserRegisterResult> data) {
-                        if (getV() != null) {
-
-                            if (data.code == HttpConst.CODE_RESULT_SUCCESS) {
-
-                                UserRegisterResult registerResult = data.result;
-                                if (registerResult != null) {
-
-                                    UserRegisterResult.ResultBean resultBean = registerResult.getResult();
-                                    if (resultBean != null){
-
-                                        String action_id = resultBean.getAction_id();
-                                        LoggerManager.d("action_id",  action_id);
-                                        ActionIdEvent event = new ActionIdEvent();
-                                        event.setAction_id(action_id);
-                                        EventBusProvider.postSticky(event);
-
-                                        updateCurBluetoothWallet(account_name);
-//                                        TimeStampValidateJob.executedCreateLogic(account_name, public_key);
-                                        AppManager.getAppManager().finishActivity();
-                                        UISkipMananger.launchEOSHome(getV());
-                                        getV().dissmisProgressDialog();
-                                    }
-                                }
-                            } else if (data.code == HttpConst.INVCODE_USED) {
-                                AppManager.getAppManager().finishActivity();
-                                Bundle bundle = new Bundle();
-                                String account_name = getV().getEOSUsername();
-                                bundle.putString(ParamConstants.EOS_USERNAME, account_name);
-                                UISkipMananger.launchChooseActivateMethod(getV(), bundle);
-                            } else {
-                                showOnErrorInfo(data.code);
-                            }
-
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        if (getV() != null) {
-                            getV().dissmisProgressDialog();
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        if (getV() != null) {
-                            getV().dissmisProgressDialog();
-                        }
-                    }
-                });
-                */
     }
 
 
@@ -385,23 +325,6 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
 
             }
         }
-
-        /*
-        MultiWalletEntity curWallet = DBManager.getInstance().getMultiWalletEntityDao().getCurrentMultiWalletEntity();
-        if (curWallet != null){
-            List<EosWalletEntity> eosWalletEntities = curWallet.getEosWalletEntities();
-            if (eosWalletEntities != null && eosWalletEntities.size() > 0){
-                EosWalletEntity curEosWallet = eosWalletEntities.get(0);
-                curEosWallet.setCurrentEosName(account_name);
-                List<String> account_names = new ArrayList<>();
-                account_names.add(account_name);
-                String jsonEosName = GsonUtils.objectToJson(account_names);
-                curEosWallet.setEosNameJson(jsonEosName);
-                curEosWallet.save();
-                curWallet.save();
-            }
-        }
-        */
     }
 
     /**
