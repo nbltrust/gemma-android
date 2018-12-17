@@ -1,6 +1,7 @@
 package com.cybex.gma.client.ui.activity;
 
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -27,10 +28,18 @@ public class SpalashActivity extends XActivity<SpalashActPresenter> {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // 隐藏标题栏
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // 隐藏状态栏
+//        // 隐藏状态栏
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= 28){
+            WindowManager.LayoutParams lp = mContext.getWindow().getAttributes();
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            mContext.getWindow().setAttributes(lp);
+        }
+
         if (!isTaskRoot()) {
             finish();
             return;
@@ -50,10 +59,10 @@ public class SpalashActivity extends XActivity<SpalashActPresenter> {
 
     }
 
-    @Override
-    protected void setImmersiveStyle() {
-
-    }
+//    @Override
+//    protected void setImmersiveStyle() {
+//
+//    }
 
     @Override
     public void initData(Bundle savedInstanceState) {
