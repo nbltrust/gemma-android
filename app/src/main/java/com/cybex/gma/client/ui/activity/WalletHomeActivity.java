@@ -571,13 +571,7 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
                     mEosCardView.setCreateProgress(0);
                 }
 
-                mEosCardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //跳转EOS主页面
-                        UISkipMananger.launchEOSHome(WalletHomeActivity.this);
-                    }
-                });
+                mEosCardView.setOnClickListener(null);
             }
         } else {
             //当前eos钱包为空

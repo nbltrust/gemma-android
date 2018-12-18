@@ -286,7 +286,7 @@ public class CreateEosAccountPresenter extends XPresenter<CreateEosAccountActivi
                                     bundle.putString(ParamConstants.EOS_USERNAME, account_name);
                                     UISkipMananger.launchChooseActivateMethod(getV(), bundle);
                                 }else {
-                                    showOnErrorInfo(response.code());
+                                    showOnErrorInfo(response.body().getCode());
                                 }
                             }
                         }

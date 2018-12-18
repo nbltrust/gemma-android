@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cybex.base.view.refresh.CommonRefreshLayout;
 import com.cybex.base.view.statusview.MultipleStatusView;
+import com.cybex.componentservice.config.CacheConstants;
 import com.cybex.componentservice.db.entity.EosTransactionEntity;
 import com.cybex.componentservice.db.entity.EosWalletEntity;
 import com.cybex.componentservice.db.entity.MultiWalletEntity;
@@ -31,6 +32,7 @@ import com.cybex.gma.client.ui.model.vo.EosTokenVO;
 import com.cybex.gma.client.ui.presenter.AssetDetailPresenter;
 import com.hxlx.core.lib.mvp.lite.XActivity;
 import com.hxlx.core.lib.utils.EmptyUtils;
+import com.hxlx.core.lib.utils.SPUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -39,6 +41,8 @@ import com.tapadoo.alerter.Alerter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +91,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     private String curEosPrice;
     private String curUSDTPrice;
     private boolean isSet;
+    private int savedCurrency;
     @BindView(R.id.btn_navibar) TitleBar btnNavibar;
     @BindView(R.id.iv_logo_eos_asset) ImageView ivLogoEosAsset;
     @BindView(R.id.tv_eos_amount) TextView tvEosAmount;
@@ -100,6 +105,12 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     @BindView(R.id.view_refresh_token_asset) CommonRefreshLayout viewRefresh;
     @BindView(R.id.tv_vote) TextView tvVote;
     @BindView(R.id.tv_resource_manage) TextView tvResourceManage;
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onCybexPriceReceived(CybexPriceEvent event) {
+        curEosPrice = event.getEosPrice();
+        curUSDTPrice = event.getUsdtPrice();
+    }
 
     @Override
     public void bindUI(View rootView) {
@@ -160,6 +171,26 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
                             .into(ivLogoEosAsset);
                 }
 
+                String totalCNY = AmountUtil.mul(curEosPrice, curToken.getQuantity(), 2);
+                String totalUSD = AmountUtil.div(totalCNY, curUSDTPrice, 2);
+                LoggerManager.d("curUSDTPrice", curUSDTPrice);
+                savedCurrency = SPUtils.getInstance().getInt("currency_unit");
+                switch (savedCurrency) {
+                    case CacheConstants.CURRENCY_CNY:
+                        tvCurrencyType.setText("≈ ¥ ");
+                        tvRmbAmount.setText(formatCurrency(totalCNY));
+                        break;
+                    case CacheConstants.CURRENCY_USD:
+                        LoggerManager.d("totalUSD", totalUSD);
+                        tvCurrencyType.setText("≈ $ ");
+                        tvRmbAmount.setText(formatCurrency(totalUSD));
+                        break;
+                    default:
+                        tvCurrencyType.setText("≈ ¥ ");
+                        tvRmbAmount.setText(formatCurrency(totalCNY));
+                        break;
+                }
+
                 //EOS和TOKENS差异处理
                 if (asset_type != null) {
                     if (asset_type.equals(ParamConstants.SYMBOL_EOS)) {
@@ -198,7 +229,6 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
             //第一次请求数据
             doRequest(curPage);
         }
-
 
         viewRefresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
@@ -350,7 +380,7 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         viewRefresh.finishRefresh();
         viewRefresh.setLoadmoreFinished(false);
 
-        if (!isSet){
+        if (!isSet) {
             setmRecyclerViewOnClick();
             isSet = true;
         }
@@ -389,11 +419,18 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
         tvEosAmount.setText(balance.split(" ")[0]);
         if (curEosPrice != null) {
             String eosValue = AmountUtil.mul(balance.split(" ")[0], curEosPrice, 2);
-            tvRmbAmount.setText(eosValue);
+            String eosValueUSD = AmountUtil.div(eosValue, curUSDTPrice, 2);
+
+            if (savedCurrency == CacheConstants.CURRENCY_CNY){
+                tvRmbAmount.setText(eosValue);
+            }else if (savedCurrency == CacheConstants.CURRENCY_USD){
+                tvRmbAmount.setText(eosValueUSD);
+            }
+
         }
     }
 
-    public void updateTransactionStatus(){
+    public void updateTransactionStatus() {
         curDataList = getP().updateDataSource(curDataList);
         mAdapter.notifyDataSetChanged();
     }
@@ -403,5 +440,20 @@ public class EosAssetDetailActivity extends XActivity<AssetDetailPresenter> {
     protected void onDestroy() {
         super.onDestroy();
         Alerter.clearCurrent(this);
+    }
+
+    /**
+     * 返回每三个位数添加一位逗号的字符串
+     *
+     * @param value
+     * @return
+     */
+    public String formatCurrency(String value) {
+
+        if (value.equals("0.00") || value.split("\\.")[0].equals("0")) { return value; }
+
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        BigDecimal bigDecimal = new BigDecimal(value);
+        return df.format(bigDecimal);
     }
 }

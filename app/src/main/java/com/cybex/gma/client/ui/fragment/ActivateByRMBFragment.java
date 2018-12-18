@@ -20,6 +20,7 @@ import com.cybex.gma.client.R;
 import com.cybex.gma.client.config.ParamConstants;
 import com.cybex.gma.client.event.WXPayStatusEvent;
 import com.cybex.gma.client.manager.UISkipMananger;
+import com.cybex.gma.client.ui.activity.CreateEosAccountActivity;
 import com.cybex.gma.client.ui.model.response.WXPayBillResult;
 import com.cybex.gma.client.ui.model.response.WXPayPlaceOrderResult;
 import com.cybex.gma.client.ui.model.response.WXPayQueryOrderInfoResult;
@@ -124,7 +125,8 @@ public class ActivateByRMBFragment extends XFragment<ActivateByRMBPresenter> {
                     //调真正创建账户接口
 
                     getP().updateWallet(account_name);
-                    AppManager.getAppManager().finishAllActivity();
+                    AppManager.getAppManager().finishActivity(CreateEosAccountActivity.class);
+                    AppManager.getAppManager().finishActivity();
                     UISkipMananger.launchHome(getActivity());
 
                     break;
