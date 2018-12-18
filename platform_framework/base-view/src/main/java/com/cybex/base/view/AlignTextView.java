@@ -6,14 +6,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
 
-import com.hxlx.core.lib.utils.android.logger.Log;
+
+import com.cybex.gma.framework.view.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * 文字适配控件
@@ -58,23 +59,84 @@ public class AlignTextView extends android.support.v7.widget.AppCompatTextView {
         originalPaddingBottom = getPaddingBottom();
         arr.recycle();
 
-//        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AlignTextView);
-//
-//        int alignStyle = ta.getInt(R.styleable.AlignTextView_align, 0);
-//        switch (alignStyle) {
-//            case 1:
-//                align = Align.ALIGN_CENTER;
-//                break;
-//            case 2:
-//                align = Align.ALIGN_RIGHT;
-//                break;
-//            default:
-//                align = Align.ALIGN_LEFT;
-//                break;
-//        }
-//
-//        ta.recycle();
-        align = Align.ALIGN_LEFT;
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AlignTextView);
+
+        int alignStyle = ta.getInt(R.styleable.AlignTextView_align, 0);
+        switch (alignStyle) {
+            case 1:
+                align = Align.ALIGN_CENTER;
+                break;
+            case 2:
+                align = Align.ALIGN_RIGHT;
+                break;
+            default:
+                align = Align.ALIGN_LEFT;
+                break;
+        }
+
+        ta.recycle();
+    }
+
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        int width;
+        int height;
+
+
+        int paddingLeft = getPaddingLeft();
+        int paddingRight = getPaddingRight();
+        this.width = widthSize - paddingLeft - paddingRight;
+
+        int measuredWidth = widthSize;
+        int measuredHeight = heightSize;
+        if (measuredWidth>0) {
+            String text = getText().toString();
+            TextPaint paint = getPaint();
+            lines.clear();
+            tailLines.clear();
+
+            // 文本含有换行符时，分割单独处理
+            String[] items = text.split("\\n");
+            for (String item : items) {
+                calc(paint, item);
+            }
+
+            //使用替代textview计算原始高度与行数
+            measureTextViewHeight(text, paint.getTextSize(), measuredWidth -
+                    getPaddingLeft() - getPaddingRight());
+
+            //获取行高
+            textHeight = 1.0f * originalHeight / originalLineCount;
+
+            textLineSpaceExtra = textHeight * (lineSpacingMultiplier - 1) + lineSpacingAdd;
+
+            //计算实际高度,加上多出的行的高度(一般是减少)
+            int heightGap = (int) ((textLineSpaceExtra + textHeight) * (lines.size() -
+                    originalLineCount));
+
+            height=originalHeight+heightGap;
+//            Log.e(" ","  originalHeight="+originalHeight+"   heightGap="+heightGap);
+//            Log.e(" ","  measuredWidth="+measuredWidth+"   height="+height);
+//            Log.e(" ","  heightSize="+heightSize);
+
+            setMeasuredDimension(widthSize, height);
+        }
+        else{
+
+        }
+
+
+
+
+
+
     }
 
 
@@ -108,10 +170,10 @@ public class AlignTextView extends android.support.v7.widget.AppCompatTextView {
             int heightGap = (int) ((textLineSpaceExtra + textHeight) * (lines.size() -
                     originalLineCount));
 
-            setPaddingFromMe = true;
+//            setPaddingFromMe = true;
             //调整textview的paddingBottom来缩小底部空白
-            setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(),
-                    originalPaddingBottom + heightGap);
+//            setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(),
+//                    originalPaddingBottom + heightGap);
 
             firstCalc = false;
         }
@@ -257,4 +319,5 @@ public class AlignTextView extends android.support.v7.widget.AppCompatTextView {
         originalLineCount = textView.getLineCount();
         originalHeight = textView.getMeasuredHeight();
     }
+
 }

@@ -26,7 +26,8 @@
         android:textSize="@dimen/font_4"
         android:layout_marginTop="6dp"/>
 
-    <me.codeboy.android.aligntextview.AlignTextView
+    <!--<me.codeboy.android.aligntextview.AlignTextView-->
+    <com.cybex.base.view.AlignTextView
         android:id="@+id/tv_no_screenshot_hint"
         android:layout_width="210dp"
         android:layout_gravity="center_horizontal"

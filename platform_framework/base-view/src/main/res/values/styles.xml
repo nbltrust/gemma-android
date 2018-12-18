@@ -63,4 +63,13 @@
         <attr name="text_right_isShow" format="boolean" />
     </declare-styleable>
 
+
+    <declare-styleable name="AlignTextView">
+        <attr name="align" format="enum" >
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+    </declare-styleable>
+
 </resources>
