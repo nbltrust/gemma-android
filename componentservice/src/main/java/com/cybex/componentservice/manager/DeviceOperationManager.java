@@ -575,13 +575,13 @@ public class DeviceOperationManager {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
 
-        if ((deviceComm.abortButtonThread == null) || (deviceComm.abortButtonThread.getState()
-                == Thread.State.TERMINATED)) {
+//        if ((deviceComm.abortButtonThread == null) || (deviceComm.abortButtonThread.getState()
+//                == Thread.State.TERMINATED)) {
             deviceComm.abortButtonThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.abortButtonThread.setAbortButtonWrapper(deviceComm.contextHandle,
                     0);
             deviceComm.abortButtonThread.start();
-        }
+//        }
     }
 
 
@@ -1133,15 +1133,15 @@ public class DeviceOperationManager {
         }
         int m_coinChoiceIndex = 0;
 
-        while (!((deviceComm.getSignResultThread == null) || (deviceComm.getSignResultThread.getState() == Thread.State.TERMINATED))) {
-            ((BlueToothWrapper)deviceComm.getSignResultThread).breakGetSignResultLoop();
+        if ((deviceComm.getSignResultThread != null) && (deviceComm.getSignResultThread.getState() != Thread.State.TERMINATED)) {
+           deviceComm.getSignResultThread.breakGetSignResultLoop();
         }
 
-        deviceComm.getSignResultThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
-        deviceComm.getSignResultThread.setSwitchSignWrapper(deviceComm.contextHandle,
+        deviceComm.switchSignThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+        deviceComm.switchSignThread.setSwitchSignWrapper(deviceComm.contextHandle,
                 0);
         try {
-            queue.put(deviceComm.getSignResultThread);
+            queue.put(deviceComm.switchSignThread);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -1213,13 +1213,18 @@ public class DeviceOperationManager {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
 
-        //deviceComm.getSignResultThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
-        if (!(deviceComm.getSignResultThread == null || deviceComm.getSignResultThread.getState() == Thread.State
-                .TERMINATED)){
-            (deviceComm.getSignResultThread).breakGetSignResultLoop();
-            deviceComm.getSignResultThread.setAbortSignWrapper(deviceComm.contextHandle, 0);
-            deviceComm.getSignResultThread.start();
+
+        if ((deviceComm.getSignResultThread != null) && (deviceComm.getSignResultThread.getState() != Thread.State.TERMINATED)) {
+            deviceComm.getSignResultThread.breakGetSignResultLoop();
         }
+
+//        if (!(deviceComm.getSignResultThread == null || deviceComm.getSignResultThread.getState() == Thread.State
+//                .TERMINATED)){
+//            (deviceComm.getSignResultThread).breakGetSignResultLoop();
+        deviceComm.abortSignThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
+        deviceComm.abortSignThread.setAbortSignWrapper(deviceComm.contextHandle, 0);
+        deviceComm.abortSignThread.start();
+//        }
     }
 
     public interface DeviceConnectCallback {
@@ -1508,7 +1513,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getHeartDeviceInfoCallback != null) {
                                 callbackMaps.get(tag).getHeartDeviceInfoCallback.onGetSuccess(devInfo);
-                                callbackMaps.get(tag).getHeartDeviceInfoCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getHeartDeviceInfoCallback=null;
+                                }
                             }
                         }
 
@@ -1518,7 +1525,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getHeartDeviceInfoCallback != null) {
                                 callbackMaps.get(tag).getHeartDeviceInfoCallback.onGetFail();
-                                callbackMaps.get(tag).getHeartDeviceInfoCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getHeartDeviceInfoCallback=null;
+                                }
                             }
                         }
                     }
@@ -1597,7 +1606,9 @@ public class DeviceOperationManager {
                         String tag = iterator.next();
                         if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).scanDeviceCallback != null) {
                             callbackMaps.get(tag).scanDeviceCallback.onScanFinish();
-                            callbackMaps.get(tag).scanDeviceCallback=null;
+                            if(callbackMaps.get(tag)!= null){
+                                callbackMaps.get(tag).scanDeviceCallback=null;
+                            }
                         }
                     }
                     break;
@@ -1652,7 +1663,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).initPinCallback != null) {
                                 callbackMaps.get(tag).initPinCallback.onInitSuccess();
-                                callbackMaps.get(tag).initPinCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).initPinCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -1661,7 +1674,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).initPinCallback != null) {
                                 callbackMaps.get(tag).initPinCallback.onInitFail();
-                                callbackMaps.get(tag).initPinCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).initPinCallback=null;
+                                }
                             }
                         }
                     }
@@ -1681,7 +1696,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyPinCallback != null) {
                                 callbackMaps.get(tag).verifyPinCallback.onVerifySuccess();
-                                callbackMaps.get(tag).verifyPinCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).verifyPinCallback=null;
+                                }
                             }
                         }
                     }else if (msg.arg1 == MiddlewareInterface.PAEW_RET_DEV_PIN_LOCKED) {
@@ -1690,7 +1707,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyPinCallback != null) {
                                 callbackMaps.get(tag).verifyPinCallback.onPinLocked();
-                                callbackMaps.get(tag).verifyPinCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).verifyPinCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -1699,7 +1718,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyPinCallback != null) {
                                 callbackMaps.get(tag).verifyPinCallback.onVerifyFail();
-                                callbackMaps.get(tag).verifyPinCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).verifyPinCallback=null;
+                                }
                             }
                         }
                     }
@@ -1742,7 +1763,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).connectCallback != null) {
                                 callbackMaps.get(tag).connectCallback.onConnectSuccess();
-                                callbackMaps.get(tag).connectCallback = null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).connectCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -1759,7 +1782,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).connectCallback != null) {
                                 callbackMaps.get(tag).connectCallback.onConnectFailed();
-                                callbackMaps.get(tag).connectCallback = null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).connectCallback=null;
+                                }
                             }
                         }
                         if (deviceMaps.get(deviceName).connectThread != null) {
@@ -1882,7 +1907,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getDeviceInfoCallback != null) {
                                 callbackMaps.get(tag).getDeviceInfoCallback.onGetSuccess(devInfo);
-                                callbackMaps.get(tag).getDeviceInfoCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getDeviceInfoCallback=null;
+                                }
                             }
                         }
 
@@ -1892,7 +1919,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getDeviceInfoCallback != null) {
                                 callbackMaps.get(tag).getDeviceInfoCallback.onGetFail();
-                                callbackMaps.get(tag).getDeviceInfoCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getDeviceInfoCallback=null;
+                                }
                             }
                         }
                     }
@@ -1909,7 +1938,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).importMnemonicCallback != null) {
                                 callbackMaps.get(tag).importMnemonicCallback.onImportSuccess();
-                                callbackMaps.get(tag).importMnemonicCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).importMnemonicCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -1918,7 +1949,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).importMnemonicCallback != null) {
                                 callbackMaps.get(tag).importMnemonicCallback.onImportFailed();
-                                callbackMaps.get(tag).importMnemonicCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).importMnemonicCallback=null;
+                                }
                             }
                         }
                     }
@@ -1958,7 +1991,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).formatCallback != null) {
                                 callbackMaps.get(tag).formatCallback.onFormatSuccess();
-                                callbackMaps.get(tag).formatCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).formatCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -1968,7 +2003,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).formatCallback != null) {
                                 callbackMaps.get(tag).formatCallback.onFormatFailed();
-                                callbackMaps.get(tag).formatCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).formatCallback=null;
+                                }
                             }
                         }
                     }
@@ -1998,7 +2035,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyFPCallback != null) {
                                 callbackMaps.get(tag).verifyFPCallback.onVerifySuccess();
-                                callbackMaps.get(tag).verifyFPCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).verifyFPCallback=null;
+                                }
                             }
                         }
                     } else if (verifyFpReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_DEV_OP_CANCEL) {
@@ -2007,7 +2046,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyFPCallback != null) {
                                 callbackMaps.get(tag).verifyFPCallback.onVerifyCancelled();
-                                callbackMaps.get(tag).verifyFPCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).verifyFPCallback=null;
+                                }
                             }
                         }
                     }else {
@@ -2016,7 +2057,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyFPCallback != null) {
                                 callbackMaps.get(tag).verifyFPCallback.onVerifyFailed(verifyFpReturnValue.getReturnValue());
-                                callbackMaps.get(tag).verifyFPCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).verifyFPCallback=null;
+                                }
                             }
                         }
                     }
@@ -2035,7 +2078,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).abortFPCallback != null) {
                                 callbackMaps.get(tag).abortFPCallback.onAbortSuccess();
-                                callbackMaps.get(tag).abortFPCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).abortFPCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -2044,7 +2089,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).abortFPCallback != null) {
                                 callbackMaps.get(tag).abortFPCallback.onAbortFail();
-                                callbackMaps.get(tag).abortFPCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).abortFPCallback=null;
+                                }
                             }
                         }
                     }
@@ -2075,7 +2122,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).changePinCallback != null) {
                                 callbackMaps.get(tag).changePinCallback.onChangePinSuccess();
-                                callbackMaps.get(tag).changePinCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).changePinCallback=null;
+                                }
 
                             }
                         }
@@ -2085,7 +2134,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).changePinCallback != null) {
                                 callbackMaps.get(tag).changePinCallback.onChangePinFail();
-                                callbackMaps.get(tag).changePinCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).changePinCallback=null;
+                                }
                             }
                         }
                     }
@@ -2123,7 +2174,9 @@ public class DeviceOperationManager {
                         String tag = iterator.next();
                         if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).freeContextCallback != null) {
                             callbackMaps.get(tag).freeContextCallback.onFreeSuccess();
-                            callbackMaps.get(tag).freeContextCallback=null;
+                            if(callbackMaps.get(tag)!= null){
+                                callbackMaps.get(tag).freeContextCallback=null;
+                            }
                         }
                     }
                     singleExecutor.shutdownNow();
@@ -2156,7 +2209,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).jsonSerilizeCallback != null) {
                                 callbackMaps.get(tag).jsonSerilizeCallback.onSerilizeSuccess(serializedStr);
-                                callbackMaps.get(tag).jsonSerilizeCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).jsonSerilizeCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -2165,7 +2220,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).jsonSerilizeCallback != null) {
                                 callbackMaps.get(tag).jsonSerilizeCallback.onSerilizeFail();
-                                callbackMaps.get(tag).jsonSerilizeCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).jsonSerilizeCallback=null;
+                                }
                             }
                         }
                     }
@@ -2188,7 +2245,9 @@ public class DeviceOperationManager {
                                 String tag = iterator.next();
                                 if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).generateMnemonicCallback != null) {
                                     callbackMaps.get(tag).generateMnemonicCallback.onGenerateSuccess(value);
-                                    callbackMaps.get(tag).generateMnemonicCallback=null;
+                                    if(callbackMaps.get(tag)!= null){
+                                        callbackMaps.get(tag).generateMnemonicCallback=null;
+                                    }
                                 }
                             }
                         } else {
@@ -2197,7 +2256,9 @@ public class DeviceOperationManager {
                                 String tag = iterator.next();
                                 if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).generateMnemonicCallback != null) {
                                     callbackMaps.get(tag).generateMnemonicCallback.onGenerateFail();
-                                    callbackMaps.get(tag).generateMnemonicCallback=null;
+                                    if(callbackMaps.get(tag)!= null){
+                                        callbackMaps.get(tag).generateMnemonicCallback=null;
+                                    }
                                 }
                             }
                         }
@@ -2207,7 +2268,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).generateMnemonicCallback != null) {
                                 callbackMaps.get(tag).generateMnemonicCallback.onGenerateFail();
-                                callbackMaps.get(tag).generateMnemonicCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).generateMnemonicCallback=null;
+                                }
                             }
                         }
                     }
@@ -2234,7 +2297,9 @@ public class DeviceOperationManager {
                         String tag = iterator.next();
                         if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).enrollFPCallback != null) {
                             callbackMaps.get(tag).enrollFPCallback.onEnrollFinish(rtValue);
-                            callbackMaps.get(tag).enrollFPCallback=null;
+                            if(callbackMaps.get(tag)!= null){
+                                callbackMaps.get(tag).enrollFPCallback=null;
+                            }
                         }
                     }
                     break;
@@ -2259,7 +2324,9 @@ public class DeviceOperationManager {
                                 String tag = iterator.next();
                                 if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getEosAddressCallback != null) {
                                     callbackMaps.get(tag).getEosAddressCallback.onGetSuccess(address);
-                                    callbackMaps.get(tag).getEosAddressCallback=null;
+                                    if(callbackMaps.get(tag)!= null){
+                                        callbackMaps.get(tag).getEosAddressCallback=null;
+                                    }
                                 }
                             }
                             return;
@@ -2273,7 +2340,9 @@ public class DeviceOperationManager {
                                 String tag = iterator.next();
                                 if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getEthAddressCallback != null) {
                                     callbackMaps.get(tag).getEthAddressCallback.onGetSuccess(returnValueAddress.getAddress());
-                                    callbackMaps.get(tag).getEthAddressCallback=null;
+                                    if(callbackMaps.get(tag)!= null){
+                                        callbackMaps.get(tag).getEthAddressCallback=null;
+                                    }
                                 }
                             }
                             return;
@@ -2291,7 +2360,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getEosAddressCallback != null) {
                                 callbackMaps.get(tag).getEosAddressCallback.onGetFail();
-                                callbackMaps.get(tag).getEosAddressCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getEosAddressCallback=null;
+                                }
                             }
                         }
                     } else if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_ETH) {
@@ -2300,7 +2371,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getEthAddressCallback != null) {
                                 callbackMaps.get(tag).getEthAddressCallback.onGetFail();
-                                callbackMaps.get(tag).getEthAddressCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getEthAddressCallback=null;
+                                }
                             }
                         }
                     }
@@ -2323,7 +2396,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getFPListCallback != null) {
                                 callbackMaps.get(tag).getFPListCallback.onSuccess(fpListReturnValue);
-                                callbackMaps.get(tag).getFPListCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getFPListCallback=null;
+                                }
                             }
                         }
                         //获取指纹信息成功
@@ -2337,7 +2412,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getFPListCallback != null) {
                                 callbackMaps.get(tag).getFPListCallback.onFail();
-                                callbackMaps.get(tag).getFPListCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getFPListCallback=null;
+                                }
                             }
                         }
                     }
@@ -2355,7 +2432,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).deleteFPCallback != null) {
                                 callbackMaps.get(tag).deleteFPCallback.onSuccess();
-                                callbackMaps.get(tag).deleteFPCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).deleteFPCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -2364,7 +2443,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).deleteFPCallback != null) {
                                 callbackMaps.get(tag).deleteFPCallback.onFail();
-                                callbackMaps.get(tag).deleteFPCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).deleteFPCallback=null;
+                                }
                             }
                         }
                     }
@@ -2396,7 +2477,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).eosSignCallback != null) {
                                 callbackMaps.get(tag).eosSignCallback.onEosSignSuccess(strSignature);
-                                callbackMaps.get(tag).eosSignCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).eosSignCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -2406,7 +2489,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).eosSignCallback != null) {
                                 callbackMaps.get(tag).eosSignCallback.onEosSignFail();
-                                callbackMaps.get(tag).eosSignCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).eosSignCallback=null;
+                                }
                             }
                         }
                     }
@@ -2432,7 +2517,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getCheckCodeCallback != null) {
                                 callbackMaps.get(tag).getCheckCodeCallback.onCheckCodeSuccess(checkedcode);
-                                callbackMaps.get(tag).getCheckCodeCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getCheckCodeCallback=null;
+                                }
                             }
                         }
 
@@ -2444,7 +2531,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getCheckCodeCallback != null) {
                                 callbackMaps.get(tag).getCheckCodeCallback.onCheckCodeFail();
-                                callbackMaps.get(tag).getCheckCodeCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getCheckCodeCallback=null;
+                                }
                             }
                         }
                     }
@@ -2466,7 +2555,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).checkMnemonicCallback != null) {
                                 callbackMaps.get(tag).checkMnemonicCallback.onCheckSuccess();
-                                callbackMaps.get(tag).checkMnemonicCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).checkMnemonicCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -2475,7 +2566,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).checkMnemonicCallback != null) {
                                 callbackMaps.get(tag).checkMnemonicCallback.onCheckFail(msg.arg1);
-                                callbackMaps.get(tag).checkMnemonicCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).checkMnemonicCallback=null;
+                                }
                             }
                         }
                     }
@@ -2494,7 +2587,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setTxCallback != null) {
                                 callbackMaps.get(tag).setTxCallback.onSetTxSuccess();
-                                callbackMaps.get(tag).setTxCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).setTxCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -2503,7 +2598,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setTxCallback != null) {
                                 callbackMaps.get(tag).setTxCallback.onSetTxFail();
-                                callbackMaps.get(tag).setTxCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).setTxCallback=null;
+                                }
                             }
                         }
                     }
@@ -2562,7 +2659,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setGetSignResultCallback != null) {
                                 callbackMaps.get(tag).setGetSignResultCallback.onGetSignResultSuccess(strSignature);
-                                callbackMaps.get(tag).setGetSignResultCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).setGetSignResultCallback=null;
+                                }
                             }
                         }
                     }else {
@@ -2574,7 +2673,9 @@ public class DeviceOperationManager {
                                 String tag = iterator.next();
                                 if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setGetSignResultCallback != null) {
                                     callbackMaps.get(tag).setGetSignResultCallback.onGetSignResultFail(BaseConst.STATUS_NO_VERIFY_COUNT);
-                                    callbackMaps.get(tag).setGetSignResultCallback=null;
+                                    if(callbackMaps.get(tag)!= null){
+                                        callbackMaps.get(tag).setGetSignResultCallback=null;
+                                    }
                                 }
                             }
                         }else {
@@ -2584,7 +2685,9 @@ public class DeviceOperationManager {
                                 String tag = iterator.next();
                                 if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setGetSignResultCallback != null) {
                                     callbackMaps.get(tag).setGetSignResultCallback.onGetSignResultFail(BaseConst.STATUS_OTHER_ERR);
-                                    callbackMaps.get(tag).setGetSignResultCallback=null;
+                                    if(callbackMaps.get(tag)!= null){
+                                        callbackMaps.get(tag).setGetSignResultCallback=null;
+                                    }
                                 }
                             }
                         }
@@ -2607,7 +2710,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).switchSignCallback != null) {
                                 callbackMaps.get(tag).switchSignCallback.onSwitchSignSuccess();
-                                callbackMaps.get(tag).switchSignCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).switchSignCallback=null;
+                                }
                             }
                         }
                     }else {
@@ -2616,7 +2721,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).switchSignCallback != null) {
                                 callbackMaps.get(tag).switchSignCallback.onSwitchSignFail();
-                                callbackMaps.get(tag).switchSignCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).switchSignCallback=null;
+                                }
                             }
                         }
                     }
@@ -2638,7 +2745,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifySignPinCallback != null) {
                                 callbackMaps.get(tag).verifySignPinCallback.onVerifySuccess();
-                                callbackMaps.get(tag).verifySignPinCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).verifySignPinCallback=null;
+                                }
                             }
                         }
                     }else {
@@ -2647,7 +2756,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifySignPinCallback != null) {
                                 callbackMaps.get(tag).verifySignPinCallback.onVerifyFail();
-                                callbackMaps.get(tag).verifySignPinCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).verifySignPinCallback=null;
+                                }
                             }
                         }
                     }
@@ -2670,7 +2781,29 @@ public class DeviceOperationManager {
                 case BlueToothWrapper.MSG_ABORT_SIGN_FINISH:
                     String returnStr = MiddlewareInterface.getReturnString(msg.arg1);
                     LoggerManager.d("MSG_ABORT_SIGN_FINISH  Return Value:", returnStr);
-
+                    if (msg.arg1 == MiddlewareInterface.PAEW_RET_SUCCESS) {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).abortSignCallback != null) {
+                                callbackMaps.get(tag).abortSignCallback.onAbortSignSuccess();
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).abortSignCallback=null;
+                                }
+                            }
+                        }
+                    } else {
+                        iterator = tags.iterator();
+                        while (iterator.hasNext()) {
+                            String tag = iterator.next();
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).abortSignCallback != null) {
+                                callbackMaps.get(tag).abortSignCallback.onAbortSignFail();
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).abortSignCallback=null;
+                                }
+                            }
+                        }
+                    }
                     break;
 
 
@@ -2683,7 +2816,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).abortButtonCallback != null) {
                                 callbackMaps.get(tag).abortButtonCallback.onAbortSuccess();
-                                callbackMaps.get(tag).abortButtonCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).abortButtonCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -2692,7 +2827,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).abortButtonCallback != null) {
                                 callbackMaps.get(tag).abortButtonCallback.onAbortFail();
-                                callbackMaps.get(tag).abortButtonCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).abortButtonCallback=null;
+                                }
                             }
                         }
                     }
@@ -2708,7 +2845,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getBatteryCallback != null) {
                                 callbackMaps.get(tag).getBatteryCallback.onSuccess(batteryReturnValue.getBatteryValue());
-                                callbackMaps.get(tag).getBatteryCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getBatteryCallback=null;
+                                }
                             }
                         }
                     } else {
@@ -2717,7 +2856,9 @@ public class DeviceOperationManager {
                             String tag = iterator.next();
                             if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getBatteryCallback != null) {
                                 callbackMaps.get(tag).getBatteryCallback.onFail();
-                                callbackMaps.get(tag).getBatteryCallback=null;
+                                if(callbackMaps.get(tag)!= null){
+                                    callbackMaps.get(tag).getBatteryCallback=null;
+                                }
                             }
                         }
                     }

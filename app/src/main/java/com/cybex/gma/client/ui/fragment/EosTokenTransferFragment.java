@@ -42,14 +42,12 @@ import com.hxlx.core.lib.utils.GsonUtils;
 import com.hxlx.core.lib.utils.KeyboardUtils;
 import com.hxlx.core.lib.utils.toast.GemmaToastUtils;
 import com.hxlx.core.lib.widget.titlebar.view.TitleBar;
-import com.siberiadante.customdialoglib.CustomDialog;
 import com.siberiadante.customdialoglib.CustomFullDialog;
 import com.tapadoo.alerter.Alerter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,7 +85,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
     Unbinder unbinder;
     CustomFullDialog dialog = null;
     EosTokenVO curToken;
-    boolean isAbort = false;//abort是否在执行中
+    boolean isVerifyingFp = false;//abort是否在执行中
     private String TAG = this.toString();
     private TransferTransactionVO transactionVO;
     private String chain_id = "";
@@ -178,7 +176,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
     @Override
     public void onDestroy() {
-        if (!isAbort){
+        if (isVerifyingFp){
+            isVerifyingFp=false;
             DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
                     new DeviceOperationManager.AbortSignCallback() {
                         @Override
@@ -807,6 +806,8 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
      * EOS Tranasaction 签名
      */
     private void startEosSign(byte[] transaction) {
+
+
         //先Set Tx
         DeviceOperationManager.getInstance().setTx(TAG, deviceName, transaction,
                 new DeviceOperationManager.SetTxCallback() {
@@ -818,6 +819,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                     @Override
                     public void onSetTxSuccess() {
                         dissmisProgressDialog();
+
+                        if(isVerifyingFp)return;
+                        isVerifyingFp = true;
+
                         DeviceOperationManager.getInstance().getSignResult(TAG, deviceName,
                                 MiddlewareInterface.PAEW_SIGN_AUTH_TYPE_FP,
                                 new DeviceOperationManager.SetGetSignResultCallback() {
@@ -828,7 +833,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                                     @Override
                                     public void onGetSignResultSuccess(String strSignature) {
-
+                                        isVerifyingFp =false;
                                         //LoggerManager.d("Sign Success str Sig = " + strSignature);
                                         buildTransaction(strSignature);
                                         if (verifyDialog != null && verifyDialog.isShowing()) {
@@ -838,7 +843,7 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
 
                                     @Override
                                     public void onGetSignResultFail(int status) {
-
+                                        isVerifyingFp =false;
                                         if (verifyDialog != null && verifyDialog.isShowing()) {
                                             verifyDialog.cancel();
                                         }
@@ -869,8 +874,10 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
                                             }
 
                                         } else if (statusCode == MiddlewareInterface.PAEW_RET_DEV_WAITING) {
-                                            if (verifyDialog == null || !verifyDialog.isShowing()) {
-                                                showVerifyFPDialog();
+                                            if(isVerifyingFp){
+                                                if (verifyDialog == null || !verifyDialog.isShowing()) {
+                                                    showVerifyFPDialog();
+                                                }
                                             }
                                         } else if (statusCode == MiddlewareInterface.PAEW_RET_DEV_FP_COMMON_ERROR) {
                                             //单次指纹验证失败
@@ -957,21 +964,22 @@ public class EosTokenTransferFragment extends XFragment<EosTokenTransferPresente
         verifyDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                if (!isAbort){
+                if (isVerifyingFp){
+                    isVerifyingFp = false;
                     DeviceOperationManager.getInstance().abortSign(TAG, deviceName,
                             new DeviceOperationManager.AbortSignCallback() {
                                 @Override
                                 public void onAbortSignSuccess() {
-                                    isAbort = false;
+//                                    isVerifyingFp = false;
                                 }
 
                                 @Override
                                 public void onAbortSignFail() {
-                                    isAbort = false;
+//                                    isVerifyingFp = false;
                                 }
                             });
                 }
-                isAbort = true;
+
             }
         });
 
