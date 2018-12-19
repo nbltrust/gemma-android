@@ -1506,8 +1506,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getHeartDeviceInfoCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getHeartDeviceInfoCallback != null) {
                                 callbackMaps.get(tag).getHeartDeviceInfoCallback.onGetSuccess(devInfo);
+                                callbackMaps.get(tag).getHeartDeviceInfoCallback=null;
                             }
                         }
 
@@ -1515,8 +1516,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getHeartDeviceInfoCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getHeartDeviceInfoCallback != null) {
                                 callbackMaps.get(tag).getHeartDeviceInfoCallback.onGetFail();
+                                callbackMaps.get(tag).getHeartDeviceInfoCallback=null;
                             }
                         }
                     }
@@ -1549,7 +1551,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).scanDeviceCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).scanDeviceCallback != null) {
                             callbackMaps.get(tag).scanDeviceCallback.onScanStart();
                         }
                     }
@@ -1584,7 +1586,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).scanDeviceCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).scanDeviceCallback != null) {
                             callbackMaps.get(tag).scanDeviceCallback.onScanUpdate(devNames);
                         }
                     }
@@ -1593,8 +1595,9 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).scanDeviceCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).scanDeviceCallback != null) {
                             callbackMaps.get(tag).scanDeviceCallback.onScanFinish();
+                            callbackMaps.get(tag).scanDeviceCallback=null;
                         }
                     }
                     break;
@@ -1635,7 +1638,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).initPinCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).initPinCallback != null) {
                             callbackMaps.get(tag).initPinCallback.onInitUpdate(msg.arg1);
                         }
                     }
@@ -1647,16 +1650,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).initPinCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).initPinCallback != null) {
                                 callbackMaps.get(tag).initPinCallback.onInitSuccess();
+                                callbackMaps.get(tag).initPinCallback=null;
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).initPinCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).initPinCallback != null) {
                                 callbackMaps.get(tag).initPinCallback.onInitFail();
+                                callbackMaps.get(tag).initPinCallback=null;
                             }
                         }
                     }
@@ -1674,24 +1679,27 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).verifyPinCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyPinCallback != null) {
                                 callbackMaps.get(tag).verifyPinCallback.onVerifySuccess();
+                                callbackMaps.get(tag).verifyPinCallback=null;
                             }
                         }
                     }else if (msg.arg1 == MiddlewareInterface.PAEW_RET_DEV_PIN_LOCKED) {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).verifyPinCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyPinCallback != null) {
                                 callbackMaps.get(tag).verifyPinCallback.onPinLocked();
+                                callbackMaps.get(tag).verifyPinCallback=null;
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).verifyPinCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyPinCallback != null) {
                                 callbackMaps.get(tag).verifyPinCallback.onVerifyFail();
+                                callbackMaps.get(tag).verifyPinCallback=null;
                             }
                         }
                     }
@@ -1703,7 +1711,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).connectCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).connectCallback != null) {
                             callbackMaps.get(tag).connectCallback.onConnectStart();
                         }
                     }
@@ -1732,8 +1740,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).connectCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).connectCallback != null) {
                                 callbackMaps.get(tag).connectCallback.onConnectSuccess();
+                                callbackMaps.get(tag).connectCallback = null;
                             }
                         }
                     } else {
@@ -1748,8 +1757,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).connectCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).connectCallback != null) {
                                 callbackMaps.get(tag).connectCallback.onConnectFailed();
+                                callbackMaps.get(tag).connectCallback = null;
                             }
                         }
                         if (deviceMaps.get(deviceName).connectThread != null) {
@@ -1870,8 +1880,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getDeviceInfoCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getDeviceInfoCallback != null) {
                                 callbackMaps.get(tag).getDeviceInfoCallback.onGetSuccess(devInfo);
+                                callbackMaps.get(tag).getDeviceInfoCallback=null;
                             }
                         }
 
@@ -1879,8 +1890,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getDeviceInfoCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getDeviceInfoCallback != null) {
                                 callbackMaps.get(tag).getDeviceInfoCallback.onGetFail();
+                                callbackMaps.get(tag).getDeviceInfoCallback=null;
                             }
                         }
                     }
@@ -1895,16 +1907,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).importMnemonicCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).importMnemonicCallback != null) {
                                 callbackMaps.get(tag).importMnemonicCallback.onImportSuccess();
+                                callbackMaps.get(tag).importMnemonicCallback=null;
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).importMnemonicCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).importMnemonicCallback != null) {
                                 callbackMaps.get(tag).importMnemonicCallback.onImportFailed();
+                                callbackMaps.get(tag).importMnemonicCallback=null;
                             }
                         }
                     }
@@ -1918,7 +1932,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).formatCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).formatCallback != null) {
                             callbackMaps.get(tag).formatCallback.onFormatStart();
                         }
                     }
@@ -1929,7 +1943,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).formatCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).formatCallback != null) {
                             callbackMaps.get(tag).formatCallback.onFormatUpdate(msg.arg1);
                         }
                     }
@@ -1942,8 +1956,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).formatCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).formatCallback != null) {
                                 callbackMaps.get(tag).formatCallback.onFormatSuccess();
+                                callbackMaps.get(tag).formatCallback=null;
                             }
                         }
                     } else {
@@ -1951,8 +1966,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).formatCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).formatCallback != null) {
                                 callbackMaps.get(tag).formatCallback.onFormatFailed();
+                                callbackMaps.get(tag).formatCallback=null;
                             }
                         }
                     }
@@ -1966,7 +1982,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).verifyFPCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyFPCallback != null) {
                             callbackMaps.get(tag).verifyFPCallback.onVerifyStart();
                         }
                     }
@@ -1980,24 +1996,27 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).verifyFPCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyFPCallback != null) {
                                 callbackMaps.get(tag).verifyFPCallback.onVerifySuccess();
+                                callbackMaps.get(tag).verifyFPCallback=null;
                             }
                         }
                     } else if (verifyFpReturnValue.getReturnValue() == MiddlewareInterface.PAEW_RET_DEV_OP_CANCEL) {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).verifyFPCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyFPCallback != null) {
                                 callbackMaps.get(tag).verifyFPCallback.onVerifyCancelled();
+                                callbackMaps.get(tag).verifyFPCallback=null;
                             }
                         }
                     }else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).verifyFPCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifyFPCallback != null) {
                                 callbackMaps.get(tag).verifyFPCallback.onVerifyFailed(verifyFpReturnValue.getReturnValue());
+                                callbackMaps.get(tag).verifyFPCallback=null;
                             }
                         }
                     }
@@ -2012,16 +2031,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).abortFPCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).abortFPCallback != null) {
                                 callbackMaps.get(tag).abortFPCallback.onAbortSuccess();
+                                callbackMaps.get(tag).abortFPCallback=null;
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).abortFPCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).abortFPCallback != null) {
                                 callbackMaps.get(tag).abortFPCallback.onAbortFail();
+                                callbackMaps.get(tag).abortFPCallback=null;
                             }
                         }
                     }
@@ -2035,7 +2056,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).changePinCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).changePinCallback != null) {
                             callbackMaps.get(tag).changePinCallback.onChangePinUpdate(msg.arg1);
                         }
                     }
@@ -2050,16 +2071,19 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).changePinCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).changePinCallback != null) {
                                 callbackMaps.get(tag).changePinCallback.onChangePinSuccess();
+                                callbackMaps.get(tag).changePinCallback=null;
+
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).changePinCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).changePinCallback != null) {
                                 callbackMaps.get(tag).changePinCallback.onChangePinFail();
+                                callbackMaps.get(tag).changePinCallback=null;
                             }
                         }
                     }
@@ -2074,7 +2098,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).freeContextCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).freeContextCallback != null) {
                             callbackMaps.get(tag).freeContextCallback.onFreeStart();
                         }
                     }
@@ -2095,8 +2119,9 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).freeContextCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).freeContextCallback != null) {
                             callbackMaps.get(tag).freeContextCallback.onFreeSuccess();
+                            callbackMaps.get(tag).freeContextCallback=null;
                         }
                     }
                     singleExecutor.shutdownNow();
@@ -2112,7 +2137,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).jsonSerilizeCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).jsonSerilizeCallback != null) {
                             callbackMaps.get(tag).jsonSerilizeCallback.onSerilizeStart();
                         }
                     }
@@ -2127,16 +2152,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).jsonSerilizeCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).jsonSerilizeCallback != null) {
                                 callbackMaps.get(tag).jsonSerilizeCallback.onSerilizeSuccess(serializedStr);
+                                callbackMaps.get(tag).jsonSerilizeCallback=null;
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).jsonSerilizeCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).jsonSerilizeCallback != null) {
                                 callbackMaps.get(tag).jsonSerilizeCallback.onSerilizeFail();
+                                callbackMaps.get(tag).jsonSerilizeCallback=null;
                             }
                         }
                     }
@@ -2157,16 +2184,18 @@ public class DeviceOperationManager {
                             iterator = tags.iterator();
                             while (iterator.hasNext()) {
                                 String tag = iterator.next();
-                                if (callbackMaps.get(tag).generateMnemonicCallback != null) {
+                                if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).generateMnemonicCallback != null) {
                                     callbackMaps.get(tag).generateMnemonicCallback.onGenerateSuccess(value);
+                                    callbackMaps.get(tag).generateMnemonicCallback=null;
                                 }
                             }
                         } else {
                             iterator = tags.iterator();
                             while (iterator.hasNext()) {
                                 String tag = iterator.next();
-                                if (callbackMaps.get(tag).generateMnemonicCallback != null) {
+                                if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).generateMnemonicCallback != null) {
                                     callbackMaps.get(tag).generateMnemonicCallback.onGenerateFail();
+                                    callbackMaps.get(tag).generateMnemonicCallback=null;
                                 }
                             }
                         }
@@ -2174,8 +2203,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).generateMnemonicCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).generateMnemonicCallback != null) {
                                 callbackMaps.get(tag).generateMnemonicCallback.onGenerateFail();
+                                callbackMaps.get(tag).generateMnemonicCallback=null;
                             }
                         }
                     }
@@ -2189,7 +2219,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).enrollFPCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).enrollFPCallback != null) {
                             callbackMaps.get(tag).enrollFPCallback.onEnrollFPUpate(state);
                         }
                     }
@@ -2200,8 +2230,9 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).enrollFPCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).enrollFPCallback != null) {
                             callbackMaps.get(tag).enrollFPCallback.onEnrollFinish(rtValue);
+                            callbackMaps.get(tag).enrollFPCallback=null;
                         }
                     }
                     break;
@@ -2224,8 +2255,9 @@ public class DeviceOperationManager {
                             iterator = tags.iterator();
                             while (iterator.hasNext()) {
                                 String tag = iterator.next();
-                                if (callbackMaps.get(tag).getEosAddressCallback != null) {
+                                if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getEosAddressCallback != null) {
                                     callbackMaps.get(tag).getEosAddressCallback.onGetSuccess(address);
+                                    callbackMaps.get(tag).getEosAddressCallback=null;
                                 }
                             }
                             return;
@@ -2237,8 +2269,9 @@ public class DeviceOperationManager {
                             iterator = tags.iterator();
                             while (iterator.hasNext()) {
                                 String tag = iterator.next();
-                                if (callbackMaps.get(tag).getEthAddressCallback != null) {
+                                if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getEthAddressCallback != null) {
                                     callbackMaps.get(tag).getEthAddressCallback.onGetSuccess(returnValueAddress.getAddress());
+                                    callbackMaps.get(tag).getEthAddressCallback=null;
                                 }
                             }
                             return;
@@ -2254,16 +2287,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getEosAddressCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getEosAddressCallback != null) {
                                 callbackMaps.get(tag).getEosAddressCallback.onGetFail();
+                                callbackMaps.get(tag).getEosAddressCallback=null;
                             }
                         }
                     } else if (returnValueAddress.getCoinType() == MiddlewareInterface.PAEW_COIN_TYPE_ETH) {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getEthAddressCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getEthAddressCallback != null) {
                                 callbackMaps.get(tag).getEthAddressCallback.onGetFail();
+                                callbackMaps.get(tag).getEthAddressCallback=null;
                             }
                         }
                     }
@@ -2284,8 +2319,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getFPListCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getFPListCallback != null) {
                                 callbackMaps.get(tag).getFPListCallback.onSuccess(fpListReturnValue);
+                                callbackMaps.get(tag).getFPListCallback=null;
                             }
                         }
                         //获取指纹信息成功
@@ -2297,8 +2333,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getFPListCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getFPListCallback != null) {
                                 callbackMaps.get(tag).getFPListCallback.onFail();
+                                callbackMaps.get(tag).getFPListCallback=null;
                             }
                         }
                     }
@@ -2314,16 +2351,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).deleteFPCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).deleteFPCallback != null) {
                                 callbackMaps.get(tag).deleteFPCallback.onSuccess();
+                                callbackMaps.get(tag).deleteFPCallback=null;
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).deleteFPCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).deleteFPCallback != null) {
                                 callbackMaps.get(tag).deleteFPCallback.onFail();
+                                callbackMaps.get(tag).deleteFPCallback=null;
                             }
                         }
                     }
@@ -2336,7 +2375,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).eosSignCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).eosSignCallback != null) {
                             callbackMaps.get(tag).eosSignCallback.onEosSignStart();
                         }
                     }
@@ -2353,8 +2392,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).eosSignCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).eosSignCallback != null) {
                                 callbackMaps.get(tag).eosSignCallback.onEosSignSuccess(strSignature);
+                                callbackMaps.get(tag).eosSignCallback=null;
                             }
                         }
                     } else {
@@ -2362,8 +2402,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).eosSignCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).eosSignCallback != null) {
                                 callbackMaps.get(tag).eosSignCallback.onEosSignFail();
+                                callbackMaps.get(tag).eosSignCallback=null;
                             }
                         }
                     }
@@ -2387,8 +2428,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getCheckCodeCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getCheckCodeCallback != null) {
                                 callbackMaps.get(tag).getCheckCodeCallback.onCheckCodeSuccess(checkedcode);
+                                callbackMaps.get(tag).getCheckCodeCallback=null;
                             }
                         }
 
@@ -2398,8 +2440,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getCheckCodeCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getCheckCodeCallback != null) {
                                 callbackMaps.get(tag).getCheckCodeCallback.onCheckCodeFail();
+                                callbackMaps.get(tag).getCheckCodeCallback=null;
                             }
                         }
                     }
@@ -2419,16 +2462,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).checkMnemonicCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).checkMnemonicCallback != null) {
                                 callbackMaps.get(tag).checkMnemonicCallback.onCheckSuccess();
+                                callbackMaps.get(tag).checkMnemonicCallback=null;
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).checkMnemonicCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).checkMnemonicCallback != null) {
                                 callbackMaps.get(tag).checkMnemonicCallback.onCheckFail(msg.arg1);
+                                callbackMaps.get(tag).checkMnemonicCallback=null;
                             }
                         }
                     }
@@ -2445,16 +2490,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).setTxCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setTxCallback != null) {
                                 callbackMaps.get(tag).setTxCallback.onSetTxSuccess();
+                                callbackMaps.get(tag).setTxCallback=null;
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).setTxCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setTxCallback != null) {
                                 callbackMaps.get(tag).setTxCallback.onSetTxFail();
+                                callbackMaps.get(tag).setTxCallback=null;
                             }
                         }
                     }
@@ -2466,7 +2513,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).setGetSignResultCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setGetSignResultCallback != null) {
                             callbackMaps.get(tag).setGetSignResultCallback.onGetSignResultStart();
                         }
                     }
@@ -2479,7 +2526,7 @@ public class DeviceOperationManager {
                     iterator = tags.iterator();
                     while (iterator.hasNext()) {
                         String tag = iterator.next();
-                        if (callbackMaps.get(tag).setGetSignResultCallback != null) {
+                        if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setGetSignResultCallback != null) {
                             callbackMaps.get(tag).setGetSignResultCallback.onGetSignResultUpdate(msg.arg1);
                         }
                     }
@@ -2511,8 +2558,9 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).setGetSignResultCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setGetSignResultCallback != null) {
                                 callbackMaps.get(tag).setGetSignResultCallback.onGetSignResultSuccess(strSignature);
+                                callbackMaps.get(tag).setGetSignResultCallback=null;
                             }
                         }
                     }else {
@@ -2522,8 +2570,9 @@ public class DeviceOperationManager {
                             iterator = tags.iterator();
                             while (iterator.hasNext()) {
                                 String tag = iterator.next();
-                                if (callbackMaps.get(tag).setGetSignResultCallback != null) {
+                                if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setGetSignResultCallback != null) {
                                     callbackMaps.get(tag).setGetSignResultCallback.onGetSignResultFail(BaseConst.STATUS_NO_VERIFY_COUNT);
+                                    callbackMaps.get(tag).setGetSignResultCallback=null;
                                 }
                             }
                         }else {
@@ -2531,8 +2580,9 @@ public class DeviceOperationManager {
                             iterator = tags.iterator();
                             while (iterator.hasNext()) {
                                 String tag = iterator.next();
-                                if (callbackMaps.get(tag).setGetSignResultCallback != null) {
+                                if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).setGetSignResultCallback != null) {
                                     callbackMaps.get(tag).setGetSignResultCallback.onGetSignResultFail(BaseConst.STATUS_OTHER_ERR);
+                                    callbackMaps.get(tag).setGetSignResultCallback=null;
                                 }
                             }
                         }
@@ -2553,16 +2603,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).switchSignCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).switchSignCallback != null) {
                                 callbackMaps.get(tag).switchSignCallback.onSwitchSignSuccess();
+                                callbackMaps.get(tag).switchSignCallback=null;
                             }
                         }
                     }else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).switchSignCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).switchSignCallback != null) {
                                 callbackMaps.get(tag).switchSignCallback.onSwitchSignFail();
+                                callbackMaps.get(tag).switchSignCallback=null;
                             }
                         }
                     }
@@ -2582,16 +2634,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).verifySignPinCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifySignPinCallback != null) {
                                 callbackMaps.get(tag).verifySignPinCallback.onVerifySuccess();
+                                callbackMaps.get(tag).verifySignPinCallback=null;
                             }
                         }
                     }else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).verifySignPinCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifySignPinCallback != null) {
                                 callbackMaps.get(tag).verifySignPinCallback.onVerifyFail();
+                                callbackMaps.get(tag).verifySignPinCallback=null;
                             }
                         }
                     }
@@ -2599,8 +2653,9 @@ public class DeviceOperationManager {
 //                        iterator = tags.iterator();
 //                        while (iterator.hasNext()) {
 //                            String tag = iterator.next();
-//                            if (callbackMaps.get(tag).verifySignPinCallback != null) {
+//                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).verifySignPinCallback != null) {
 //                                callbackMaps.get(tag).verifySignPinCallback.onVerifyOvertime();
+//                                callbackMaps.get(tag).verifySignPinCallback=null;
 //                            }
 //                        }
 //                    }
@@ -2624,16 +2679,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).abortButtonCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).abortButtonCallback != null) {
                                 callbackMaps.get(tag).abortButtonCallback.onAbortSuccess();
+                                callbackMaps.get(tag).abortButtonCallback=null;
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).abortButtonCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).abortButtonCallback != null) {
                                 callbackMaps.get(tag).abortButtonCallback.onAbortFail();
+                                callbackMaps.get(tag).abortButtonCallback=null;
                             }
                         }
                     }
@@ -2647,16 +2704,18 @@ public class DeviceOperationManager {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getBatteryCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getBatteryCallback != null) {
                                 callbackMaps.get(tag).getBatteryCallback.onSuccess(batteryReturnValue.getBatteryValue());
+                                callbackMaps.get(tag).getBatteryCallback=null;
                             }
                         }
                     } else {
                         iterator = tags.iterator();
                         while (iterator.hasNext()) {
                             String tag = iterator.next();
-                            if (callbackMaps.get(tag).getBatteryCallback != null) {
+                            if (callbackMaps.get(tag)!= null&&callbackMaps.get(tag).getBatteryCallback != null) {
                                 callbackMaps.get(tag).getBatteryCallback.onFail();
+                                callbackMaps.get(tag).getBatteryCallback=null;
                             }
                         }
                     }
