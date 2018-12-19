@@ -809,7 +809,7 @@ public class BlueToothWrapper extends Thread {
         if (m_commonLock == null) {
             m_commonLock = new ReentrantLock();
         }
-        m_bAborting = false;
+//        m_bAborting = false;
     }
 
     public boolean setInitWrapper(Context context) {

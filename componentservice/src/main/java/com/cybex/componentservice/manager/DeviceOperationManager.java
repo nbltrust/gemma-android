@@ -537,13 +537,13 @@ public class DeviceOperationManager {
             deviceComm.mDeviceHandler = new DeviceHandler(deviceName);
         }
 
-        if ((deviceComm.abortEnrollFPThread == null) || (deviceComm.abortEnrollFPThread.getState()
-                == Thread.State.TERMINATED)) {
+//        if ((deviceComm.abortEnrollFPThread == null) || (deviceComm.abortEnrollFPThread.getState()
+//                == Thread.State.TERMINATED)) {
             deviceComm.abortEnrollFPThread = new BlueToothWrapper(deviceComm.mDeviceHandler);
             deviceComm.abortEnrollFPThread.setAbortFPWrapper(deviceComm.contextHandle,
                     0);
             deviceComm.abortEnrollFPThread.start();
-        }
+//        }
     }
 
 
@@ -2021,8 +2021,10 @@ public class DeviceOperationManager {
                         }
                     }
                     break;
-
-
+                case BlueToothWrapper.MSG_ABORT_FP_START:
+                    LoggerManager.d(
+                            "MSG_ABORT_FP_START  ");
+                    break;
                     //MSG_ABORT_FP_FINISH
                 case BlueToothWrapper.MSG_ABORT_FP_FINISH:
                     LoggerManager.d(
