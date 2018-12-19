@@ -23,6 +23,8 @@ import me.jessyan.autosize.AutoSize;
 
 public class WookongConnectHelper {
 
+    private static boolean isDeviceShow;
+    private static boolean isConnecting;
     private String tag;
     private MultiWalletEntity walletEntity;
     private Activity activity;
@@ -72,24 +74,64 @@ public class WookongConnectHelper {
     }
 
     private void startConnectWookongBio(){
+        //先搜索
+        DeviceOperationManager.getInstance().scanDevice(tag, new DeviceOperationManager.ScanDeviceCallback() {
+            @Override
+            public void onScanStart() {
 
-        DeviceOperationManager.getInstance().connectDevice(tag, walletEntity.getBluetoothDeviceName(), new DeviceOperationManager.DeviceConnectCallback() {
-                    @Override
-                    public void onConnectStart() {
+            }
 
-                    }
+            @Override
+            public void onScanUpdate(String[] devices) {
 
-                    @Override
-                    public void onConnectSuccess() {
-                        innerGetDeviceInfo();
-                    }
+                if (!isDeviceShow){
+                    for (String deviceName : devices){
+                        if (deviceName.equals(walletEntity.getBluetoothDeviceName())){
+                            isDeviceShow = true;
 
-                    @Override
-                    public void onConnectFailed() {
-                        doConnectError();
+                            if (!isConnecting){
+
+                                DeviceOperationManager.getInstance().connectDevice(tag, walletEntity.getBluetoothDeviceName(), new DeviceOperationManager.DeviceConnectCallback() {
+                                            @Override
+                                            public void onConnectStart() {
+                                                LoggerManager.d("onConnectStart");
+                                            }
+
+                                            @Override
+                                            public void onConnectSuccess() {
+                                                LoggerManager.d("onConnectSuccess");
+                                                innerGetDeviceInfo();
+                                            }
+
+                                            @Override
+                                            public void onConnectFailed() {
+                                                LoggerManager.d("onConnectFailed");
+                                                doConnectError();
+                                            }
+                                        }
+                                );
+
+                                isConnecting = true;
+
+                            }
+
+                            break;
+                        }
                     }
                 }
-        );
+            }
+
+            @Override
+            public void onScanFinish() {
+                if (!isDeviceShow){
+                    LoggerManager.d("onScanFinish and doConnectErr");
+                    doConnectError();
+                }
+
+                isDeviceShow = false;
+                isConnecting = false;
+            }
+        });
 
     }
 

@@ -101,7 +101,6 @@ public class WalletHomeActivity extends XActivity<WalletHomePresenter> {
     private MultiWalletEntity curWallet;
     private EosWalletEntity curEosWallet;
     private EthWalletEntity curEthWallet;
-    private boolean isBioConnected;//蓝牙卡是否连接
     private String eosUnitPriceRMB;
     private String eosUnitPriceUSDT;
 
