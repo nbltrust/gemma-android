@@ -2,4 +2,17 @@
 <resources>
     <bool name="home_show">true</bool>
     <bool name="home_hide">false</bool>
+
+
+    <!--是否使用logger打印crashLog-->
+    <bool name="crash_logger_enable">false</bool>
+    <!--bugly app id-->
+    <string name="bugly_app_id">注册时申请的appId</string>
+    <!--是否使用cookie-->
+    <bool name="cookie_enable">true</bool>
+    <!--是否请求参数base64处理-->
+    <bool name="http_params_base64_enable">true</bool>
+
+    <!--应用退出是否清缓存-->
+    <bool name="web_clear_cache_enable">false</bool>
 </resources>

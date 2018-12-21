@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?><!--公共的 根据项目需求设定-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:listViewStyle">@style/common_list_view</item>-->
+        <!--<item name="android:gridViewStyle">@style/common_grid_view</item>-->
+        <!--<item name="android:textViewStyle">@style/common_textView</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/Fantasy.Animation.Activity.SlidingBack-->
+        <!--</item>-->
+
+    <!--</style>-->
+    <!--&lt;!&ndash;<item name="android:alertDialogStyle">@style/common_dialog_alert</item>&ndash;&gt;-->
+
+
+    <!--<style name="Fantasy.Animation.Activity.SlidingBack" parent="@android:style/Animation.Activity">-->
+        <!--<item name="android:activityOpenEnterAnimation">@anim/slide_left_in</item>-->
+        <!--<item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>-->
+        <!--<item name="android:activityCloseEnterAnimation">@anim/slide_right_in</item>-->
+        <!--<item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>-->
+    <!--</style>-->
+    <!--&lt;!&ndash;Common style&ndash;&gt;-->
+    <!--<style name="AppTheme1" parent="@android:style/Theme.Light">-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--&lt;!&ndash;   <item name="android:windowAnimationStyle">@style/AnimationActivity</item>-->
+           <!--<item name="android:textViewStyle">@style/MR.TextView</item>-->
+           <!--<item name="android:editTextStyle">@style/MR.EditText</item>-->
+           <!--<item name="android:buttonStyle">@style/MR.Button</item>-->
+           <!--<item name="android:checkboxStyle">@style/MR.CheckBox</item>-->
+           <!--<item name="android:radioButtonStyle">@style/MR.RadioButton</item>-->
+           <!--<item name="android:listViewStyle">@style/MR.ListView</item>-->
+           <!--<item name="android:gridViewStyle">@style/MR.GridView</item>-->
+           <!--<item name="android:progressBarStyle">@style/MR.ProgressBar</item>-->
+           <!--<item name="android:progressBarStyleSmall">@style/MR.LittleProgressBar</item>&ndash;&gt;-->
+        <!--<item name="android:alertDialogStyle">@style/common_dialog_alert</item>-->
+    <!--</style>-->
+
+    <!--&lt;!&ndash;Splash&ndash;&gt;-->
+    <!--<style name="Theme.Splash" parent="@style/AppTheme">-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+    <!--</style>-->
+    <!--&lt;!&ndash;end Splash&ndash;&gt;-->
+
+    <!--&lt;!&ndash;对话框风格&ndash;&gt;-->
+    <!--<style name="common_dialog_alert" parent="@style/Theme.AppCompat.Dialog">-->
+        <!--<item name="android:windowBackground">@android:color/white</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:windowTitleSize">@dimen/dimen_14</item>-->
+        <!--<item name="android:textColor">#333333</item>-->
+        <!--<item name="android:textSize">@dimen/dimen_14</item>-->
+        <!--<item name="android:scrollbarSize">3dp</item>-->
+        <!--<item name="android:windowFrame">@null</item>-->
+    <!--</style>-->
+
+    <!--&lt;!&ndash;ListView风格&ndash;&gt;-->
+    <!--<style name="common_list_view" parent="@android:style/Widget.ListView">-->
+        <!--<item name="android:fadingEdge">none</item>-->
+        <!--<item name="android:cacheColorHint">@android:color/transparent</item>-->
+        <!--&lt;!&ndash; <item name="android:listSelector">@drawable/list_selector_background</item>&ndash;&gt;-->
+        <!--<item name="android:divider">@null</item>-->
+        <!--<item name="android:dividerHeight">0dp</item>-->
+        <!--<item name="android:scrollbarSize">3dp</item>-->
+        <!--&lt;!&ndash;         <item name="android:scrollbarThumbVertical">@drawable/thumb</item> &ndash;&gt;-->
+    <!--</style>-->
+
+    <!--&lt;!&ndash;GridView风格&ndash;&gt;-->
+    <!--<style name="common_grid_view" parent="@android:style/Widget.GridView">-->
+        <!--<item name="android:listSelector">#00000000</item>-->
+        <!--<item name="android:cacheColorHint">@android:color/transparent</item>-->
+        <!--&lt;!&ndash;    <item name="android:scrollbarThumbVertical">@drawable/thumb</item>&ndash;&gt;-->
+        <!--<item name="android:scrollbarSize">3dp</item>-->
+    <!--</style>-->
+
+
+    <!--<style name="common_textView" parent="@android:style/Widget.TextView"></style>-->
+
+
+    <!--<style name="webProgress_horizontal">-->
+        <!--<item name="android:indeterminateOnly">false</item>-->
+        <!--<item name="android:progressDrawable">@drawable/comm_web_progressbar_horizontal_shape</item>-->
+        <!--&lt;!&ndash; progress_horizontal &ndash;&gt;-->
+        <!--<item name="android:indeterminateDrawable">-->
+            <!--@android:drawable/progress_indeterminate_horizontal-->
+        <!--</item>-->
+        <!--<item name="android:minHeight">20dip</item>-->
+        <!--<item name="android:maxHeight">20dip</item>-->
+    <!--</style>-->
+
+
+    <!--<style name="WrapMatch">-->
+        <!--<item name="android:layout_width">wrap_content</item>-->
+        <!--<item name="android:layout_height">match_parent</item>-->
+    <!--</style>-->
+
+    <!--<style name="MatchWrap">-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+    <!--</style>-->
+
+    <!--<style name="WrapWrap">-->
+        <!--<item name="android:layout_width">wrap_content</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+    <!--</style>-->
+
+    <!--<style name="MatchMatch">-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+        <!--<item name="android:layout_height">match_parent</item>-->
+    <!--</style>-->
+
+    <!--<style name="MatchAuto">-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+        <!--<item name="android:layout_weight">1</item>-->
+        <!--<item name="android:layout_height">0dp</item>-->
+    <!--</style>-->
+
+    <!--<style name="AutoMatch">-->
+        <!--<item name="android:layout_width">0dp</item>-->
+        <!--<item name="android:layout_weight">1</item>-->
+        <!--<item name="android:layout_height">match_parent</item>-->
+    <!--</style>-->
+
+    <!--<style name="WrapAuto">-->
+        <!--<item name="android:layout_width">wrap_content</item>-->
+        <!--<item name="android:layout_weight">1</item>-->
+        <!--<item name="android:layout_height">0dp</item>-->
+    <!--</style>-->
+
+    <!--<style name="AutoWrap">-->
+        <!--<item name="android:layout_width">0dp</item>-->
+        <!--<item name="android:layout_weight">1</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+    <!--</style>-->
+
+    <!--<style name="WrapMatch.Vertical">-->
+        <!--<item name="android:orientation">vertical</item>-->
+    <!--</style>-->
+
+    <!--<style name="WrapMatch.Horizontal">-->
+        <!--<item name="android:orientation">horizontal</item>-->
+    <!--</style>-->
+
+    <!--<style name="MatchWrap.Vertical">-->
+        <!--<item name="android:orientation">vertical</item>-->
+    <!--</style>-->
+
+    <!--<style name="MatchWrap.Horizontal">-->
+        <!--<item name="android:orientation">horizontal</item>-->
+    <!--</style>-->
+
+    <!--<style name="WrapWrap.Vertical">-->
+        <!--<item name="android:orientation">vertical</item>-->
+    <!--</style>-->
+
+    <!--<style name="WrapWrap.Horizontal">-->
+        <!--<item name="android:orientation">horizontal</item>-->
+    <!--</style>-->
+
+    <!--<style name="MatchMatch.Vertical">-->
+        <!--<item name="android:orientation">vertical</item>-->
+    <!--</style>-->
+
+    <!--<style name="MatchMatch.Horizontal">-->
+        <!--<item name="android:orientation">horizontal</item>-->
+    <!--</style>-->
+
+    <!--<style name="MatchAuto.Vertical">-->
+        <!--<item name="android:orientation">vertical</item>-->
+    <!--</style>-->
+
+    <!--<style name="MatchAuto.Horizontal">-->
+        <!--<item name="android:orientation">horizontal</item>-->
+    <!--</style>-->
+
+    <!--<style name="AutoMatch.Vertical">-->
+        <!--<item name="android:orientation">vertical</item>-->
+    <!--</style>-->
+
+    <!--<style name="AutoMatch.Horizontal">-->
+        <!--<item name="android:orientation">horizontal</item>-->
+    <!--</style>-->
+
+    <!--<style name="WrapAuto.Vertical">-->
+        <!--<item name="android:orientation">vertical</item>-->
+    <!--</style>-->
+
+    <!--<style name="WrapAuto.Horizontal">-->
+        <!--<item name="android:orientation">horizontal</item>-->
+    <!--</style>-->
+
+    <!--<style name="AutoWrap.Vertical">-->
+        <!--<item name="android:orientation">vertical</item>-->
+    <!--</style>-->
+
+    <!--<style name="AutoWrap.Horizontal">-->
+        <!--<item name="android:orientation">horizontal</item>-->
+    <!--</style>-->
+
+    <!--<style name="MatchOne">-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+        <!--<item name="android:layout_height">1px</item>-->
+    <!--</style>-->
+
+    <!--<style name="OneMatch">-->
+        <!--<item name="android:layout_width">1px</item>-->
+        <!--<item name="android:layout_height">match_parent</item>-->
+    <!--</style>-->
+</resources>
