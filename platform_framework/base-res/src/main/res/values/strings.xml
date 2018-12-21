@@ -1477,8 +1477,7 @@
 
     <string name="package_version_info">WOOKONG Wallet %1$s</string>
     <string name="activating_eos_account">正在激活EOS账号</string>
-
-
+    <string name="eos_account_activated">EOS 账号已成功激活</string>
 
 
 </resources>

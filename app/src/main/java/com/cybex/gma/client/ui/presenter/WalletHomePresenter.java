@@ -565,7 +565,8 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                         LoggerManager.d("Action status", status);
                                         if (status == 3 || status == 2 || status == 1){
                                             //轮询
-                                            startValidatePolling(action_id, 10000);
+
+                                            startValidatePolling(action_id, 8000);
                                             int block_num = resultBean.getBlock_num();
                                             int lib = resultBean.getLast_irreversible_block();
                                             double progress = getProgressPrecentage(block_num, lib);
@@ -577,6 +578,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                         else if (status == 4) {
                                             //已完成
 
+                                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_account_activated));
                                             removePollingJob();
                                             getV().setActionId(null);
                                             updateEosAccountStatus(ParamConstants.EOSACCOUNT_ACTIVATED);
@@ -585,6 +587,7 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                         } else {
                                             //失败
 
+                                            GemmaToastUtils.showShortToast(getV().getString(R.string.eos_default_create_fail_info));
                                             removePollingJob();
                                             getV().setActionId(null);
                                             updateEosAccountStatus(ParamConstants.EOSACCOUNT_NOT_ACTIVATED);
@@ -593,7 +596,6 @@ public class WalletHomePresenter extends XPresenter<WalletHomeActivity> {
                                         }
                                     }
                                 }
-
                             }
                         }
                     }
