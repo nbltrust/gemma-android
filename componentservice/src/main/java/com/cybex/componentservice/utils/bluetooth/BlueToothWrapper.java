@@ -1840,12 +1840,17 @@ public class BlueToothWrapper extends Thread {
                 if (m_contextHandle == 0) {
                     iRtn = MiddlewareInterface.PAEW_RET_DEV_COMMUNICATE_FAIL;
                 } else {
-                    devInfoType = MiddlewareInterface.PAEW_DEV_INFOTYPE_COS_VERSION
-                            + MiddlewareInterface.PAEW_DEV_INFOTYPE_PIN_STATE +
-                            MiddlewareInterface.PAEW_DEV_INFOTYPE_COS_TYPE
-                            + MiddlewareInterface.PAEW_DEV_INFOTYPE_CHAIN_TYPE +
-                            MiddlewareInterface.PAEW_DEV_INFOTYPE_SN + MiddlewareInterface.PAEW_DEV_INFOTYPE_LIFECYCLE;
+                    devInfoType = MiddlewareInterface.PAEW_DEV_INFOTYPE_COS_VERSION + MiddlewareInterface.PAEW_DEV_INFOTYPE_PIN_STATE +
+                            MiddlewareInterface.PAEW_DEV_INFOTYPE_COS_TYPE + MiddlewareInterface.PAEW_DEV_INFOTYPE_CHAIN_TYPE +
+                            MiddlewareInterface.PAEW_DEV_INFOTYPE_SN + MiddlewareInterface.PAEW_DEV_INFOTYPE_LIFECYCLE + MiddlewareInterface.PAEW_DEV_INFOTYPE_BLE_VERSION;
                     iRtn = MiddlewareInterface.getDevInfo(m_contextHandle, m_devIndex, devInfoType, devInfo);
+                    if (iRtn == MiddlewareInterface.PAEW_RET_NOT_SUPPORTED) {
+                        devInfoType = MiddlewareInterface.PAEW_DEV_INFOTYPE_COS_VERSION + MiddlewareInterface.PAEW_DEV_INFOTYPE_PIN_STATE +
+                                MiddlewareInterface.PAEW_DEV_INFOTYPE_COS_TYPE + MiddlewareInterface.PAEW_DEV_INFOTYPE_CHAIN_TYPE +
+                                MiddlewareInterface.PAEW_DEV_INFOTYPE_SN + MiddlewareInterface.PAEW_DEV_INFOTYPE_LIFECYCLE;
+                        iRtn = MiddlewareInterface.getDevInfo(m_contextHandle, m_devIndex, devInfoType, devInfo);
+                    }
+
                 }
                 m_commonLock.unlock();
 
